@@ -4,6 +4,7 @@
   "description": "Scrape law firm leads from bar associations and legal directories for Mortar Metrics cold email campaigns",
   "main": "scrape.js",
   "scripts": {
+    "start": "node server.js",
     "scrape": "node scrape.js",
     "dedup": "node dedup.js"
   },
@@ -14,8 +15,11 @@
     "csv-parser": "^3.0.0",
     "csv-writer": "^1.6.0",
     "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "multer": "^1.4.5-lts.1",
     "fuse.js": "^7.0.0",
-    "puppeteer": "^23.0.0"
+    "puppeteer": "^23.0.0",
+    "ws": "^8.18.0"
   },
   "author": "Mortar Metrics",
   "license": "MIT"

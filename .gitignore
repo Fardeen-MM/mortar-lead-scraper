@@ -2,6 +2,7 @@ node_modules/
 .env
 data/*.csv
 data/output/*.csv
+data/uploads/
 !data/.gitkeep
 !data/output/.gitkeep
 .DS_Store

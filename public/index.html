@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mortar Lead Scraper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">🧱</span>
+        <span class="logo-text">Mortar</span>
+      </div>
+      <p class="subtitle">Lead Scraper</p>
+    </header>
+
+    <!-- Step Indicator -->
+    <nav class="steps">
+      <div class="step active" data-step="1"><span class="step-num">1</span> Upload</div>
+      <div class="step" data-step="2"><span class="step-num">2</span> Configure</div>
+      <div class="step" data-step="3"><span class="step-num">3</span> Scrape</div>
+      <div class="step" data-step="4"><span class="step-num">4</span> Preview</div>
+      <div class="step" data-step="5"><span class="step-num">5</span> Download</div>
+    </nav>
+
+    <!-- Step 1: Upload -->
+    <section id="step-1" class="panel active">
+      <h2>Upload Existing Leads</h2>
+      <p class="hint">Upload your current Instantly CSV to deduplicate against. This is optional — skip if you don't have one.</p>
+
+      <div id="drop-zone" class="drop-zone">
+        <div class="drop-zone-content">
+          <span class="drop-icon">📄</span>
+          <p>Drag &amp; drop your CSV here</p>
+          <p class="small">or click to browse</p>
+        </div>
+        <input type="file" id="file-input" accept=".csv" hidden>
+      </div>
+
+      <div id="upload-status" class="upload-status hidden">
+        <span class="status-icon">✓</span>
+        <span id="upload-message"></span>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-secondary" onclick="app.skipUpload()">Skip</button>
+        <button class="btn btn-primary" id="btn-upload-next" onclick="app.goToStep(2)" disabled>Next</button>
+      </div>
+    </section>
+
+    <!-- Step 2: Configure -->
+    <section id="step-2" class="panel">
+      <h2>Configure Scrape</h2>
+      <p class="hint">Choose what to scrape. The scraper will search bar association directories for matching attorneys.</p>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="select-state">State</label>
+          <select id="select-state">
+            <option value="">Loading...</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="select-practice">Practice Area</label>
+          <select id="select-practice">
+            <option value="">All practice areas</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="select-city">City</label>
+          <select id="select-city">
+            <option value="">All major cities</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="toggle-label">
+            <input type="checkbox" id="toggle-test">
+            <span class="toggle-switch"></span>
+            Test Mode <span class="hint-inline">(2 pages per city)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-secondary" onclick="app.goToStep(1)">Back</button>
+        <button class="btn btn-primary" id="btn-start-scrape" onclick="app.startScrape()">Start Scrape</button>
+      </div>
+    </section>
+
+    <!-- Step 3: Scrape -->
+    <section id="step-3" class="panel">
+      <h2>Scraping...</h2>
+
+      <div class="stats-bar">
+        <div class="stat">
+          <span class="stat-value" id="stat-scraped">0</span>
+          <span class="stat-label">Scraped</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="stat-dupes">0</span>
+          <span class="stat-label">Dupes</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="stat-new">0</span>
+          <span class="stat-label">New</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="stat-emails">0</span>
+          <span class="stat-label">Emails</span>
+        </div>
+      </div>
+
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+
+      <div class="log-container" id="log-container">
+        <div class="log-line log-info">Waiting for scrape to start...</div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="btn-view-results" onclick="app.goToStep(4)" disabled>View Results</button>
+      </div>
+    </section>
+
+    <!-- Step 4: Preview -->
+    <section id="step-4" class="panel">
+      <h2>Results Preview</h2>
+
+      <div class="table-controls">
+        <input type="text" id="table-search" class="search-input" placeholder="Search leads..." oninput="app.filterTable()">
+        <span class="result-count" id="result-count"></span>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="results-table">
+          <thead>
+            <tr>
+              <th onclick="app.sortTable('first_name')">First Name <span class="sort-arrow"></span></th>
+              <th onclick="app.sortTable('last_name')">Last Name <span class="sort-arrow"></span></th>
+              <th onclick="app.sortTable('firm_name')">Firm <span class="sort-arrow"></span></th>
+              <th onclick="app.sortTable('city')">City <span class="sort-arrow"></span></th>
+              <th onclick="app.sortTable('email')">Email <span class="sort-arrow"></span></th>
+              <th onclick="app.sortTable('phone')">Phone <span class="sort-arrow"></span></th>
+            </tr>
+          </thead>
+          <tbody id="results-body"></tbody>
+        </table>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-secondary" onclick="app.goToStep(3)">Back</button>
+        <button class="btn btn-primary" onclick="app.goToStep(5)">Continue to Download</button>
+      </div>
+    </section>
+
+    <!-- Step 5: Download -->
+    <section id="step-5" class="panel">
+      <h2>Download Leads</h2>
+
+      <div class="download-card">
+        <div class="download-icon">📥</div>
+        <h3 id="download-filename">leads.csv</h3>
+        <p id="download-summary"></p>
+        <button class="btn btn-primary btn-large" id="btn-download" onclick="app.downloadCSV()">Download CSV</button>
+        <p class="hint">Ready to upload to Instantly</p>
+      </div>
+
+      <div class="summary-card" id="summary-card">
+        <h3>Scrape Summary</h3>
+        <div class="summary-grid" id="summary-grid"></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-secondary" onclick="app.goToStep(4)">Back to Preview</button>
+        <button class="btn btn-primary" onclick="app.reset()">New Scrape</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
