@@ -34,25 +34,50 @@ const app = {
   populateDropdowns() {
     const stateSelect = document.getElementById('select-state');
     stateSelect.innerHTML = '';
-    for (const state of this.config.states) {
+
+    // Sort state codes alphabetically by name
+    const stateCodes = Object.keys(this.config.states).sort((a, b) =>
+      this.config.states[a].name.localeCompare(this.config.states[b].name)
+    );
+
+    for (const code of stateCodes) {
       const opt = document.createElement('option');
-      opt.value = state;
-      opt.textContent = state;
+      opt.value = code;
+      opt.textContent = `${code} — ${this.config.states[code].name}`;
       stateSelect.appendChild(opt);
     }
 
+    // Listen for state change to update practice areas and cities
+    stateSelect.addEventListener('change', () => this.onStateChange());
+
+    // Initialize with first state
+    this.onStateChange();
+  },
+
+  onStateChange() {
+    const code = document.getElementById('select-state').value;
+    const stateMeta = this.config.states[code];
+    if (!stateMeta) return;
+
+    // Update practice areas
     const practiceSelect = document.getElementById('select-practice');
     practiceSelect.innerHTML = '<option value="">All practice areas</option>';
-    for (const area of this.config.practiceAreas) {
+
+    // Deduplicate practice areas (some states have aliases like 'family' and 'family law')
+    const seen = new Set();
+    for (const area of stateMeta.practiceAreas) {
+      if (seen.has(area)) continue;
+      seen.add(area);
       const opt = document.createElement('option');
       opt.value = area;
       opt.textContent = area.charAt(0).toUpperCase() + area.slice(1);
       practiceSelect.appendChild(opt);
     }
 
+    // Update cities
     const citySelect = document.getElementById('select-city');
     citySelect.innerHTML = '<option value="">All major cities</option>';
-    for (const city of this.config.floridaCities) {
+    for (const city of stateMeta.defaultCities) {
       const opt = document.createElement('option');
       opt.value = city;
       opt.textContent = city;

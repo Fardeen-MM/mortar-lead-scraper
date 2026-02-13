@@ -14,7 +14,8 @@ const express = require('express');
 const multer = require('multer');
 const { WebSocketServer } = require('ws');
 const { readCSV } = require('./lib/csv-handler');
-const { runPipeline, SCRAPERS } = require('./lib/pipeline');
+const { runPipeline } = require('./lib/pipeline');
+const { getScraperMetadata } = require('./lib/registry');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -49,16 +50,9 @@ const jobs = new Map();
 
 // Get available scrapers and their practice areas
 app.get('/api/config', (req, res) => {
-  const florida = require('./scrapers/bars/florida');
+  const metadata = getScraperMetadata();
   res.json({
-    states: Object.keys(SCRAPERS),
-    practiceAreas: Object.keys(florida.PRACTICE_AREA_CODES),
-    floridaCities: [
-      'Miami', 'Fort Lauderdale', 'West Palm Beach', 'Orlando',
-      'Tampa', 'Jacksonville', 'St. Petersburg', 'Naples',
-      'Boca Raton', 'Tallahassee', 'Gainesville', 'Sarasota',
-      'Fort Myers', 'Daytona Beach', 'Pensacola', 'Coral Gables',
-    ],
+    states: metadata,
     hasAnthropicKey: !!process.env.ANTHROPIC_API_KEY,
     enrichmentFeatures: [
       { id: 'deriveWebsite', label: 'Derive website from email', default: true, cost: 'free' },
