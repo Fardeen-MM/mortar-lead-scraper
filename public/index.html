@@ -90,6 +90,47 @@
         </div>
       </div>
 
+      <!-- Lead Enrichment -->
+      <div class="enrichment-section">
+        <h3>Lead Enrichment</h3>
+        <p class="hint">Enrich leads with website, title, LinkedIn, and more after scraping.</p>
+
+        <div class="form-group">
+          <label class="toggle-label">
+            <input type="checkbox" id="toggle-enrich" onchange="app.toggleEnrichment()">
+            <span class="toggle-switch"></span>
+            Enable Enrichment
+          </label>
+        </div>
+
+        <div id="enrich-options" class="enrich-options hidden">
+          <div class="form-group">
+            <label class="toggle-label sub-toggle">
+              <input type="checkbox" id="toggle-derive-website" checked>
+              <span class="toggle-switch"></span>
+              Derive website from email <span class="hint-inline">(free, instant)</span>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label class="toggle-label sub-toggle">
+              <input type="checkbox" id="toggle-scrape-website" checked>
+              <span class="toggle-switch"></span>
+              Scrape firm websites <span class="hint-inline">(free, ~5s/lead)</span>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label class="toggle-label sub-toggle" id="label-ai-toggle">
+              <input type="checkbox" id="toggle-ai-fallback">
+              <span class="toggle-switch"></span>
+              AI fallback for missing data <span class="hint-inline">(~$0.001/lead)</span>
+            </label>
+            <span id="ai-warning" class="ai-warning hidden">API key not configured</span>
+          </div>
+        </div>
+      </div>
+
       <div class="actions">
         <button class="btn btn-secondary" onclick="app.goToStep(1)">Back</button>
         <button class="btn btn-primary" id="btn-start-scrape" onclick="app.startScrape()">Start Scrape</button>
@@ -127,6 +168,17 @@
         <div class="log-line log-info">Waiting for scrape to start...</div>
       </div>
 
+      <!-- Enrichment Progress (hidden until enrichment starts) -->
+      <div id="enrichment-section" class="enrichment-progress hidden">
+        <h3>Enriching Leads</h3>
+        <div class="enrichment-status">
+          <span id="enrich-status-text">Waiting...</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar progress-bar-enrich" id="enrich-progress-bar"></div>
+        </div>
+      </div>
+
       <div class="actions">
         <button class="btn btn-primary" id="btn-view-results" onclick="app.goToStep(4)" disabled>View Results</button>
       </div>
@@ -148,9 +200,11 @@
               <th onclick="app.sortTable('first_name')">First Name <span class="sort-arrow"></span></th>
               <th onclick="app.sortTable('last_name')">Last Name <span class="sort-arrow"></span></th>
               <th onclick="app.sortTable('firm_name')">Firm <span class="sort-arrow"></span></th>
+              <th onclick="app.sortTable('title')">Title <span class="sort-arrow"></span></th>
               <th onclick="app.sortTable('city')">City <span class="sort-arrow"></span></th>
               <th onclick="app.sortTable('email')">Email <span class="sort-arrow"></span></th>
               <th onclick="app.sortTable('phone')">Phone <span class="sort-arrow"></span></th>
+              <th>LinkedIn</th>
             </tr>
           </thead>
           <tbody id="results-body"></tbody>

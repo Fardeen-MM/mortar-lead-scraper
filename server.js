@@ -59,6 +59,13 @@ app.get('/api/config', (req, res) => {
       'Boca Raton', 'Tallahassee', 'Gainesville', 'Sarasota',
       'Fort Myers', 'Daytona Beach', 'Pensacola', 'Coral Gables',
     ],
+    hasAnthropicKey: !!process.env.ANTHROPIC_API_KEY,
+    enrichmentFeatures: [
+      { id: 'deriveWebsite', label: 'Derive website from email', default: true, cost: 'free' },
+      { id: 'scrapeWebsite', label: 'Scrape firm websites', default: true, cost: 'free, ~5s/lead' },
+      { id: 'findLinkedIn', label: 'Find LinkedIn profiles', default: true, cost: 'free' },
+      { id: 'extractWithAI', label: 'AI fallback for missing data', default: false, cost: '~$0.001/lead' },
+    ],
   });
 });
 
@@ -86,7 +93,7 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
 
 // Start a scrape job
 app.post('/api/scrape/start', (req, res) => {
-  const { state, practice, city, test, uploadId } = req.body;
+  const { state, practice, city, test, uploadId, enrich, enrichOptions } = req.body;
 
   if (!state) {
     return res.status(400).json({ error: 'State is required' });
@@ -111,6 +118,8 @@ app.post('/api/scrape/start', (req, res) => {
     test: !!test,
     emailScrape: false, // Bar scraping doesn't typically need Puppeteer email scraping
     existingLeads,
+    enrich: !!enrich,
+    enrichOptions: enrichOptions || {},
   });
 
   // Store job
@@ -140,6 +149,10 @@ app.post('/api/scrape/start', (req, res) => {
 
   emitter.on('log', (data) => {
     broadcast(jobId, { type: 'log', level: data.level, message: data.message });
+  });
+
+  emitter.on('enrichment-progress', (data) => {
+    broadcast(jobId, { type: 'enrichment-progress', ...data });
   });
 
   emitter.on('complete', (data) => {

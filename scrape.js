@@ -30,6 +30,9 @@ program
   .option('--no-email-scrape', 'Skip website email scraping (bar emails only)')
   .option('--proxy <url>', 'Proxy URL (http://user:pass@host:port)')
   .option('--output <path>', 'Custom output file path')
+  .option('--enrich', 'Enable lead enrichment (website, title, LinkedIn, etc.)')
+  .option('--no-enrich-llm', 'Disable AI fallback during enrichment')
+  .option('--no-enrich-website', 'Disable website scraping during enrichment')
   .parse(process.argv);
 
 const opts = program.opts();
@@ -44,6 +47,13 @@ const emitter = runPipeline({
   minYear: opts.minYear,
   output: opts.output,
   existingPath: opts.existing,
+  enrich: opts.enrich,
+  enrichOptions: opts.enrich ? {
+    deriveWebsite: true,
+    scrapeWebsite: opts.enrichWebsite !== false,
+    findLinkedIn: opts.enrichWebsite !== false,
+    extractWithAI: opts.enrichLlm !== false,
+  } : undefined,
 });
 
 emitter.on('complete', ({ stats }) => {

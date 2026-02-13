@@ -418,6 +418,79 @@ select:focus, input[type="text"]:focus {
 .log-skip { color: #9ca3af; }
 .log-scrape { color: #67e8f9; }
 .log-progress { color: #a5b4fc; }
+.log-enrich { color: #c4b5fd; }
+
+/* Enrichment Section (Step 2) */
+.enrichment-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.enrichment-section h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.enrich-options {
+  padding-left: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.sub-toggle {
+  padding-top: 0.6rem !important;
+  padding-left: 1rem;
+  font-size: 0.85rem !important;
+}
+
+.toggle-label.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ai-warning {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--warn);
+  padding-left: 3.5rem;
+  margin-top: 0.15rem;
+}
+
+/* Enrichment Progress (Step 3) */
+.enrichment-progress {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.enrichment-progress h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.enrichment-status {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.progress-bar-enrich {
+  background: var(--indigo-light);
+}
+
+/* LinkedIn link in table */
+.link-view {
+  color: var(--indigo);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.link-view:hover {
+  text-decoration: underline;
+}
 
 /* Table */
 .table-controls {

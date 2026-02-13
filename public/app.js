@@ -25,6 +25,7 @@ const app = {
       const res = await fetch('/api/config');
       this.config = await res.json();
       this.populateDropdowns();
+      this.setupEnrichmentToggles();
     } catch (err) {
       console.error('Failed to load config:', err);
     }
@@ -152,6 +153,27 @@ const app = {
 
   // --- Step 2: Configure ---
 
+  setupEnrichmentToggles() {
+    if (!this.config) return;
+    // Disable AI toggle if no API key
+    if (!this.config.hasAnthropicKey) {
+      const aiToggle = document.getElementById('toggle-ai-fallback');
+      aiToggle.disabled = true;
+      document.getElementById('ai-warning').classList.remove('hidden');
+      document.getElementById('label-ai-toggle').classList.add('disabled');
+    }
+  },
+
+  toggleEnrichment() {
+    const enabled = document.getElementById('toggle-enrich').checked;
+    const options = document.getElementById('enrich-options');
+    if (enabled) {
+      options.classList.remove('hidden');
+    } else {
+      options.classList.add('hidden');
+    }
+  },
+
   // --- Step 3: Scrape ---
 
   async startScrape() {
@@ -168,6 +190,15 @@ const app = {
     // Move to scrape step
     this.goToStep(3);
 
+    // Gather enrichment options
+    const enrich = document.getElementById('toggle-enrich').checked;
+    const enrichOptions = enrich ? {
+      deriveWebsite: document.getElementById('toggle-derive-website').checked,
+      scrapeWebsite: document.getElementById('toggle-scrape-website').checked,
+      findLinkedIn: document.getElementById('toggle-scrape-website').checked, // Depends on website scraping
+      extractWithAI: document.getElementById('toggle-ai-fallback').checked,
+    } : {};
+
     // Clear previous state
     this.leads = [];
     this.stats = null;
@@ -178,13 +209,15 @@ const app = {
     document.getElementById('stat-emails').textContent = '0';
     document.getElementById('progress-bar').style.width = '0%';
     document.getElementById('btn-view-results').disabled = true;
+    document.getElementById('enrichment-section').classList.add('hidden');
+    document.getElementById('enrich-progress-bar').style.width = '0%';
 
     // Start the job
     try {
       const res = await fetch('/api/scrape/start', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ state, practice, city, test, uploadId: this.uploadId }),
+        body: JSON.stringify({ state, practice, city, test, uploadId: this.uploadId, enrich, enrichOptions }),
       });
       const data = await res.json();
 
@@ -246,11 +279,26 @@ const app = {
         this.leads.push(msg.data);
         break;
 
+      case 'enrichment-progress': {
+        const section = document.getElementById('enrichment-section');
+        section.classList.remove('hidden');
+        const pct = msg.total > 0 ? Math.round((msg.current / msg.total) * 100) : 0;
+        document.getElementById('enrich-progress-bar').style.width = pct + '%';
+        document.getElementById('enrich-status-text').textContent =
+          `Enriching: ${msg.current}/${msg.total} — ${msg.leadName}`;
+        break;
+      }
+
       case 'complete':
         this.stats = msg.stats;
         this.addLog('success', `Scrape complete! ${this.leads.length} new leads found.`);
         document.getElementById('btn-view-results').disabled = false;
         document.getElementById('progress-bar').style.width = '100%';
+        // Mark enrichment as done if it was running
+        if (msg.stats.enrichment) {
+          document.getElementById('enrich-progress-bar').style.width = '100%';
+          document.getElementById('enrich-status-text').textContent = 'Enrichment complete';
+        }
         if (this.ws) this.ws.close();
         break;
 
@@ -273,6 +321,7 @@ const app = {
       skip: '↷',
       scrape: '🔍',
       progress: '▶',
+      enrich: '✦',
     };
 
     const icon = icons[level] || '·';
@@ -292,13 +341,18 @@ const app = {
 
     for (const lead of filtered) {
       const tr = document.createElement('tr');
+      const linkedInCell = lead.linkedin_url
+        ? `<a href="${esc(lead.linkedin_url)}" target="_blank" rel="noopener" class="link-view">View</a>`
+        : '';
       tr.innerHTML = `
         <td title="${esc(lead.first_name)}">${esc(lead.first_name)}</td>
         <td title="${esc(lead.last_name)}">${esc(lead.last_name)}</td>
         <td title="${esc(lead.firm_name)}">${esc(lead.firm_name)}</td>
+        <td title="${esc(lead.title)}">${esc(lead.title)}</td>
         <td title="${esc(lead.city)}">${esc(lead.city)}</td>
         <td title="${esc(lead.email)}">${esc(lead.email)}</td>
         <td title="${esc(lead.phone)}">${esc(lead.phone)}</td>
+        <td>${linkedInCell}</td>
       `;
       body.appendChild(tr);
     }
@@ -368,6 +422,16 @@ const app = {
 
     if (stats.captchaSkipped) rows.push(['CAPTCHA Skipped', stats.captchaSkipped]);
     if (stats.errorSkipped) rows.push(['Errors', stats.errorSkipped]);
+
+    // Enrichment stats
+    if (stats.enrichment) {
+      const e = stats.enrichment;
+      if (e.websitesDerived) rows.push(['Websites Derived', e.websitesDerived]);
+      if (e.titlesFound) rows.push(['Titles Found', e.titlesFound]);
+      if (e.linkedInFound) rows.push(['LinkedIn Found', e.linkedInFound]);
+      if (e.educationFound) rows.push(['Education Found', e.educationFound]);
+      if (e.llmCalls) rows.push(['AI Calls', e.llmCalls]);
+    }
 
     for (const [label, value] of rows) {
       const div = document.createElement('div');
