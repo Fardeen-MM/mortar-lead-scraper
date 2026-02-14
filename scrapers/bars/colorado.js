@@ -267,12 +267,9 @@ class ColoradoScraper extends BaseScraper {
 
     const cities = this.getCities(options);
 
-    // Common last name prefixes for broad coverage
-    const lastNamePrefixes = [
-      'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-      'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-      'U', 'V', 'W', 'X', 'Y', 'Z',
-    ];
+    // High-frequency last name prefixes to avoid timeout (A-Z takes 26+ requests per city).
+    // These 5 letters cover the most common last name initials in the US.
+    const lastNamePrefixes = ['A', 'B', 'C', 'M', 'S'];
 
     for (let ci = 0; ci < cities.length; ci++) {
       const city = cities[ci];

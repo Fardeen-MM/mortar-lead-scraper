@@ -214,7 +214,12 @@ class IowaScraper extends BaseScraper {
         const $link = $(el);
         const fullName = $link.text().trim();
         if (!fullName || fullName.length < 3 || fullName.length > 60) return;
-        if (/^(home|about|contact|search|find|back|next|page|prev)/i.test(fullName)) return;
+        if (/^(home|about|contact|search|find|back|next|page|prev|disclaimer|privacy|terms|login|register|sign|faq|help|menu|copyright|skip|sitemap|accessibility|subscribe|join|donate|events?|news|blog|resources?|publications?|members?|calendar|directory|board|staff|careers?|links?|legal|policy|print|share|follow|email|phone|address|map|directions)/i.test(fullName)) return;
+        // Must contain a space (first + last name) and not be a single word
+        if (!fullName.includes(' ')) return;
+        // Skip if the link href looks like a non-profile page (nav links)
+        const linkHref = ($link.attr('href') || '').toLowerCase();
+        if (linkHref && /\/(about|contact|disclaimer|privacy|terms|faq|help|login|register|news|blog|events|careers|staff|board|join)/.test(linkHref)) return;
 
         const { firstName, lastName } = this.splitName(fullName);
         const profileLink = $link.attr('href') || '';

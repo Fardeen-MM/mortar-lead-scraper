@@ -1,15 +1,12 @@
 /**
  * State Bar of Nevada Scraper
  *
- * Source: https://nvbar.org/for-the-public/find-a-lawyer/
- * Method: WordPress site with referral form — discover actual database endpoint
+ * Source: https://members.nvbar.org/cvweb/cgi-bin/memberdll.dll/info?WRP=lrs_referralNew.htm
+ * Method: CV5 (Community Voice) memberdll system with tilde-delimited parameters
  *
- * The Nevada Bar's "Find a Lawyer" page is hosted on WordPress (nvbar.org).
- * The public-facing page may use a referral form, embedded iframe, or
- * WordPress REST API / AJAX handler (admin-ajax.php) to query the member
- * database. This scraper discovers the actual search endpoint by examining
- * the page source for AJAX handlers, shortcode configurations, or
- * REST API routes, then queries it for attorney data.
+ * The Nevada Bar uses a CV5 member directory system similar to Alaska and Kentucky.
+ * The search form submits to a memberdll.dll endpoint with tilde-delimited params.
+ * The response is HTML fragments containing member listings.
  */
 
 const https = require('https');
@@ -24,7 +21,7 @@ class NevadaScraper extends BaseScraper {
     super({
       name: 'nevada',
       stateCode: 'NV',
-      baseUrl: 'https://nvbar.org/for-the-public/find-a-lawyer/',
+      baseUrl: 'https://members.nvbar.org/cvweb/cgi-bin/memberdll.dll/info?WRP=lrs_referralNew.htm',
       pageSize: 50,
       practiceAreaCodes: {
         'administrative':         'Administrative Law',
@@ -65,347 +62,138 @@ class NevadaScraper extends BaseScraper {
       ],
     });
 
-    // Potential WordPress/backend endpoints
-    this.wpAjaxUrl = 'https://nvbar.org/wp-admin/admin-ajax.php';
-    this.wpRestBase = 'https://nvbar.org/wp-json';
-    this.discoveredEndpoint = null;
-    this.ajaxAction = null;
-    this.ajaxNonce = null;
+    this.ajaxBaseUrl = 'https://members.nvbar.org/cvweb/cgi-bin/memberdll.dll/List';
   }
 
   /**
-   * Not used directly -- search() is overridden for WordPress endpoint discovery.
+   * Not used directly -- search() is overridden for CV5 AJAX requests.
    */
   buildSearchUrl() {
-    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden for WP endpoint discovery`);
+    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden for CV5 AJAX`);
   }
 
   parseResultsPage() {
-    throw new Error(`${this.name}: parseResultsPage() is not used — search() is overridden for WP endpoint discovery`);
+    throw new Error(`${this.name}: parseResultsPage() is not used — search() is overridden for CV5 AJAX`);
   }
 
   extractResultCount() {
-    throw new Error(`${this.name}: extractResultCount() is not used — search() is overridden for WP endpoint discovery`);
+    throw new Error(`${this.name}: extractResultCount() is not used — search() is overridden for CV5 AJAX`);
   }
 
   /**
-   * HTTP POST for WordPress AJAX and REST API requests.
+   * Build the tilde-delimited AJAX URL for the Nevada Bar CV5 system.
+   * Similar to Alaska's CV5 system — params are delimited by tildes.
    */
-  httpPost(url, data, rateLimiter, contentType = 'application/x-www-form-urlencoded') {
-    return new Promise((resolve, reject) => {
-      const postData = typeof data === 'string' ? data : (
-        contentType.includes('json') ? JSON.stringify(data) : new URLSearchParams(data).toString()
-      );
-
-      const parsed = new URL(url);
-      const options = {
-        hostname: parsed.hostname,
-        port: parsed.port || (parsed.protocol === 'https:' ? 443 : 80),
-        path: parsed.pathname + parsed.search,
-        method: 'POST',
-        headers: {
-          'Content-Type': contentType,
-          'Content-Length': Buffer.byteLength(postData),
-          'User-Agent': rateLimiter.getUserAgent(),
-          'Accept': 'application/json, text/html, */*',
-          'Accept-Language': 'en-US,en;q=0.9',
-          'Referer': this.baseUrl,
-          'Origin': 'https://nvbar.org',
-          'X-Requested-With': 'XMLHttpRequest',
-        },
-        timeout: 15000,
-      };
-
-      const protocol = parsed.protocol === 'https:' ? https : http;
-      const req = protocol.request(options, (res) => {
-        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-          res.resume();
-          let redirect = res.headers.location;
-          if (redirect.startsWith('/')) {
-            redirect = `${parsed.protocol}//${parsed.host}${redirect}`;
-          }
-          return resolve(this.httpGet(redirect, rateLimiter));
-        }
-        let body = '';
-        res.on('data', chunk => body += chunk);
-        res.on('end', () => resolve({ statusCode: res.statusCode, body }));
-      });
-      req.on('error', reject);
-      req.on('timeout', () => { req.destroy(); reject(new Error('timeout')); });
-      req.setTimeout(15000);
-      req.write(postData);
-      req.end();
-    });
-  }
-
-  /**
-   * Discover the actual search endpoint from the WordPress page.
-   * Examines the page for:
-   * - admin-ajax.php action names and nonces
-   * - WP REST API endpoints
-   * - Embedded iframes pointing to member databases
-   * - JavaScript configuration objects
-   */
-  async discoverEndpoint(rateLimiter) {
-    if (this.discoveredEndpoint) return this.discoveredEndpoint;
-
-    log.info(`Discovering search endpoint for ${this.name}...`);
-
-    try {
-      const response = await this.httpGet(this.baseUrl, rateLimiter);
-      if (response.statusCode !== 200) {
-        log.warn(`Could not load find-a-lawyer page: ${response.statusCode}`);
-        return null;
-      }
-
-      const $ = cheerio.load(response.body);
-      const html = response.body;
-
-      // Check for iframe pointing to external member directory
-      const iframe = $('iframe[src*="member"], iframe[src*="directory"], iframe[src*="lawyer"], iframe[src*="search"]');
-      if (iframe.length) {
-        const src = iframe.attr('src');
-        log.info(`Found iframe endpoint: ${src}`);
-        this.discoveredEndpoint = src;
-        return src;
-      }
-
-      // Check for form action
-      const form = $('form[action*="member"], form[action*="lawyer"], form[action*="search"], form[action*="directory"]');
-      if (form.length) {
-        const action = form.attr('action');
-        const fullUrl = action.startsWith('http') ? action : new URL(action, 'https://nvbar.org').href;
-        log.info(`Found form endpoint: ${fullUrl}`);
-        this.discoveredEndpoint = fullUrl;
-        return fullUrl;
-      }
-
-      // Extract WP AJAX action and nonce from script tags
-      const scripts = $('script').map((_, el) => $(el).html()).get().join('\n');
-
-      // Look for admin-ajax.php action
-      const actionMatch = scripts.match(/['"]action['"]\s*:\s*['"](\w+_search|\w+_directory|\w+_lawyer|\w+_member)['"]/i);
-      if (actionMatch) {
-        this.ajaxAction = actionMatch[1];
-        log.info(`Found WP AJAX action: ${this.ajaxAction}`);
-        this.discoveredEndpoint = this.wpAjaxUrl;
-      }
-
-      // Look for nonce
-      const nonceMatch = scripts.match(/['"](?:nonce|_wpnonce|security)['"]\s*:\s*['"]([a-f0-9]+)['"]/i);
-      if (nonceMatch) {
-        this.ajaxNonce = nonceMatch[1];
-        log.info(`Found WP AJAX nonce: ${this.ajaxNonce}`);
-      }
-
-      // Look for localized script variables with AJAX URL
-      const ajaxUrlMatch = scripts.match(/(?:ajaxurl|ajax_url|ajaxUrl)\s*[=:]\s*['"]([^'"]+)['"]/i);
-      if (ajaxUrlMatch && !this.discoveredEndpoint) {
-        this.discoveredEndpoint = ajaxUrlMatch[1];
-        log.info(`Found AJAX URL: ${this.discoveredEndpoint}`);
-      }
-
-      // Look for WP REST API endpoints
-      const restMatch = scripts.match(/['"](?:rest_url|apiUrl|restBase)['"]\s*:\s*['"]([^'"]+)['"]/i);
-      if (restMatch && !this.discoveredEndpoint) {
-        this.discoveredEndpoint = restMatch[1];
-        log.info(`Found REST API base: ${this.discoveredEndpoint}`);
-      }
-
-      // Look for data attributes on search elements
-      const searchEl = $('[data-action], [data-ajax-url], [data-search-url]').first();
-      if (searchEl.length && !this.discoveredEndpoint) {
-        this.ajaxAction = searchEl.attr('data-action') || this.ajaxAction;
-        const dataUrl = searchEl.attr('data-ajax-url') || searchEl.attr('data-search-url');
-        if (dataUrl) {
-          this.discoveredEndpoint = dataUrl;
-          log.info(`Found data attribute endpoint: ${dataUrl}`);
-        }
-      }
-
-      if (this.discoveredEndpoint) return this.discoveredEndpoint;
-
-    } catch (err) {
-      log.warn(`Endpoint discovery failed: ${err.message}`);
-    }
-
-    // Default to WP admin-ajax.php with a generic action
-    this.discoveredEndpoint = this.wpAjaxUrl;
-    this.ajaxAction = this.ajaxAction || 'member_search';
-    log.info(`Using default WP AJAX endpoint: ${this.discoveredEndpoint} with action: ${this.ajaxAction}`);
-    return this.discoveredEndpoint;
-  }
-
-  /**
-   * Build WordPress AJAX form data for admin-ajax.php requests.
-   */
-  buildWpAjaxData(city, practiceCode, page) {
-    const data = {
-      'action': this.ajaxAction || 'member_search',
-      'city': city,
-      'state': 'NV',
-      'status': 'Active',
-      'page': String(page),
-      'per_page': String(this.pageSize),
-    };
+  buildAjaxUrl(city, practiceCode, page) {
+    const offset = (page - 1) * this.pageSize;
+    const params = [
+      'CIT', city,
+      'STA', 'NV',
+      'STAT', 'Active',
+      'OFFSET', String(offset),
+      'LIMIT', String(this.pageSize),
+    ];
 
     if (practiceCode) {
-      data['practice_area'] = practiceCode;
+      params.push('PRA', practiceCode);
     }
 
-    if (this.ajaxNonce) {
-      data['nonce'] = this.ajaxNonce;
-      data['_wpnonce'] = this.ajaxNonce;
-      data['security'] = this.ajaxNonce;
-    }
-
-    return data;
+    const tildeParams = params.join('~');
+    return `${this.ajaxBaseUrl}?${tildeParams}`;
   }
 
   /**
-   * Build a standard search form data payload.
+   * Parse the AJAX HTML response from the CV5 member listing.
    */
-  buildFormData(city, practiceCode, page) {
-    const data = {
-      'city': city,
-      'state': 'NV',
-      'status': 'Active',
-      'page': String(page),
-      'pageSize': String(this.pageSize),
-    };
-
-    if (practiceCode) {
-      data['practice_area'] = practiceCode;
-    }
-
-    return data;
-  }
-
-  /**
-   * Parse JSON API response from WordPress or member database.
-   */
-  parseJsonResponse(body) {
-    const attorneys = [];
-
-    let data;
-    try {
-      data = JSON.parse(body);
-    } catch {
-      return attorneys;
-    }
-
-    // Handle WordPress AJAX response wrapper
-    if (data.success !== undefined) {
-      data = data.data || data;
-    }
-
-    const records = Array.isArray(data)
-      ? data
-      : (data.results || data.members || data.data || data.Records ||
-         data.attorneys || data.lawyers || data.Items || []);
-
-    for (const rec of records) {
-      const fullName = rec.FullName || rec.full_name || rec.Name || rec.name ||
-        `${rec.FirstName || rec.first_name || rec.fname || ''} ${rec.LastName || rec.last_name || rec.lname || ''}`.trim();
-      if (!fullName) continue;
-
-      const { firstName, lastName } = this.splitName(fullName);
-
-      attorneys.push({
-        first_name: rec.FirstName || rec.first_name || rec.fname || firstName,
-        last_name: rec.LastName || rec.last_name || rec.lname || lastName,
-        full_name: fullName,
-        firm_name: (rec.Company || rec.Firm || rec.firm_name || rec.FirmName || rec.firm || '').trim(),
-        city: (rec.City || rec.city || '').trim(),
-        state: (rec.State || rec.state || 'NV').trim(),
-        phone: (rec.Phone || rec.phone || rec.PhoneNumber || rec.work_phone || '').trim(),
-        email: (rec.Email || rec.email || '').trim(),
-        website: (rec.Website || rec.website || rec.url || '').trim(),
-        bar_number: String(rec.BarNumber || rec.bar_number || rec.MemberNumber || rec.bar_id || ''),
-        bar_status: (rec.Status || rec.status || rec.MemberStatus || 'Active').trim(),
-        profile_url: rec.ProfileUrl || rec.profile_url || rec.link || rec.permalink || '',
-      });
-    }
-
-    return attorneys;
-  }
-
-  /**
-   * Parse HTML response for attorney data.
-   */
-  parseHtmlResponse(body) {
+  parseAjaxResponse(body) {
     const attorneys = [];
     const $ = cheerio.load(body);
 
-    // Look for result containers
-    $('.attorney-result, .lawyer-result, .member-result, .search-result, .result-item, .directory-entry, .entry').each((_, el) => {
-      const $card = $(el);
-      const nameEl = $card.find('a, .name, .member-name, .attorney-name, h3, h4, strong').first();
-      const fullName = nameEl.text().trim();
-      if (!fullName || fullName.length < 3) return;
-      if (/^(find|search|results|page|home|about|contact|next)/i.test(fullName)) return;
+    // CV5 systems typically render results in table rows or div-based cards
+    $('tr.memberRow, .member-row, .cv-member-row, tr[class*="member"]').each((_, el) => {
+      const $row = $(el);
+      const cells = $row.find('td');
+      if (cells.length < 2) return;
+
+      const nameEl = $row.find('a').first();
+      const fullName = nameEl.text().trim() || $(cells[0]).text().trim();
+      if (!fullName) return;
 
       const { firstName, lastName } = this.splitName(fullName);
-      const profileLink = nameEl.is('a') ? nameEl.attr('href') : ($card.find('a').first().attr('href') || '');
+      const profileLink = nameEl.attr('href') || '';
+      const barNumber = profileLink.match(/(?:ID|num|bar)=(\d+)/i)?.[1] || '';
 
       let phone = '';
-      const telLink = $card.find('a[href^="tel:"]');
+      const telLink = $row.find('a[href^="tel:"]');
       if (telLink.length) {
         phone = telLink.attr('href').replace('tel:', '');
       } else {
-        phone = $card.find('.phone, .member-phone, .attorney-phone').text().trim();
-        if (!phone) {
-          const cardText = $card.text();
-          const phoneMatch = cardText.match(/(\(?\d{3}\)?[-.\s]\d{3}[-.\s]\d{4})/);
-          if (phoneMatch) phone = phoneMatch[1];
-        }
+        const rowText = $row.text();
+        const phoneMatch = rowText.match(/(\(?\d{3}\)?[-.\s]\d{3}[-.\s]\d{4})/);
+        if (phoneMatch) phone = phoneMatch[1];
       }
 
       let email = '';
-      const mailLink = $card.find('a[href^="mailto:"]');
+      const mailLink = $row.find('a[href^="mailto:"]');
       if (mailLink.length) {
         email = mailLink.attr('href').replace('mailto:', '').split('?')[0];
       }
-
-      const firmName = $card.find('.firm, .company, .firm-name, .attorney-firm').text().trim();
-      let city = $card.find('.city, .location, .member-city').text().trim();
-      if (!city) {
-        const addrText = $card.find('.address, .member-address').text().trim();
-        const parsed = this.parseCityStateZip(addrText);
-        city = parsed.city;
-      }
-
-      let website = '';
-      const webLink = $card.find('a[href^="http"]').filter((_, a) => {
-        const href = $(a).attr('href') || '';
-        return !href.includes('nvbar.org') && !href.includes('mailto:') && !href.includes('tel:');
-      }).first();
-      if (webLink.length) website = webLink.attr('href');
 
       attorneys.push({
         first_name: firstName,
         last_name: lastName,
         full_name: fullName,
-        firm_name: firmName,
-        city: city,
+        firm_name: cells.length > 1 ? $(cells[1]).text().trim() : '',
+        city: cells.length > 2 ? $(cells[2]).text().trim() : '',
         state: 'NV',
         phone: phone.replace(/[^\d()-\s+.]/g, ''),
         email: email,
-        website: website,
-        bar_number: '',
+        website: '',
+        bar_number: barNumber,
         bar_status: 'Active',
         profile_url: profileLink
-          ? (profileLink.startsWith('http') ? profileLink : new URL(profileLink, 'https://nvbar.org').href)
+          ? new URL(profileLink, 'https://members.nvbar.org').href
           : '',
       });
     });
 
-    // Fallback: table-based results
+    // Fallback: div-based card layout
+    if (attorneys.length === 0) {
+      $('div.member-card, div.memberCard, .cv-member-card, .member-item').each((_, el) => {
+        const $card = $(el);
+        const nameEl = $card.find('a, .member-name, .name').first();
+        const fullName = nameEl.text().trim();
+        if (!fullName) return;
+
+        const { firstName, lastName } = this.splitName(fullName);
+        const profileLink = nameEl.attr('href') || '';
+        const barNumber = profileLink.match(/(?:ID|num|bar)=(\d+)/i)?.[1] || '';
+
+        attorneys.push({
+          first_name: firstName,
+          last_name: lastName,
+          full_name: fullName,
+          firm_name: $card.find('.firm, .company, .member-firm').text().trim(),
+          city: $card.find('.city, .location, .member-city').text().trim(),
+          state: 'NV',
+          phone: $card.find('.phone, .member-phone').text().trim(),
+          email: $card.find('a[href^="mailto:"]').text().trim(),
+          website: '',
+          bar_number: barNumber,
+          bar_status: 'Active',
+          profile_url: profileLink
+            ? new URL(profileLink, 'https://members.nvbar.org').href
+            : '',
+        });
+      });
+    }
+
+    // Fallback: generic table parsing
     if (attorneys.length === 0) {
       $('table').each((_, table) => {
         const rows = $(table).find('tr');
         rows.each((i, row) => {
-          if (i === 0) return;
+          if (i === 0) return; // skip header
           const cells = $(row).find('td');
           if (cells.length < 2) return;
 
@@ -414,6 +202,7 @@ class NevadaScraper extends BaseScraper {
 
           const { firstName, lastName } = this.splitName(fullName);
           const profileLink = $(cells[0]).find('a').attr('href') || '';
+          const barNumber = profileLink.match(/(?:ID|num|bar)=(\d+)/i)?.[1] || '';
 
           let email = '';
           const mailLink = $(row).find('a[href^="mailto:"]');
@@ -429,10 +218,10 @@ class NevadaScraper extends BaseScraper {
             phone: cells.length > 3 ? $(cells[3]).text().trim() : '',
             email: email,
             website: '',
-            bar_number: cells.length > 4 ? $(cells[4]).text().trim().replace(/[^\d]/g, '') : '',
+            bar_number: barNumber,
             bar_status: 'Active',
             profile_url: profileLink
-              ? (profileLink.startsWith('http') ? profileLink : new URL(profileLink, 'https://nvbar.org').href)
+              ? new URL(profileLink, 'https://members.nvbar.org').href
               : '',
           });
         });
@@ -443,33 +232,26 @@ class NevadaScraper extends BaseScraper {
   }
 
   /**
-   * Extract total result count from JSON or HTML response.
+   * Extract total result count from the AJAX response.
    */
-  extractCountFromResponse(body) {
-    try {
-      const data = JSON.parse(body);
-      const source = data.data || data;
-      return source.totalCount || source.TotalCount || source.total || source.Total ||
-             source.totalRows || source.found_posts || source.count || 0;
-    } catch {
-      // Not JSON
-    }
-
+  extractCountFromAjax(body) {
     const $ = cheerio.load(body);
     const text = $.text();
 
-    const matchOf = text.match(/(?:of|total)\s*([\d,]+)\s*(?:results?|members?|records?|attorneys?|lawyers?)/i);
+    const matchOf = text.match(/(?:of|total[:\s]*)\s*([\d,]+)\s*(?:results?|members?|records?|attorneys?)/i);
     if (matchOf) return parseInt(matchOf[1].replace(/,/g, ''), 10);
 
-    const matchFound = text.match(/([\d,]+)\s*(?:results?|members?|records?|attorneys?|lawyers?)\s*(?:found|returned)/i);
+    const matchFound = text.match(/([\d,]+)\s*(?:results?|members?|records?|attorneys?)\s*(?:found|returned|matched)/i);
     if (matchFound) return parseInt(matchFound[1].replace(/,/g, ''), 10);
+
+    const matchShowing = text.match(/showing\s+\d+\s*[-–]\s*\d+\s+of\s+([\d,]+)/i);
+    if (matchShowing) return parseInt(matchShowing[1].replace(/,/g, ''), 10);
 
     return 0;
   }
 
   /**
-   * Override search() to discover the Nevada Bar's actual search endpoint
-   * and query it. Handles WordPress AJAX, REST API, and HTML form patterns.
+   * Override search() for Nevada Bar CV5 AJAX GET requests with tilde-delimited params.
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
@@ -478,10 +260,6 @@ class NevadaScraper extends BaseScraper {
     if (!practiceCode && practiceArea) {
       log.warn(`Unknown practice area "${practiceArea}" for ${this.stateCode} — searching without filter`);
     }
-
-    // Step 1: Discover the search endpoint
-    await rateLimiter.wait();
-    const endpoint = await this.discoverEndpoint(rateLimiter);
 
     const cities = this.getCities(options);
 
@@ -501,42 +279,15 @@ class NevadaScraper extends BaseScraper {
           break;
         }
 
-        let response;
+        const url = this.buildAjaxUrl(city, practiceCode, page);
+        log.info(`Page ${page} — AJAX GET ${url}`);
 
+        let response;
         try {
           await rateLimiter.wait();
-
-          if (endpoint === this.wpAjaxUrl) {
-            // WordPress admin-ajax.php
-            const ajaxData = this.buildWpAjaxData(city, practiceCode, page);
-            log.info(`Page ${page} — POST ${this.wpAjaxUrl} [City=${city}, Action=${this.ajaxAction}]`);
-            response = await this.httpPost(this.wpAjaxUrl, ajaxData, rateLimiter);
-          } else if (endpoint && endpoint.includes('wp-json')) {
-            // WordPress REST API
-            const params = new URLSearchParams({
-              city: city,
-              state: 'NV',
-              status: 'Active',
-              page: String(page),
-              per_page: String(this.pageSize),
-            });
-            if (practiceCode) params.set('practice_area', practiceCode);
-            const restUrl = `${endpoint}?${params.toString()}`;
-            log.info(`Page ${page} — GET ${restUrl}`);
-            response = await this.httpGet(restUrl, rateLimiter);
-          } else if (endpoint) {
-            // Custom endpoint (iframe src, form action, etc.)
-            const formData = this.buildFormData(city, practiceCode, page);
-            log.info(`Page ${page} — POST ${endpoint} [City=${city}]`);
-            response = await this.httpPost(endpoint, formData, rateLimiter);
-          } else {
-            // Fallback to the main page with form POST
-            const formData = this.buildFormData(city, practiceCode, page);
-            log.info(`Page ${page} — POST ${this.baseUrl} [City=${city}]`);
-            response = await this.httpPost(this.baseUrl, formData, rateLimiter);
-          }
+          response = await this.httpGet(url, rateLimiter);
         } catch (err) {
-          log.error(`Request failed for ${city}: ${err.message}`);
+          log.error(`Request failed: ${err.message}`);
           const shouldRetry = await rateLimiter.handleBlock(0);
           if (shouldRetry) continue;
           break;
@@ -563,17 +314,13 @@ class NevadaScraper extends BaseScraper {
         }
 
         if (page === 1) {
-          totalResults = this.extractCountFromResponse(response.body);
+          totalResults = this.extractCountFromAjax(response.body);
           if (totalResults > 0) {
             log.success(`Found ${totalResults.toLocaleString()} results for ${city}`);
           }
         }
 
-        // Try JSON first, then HTML
-        let attorneys = this.parseJsonResponse(response.body);
-        if (attorneys.length === 0) {
-          attorneys = this.parseHtmlResponse(response.body);
-        }
+        const attorneys = this.parseAjaxResponse(response.body);
 
         if (attorneys.length === 0) {
           if (page === 1) {

@@ -3,7 +3,7 @@
  *
  * Source: https://www.osbar.org/members/start.asp
  * Method: HTTP GET with query params + Cheerio HTML parsing
- * Search params: lname, fname, barnum, city
+ * Search params: last, first, bar, city, s (status)
  * Results rendered in HTML table format.
  */
 
@@ -54,9 +54,9 @@ class OregonScraper extends BaseScraper {
 
   buildSearchUrl({ city, practiceCode, page }) {
     const params = new URLSearchParams();
-    params.set('fn', '');
-    params.set('ln', '');
-    params.set('barnum', '');
+    params.set('first', '');
+    params.set('last', '');
+    params.set('bar', '');
     if (city) {
       params.set('city', city);
     }

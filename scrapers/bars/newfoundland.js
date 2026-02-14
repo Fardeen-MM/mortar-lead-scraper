@@ -2,9 +2,10 @@
  * Newfoundland and Labrador Law Society Scraper
  *
  * Source: https://lsnl.memberpro.net/main/body.cfm
- * Method: ColdFusion (MemberPro platform — same as Alberta) — form POST + Cheerio
+ * Method: ColdFusion (MemberPro platform) — form POST + Cheerio
  *
- * Uses the same MemberPro hosted ColdFusion directory as Alberta's LSA.
+ * The form named "Next" uses fields: person_nm (last name), first_nm (first name),
+ * city_nm (city dropdown), area_ds (practice area), member_status_cl, gender_cl, language_cl.
  * Overrides search() for POST-based workflow.
  */
 
@@ -264,15 +265,19 @@ class NewfoundlandScraper extends BaseScraper {
           break;
         }
 
+        // MemberPro form "Next" uses these actual field names:
+        //   person_nm (last name), first_nm (first name), city_nm (city dropdown),
+        //   area_ds (practice area), member_status_cl, gender_cl, language_cl
         const formData = new URLSearchParams();
-        formData.set('menu', 'directory');
-        formData.set('action', 'search');
-        formData.set('city', city);
-        formData.set('province', 'NL');
-        formData.set('status', 'Active');
+        formData.set('person_nm', '');
+        formData.set('first_nm', '');
+        formData.set('city_nm', city);
+        formData.set('member_status_cl', 'Active');
         if (practiceCode) {
-          formData.set('practiceArea', practiceCode);
+          formData.set('area_ds', practiceCode);
         }
+        formData.set('gender_cl', '');
+        formData.set('language_cl', '');
         if (page > 1) {
           formData.set('page', String(page));
           formData.set('startrow', String((page - 1) * this.pageSize + 1));

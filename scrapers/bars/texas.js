@@ -121,11 +121,12 @@ class TexasScraper extends BaseScraper {
    * Parse search results page HTML.
    * Texas Bar results are rendered as div-based cards with microformat spans,
    * not HTML tables. Each result has span.given-name, span.family-name, etc.
+   * Also handles table-based layouts as a fallback.
    */
   parseResultsPage($) {
     const attorneys = [];
 
-    // Each result card contains a link to MemberDirectoryDetail with ContactID
+    // Primary: Each result card contains a link to MemberDirectoryDetail with ContactID
     $('a[href*="ContactID"]').each((_, el) => {
       const $link = $(el);
       const href = $link.attr('href') || '';
@@ -138,22 +139,35 @@ class TexasScraper extends BaseScraper {
       const $parent = $link.closest('h3, .result, div');
       if (!$parent.length) return;
 
-      // Skip if this is a duplicate link (multiple links per result card)
-      // Only process the first link that has name spans
+      // Try microformat spans first (in h3 or parent)
       const $h3 = $link.closest('h3');
-      if (!$h3.length) return;
+      let firstName = '';
+      let lastName = '';
 
-      // Extract name from microformat spans
-      const firstName = $h3.find('span.given-name').text().trim();
-      const lastName = $h3.find('span.family-name').text().trim();
+      if ($h3.length) {
+        firstName = $h3.find('span.given-name').text().trim();
+        lastName = $h3.find('span.family-name').text().trim();
+      }
+
+      // Fallback: extract name from the link text itself
+      if (!firstName && !lastName) {
+        const linkText = $link.text().trim();
+        if (linkText && linkText.length > 2) {
+          const parsed = this.splitName(linkText);
+          firstName = parsed.firstName;
+          lastName = parsed.lastName;
+        }
+      }
+
       if (!firstName && !lastName) return;
 
-      // Get the result card container (parent of h3)
-      const $card = $h3.parent();
+      // Get the result card container
+      const $card = $h3.length ? $h3.parent() : $parent;
 
       // Extract bar status from status icon
       let barStatus = '';
-      const statusIcon = $h3.find('span.status-icon');
+      const statusContainer = $h3.length ? $h3 : $card;
+      const statusIcon = statusContainer.find('span.status-icon');
       if (statusIcon.length) {
         if (statusIcon.hasClass('green')) barStatus = 'Eligible';
         else if (statusIcon.hasClass('red')) barStatus = 'Not Eligible';
@@ -164,12 +178,13 @@ class TexasScraper extends BaseScraper {
 
       // Extract bar card number from card text
       let barNumber = '';
-      const barCardMatch = $card.text().match(/Bar Card Number:\s*(\d+)/i);
+      const cardText = $card.text();
+      const barCardMatch = cardText.match(/Bar Card(?:\s+Number)?[:\s]*(\d+)/i);
       if (barCardMatch) barNumber = barCardMatch[1];
 
       // Extract city from card text
       let city = '';
-      const locationMatch = $card.text().match(/(?:City|Location):\s*([A-Za-z\s.'-]+)/i);
+      const locationMatch = cardText.match(/(?:City|Location)[:\s]*([A-Za-z\s.'-]+?)(?:\s*(?:Bar|Phone|Email|Fax|\n|$))/i);
       if (locationMatch) city = locationMatch[1].trim();
 
       attorneys.push({
@@ -191,9 +206,50 @@ class TexasScraper extends BaseScraper {
       });
     });
 
+    // Fallback: try table-based results if no ContactID links found
+    if (attorneys.length === 0) {
+      $('table tr').each((i, row) => {
+        if (i === 0) return; // skip header
+        const $row = $(row);
+        if ($row.find('th').length > 0) return;
+        const cells = $row.find('td');
+        if (cells.length < 2) return;
+
+        const nameCell = $(cells[0]);
+        const nameLink = nameCell.find('a');
+        const fullName = (nameLink.length ? nameLink.text() : nameCell.text()).trim();
+        if (!fullName || fullName.length < 3) return;
+        if (/^(name|attorney|search|result|page|home|about|contact)/i.test(fullName)) return;
+        if (!fullName.includes(' ') && !fullName.includes(',')) return;
+
+        const { firstName, lastName } = this.splitName(fullName);
+        const profileLink = nameLink.attr('href') || '';
+        const contactIdMatch = profileLink.match(/ContactID=(\d+)/i);
+
+        attorneys.push({
+          first_name: firstName,
+          last_name: lastName,
+          full_name: fullName,
+          firm_name: cells.length > 1 ? $(cells[1]).text().trim() : '',
+          city: cells.length > 2 ? $(cells[2]).text().trim() : '',
+          state: 'TX',
+          phone: cells.length > 3 ? $(cells[3]).text().trim() : '',
+          email: '',
+          website: '',
+          bar_number: '',
+          admission_date: '',
+          bar_status: cells.length > 4 ? $(cells[4]).text().trim() : '',
+          contact_id: contactIdMatch ? contactIdMatch[1] : '',
+          profile_url: contactIdMatch ? this.detailBaseUrl + contactIdMatch[1] : '',
+          source: 'texas_bar',
+        });
+      });
+    }
+
     // Deduplicate by contactId (multiple links per card)
     const seen = new Set();
     return attorneys.filter(a => {
+      if (!a.contact_id) return true; // keep entries without contact_id
       if (seen.has(a.contact_id)) return false;
       seen.add(a.contact_id);
       return true;

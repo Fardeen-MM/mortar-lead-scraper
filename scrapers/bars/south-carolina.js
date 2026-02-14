@@ -2,6 +2,7 @@
  * South Carolina Bar Association Scraper
  *
  * Source: https://www.sccourts.org/attorneys/
+ * Alt:    https://www.scbar.org/lawyers/directory/
  * Method: Returns 406 error (bot protection) — try with proper Accept headers and Referer
  *
  * The SC Courts attorney directory has bot protection that returns 406 Not Acceptable
@@ -24,6 +25,7 @@ class SouthCarolinaScraper extends BaseScraper {
       name: 'south-carolina',
       stateCode: 'SC',
       baseUrl: 'https://www.sccourts.org/attorneys/',
+      altUrl: 'https://www.scbar.org/lawyers/directory/',
       pageSize: 50,
       practiceAreaCodes: {
         'bankruptcy':            'bankruptcy',

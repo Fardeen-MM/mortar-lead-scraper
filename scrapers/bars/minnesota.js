@@ -13,6 +13,7 @@
 const https = require('https');
 const http = require('http');
 const { Readable } = require('stream');
+const zlib = require('zlib');
 const csvParser = require('csv-parser');
 const cheerio = require('cheerio');
 const BaseScraper = require('../base-scraper');
@@ -56,13 +57,11 @@ class MinnesotaScraper extends BaseScraper {
       ],
     });
 
-    // Known CSV download paths to try on the MARS site
-    this.csvDownloadPaths = [
-      '/api/lawyers/download',
-      '/lawyers/download',
-      '/export/csv',
-      '/data/attorneys.csv',
-      '/api/export',
+    // Known download URLs for the MARS attorney list
+    this.csvDownloadUrls = [
+      'https://mars.courts.state.mn.us/marstxt.zip',
+      'https://mars.courts.state.mn.us/marstxt.txt',
+      'https://mars.courts.state.mn.us/marstxt.csv',
     ];
   }
 
@@ -79,8 +78,8 @@ class MinnesotaScraper extends BaseScraper {
   }
 
   /**
-   * HTTP GET that returns raw binary/text data (for CSV downloads).
-   * Similar to BaseScraper.httpGet but with longer timeout for large files.
+   * HTTP GET that returns raw binary data (for ZIP/CSV downloads).
+   * Returns a Buffer body for binary-safe handling.
    */
   _httpGetRaw(url, rateLimiter, redirectCount = 0) {
     return new Promise((resolve, reject) => {
@@ -92,12 +91,12 @@ class MinnesotaScraper extends BaseScraper {
       const options = {
         headers: {
           'User-Agent': ua,
-          'Accept': 'text/csv,text/plain,application/csv,*/*;q=0.8',
+          'Accept': '*/*',
           'Accept-Language': 'en-US,en;q=0.9',
           'Accept-Encoding': 'identity',
           'Connection': 'keep-alive',
         },
-        timeout: 60000, // 60s timeout for large CSV files
+        timeout: 60000, // 60s timeout for large files
       };
 
       const protocol = url.startsWith('https') ? https : http;
@@ -112,17 +111,47 @@ class MinnesotaScraper extends BaseScraper {
           return resolve(this._httpGetRaw(redirect, rateLimiter, redirectCount + 1));
         }
 
-        let data = '';
-        res.on('data', chunk => { data += chunk; });
+        const chunks = [];
+        res.on('data', chunk => { chunks.push(chunk); });
         res.on('end', () => resolve({
           statusCode: res.statusCode,
-          body: data,
+          body: Buffer.concat(chunks),
           contentType: res.headers['content-type'] || '',
         }));
       });
       req.on('error', reject);
       req.on('timeout', () => { req.destroy(); reject(new Error('Request timed out')); });
     });
+  }
+
+  /**
+   * Extract a file from a ZIP buffer.
+   * Implements minimal ZIP parsing (local file header) without external dependencies.
+   * Returns the decompressed content as a string.
+   */
+  _extractFromZip(zipBuffer) {
+    // ZIP local file header signature: 0x04034b50
+    if (zipBuffer.length < 30 || zipBuffer.readUInt32LE(0) !== 0x04034b50) {
+      throw new Error('Not a valid ZIP file');
+    }
+
+    const compressionMethod = zipBuffer.readUInt16LE(8);
+    const compressedSize = zipBuffer.readUInt32LE(18);
+    const fileNameLength = zipBuffer.readUInt16LE(26);
+    const extraFieldLength = zipBuffer.readUInt16LE(28);
+    const dataOffset = 30 + fileNameLength + extraFieldLength;
+    const compressedData = zipBuffer.slice(dataOffset, dataOffset + compressedSize);
+
+    if (compressionMethod === 0) {
+      // Stored (no compression)
+      return compressedData.toString('utf-8');
+    } else if (compressionMethod === 8) {
+      // Deflated — use raw inflate (no header)
+      const decompressed = zlib.inflateRawSync(compressedData);
+      return decompressed.toString('utf-8');
+    } else {
+      throw new Error(`Unsupported ZIP compression method: ${compressionMethod}`);
+    }
   }
 
   /**
@@ -217,133 +246,48 @@ class MinnesotaScraper extends BaseScraper {
   }
 
   /**
-   * Attempt to find the CSV download link from the MARS homepage.
-   * Returns the URL string or null if not found.
+   * Try known MARS download URLs (ZIP then plain text).
+   * Returns the CSV/text content as a string, or null if none work.
    */
-  async _findCsvDownloadLink(rateLimiter) {
-    log.info('Fetching MARS homepage to find CSV download link...');
-
-    try {
-      await rateLimiter.wait();
-      const response = await this.httpGet(this.baseUrl, rateLimiter);
-
-      if (response.statusCode !== 200) {
-        log.warn(`MARS homepage returned status ${response.statusCode}`);
-        return null;
-      }
-
-      const $ = cheerio.load(response.body);
-
-      // Look for CSV/download links in the page
-      const downloadPatterns = [
-        'a[href*=".csv"]',
-        'a[href*="download"]',
-        'a[href*="export"]',
-        'a[href*="CSV"]',
-        'a[href*="spreadsheet"]',
-        'a:contains("Download")',
-        'a:contains("Export")',
-        'a:contains("CSV")',
-        'a:contains("Spreadsheet")',
-      ];
-
-      for (const selector of downloadPatterns) {
-        const link = $(selector).first();
-        if (link.length) {
-          let href = link.attr('href') || '';
-          if (href && !href.includes('javascript:')) {
-            if (href.startsWith('/')) {
-              href = `${new URL(this.baseUrl).origin}${href}`;
-            } else if (!href.startsWith('http')) {
-              href = `${this.baseUrl}${href}`;
-            }
-            log.info(`Found potential CSV download link: ${href}`);
-            return href;
-          }
-        }
-      }
-
-      // Also check for links in search-related pages
-      const searchLinks = [];
-      $('a[href]').each((_, el) => {
-        const href = $(el).attr('href') || '';
-        const text = $(el).text().toLowerCase();
-        if (text.includes('search') || text.includes('find') || text.includes('attorney') || text.includes('lawyer')) {
-          if (href.startsWith('/')) {
-            searchLinks.push(`${new URL(this.baseUrl).origin}${href}`);
-          } else if (href.startsWith('http')) {
-            searchLinks.push(href);
-          }
-        }
-      });
-
-      // Try search pages for CSV links
-      for (const searchUrl of searchLinks.slice(0, 3)) {
-        try {
-          await rateLimiter.wait();
-          const searchResp = await this.httpGet(searchUrl, rateLimiter);
-          if (searchResp.statusCode === 200) {
-            const $s = cheerio.load(searchResp.body);
-            for (const selector of downloadPatterns) {
-              const link = $s(selector).first();
-              if (link.length) {
-                let href = link.attr('href') || '';
-                if (href && !href.includes('javascript:')) {
-                  if (href.startsWith('/')) {
-                    href = `${new URL(this.baseUrl).origin}${href}`;
-                  } else if (!href.startsWith('http')) {
-                    href = `${this.baseUrl}${href}`;
-                  }
-                  log.info(`Found CSV download link on search page: ${href}`);
-                  return href;
-                }
-              }
-            }
-          }
-        } catch (err) {
-          log.info(`Could not check search page ${searchUrl}: ${err.message}`);
-        }
-      }
-
-      return null;
-    } catch (err) {
-      log.warn(`Failed to fetch MARS homepage: ${err.message}`);
-      return null;
-    }
-  }
-
-  /**
-   * Try known CSV download paths directly.
-   * Returns the CSV content as a string, or null if none work.
-   */
-  async _tryCsvDownloadPaths(rateLimiter) {
-    const origin = new URL(this.baseUrl).origin;
-
-    for (const csvPath of this.csvDownloadPaths) {
-      const url = `${origin}${csvPath}`;
-      log.info(`Trying CSV download: ${url}`);
+  async _downloadMarsData(rateLimiter) {
+    for (const url of this.csvDownloadUrls) {
+      log.info(`Trying MARS download: ${url}`);
 
       try {
         await rateLimiter.wait();
         const response = await this._httpGetRaw(url, rateLimiter);
 
-        if (response.statusCode === 200) {
-          const ct = response.contentType.toLowerCase();
-          const bodyStart = response.body.substring(0, 500).toLowerCase();
+        if (response.statusCode !== 200) {
+          log.info(`${url} returned status ${response.statusCode}`);
+          continue;
+        }
 
-          // Check if the response is actually CSV content
-          if (ct.includes('csv') || ct.includes('text/plain') || ct.includes('octet-stream') ||
-              bodyStart.includes(',') && (bodyStart.includes('name') || bodyStart.includes('attorney') || bodyStart.includes('bar'))) {
-            // Verify it looks like CSV (has commas and multiple lines)
-            const lines = response.body.split('\n');
-            if (lines.length > 10 && lines[0].includes(',')) {
-              log.success(`CSV download successful from ${url} — ${lines.length} lines`);
-              return response.body;
+        const isZip = url.endsWith('.zip') ||
+          (response.body.length >= 4 && response.body.readUInt32LE(0) === 0x04034b50);
+
+        if (isZip) {
+          try {
+            const csvContent = this._extractFromZip(response.body);
+            const lines = csvContent.split('\n');
+            if (lines.length > 10) {
+              log.success(`Extracted CSV from ZIP (${url}) — ${lines.length} lines`);
+              return csvContent;
             }
+          } catch (zipErr) {
+            log.warn(`Failed to extract ZIP from ${url}: ${zipErr.message}`);
+            continue;
+          }
+        } else {
+          // Plain text/CSV file
+          const csvContent = response.body.toString('utf-8');
+          const lines = csvContent.split('\n');
+          if (lines.length > 10 && lines[0].includes(',')) {
+            log.success(`CSV download successful from ${url} — ${lines.length} lines`);
+            return csvContent;
           }
         }
       } catch (err) {
-        log.info(`CSV path ${csvPath} failed: ${err.message}`);
+        log.info(`Download from ${url} failed: ${err.message}`);
       }
     }
 
@@ -430,42 +374,19 @@ class MinnesotaScraper extends BaseScraper {
    * Async generator that yields attorney records.
    *
    * Strategy:
-   *  1. Try to find and download a CSV file from the MARS site
-   *  2. If CSV is available, parse it and yield filtered results
-   *  3. If CSV is not available, fall back to HTML search form scraping
+   *  1. Download the MARS ZIP/CSV file from mars.courts.state.mn.us
+   *  2. Parse the comma-delimited data and yield filtered results
+   *  3. If download fails, fall back to HTML search form scraping
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
     const cities = this.getCities(options);
     const citySet = new Set(cities.map(c => c.toLowerCase()));
 
-    // --- Attempt CSV download ---
-    log.info('Attempting CSV download from MARS...');
+    // --- Attempt MARS data download (ZIP or plain CSV) ---
+    log.info('Attempting MARS data download from mars.courts.state.mn.us...');
 
-    let csvContent = null;
-
-    // Step 1: Try to find CSV link from the homepage
-    const csvLink = await this._findCsvDownloadLink(rateLimiter);
-    if (csvLink) {
-      try {
-        await rateLimiter.wait();
-        const csvResp = await this._httpGetRaw(csvLink, rateLimiter);
-        if (csvResp.statusCode === 200 && csvResp.body.length > 100) {
-          const lines = csvResp.body.split('\n');
-          if (lines.length > 10 && lines[0].includes(',')) {
-            csvContent = csvResp.body;
-            log.success(`Downloaded CSV from discovered link — ${lines.length} lines`);
-          }
-        }
-      } catch (err) {
-        log.warn(`CSV download from discovered link failed: ${err.message}`);
-      }
-    }
-
-    // Step 2: Try known CSV paths
-    if (!csvContent) {
-      csvContent = await this._tryCsvDownloadPaths(rateLimiter);
-    }
+    const csvContent = await this._downloadMarsData(rateLimiter);
 
     // --- CSV path: parse and yield ---
     if (csvContent) {

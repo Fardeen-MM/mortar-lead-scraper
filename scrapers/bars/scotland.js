@@ -2,7 +2,7 @@
  * Law Society of Scotland Scraper
  *
  * Source: https://www.lawscot.org.uk/find-a-solicitor/
- * Search endpoint: https://www.lawscot.org.uk/find-a-solicitor//search/
+ * Search endpoint: https://www.lawscot.org.uk/find-a-solicitor/search/
  * Method: HTML form-based search, server-side rendered results
  *
  * The Law Society of Scotland maintains a Find a Solicitor directory.
@@ -58,7 +58,7 @@ class ScotlandScraper extends BaseScraper {
       ],
     });
 
-    this.searchEndpoint = 'https://www.lawscot.org.uk/find-a-solicitor//search/';
+    this.searchEndpoint = 'https://www.lawscot.org.uk/find-a-solicitor/search/';
   }
 
   /**

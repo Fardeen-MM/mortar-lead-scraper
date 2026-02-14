@@ -209,7 +209,9 @@ class OklahomaScraper extends BaseScraper {
     const attorneys = [];
 
     // eWeb/iMIS typically renders results in HTML tables or div grids
-    $('table tr, .search-result-item, .fal-result').each((_, row) => {
+    // Only match tables with result-like classes or that contain result-specific content
+    // Avoid matching all "table tr" which catches navigation tables
+    $('table[id*="result"] tr, table[id*="grid"] tr, table[id*="list"] tr, table[class*="result"] tr, table[class*="grid"] tr, table[class*="list"] tr, table[class*="data"] tr, .search-result-item, .fal-result').each((_, row) => {
       const $row = $(row);
       if ($row.find('th').length > 0) return;
 
@@ -252,6 +254,10 @@ class OklahomaScraper extends BaseScraper {
       }
 
       if (!fullName || /^(name|search|find|member)/i.test(fullName)) return;
+      // Skip navigation/menu text
+      if (/^(home|about|contact|login|register|sign|program|menu|faq|help|privacy|terms|copyright|calendar|events?|news|resources?|links?|careers?|join|back|next|prev|page)/i.test(fullName)) return;
+      // Names should contain a space or comma (first + last name)
+      if (!fullName.includes(',') && !fullName.includes(' ')) return;
 
       const { firstName, lastName } = this.splitName(fullName);
 

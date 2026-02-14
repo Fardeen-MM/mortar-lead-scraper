@@ -323,16 +323,13 @@ class ConnecticutScraper extends BaseScraper {
         }
 
         // Build ASP.NET form data with ViewState
+        // Actual form fields: txtCivInqName (last name/firm), txtJurisNo (juris number)
         const formData = {
           '__VIEWSTATE': viewStateData.viewState,
           '__VIEWSTATEGENERATOR': viewStateData.viewStateGenerator,
           '__EVENTVALIDATION': viewStateData.eventValidation,
-          'txtLastName': prefix,
-          'txtFirstName': '',
-          'txtJurisNumber': '',
-          'txtFirmName': '',
-          'txtCity': city,
-          'btnSearch': 'Search',
+          'txtCivInqName': prefix,
+          'txtJurisNo': '',
         };
 
         log.info(`Searching ${city} — last name prefix "${prefix}" — POST ${this.baseUrl}`);

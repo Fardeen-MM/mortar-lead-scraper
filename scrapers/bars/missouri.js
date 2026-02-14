@@ -27,7 +27,7 @@ class MissouriScraper extends BaseScraper {
     super({
       name: 'missouri',
       stateCode: 'MO',
-      baseUrl: 'https://mobar.org/public/LawyerSearch.aspx',
+      baseUrl: 'https://mobar.org/public/LawyerDirectory.aspx',
       pageSize: 50,
       practiceAreaCodes: {
         'administrative':        'ADM',
@@ -61,7 +61,7 @@ class MissouriScraper extends BaseScraper {
       ],
     });
 
-    this.directoryUrl = 'https://mobar.org/public/LawyerDirectory.aspx';
+    this.searchUrl = 'https://mobar.org/public/LawyerSearch.aspx';
   }
 
   buildSearchUrl() {

@@ -197,7 +197,8 @@ class DelawareScraper extends BaseScraper {
   _parseAttorneys($) {
     const attorneys = [];
 
-    $('table.GridView tr, table[id*="GridView"] tr, table[id*="gv"] tr, table.rgMasterTable tr, table tbody tr').each((_, row) => {
+    // Only match GridView/data tables — avoid generic "table tbody tr" which catches nav tables
+    $('table.GridView tr, table[id*="GridView"] tr, table[id*="gv"] tr, table.rgMasterTable tr').each((_, row) => {
       const $row = $(row);
       if ($row.find('th').length > 0) return;
 
@@ -213,6 +214,10 @@ class DelawareScraper extends BaseScraper {
       if (!fullName || /^(name|attorney|search|no\s|page)/i.test(fullName)) return;
       // Skip pagination row cells
       if (fullName.match(/^\d+$/) && fullName.length <= 3) return;
+      // Skip navigation/menu text that leaks through
+      if (/^(home|about|contact|login|register|sign|delaware|menu|faq|help|privacy|terms|copyright)/i.test(fullName)) return;
+      // Names must contain at least one space or comma (first + last) and look like a person name
+      if (!fullName.includes(',') && !fullName.includes(' ')) return;
 
       const firmName = cells.length > 1 ? $(cells[1]).text().trim() : '';
       const phone = cells.length > 2 ? $(cells[2]).text().trim().replace(/[^\d()-.\s+]/g, '') : '';
