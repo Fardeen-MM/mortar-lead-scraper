@@ -64,14 +64,11 @@ const KNOWN_PLACEHOLDERS = new Set([
   'UK-EW',  // SRA API endpoint unknown
   'UK-NI',  // Client-side rendering
   'UK-SC',  // May need real POST testing
-  // Australia — placeholder (need browser inspection)
-  'AU-QLD',   // Kentico CMS API discovery needed
-  'AU-SA',    // ASP.NET ViewState inspection needed
-  'AU-TAS',   // WordPress AJAX field discovery needed
-  'AU-ACT',   // ACT Law Society form inspection needed
-  'AU-NT',    // Law Society NT form inspection needed
-  // Asia-Pacific — placeholder
-  'HK',       // Law Society Hong Kong form inspection needed
+  // Australia — may need browser/special handling
+  'AU-SA',    // ASP.NET ViewState — may require login
+  'AU-TAS',   // WordPress Search & Filter — may need JS
+  'AU-ACT',   // Bond MCRM — requires Puppeteer
+  'AU-NT',    // PDF-based — may hit CAPTCHA on index page
 ]);
 
 async function testScraper(code, loader) {
