@@ -64,6 +64,20 @@ const KNOWN_PLACEHOLDERS = new Set([
   'UK-EW',  // SRA API endpoint unknown
   'UK-NI',  // Client-side rendering
   'UK-SC',  // May need real POST testing
+  // Australia — placeholder (need browser inspection)
+  'AU-NSW',   // Register of Solicitors form inspection needed
+  'AU-QLD',   // Kentico CMS API discovery needed
+  'AU-SA',    // ASP.NET ViewState inspection needed
+  'AU-TAS',   // WordPress AJAX field discovery needed
+  'AU-ACT',   // ACT Law Society form inspection needed
+  'AU-NT',    // Law Society NT form inspection needed
+  // Europe — placeholder
+  'DE-BRAK',  // German BRAK register API discovery needed
+  'IE',       // Law Society of Ireland form inspection needed
+  // Asia-Pacific — placeholder
+  'NZ',       // NZ Law Society form inspection needed
+  'SG',       // Law Society Singapore form inspection needed
+  'HK',       // Law Society Hong Kong form inspection needed
 ]);
 
 async function testScraper(code, loader) {
