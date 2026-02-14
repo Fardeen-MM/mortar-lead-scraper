@@ -79,8 +79,12 @@ class NewJerseyScraper extends BaseScraper {
    * HTTP GET with headers tailored for the NJ Courts Pega application.
    * Sends browser-like headers to minimize WAF detection.
    */
-  _httpGetNJ(url, rateLimiter) {
+  _httpGetNJ(url, rateLimiter, redirectCount = 0) {
     return new Promise((resolve, reject) => {
+      if (redirectCount > 5) {
+        return reject(new Error(`Too many redirects (>5) for ${url}`));
+      }
+
       const ua = rateLimiter.getUserAgent();
       const parsed = new URL(url);
       const options = {
@@ -106,11 +110,13 @@ class NewJerseyScraper extends BaseScraper {
       const req = https.get(url, options, (res) => {
         // Follow redirects
         if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          // Drain the response body to free the socket
+          res.resume();
           let redirect = res.headers.location;
           if (redirect.startsWith('/')) {
             redirect = `https://${parsed.hostname}${redirect}`;
           }
-          return resolve(this._httpGetNJ(redirect, rateLimiter));
+          return resolve(this._httpGetNJ(redirect, rateLimiter, redirectCount + 1));
         }
         let data = '';
         res.on('data', chunk => { data += chunk; });
@@ -258,7 +264,9 @@ class NewJerseyScraper extends BaseScraper {
 
     log.info(`NJ Courts portal is protected by Incapsula WAF — automated access may be blocked`);
 
-    for (const city of cities) {
+    for (let ci = 0; ci < cities.length; ci++) {
+      const city = cities[ci];
+      yield { _cityProgress: { current: ci + 1, total: cities.length } };
       log.scrape(`Searching: ${practiceArea || 'all'} attorneys in ${city}, ${this.stateCode}`);
 
       // Build the search URL with city parameter

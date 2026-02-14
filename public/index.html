@@ -11,6 +11,9 @@
 </head>
 <body>
   <div class="container">
+    <!-- Notification Area -->
+    <div id="notification-area"></div>
+
     <!-- Header -->
     <header class="header">
       <div class="logo">
@@ -121,6 +124,14 @@
           </div>
 
           <div class="form-group">
+            <label class="toggle-label sub-toggle">
+              <input type="checkbox" id="toggle-find-linkedin" checked>
+              <span class="toggle-switch"></span>
+              Find LinkedIn profiles <span class="hint-inline">(free, from website)</span>
+            </label>
+          </div>
+
+          <div class="form-group">
             <label class="toggle-label sub-toggle" id="label-ai-toggle">
               <input type="checkbox" id="toggle-ai-fallback">
               <span class="toggle-switch"></span>
@@ -139,7 +150,15 @@
 
     <!-- Step 3: Scrape -->
     <section id="step-3" class="panel">
-      <h2>Scraping...</h2>
+      <div class="step-header">
+        <h2 id="scrape-heading">Scraping...</h2>
+        <span id="test-mode-badge" class="badge badge-warn hidden">TEST MODE</span>
+      </div>
+
+      <div id="connection-status" class="connection-status connected hidden">
+        <span class="connection-dot"></span>
+        <span id="connection-text">Connected</span>
+      </div>
 
       <div class="stats-bar">
         <div class="stat">
@@ -179,7 +198,11 @@
         </div>
       </div>
 
+      <!-- Enrichment Preview (shown after scrape completes if enrichment wasn't run) -->
+      <div id="enrich-preview" class="enrich-preview-card hidden"></div>
+
       <div class="actions">
+        <button class="btn btn-danger" id="btn-stop-scrape" onclick="app.cancelScrape()" hidden>Stop Scrape</button>
         <button class="btn btn-primary" id="btn-view-results" onclick="app.goToStep(4)" disabled>View Results</button>
       </div>
     </section>
@@ -205,6 +228,7 @@
               <th onclick="app.sortTable('email')">Email <span class="sort-arrow"></span></th>
               <th onclick="app.sortTable('phone')">Phone <span class="sort-arrow"></span></th>
               <th>LinkedIn</th>
+              <th onclick="app.sortTable('_completeness')">Score <span class="sort-arrow"></span></th>
             </tr>
           </thead>
           <tbody id="results-body"></tbody>
@@ -227,6 +251,15 @@
         <p id="download-summary"></p>
         <button class="btn btn-primary btn-large" id="btn-download" onclick="app.downloadCSV()">Download CSV</button>
         <p class="hint">Ready to upload to Instantly</p>
+      </div>
+
+      <div class="column-selector-card">
+        <h3>Export Columns</h3>
+        <p class="hint">Choose which columns to include in your export.</p>
+        <div class="column-selector" id="column-selector"></div>
+        <div class="export-actions">
+          <button class="btn btn-secondary" onclick="app.exportCSVCustom()">Export Custom CSV</button>
+        </div>
       </div>
 
       <div class="summary-card" id="summary-card">

@@ -2,11 +2,18 @@
  * Ohio Supreme Court Attorney Search Scraper
  *
  * Source: https://www.supremecourt.ohio.gov/AttorneySearch/
- * Method: HTTP GET to JSON API (Angular SPA backend)
+ * Method: POST to Ajax.ashx endpoint (Ember.js SPA backend)
  *
- * The Ohio Attorney Search is an Angular SPA that makes backend API calls.
- * We hit the API directly at /AttorneySearch/api/Attorney/Search with query params.
- * The API returns JSON with attorney results and supports pagination via PageNumber.
+ * The Ohio Attorney Search is an Ember.js SPA. We hit the backend API
+ * at /AttorneySearch/Ajax.ashx with POST requests.
+ *
+ * Flow:
+ * 1. GET the main page to obtain the CSRF token from <meta name="csrf-token">
+ * 2. POST action=SearchAttorney with search params + X-CSRF-TOKEN header
+ * 3. Response: { MySearchResults: [...], TooManyResults: bool, NoResults: bool }
+ *
+ * Search results contain: AttorneyNumber, FirstName, MiddleName, LastName,
+ * Status, AdmittedBy, AdmissionDate. City/phone/email are NOT in search results.
  */
 
 const https = require('https');
@@ -19,8 +26,8 @@ class OhioScraper extends BaseScraper {
     super({
       name: 'ohio',
       stateCode: 'OH',
-      baseUrl: 'https://www.supremecourt.ohio.gov/AttorneySearch/api/Attorney/Search',
-      pageSize: 50,
+      baseUrl: 'https://www.supremecourt.ohio.gov/AttorneySearch/',
+      pageSize: 500, // API returns all results at once; this is just a nominal limit
       practiceAreaCodes: {},
       defaultCities: [
         'Columbus', 'Cleveland', 'Cincinnati', 'Dayton', 'Toledo',
@@ -28,83 +35,46 @@ class OhioScraper extends BaseScraper {
         'Elyria', 'Mansfield', 'Newark', 'Lima',
       ],
     });
+
+    this.ajaxUrl = 'https://www.supremecourt.ohio.gov/AttorneySearch/Ajax.ashx';
+    this.csrfToken = null;
   }
 
-  /**
-   * Not used — search() is fully overridden for the JSON API.
-   */
   buildSearchUrl() {
-    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden for Ohio JSON API`);
+    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden for Ohio Ajax API`);
   }
 
-  /**
-   * Not used — search() is fully overridden for the JSON API.
-   */
   parseResultsPage() {
-    throw new Error(`${this.name}: parseResultsPage() is not used — search() is overridden for Ohio JSON API`);
+    throw new Error(`${this.name}: parseResultsPage() is not used — search() is overridden for Ohio Ajax API`);
   }
 
-  /**
-   * Not used — search() is fully overridden for the JSON API.
-   */
   extractResultCount() {
-    throw new Error(`${this.name}: extractResultCount() is not used — search() is overridden for Ohio JSON API`);
+    throw new Error(`${this.name}: extractResultCount() is not used — search() is overridden for Ohio Ajax API`);
   }
 
   /**
-   * Build the API search URL for a city and page number.
-   * @param {string} city
-   * @param {number} page
-   * @returns {string}
+   * Fetch the main page and extract the CSRF token.
    */
-  _buildApiUrl(city, page) {
-    const params = new URLSearchParams();
-    params.set('LastName', '*');
-    params.set('FirstName', '');
-    params.set('City', city);
-    params.set('Status', 'Active');
-    params.set('PageNumber', String(page));
-    params.set('PageSize', String(this.pageSize));
-    return `${this.baseUrl}?${params.toString()}`;
-  }
-
-  /**
-   * HTTP GET with JSON-specific headers for the Ohio API.
-   * The Angular SPA backend may require Accept: application/json and
-   * X-Requested-With: XMLHttpRequest to return JSON instead of HTML.
-   */
-  _httpGetJson(url, rateLimiter) {
+  _fetchCsrfToken(rateLimiter) {
     return new Promise((resolve, reject) => {
       const ua = rateLimiter.getUserAgent();
-      const parsed = new URL(url);
-      const options = {
-        hostname: parsed.hostname,
-        path: parsed.pathname + parsed.search,
-        method: 'GET',
+      const req = https.get(this.baseUrl, {
         headers: {
           'User-Agent': ua,
-          'Accept': 'application/json',
-          'Accept-Language': 'en-US,en;q=0.9',
-          'Accept-Encoding': 'identity',
-          'Connection': 'keep-alive',
-          'X-Requested-With': 'XMLHttpRequest',
-          'Referer': 'https://www.supremecourt.ohio.gov/AttorneySearch/',
+          'Accept': 'text/html',
         },
         timeout: 15000,
-      };
-
-      const req = https.get(url, options, (res) => {
-        // Follow redirects
-        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-          let redirect = res.headers.location;
-          if (redirect.startsWith('/')) {
-            redirect = `https://${parsed.hostname}${redirect}`;
-          }
-          return resolve(this._httpGetJson(redirect, rateLimiter));
-        }
+      }, (res) => {
         let data = '';
         res.on('data', chunk => { data += chunk; });
-        res.on('end', () => resolve({ statusCode: res.statusCode, body: data }));
+        res.on('end', () => {
+          const match = data.match(/csrf-token.*?content="([^"]+)"/);
+          if (match) {
+            resolve(match[1]);
+          } else {
+            reject(new Error('Could not extract CSRF token from Ohio Attorney Search page'));
+          }
+        });
       });
       req.on('error', reject);
       req.on('timeout', () => { req.destroy(); reject(new Error('Request timed out')); });
@@ -112,8 +82,53 @@ class OhioScraper extends BaseScraper {
   }
 
   /**
+   * POST to the Ajax.ashx endpoint with search parameters.
+   */
+  _ajaxPost(formData, rateLimiter) {
+    return new Promise((resolve, reject) => {
+      const ua = rateLimiter.getUserAgent();
+      const postBody = new URLSearchParams(formData).toString();
+      const bodyBuffer = Buffer.from(postBody, 'utf8');
+
+      const parsed = new URL(this.ajaxUrl);
+      const options = {
+        hostname: parsed.hostname,
+        port: 443,
+        path: parsed.pathname,
+        method: 'POST',
+        headers: {
+          'User-Agent': ua,
+          'Accept': 'application/json, text/javascript, */*; q=0.01',
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          'Content-Length': bodyBuffer.length,
+          'X-CSRF-TOKEN': this.csrfToken,
+          'X-Requested-With': 'XMLHttpRequest',
+          'Referer': this.baseUrl,
+        },
+        timeout: 15000,
+      };
+
+      const req = https.request(options, (res) => {
+        let data = '';
+        res.on('data', chunk => { data += chunk; });
+        res.on('end', () => {
+          try {
+            resolve({ statusCode: res.statusCode, body: JSON.parse(data) });
+          } catch {
+            resolve({ statusCode: res.statusCode, body: null, rawBody: data });
+          }
+        });
+      });
+
+      req.on('error', reject);
+      req.on('timeout', () => { req.destroy(); reject(new Error('Request timed out')); });
+      req.write(bodyBuffer);
+      req.end();
+    });
+  }
+
+  /**
    * Async generator that yields attorney records from the Ohio Supreme Court API.
-   * Overrides BaseScraper.search() entirely since the data source is a JSON API.
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
@@ -123,147 +138,105 @@ class OhioScraper extends BaseScraper {
       log.warn(`Ohio attorney search does not support practice area filtering — searching all attorneys`);
     }
 
-    for (const city of cities) {
+    // Fetch CSRF token once
+    try {
+      await rateLimiter.wait();
+      this.csrfToken = await this._fetchCsrfToken(rateLimiter);
+      log.info(`Obtained CSRF token for Ohio Attorney Search`);
+    } catch (err) {
+      log.error(`Failed to get CSRF token: ${err.message}`);
+      return;
+    }
+
+    for (let ci = 0; ci < cities.length; ci++) {
+      const city = cities[ci];
+      yield { _cityProgress: { current: ci + 1, total: cities.length } };
       log.scrape(`Searching: ${practiceArea || 'all'} attorneys in ${city}, ${this.stateCode}`);
 
-      let page = 1;
-      let pagesFetched = 0;
-      let totalResults = null;
+      // Check max pages limit (1 "page" per city since API returns all results)
+      if (options.maxPages && options.maxPages < 1) {
+        log.info(`Reached max pages limit for ${city}`);
+        continue;
+      }
 
-      while (true) {
-        // Check max pages limit (--test flag sets this to 2)
-        if (options.maxPages && pagesFetched >= options.maxPages) {
-          log.info(`Reached max pages limit (${options.maxPages}) for ${city}`);
-          break;
+      let response;
+      try {
+        await rateLimiter.wait();
+        response = await this._ajaxPost({
+          action: 'SearchAttorney',
+          lastName: '',
+          firstName: '',
+          city: city,
+          state: '',
+          zipCode: '',
+          regNumber: '',
+          companyName: '',
+          status: 'Active',
+        }, rateLimiter);
+      } catch (err) {
+        log.error(`Request failed for ${city}: ${err.message}`);
+        const shouldRetry = await rateLimiter.handleBlock(0);
+        if (!shouldRetry) break;
+        continue;
+      }
+
+      if (response.statusCode === 429 || response.statusCode === 403) {
+        log.warn(`Got ${response.statusCode} from ${this.name}`);
+        const shouldRetry = await rateLimiter.handleBlock(response.statusCode);
+        if (!shouldRetry) break;
+        continue;
+      }
+
+      if (response.statusCode !== 200 || !response.body) {
+        log.error(`Unexpected status ${response.statusCode} or empty body for ${city} — skipping`);
+        continue;
+      }
+
+      rateLimiter.resetBackoff();
+
+      const data = response.body;
+
+      if (data.NoResults) {
+        log.info(`No results for ${practiceArea || 'all'} in ${city}`);
+        continue;
+      }
+
+      if (data.TooManyResults) {
+        log.warn(`Too many results for ${city} — server returned TooManyResults flag`);
+      }
+
+      const records = data.MySearchResults || [];
+
+      if (records.length === 0) {
+        log.info(`No results for ${practiceArea || 'all'} in ${city}`);
+        continue;
+      }
+
+      log.success(`Found ${records.length} results for ${city}`);
+
+      for (const rec of records) {
+        const attorney = {
+          first_name: (rec.FirstName || '').trim(),
+          last_name: (rec.LastName || '').trim(),
+          firm_name: '',
+          city: city,
+          state: 'OH',
+          phone: '',
+          email: '',
+          website: '',
+          bar_number: (rec.AttorneyNumber || '').toString().trim(),
+          admission_date: (rec.AdmissionDate || '').trim(),
+          bar_status: (rec.Status || '').trim(),
+          source: `${this.name}_bar`,
+        };
+
+        if (options.minYear && attorney.admission_date) {
+          const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
+          if (year > 0 && year < options.minYear) continue;
         }
 
-        const url = this._buildApiUrl(city, page);
-        log.info(`Page ${page} — ${url}`);
-
-        let response;
-        try {
-          await rateLimiter.wait();
-          response = await this._httpGetJson(url, rateLimiter);
-        } catch (err) {
-          log.error(`Request failed: ${err.message}`);
-          const shouldRetry = await rateLimiter.handleBlock(0);
-          if (shouldRetry) continue;
-          break;
-        }
-
-        // Handle rate limiting
-        if (response.statusCode === 429 || response.statusCode === 403) {
-          log.warn(`Got ${response.statusCode} from ${this.name}`);
-          const shouldRetry = await rateLimiter.handleBlock(response.statusCode);
-          if (shouldRetry) continue;
-          break;
-        }
-
-        if (response.statusCode !== 200) {
-          log.error(`Unexpected status ${response.statusCode} — skipping`);
-          break;
-        }
-
-        rateLimiter.resetBackoff();
-
-        // Parse JSON response
-        let data;
-        try {
-          data = JSON.parse(response.body);
-        } catch (err) {
-          // If we got HTML instead of JSON, log a warning
-          if (response.body.includes('<html') || response.body.includes('<!DOCTYPE')) {
-            log.warn(`Got HTML instead of JSON for ${city} — API may require browser session`);
-          } else {
-            log.error(`Failed to parse JSON response: ${err.message}`);
-          }
-          break;
-        }
-
-        // Extract records — the API may return:
-        //   { results: [...], totalCount: N }
-        //   or just an array of attorney objects
-        let records;
-        if (Array.isArray(data)) {
-          records = data;
-        } else if (data && Array.isArray(data.results)) {
-          records = data.results;
-          if (totalResults === null && typeof data.totalCount === 'number') {
-            totalResults = data.totalCount;
-          }
-        } else if (data && Array.isArray(data.attorneys)) {
-          records = data.attorneys;
-          if (totalResults === null && typeof data.totalCount === 'number') {
-            totalResults = data.totalCount;
-          }
-        } else if (data && Array.isArray(data.data)) {
-          records = data.data;
-          if (totalResults === null && typeof data.total === 'number') {
-            totalResults = data.total;
-          }
-        } else {
-          log.warn(`Unexpected API response structure for ${city} — keys: ${Object.keys(data || {}).join(', ')}`);
-          break;
-        }
-
-        if (records.length === 0) {
-          if (pagesFetched === 0) {
-            log.info(`No results for ${practiceArea || 'all'} in ${city}`);
-          } else {
-            log.success(`Completed all pages for ${city}`);
-          }
-          break;
-        }
-
-        if (pagesFetched === 0) {
-          const totalMsg = totalResults !== null
-            ? `${totalResults.toLocaleString()} total results`
-            : `first batch: ${records.length} records`;
-          log.success(`Fetching results for ${city} (${totalMsg})`);
-        }
-
-        // Map and yield each attorney record
-        for (const rec of records) {
-          const attorney = {
-            first_name: (rec.firstName || rec.first_name || rec.FirstName || '').trim(),
-            last_name: (rec.lastName || rec.last_name || rec.LastName || '').trim(),
-            firm_name: (rec.firmName || rec.firm_name || rec.FirmName || rec.lawFirmName || '').trim(),
-            city: (rec.city || rec.City || '').trim(),
-            state: (rec.state || rec.State || 'OH').trim(),
-            phone: (rec.phone || rec.Phone || rec.phoneNumber || '').trim(),
-            email: (rec.email || rec.Email || rec.emailAddress || '').trim(),
-            website: '',
-            bar_number: (rec.attorneyNumber || rec.attorney_number || rec.AttorneyNumber || rec.registrationNumber || '').toString().trim(),
-            admission_date: (rec.admissionDate || rec.admission_date || rec.AdmissionDate || '').trim(),
-            bar_status: (rec.status || rec.Status || '').trim(),
-            source: `${this.name}_bar`,
-          };
-
-          // Apply min year filter
-          if (options.minYear && attorney.admission_date) {
-            const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
-            if (year > 0 && year < options.minYear) continue;
-          }
-
-          attorney.practice_area = practiceArea || '';
-          yield attorney;
-        }
-
-        // Determine if there are more pages
-        if (totalResults !== null) {
-          const totalPages = Math.ceil(totalResults / this.pageSize);
-          if (page >= totalPages) {
-            log.success(`Completed all ${totalPages} pages for ${city}`);
-            break;
-          }
-        } else if (records.length < this.pageSize) {
-          // Fewer results than page size means we've reached the end
-          log.success(`Completed all pages for ${city} (last page had ${records.length} records)`);
-          break;
-        }
-
-        page++;
-        pagesFetched++;
+        attorney.practice_area = practiceArea || '';
+        yield attorney;
       }
     }
   }

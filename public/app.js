@@ -12,12 +12,28 @@ const app = {
   sortCol: null,
   sortAsc: true,
   config: null,
+  wsReconnectAttempts: 0,
+  wsReconnectTimer: null,
 
   // --- Initialization ---
 
   async init() {
+    // Cache frequently used DOM elements
+    this.$statScraped = document.getElementById('stat-scraped');
+    this.$statDupes = document.getElementById('stat-dupes');
+    this.$statNew = document.getElementById('stat-new');
+    this.$statEmails = document.getElementById('stat-emails');
+    this.$progressBar = document.getElementById('progress-bar');
+
     this.setupDropZone();
+    this.setupBeforeUnload();
     await this.loadConfig();
+
+    // Try to restore a previous session from localStorage
+    const savedJobId = localStorage.getItem('mortar-jobId');
+    if (savedJobId) {
+      await this.restoreSession(savedJobId);
+    }
   },
 
   async loadConfig() {
@@ -27,7 +43,7 @@ const app = {
       this.populateDropdowns();
       this.setupEnrichmentToggles();
     } catch (err) {
-      console.error('Failed to load config:', err);
+      console.error('[mortar] Failed to load config:', err);
     }
   },
 
@@ -46,6 +62,9 @@ const app = {
       opt.textContent = `${code} — ${this.config.states[code].name}`;
       stateSelect.appendChild(opt);
     }
+
+    // Fetch health status for states (non-blocking)
+    this.fetchHealthStatus();
 
     // Listen for state change to update practice areas and cities
     stateSelect.addEventListener('change', () => this.onStateChange());
@@ -82,6 +101,57 @@ const app = {
       opt.value = city;
       opt.textContent = city;
       citySelect.appendChild(opt);
+    }
+  },
+
+  // --- Health Status ---
+
+  async fetchHealthStatus() {
+    try {
+      const res = await fetch('/api/health');
+      if (!res.ok) return;
+      const health = await res.json();
+      const stateSelect = document.getElementById('select-state');
+      for (const opt of stateSelect.options) {
+        const status = health[opt.value];
+        if (status) {
+          const dot = status === 'green' ? '\u{1F7E2}' : status === 'yellow' ? '\u{1F7E1}' : '\u{1F534}';
+          opt.textContent = `${dot} ${opt.textContent}`;
+        }
+      }
+    } catch (err) {
+      console.debug('[mortar] Health check failed:', err.message);
+    }
+  },
+
+  // --- Enrichment Preview ---
+
+  async showEnrichPreview() {
+    if (!this.jobId) return;
+    const previewEl = document.getElementById('enrich-preview');
+    if (!previewEl) return;
+
+    try {
+      const res = await fetch(`/api/scrape/${this.jobId}/enrich-preview`);
+      if (!res.ok) return;
+      const data = await res.json();
+
+      if (data.samples.length === 0) {
+        previewEl.innerHTML = '<p class="hint">No leads available for preview.</p>';
+        previewEl.classList.remove('hidden');
+        return;
+      }
+
+      let html = `<h4>Enrichment Preview (${data.enrichableCount}/${data.totalLeads} leads enrichable)</h4><ul>`;
+      for (const s of data.samples) {
+        const potential = (s.potentialEnrichment || '').replace(/^, /, '').replace(/, $/, '');
+        html += `<li><strong>${esc(s.name)}</strong> — ${potential ? 'can find: ' + esc(potential) : 'already complete'}</li>`;
+      }
+      html += '</ul>';
+      previewEl.innerHTML = html;
+      previewEl.classList.remove('hidden');
+    } catch (err) {
+      console.debug('[mortar] Enrich preview failed:', err.message);
     }
   },
 
@@ -141,8 +211,14 @@ const app = {
   },
 
   async uploadFile(file) {
-    if (!file.name.endsWith('.csv')) {
-      alert('Please upload a CSV file');
+    if (!file.name.toLowerCase().endsWith('.csv')) {
+      this.showNotification('Please upload a CSV file', 'error');
+      return;
+    }
+
+    // Frontend file size validation (50MB max, matches server limit)
+    if (file.size > 50 * 1024 * 1024) {
+      this.showNotification('File is too large. Maximum size is 50MB.', 'error');
       return;
     }
 
@@ -154,7 +230,8 @@ const app = {
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.error || 'Upload failed');
+        console.error('[mortar] Upload failed:', res.status, data);
+        this.showNotification(data.error || 'Upload failed', 'error');
         return;
       }
 
@@ -167,7 +244,8 @@ const app = {
 
       document.getElementById('btn-upload-next').disabled = false;
     } catch (err) {
-      alert('Upload failed: ' + err.message);
+      console.error('[mortar] Upload network error:', err);
+      this.showNotification('Upload failed: ' + err.message, 'error');
     }
   },
 
@@ -180,11 +258,10 @@ const app = {
 
   setupEnrichmentToggles() {
     if (!this.config) return;
-    // Disable AI toggle if no API key
+    // Disable AI toggle if no API key — but don't show warning yet
     if (!this.config.hasAnthropicKey) {
       const aiToggle = document.getElementById('toggle-ai-fallback');
       aiToggle.disabled = true;
-      document.getElementById('ai-warning').classList.remove('hidden');
       document.getElementById('label-ai-toggle').classList.add('disabled');
     }
   },
@@ -194,8 +271,14 @@ const app = {
     const options = document.getElementById('enrich-options');
     if (enabled) {
       options.classList.remove('hidden');
+      // Show AI warning only when enrichment is on and no API key
+      if (!this.config.hasAnthropicKey) {
+        document.getElementById('ai-warning').classList.remove('hidden');
+      }
     } else {
       options.classList.add('hidden');
+      // Hide AI warning when enrichment is off
+      document.getElementById('ai-warning').classList.add('hidden');
     }
   },
 
@@ -208,19 +291,30 @@ const app = {
     const test = document.getElementById('toggle-test').checked;
 
     if (!state) {
-      alert('Please select a state');
+      this.showNotification('Please select a state', 'error');
       return;
     }
 
     // Move to scrape step
     this.goToStep(3);
 
+    // Show/hide test mode badge
+    const badge = document.getElementById('test-mode-badge');
+    if (test) {
+      badge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');
+    }
+
+    // Reset heading
+    document.getElementById('scrape-heading').textContent = 'Scraping...';
+
     // Gather enrichment options
     const enrich = document.getElementById('toggle-enrich').checked;
     const enrichOptions = enrich ? {
       deriveWebsite: document.getElementById('toggle-derive-website').checked,
       scrapeWebsite: document.getElementById('toggle-scrape-website').checked,
-      findLinkedIn: document.getElementById('toggle-scrape-website').checked, // Depends on website scraping
+      findLinkedIn: document.getElementById('toggle-find-linkedin').checked,
       extractWithAI: document.getElementById('toggle-ai-fallback').checked,
     } : {};
 
@@ -228,12 +322,16 @@ const app = {
     this.leads = [];
     this.stats = null;
     document.getElementById('log-container').innerHTML = '';
-    document.getElementById('stat-scraped').textContent = '0';
-    document.getElementById('stat-dupes').textContent = '0';
-    document.getElementById('stat-new').textContent = '0';
-    document.getElementById('stat-emails').textContent = '0';
-    document.getElementById('progress-bar').style.width = '0%';
+    this.$statScraped.textContent = '0';
+    this.$statDupes.textContent = '0';
+    this.$statNew.textContent = '0';
+    this.$statEmails.textContent = '0';
+    this.$progressBar.style.width = '0%';
+    this.$progressBar.classList.remove('progress-bar-cancelled');
     document.getElementById('btn-view-results').disabled = true;
+    document.getElementById('btn-stop-scrape').hidden = false;
+    document.getElementById('btn-stop-scrape').disabled = false;
+    document.getElementById('btn-stop-scrape').textContent = 'Stop Scrape';
     document.getElementById('enrichment-section').classList.add('hidden');
     document.getElementById('enrich-progress-bar').style.width = '0%';
 
@@ -248,37 +346,162 @@ const app = {
 
       if (!res.ok) {
         this.addLog('error', data.error || 'Failed to start scrape');
+        document.getElementById('btn-stop-scrape').hidden = true;
         return;
       }
 
       this.jobId = data.jobId;
+      localStorage.setItem('mortar-jobId', this.jobId);
+      console.debug('[mortar] Job started:', this.jobId);
       this.connectWebSocket();
     } catch (err) {
+      console.error('[mortar] Start scrape error:', err);
       this.addLog('error', 'Failed to start scrape: ' + err.message);
+      document.getElementById('btn-stop-scrape').hidden = true;
     }
   },
+
+  // --- Session Restore ---
+
+  async restoreSession(jobId) {
+    console.debug('[mortar] Attempting session restore for', jobId);
+    try {
+      const res = await fetch(`/api/scrape/${jobId}/status`);
+      if (!res.ok) {
+        console.debug('[mortar] Session restore: job gone (status', res.status + ')');
+        localStorage.removeItem('mortar-jobId');
+        return;
+      }
+
+      const data = await res.json();
+      console.debug('[mortar] Session restore: job status =', data.status, 'leads =', data.leadCount);
+      this.jobId = data.jobId;
+      this.leads = data.leads || [];
+
+      if (data.status === 'running') {
+        // Restore to Step 3 and reconnect WS
+        this.goToStep(3);
+        document.getElementById('scrape-heading').textContent = 'Scraping...';
+        this.$statNew.textContent = this.leads.length.toLocaleString();
+        document.getElementById('btn-stop-scrape').hidden = false;
+        if (data.test) {
+          document.getElementById('test-mode-badge').classList.remove('hidden');
+        }
+        this.connectWebSocket();
+        this.addLog('info', 'Session restored — reconnected to running scrape');
+      } else if (data.status === 'complete' || data.status === 'cancelled') {
+        // Restore to Step 4 (preview) with leads and stats
+        this.stats = data.stats;
+        this.goToStep(4);
+      } else {
+        // Error or unknown status — clear
+        localStorage.removeItem('mortar-jobId');
+      }
+    } catch (err) {
+      console.error('[mortar] Session restore failed:', err);
+      localStorage.removeItem('mortar-jobId');
+    }
+  },
+
+  // --- Cancel Scrape ---
+
+  async cancelScrape() {
+    if (!this.jobId) return;
+
+    const btn = document.getElementById('btn-stop-scrape');
+    btn.disabled = true;
+    btn.textContent = 'Stopping...';
+
+    try {
+      console.debug('[mortar] Cancelling job:', this.jobId);
+      const res = await fetch(`/api/scrape/${this.jobId}/cancel`, { method: 'POST' });
+      if (!res.ok) {
+        const data = await res.json();
+        console.error('[mortar] Cancel failed:', res.status, data);
+        this.showNotification(data.error || 'Failed to cancel', 'error');
+        btn.disabled = false;
+        btn.textContent = 'Stop Scrape';
+      }
+      // Success — wait for cancelled-complete WS message
+    } catch (err) {
+      console.error('[mortar] Cancel network error:', err);
+      this.showNotification('Failed to cancel: ' + err.message, 'error');
+      btn.disabled = false;
+      btn.textContent = 'Stop Scrape';
+    }
+  },
+
+  // --- WebSocket ---
 
   connectWebSocket() {
     const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
     this.ws = new WebSocket(`${protocol}//${location.host}/ws`);
 
     this.ws.onopen = () => {
+      console.debug('[mortar] WS connected, subscribing to', this.jobId);
       this.ws.send(JSON.stringify({ type: 'subscribe', jobId: this.jobId }));
+      this.wsReconnectAttempts = 0;
+      this.showConnectionStatus('connected');
       this.addLog('info', 'Connected — scrape started');
     };
 
     this.ws.onmessage = (event) => {
-      const msg = JSON.parse(event.data);
-      this.handleWSMessage(msg);
+      try {
+        const msg = JSON.parse(event.data);
+        this.handleWSMessage(msg);
+      } catch (err) {
+        console.error('[mortar] WS message parse error:', err, 'raw:', event.data.substring(0, 200));
+      }
     };
 
-    this.ws.onclose = () => {
-      // Reconnect only if job is still running
+    this.ws.onclose = (event) => {
+      console.debug('[mortar] WS closed — code:', event.code, 'reason:', event.reason || 'none', 'jobId:', this.jobId, 'hasStats:', !!this.stats);
+      // Reconnect only if job is still running (no stats yet = still running)
+      if (this.jobId && !this.stats) {
+        this.showConnectionStatus('reconnecting');
+        this.reconnectWebSocket();
+      } else {
+        this.showConnectionStatus(null);
+      }
     };
 
-    this.ws.onerror = () => {
-      this.addLog('error', 'WebSocket connection error');
+    this.ws.onerror = (event) => {
+      console.error('[mortar] WS error:', event);
     };
+  },
+
+  reconnectWebSocket() {
+    if (this.wsReconnectAttempts >= 5) {
+      this.showConnectionStatus('disconnected');
+      this.addLog('error', 'Lost connection to server. Refresh the page to try again.');
+      return;
+    }
+
+    const delays = [1000, 2000, 4000, 8000, 10000];
+    const delay = delays[this.wsReconnectAttempts] || 10000;
+    this.wsReconnectAttempts++;
+
+    this.wsReconnectTimer = setTimeout(() => {
+      this.addLog('info', `Reconnecting... (attempt ${this.wsReconnectAttempts}/5)`);
+      this.connectWebSocket();
+    }, delay);
+  },
+
+  showConnectionStatus(status) {
+    const el = document.getElementById('connection-status');
+    const text = document.getElementById('connection-text');
+    if (!status) {
+      el.classList.add('hidden');
+      return;
+    }
+    el.classList.remove('hidden', 'connected', 'reconnecting', 'disconnected');
+    el.classList.add(status);
+    const labels = {
+      connected: 'Connected',
+      reconnecting: 'Reconnecting...',
+      disconnected: 'Disconnected',
+    };
+    text.textContent = labels[status] || status;
   },
 
   handleWSMessage(msg) {
@@ -288,15 +511,19 @@ const app = {
         break;
 
       case 'progress':
-        document.getElementById('stat-scraped').textContent = msg.totalScraped.toLocaleString();
-        document.getElementById('stat-dupes').textContent = msg.dupes.toLocaleString();
-        document.getElementById('stat-new').textContent = msg.netNew.toLocaleString();
-        document.getElementById('stat-emails').textContent = msg.emails.toLocaleString();
+        this.$statScraped.textContent = msg.totalScraped.toLocaleString();
+        this.$statDupes.textContent = msg.dupes.toLocaleString();
+        this.$statNew.textContent = msg.netNew.toLocaleString();
+        this.$statEmails.textContent = msg.emails.toLocaleString();
 
-        // Progress bar: use netNew / totalScraped ratio (capped at 100%)
-        if (msg.totalScraped > 0) {
-          const pct = Math.min(100, Math.round((msg.netNew / msg.totalScraped) * 100));
-          document.getElementById('progress-bar').style.width = pct + '%';
+        // Progress bar: use city progress if available, else asymptotic
+        if (msg.totalCities > 0 && msg.cityIndex > 0) {
+          const pct = Math.min(95, Math.round((msg.cityIndex / msg.totalCities) * 95));
+          this.$progressBar.style.width = pct + '%';
+        } else if (msg.totalScraped > 0) {
+          // Asymptotic: approaches 90% but never reaches it
+          const pct = Math.min(90, Math.round(90 * (1 - Math.exp(-msg.totalScraped / 200))));
+          this.$progressBar.style.width = pct + '%';
         }
         break;
 
@@ -318,12 +545,30 @@ const app = {
         this.stats = msg.stats;
         this.addLog('success', `Scrape complete! ${this.leads.length} new leads found.`);
         document.getElementById('btn-view-results').disabled = false;
-        document.getElementById('progress-bar').style.width = '100%';
+        document.getElementById('btn-stop-scrape').hidden = true;
+        this.$progressBar.style.width = '100%';
+        document.getElementById('scrape-heading').textContent = 'Scrape Complete';
+        this.showConnectionStatus(null);
         // Mark enrichment as done if it was running
         if (msg.stats.enrichment) {
           document.getElementById('enrich-progress-bar').style.width = '100%';
           document.getElementById('enrich-status-text').textContent = 'Enrichment complete';
         }
+        // Show enrichment preview if enrichment wasn't already done
+        if (!msg.stats.enrichment) {
+          this.showEnrichPreview();
+        }
+        if (this.ws) this.ws.close();
+        break;
+
+      case 'cancelled-complete':
+        this.stats = msg.stats;
+        this.addLog('warn', `Scrape stopped. ${this.leads.length} leads collected.`);
+        document.getElementById('btn-view-results').disabled = false;
+        document.getElementById('btn-stop-scrape').hidden = true;
+        this.$progressBar.classList.add('progress-bar-cancelled');
+        document.getElementById('scrape-heading').textContent = 'Scrape Stopped';
+        this.showConnectionStatus(null);
         if (this.ws) this.ws.close();
         break;
 
@@ -364,11 +609,31 @@ const app = {
     const filtered = this.getFilteredLeads();
     body.innerHTML = '';
 
+    // Empty state
+    if (this.leads.length === 0) {
+      body.innerHTML = `
+        <tr>
+          <td colspan="9">
+            <div class="empty-state">
+              <span class="empty-state-icon">🔍</span>
+              <h3>No leads found</h3>
+              <p>Try adjusting your search criteria — select a different practice area, city, or state.</p>
+            </div>
+          </td>
+        </tr>
+      `;
+      document.getElementById('result-count').textContent = '0 leads';
+      return;
+    }
+
     for (const lead of filtered) {
       const tr = document.createElement('tr');
-      const linkedInCell = lead.linkedin_url
-        ? `<a href="${esc(lead.linkedin_url)}" target="_blank" rel="noopener" class="link-view">View</a>`
+      const safeLinkedIn = lead.linkedin_url && /^https?:\/\//i.test(lead.linkedin_url) ? lead.linkedin_url : '';
+      const linkedInCell = safeLinkedIn
+        ? `<a href="${esc(safeLinkedIn)}" target="_blank" rel="noopener" class="link-view">View</a>`
         : '';
+      const completeness = this.calcCompleteness(lead);
+      const compClass = completeness >= 70 ? 'completeness-high' : completeness >= 40 ? 'completeness-med' : 'completeness-low';
       tr.innerHTML = `
         <td title="${esc(lead.first_name)}">${esc(lead.first_name)}</td>
         <td title="${esc(lead.last_name)}">${esc(lead.last_name)}</td>
@@ -378,6 +643,7 @@ const app = {
         <td title="${esc(lead.email)}">${esc(lead.email)}</td>
         <td title="${esc(lead.phone)}">${esc(lead.phone)}</td>
         <td>${linkedInCell}</td>
+        <td><span class="completeness-badge ${compClass}">${completeness}%</span></td>
       `;
       body.appendChild(tr);
     }
@@ -397,6 +663,11 @@ const app = {
 
     if (this.sortCol) {
       results = [...results].sort((a, b) => {
+        if (this.sortCol === '_completeness') {
+          const va = this.calcCompleteness(a);
+          const vb = this.calcCompleteness(b);
+          return this.sortAsc ? va - vb : vb - va;
+        }
         const va = (a[this.sortCol] || '').toLowerCase();
         const vb = (b[this.sortCol] || '').toLowerCase();
         if (va < vb) return this.sortAsc ? -1 : 1;
@@ -418,20 +689,48 @@ const app = {
     this.renderTable();
   },
 
+  _filterDebounceTimer: null,
   filterTable() {
-    this.renderTable();
+    clearTimeout(this._filterDebounceTimer);
+    this._filterDebounceTimer = setTimeout(() => this.renderTable(), 300);
   },
 
   // --- Step 5: Download ---
 
   renderDownloadPage() {
-    const count = this.leads.length;
-    const emails = this.leads.filter(l => l.email).length;
+    // Empty state: no leads
+    if (this.leads.length === 0) {
+      document.getElementById('download-filename').textContent = '';
+      document.getElementById('download-summary').textContent = '';
+      const card = document.querySelector('.download-card');
+      card.innerHTML = `
+        <div class="empty-state">
+          <span class="empty-state-icon">📭</span>
+          <h3>No new leads to download</h3>
+          <p>The scrape didn't find any new leads. Try a different practice area, city, or disable deduplication.</p>
+        </div>
+      `;
+    } else {
+      const count = this.leads.length;
+      const emails = this.leads.filter(l => l.email).length;
 
-    document.getElementById('download-filename').textContent =
-      this.jobId ? `${this.jobId.replace('job-', 'leads-')}.csv` : 'leads.csv';
-    document.getElementById('download-summary').textContent =
-      `${count.toLocaleString()} leads with ${emails.toLocaleString()} emails`;
+      document.getElementById('download-filename').textContent =
+        this.jobId ? `${this.jobId.replace('job-', 'leads-')}.csv` : 'leads.csv';
+      document.getElementById('download-summary').textContent =
+        `${count.toLocaleString()} leads with ${emails.toLocaleString()} emails`;
+
+      // Render column selection checkboxes
+      const colSelector = document.getElementById('column-selector');
+      if (colSelector) {
+        colSelector.innerHTML = '';
+        for (const col of this.allColumns) {
+          const label = document.createElement('label');
+          label.className = 'col-select-label';
+          label.innerHTML = `<input type="checkbox" class="col-select-checkbox" value="${col.key}" ${col.default ? 'checked' : ''}> ${esc(col.label)}`;
+          colSelector.appendChild(label);
+        }
+      }
+    }
 
     // Summary
     const grid = document.getElementById('summary-grid');
@@ -466,25 +765,195 @@ const app = {
     }
   },
 
-  downloadCSV() {
-    if (!this.jobId) return;
-    window.open(`/api/scrape/${this.jobId}/download`, '_blank');
+  async downloadCSV() {
+    if (!this.jobId) {
+      this.showNotification('No job to download. Start a scrape first.', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('btn-download');
+    const originalText = btn.textContent;
+    btn.textContent = 'Preparing...';
+    btn.disabled = true;
+
+    try {
+      console.debug('[mortar] Downloading CSV for', this.jobId);
+      const res = await fetch(`/api/scrape/${this.jobId}/download`);
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        console.error('[mortar] Download failed:', res.status, data);
+        this.showNotification(data.error || 'Download failed', 'error');
+        return;
+      }
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = this.jobId ? `${this.jobId.replace('job-', 'leads-')}.csv` : 'leads.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('[mortar] Download network error:', err);
+      this.showNotification('Download failed: ' + err.message, 'error');
+    } finally {
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }
+  },
+
+  // --- Notification System ---
+
+  showNotification(message, type = 'info') {
+    const area = document.getElementById('notification-area');
+    const el = document.createElement('div');
+    el.className = `notification ${type}`;
+    el.innerHTML = `
+      <span>${esc(message)}</span>
+      <button class="notification-dismiss" onclick="this.parentElement.remove()">&times;</button>
+    `;
+    area.appendChild(el);
+
+    // Auto-dismiss after 5 seconds
+    setTimeout(() => {
+      if (el.parentElement) el.remove();
+    }, 5000);
+  },
+
+  // --- beforeunload Protection ---
+
+  setupBeforeUnload() {
+    window.addEventListener('beforeunload', (e) => {
+      // Only warn when scrape is actively running (Step 3, no stats yet)
+      if (this.currentStep === 3 && this.jobId && !this.stats) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
+  },
+
+  // --- Lead Completeness Scoring ---
+
+  calcCompleteness(lead) {
+    let score = 0;
+    if (lead.first_name) score += 10;
+    if (lead.last_name) score += 10;
+    if (lead.email) score += 25;
+    if (lead.phone) score += 15;
+    if (lead.firm_name) score += 10;
+    if (lead.city) score += 5;
+    if (lead.bar_number) score += 5;
+    if (lead.admission_date) score += 5;
+    if (lead.website) score += 10;
+    if (lead.linkedin_url) score += 5;
+    return score;
+  },
+
+  // --- Column Selection Export ---
+
+  allColumns: [
+    { key: 'first_name', label: 'First Name', default: true },
+    { key: 'last_name', label: 'Last Name', default: true },
+    { key: 'firm_name', label: 'Firm', default: true },
+    { key: 'title', label: 'Title', default: true },
+    { key: 'city', label: 'City', default: true },
+    { key: 'state', label: 'State', default: true },
+    { key: 'email', label: 'Email', default: true },
+    { key: 'phone', label: 'Phone', default: true },
+    { key: 'website', label: 'Website', default: true },
+    { key: 'linkedin_url', label: 'LinkedIn', default: true },
+    { key: 'bar_number', label: 'Bar Number', default: false },
+    { key: 'admission_date', label: 'Admission Date', default: false },
+    { key: 'bar_status', label: 'Bar Status', default: false },
+    { key: 'practice_area', label: 'Practice Area', default: true },
+    { key: 'bio', label: 'Bio', default: false },
+    { key: 'education', label: 'Education', default: false },
+    { key: 'languages', label: 'Languages', default: false },
+  ],
+
+  getSelectedColumns() {
+    const checkboxes = document.querySelectorAll('.col-select-checkbox');
+    if (checkboxes.length === 0) return this.allColumns.filter(c => c.default).map(c => c.key);
+    const selected = [];
+    checkboxes.forEach(cb => { if (cb.checked) selected.push(cb.value); });
+    return selected;
+  },
+
+  exportCSVCustom() {
+    if (this.leads.length === 0) {
+      this.showNotification('No leads to export', 'error');
+      return;
+    }
+    const cols = this.getSelectedColumns();
+    const header = cols.map(c => `"${c}"`).join(',');
+    const rows = this.leads.map(lead =>
+      cols.map(c => {
+        const val = (lead[c] || '').toString().replace(/"/g, '""');
+        return `"${val}"`;
+      }).join(',')
+    );
+    const csv = [header, ...rows].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = this.jobId ? `${this.jobId.replace('job-', 'leads-')}.csv` : 'leads.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   },
 
   // --- Reset ---
 
   reset() {
+    // Confirmation dialog if leads exist
+    if (this.leads.length > 0) {
+      if (!confirm(`You have ${this.leads.length} leads. Start a new scrape? (Your current results will be lost)`)) {
+        return;
+      }
+    }
+
     this.uploadId = null;
     this.jobId = null;
     this.leads = [];
     this.stats = null;
     this.sortCol = null;
     this.sortAsc = true;
+    localStorage.removeItem('mortar-jobId');
+
+    if (this.wsReconnectTimer) {
+      clearTimeout(this.wsReconnectTimer);
+      this.wsReconnectTimer = null;
+    }
+    if (this.ws) {
+      this.ws.close();
+      this.ws = null;
+    }
 
     // Reset upload UI
     document.getElementById('upload-status').classList.add('hidden');
     document.getElementById('btn-upload-next').disabled = true;
     document.getElementById('file-input').value = '';
+
+    // Reset Step 3 UI
+    document.getElementById('btn-stop-scrape').hidden = true;
+    document.getElementById('test-mode-badge').classList.add('hidden');
+    document.getElementById('scrape-heading').textContent = 'Scraping...';
+    this.$progressBar.classList.remove('progress-bar-cancelled');
+    this.showConnectionStatus(null);
+
+    // Restore download card HTML in case it was replaced by empty state
+    const downloadCard = document.querySelector('.download-card');
+    downloadCard.innerHTML = `
+      <div class="download-icon">📥</div>
+      <h3 id="download-filename">leads.csv</h3>
+      <p id="download-summary"></p>
+      <button class="btn btn-primary btn-large" id="btn-download" onclick="app.downloadCSV()">Download CSV</button>
+      <p class="hint">Ready to upload to Instantly</p>
+    `;
 
     this.goToStep(1);
   },
@@ -493,7 +962,7 @@ const app = {
 // Escape HTML
 function esc(str) {
   if (!str) return '';
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
 // Boot

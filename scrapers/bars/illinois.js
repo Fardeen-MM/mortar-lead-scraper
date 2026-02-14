@@ -1,12 +1,21 @@
 /**
  * Illinois Bar (IARDC) Scraper
  *
- * Source: https://www.iardc.org/lawyersearch
- * Method: HTTP GET via gateway.asp endpoint + Cheerio for HTML parsing
- * Search URL: https://www.iardc.org/lrs/gateway.asp with query params
- * Note: IARDC does not support practice area filtering
+ * Source: https://www.iardc.org/Lawyer/Search
+ * Method: ASP.NET MVC with MVC Grid — 3-step HTTP flow
+ *
+ * Flow:
+ * 1. GET /Lawyer/Search — obtain __RequestVerificationToken + session cookie
+ * 2. POST /Lawyer/SearchResults — submit search form to get PageKey
+ * 3. POST /Lawyer/SearchGrid?page=N&rows=100 — fetch paginated HTML table results
+ *
+ * The IARDC search requires a last name (city-only returns no results).
+ * This scraper iterates A-Z for each city to get comprehensive coverage.
+ *
+ * Grid columns: id, include-former-names, name, city, state, date-admitted, authorized-to-practice
  */
 
+const https = require('https');
 const cheerio = require('cheerio');
 const BaseScraper = require('../base-scraper');
 const { log } = require('../../lib/logger');
@@ -17,8 +26,8 @@ class IllinoisScraper extends BaseScraper {
     super({
       name: 'illinois',
       stateCode: 'IL',
-      baseUrl: 'https://www.iardc.org/lrs/gateway.asp',
-      pageSize: 50,
+      baseUrl: 'https://www.iardc.org',
+      pageSize: 100,
       practiceAreaCodes: {},
       defaultCities: [
         'Chicago', 'Springfield', 'Rockford', 'Naperville', 'Peoria',
@@ -26,81 +35,134 @@ class IllinoisScraper extends BaseScraper {
         'Decatur', 'Schaumburg', 'Wheaton', 'Waukegan',
       ],
     });
+
+    this.searchUrl = `${this.baseUrl}/Lawyer/Search`;
+    this.resultsUrl = `${this.baseUrl}/Lawyer/SearchResults`;
+    this.gridUrl = `${this.baseUrl}/Lawyer/SearchGrid`;
+    this.lastNameLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  }
+
+  buildSearchUrl() {
+    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden for IARDC MVC Grid`);
+  }
+
+  parseResultsPage() {
+    throw new Error(`${this.name}: parseResultsPage() is not used — search() is overridden for IARDC MVC Grid`);
+  }
+
+  extractResultCount() {
+    throw new Error(`${this.name}: extractResultCount() is not used — search() is overridden for IARDC MVC Grid`);
   }
 
   /**
-   * Build the search URL for a specific city and page.
-   * IARDC gateway uses simple GET parameters.
+   * HTTP GET with cookie support.
    */
-  buildSearchUrl({ city, page }) {
-    const params = new URLSearchParams();
-    params.set('LastName', '*');
-    params.set('FirstName', '*');
-    if (city) params.set('City', city);
-    params.set('State', 'IL');
-    params.set('Status', 'AU'); // Authorized to practice
-    if (page && page > 1) {
-      params.set('Page', String(page));
-    }
-    return `${this.baseUrl}?${params.toString()}`;
+  _httpGet(url, rateLimiter, cookies = '') {
+    return new Promise((resolve, reject) => {
+      const ua = rateLimiter.getUserAgent();
+      const options = {
+        headers: {
+          'User-Agent': ua,
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.9',
+          'Accept-Encoding': 'identity',
+          ...(cookies ? { 'Cookie': cookies } : {}),
+        },
+        timeout: 15000,
+      };
+
+      const req = https.get(url, options, (res) => {
+        const setCookies = (res.headers['set-cookie'] || [])
+          .map(c => c.split(';')[0])
+          .join('; ');
+        let data = '';
+        res.on('data', chunk => { data += chunk; });
+        res.on('end', () => resolve({ statusCode: res.statusCode, body: data, cookies: setCookies }));
+      });
+      req.on('error', reject);
+      req.on('timeout', () => { req.destroy(); reject(new Error('Request timed out')); });
+    });
   }
 
   /**
-   * Parse search results page HTML.
-   * IARDC returns results in HTML table rows with: Name (linked), ARDC Number, City, Status.
+   * HTTP POST with form data and cookie support.
    */
-  parseResultsPage($) {
+  _httpPost(url, formBody, rateLimiter, cookies = '', extraHeaders = {}) {
+    return new Promise((resolve, reject) => {
+      const ua = rateLimiter.getUserAgent();
+      const parsed = new URL(url);
+      const bodyBuffer = Buffer.from(formBody, 'utf8');
+      const options = {
+        hostname: parsed.hostname,
+        port: 443,
+        path: parsed.pathname + parsed.search,
+        method: 'POST',
+        headers: {
+          'User-Agent': ua,
+          'Accept': 'text/html, */*; q=0.01',
+          'Accept-Language': 'en-US,en;q=0.9',
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          'Content-Length': bodyBuffer.length,
+          'Referer': this.searchUrl,
+          ...(cookies ? { 'Cookie': cookies } : {}),
+          ...extraHeaders,
+        },
+        timeout: 30000,
+      };
+
+      const req = https.request(options, (res) => {
+        // Follow redirects
+        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          let redirect = res.headers.location;
+          if (redirect.startsWith('/')) redirect = `https://${parsed.hostname}${redirect}`;
+          const newCookies = (res.headers['set-cookie'] || [])
+            .map(c => c.split(';')[0])
+            .join('; ');
+          const allCookies = [cookies, newCookies].filter(Boolean).join('; ');
+          res.resume();
+          return resolve(this._httpGet(redirect, rateLimiter, allCookies));
+        }
+        const setCookies = (res.headers['set-cookie'] || [])
+          .map(c => c.split(';')[0])
+          .join('; ');
+        let data = '';
+        res.on('data', chunk => { data += chunk; });
+        res.on('end', () => resolve({ statusCode: res.statusCode, body: data, cookies: setCookies }));
+      });
+
+      req.on('error', reject);
+      req.on('timeout', () => { req.destroy(); reject(new Error('Request timed out')); });
+      req.write(bodyBuffer);
+      req.end();
+    });
+  }
+
+  /**
+   * Parse the MVC Grid HTML table response into attorney records.
+   */
+  _parseGridRows($) {
     const attorneys = [];
 
     $('table tr').each((_, row) => {
       const $row = $(row);
-      const cells = $row.find('td');
-      if (cells.length < 2) return;
-
       // Skip header rows
       if ($row.find('th').length > 0) return;
-      const firstCellText = cells.first().text().trim().toLowerCase();
-      if (firstCellText === 'name' || firstCellText === 'attorney name') return;
+      if ($row.hasClass('mvc-grid-headers')) return;
 
-      // Look for a link containing the attorney name
-      const nameLink = $row.find('a').first();
-      let fullName = '';
-      let profileUrl = '';
+      const cells = $row.find('td');
+      if (cells.length < 5) return;
 
-      if (nameLink.length) {
-        fullName = nameLink.text().trim();
-        profileUrl = nameLink.attr('href') || '';
-        // Make absolute URL if relative
-        if (profileUrl && !profileUrl.startsWith('http')) {
-          profileUrl = `https://www.iardc.org/lrs/${profileUrl}`;
-        }
-      } else {
-        // No link — try first cell text
-        fullName = cells.first().text().trim();
-      }
+      // Columns: id, include-former-names, name, city, state, date-admitted, authorized-to-practice
+      const id = $(cells[0]).text().trim();
+      const fullName = $(cells[2]).text().trim();
+      const city = $(cells[3]).text().trim();
+      const state = $(cells[4]).text().trim();
+      const dateAdmitted = cells.length > 5 ? $(cells[5]).text().trim() : '';
+      const authorized = cells.length > 6 ? $(cells[6]).text().trim() : '';
 
-      if (!fullName) return;
+      if (!fullName || fullName === 'No Data Found') return;
 
-      // Extract ARDC number, city, and status from remaining cells
-      let barNumber = '';
-      let city = '';
-      let barStatus = '';
-
-      cells.each((i, cell) => {
-        const text = $(cell).text().trim();
-        if (i === 0) return; // Skip name cell
-
-        // ARDC numbers are typically 7-digit numbers
-        if (/^\d{5,8}$/.test(text)) {
-          barNumber = text;
-        } else if (/authorized|active|inactive|retired|suspended|not authorized/i.test(text)) {
-          barStatus = text;
-        } else if (text && !city && /^[A-Za-z\s.'-]+$/.test(text) && text.length < 40) {
-          city = text;
-        }
-      });
-
-      // Split name — IARDC typically formats as "Last, First Middle"
+      // Parse name — IARDC format: "Last, First Middle" or "Hyphenated-Last, First"
       let firstName = '';
       let lastName = '';
       if (fullName.includes(',')) {
@@ -108,26 +170,28 @@ class IllinoisScraper extends BaseScraper {
         lastName = parts[0];
         firstName = (parts[1] || '').split(/\s+/)[0];
       } else {
-        const split = this.splitName(fullName);
-        firstName = split.firstName;
-        lastName = split.lastName;
+        const nameParts = fullName.split(/\s+/);
+        if (nameParts.length >= 2) {
+          firstName = nameParts[0];
+          lastName = nameParts[nameParts.length - 1];
+        } else {
+          lastName = fullName;
+        }
       }
 
       attorneys.push({
         first_name: firstName,
         last_name: lastName,
-        full_name: fullName,
         firm_name: '',
         city: city,
-        state: 'IL',
+        state: state || 'IL',
         phone: '',
         email: '',
         website: '',
-        bar_number: barNumber,
-        admission_date: '',
-        bar_status: barStatus,
-        profile_url: profileUrl,
-        source: 'illinois_bar',
+        bar_number: '',
+        admission_date: dateAdmitted,
+        bar_status: authorized === 'Yes' ? 'Authorized' : authorized === 'No' ? 'Not Authorized' : authorized,
+        source: `${this.name}_bar`,
       });
     });
 
@@ -135,150 +199,196 @@ class IllinoisScraper extends BaseScraper {
   }
 
   /**
-   * Extract total result count from the page.
+   * Extract total page count from the MVC Grid pager.
    */
-  extractResultCount($) {
-    const text = $('body').text();
-
-    // Look for patterns like "X records found" or "Results: 1-50 of X"
-    const matchOf = text.match(/of\s+([\d,]+)\s+(?:records?|results?|attorneys?|matches)/i);
-    if (matchOf) return parseInt(matchOf[1].replace(/,/g, ''), 10);
-
-    const matchFound = text.match(/([\d,]+)\s+(?:records?|results?|attorneys?|matches)\s+found/i);
-    if (matchFound) return parseInt(matchFound[1].replace(/,/g, ''), 10);
-
-    const matchShowing = text.match(/Showing\s+\d+\s*[-–]\s*\d+\s+of\s+([\d,]+)/i);
-    if (matchShowing) return parseInt(matchShowing[1].replace(/,/g, ''), 10);
-
-    // Try total at bottom of page
-    const matchTotal = text.match(/Total:?\s*([\d,]+)/i);
-    if (matchTotal) return parseInt(matchTotal[1].replace(/,/g, ''), 10);
-
-    return 0;
+  _extractTotalPages($) {
+    const pagerItems = [];
+    $('[data-page]').each((_, el) => {
+      const page = parseInt($(el).attr('data-page'), 10);
+      if (!isNaN(page)) pagerItems.push(page);
+    });
+    return pagerItems.length > 0 ? Math.max(...pagerItems) : 1;
   }
 
   /**
-   * Override search() since IARDC has a unique URL structure and no practice area support.
-   * Async generator that yields attorney records.
+   * Async generator that yields attorney records from the IARDC.
+   * Iterates A-Z for each city since the search requires a last name.
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
 
-    // IARDC does not support practice area filtering
     if (practiceArea) {
       log.warn(`Illinois IARDC does not support practice area filtering — ignoring "${practiceArea}"`);
     }
 
     const cities = this.getCities(options);
 
-    for (const city of cities) {
+    for (let ci = 0; ci < cities.length; ci++) {
+      const city = cities[ci];
+      yield { _cityProgress: { current: ci + 1, total: cities.length } };
       log.scrape(`Searching: ${practiceArea || 'all'} attorneys in ${city}, IL`);
 
-      let page = 1;
-      let totalResults = 0;
-      let pagesFetched = 0;
-      let consecutiveEmpty = 0;
+      let totalForCity = 0;
 
-      while (true) {
-        // Check max pages limit (--test flag sets this to 2)
-        if (options.maxPages && pagesFetched >= options.maxPages) {
-          log.info(`Reached max pages limit (${options.maxPages}) for ${city}`);
-          break;
-        }
-
-        const url = this.buildSearchUrl({ city, page });
-        log.info(`Page ${page} — ${url}`);
-
-        let response;
+      for (const letter of this.lastNameLetters) {
+        // Step 1: GET search page for token + session cookie
+        let sessionResponse;
         try {
           await rateLimiter.wait();
-          response = await this.httpGet(url, rateLimiter);
+          sessionResponse = await this._httpGet(this.searchUrl, rateLimiter);
         } catch (err) {
-          log.error(`Request failed: ${err.message}`);
-          const shouldRetry = await rateLimiter.handleBlock(0);
-          if (shouldRetry) continue;
-          break;
-        }
-
-        // Handle rate limiting
-        if (response.statusCode === 429 || response.statusCode === 403) {
-          log.warn(`Got ${response.statusCode} from IARDC`);
-          const shouldRetry = await rateLimiter.handleBlock(response.statusCode);
-          if (shouldRetry) continue;
-          break;
-        }
-
-        if (response.statusCode !== 200) {
-          log.error(`Unexpected status ${response.statusCode} — skipping`);
-          break;
-        }
-
-        rateLimiter.resetBackoff();
-
-        // Check for CAPTCHA
-        if (this.detectCaptcha(response.body)) {
-          log.warn(`CAPTCHA detected on page ${page} for ${city} — skipping`);
-          yield { _captcha: true, city, page };
-          break;
-        }
-
-        const $ = cheerio.load(response.body);
-
-        // Get total count on first page
-        if (page === 1) {
-          totalResults = this.extractResultCount($);
-          if (totalResults === 0) {
-            // Try parsing results even if count is not found
-            const testAttorneys = this.parseResultsPage($);
-            if (testAttorneys.length === 0) {
-              log.info(`No results for attorneys in ${city}`);
-              break;
-            }
-            totalResults = testAttorneys.length;
-          }
-          const totalPages = Math.ceil(totalResults / this.pageSize);
-          log.success(`Found ${totalResults.toLocaleString()} results (${totalPages} pages) for ${city}`);
-        }
-
-        const attorneys = this.parseResultsPage($);
-
-        if (attorneys.length === 0) {
-          consecutiveEmpty++;
-          if (consecutiveEmpty >= this.maxConsecutiveEmpty) {
-            log.warn(`${this.maxConsecutiveEmpty} consecutive empty pages — stopping pagination for ${city}`);
-            break;
-          }
-          page++;
-          pagesFetched++;
+          log.error(`Failed to load search page: ${err.message}`);
           continue;
         }
 
-        consecutiveEmpty = 0;
+        if (sessionResponse.statusCode !== 200) {
+          log.error(`Search page returned ${sessionResponse.statusCode}`);
+          continue;
+        }
 
-        // Filter and yield
-        for (const attorney of attorneys) {
-          if (options.minYear && attorney.admission_date) {
-            const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
-            if (year > 0 && year < options.minYear) continue;
+        const sessionCookies = sessionResponse.cookies;
+        const $form = cheerio.load(sessionResponse.body);
+        const token = $form('input[name="__RequestVerificationToken"]').val();
+
+        if (!token) {
+          log.error(`Could not extract anti-forgery token`);
+          continue;
+        }
+
+        // Step 2: POST search to get PageKey
+        const searchFormData = new URLSearchParams();
+        searchFormData.set('__RequestVerificationToken', token);
+        searchFormData.set('LastName', letter);
+        searchFormData.set('FirstName', '');
+        searchFormData.set('City', city);
+        searchFormData.set('Status', 'AuthorizedToPractice');
+        searchFormData.set('LastNameMatch', 'Exact');
+        searchFormData.set('IncludeFormerNames', 'false');
+        searchFormData.set('IsRecentSearch', 'false');
+
+        let resultsResponse;
+        try {
+          await rateLimiter.wait();
+          resultsResponse = await this._httpPost(
+            this.resultsUrl,
+            searchFormData.toString(),
+            rateLimiter,
+            sessionCookies,
+          );
+        } catch (err) {
+          log.error(`Search POST failed for ${city}/${letter}: ${err.message}`);
+          continue;
+        }
+
+        if (resultsResponse.statusCode !== 200) {
+          log.error(`Search POST returned ${resultsResponse.statusCode} for ${city}/${letter}`);
+          continue;
+        }
+
+        const allCookies = [sessionCookies, resultsResponse.cookies].filter(Boolean).join('; ');
+
+        const $results = cheerio.load(resultsResponse.body);
+        const pageKeyMatch = resultsResponse.body.match(/PageKey:\s*"([^"]+)"/);
+        if (!pageKeyMatch) {
+          log.info(`No PageKey for ${city}/${letter} — likely no results`);
+          continue;
+        }
+
+        const pageKey = pageKeyMatch[1];
+        const token2 = $results('input[name="__RequestVerificationToken"]').val() || token;
+
+        // Step 3: Fetch grid pages
+        let gridPage = 1;
+        let pagesFetched = 0;
+        let totalPages = 1;
+
+        while (true) {
+          if (options.maxPages && pagesFetched >= options.maxPages) {
+            break;
           }
-          yield this.transformResult(attorney, practiceArea);
+
+          const gridFormData = new URLSearchParams();
+          gridFormData.set('__RequestVerificationToken', token2);
+          gridFormData.set('PageKey', pageKey);
+          gridFormData.set('LastName', letter);
+          gridFormData.set('City', city);
+          gridFormData.set('Status', '0');
+          gridFormData.set('LastNameMatch', '0');
+          gridFormData.set('IncludeFormerNames', 'false');
+          gridFormData.set('FirstName', '');
+          gridFormData.set('StatusLastName', '');
+          gridFormData.set('State', '');
+          gridFormData.set('Country', '');
+          gridFormData.set('StatusChangeTimeFrame', '0');
+          gridFormData.set('BusinessLocation', '0');
+          gridFormData.set('County', '');
+          gridFormData.set('LawyerCounty', '');
+          gridFormData.set('JudicialCircuit', '');
+          gridFormData.set('JudicialDistrict', '');
+          gridFormData.set('IsRecentSearch', 'false');
+
+          const gridUrlWithPage = `${this.gridUrl}?page=${gridPage}&rows=${this.pageSize}`;
+
+          let gridResponse;
+          try {
+            await rateLimiter.wait();
+            gridResponse = await this._httpPost(
+              gridUrlWithPage,
+              gridFormData.toString(),
+              rateLimiter,
+              allCookies,
+              { 'X-Requested-With': 'XMLHttpRequest', 'Referer': this.resultsUrl },
+            );
+          } catch (err) {
+            log.error(`Grid request failed for ${city}/${letter} page ${gridPage}: ${err.message}`);
+            break;
+          }
+
+          if (gridResponse.statusCode !== 200) {
+            log.error(`Grid returned ${gridResponse.statusCode} for ${city}/${letter}`);
+            break;
+          }
+
+          rateLimiter.resetBackoff();
+
+          const $grid = cheerio.load(gridResponse.body);
+          const attorneys = this._parseGridRows($grid);
+
+          if (pagesFetched === 0) {
+            totalPages = this._extractTotalPages($grid);
+          }
+
+          if (attorneys.length === 0) {
+            break;
+          }
+
+          for (const attorney of attorneys) {
+            if (options.minYear && attorney.admission_date) {
+              const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
+              if (year > 0 && year < options.minYear) continue;
+            }
+            attorney.practice_area = practiceArea || '';
+            yield attorney;
+            totalForCity++;
+          }
+
+          if (gridPage >= totalPages) {
+            break;
+          }
+
+          gridPage++;
+          pagesFetched++;
         }
 
-        // Check for "next" page links
-        const hasNext = $('a').filter((_, el) => {
-          const text = $(el).text().trim().toLowerCase();
-          return text === 'next' || text === 'next >' || text === 'next >>' || text === 'next page';
-        }).length > 0;
-
-        // Check if we've reached the last page
-        const totalPages = Math.ceil(totalResults / this.pageSize);
-        if (page >= totalPages && !hasNext) {
-          log.success(`Completed all pages for ${city}`);
-          break;
+        if (pagesFetched > 0 || totalPages > 1) {
+          log.info(`${city}/${letter}: ${totalPages} pages fetched`);
         }
+      }
 
-        page++;
-        pagesFetched++;
+      if (totalForCity > 0) {
+        log.success(`Found ${totalForCity} total results for ${city}`);
+      } else {
+        log.info(`No results for ${practiceArea || 'all'} in ${city}`);
       }
     }
   }

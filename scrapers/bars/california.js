@@ -24,22 +24,43 @@ class CaliforniaScraper extends BaseScraper {
       baseUrl: 'https://apps.calbar.ca.gov/attorney/LicenseeSearch/AdvancedSearch',
       pageSize: 500,
       practiceAreaCodes: {
-        'admiralty':          'Admiralty and Maritime Law',
-        'appellate':          'Appellate Law',
-        'bankruptcy':         'Bankruptcy Law',
-        'criminal':           'Criminal Law',
-        'criminal defense':   'Criminal Law',
-        'estate planning':    'Estate Planning, Trust and Probate Law',
-        'estate':             'Estate Planning, Trust and Probate Law',
-        'family':             'Family Law',
-        'family law':         'Family Law',
-        'franchise':          'Franchise and Distribution Law',
-        'immigration':        'Immigration and Nationality Law',
-        'injury':             'Legal Malpractice Law',
-        'tax':                'Taxation Law',
-        'tax law':            'Taxation Law',
-        'workers comp':       'Workers Compensation Law',
-        'employment':         'Workers Compensation Law',
+        'administrative':     '1',
+        'admiralty':          '2',
+        'appellate':          '6',
+        'bankruptcy':         '9',
+        'business':           '10',
+        'civil rights':       '11',
+        'construction':       '16',
+        'corporate':          '18',
+        'criminal':           '19',
+        'criminal defense':   '19',
+        'criminal law':       '19',
+        'education':          '21',
+        'elder law':          '22',
+        'employment':         '42',
+        'environmental':      '28',
+        'estate planning':    '60',
+        'estate':             '60',
+        'family':             '29',
+        'family law':         '29',
+        'health care':        '33',
+        'immigration':        '34',
+        'insurance':          '36',
+        'intellectual property': '37',
+        'ip':                 '37',
+        'labor':              '42',
+        'litigation':         '44',
+        'medical malpractice': '46',
+        'personal injury':    '51',
+        'injury':             '51',
+        'real estate':        '54',
+        'securities':         '55',
+        'tax':                '56',
+        'tax law':            '56',
+        'trusts':             '60',
+        'wills':              '61',
+        'workers comp':       '63',
+        'workers compensation': '63',
       },
       defaultCities: [
         'Los Angeles', 'San Francisco', 'San Diego', 'Sacramento',
@@ -73,18 +94,35 @@ class CaliforniaScraper extends BaseScraper {
 
   /**
    * Build the Advanced Search URL for a city, with optional practice area filter.
+   *
+   * The CalBar ASP.NET MVC controller only returns results when ALL form fields
+   * are present in the query string (even empty ones). Without the full set of
+   * fields, the server returns the blank search form with no results.
+   *
    * @param {string} city
-   * @param {string|null} practiceCode - Certified specialty name or null
+   * @param {string|null} practiceCode - Practice area name or null
    * @returns {string}
    */
   _buildAdvancedSearchUrl(city, practiceCode) {
     const params = new URLSearchParams();
+    // All fields must be present for the server to return results
+    params.set('LastNameOption', 'b');
+    params.set('LastName', '');
+    params.set('FirstNameOption', 'b');
+    params.set('FirstName', '');
+    params.set('MiddleNameOption', 'b');
+    params.set('MiddleName', '');
+    params.set('FirmNameOption', 'b');
+    params.set('FirmName', '');
+    params.set('CityOption', 'e'); // exact match
     params.set('City', city);
-    params.set('State', 'California');
-    params.set('Status', 'Active');
-    if (practiceCode) {
-      params.set('CertifiedSpecialty', practiceCode);
-    }
+    params.set('State', 'CA');    // abbreviation, not full name
+    params.set('Zip', '');
+    params.set('District', '');
+    params.set('County', '');
+    params.set('LegalSpecialty', '');
+    params.set('LanguageSpoken', '');
+    params.set('PracticeArea', practiceCode || '');
     return `${this.baseUrl}?${params.toString()}`;
   }
 
@@ -178,7 +216,9 @@ class CaliforniaScraper extends BaseScraper {
 
     const cities = this.getCities(options);
 
-    for (const city of cities) {
+    for (let ci = 0; ci < cities.length; ci++) {
+      const city = cities[ci];
+      yield { _cityProgress: { current: ci + 1, total: cities.length } };
       log.scrape(`Searching: ${practiceArea || 'all'} attorneys in ${city}, ${this.stateCode}`);
 
       const url = this._buildAdvancedSearchUrl(city, practiceCode);

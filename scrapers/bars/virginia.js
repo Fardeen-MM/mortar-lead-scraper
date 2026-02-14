@@ -1,12 +1,25 @@
 /**
  * Virginia State Bar (VSB) Scraper
  *
- * Source: https://www.vsb.org/vlrs/
- * Method: HTTP GET with query params + Cheerio for HTML parsing
- * Search URL: https://www.vsb.org/vlrs/results.asp
- * Params: LName, FName, City, Adm (A=active), Specialty
+ * Source: https://vsb.org/Shared_Content/Directory/va-lawyer-directory.aspx
+ * Method: ASP.NET async postback (UpdatePanel + RadGrid)
+ *
+ * The VSB uses an iMIS-based ASP.NET WebForms application with Telerik RadGrid.
+ * Search is done via __doPostBack async postbacks.
+ *
+ * Flow:
+ * 1. GET the search page to obtain __VIEWSTATE and hidden form fields
+ * 2. POST async postback with search params (last name, etc.)
+ * 3. Parse the RadGrid table from the delta response
+ *
+ * The VSB search does NOT have a city filter — results are searched by last name
+ * and filtered by city client-side. This scraper iterates A-Z per city.
+ *
+ * Grid columns: BarID, Name, MemberType, LicenseType, Status, City, State, Zip,
+ * HasDiscipline, SuspensionType, DateOfLicense, SortCode
  */
 
+const https = require('https');
 const cheerio = require('cheerio');
 const BaseScraper = require('../base-scraper');
 const { log } = require('../../lib/logger');
@@ -17,115 +30,156 @@ class VirginiaScraper extends BaseScraper {
     super({
       name: 'virginia',
       stateCode: 'VA',
-      baseUrl: 'https://www.vsb.org/vlrs/results.asp',
-      pageSize: 50,
-      practiceAreaCodes: {
-        'administrative':        'Administrative',
-        'bankruptcy':            'Bankruptcy',
-        'civil litigation':      'Civil Litigation',
-        'corporate':             'Corporate',
-        'criminal':              'Criminal',
-        'criminal defense':      'Criminal',
-        'employment':            'Employment/Labor',
-        'labor':                 'Employment/Labor',
-        'environmental':         'Environmental',
-        'estate planning':       'Estate Planning',
-        'estate':                'Estate Planning',
-        'family':                'Family/Domestic',
-        'family law':            'Family/Domestic',
-        'immigration':           'Immigration',
-        'intellectual property': 'Intellectual Property',
-        'personal injury':       'Personal Injury',
-        'real estate':           'Real Estate',
-        'tax':                   'Tax',
-        'tax law':               'Tax',
-        'workers comp':          'Workers Compensation',
-      },
+      baseUrl: 'https://vsb.org/Shared_Content/Directory/va-lawyer-directory.aspx',
+      pageSize: 10, // RadGrid default page size
+      practiceAreaCodes: {},
       defaultCities: [
         'Virginia Beach', 'Norfolk', 'Richmond', 'Arlington', 'Alexandria',
         'Newport News', 'Chesapeake', 'Hampton', 'Roanoke', 'Fairfax',
         'Charlottesville', 'Lynchburg', 'McLean', 'Tysons',
       ],
     });
+
+    this.formPrefix = 'ctl01$TemplateBody$WebPartManager1$gwpciVirginiaLawyerSearch$ciVirginiaLawyerSearch$ResultsGrid$Sheet0';
+    this.gridId = 'ctl01$TemplateBody$WebPartManager1$gwpciVirginiaLawyerSearch$ciVirginiaLawyerSearch$ResultsGrid$Grid1';
+    this.lastNameLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  }
+
+  buildSearchUrl() {
+    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden for VSB async postback`);
+  }
+
+  parseResultsPage() {
+    throw new Error(`${this.name}: parseResultsPage() is not used — search() is overridden for VSB async postback`);
+  }
+
+  extractResultCount() {
+    throw new Error(`${this.name}: extractResultCount() is not used — search() is overridden for VSB async postback`);
   }
 
   /**
-   * Build the search URL for a specific city, page, and optional practice code.
+   * HTTP GET with cookie support.
    */
-  buildSearchUrl({ city, practiceCode, page }) {
-    const params = new URLSearchParams();
-    params.set('LName', '*');
-    params.set('FName', '');
-    if (city) params.set('City', city);
-    params.set('Adm', 'A'); // Active only
-    if (practiceCode) {
-      params.set('Specialty', practiceCode);
-    }
-    if (page && page > 1) {
-      params.set('Page', String(page));
-    }
-    return `${this.baseUrl}?${params.toString()}`;
+  _httpGet(url, rateLimiter) {
+    return new Promise((resolve, reject) => {
+      const ua = rateLimiter.getUserAgent();
+      const req = https.get(url, {
+        headers: {
+          'User-Agent': ua,
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          'Accept-Encoding': 'identity',
+        },
+        timeout: 20000,
+      }, (res) => {
+        const setCookies = (res.headers['set-cookie'] || [])
+          .map(c => c.split(';')[0])
+          .join('; ');
+        let data = '';
+        res.on('data', chunk => { data += chunk; });
+        res.on('end', () => resolve({ statusCode: res.statusCode, body: data, cookies: setCookies }));
+      });
+      req.on('error', reject);
+      req.on('timeout', () => { req.destroy(); reject(new Error('Request timed out')); });
+    });
   }
 
   /**
-   * Parse search results page HTML.
-   * VSB returns results in HTML tables/lists with: Name, VSB Number, City, Admission date, Status.
+   * POST async postback (delta request) with form data.
    */
-  parseResultsPage($) {
-    const attorneys = [];
+  _asyncPostback(formData, rateLimiter, cookies = '') {
+    return new Promise((resolve, reject) => {
+      const ua = rateLimiter.getUserAgent();
+      const parsed = new URL(this.baseUrl);
+      const postBody = new URLSearchParams(formData).toString();
+      const bodyBuffer = Buffer.from(postBody, 'utf8');
 
-    $('table tr').each((_, row) => {
-      const $row = $(row);
-      const cells = $row.find('td');
-      if (cells.length < 2) return;
+      const options = {
+        hostname: parsed.hostname,
+        port: 443,
+        path: parsed.pathname + parsed.search,
+        method: 'POST',
+        headers: {
+          'User-Agent': ua,
+          'Accept': '*/*',
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          'Content-Length': bodyBuffer.length,
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-MicrosoftAjax': 'Delta=true',
+          'Referer': this.baseUrl,
+          ...(cookies ? { 'Cookie': cookies } : {}),
+        },
+        timeout: 30000,
+      };
 
-      // Skip header rows
-      if ($row.find('th').length > 0) return;
-      const firstCellText = cells.first().text().trim().toLowerCase();
-      if (firstCellText === 'name' || firstCellText === 'attorney' || firstCellText === 'member name') return;
-
-      // Look for a link containing the attorney name
-      const nameLink = $row.find('a').first();
-      let fullName = '';
-      let profileUrl = '';
-
-      if (nameLink.length) {
-        fullName = nameLink.text().trim();
-        profileUrl = nameLink.attr('href') || '';
-        // Make absolute URL if relative
-        if (profileUrl && !profileUrl.startsWith('http')) {
-          profileUrl = `https://www.vsb.org/vlrs/${profileUrl}`;
-        }
-      } else {
-        fullName = cells.first().text().trim();
-      }
-
-      if (!fullName) return;
-
-      // Extract VSB number, city, admission date, and status from cells
-      let barNumber = '';
-      let city = '';
-      let admissionDate = '';
-      let barStatus = '';
-
-      cells.each((i, cell) => {
-        const text = $(cell).text().trim();
-        if (i === 0) return; // Skip name cell
-
-        // VSB numbers are typically numeric
-        if (/^\d{5,8}$/.test(text)) {
-          barNumber = text;
-        } else if (/\d{1,2}\/\d{1,2}\/\d{2,4}/.test(text) || /\d{4}-\d{2}-\d{2}/.test(text)) {
-          // Date pattern — likely admission date
-          admissionDate = text;
-        } else if (/active|inactive|retired|suspended|authorized|good standing|emeritus/i.test(text)) {
-          barStatus = text;
-        } else if (text && !city && /^[A-Za-z\s.'-]+$/.test(text) && text.length < 40) {
-          city = text;
-        }
+      const req = https.request(options, (res) => {
+        const setCookies = (res.headers['set-cookie'] || [])
+          .map(c => c.split(';')[0])
+          .join('; ');
+        let data = '';
+        res.on('data', chunk => { data += chunk; });
+        res.on('end', () => resolve({
+          statusCode: res.statusCode,
+          body: data,
+          cookies: [cookies, setCookies].filter(Boolean).join('; '),
+        }));
       });
 
-      // Split name — VSB typically formats as "Last, First Middle"
+      req.on('error', reject);
+      req.on('timeout', () => { req.destroy(); reject(new Error('Request timed out')); });
+      req.write(bodyBuffer);
+      req.end();
+    });
+  }
+
+  /**
+   * Extract all hidden form fields from HTML.
+   */
+  _extractHiddenFields(html) {
+    const fields = {};
+    const regex = /<input[^>]*type="hidden"[^>]*name="([^"]*)"[^>]*value="([^"]*)"/g;
+    let match;
+    while ((match = regex.exec(html)) !== null) {
+      fields[match[1]] = match[2];
+    }
+    return fields;
+  }
+
+  /**
+   * Extract updated __VIEWSTATE from delta response.
+   */
+  _extractViewstateFromDelta(deltaBody) {
+    const vsMatch = deltaBody.match(/\|hiddenField\|__VIEWSTATE\|([^|]*)\|/);
+    return vsMatch ? vsMatch[1] : null;
+  }
+
+  /**
+   * Parse RadGrid rows from delta response body.
+   * Returns array of attorney objects.
+   */
+  _parseRadGridRows(deltaBody) {
+    const attorneys = [];
+
+    // Extract RadGrid HTML from delta response
+    const rows = deltaBody.match(/<tr[^>]*class="rg(?:Row|AltRow)[^"]*"[^>]*>.*?<\/tr>/gs) || [];
+
+    for (const rowHtml of rows) {
+      const $ = cheerio.load(rowHtml);
+      const cells = $('td');
+      if (cells.length < 8) continue;
+
+      const barNumber = $(cells[0]).text().trim();
+      const fullName = $(cells[1]).text().trim();
+      const memberType = $(cells[2]).text().trim();
+      const licenseType = $(cells[3]).text().trim();
+      const status = $(cells[4]).text().trim();
+      const city = $(cells[5]).text().trim();
+      const state = $(cells[6]).text().trim();
+      const zip = $(cells[7]).text().trim();
+      const dateOfLicense = cells.length > 10 ? $(cells[10]).text().trim() : '';
+
+      if (!fullName) continue;
+
+      // Parse name — VSB format: "First Last" or "First Middle Last"
       let firstName = '';
       let lastName = '';
       if (fullName.includes(',')) {
@@ -133,177 +187,193 @@ class VirginiaScraper extends BaseScraper {
         lastName = parts[0];
         firstName = (parts[1] || '').split(/\s+/)[0];
       } else {
-        const split = this.splitName(fullName);
-        firstName = split.firstName;
-        lastName = split.lastName;
+        const nameParts = fullName.split(/\s+/).filter(Boolean);
+        if (nameParts.length >= 2) {
+          firstName = nameParts[0];
+          lastName = nameParts[nameParts.length - 1];
+        } else if (nameParts.length === 1) {
+          lastName = nameParts[0];
+        }
       }
 
       attorneys.push({
         first_name: firstName,
         last_name: lastName,
-        full_name: fullName,
         firm_name: '',
         city: city,
-        state: 'VA',
+        state: state || 'VA',
         phone: '',
         email: '',
         website: '',
         bar_number: barNumber,
-        admission_date: admissionDate,
-        bar_status: barStatus,
-        profile_url: profileUrl,
-        source: 'virginia_bar',
+        admission_date: dateOfLicense,
+        bar_status: status,
+        member_type: memberType,
+        license_type: licenseType,
+        source: `${this.name}_bar`,
       });
-    });
+    }
 
     return attorneys;
   }
 
   /**
-   * Extract total result count from the page.
-   */
-  extractResultCount($) {
-    const text = $('body').text();
-
-    // Look for patterns like "X records found" or "Results 1-50 of X"
-    const matchOf = text.match(/of\s+([\d,]+)\s+(?:records?|results?|attorneys?|members?|matches)/i);
-    if (matchOf) return parseInt(matchOf[1].replace(/,/g, ''), 10);
-
-    const matchFound = text.match(/([\d,]+)\s+(?:records?|results?|attorneys?|members?|matches)\s+found/i);
-    if (matchFound) return parseInt(matchFound[1].replace(/,/g, ''), 10);
-
-    const matchShowing = text.match(/Showing\s+\d+\s*[-–]\s*\d+\s+of\s+([\d,]+)/i);
-    if (matchShowing) return parseInt(matchShowing[1].replace(/,/g, ''), 10);
-
-    const matchTotal = text.match(/Total:?\s*([\d,]+)/i);
-    if (matchTotal) return parseInt(matchTotal[1].replace(/,/g, ''), 10);
-
-    return 0;
-  }
-
-  /**
-   * Override search() since Virginia has a unique URL structure and result format.
-   * Async generator that yields attorney records.
+   * Async generator that yields attorney records from the VSB directory.
+   * Iterates A-Z for each city since the search has no city filter.
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
-    const practiceCode = this.resolvePracticeCode(practiceArea);
-
-    if (!practiceCode && practiceArea) {
-      log.warn(`Unknown practice area "${practiceArea}" for VA — searching without filter`);
-      log.info(`Available areas: ${Object.keys(this.practiceAreaCodes).join(', ')}`);
-    }
-
     const cities = this.getCities(options);
 
-    for (const city of cities) {
-      log.scrape(`Searching: ${practiceArea || 'all'} attorneys in ${city}, VA`);
+    if (practiceArea) {
+      log.warn(`Virginia bar search does not support practice area filtering — searching all attorneys`);
+    }
 
-      let page = 1;
-      let totalResults = 0;
-      let pagesFetched = 0;
-      let consecutiveEmpty = 0;
+    for (let ci = 0; ci < cities.length; ci++) {
+      const city = cities[ci];
+      yield { _cityProgress: { current: ci + 1, total: cities.length } };
+      log.scrape(`Searching: ${practiceArea || 'all'} attorneys in ${city}, ${this.stateCode}`);
 
-      while (true) {
-        // Check max pages limit (--test flag sets this to 2)
-        if (options.maxPages && pagesFetched >= options.maxPages) {
-          log.info(`Reached max pages limit (${options.maxPages}) for ${city}`);
-          break;
-        }
+      let totalForCity = 0;
 
-        const url = this.buildSearchUrl({ city, practiceCode, page });
-        log.info(`Page ${page} — ${url}`);
-
-        let response;
+      for (const letter of this.lastNameLetters) {
+        // Step 1: GET the search page (fresh session per letter to avoid stale viewstate)
+        let pageResponse;
         try {
           await rateLimiter.wait();
-          response = await this.httpGet(url, rateLimiter);
+          pageResponse = await this._httpGet(this.baseUrl, rateLimiter);
         } catch (err) {
-          log.error(`Request failed: ${err.message}`);
-          const shouldRetry = await rateLimiter.handleBlock(0);
-          if (shouldRetry) continue;
-          break;
+          log.error(`Failed to load search page: ${err.message}`);
+          continue;
         }
 
-        // Handle rate limiting
-        if (response.statusCode === 429 || response.statusCode === 403) {
-          log.warn(`Got ${response.statusCode} from VSB`);
-          const shouldRetry = await rateLimiter.handleBlock(response.statusCode);
-          if (shouldRetry) continue;
-          break;
+        if (pageResponse.statusCode !== 200) {
+          log.error(`Search page returned ${pageResponse.statusCode}`);
+          continue;
         }
 
-        if (response.statusCode !== 200) {
-          log.error(`Unexpected status ${response.statusCode} — skipping`);
-          break;
+        const sessionCookies = pageResponse.cookies;
+        const hiddenFields = this._extractHiddenFields(pageResponse.body);
+
+        if (!hiddenFields.__VIEWSTATE) {
+          log.error(`Could not extract __VIEWSTATE`);
+          continue;
+        }
+
+        // Step 2: POST async postback with search params
+        const submitBtn = `${this.formPrefix}$SubmitButton`;
+        const form = { ...hiddenFields };
+        form['__EVENTTARGET'] = submitBtn;
+        form['__EVENTARGUMENT'] = '';
+        form[`${this.formPrefix}$Input0$TextBox1`] = ''; // Bar ID#
+        form[`${this.formPrefix}$Input1$TextBox1`] = ''; // First Name
+        form[`${this.formPrefix}$Input2$TextBox1`] = letter; // Last Name
+        form['ctl01$ScriptManager1'] = `${this.formPrefix}$ctl01|${submitBtn}`;
+        form['__ASYNCPOST'] = 'true';
+        form['IsControlPostBack'] = '1';
+
+        let searchResponse;
+        try {
+          await rateLimiter.wait();
+          searchResponse = await this._asyncPostback(form, rateLimiter, sessionCookies);
+        } catch (err) {
+          log.error(`Search POST failed for ${city}/${letter}: ${err.message}`);
+          continue;
+        }
+
+        if (searchResponse.statusCode !== 200) {
+          log.error(`Search POST returned ${searchResponse.statusCode} for ${city}/${letter}`);
+          continue;
         }
 
         rateLimiter.resetBackoff();
 
-        // Check for CAPTCHA
-        if (this.detectCaptcha(response.body)) {
-          log.warn(`CAPTCHA detected on page ${page} for ${city} — skipping`);
-          yield { _captcha: true, city, page };
-          break;
-        }
+        // Parse results from delta response
+        const allAttorneys = this._parseRadGridRows(searchResponse.body);
 
-        const $ = cheerio.load(response.body);
+        // Filter by city (case-insensitive) and active status
+        const cityLower = city.toLowerCase();
+        const cityAttorneys = allAttorneys.filter(a =>
+          a.city.toLowerCase() === cityLower &&
+          (a.bar_status === 'In Good Standing' || a.member_type === 'Active')
+        );
 
-        // Get total count on first page
-        if (page === 1) {
-          totalResults = this.extractResultCount($);
-          if (totalResults === 0) {
-            // Try parsing results even if count is not found
-            const testAttorneys = this.parseResultsPage($);
-            if (testAttorneys.length === 0) {
-              log.info(`No results for ${practiceArea || 'all'} in ${city}`);
-              break;
-            }
-            totalResults = testAttorneys.length;
-          }
-          const totalPages = Math.ceil(totalResults / this.pageSize);
-          log.success(`Found ${totalResults.toLocaleString()} results (${totalPages} pages) for ${city}`);
-        }
-
-        const attorneys = this.parseResultsPage($);
-
-        if (attorneys.length === 0) {
-          consecutiveEmpty++;
-          if (consecutiveEmpty >= this.maxConsecutiveEmpty) {
-            log.warn(`${this.maxConsecutiveEmpty} consecutive empty pages — stopping pagination for ${city}`);
-            break;
-          }
-          page++;
-          pagesFetched++;
-          continue;
-        }
-
-        consecutiveEmpty = 0;
-
-        // Filter and yield
-        for (const attorney of attorneys) {
+        for (const attorney of cityAttorneys) {
           if (options.minYear && attorney.admission_date) {
             const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
             if (year > 0 && year < options.minYear) continue;
           }
-          yield this.transformResult(attorney, practiceArea);
+          attorney.practice_area = practiceArea || '';
+          delete attorney.member_type;
+          delete attorney.license_type;
+          yield attorney;
+          totalForCity++;
         }
 
-        // Check for "next" page links
-        const hasNext = $('a').filter((_, el) => {
-          const text = $(el).text().trim().toLowerCase();
-          return text === 'next' || text === 'next >' || text === 'next >>' || text === 'next page';
-        }).length > 0;
+        // Handle RadGrid pagination — get additional pages if there were results
+        let currentViewstate = this._extractViewstateFromDelta(searchResponse.body);
+        let currentCookies = searchResponse.cookies;
+        let pageNum = 2;
+        let maxGridPages = options.maxPages || 20;
 
-        // Check if we've reached the last page
-        const totalPages = Math.ceil(totalResults / this.pageSize);
-        if (page >= totalPages && !hasNext) {
-          log.success(`Completed all pages for ${city}`);
-          break;
+        while (allAttorneys.length >= this.pageSize && pageNum <= maxGridPages) {
+          // Build page change postback
+          const pageForm = { ...hiddenFields };
+          if (currentViewstate) pageForm['__VIEWSTATE'] = currentViewstate;
+          pageForm['__EVENTTARGET'] = this.gridId;
+          pageForm['__EVENTARGUMENT'] = `FireCommand:${this.gridId.replace(/\$/g, '_')}$ctl00;PageSize;10`;
+          pageForm[`${this.formPrefix}$Input0$TextBox1`] = '';
+          pageForm[`${this.formPrefix}$Input1$TextBox1`] = '';
+          pageForm[`${this.formPrefix}$Input2$TextBox1`] = letter;
+          pageForm['ctl01$ScriptManager1'] = `${this.gridId.replace('$Grid1', '$ListerPanel')}|${this.gridId}`;
+          pageForm['__ASYNCPOST'] = 'true';
+          pageForm['IsControlPostBack'] = '1';
+          // Telerik RadGrid page change uses __EVENTARGUMENT
+          pageForm['__EVENTARGUMENT'] = `Page$${pageNum}`;
+
+          let pageResponse2;
+          try {
+            await rateLimiter.wait();
+            pageResponse2 = await this._asyncPostback(pageForm, rateLimiter, currentCookies);
+          } catch (err) {
+            log.error(`Grid page ${pageNum} failed for ${city}/${letter}: ${err.message}`);
+            break;
+          }
+
+          if (pageResponse2.statusCode !== 200) break;
+
+          const pageAttorneys = this._parseRadGridRows(pageResponse2.body);
+          if (pageAttorneys.length === 0) break;
+
+          const pageCityAttorneys = pageAttorneys.filter(a =>
+            a.city.toLowerCase() === cityLower &&
+            (a.bar_status === 'In Good Standing' || a.member_type === 'Active')
+          );
+
+          for (const attorney of pageCityAttorneys) {
+            if (options.minYear && attorney.admission_date) {
+              const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
+              if (year > 0 && year < options.minYear) continue;
+            }
+            attorney.practice_area = practiceArea || '';
+            delete attorney.member_type;
+            delete attorney.license_type;
+            yield attorney;
+            totalForCity++;
+          }
+
+          currentViewstate = this._extractViewstateFromDelta(pageResponse2.body) || currentViewstate;
+          currentCookies = pageResponse2.cookies;
+
+          if (pageAttorneys.length < this.pageSize) break;
+          pageNum++;
         }
+      }
 
-        page++;
-        pagesFetched++;
+      if (totalForCity > 0) {
+        log.success(`Found ${totalForCity} total results for ${city}`);
+      } else {
+        log.info(`No results for ${practiceArea || 'all'} in ${city}`);
       }
     }
   }

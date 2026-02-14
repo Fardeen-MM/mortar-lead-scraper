@@ -58,7 +58,9 @@ class NewYorkScraper extends BaseScraper {
     const cities = this.getCities(options);
     const limit = this.pageSize;
 
-    for (const city of cities) {
+    for (let ci = 0; ci < cities.length; ci++) {
+      const city = cities[ci];
+      yield { _cityProgress: { current: ci + 1, total: cities.length } };
       log.scrape(`Searching: ${practiceArea || 'all'} attorneys in ${city}, ${this.stateCode}`);
 
       let offset = 0;

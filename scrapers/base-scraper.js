@@ -118,8 +118,12 @@ class BaseScraper {
   /**
    * HTTP GET with user agent rotation and redirect following.
    */
-  httpGet(url, rateLimiter) {
+  httpGet(url, rateLimiter, redirectCount = 0) {
     return new Promise((resolve, reject) => {
+      if (redirectCount > 5) {
+        return reject(new Error(`Too many redirects (>5) for ${url}`));
+      }
+
       const ua = rateLimiter.getUserAgent();
       const options = {
         headers: {
@@ -135,12 +139,14 @@ class BaseScraper {
       const protocol = url.startsWith('https') ? https : http;
       const req = protocol.get(url, options, (res) => {
         if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          // Drain the response body to free the socket
+          res.resume();
           let redirect = res.headers.location;
           if (redirect.startsWith('/')) {
             const u = new URL(url);
             redirect = `${u.protocol}//${u.host}${redirect}`;
           }
-          return resolve(this.httpGet(redirect, rateLimiter));
+          return resolve(this.httpGet(redirect, rateLimiter, redirectCount + 1));
         }
         let data = '';
         res.on('data', chunk => { data += chunk; });
@@ -230,7 +236,9 @@ class BaseScraper {
 
     const cities = this.getCities(options);
 
-    for (const city of cities) {
+    for (let ci = 0; ci < cities.length; ci++) {
+      const city = cities[ci];
+      yield { _cityProgress: { current: ci + 1, total: cities.length } };
       log.scrape(`Searching: ${practiceArea || 'all'} attorneys in ${city}, ${this.stateCode}`);
 
       let page = 1;

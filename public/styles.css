@@ -635,6 +635,265 @@ tr:hover td {
   font-weight: 600;
 }
 
+/* Danger Button (Stop Scrape) */
+.btn-danger {
+  background: var(--error);
+  color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+/* Step Header (h2 + badge flex row) */
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.step-header h2 {
+  margin-bottom: 0;
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge-warn {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* Connection Status Indicator */
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+  width: fit-content;
+}
+
+.connection-status.connected {
+  background: #ecfdf5;
+  color: var(--success);
+}
+
+.connection-status.reconnecting {
+  background: #fef3c7;
+  color: var(--warn);
+}
+
+.connection-status.disconnected {
+  background: #fef2f2;
+  color: var(--error);
+}
+
+.connection-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.connection-status.reconnecting .connection-dot {
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Notification Toasts */
+.notification {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  animation: slideIn 0.3s ease;
+  position: relative;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.notification.error {
+  background: #fef2f2;
+  color: var(--error);
+  border: 1px solid #fecaca;
+}
+
+.notification.info {
+  background: var(--indigo-50);
+  color: var(--indigo);
+  border: 1px solid #c7d2fe;
+}
+
+.notification.success {
+  background: #ecfdf5;
+  color: var(--success);
+  border: 1px solid #a7f3d0;
+}
+
+.notification-dismiss {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+  padding: 0 0.25rem;
+}
+
+.notification-dismiss:hover {
+  opacity: 1;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--text-muted);
+}
+
+.empty-state-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.empty-state h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Enrichment Preview Card */
+.enrich-preview-card {
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
+  background: var(--indigo-50);
+  border-radius: 8px;
+  border: 1px solid #c7d2fe;
+}
+
+.enrich-preview-card h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--indigo);
+}
+
+.enrich-preview-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.enrich-preview-card li {
+  font-size: 0.85rem;
+  padding: 0.25rem 0;
+  color: var(--text);
+}
+
+/* Completeness Badge */
+.completeness-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.completeness-high {
+  background: #ecfdf5;
+  color: var(--success);
+}
+
+.completeness-med {
+  background: #fef3c7;
+  color: var(--warn);
+}
+
+.completeness-low {
+  background: #fef2f2;
+  color: var(--error);
+}
+
+/* Column Selector */
+.column-selector-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.column-selector-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.column-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.col-select-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.col-select-label input[type="checkbox"] {
+  accent-color: var(--indigo);
+}
+
+.export-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Cancelled Progress Bar */
+.progress-bar-cancelled {
+  background: var(--warn) !important;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .container {

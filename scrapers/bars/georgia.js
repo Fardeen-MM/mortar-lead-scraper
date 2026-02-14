@@ -1,16 +1,16 @@
 /**
  * Georgia State Bar Association Scraper
  *
- * Source: https://www.gabar.org/membersearchresults.cfm
- * Method: HTTP GET + Cheerio (ColdFusion-based server-rendered HTML)
+ * Source: https://www.gabar.org/memberdirectory/
+ * API: https://api.gabar.org/webservices/membersearch
+ * Method: HTTP POST to JSON API (Vue.js SPA backend)
  *
- * Searches the Georgia Bar member directory by city, with optional
- * practice area (section) filtering. The search() async generator is
- * fully overridden since the URL structure and pagination differ from
- * the base scraper.
+ * The GA Bar migrated from a ColdFusion site to a Vue.js SPA
+ * with a REST API at api.gabar.org. The membersearch endpoint
+ * accepts city/status filters via query params and returns JSON.
  */
 
-const cheerio = require('cheerio');
+const https = require('https');
 const BaseScraper = require('../base-scraper');
 const { log } = require('../../lib/logger');
 const { RateLimiter } = require('../../lib/rate-limiter');
@@ -20,231 +20,113 @@ class GeorgiaScraper extends BaseScraper {
     super({
       name: 'georgia',
       stateCode: 'GA',
-      baseUrl: 'https://www.gabar.org/membersearchresults.cfm',
+      baseUrl: 'https://api.gabar.org/webservices/membersearch',
       pageSize: 50,
-      practiceAreaCodes: {
-        'administrative': '1',
-        'bankruptcy': '2',
-        'business': '3',
-        'corporate': '3',
-        'criminal': '4',
-        'criminal defense': '4',
-        'environmental': '5',
-        'estate planning': '6',
-        'estate': '6',
-        'family': '7',
-        'family law': '7',
-        'immigration': '8',
-        'intellectual property': '9',
-        'labor': '10',
-        'employment': '10',
-        'personal injury': '11',
-        'real estate': '12',
-        'tax': '13',
-        'tax law': '13',
-      },
+      practiceAreaCodes: {},
       defaultCities: [
         'Atlanta', 'Savannah', 'Augusta', 'Columbus', 'Macon',
         'Athens', 'Roswell', 'Albany', 'Marietta', 'Decatur',
         'Lawrenceville', 'Kennesaw', 'Gainesville', 'Valdosta',
       ],
     });
-
-    this.detailBaseUrl = 'https://www.gabar.org/membersearchdetail.cfm';
   }
 
-  /**
-   * Not used — search() is fully overridden for the ColdFusion directory.
-   */
   buildSearchUrl() {
-    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden for GA Bar directory`);
+    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden for GA Bar API`);
   }
 
-  /**
-   * Not used — search() is fully overridden for the ColdFusion directory.
-   */
   extractResultCount() {
-    throw new Error(`${this.name}: extractResultCount() is not used — search() is overridden for GA Bar directory`);
+    throw new Error(`${this.name}: extractResultCount() is not used — search() is overridden for GA Bar API`);
+  }
+
+  parseResultsPage() {
+    throw new Error(`${this.name}: parseResultsPage() is not used — search() is overridden for GA Bar API`);
   }
 
   /**
-   * Parse the ColdFusion search results HTML page.
-   * Looks for attorney listing elements (tables/lists) and extracts
-   * name, bar number, city, and status from each entry.
-   *
-   * @param {CheerioStatic} $ - Cheerio-loaded HTML document
-   * @returns {object[]} Array of attorney records
+   * POST to the GA Bar API and parse JSON response.
    */
-  parseResultsPage($) {
-    const attorneys = [];
+  _apiPost(url, rateLimiter) {
+    return new Promise((resolve, reject) => {
+      const ua = rateLimiter.getUserAgent();
+      const parsed = new URL(url);
+      const options = {
+        hostname: parsed.hostname,
+        port: 443,
+        path: parsed.pathname + parsed.search,
+        method: 'POST',
+        headers: {
+          'User-Agent': ua,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Origin': 'https://www.gabar.org',
+          'Referer': 'https://www.gabar.org/',
+          'Content-Length': Buffer.byteLength('{}'),
+        },
+        timeout: 15000,
+      };
 
-    // GA Bar results are typically rendered in a table or repeated div/list structure.
-    // Try table rows first, then fall back to common listing patterns.
-    $('table.searchresults tr, table.memberResults tr, .search-results tr, .member-list tr').each((i, el) => {
-      const $row = $(el);
-
-      // Skip header rows
-      if ($row.find('th').length > 0) return;
-
-      const cells = $row.find('td');
-      if (cells.length < 2) return;
-
-      // Typical layout: Name (linked), Bar Number, City, Status
-      const nameLink = $row.find('a').first();
-      const fullName = nameLink.text().trim();
-      if (!fullName) return;
-
-      const profileHref = nameLink.attr('href') || '';
-      const barNumberMatch = profileHref.match(/(?:BarNumber|id|member)=(\d+)/i);
-
-      // Extract text from each cell
-      const cellTexts = [];
-      cells.each((_, cell) => { cellTexts.push($(cell).text().trim()); });
-
-      const barNumber = barNumberMatch ? barNumberMatch[1] : (cellTexts[1] || '').replace(/\D/g, '');
-      const city = cellTexts[2] || '';
-      const status = cellTexts[3] || '';
-
-      const { firstName, lastName } = this.splitName(fullName);
-
-      attorneys.push({
-        first_name: firstName,
-        last_name: lastName,
-        full_name: fullName,
-        firm_name: '',
-        city: city,
-        state: 'GA',
-        phone: '',
-        email: '',
-        website: '',
-        bar_number: barNumber,
-        admission_date: '',
-        bar_status: status || 'Active',
-        profile_url: profileHref ? `https://www.gabar.org/${profileHref.replace(/^\//, '')}` : '',
-        source: `${this.name}_bar`,
-      });
-    });
-
-    // Fallback: look for div-based or list-based results if table parsing found nothing
-    if (attorneys.length === 0) {
-      $('.member-result, .search-result, .attorney-result, .result-item').each((_, el) => {
-        const $el = $(el);
-
-        const nameLink = $el.find('a').first();
-        const fullName = nameLink.text().trim();
-        if (!fullName) return;
-
-        const profileHref = nameLink.attr('href') || '';
-        const barNumberMatch = profileHref.match(/(?:BarNumber|id|member)=(\d+)/i);
-
-        const barText = $el.find('.bar-number, .barnum').text().trim();
-        const barNumber = barNumberMatch ? barNumberMatch[1] : (barText.match(/\d+/) || [''])[0];
-
-        const cityText = $el.find('.city, .location').text().trim();
-        const statusText = $el.find('.status, .member-status').text().trim();
-        const firmText = $el.find('.firm, .firm-name, .company').text().trim();
-        const phoneText = $el.find('.phone, .telephone').text().trim();
-        const emailEl = $el.find('a[href^="mailto:"]');
-        const email = emailEl.length ? emailEl.attr('href').replace('mailto:', '') : '';
-
-        const { firstName, lastName } = this.splitName(fullName);
-
-        attorneys.push({
-          first_name: firstName,
-          last_name: lastName,
-          full_name: fullName,
-          firm_name: firmText,
-          city: cityText,
-          state: 'GA',
-          phone: phoneText,
-          email: email,
-          website: '',
-          bar_number: barNumber,
-          admission_date: '',
-          bar_status: statusText || 'Active',
-          profile_url: profileHref ? `https://www.gabar.org/${profileHref.replace(/^\//, '')}` : '',
-          source: `${this.name}_bar`,
+      const req = https.request(options, (res) => {
+        let data = '';
+        res.on('data', chunk => { data += chunk; });
+        res.on('end', () => {
+          try {
+            resolve({ statusCode: res.statusCode, body: JSON.parse(data) });
+          } catch {
+            resolve({ statusCode: res.statusCode, body: null, rawBody: data });
+          }
         });
       });
-    }
 
-    return attorneys;
+      req.on('error', reject);
+      req.on('timeout', () => { req.destroy(); reject(new Error('Request timed out')); });
+      req.write('{}');
+      req.end();
+    });
   }
 
   /**
-   * Detect if there is a next page link in the results.
-   *
-   * @param {CheerioStatic} $ - Cheerio-loaded HTML document
-   * @returns {string|null} URL of the next page, or null if no more pages
-   */
-  findNextPageUrl($) {
-    // Look for common pagination patterns
-    const nextLink = $('a:contains("Next"), a:contains("next"), a.next, a.nextPage, a[rel="next"]').first();
-    if (nextLink.length) {
-      const href = nextLink.attr('href');
-      if (href) {
-        if (href.startsWith('http')) return href;
-        return `https://www.gabar.org/${href.replace(/^\//, '')}`;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Async generator that yields attorney records from the GA Bar directory.
-   * Overrides BaseScraper.search() since the URL structure is unique.
+   * Async generator that yields attorney records from the GA Bar API.
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
-    const practiceCode = this.resolvePracticeCode(practiceArea);
     const cities = this.getCities(options);
 
-    if (!practiceCode && practiceArea) {
-      log.warn(`Unknown practice area "${practiceArea}" for ${this.stateCode} — searching without filter`);
-      log.info(`Available areas: ${Object.keys(this.practiceAreaCodes).join(', ')}`);
-    }
-
-    for (const city of cities) {
+    for (let ci = 0; ci < cities.length; ci++) {
+      const city = cities[ci];
+      yield { _cityProgress: { current: ci + 1, total: cities.length } };
       log.scrape(`Searching: ${practiceArea || 'all'} attorneys in ${city}, ${this.stateCode}`);
 
+      let skip = 0;
       let pagesFetched = 0;
-      let consecutiveEmpty = 0;
-
-      // Build the initial search URL
-      const params = new URLSearchParams();
-      params.set('FindMember', '');
-      params.set('BarNumber', '');
-      params.set('City', city);
-      params.set('Circuit', '0');
-      params.set('Section', practiceCode || '0');
-      params.set('County', '0');
-      params.set('Zip', '');
-      params.set('Status', 'A');
-      params.set('Practice', practiceCode || '0');
-
-      let url = `${this.baseUrl}?${params.toString()}`;
+      let totalRows = 0;
 
       while (true) {
-        // Check max pages limit (--test flag sets this to 2)
         if (options.maxPages && pagesFetched >= options.maxPages) {
           log.info(`Reached max pages limit (${options.maxPages}) for ${city}`);
           break;
         }
 
+        const params = new URLSearchParams();
+        params.set('City', city);
+        params.set('Status', 'Active Member in Good Standing');
+        params.set('top', String(this.pageSize));
+        if (skip > 0) params.set('skip', String(skip));
+
+        const url = `${this.baseUrl}?${params.toString()}`;
         log.info(`Page ${pagesFetched + 1} — ${url}`);
 
         let response;
         try {
           await rateLimiter.wait();
-          response = await this.httpGet(url, rateLimiter);
+          response = await this._apiPost(url, rateLimiter);
         } catch (err) {
-          log.error(`Request failed: ${err.message}`);
+          log.error(`Request failed for ${city}: ${err.message}`);
           const shouldRetry = await rateLimiter.handleBlock(0);
           if (shouldRetry) continue;
           break;
         }
 
-        // Handle rate limiting
         if (response.statusCode === 429 || response.statusCode === 403) {
           log.warn(`Got ${response.statusCode} from ${this.name}`);
           const shouldRetry = await rateLimiter.handleBlock(response.statusCode);
@@ -252,63 +134,59 @@ class GeorgiaScraper extends BaseScraper {
           break;
         }
 
-        if (response.statusCode !== 200) {
-          log.error(`Unexpected status ${response.statusCode} — skipping`);
+        if (response.statusCode !== 200 || !response.body) {
+          log.error(`Unexpected status ${response.statusCode} or empty body for ${city} — skipping`);
           break;
         }
 
         rateLimiter.resetBackoff();
 
-        // Check for CAPTCHA
-        if (this.detectCaptcha(response.body)) {
-          log.warn(`CAPTCHA detected on page ${pagesFetched + 1} for ${city} — skipping`);
-          yield { _captcha: true, city, page: pagesFetched + 1 };
-          break;
-        }
+        const { members, totalRows: total } = response.body;
 
-        const $ = cheerio.load(response.body);
-        const attorneys = this.parseResultsPage($);
-
-        if (attorneys.length === 0) {
-          consecutiveEmpty++;
-          if (pagesFetched === 0) {
+        if (pagesFetched === 0) {
+          totalRows = total || 0;
+          if (!members || members.length === 0) {
             log.info(`No results for ${practiceArea || 'all'} in ${city}`);
             break;
           }
-          if (consecutiveEmpty >= this.maxConsecutiveEmpty) {
-            log.warn(`${this.maxConsecutiveEmpty} consecutive empty pages — stopping pagination for ${city}`);
-            break;
-          }
-        } else {
-          consecutiveEmpty = 0;
-
-          if (pagesFetched === 0) {
-            log.success(`Fetching results for ${city} (first page: ${attorneys.length} records)`);
-          }
-
-          // Filter and yield each attorney record
-          for (const attorney of attorneys) {
-            if (options.minYear && attorney.admission_date) {
-              const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
-              if (year > 0 && year < options.minYear) continue;
-            }
-
-            attorney.practice_area = practiceArea || '';
-            yield attorney;
-          }
+          log.success(`Found ${totalRows.toLocaleString()} results for ${city}`);
         }
 
-        // Check for next page
-        const nextPageUrl = this.findNextPageUrl($);
-        if (!nextPageUrl) {
-          if (pagesFetched > 0) {
-            log.success(`Completed all pages for ${city}`);
-          }
+        if (!members || members.length === 0) {
+          log.info(`No more results for ${city}`);
           break;
         }
 
-        url = nextPageUrl;
+        for (const m of members) {
+          if (options.minYear && m.admitDate) {
+            const year = parseInt((m.admitDate.match(/\d{4}/) || ['0'])[0], 10);
+            if (year > 0 && year < options.minYear) continue;
+          }
+
+          yield {
+            first_name: (m.firstName || '').trim(),
+            last_name: (m.lastName || '').trim(),
+            firm_name: (m.company || '').trim(),
+            city: (m.city || '').trim(),
+            state: (m.state || 'GA').trim(),
+            phone: (m.phone || '').trim(),
+            email: m.hideEmail ? '' : (m.email || '').trim(),
+            website: '',
+            bar_number: String(m.barNumber || ''),
+            admission_date: (m.admitDate || '').split('T')[0],
+            bar_status: (m.status || '').trim(),
+            practice_area: practiceArea || '',
+            source: `${this.name}_bar`,
+          };
+        }
+
+        skip += members.length;
         pagesFetched++;
+
+        if (skip >= totalRows || members.length < this.pageSize) {
+          log.success(`Completed all results for ${city}`);
+          break;
+        }
       }
     }
   }

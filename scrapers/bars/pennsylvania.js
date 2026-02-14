@@ -2,11 +2,11 @@
  * Pennsylvania Disciplinary Board Attorney Scraper
  *
  * Source: https://www.padisciplinaryboard.org/for-the-public/find-attorney
- * Method: Algolia REST API (JSON, no HTML parsing)
+ * Method: REST API (JSON) at /api/attorneysearch
  *
- * Uses the Algolia search API with application credentials to query the
- * attorney index. The search() async generator is fully overridden since
- * this is a JSON API, not HTML.
+ * The PA Disciplinary Board provides a REST API that accepts query params
+ * (city, status, last, first, pageNumber, pageLength) and returns JSON
+ * with paginated attorney records.
  */
 
 const https = require('https');
@@ -19,8 +19,8 @@ class PennsylvaniaScraper extends BaseScraper {
     super({
       name: 'pennsylvania',
       stateCode: 'PA',
-      baseUrl: 'https://www.padisciplinaryboard.org/for-the-public/find-attorney/attorney-detail',
-      pageSize: 100,
+      baseUrl: 'https://www.padisciplinaryboard.org/api/attorneysearch',
+      pageSize: 50,
       practiceAreaCodes: {},
       defaultCities: [
         'Philadelphia', 'Pittsburgh', 'Harrisburg', 'Allentown', 'Erie',
@@ -28,60 +28,38 @@ class PennsylvaniaScraper extends BaseScraper {
         'Media', 'Doylestown', 'West Chester', 'King of Prussia',
       ],
     });
-
-    this.algoliaAppId = 'N1H4MQXREP';
-    this.algoliaApiKey = '658c08635772deca1fc71b90f429d08c';
-    this.algoliaIndex = 'attorneys';
-    this.algoliaHost = `${this.algoliaAppId}-dsn.algolia.net`;
-    this.algoliaPath = `/1/indexes/${this.algoliaIndex}/query`;
   }
 
-  /**
-   * Not used — search() is fully overridden for the Algolia JSON API.
-   */
   buildSearchUrl() {
-    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden for Algolia API`);
+    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden for PA REST API`);
   }
 
-  /**
-   * Not used — search() is fully overridden for the Algolia JSON API.
-   */
   parseResultsPage() {
-    throw new Error(`${this.name}: parseResultsPage() is not used — search() is overridden for Algolia API`);
+    throw new Error(`${this.name}: parseResultsPage() is not used — search() is overridden for PA REST API`);
   }
 
-  /**
-   * Not used — search() is fully overridden for the Algolia JSON API.
-   */
   extractResultCount() {
-    throw new Error(`${this.name}: extractResultCount() is not used — search() is overridden for Algolia API`);
+    throw new Error(`${this.name}: extractResultCount() is not used — search() is overridden for PA REST API`);
   }
 
   /**
-   * Make an Algolia search request.
-   *
-   * @param {string} query     - The search query (city name)
-   * @param {number} page      - 0-indexed page number
-   * @param {RateLimiter} rateLimiter - Rate limiter instance for user agent
-   * @returns {Promise<object>} Parsed JSON response with hits and nbPages
+   * HTTP GET to the PA attorney search REST API.
    */
-  algoliaSearch(query, page, rateLimiter) {
+  _apiGet(url, rateLimiter) {
     return new Promise((resolve, reject) => {
-      const params = `query=${encodeURIComponent(query)}&hitsPerPage=${this.pageSize}&page=${page}`;
-      const postBody = JSON.stringify({ params });
-
+      const ua = rateLimiter.getUserAgent();
+      const parsed = new URL(url);
       const options = {
-        hostname: this.algoliaHost,
+        hostname: parsed.hostname,
         port: 443,
-        path: this.algoliaPath,
-        method: 'POST',
+        path: parsed.pathname + parsed.search,
+        method: 'GET',
         headers: {
-          'X-Algolia-Application-Id': this.algoliaAppId,
-          'X-Algolia-API-Key': this.algoliaApiKey,
-          'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(postBody),
-          'User-Agent': rateLimiter.getUserAgent(),
+          'User-Agent': ua,
           'Accept': 'application/json',
+          'Accept-Language': 'en-US,en;q=0.9',
+          'Accept-Encoding': 'identity',
+          'Referer': 'https://www.padisciplinaryboard.org/for-the-public/find-attorney',
         },
         timeout: 15000,
       };
@@ -92,105 +70,118 @@ class PennsylvaniaScraper extends BaseScraper {
         res.on('end', () => {
           try {
             resolve({ statusCode: res.statusCode, body: JSON.parse(data) });
-          } catch (err) {
-            reject(new Error(`Failed to parse Algolia response: ${err.message}`));
+          } catch {
+            resolve({ statusCode: res.statusCode, body: null, rawBody: data });
           }
         });
       });
 
       req.on('error', reject);
-      req.on('timeout', () => { req.destroy(); reject(new Error('Algolia request timed out')); });
-      req.write(postBody);
+      req.on('timeout', () => { req.destroy(); reject(new Error('Request timed out')); });
       req.end();
     });
   }
 
   /**
-   * Async generator that yields attorney records from the PA Algolia API.
-   * Overrides BaseScraper.search() entirely since the data source is JSON, not HTML.
+   * Async generator that yields attorney records from the PA REST API.
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
     const cities = this.getCities(options);
 
-    for (const city of cities) {
+    if (practiceArea) {
+      log.warn(`PA attorney search does not support practice area filtering — searching all attorneys`);
+    }
+
+    for (let ci = 0; ci < cities.length; ci++) {
+      const city = cities[ci];
+      yield { _cityProgress: { current: ci + 1, total: cities.length } };
       log.scrape(`Searching: ${practiceArea || 'all'} attorneys in ${city}, ${this.stateCode}`);
 
-      let page = 0;
+      let pageNumber = 1;
       let pagesFetched = 0;
+      let totalRecords = 0;
 
       while (true) {
-        // Check max pages limit (--test flag sets this to 2)
         if (options.maxPages && pagesFetched >= options.maxPages) {
           log.info(`Reached max pages limit (${options.maxPages}) for ${city}`);
           break;
         }
 
-        log.info(`Page ${page + 1} (Algolia page ${page}) for ${city}`);
+        const params = new URLSearchParams();
+        params.set('city', city);
+        params.set('status', 'Active');
+        params.set('pageNumber', String(pageNumber));
+        params.set('pageLength', String(this.pageSize));
 
-        let result;
+        const url = `${this.baseUrl}?${params.toString()}`;
+        log.info(`Page ${pageNumber} — ${url}`);
+
+        let response;
         try {
           await rateLimiter.wait();
-          result = await this.algoliaSearch(city, page, rateLimiter);
+          response = await this._apiGet(url, rateLimiter);
         } catch (err) {
-          log.error(`Algolia request failed: ${err.message}`);
+          log.error(`Request failed for ${city}: ${err.message}`);
           const shouldRetry = await rateLimiter.handleBlock(0);
           if (shouldRetry) continue;
           break;
         }
 
-        // Handle rate limiting
-        if (result.statusCode === 429 || result.statusCode === 403) {
-          log.warn(`Got ${result.statusCode} from Algolia`);
-          const shouldRetry = await rateLimiter.handleBlock(result.statusCode);
+        if (response.statusCode === 429 || response.statusCode === 403) {
+          log.warn(`Got ${response.statusCode} from ${this.name}`);
+          const shouldRetry = await rateLimiter.handleBlock(response.statusCode);
           if (shouldRetry) continue;
           break;
         }
 
-        if (result.statusCode !== 200) {
-          log.error(`Unexpected status ${result.statusCode} from Algolia — skipping`);
+        if (response.statusCode !== 200 || !response.body) {
+          log.error(`Unexpected status ${response.statusCode} or empty body for ${city} — skipping`);
           break;
         }
 
         rateLimiter.resetBackoff();
 
-        const data = result.body;
-        const hits = data.hits || [];
-        const nbPages = data.nbPages || 0;
-
-        if (hits.length === 0) {
-          if (pagesFetched === 0) {
-            log.info(`No results for ${practiceArea || 'all'} in ${city}`);
-          } else {
-            log.success(`Completed all pages for ${city}`);
-          }
+        const result = response.body.result;
+        if (!result || !result.items) {
+          log.error(`Unexpected response structure for ${city} — skipping`);
           break;
         }
 
+        const items = result.items;
+
         if (pagesFetched === 0) {
-          const totalHits = data.nbHits || hits.length;
-          log.success(`Found ${totalHits.toLocaleString()} results (${nbPages} pages) for ${city}`);
+          totalRecords = result.totalRecords || 0;
+          if (items.length === 0) {
+            log.info(`No results for ${practiceArea || 'all'} in ${city}`);
+            break;
+          }
+          const totalPages = Math.ceil(totalRecords / this.pageSize);
+          log.success(`Found ${totalRecords.toLocaleString()} results (${totalPages} pages) for ${city}`);
         }
 
-        // Map and yield each attorney record
-        for (const hit of hits) {
+        if (items.length === 0) {
+          log.success(`Completed all pages for ${city}`);
+          break;
+        }
+
+        for (const item of items) {
           const attorney = {
-            first_name: (hit.first_name || '').trim(),
-            last_name: (hit.last_name || '').trim(),
-            firm_name: '',
-            city: (hit.city || '').trim(),
+            first_name: (item.firstName || '').trim(),
+            last_name: (item.lastName || '').trim(),
+            firm_name: (item.employer || '').trim(),
+            city: (item.city || '').trim(),
             state: 'PA',
-            phone: '',
-            email: '',
+            phone: (item.phone || '').trim(),
+            email: (item.email || '').trim(),
             website: '',
-            bar_number: (hit.attorney_id || '').toString().trim(),
-            admission_date: (hit.admission_date || '').trim(),
-            bar_status: (hit.status || '').trim(),
-            county: (hit.county || '').trim(),
+            bar_number: String(item.attorneyId ?? '').trim(),
+            admission_date: (item.dateOfAdmission || '').trim(),
+            bar_status: (item.status || '').trim(),
+            county: (item.county || '').trim(),
             source: `${this.name}_bar`,
           };
 
-          // Apply min year filter
           if (options.minYear && attorney.admission_date) {
             const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
             if (year > 0 && year < options.minYear) continue;
@@ -200,13 +191,13 @@ class PennsylvaniaScraper extends BaseScraper {
           yield attorney;
         }
 
-        // Stop when we've reached the last page (0-indexed)
-        if (page + 1 >= nbPages) {
-          log.success(`Completed all ${nbPages} pages for ${city}`);
+        const totalPages = Math.ceil(totalRecords / this.pageSize);
+        if (pageNumber >= totalPages) {
+          log.success(`Completed all ${totalPages} pages for ${city}`);
           break;
         }
 
-        page++;
+        pageNumber++;
         pagesFetched++;
       }
     }
