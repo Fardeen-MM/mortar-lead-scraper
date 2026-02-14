@@ -51,16 +51,33 @@ const app = {
     const stateSelect = document.getElementById('select-state');
     stateSelect.innerHTML = '';
 
-    // Sort state codes alphabetically by name
-    const stateCodes = Object.keys(this.config.states).sort((a, b) =>
-      this.config.states[a].name.localeCompare(this.config.states[b].name)
-    );
+    // Group by country
+    const groups = { US: [], CA: [], UK: [] };
+    const groupLabels = { US: 'United States', CA: 'Canada', UK: 'United Kingdom' };
 
-    for (const code of stateCodes) {
-      const opt = document.createElement('option');
-      opt.value = code;
-      opt.textContent = `${code} — ${this.config.states[code].name}`;
-      stateSelect.appendChild(opt);
+    for (const [code, meta] of Object.entries(this.config.states)) {
+      const country = meta.country || 'US';
+      if (!groups[country]) groups[country] = [];
+      groups[country].push({ code, name: meta.name });
+    }
+
+    // Sort each group alphabetically by name
+    for (const country of Object.keys(groups)) {
+      groups[country].sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    // Build optgroups (US first, then CA, then UK)
+    for (const country of ['US', 'CA', 'UK']) {
+      if (groups[country].length === 0) continue;
+      const optgroup = document.createElement('optgroup');
+      optgroup.label = groupLabels[country] || country;
+      for (const { code, name } of groups[country]) {
+        const opt = document.createElement('option');
+        opt.value = code;
+        opt.textContent = `${code} — ${name}`;
+        optgroup.appendChild(opt);
+      }
+      stateSelect.appendChild(optgroup);
     }
 
     // Fetch health status for states (non-blocking)

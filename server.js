@@ -16,6 +16,8 @@ const { WebSocketServer } = require('ws');
 const { readCSV } = require('./lib/csv-handler');
 const { runPipeline } = require('./lib/pipeline');
 const { getScraperMetadata } = require('./lib/registry');
+const { readLogTail } = require('./lib/logger');
+const metrics = require('./lib/metrics');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -321,6 +323,41 @@ app.get('/api/scrape/:id/enrich-preview', async (req, res) => {
   res.json({ samples, totalLeads: job.leads.length, enrichableCount: enrichable.length });
 });
 
+// --- Debug Endpoints (dev only) ---
+
+if (process.env.NODE_ENV !== 'production') {
+  app.get('/api/debug/logs', (req, res) => {
+    const lines = parseInt(req.query.lines) || 100;
+    res.json(readLogTail(lines));
+  });
+
+  app.get('/api/debug/metrics', (req, res) => {
+    res.json(metrics.getSummary());
+  });
+
+  app.get('/api/debug/jobs', (req, res) => {
+    const activeJobs = [];
+    for (const [id, job] of jobs.entries()) {
+      if (id.startsWith('upload-')) continue;
+      activeJobs.push({
+        id,
+        state: job.state,
+        practice: job.practice,
+        status: job.status,
+        leadCount: job.leads.length,
+      });
+    }
+    res.json({ active: activeJobs, recent: metrics.getRecentJobs() });
+  });
+}
+
+// --- Express error middleware ---
+
+app.use((err, req, res, _next) => {
+  console.error('[express] Unhandled error:', err.stack || err.message);
+  res.status(500).json({ error: 'Internal server error' });
+});
+
 // --- HTTP Server + WebSocket ---
 
 const server = app.listen(PORT, () => {
@@ -356,6 +393,20 @@ wss.on('connection', (ws) => {
     wsClients.delete(ws);
     console.log(`[ws] Client disconnected${jobId ? ` (was on ${jobId})` : ''} (${wsClients.size} remaining)`);
   });
+});
+
+// --- Global Error Handlers ---
+
+process.on('uncaughtException', (err) => {
+  console.error('[FATAL] Uncaught exception:', err.stack || err.message);
+  try { require('./lib/logger').log.error(`Uncaught exception: ${err.message}`); } catch {}
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason) => {
+  const msg = reason instanceof Error ? reason.stack : String(reason);
+  console.error('[WARN] Unhandled rejection:', msg);
+  try { require('./lib/logger').log.error(`Unhandled rejection: ${msg}`); } catch {}
 });
 
 function broadcast(jobId, data) {

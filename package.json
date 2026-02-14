@@ -6,22 +6,27 @@
   "scripts": {
     "start": "node server.js",
     "scrape": "node scrape.js",
-    "dedup": "node dedup.js"
+    "dedup": "node dedup.js",
+    "test": "jest --forceExit",
+    "test:smoke": "jest --testPathPattern=smoke --forceExit --testTimeout=30000"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
-    "cheerio": "^1.0.0",
     "chalk": "^4.1.2",
+    "cheerio": "^1.0.0",
     "commander": "^12.1.0",
     "csv-parser": "^3.0.0",
     "csv-writer": "^1.6.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
-    "multer": "^1.4.5-lts.1",
     "fuse.js": "^7.0.0",
+    "multer": "^1.4.5-lts.1",
     "puppeteer": "^23.0.0",
     "ws": "^8.18.0"
   },
   "author": "Mortar Metrics",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^30.2.0"
+  }
 }
