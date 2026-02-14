@@ -69,6 +69,14 @@ const KNOWN_PLACEHOLDERS = new Set([
   'AU-TAS',   // WordPress Search & Filter — may need JS
   'AU-ACT',   // Bond MCRM — requires Puppeteer
   'AU-NT',    // PDF-based — may hit CAPTCHA on index page
+  // Europe — placeholder
+  'ES',       // Spain CGAE — Liferay/Angular SPA
+  // Asia-Pacific — placeholder
+  'IN-DL',    // India BCI — no reliable public API
+  // Africa — placeholder
+  'ZA',       // South Africa LSSA — no public directory
+  // Directories — may have CAPTCHA
+  'LAWYERS-COM',  // Lawyers.com — CAPTCHA detected
 ]);
 
 async function testScraper(code, loader) {
