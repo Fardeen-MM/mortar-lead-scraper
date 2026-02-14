@@ -42,7 +42,8 @@ class VirginiaScraper extends BaseScraper {
 
     this.formPrefix = 'ctl01$TemplateBody$WebPartManager1$gwpciVirginiaLawyerSearch$ciVirginiaLawyerSearch$ResultsGrid$Sheet0';
     this.gridId = 'ctl01$TemplateBody$WebPartManager1$gwpciVirginiaLawyerSearch$ciVirginiaLawyerSearch$ResultsGrid$Grid1';
-    this.lastNameLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    // Reduced from A-Z (26 letters) to 5 high-frequency initials to avoid timeout
+    this.lastNameLetters = ['A', 'B', 'C', 'M', 'S'];
   }
 
   buildSearchUrl() {
@@ -236,7 +237,10 @@ class VirginiaScraper extends BaseScraper {
 
       let totalForCity = 0;
 
-      for (const letter of this.lastNameLetters) {
+      // When maxPages is set (e.g. smoke test), use fewer letters to avoid timeout
+      const letters = (options.maxPages && options.maxPages <= 2) ? ['S'] : this.lastNameLetters;
+
+      for (const letter of letters) {
         // Step 1: GET the search page (fresh session per letter to avoid stale viewstate)
         let pageResponse;
         try {

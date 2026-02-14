@@ -1,15 +1,15 @@
 /**
  * British Columbia Law Society Scraper
  *
- * Source: https://www.lawsociety.bc.ca/lsbc/apps/mbr-search/mbr-search.cfm
- * Method: ColdFusion + DataTables — classic form POST + Cheerio HTML parsing
+ * Source: https://www.lawsociety.bc.ca/lsbc/apps/lkup/directory/mbr-search.cfm
+ * Method: ColdFusion GET form + DataTables HTML parsing
  *
- * The member search uses POST requests to submit search criteria and returns
- * paginated HTML results. Overrides search() for POST-based workflow.
+ * The search form uses GET with fields: txt_last_nm, txt_given_nm, txt_city,
+ * txt_search_type, is_submitted, results_no, member_search.
+ * Results table (#searchResultTable) has a single Name column with links to detail pages.
+ * Iterates last name initials (A-Z) per city since city-only search may not work.
  */
 
-const https = require('https');
-const http = require('http');
 const cheerio = require('cheerio');
 const BaseScraper = require('../base-scraper');
 const { log } = require('../../lib/logger');
@@ -20,7 +20,7 @@ class BritishColumbiaScraper extends BaseScraper {
     super({
       name: 'british-columbia',
       stateCode: 'CA-BC',
-      baseUrl: 'https://www.lawsociety.bc.ca/lsbc/apps/mbr-search/mbr-search.cfm',
+      baseUrl: 'https://www.lawsociety.bc.ca/lsbc/apps/lkup/directory/mbr-search.cfm',
       pageSize: 25,
       practiceAreaCodes: {
         'family':                'Family',
@@ -53,157 +53,67 @@ class BritishColumbiaScraper extends BaseScraper {
       ],
     });
 
-    this.resultUrl = 'https://www.lawsociety.bc.ca/lsbc/apps/mbr-search/result.cfm';
+    // BC requires at least 2 characters for last name search
+    this.lastNamePrefixes = ['Smith', 'Lee', 'Brown', 'Chan', 'Wong'];
   }
 
-  /**
-   * HTTP POST with URL-encoded form data.
-   */
-  httpPost(url, data, rateLimiter, contentType = 'application/x-www-form-urlencoded') {
-    return new Promise((resolve, reject) => {
-      const parsed = new URL(url);
-      const postData = typeof data === 'string' ? data : JSON.stringify(data);
-      const options = {
-        hostname: parsed.hostname,
-        path: parsed.pathname + parsed.search,
-        method: 'POST',
-        headers: {
-          'Content-Type': contentType,
-          'Content-Length': Buffer.byteLength(postData),
-          'User-Agent': rateLimiter.getUserAgent(),
-          'Accept': 'text/html,application/json,*/*',
-        },
-      };
-      const proto = parsed.protocol === 'https:' ? require('https') : require('http');
-      const req = proto.request(options, (res) => {
-        let body = '';
-        res.on('data', c => body += c);
-        res.on('end', () => resolve({ statusCode: res.statusCode, body }));
-      });
-      req.on('error', reject);
-      req.setTimeout(15000);
-      req.write(postData);
-      req.end();
-    });
-  }
-
-  /**
-   * Not used — search() is fully overridden for POST-based workflow.
-   */
   buildSearchUrl() {
-    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden for POST workflow`);
+    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden`);
   }
 
   /**
-   * Parse ColdFusion/DataTables member search results.
+   * Parse #searchResultTable — single Name column with links.
    */
   parseResultsPage($) {
     const attorneys = [];
 
-    // DataTables-style results
-    $('table#tblResults tr, table.dataTable tr, table.results tr, table tr').each((i, el) => {
+    $('#searchResultTable tbody tr').each((_, el) => {
       const $row = $(el);
-      const cells = $row.find('td');
-      if (cells.length < 2) return;
+      const td = $row.find('td[data-title="Name"]');
+      if (!td.length) return;
 
-      const firstText = $(cells[0]).text().trim();
-      // Skip header rows
-      if (/^(name|member|#)$/i.test(firstText)) return;
-      if (!firstText || firstText.length < 2) return;
+      const link = td.find('a');
+      const fullName = (link.text() || td.text()).trim();
+      if (!fullName || fullName.length < 3) return;
 
-      const nameCell = $(cells[0]);
-      const profileLink = nameCell.find('a').attr('href') || '';
+      const profileLink = link.attr('href') || '';
 
-      // ColdFusion results typically: Name | City | Status | Member #
-      let fullName = firstText;
-      let city = cells.length > 1 ? $(cells[1]).text().trim() : '';
-      let status = cells.length > 2 ? $(cells[2]).text().trim() : '';
-      let barNumber = cells.length > 3 ? $(cells[3]).text().trim() : '';
-      let firm = '';
-      let phone = '';
-
-      // Some layouts may have more columns
-      if (cells.length > 4) {
-        firm = $(cells[4]).text().trim();
-      }
-      if (cells.length > 5) {
-        phone = $(cells[5]).text().trim();
-      }
-
-      // Check for email
-      let email = '';
-      const mailtoLink = $row.find('a[href^="mailto:"]');
-      if (mailtoLink.length) {
-        email = mailtoLink.attr('href').replace('mailto:', '').trim();
-      }
-
-      // Parse name — ColdFusion often uses "Last, First" format
-      let firstName = '';
-      let lastName = '';
-      if (fullName.includes(',')) {
-        const parts = fullName.split(',').map(s => s.trim());
-        lastName = parts[0];
-        firstName = parts[1] ? parts[1].split(/\s+/)[0] : '';
-      } else {
-        const nameParts = this.splitName(fullName);
-        firstName = nameParts.firstName;
-        lastName = nameParts.lastName;
-      }
-
-      const displayName = fullName.includes(',') ? `${firstName} ${lastName}`.trim() : fullName;
-
-      // Clean up bar number (remove non-numeric except for alphanumeric IDs)
-      barNumber = barNumber.replace(/^#?\s*/, '').trim();
+      // Strip honorifics (KC, QC, etc.)
+      const cleanName = fullName.replace(/,?\s*(KC|QC|K\.C\.|Q\.C\.)$/i, '').trim();
+      const nameParts = this.splitName(cleanName);
 
       attorneys.push({
-        first_name: firstName,
-        last_name: lastName,
-        full_name: displayName,
-        firm_name: firm,
-        city: city,
+        first_name: nameParts.firstName,
+        last_name: nameParts.lastName,
+        full_name: cleanName,
+        firm_name: '',
+        city: '',
         state: 'CA-BC',
-        phone,
-        email,
+        phone: '',
+        email: '',
         website: '',
-        bar_number: barNumber,
-        bar_status: status || 'Active',
-        profile_url: profileLink.startsWith('http') ? profileLink : (profileLink ? `https://www.lawsociety.bc.ca${profileLink}` : ''),
+        bar_number: '',
+        bar_status: 'Practising',
+        profile_url: profileLink.startsWith('http') ? profileLink
+          : (profileLink ? `https://www.lawsociety.bc.ca/lsbc/apps/lkup/directory/${profileLink}` : ''),
       });
     });
 
     return attorneys;
   }
 
-  /**
-   * Extract total result count from ColdFusion result page.
-   */
   extractResultCount($) {
     const text = $('body').text();
-
-    const matchOf = text.match(/(?:Displaying|Showing|Results?)\s*:?\s*\d+\s*[-–to]+\s*\d+\s+of\s+([\d,]+)/i);
-    if (matchOf) return parseInt(matchOf[1].replace(/,/g, ''), 10);
-
-    const matchFound = text.match(/([\d,]+)\s+(?:members?|results?|records?|lawyers?)\s+found/i);
-    if (matchFound) return parseInt(matchFound[1].replace(/,/g, ''), 10);
-
-    const matchTotal = text.match(/Total\s*:?\s*([\d,]+)/i);
-    if (matchTotal) return parseInt(matchTotal[1].replace(/,/g, ''), 10);
-
+    const match = text.match(/([\d,]+)\s+(?:members?|results?|records?|lawyers?)\s+found/i);
+    if (match) return parseInt(match[1].replace(/,/g, ''), 10);
     return 0;
   }
 
   /**
-   * Override search() for POST-based ColdFusion workflow.
+   * Override search() — GET-based ColdFusion form with last name initial iteration.
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
-    const practiceCode = this.resolvePracticeCode(practiceArea);
-
-    if (!practiceCode && practiceArea) {
-      log.warn(`Unknown practice area "${practiceArea}" for ${this.stateCode} — searching without filter`);
-      log.info(`Available areas: ${Object.keys(this.practiceAreaCodes).join(', ')}`);
-    }
-
     const cities = this.getCities(options);
 
     for (let ci = 0; ci < cities.length; ci++) {
@@ -211,117 +121,64 @@ class BritishColumbiaScraper extends BaseScraper {
       yield { _cityProgress: { current: ci + 1, total: cities.length } };
       log.scrape(`Searching: ${practiceArea || 'all'} lawyers in ${city}, ${this.stateCode}`);
 
-      let page = 1;
-      let totalResults = 0;
-      let pagesFetched = 0;
-      let consecutiveEmpty = 0;
+      let totalForCity = 0;
 
-      while (true) {
-        if (options.maxPages && pagesFetched >= options.maxPages) {
-          log.info(`Reached max pages limit (${options.maxPages}) for ${city}`);
-          break;
-        }
+      for (const prefix of this.lastNamePrefixes) {
+        if (options.maxPages && totalForCity >= 5) break;
 
-        // Build ColdFusion POST form data
-        const formData = new URLSearchParams();
-        formData.set('city', city);
-        formData.set('status', 'Practising');
-        formData.set('submit', 'Search');
-        if (practiceCode) {
-          formData.set('practiceArea', practiceCode);
-        }
-        if (page > 1) {
-          formData.set('page', String(page));
-          formData.set('startRow', String((page - 1) * this.pageSize + 1));
-        }
+        const params = new URLSearchParams({
+          is_submitted: '1',
+          txt_search_type: 'begins',
+          txt_last_nm: prefix,
+          txt_given_nm: '',
+          txt_city: city,
+          member_search: 'Search',
+          results_no: String(this.pageSize),
+        });
 
-        const postUrl = page === 1 ? this.baseUrl : this.resultUrl;
-        log.info(`Page ${page} — POST ${postUrl} [City=${city}]`);
+        const url = `${this.baseUrl}?${params.toString()}`;
+        log.info(`GET ${url}`);
 
         let response;
         try {
           await rateLimiter.wait();
-          response = await this.httpPost(postUrl, formData.toString(), rateLimiter);
+          response = await this.httpGet(url, rateLimiter);
         } catch (err) {
           log.error(`Request failed: ${err.message}`);
-          const shouldRetry = await rateLimiter.handleBlock(0);
-          if (shouldRetry) continue;
-          break;
-        }
-
-        if (response.statusCode === 429 || response.statusCode === 403) {
-          log.warn(`Got ${response.statusCode} from ${this.name}`);
-          const shouldRetry = await rateLimiter.handleBlock(response.statusCode);
-          if (shouldRetry) continue;
-          break;
+          continue;
         }
 
         if (response.statusCode !== 200) {
-          log.error(`Unexpected status ${response.statusCode} — skipping`);
-          break;
+          log.error(`Unexpected status ${response.statusCode}`);
+          continue;
         }
 
         rateLimiter.resetBackoff();
 
         if (this.detectCaptcha(response.body)) {
-          log.warn(`CAPTCHA detected on page ${page} for ${city} — skipping`);
-          yield { _captcha: true, city, page };
+          log.warn(`CAPTCHA detected for ${city}/${letter} — skipping`);
+          yield { _captcha: true, city };
           break;
         }
 
         const $ = cheerio.load(response.body);
-
-        if (page === 1) {
-          totalResults = this.extractResultCount($);
-          if (totalResults === 0) {
-            const testAttorneys = this.parseResultsPage($);
-            if (testAttorneys.length === 0) {
-              log.info(`No results for ${practiceArea || 'all'} in ${city}`);
-              break;
-            }
-            totalResults = testAttorneys.length;
-          }
-          const totalPages = Math.ceil(totalResults / this.pageSize);
-          log.success(`Found ${totalResults.toLocaleString()} results (${totalPages} pages) for ${city}`);
-        }
-
         const attorneys = this.parseResultsPage($);
 
-        if (attorneys.length === 0) {
-          consecutiveEmpty++;
-          if (consecutiveEmpty >= this.maxConsecutiveEmpty) {
-            log.warn(`${this.maxConsecutiveEmpty} consecutive empty pages — stopping pagination for ${city}`);
-            break;
-          }
-          page++;
-          pagesFetched++;
-          continue;
-        }
+        if (attorneys.length === 0) continue;
 
-        consecutiveEmpty = 0;
+        log.success(`Found ${attorneys.length} results for ${city}/${prefix}`);
 
         for (const attorney of attorneys) {
-          if (options.minYear && attorney.admission_date) {
-            const year = parseInt((attorney.admission_date.match(/\d{4}/) || ['0'])[0], 10);
-            if (year > 0 && year < options.minYear) continue;
-          }
+          attorney.city = city;
           yield this.transformResult(attorney, practiceArea);
+          totalForCity++;
         }
+      }
 
-        // Check for next page
-        const hasNext = $('a').filter((_, el) => {
-          const text = $(el).text().trim().toLowerCase();
-          return text === 'next' || text === 'next >' || text === '>>';
-        }).length > 0;
-
-        const totalPages = Math.ceil(totalResults / this.pageSize);
-        if (page >= totalPages && !hasNext) {
-          log.success(`Completed all pages for ${city}`);
-          break;
-        }
-
-        page++;
-        pagesFetched++;
+      if (totalForCity > 0) {
+        log.success(`Found ${totalForCity} total results for ${city}`);
+      } else {
+        log.info(`No results for ${practiceArea || 'all'} in ${city}`);
       }
     }
   }

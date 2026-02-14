@@ -2,19 +2,19 @@
  * Law Society of Scotland Scraper
  *
  * Source: https://www.lawscot.org.uk/find-a-solicitor/
- * Search endpoint: https://www.lawscot.org.uk/find-a-solicitor/search/
- * Method: HTML form-based search, server-side rendered results
+ * Method: HTTP GET with query params + Cheerio HTML parsing
+ * Search URL: /find-a-solicitor/?type=sol&lastname=X&city=Y
  *
  * The Law Society of Scotland maintains a Find a Solicitor directory.
- * Search by last name, first name, firm name, postcode, area of work, city.
- * Results include firm name, postal address with postcode, legal aid status,
- * and partner count. Detail pages may have phone and email.
+ * Search by last name, city, area of work via GET query params.
+ * Results are in <div class="find-a-solicitor-list-item"> containers with
+ * h2.h4 name headings ("Last, First"), firm links with data-heading attributes,
+ * and admission date paragraphs.
  *
  * Note: results are randomised by default -- systematic searching by
  * last name initial and city provides more complete coverage.
  *
- * Overrides search() to POST form data to the search endpoint and parse
- * server-rendered HTML results.
+ * Overrides search() to iterate A-Z last name initials per city.
  */
 
 const cheerio = require('cheerio');
@@ -58,191 +58,104 @@ class ScotlandScraper extends BaseScraper {
       ],
     });
 
-    this.searchEndpoint = 'https://www.lawscot.org.uk/find-a-solicitor/search/';
+    // GET-based search — no separate endpoint needed
   }
 
   /**
-   * Not used -- search() is fully overridden for HTML form scraping.
+   * Build search URL for the Law Society of Scotland.
+   * Uses GET with query params: type=sol, lastname, city, etc.
    */
-  buildSearchUrl() {
-    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden for HTML form search`);
-  }
-
-  /**
-   * Not used -- search() is fully overridden for HTML form scraping.
-   */
-  parseResultsPage() {
-    throw new Error(`${this.name}: parseResultsPage() is not used — search() is overridden for HTML form search`);
-  }
-
-  /**
-   * Not used -- search() is fully overridden for HTML form scraping.
-   */
-  extractResultCount() {
-    throw new Error(`${this.name}: extractResultCount() is not used — search() is overridden for HTML form search`);
-  }
-
-  /**
-   * HTTP POST for the Law Society of Scotland search form.
-   */
-  httpPost(url, data, rateLimiter, contentType = 'application/x-www-form-urlencoded') {
-    return new Promise((resolve, reject) => {
-      const parsed = new URL(url);
-      const postData = typeof data === 'string'
-        ? data
-        : new URLSearchParams(data).toString();
-      const options = {
-        hostname: parsed.hostname,
-        path: parsed.pathname + parsed.search,
-        method: 'POST',
-        headers: {
-          'Content-Type': contentType,
-          'Content-Length': Buffer.byteLength(postData),
-          'User-Agent': rateLimiter.getUserAgent(),
-          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-          'Accept-Language': 'en-GB,en;q=0.9',
-          'Origin': 'https://www.lawscot.org.uk',
-          'Referer': 'https://www.lawscot.org.uk/find-a-solicitor/',
-          'Connection': 'keep-alive',
-        },
-      };
-      const proto = parsed.protocol === 'https:' ? require('https') : require('http');
-      const req = proto.request(options, (res) => {
-        // Follow redirects with GET
-        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-          res.resume();
-          let redirect = res.headers.location;
-          if (redirect.startsWith('/')) {
-            redirect = `${parsed.protocol}//${parsed.host}${redirect}`;
-          }
-          return resolve(this.httpGet(redirect, rateLimiter));
-        }
-        let body = '';
-        res.on('data', c => body += c);
-        res.on('end', () => resolve({ statusCode: res.statusCode, body }));
-      });
-      req.on('error', reject);
-      req.setTimeout(15000);
-      req.write(postData);
-      req.end();
-    });
+  buildSearchUrl({ city, practiceCode, page, lastNameInitial }) {
+    const params = new URLSearchParams();
+    params.set('type', 'sol');
+    if (lastNameInitial) {
+      params.set('lastname', lastNameInitial);
+    }
+    if (city) {
+      params.set('city', city);
+    }
+    if (practiceCode) {
+      params.set('areaofwork', practiceCode);
+    }
+    if (page && page > 1) {
+      params.set('page', String(page));
+    }
+    return `${this.baseUrl}?${params.toString()}`;
   }
 
   /**
    * Parse search results from the Law Society of Scotland HTML page.
-   * Results typically show firm name, address, postcode, legal aid, partners.
+   * Results are in <div class="find-a-solicitor-list-item"> containers.
+   * Name in <h2 class="h4"> as "Last, First".
+   * Firm in <a class="overlay-link"> with data-heading attribute.
+   * Admission date in <p>Admission date: DD/MM/YYYY</p>.
    */
-  _parseSearchResults($, city) {
+  parseResultsPage($) {
     const attorneys = [];
 
-    // Try various selectors for solicitor result items
-    const selectors = [
-      '.search-result', '.result-item', '.solicitor-result',
-      'table tbody tr', '.card', 'li.result', 'article',
-      '.find-solicitor-result', '.listing', '.member-result',
-    ];
-
-    let $items = $([]);
-    for (const sel of selectors) {
-      $items = $(sel);
-      if ($items.length > 0) break;
-    }
-
-    // Fallback: try to find result containers by structure
-    if ($items.length === 0) {
-      $items = $('div').filter((_, el) => {
-        const $el = $(el);
-        const text = $el.text();
-        // Look for blocks that contain name-like and address-like content
-        return text.includes(city) && (text.match(/\b[A-Z]{1,2}\d{1,2}\s?\d[A-Z]{2}\b/) !== null);
-      });
-    }
-
-    $items.each((_, el) => {
+    $('.find-a-solicitor-list-item').each((_, el) => {
       const $el = $(el);
 
-      // Extract solicitor/firm name
-      const nameEl = $el.find('h2 a, h3 a, h4 a, .name a, a.solicitor-name').first();
-      let fullName = nameEl.text().trim();
-      if (!fullName) {
-        fullName = $el.find('h2, h3, h4, .name, .solicitor-name, strong').first().text().trim();
-      }
+      // Extract solicitor name from h2.h4 heading
+      const fullName = $el.find('h2.h4').text().trim();
       if (!fullName || fullName.length < 2) return;
 
-      // Profile URL
-      let profileUrl = nameEl.attr('href') || '';
-      if (profileUrl && profileUrl.startsWith('/')) {
-        profileUrl = `https://www.lawscot.org.uk${profileUrl}`;
+      // Parse "Last, First Middle" name format
+      let firstName = '';
+      let lastName = '';
+      if (fullName.includes(',')) {
+        const parts = fullName.split(',').map(s => s.trim());
+        lastName = parts[0];
+        firstName = parts[1] || '';
+      } else {
+        const nameParts = this.splitName(fullName);
+        firstName = nameParts.firstName;
+        lastName = nameParts.lastName;
       }
 
-      // Extract firm name (may differ from solicitor name)
-      let firmName = ($el.find('.firm, .firm-name, .organisation, .company').text() || '').trim();
-      if (!firmName) {
-        // Check if there is a secondary heading/line that looks like a firm
-        const secondaryText = $el.find('p, .details, .info').first().text().trim();
-        if (secondaryText && secondaryText !== fullName) {
-          firmName = secondaryText.split('\n')[0].trim();
-        }
-      }
+      // Extract firm name from overlay-link data-heading attribute
+      const $firmLink = $el.find('a.overlay-link').first();
+      const firmName = $firmLink.attr('data-heading') || $firmLink.text().trim() || '';
 
-      // Extract address and postcode
-      const addressEl = $el.find('.address, address, .location, .postal-address');
-      let address = addressEl.text().trim() || '';
-      if (!address) {
-        // Try to extract from the full text
-        const fullText = $el.text();
-        const postcodeMatch = fullText.match(/\b([A-Z]{1,2}\d{1,2}\s?\d[A-Z]{2})\b/);
-        if (postcodeMatch) {
-          address = fullText.substring(
-            Math.max(0, fullText.indexOf(postcodeMatch[0]) - 100),
-            fullText.indexOf(postcodeMatch[0]) + postcodeMatch[0].length
-          ).trim();
-        }
-      }
+      // Extract firm address from data-address attribute
+      const firmAddress = ($firmLink.attr('data-address') || '').replace(/\r/g, ', ');
+
+      // Extract total solicitors count from data-partners attribute
+      const totalSolicitors = $firmLink.attr('data-partners') || '';
+
+      // Extract admission date
+      let admissionDate = '';
+      $el.find('.findASolSummary p').each((_, p) => {
+        const pText = $(p).text().trim();
+        const admMatch = pText.match(/Admission date:\s*(\d{2}\/\d{2}\/\d{4})/i);
+        if (admMatch) admissionDate = admMatch[1];
+      });
 
       // Extract postcode from address
-      const postcodeMatch = address.match(/\b([A-Z]{1,2}\d{1,2}\s?\d[A-Z]{2})\b/);
+      const postcodeMatch = firmAddress.match(/\b([A-Z]{1,2}\d{1,2}\s?\d[A-Z]{2})\b/);
       const postcode = postcodeMatch ? postcodeMatch[1] : '';
 
-      // Extract phone number
-      let phone = ($el.find('a[href^="tel:"]').attr('href') || '').replace('tel:', '').trim();
-      if (!phone) {
-        const phoneMatch = $el.text().match(/(?:Tel|Phone|Telephone):\s*([\d\s+()-]+)/i) ||
-                           $el.text().match(/\b(0\d{2,4}\s?\d{3,4}\s?\d{3,4})\b/);
-        if (phoneMatch) phone = phoneMatch[1].trim();
-      }
-
-      // Extract email
-      let email = ($el.find('a[href^="mailto:"]').attr('href') || '').replace('mailto:', '').trim();
-
-      // Extract website
-      const website = ($el.find('a[href^="http"]').not('a[href*="lawscot.org"]').attr('href') || '').trim();
-
-      // Legal aid status
-      const legalAid = ($el.find('.legal-aid, .legal-aid-status').text() || '').trim() ||
-                        ($el.text().match(/Legal\s+Aid:\s*(Yes|No|Available)/i) || ['', ''])[1];
-
-      // Extract status
-      const status = ($el.find('.status, .badge').text() || '').trim();
-
-      const { firstName, lastName } = this.splitName(fullName);
+      // Extract solicitor ID from the item's id attribute
+      const solId = ($el.attr('id') || '').replace('fos-item-', '');
 
       attorneys.push({
         first_name: firstName,
         last_name: lastName,
-        full_name: fullName,
-        firm_name: firmName || fullName,
-        city: city,
+        full_name: fullName.includes(',') ? `${firstName} ${lastName}`.trim() : fullName,
+        firm_name: firmName,
+        city: '',
         state: 'UK-SC',
-        phone,
-        email,
-        website,
+        phone: '',
+        email: '',
+        website: '',
         bar_number: '',
-        bar_status: status || 'Practising',
-        profile_url: profileUrl,
-        address,
-        postcode,
-        legal_aid: legalAid,
+        bar_status: 'Practising',
+        profile_url: '',
+        address: firmAddress,
+        postcode: postcode,
+        admission_date: admissionDate,
+        solicitor_id: solId,
+        total_solicitors_in_firm: totalSolicitors,
       });
     });
 
@@ -251,72 +164,28 @@ class ScotlandScraper extends BaseScraper {
 
   /**
    * Extract total result count from the search results page.
+   * Looks for <div class="results-count"> with "N results found" text.
    */
-  _extractSearchResultCount($) {
-    const text = $('body').text();
-    const match = text.match(/([\d,]+)\s+(?:results?|records?|solicitors?|firms?)\s+found/i) ||
-                  text.match(/(?:Showing|Found|Displaying)\s+(?:\d+\s*[-–]\s*\d+\s+of\s+)?([\d,]+)/i) ||
-                  text.match(/Results:\s*([\d,]+)/i) ||
-                  text.match(/(\d+)\s+matching\s+(?:solicitors?|firms?|results?)/i);
+  extractResultCount($) {
+    const countText = $('.results-count').text().trim();
+    const match = countText.match(/([\d,]+)\s+results?\s+found/i);
     if (match) return parseInt(match[1].replace(/,/g, ''), 10);
+
+    // Fallback: try body text
+    const text = $('body').text();
+    const fallback = text.match(/([\d,]+)\s+results?\s+found/i);
+    if (fallback) return parseInt(fallback[1].replace(/,/g, ''), 10);
+
     return 0;
-  }
-
-  /**
-   * Fetch detail page for a solicitor to get additional contact info.
-   * Returns enriched attorney object with phone/email if available.
-   */
-  async _enrichFromDetailPage(attorney, rateLimiter) {
-    if (!attorney.profile_url) return attorney;
-
-    try {
-      await rateLimiter.wait();
-      const response = await this.httpGet(attorney.profile_url, rateLimiter);
-      if (response.statusCode !== 200) return attorney;
-
-      const $ = cheerio.load(response.body);
-
-      // Extract phone if not already present
-      if (!attorney.phone) {
-        const phoneEl = $('a[href^="tel:"]').first();
-        if (phoneEl.length) {
-          attorney.phone = phoneEl.attr('href').replace('tel:', '').trim();
-        } else {
-          const phoneMatch = $('body').text().match(/(?:Tel|Phone|Telephone):\s*([\d\s+()-]+)/i);
-          if (phoneMatch) attorney.phone = phoneMatch[1].trim();
-        }
-      }
-
-      // Extract email if not already present
-      if (!attorney.email) {
-        const emailEl = $('a[href^="mailto:"]').first();
-        if (emailEl.length) {
-          attorney.email = emailEl.attr('href').replace('mailto:', '').trim();
-        }
-      }
-
-      // Extract website if not already present
-      if (!attorney.website) {
-        const websiteEl = $('a[href^="http"]').not('a[href*="lawscot.org"]').first();
-        if (websiteEl.length) {
-          attorney.website = websiteEl.attr('href').trim();
-        }
-      }
-    } catch (err) {
-      log.info(`Could not fetch detail page for ${attorney.full_name}: ${err.message}`);
-    }
-
-    return attorney;
   }
 
   /**
    * Async generator that yields solicitor records from the Law Society of Scotland.
    *
    * Strategy:
-   *  - Systematically search by city using the HTML form POST
-   *  - To combat randomised results, also search by last name initials (A-Z)
+   *  - Uses GET requests with query params: type=sol, lastname, city
+   *  - Systematically search by city and last name initials (A-Z)
    *  - Parse server-rendered HTML results
-   *  - Optionally fetch detail pages for phone/email enrichment
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
@@ -351,27 +220,13 @@ class ScotlandScraper extends BaseScraper {
             break;
           }
 
-          // Build search form data
-          const formData = {
-            last_name: initial,
-            first_name: '',
-            firm_name: '',
-            postcode: '',
-            city: city,
-          };
-          if (practiceCode) {
-            formData.area_of_work = practiceCode;
-          }
-          if (page > 1) {
-            formData.page = String(page);
-          }
-
-          log.info(`Page ${page} — POST ${this.searchEndpoint} [City=${city}, Last=${initial}]`);
+          const url = this.buildSearchUrl({ city, practiceCode, page, lastNameInitial: initial });
+          log.info(`Page ${page} — GET ${url}`);
 
           let response;
           try {
             await rateLimiter.wait();
-            response = await this.httpPost(this.searchEndpoint, formData, rateLimiter);
+            response = await this.httpGet(url, rateLimiter);
           } catch (err) {
             log.error(`Request failed: ${err.message}`);
             const shouldRetry = await rateLimiter.handleBlock(0);
@@ -402,9 +257,9 @@ class ScotlandScraper extends BaseScraper {
           const $ = cheerio.load(response.body);
 
           if (page === 1) {
-            totalResults = this._extractSearchResultCount($);
+            totalResults = this.extractResultCount($);
             if (totalResults === 0) {
-              const testResults = this._parseSearchResults($, city);
+              const testResults = this.parseResultsPage($);
               if (testResults.length === 0) {
                 // No results for this initial — move to next
                 break;
@@ -415,7 +270,7 @@ class ScotlandScraper extends BaseScraper {
             log.info(`Found ${totalResults} results (${totalPages} pages) for ${city}/${initial}`);
           }
 
-          const attorneys = this._parseSearchResults($, city);
+          const attorneys = this.parseResultsPage($);
 
           if (attorneys.length === 0) {
             consecutiveEmpty++;
@@ -430,6 +285,9 @@ class ScotlandScraper extends BaseScraper {
           consecutiveEmpty = 0;
 
           for (const attorney of attorneys) {
+            // Set city from the search parameter
+            attorney.city = city;
+
             // Deduplicate by name+firm combination
             const key = `${attorney.full_name}|${attorney.firm_name}`.toLowerCase();
             if (seen.has(key)) continue;

@@ -321,30 +321,21 @@ class DelawareScraper extends BaseScraper {
       }
 
       // Step 2: POST search form
-      // DOE Legal ASP.NET forms use ctl00$ prefixed control names
+      // DOE Legal SearchText is a name field, not city. Search by last name initial.
+      const searchName = 'Smith';
       const formData = {
         ...hiddenFields,
         '__EVENTTARGET': '',
         '__EVENTARGUMENT': '',
       };
 
-      // Set search fields — DOE Legal uses various naming patterns
-      const searchFieldPrefixes = [
-        'ctl00$ContentPlaceHolder1$',
-        'ctl00$MainContent$',
-        'ctl00$cphContent$',
-        '',
-      ];
-
-      for (const prefix of searchFieldPrefixes) {
-        formData[`${prefix}txtLastName`] = '';
-        formData[`${prefix}txtFirstName`] = '';
-        formData[`${prefix}txtCity`] = city;
-        formData[`${prefix}txtFirm`] = '';
-        formData[`${prefix}ddlStatus`] = 'Active';
-        formData[`${prefix}ddlPageSize`] = String(this.pageSize);
-        formData[`${prefix}btnSearch`] = 'Search';
-      }
+      // DOE Legal uses ctl00$PageContent$ prefix with SearchText autocomplete field
+      formData['ctl00$PageContent$SearchText'] = searchName;
+      formData['ctl00$PageContent$ddlPageSize'] = String(this.pageSize);
+      formData['ctl00$PageContent$btnSearch'] = 'Search';
+      // Also try common alternate prefixes
+      formData['ctl00$ContentPlaceHolder1$SearchText'] = searchName;
+      formData['ctl00$MainContent$SearchText'] = searchName;
 
       let searchResponse;
       try {

@@ -119,39 +119,36 @@ class TexasScraper extends BaseScraper {
 
   /**
    * Parse search results page HTML.
-   * Texas Bar results are rendered as div-based cards with microformat spans,
-   * not HTML tables. Each result has span.given-name, span.family-name, etc.
-   * Also handles table-based layouts as a fallback.
+   * Texas Bar results are rendered as <article class="lawyer"> cards.
+   * Each card has an <h3> with span.given-name, span.family-name, and a
+   * span.status-icon with shape/color classes for status.
+   * City is in a <p> with "Primary Practice Location:" text.
+   * Practice areas are in <p class="areas">.
    */
   parseResultsPage($) {
     const attorneys = [];
 
-    // Primary: Each result card contains a link to MemberDirectoryDetail with ContactID
-    $('a[href*="ContactID"]').each((_, el) => {
-      const $link = $(el);
-      const href = $link.attr('href') || '';
+    // Each result is an <article class="lawyer"> within <div class="results">
+    $('article.lawyer').each((_, el) => {
+      const $article = $(el);
+
+      // Extract ContactID from the detail link
+      const $detailLink = $article.find('a[href*="ContactID"]').first();
+      if (!$detailLink.length) return;
+
+      const href = $detailLink.attr('href') || '';
       const contactIdMatch = href.match(/ContactID=(\d+)/i);
       if (!contactIdMatch) return;
-
       const contactId = contactIdMatch[1];
 
-      // Find the parent result container
-      const $parent = $link.closest('h3, .result, div');
-      if (!$parent.length) return;
+      // Extract name from microformat spans inside <h3>
+      const $h3 = $article.find('h3').first();
+      let firstName = $h3.find('span.given-name').text().trim();
+      let lastName = $h3.find('span.family-name').text().trim();
 
-      // Try microformat spans first (in h3 or parent)
-      const $h3 = $link.closest('h3');
-      let firstName = '';
-      let lastName = '';
-
-      if ($h3.length) {
-        firstName = $h3.find('span.given-name').text().trim();
-        lastName = $h3.find('span.family-name').text().trim();
-      }
-
-      // Fallback: extract name from the link text itself
+      // Fallback: extract name from the link text
       if (!firstName && !lastName) {
-        const linkText = $link.text().trim();
+        const linkText = $detailLink.text().trim();
         if (linkText && linkText.length > 2) {
           const parsed = this.splitName(linkText);
           firstName = parsed.firstName;
@@ -161,43 +158,51 @@ class TexasScraper extends BaseScraper {
 
       if (!firstName && !lastName) return;
 
-      // Get the result card container
-      const $card = $h3.length ? $h3.parent() : $parent;
-
-      // Extract bar status from status icon
+      // Extract bar status from status icon in <h3>
       let barStatus = '';
-      const statusContainer = $h3.length ? $h3 : $card;
-      const statusIcon = statusContainer.find('span.status-icon');
-      if (statusIcon.length) {
-        if (statusIcon.hasClass('green')) barStatus = 'Eligible';
-        else if (statusIcon.hasClass('red')) barStatus = 'Not Eligible';
-        else if (statusIcon.hasClass('yellow')) barStatus = 'Non-Practicing';
-        else if (statusIcon.hasClass('aqua')) barStatus = 'Inactive';
-        else if (statusIcon.hasClass('blue')) barStatus = 'Deceased';
+      const $statusIcon = $h3.find('span.status-icon');
+      if ($statusIcon.length) {
+        if ($statusIcon.hasClass('green')) barStatus = 'Eligible';
+        else if ($statusIcon.hasClass('red')) barStatus = 'Not Eligible';
+        else if ($statusIcon.hasClass('yellow')) barStatus = 'Non-Practicing';
+        else if ($statusIcon.hasClass('aqua')) barStatus = 'Inactive';
+        else if ($statusIcon.hasClass('blue')) barStatus = 'Deceased';
       }
 
-      // Extract bar card number from card text
-      let barNumber = '';
-      const cardText = $card.text();
-      const barCardMatch = cardText.match(/Bar Card(?:\s+Number)?[:\s]*(\d+)/i);
-      if (barCardMatch) barNumber = barCardMatch[1];
-
-      // Extract city from card text
+      // Extract city from "Primary Practice Location:" paragraph
       let city = '';
-      const locationMatch = cardText.match(/(?:City|Location)[:\s]*([A-Za-z\s.'-]+?)(?:\s*(?:Bar|Phone|Email|Fax|\n|$))/i);
-      if (locationMatch) city = locationMatch[1].trim();
+      const $avatarCol = $article.find('.avatar-column');
+      $avatarCol.find('p').each((_, p) => {
+        const pText = $(p).text();
+        if (pText.includes('Primary Practice Location:')) {
+          // Text is like "Primary Practice Location: Dallas, TX"
+          const locMatch = pText.match(/Primary Practice Location:\s*(.+)/i);
+          if (locMatch) {
+            const locText = locMatch[1].replace(/\u00a0/g, ' ').trim();
+            // Extract city before the comma or state code
+            const cityMatch = locText.match(/^([^,]+)/);
+            if (cityMatch) city = cityMatch[1].trim();
+          }
+        }
+      });
+
+      // Extract firm name from <h5> (company name)
+      const firmName = $avatarCol.find('h5').text().trim();
+
+      // Extract practice areas
+      const practiceAreas = $avatarCol.find('p.areas').text().replace(/Practice Areas:\s*/i, '').trim();
 
       attorneys.push({
         first_name: firstName,
         last_name: lastName,
         full_name: `${firstName} ${lastName}`.trim(),
-        firm_name: '',
+        firm_name: firmName,
         city: city,
         state: 'TX',
         phone: '',
         email: '',
         website: '',
-        bar_number: barNumber,
+        bar_number: '',
         admission_date: '',
         bar_status: barStatus,
         contact_id: contactId,
@@ -206,50 +211,10 @@ class TexasScraper extends BaseScraper {
       });
     });
 
-    // Fallback: try table-based results if no ContactID links found
-    if (attorneys.length === 0) {
-      $('table tr').each((i, row) => {
-        if (i === 0) return; // skip header
-        const $row = $(row);
-        if ($row.find('th').length > 0) return;
-        const cells = $row.find('td');
-        if (cells.length < 2) return;
-
-        const nameCell = $(cells[0]);
-        const nameLink = nameCell.find('a');
-        const fullName = (nameLink.length ? nameLink.text() : nameCell.text()).trim();
-        if (!fullName || fullName.length < 3) return;
-        if (/^(name|attorney|search|result|page|home|about|contact)/i.test(fullName)) return;
-        if (!fullName.includes(' ') && !fullName.includes(',')) return;
-
-        const { firstName, lastName } = this.splitName(fullName);
-        const profileLink = nameLink.attr('href') || '';
-        const contactIdMatch = profileLink.match(/ContactID=(\d+)/i);
-
-        attorneys.push({
-          first_name: firstName,
-          last_name: lastName,
-          full_name: fullName,
-          firm_name: cells.length > 1 ? $(cells[1]).text().trim() : '',
-          city: cells.length > 2 ? $(cells[2]).text().trim() : '',
-          state: 'TX',
-          phone: cells.length > 3 ? $(cells[3]).text().trim() : '',
-          email: '',
-          website: '',
-          bar_number: '',
-          admission_date: '',
-          bar_status: cells.length > 4 ? $(cells[4]).text().trim() : '',
-          contact_id: contactIdMatch ? contactIdMatch[1] : '',
-          profile_url: contactIdMatch ? this.detailBaseUrl + contactIdMatch[1] : '',
-          source: 'texas_bar',
-        });
-      });
-    }
-
-    // Deduplicate by contactId (multiple links per card)
+    // Deduplicate by contactId
     const seen = new Set();
     return attorneys.filter(a => {
-      if (!a.contact_id) return true; // keep entries without contact_id
+      if (!a.contact_id) return true;
       if (seen.has(a.contact_id)) return false;
       seen.add(a.contact_id);
       return true;
@@ -308,16 +273,17 @@ class TexasScraper extends BaseScraper {
 
         // Build POST form data
         // Form field is PPlCityName (not City) and Submitted=1 is required
+        // Note: Firstname has lowercase 'n', and State should NOT be included (causes errors)
         const formData = {
           Submitted: '1',
+          ShowPrinter: '1',
+          Find: '0',
           LastName: '',
-          FirstName: '',
+          Firstname: '',
           CompanyName: '',
           PPlCityName: city,
-          State: 'Texas',
           County: '',
           BarCardNumber: '',
-          MaxNumber: String(this.pageSize),
         };
         if (practiceCode) {
           formData.PracticeArea = practiceCode;

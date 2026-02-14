@@ -252,110 +252,21 @@ class ColoradoScraper extends BaseScraper {
   }
 
   /**
-   * Override search() for POST-based form submissions.
-   * Colorado uses POST with fname, lname params. We search by iterating
-   * common last name prefixes per city to get broad coverage.
-   * Since there is no direct city filter, we search by last name patterns.
+   * Override search() — Colorado site is behind Cloudflare protection
+   * and returns 403 Forbidden for non-browser requests.
+   * This scraper requires a browser-based approach (Puppeteer/Playwright)
+   * which is not yet implemented. For now, log a warning and yield nothing.
    */
   async *search(practiceArea, options = {}) {
-    const rateLimiter = new RateLimiter();
-    const practiceCode = this.resolvePracticeCode(practiceArea);
-
-    if (!practiceCode && practiceArea) {
-      log.warn(`CO bar search does not filter by practice area — searching all attorneys`);
-    }
-
     const cities = this.getCities(options);
-
-    // High-frequency last name prefixes to avoid timeout (A-Z takes 26+ requests per city).
-    // These 5 letters cover the most common last name initials in the US.
-    const lastNamePrefixes = ['A', 'B', 'C', 'M', 'S'];
 
     for (let ci = 0; ci < cities.length; ci++) {
       const city = cities[ci];
       yield { _cityProgress: { current: ci + 1, total: cities.length } };
-      log.scrape(`Searching: ${practiceArea || 'all'} attorneys in ${city}, ${this.stateCode}`);
-
-      for (const prefix of lastNamePrefixes) {
-        let page = 1;
-        let totalResults = 0;
-        let pagesFetched = 0;
-        let consecutiveEmpty = 0;
-
-        if (options.maxPages && pagesFetched >= options.maxPages) {
-          break;
-        }
-
-        const formData = {
-          fname: '',
-          lname: prefix,
-          city: city,
-          RegNo: '',
-          submit: 'Search',
-        };
-
-        if (page > 1) {
-          formData.page = String(page);
-        }
-
-        log.info(`Searching ${city} — last name prefix "${prefix}" — POST ${this.baseUrl}`);
-
-        let response;
-        try {
-          await rateLimiter.wait();
-          response = await this.httpPost(this.baseUrl, formData, rateLimiter);
-        } catch (err) {
-          log.error(`Request failed: ${err.message}`);
-          const shouldRetry = await rateLimiter.handleBlock(0);
-          if (shouldRetry) continue;
-          break;
-        }
-
-        if (response.statusCode === 429 || response.statusCode === 403) {
-          log.warn(`Got ${response.statusCode} from ${this.name}`);
-          const shouldRetry = await rateLimiter.handleBlock(response.statusCode);
-          if (shouldRetry) continue;
-          break;
-        }
-
-        if (response.statusCode !== 200) {
-          log.error(`Unexpected status ${response.statusCode} — skipping prefix ${prefix}`);
-          continue;
-        }
-
-        rateLimiter.resetBackoff();
-
-        if (this.detectCaptcha(response.body)) {
-          log.warn(`CAPTCHA detected for ${city} prefix ${prefix} — skipping`);
-          yield { _captcha: true, city, page };
-          continue;
-        }
-
-        const $ = cheerio.load(response.body);
-        totalResults = this.extractResultCount($);
-        const attorneys = this.parseResultsPage($);
-
-        if (attorneys.length === 0) {
-          continue;
-        }
-
-        log.success(`Found ${attorneys.length} results for ${city} prefix "${prefix}"`);
-
-        // Filter to only attorneys in the target city
-        for (const attorney of attorneys) {
-          if (city && attorney.city && attorney.city.toLowerCase() !== city.toLowerCase()) {
-            continue;
-          }
-          if (options.minYear && attorney.admission_date) {
-            const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
-            if (year > 0 && year < options.minYear) continue;
-          }
-          yield this.transformResult(attorney, practiceArea);
-        }
-
-        pagesFetched++;
-      }
+      log.warn(`CO bar (coloradolegalregulation.com) is behind Cloudflare protection — cannot scrape without browser automation. Skipping ${city}.`);
     }
+
+    log.warn(`Colorado scraper requires Puppeteer/Playwright for Cloudflare bypass — no results returned`);
   }
 }
 

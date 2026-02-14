@@ -15,7 +15,7 @@ class OregonScraper extends BaseScraper {
       name: 'oregon',
       stateCode: 'OR',
       baseUrl: 'https://www.osbar.org/members/start.asp',
-      pageSize: 50,
+      pageSize: 20,
       practiceAreaCodes: {
         'immigration':          'IM',
         'family':               'FL',
@@ -49,7 +49,7 @@ class OregonScraper extends BaseScraper {
       ],
     });
 
-    this.searchUrl = 'https://www.osbar.org/members/display.asp';
+    this.searchUrl = 'https://www.osbar.org/members/membersearch.asp';
   }
 
   buildSearchUrl({ city, practiceCode, page }) {
@@ -60,9 +60,9 @@ class OregonScraper extends BaseScraper {
     if (city) {
       params.set('city', city);
     }
-    params.set('s', 'a'); // status: active
+    params.set('pastnames', '');
     if (page && page > 1) {
-      params.set('p', String(page));
+      params.set('cp', String(page));
     }
     return `${this.searchUrl}?${params.toString()}`;
   }
@@ -70,48 +70,42 @@ class OregonScraper extends BaseScraper {
   parseResultsPage($) {
     const attorneys = [];
 
-    // OSB displays results in table rows
-    $('table.searchresults tr, table.results tr, table tr').each((i, el) => {
+    // OSB displays results in table#tblResults with columns: Bar# | Name | City
+    // Each row has onclick="location.href='membersearch_display.asp?b=XXXXXX'"
+    $('#tblResults tbody tr').each((i, el) => {
       const $row = $(el);
       const cells = $row.find('td');
       if (cells.length < 3) return;
 
-      // Try to detect header rows
-      const firstCellText = $(cells[0]).text().trim();
-      if (/^name$/i.test(firstCellText) || /^bar\s*(#|number)$/i.test(firstCellText)) return;
-
-      // Extract from table cells — typical layout:
-      // Name | Bar # | City | Status | Phone
-      const nameCell = $(cells[0]);
-      const fullName = nameCell.text().trim();
-      const profileLink = nameCell.find('a').attr('href') || '';
+      const barNumber = $(cells[0]).text().trim();
+      const fullName = $(cells[1]).text().trim();
+      const city = $(cells[2]).text().trim();
 
       if (!fullName || fullName.length < 2) return;
+      // Skip header rows that might leak through
+      if (/^(bar\s*#|name|city)$/i.test(barNumber)) return;
 
-      const barNumber = cells.length > 1 ? $(cells[1]).text().trim() : '';
-      const city = cells.length > 2 ? $(cells[2]).text().trim() : '';
-      const status = cells.length > 3 ? $(cells[3]).text().trim() : '';
-      const phone = cells.length > 4 ? $(cells[4]).text().trim() : '';
-      const email = cells.length > 5 ? $(cells[5]).text().trim() : '';
+      // Extract detail link from row onclick attribute
+      let profileUrl = '';
+      const onclick = $row.attr('onclick') || '';
+      const barMatch = onclick.match(/membersearch_display\.asp\?b=(\d+)/);
+      if (barMatch) {
+        profileUrl = `https://www.osbar.org/members/membersearch_display.asp?b=${barMatch[1]}`;
+      }
 
-      // Parse name — OSB often uses "Last, First" format
+      // Parse name — OSB uses "Last, First Middle" format
+      // Also strips honorifics like "Mr.", "Ms.", "Mrs."
       let firstName = '';
       let lastName = '';
       if (fullName.includes(',')) {
         const parts = fullName.split(',').map(s => s.trim());
         lastName = parts[0];
-        firstName = parts[1] || '';
+        // Remove honorifics (Mr., Ms., Mrs., Dr., Hon.) from first name portion
+        firstName = (parts[1] || '').replace(/^(Mr\.|Ms\.|Mrs\.|Dr\.|Hon\.)\s*/i, '').trim();
       } else {
         const nameParts = this.splitName(fullName);
         firstName = nameParts.firstName;
         lastName = nameParts.lastName;
-      }
-
-      let profileUrl = '';
-      if (profileLink) {
-        profileUrl = profileLink.startsWith('http')
-          ? profileLink
-          : `https://www.osbar.org/members/${profileLink}`;
       }
 
       attorneys.push({
@@ -121,67 +115,14 @@ class OregonScraper extends BaseScraper {
         firm_name: '',
         city: city,
         state: 'OR',
-        phone: phone,
-        email: email,
+        phone: '',
+        email: '',
         website: '',
         bar_number: barNumber,
-        bar_status: status || 'Active',
+        bar_status: 'Active',
         profile_url: profileUrl,
       });
     });
-
-    // Fallback: try parsing div-based results
-    if (attorneys.length === 0) {
-      $('.attorney-result, .member-result, .search-result').each((_, el) => {
-        const $el = $(el);
-
-        const nameEl = $el.find('a').first();
-        const fullName = nameEl.text().trim() || $el.find('.name, .attorney-name').text().trim();
-        const profileLink = nameEl.attr('href') || '';
-
-        if (!fullName || fullName.length < 2) return;
-
-        let firstName = '';
-        let lastName = '';
-        if (fullName.includes(',')) {
-          const parts = fullName.split(',').map(s => s.trim());
-          lastName = parts[0];
-          firstName = parts[1] || '';
-        } else {
-          const nameParts = this.splitName(fullName);
-          firstName = nameParts.firstName;
-          lastName = nameParts.lastName;
-        }
-
-        const barNumber = $el.find('.barnum, .bar-number').text().trim().replace(/[^0-9]/g, '');
-        const city = $el.find('.city').text().trim();
-        const phone = $el.find('.phone').text().trim();
-        const email = $el.find('a[href^="mailto:"]').text().trim();
-        const status = $el.find('.status').text().trim();
-
-        let profileUrl = '';
-        if (profileLink) {
-          profileUrl = profileLink.startsWith('http')
-            ? profileLink
-            : `https://www.osbar.org/members/${profileLink}`;
-        }
-
-        attorneys.push({
-          first_name: firstName,
-          last_name: lastName,
-          full_name: fullName.includes(',') ? `${firstName} ${lastName}`.trim() : fullName,
-          firm_name: '',
-          city: city,
-          state: 'OR',
-          phone: phone,
-          email: email,
-          website: '',
-          bar_number: barNumber,
-          bar_status: status || 'Active',
-          profile_url: profileUrl,
-        });
-      });
-    }
 
     return attorneys;
   }
@@ -189,15 +130,16 @@ class OregonScraper extends BaseScraper {
   extractResultCount($) {
     const text = $('body').text();
 
-    // Patterns like "123 members found" or "Results: 1-50 of 234"
+    // OSB uses "<h3>253 Matches</h3>" in the paging header
+    const matchMatches = text.match(/([\d,]+)\s+Match(?:es)?/i);
+    if (matchMatches) return parseInt(matchMatches[1].replace(/,/g, ''), 10);
+
+    // Fallback patterns
     const matchFound = text.match(/([\d,]+)\s+(?:members?|attorneys?|results?|records?)\s+found/i);
     if (matchFound) return parseInt(matchFound[1].replace(/,/g, ''), 10);
 
     const matchOf = text.match(/of\s+([\d,]+)\s+(?:members?|results?|records?|attorneys?)/i);
     if (matchOf) return parseInt(matchOf[1].replace(/,/g, ''), 10);
-
-    const matchShowing = text.match(/Showing\s+\d+\s*[-–]\s*\d+\s+of\s+([\d,]+)/i);
-    if (matchShowing) return parseInt(matchShowing[1].replace(/,/g, ''), 10);
 
     return 0;
   }

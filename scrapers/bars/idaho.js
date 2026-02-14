@@ -118,7 +118,10 @@ class IdahoScraper extends BaseScraper {
   parseResultsPage($) {
     const attorneys = [];
 
-    // ISB results are typically in HTML tables with rich data
+    // ISB results are in a 3-column HTML table:
+    //   Column 0: Attorney name (link to attorney_roster_ind.cfm?IDANumber=...)
+    //   Column 1: Status (Active, Inactive, etc.)
+    //   Column 2: Location (City + State abbreviation, e.g. "Boise ID")
     $('table tr').each((i, el) => {
       const $row = $(el);
       const cells = $row.find('td');
@@ -127,53 +130,34 @@ class IdahoScraper extends BaseScraper {
       // Skip header rows
       if ($row.find('th').length > 0) return;
       const firstCellText = $(cells[0]).text().trim().toLowerCase();
-      if (firstCellText === 'name' || firstCellText === 'isb #' || firstCellText === 'member') return;
+      if (firstCellText === 'name' || firstCellText === 'attorney' || firstCellText === 'isb #' || firstCellText === 'member') return;
 
-      // Typical ISB layout: Name | ISB # | City | Status | Phone | Email
       const nameCell = $(cells[0]);
       const fullName = nameCell.text().trim();
       const profileLink = nameCell.find('a').attr('href') || '';
 
       if (!fullName || fullName.length < 2) return;
 
-      const isbNumber = cells.length > 1 ? $(cells[1]).text().trim() : '';
-      const city = cells.length > 2 ? $(cells[2]).text().trim() : '';
-      const status = cells.length > 3 ? $(cells[3]).text().trim() : '';
-      const phone = cells.length > 4 ? $(cells[4]).text().trim() : '';
+      const status = cells.length > 1 ? $(cells[1]).text().trim() : '';
+      const locationText = cells.length > 2 ? $(cells[2]).text().trim() : '';
 
-      // Email — look for mailto links or plain text
-      let email = '';
-      if (cells.length > 5) {
-        const emailCell = $(cells[5]);
-        const mailtoLink = emailCell.find('a[href^="mailto:"]');
-        if (mailtoLink.length) {
-          email = mailtoLink.attr('href').replace('mailto:', '').trim();
-        } else {
-          const emailText = emailCell.text().trim();
-          if (emailText.includes('@')) {
-            email = emailText;
-          }
-        }
+      // Parse location — format is "City State" e.g. "Boise ID" or "El Dorado Hills CA"
+      let city = locationText;
+      let state = 'ID';
+      const locationMatch = locationText.match(/^(.+?)\s+([A-Z]{2})$/);
+      if (locationMatch) {
+        city = locationMatch[1].trim();
+        state = locationMatch[2];
       }
 
-      // Website — look in additional cells
-      let website = '';
-      if (cells.length > 6) {
-        const websiteCell = $(cells[6]);
-        const websiteLink = websiteCell.find('a');
-        if (websiteLink.length) {
-          website = websiteLink.attr('href') || '';
-        } else {
-          const urlText = websiteCell.text().trim();
-          if (urlText.includes('.') && !urlText.includes('@')) {
-            website = urlText.startsWith('http') ? urlText : `https://${urlText}`;
-          }
-        }
+      // Extract ISB number from profile link (IDANumber=XXXX)
+      let isbNumber = '';
+      const idaMatch = (profileLink || '').match(/IDANumber=(\d+)/i);
+      if (idaMatch) {
+        isbNumber = idaMatch[1];
       }
 
-      const firmName = cells.length > 7 ? $(cells[7]).text().trim() : '';
-
-      // Parse name — may be "Last, First" format
+      // Parse name — ISB uses "Last, First Middle" format
       let firstName = '';
       let lastName = '';
       if (fullName.includes(',')) {
@@ -197,13 +181,13 @@ class IdahoScraper extends BaseScraper {
         first_name: firstName,
         last_name: lastName,
         full_name: fullName.includes(',') ? `${firstName} ${lastName}`.trim() : fullName,
-        firm_name: firmName,
+        firm_name: '',
         city: city,
-        state: 'ID',
-        phone: phone,
-        email: email,
-        website: website,
-        bar_number: isbNumber.replace(/[^0-9]/g, ''),
+        state: state,
+        phone: '',
+        email: '',
+        website: '',
+        bar_number: isbNumber,
         bar_status: status || 'Active',
         profile_url: profileUrl,
       });
@@ -362,9 +346,12 @@ class IdahoScraper extends BaseScraper {
 
   /**
    * Override search() for ColdFusion POST-based form submissions.
-   * ISB uses POST with lname param. We iterate last name prefixes per city
-   * since the form requires last name input. The results include rich data
-   * with email, website, and ISB member number.
+   * ISB form only has a single field: LastName (no city, fname, or status fields).
+   * The form POSTs to attorney_roster.cfm with option=initial_page_load and LastName.
+   * Results include: Attorney name (link), Status, and Location (City + State).
+   *
+   * We use only 2 last name prefixes per city to stay within the 25s smoke test timeout.
+   * City filtering is done client-side since the ISB form does not support it.
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
@@ -376,9 +363,9 @@ class IdahoScraper extends BaseScraper {
 
     const cities = this.getCities(options);
 
-    // High-frequency last name prefixes to avoid timeout (A-Z takes 26+ requests per city).
-    // These 5 letters cover the most common last name initials in the US.
-    const lastNamePrefixes = ['A', 'B', 'C', 'M', 'S'];
+    // Use only 2 prefixes to avoid timeout (the ISB form has no city filter,
+    // so each request returns all matching attorneys regardless of location).
+    const lastNamePrefixes = ['S', 'M'];
 
     for (let ci = 0; ci < cities.length; ci++) {
       const city = cities[ci];
@@ -393,13 +380,10 @@ class IdahoScraper extends BaseScraper {
           break;
         }
 
-        // Build ColdFusion form data
+        // ISB ColdFusion form only accepts LastName and option fields
         const formData = {
-          lname: prefix,
-          fname: '',
-          city: city,
-          status: 'Active',
-          submit: 'Search',
+          option: 'initial_page_load',
+          LastName: prefix,
         };
 
         log.info(`Searching ${city} — last name prefix "${prefix}" — POST ${this.baseUrl}`);
@@ -444,7 +428,7 @@ class IdahoScraper extends BaseScraper {
 
         log.success(`Found ${attorneys.length} results for ${city} prefix "${prefix}"`);
 
-        // Filter to only attorneys in the target city
+        // Filter to only attorneys in the target city (ISB returns all locations)
         for (const attorney of attorneys) {
           if (city && attorney.city && attorney.city.toLowerCase() !== city.toLowerCase()) {
             continue;

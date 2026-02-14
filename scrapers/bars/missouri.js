@@ -77,6 +77,33 @@ class MissouriScraper extends BaseScraper {
   }
 
   /**
+   * HTTP GET with cookie tracking for session establishment.
+   */
+  _httpGetWithCookies(url, rateLimiter) {
+    return new Promise((resolve, reject) => {
+      const ua = rateLimiter.getUserAgent();
+      const parsed = new URL(url);
+      const req = https.get(url, {
+        headers: {
+          'User-Agent': ua,
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          'Accept-Encoding': 'identity',
+        },
+        timeout: 20000,
+      }, (res) => {
+        const setCookies = (res.headers['set-cookie'] || [])
+          .map(c => c.split(';')[0])
+          .join('; ');
+        let data = '';
+        res.on('data', chunk => { data += chunk; });
+        res.on('end', () => resolve({ statusCode: res.statusCode, body: data, cookies: setCookies }));
+      });
+      req.on('error', reject);
+      req.on('timeout', () => { req.destroy(); reject(new Error('Request timed out')); });
+    });
+  }
+
+  /**
    * HTTP POST with URL-encoded form data and cookie support.
    */
   httpPost(url, formData, rateLimiter, cookies = '') {
@@ -259,11 +286,11 @@ class MissouriScraper extends BaseScraper {
       yield { _cityProgress: { current: ci + 1, total: cities.length } };
       log.scrape(`Searching: ${practiceArea || 'all'} attorneys in ${city}, ${this.stateCode}`);
 
-      // Step 1: GET the search page to obtain ViewState
+      // Step 1: GET the search page to obtain ViewState and session cookies
       let pageResponse;
       try {
         await rateLimiter.wait();
-        pageResponse = await this.httpGet(this.baseUrl, rateLimiter);
+        pageResponse = await this._httpGetWithCookies(this.baseUrl, rateLimiter);
       } catch (err) {
         log.error(`Failed to load search page: ${err.message}`);
         continue;
@@ -274,6 +301,7 @@ class MissouriScraper extends BaseScraper {
         continue;
       }
 
+      const sessionCookies = pageResponse.cookies || '';
       const hiddenFields = this._extractHiddenFields(pageResponse.body);
       if (!hiddenFields.__VIEWSTATE) {
         log.error(`Could not extract __VIEWSTATE from MO Bar search page`);
@@ -281,36 +309,33 @@ class MissouriScraper extends BaseScraper {
       }
 
       // Step 2: POST search form with city and optional practice area
+      // The MO Bar uses iMIS/ASP.NET with a grid-based search form.
+      // Fields are numbered Input0-Input5 under a Sheet0 container:
+      //   Input0 = Last Name Contains
+      //   Input1 = First Name Contains
+      //   Input2 = City Contains
+      //   Input3 = Zip Code Starts with
+      //   Input4 = Bar Number Equals
+      //   Input5 = County Name Contains
+      const prefix = 'ctl01$TemplateBody$WebPartManager1$gwpciLawyerDirectory$ciLawyerDirectory$ResultsGrid$Sheet0';
+
       const formData = {
         ...hiddenFields,
         '__EVENTTARGET': '',
         '__EVENTARGUMENT': '',
+        [`${prefix}$Input0$TextBox1`]: '',          // Last Name
+        [`${prefix}$Input1$TextBox1`]: '',          // First Name
+        [`${prefix}$Input2$TextBox1`]: city,        // City
+        [`${prefix}$Input3$TextBox1`]: '',          // Zip Code
+        [`${prefix}$Input4$TextBox1`]: '',          // Bar Number
+        [`${prefix}$Input5$TextBox1`]: '',          // County Name
+        [`${prefix}$SubmitButton`]: 'Find',         // Submit button
       };
-
-      // Set city field (common ASP.NET naming patterns)
-      const cityFieldNames = ['txtCity', 'City', 'ctl00$MainContent$txtCity', 'ctl00$ContentPlaceHolder1$txtCity'];
-      for (const fieldName of cityFieldNames) {
-        formData[fieldName] = city;
-      }
-
-      // Set practice area if available
-      if (practiceCode) {
-        const paFieldNames = ['ddlPracticeArea', 'PracticeArea', 'ctl00$MainContent$ddlPracticeArea', 'ctl00$ContentPlaceHolder1$ddlPracticeArea'];
-        for (const fieldName of paFieldNames) {
-          formData[fieldName] = practiceCode;
-        }
-      }
-
-      // Submit button
-      const submitNames = ['btnSearch', 'ctl00$MainContent$btnSearch', 'ctl00$ContentPlaceHolder1$btnSearch'];
-      for (const fieldName of submitNames) {
-        formData[fieldName] = 'Search';
-      }
 
       let searchResponse;
       try {
         await rateLimiter.wait();
-        searchResponse = await this.httpPost(this.baseUrl, formData, rateLimiter);
+        searchResponse = await this.httpPost(this.baseUrl, formData, rateLimiter, sessionCookies);
       } catch (err) {
         log.error(`Search POST failed for ${city}: ${err.message}`);
         continue;

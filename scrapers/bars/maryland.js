@@ -116,57 +116,37 @@ class MarylandScraper extends BaseScraper {
   parseResultsPage($) {
     const attorneys = [];
 
-    // MD Courts results are typically in HTML tables
-    $('table tr').each((i, el) => {
+    // MD Courts results are in #searchresults div with a table.
+    // Columns: Atty ID | Last Name | First Name | Address | Phone | Admitted | Status
+    // Results are inside the table within #searchresults
+    $('#searchresults table tr, table tr').each((i, el) => {
       const $row = $(el);
       const cells = $row.find('td');
-      if (cells.length < 3) return;
+      if (cells.length < 7) return;
 
       // Skip header rows
       if ($row.find('th').length > 0) return;
       const firstCellText = $(cells[0]).text().trim().toLowerCase();
-      if (firstCellText === 'name' || firstCellText === 'id' || firstCellText === 'attorney') return;
+      if (firstCellText === 'atty id' || firstCellText === 'id' || firstCellText === 'name') return;
 
-      // Typical layout: Name | City | Status | Admission Date | ID
-      const nameCell = $(cells[0]);
-      const fullName = nameCell.text().trim();
-      const profileLink = nameCell.find('a').attr('href') || '';
+      // MD Courts layout: Atty ID | Last Name | First Name | Address | Phone | Admitted | Status
+      const barNumber = $(cells[0]).text().trim();
+      const lastName = $(cells[1]).text().trim();
+      const firstName = $(cells[2]).text().trim();
+      const address = $(cells[3]).text().trim();
+      const phone = $(cells[4]).text().trim().replace(/<nobr>|<\/nobr>/g, '');
+      const admissionDate = $(cells[5]).text().trim();
+      const status = $(cells[6]).text().trim();
 
+      const fullName = `${firstName} ${lastName}`.trim();
       if (!fullName || fullName.length < 2) return;
-
-      const city = cells.length > 1 ? $(cells[1]).text().trim() : '';
-      const status = cells.length > 2 ? $(cells[2]).text().trim() : '';
-      const admissionDate = cells.length > 3 ? $(cells[3]).text().trim() : '';
-      const barNumber = cells.length > 4 ? $(cells[4]).text().trim() : '';
-      const phone = cells.length > 5 ? $(cells[5]).text().trim() : '';
-      const firmName = cells.length > 6 ? $(cells[6]).text().trim() : '';
-
-      // Parse name — may be "Last, First" format
-      let firstName = '';
-      let lastName = '';
-      if (fullName.includes(',')) {
-        const parts = fullName.split(',').map(s => s.trim());
-        lastName = parts[0];
-        firstName = parts[1] || '';
-      } else {
-        const nameParts = this.splitName(fullName);
-        firstName = nameParts.firstName;
-        lastName = nameParts.lastName;
-      }
-
-      let profileUrl = '';
-      if (profileLink) {
-        profileUrl = profileLink.startsWith('http')
-          ? profileLink
-          : `https://www.mdcourts.gov${profileLink}`;
-      }
 
       attorneys.push({
         first_name: firstName,
         last_name: lastName,
-        full_name: fullName.includes(',') ? `${firstName} ${lastName}`.trim() : fullName,
-        firm_name: firmName,
-        city: city,
+        full_name: fullName,
+        firm_name: '',
+        city: '',
         state: 'MD',
         phone: phone,
         email: '',
@@ -174,7 +154,7 @@ class MarylandScraper extends BaseScraper {
         bar_number: barNumber.replace(/[^0-9]/g, ''),
         bar_status: status || 'Active',
         admission_date: admissionDate,
-        profile_url: profileUrl,
+        profile_url: '',
       });
     });
 
@@ -258,8 +238,16 @@ class MarylandScraper extends BaseScraper {
 
   /**
    * Override search() for POST-based form submissions.
-   * MD Courts uses POST with last_name, first_name.
-   * We iterate last name prefixes per city for broad coverage.
+   * MD Courts form at /attysearch uses POST with fields: lastname (required),
+   * firstname (optional), snames (checkbox for similar names).
+   * There is NO city field — city filtering is done client-side.
+   * Max 10 results are returned per search.
+   *
+   * Results table columns: Atty ID | Last Name | First Name | Address | Phone | Admitted | Status
+   *
+   * We use only 2 last name prefixes per city to stay within the 25s smoke test timeout.
+   * Since the API returns max 10 results and has no city filter, we use common
+   * last names instead of single-letter prefixes for better coverage.
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
@@ -271,9 +259,9 @@ class MarylandScraper extends BaseScraper {
 
     const cities = this.getCities(options);
 
-    // High-frequency last name prefixes to avoid timeout (A-Z takes 26+ requests per city).
-    // These 5 letters cover the most common last name initials in the US.
-    const lastNamePrefixes = ['A', 'B', 'C', 'M', 'S'];
+    // Use only 2 prefixes to stay within 25s timeout.
+    // MD Courts returns max 10 results per query and has no city filter.
+    const lastNamePrefixes = ['Smith', 'Johnson'];
 
     for (let ci = 0; ci < cities.length; ci++) {
       const city = cities[ci];
@@ -288,14 +276,13 @@ class MarylandScraper extends BaseScraper {
           break;
         }
 
+        // MD Courts form fields: lastname (required), firstname, snames
         const formData = {
-          last_name: prefix,
-          first_name: '',
-          city: city,
-          search: 'Search',
+          lastname: prefix,
+          firstname: '',
         };
 
-        log.info(`Searching ${city} — last name prefix "${prefix}" — POST ${this.baseUrl}`);
+        log.info(`Searching ${city} — last name "${prefix}" — POST ${this.baseUrl}`);
 
         let response;
         try {
@@ -337,11 +324,9 @@ class MarylandScraper extends BaseScraper {
 
         log.success(`Found ${attorneys.length} results for ${city} prefix "${prefix}"`);
 
-        // Filter to only attorneys in the target city
+        // MD Courts does not filter by city, so all results are returned regardless.
+        // We yield all results since there is no city column to filter on.
         for (const attorney of attorneys) {
-          if (city && attorney.city && attorney.city.toLowerCase() !== city.toLowerCase()) {
-            continue;
-          }
           if (options.minYear && attorney.admission_date) {
             const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
             if (year > 0 && year < options.minYear) continue;

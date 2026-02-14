@@ -53,7 +53,7 @@ class NewfoundlandScraper extends BaseScraper {
       ],
     });
 
-    this.searchUrl = 'https://lsnl.memberpro.net/main/body.cfm?menu=directory';
+    this.searchUrl = 'https://lsnl.memberpro.net/main/body.cfm?menu=directory&submenu=directoryPractisingMember&action=searchTop';
   }
 
   /**
@@ -101,118 +101,48 @@ class NewfoundlandScraper extends BaseScraper {
   parseResultsPage($) {
     const attorneys = [];
 
-    $('table tr').each((i, el) => {
-      const $row = $(el);
-      const cells = $row.find('td');
-      if (cells.length < 2) return;
+    // MemberPro results: TD.table-result cells in rows
+    // Columns: Name (with link), City, Practising Status, Called (year), Firm
+    const rows = $('tr').filter((_, el) => {
+      return $(el).find('td.table-result').length >= 2;
+    });
 
-      const firstText = $(cells[0]).text().trim();
-      if (/^(name|member|last|first|#|no\.)$/i.test(firstText)) return;
-      if (!firstText || firstText.length < 2) return;
+    rows.each((_, el) => {
+      const cells = $(el).find('td.table-result');
+      if (cells.length < 3) return;
 
+      // Name cell contains a link with <div class='font-size-plus'>Name, KC</div>
       const nameCell = $(cells[0]);
-      const profileLink = nameCell.find('a').attr('href') || '';
+      const nameDiv = nameCell.find('div.font-size-plus');
+      let fullName = (nameDiv.length ? nameDiv.text() : nameCell.text()).trim();
+      if (!fullName || fullName.length < 3) return;
 
-      let fullName = firstText;
-      let city = cells.length > 1 ? $(cells[1]).text().trim() : '';
-      let status = cells.length > 2 ? $(cells[2]).text().trim() : '';
-      let barNumber = cells.length > 3 ? $(cells[3]).text().trim() : '';
-      let firm = '';
-      let phone = '';
-      let email = '';
+      // Strip honorifics (KC, QC)
+      fullName = fullName.replace(/,?\s*(KC|QC|K\.C\.|Q\.C\.)$/i, '').trim();
 
-      for (let c = 1; c < cells.length; c++) {
-        const cellText = $(cells[c]).text().trim();
-        if (/\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}/.test(cellText) && !phone) {
-          phone = cellText;
-        }
-      }
+      const city = cells.length > 1 ? $(cells[1]).text().trim() : '';
+      const status = cells.length > 2 ? $(cells[2]).text().trim() : '';
+      const calledYear = cells.length > 3 ? $(cells[3]).text().trim() : '';
+      const firm = cells.length > 4 ? $(cells[4]).text().trim() : '';
 
-      const mailtoLink = $row.find('a[href^="mailto:"]');
-      if (mailtoLink.length) {
-        email = mailtoLink.attr('href').replace('mailto:', '').trim();
-      }
-
-      let firstName = '';
-      let lastName = '';
-      if (fullName.includes(',')) {
-        const parts = fullName.split(',').map(s => s.trim());
-        lastName = parts[0];
-        firstName = parts[1] ? parts[1].split(/\s+/)[0] : '';
-      } else {
-        const nameParts = this.splitName(fullName);
-        firstName = nameParts.firstName;
-        lastName = nameParts.lastName;
-      }
-
-      const displayName = fullName.includes(',') ? `${firstName} ${lastName}`.trim() : fullName;
+      const nameParts = this.splitName(fullName);
 
       attorneys.push({
-        first_name: firstName,
-        last_name: lastName,
-        full_name: displayName,
+        first_name: nameParts.firstName,
+        last_name: nameParts.lastName,
+        full_name: fullName,
         firm_name: firm,
         city: city,
         state: 'CA-NL',
-        phone,
-        email,
+        phone: '',
+        email: '',
         website: '',
-        bar_number: barNumber.replace(/^#?\s*/, '').trim(),
-        bar_status: status || 'Active',
-        profile_url: profileLink.startsWith('http') ? profileLink : (profileLink ? `https://lsnl.memberpro.net${profileLink}` : ''),
+        bar_number: '',
+        admission_date: calledYear,
+        bar_status: status || 'Practising',
+        profile_url: '',
       });
     });
-
-    // Fallback: div-based results
-    if (attorneys.length === 0) {
-      $('.member-result, .search-result, .directory-item').each((_, el) => {
-        const $el = $(el);
-        const nameEl = $el.find('a').first();
-        const fullName = nameEl.text().trim() || $el.find('.name, .member-name').text().trim();
-        if (!fullName || fullName.length < 3) return;
-
-        const profileLink = nameEl.attr('href') || '';
-        const city = $el.find('.city, .location').text().trim();
-        const phone = $el.find('.phone').text().trim();
-        const status = $el.find('.status').text().trim();
-        const barNumber = $el.find('.member-number, .bar-number').text().trim();
-
-        let email = '';
-        const mailtoLink = $el.find('a[href^="mailto:"]');
-        if (mailtoLink.length) {
-          email = mailtoLink.attr('href').replace('mailto:', '').trim();
-        }
-
-        let firstName = '';
-        let lastName = '';
-        if (fullName.includes(',')) {
-          const parts = fullName.split(',').map(s => s.trim());
-          lastName = parts[0];
-          firstName = parts[1] ? parts[1].split(/\s+/)[0] : '';
-        } else {
-          const nameParts = this.splitName(fullName);
-          firstName = nameParts.firstName;
-          lastName = nameParts.lastName;
-        }
-
-        const displayName = fullName.includes(',') ? `${firstName} ${lastName}`.trim() : fullName;
-
-        attorneys.push({
-          first_name: firstName,
-          last_name: lastName,
-          full_name: displayName,
-          firm_name: '',
-          city: city,
-          state: 'CA-NL',
-          phone,
-          email,
-          website: '',
-          bar_number: barNumber.replace(/[^0-9A-Za-z]/g, ''),
-          bar_status: status || 'Active',
-          profile_url: profileLink.startsWith('http') ? profileLink : (profileLink ? `https://lsnl.memberpro.net${profileLink}` : ''),
-        });
-      });
-    }
 
     return attorneys;
   }
@@ -272,12 +202,13 @@ class NewfoundlandScraper extends BaseScraper {
         formData.set('person_nm', '');
         formData.set('first_nm', '');
         formData.set('city_nm', city);
-        formData.set('member_status_cl', 'Active');
+        formData.set('member_status_cl', 'PRAC');
         if (practiceCode) {
           formData.set('area_ds', practiceCode);
         }
-        formData.set('gender_cl', '');
+        formData.set('location_nm', '');
         formData.set('language_cl', '');
+        formData.set('mode', 'search');
         if (page > 1) {
           formData.set('page', String(page));
           formData.set('startrow', String((page - 1) * this.pageSize + 1));
