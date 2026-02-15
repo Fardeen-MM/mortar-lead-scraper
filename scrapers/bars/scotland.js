@@ -150,7 +150,7 @@ class ScotlandScraper extends BaseScraper {
         website: '',
         bar_number: '',
         bar_status: 'Practising',
-        profile_url: '',
+        profile_url: solId ? `https://www.lawscot.org.uk/umbraco/surface/Imis/GetSolicitorDetail?id=${solId}` : '',
         address: firmAddress,
         postcode: postcode,
         admission_date: admissionDate,
@@ -189,6 +189,95 @@ class ScotlandScraper extends BaseScraper {
   }
 
   /**
+   * Parse a solicitor detail JSON response for additional contact info.
+   * The profile_url points to /umbraco/surface/Imis/GetSolicitorDetail?id={GUID}
+   * which returns JSON with Telephone, Email, Website, CategoriesOfWork, etc.
+   *
+   * This method is called by the default enrichFromProfile flow, but since the
+   * response is JSON (not HTML), we override enrichFromProfile instead.
+   * This stub exists so hasProfileParser returns true.
+   *
+   * @param {CheerioStatic} $ - Cheerio instance (wrapping JSON text)
+   * @returns {object} Extracted fields
+   */
+  parseProfilePage($) {
+    // The profile URL returns JSON, not HTML. Parse it from the body text.
+    try {
+      const data = JSON.parse($('body').text());
+      return this._extractFromProfileJson(data);
+    } catch {
+      return {};
+    }
+  }
+
+  /**
+   * Extract contact info from the Law Society of Scotland detail API JSON response.
+   *
+   * Response shape:
+   *   { Telephone, Fax, Email, Website, NotaryPublic, AdvocateStatus,
+   *     Postcode, Languages, CategoriesOfWork, AccreditedSpecialisms,
+   *     OtherSolicitorsAtOffice }
+   *
+   * @param {object} data - Parsed JSON object
+   * @returns {object} Extracted fields (phone, email, website, etc.)
+   */
+  _extractFromProfileJson(data) {
+    const result = {};
+
+    if (data.Telephone) {
+      result.phone = data.Telephone.trim();
+    }
+
+    if (data.Email) {
+      result.email = data.Email.trim().toLowerCase();
+    }
+
+    if (data.Website) {
+      let url = data.Website.trim();
+      // Ensure URL has a protocol
+      if (url && !url.startsWith('http')) {
+        url = 'http://' + url;
+      }
+      if (url && !this.isExcludedDomain(url)) {
+        result.website = url;
+      }
+    }
+
+    if (data.Fax) {
+      result.fax = data.Fax.trim();
+    }
+
+    if (data.Postcode) {
+      result.postcode = data.Postcode.trim();
+    }
+
+    // Extract practice areas from CategoriesOfWork
+    if (data.CategoriesOfWork && Array.isArray(data.CategoriesOfWork) && data.CategoriesOfWork.length > 0) {
+      const areas = [];
+      for (const cat of data.CategoriesOfWork) {
+        if (cat.Parent && cat.Parent.LegalDescription) {
+          areas.push(cat.Parent.LegalDescription);
+        }
+      }
+      if (areas.length > 0) {
+        result.categories_of_work = areas.join('; ');
+      }
+    }
+
+    // Extract accredited specialisms
+    if (data.AccreditedSpecialisms && Array.isArray(data.AccreditedSpecialisms) && data.AccreditedSpecialisms.length > 0) {
+      result.accredited_specialisms = data.AccreditedSpecialisms.join('; ');
+    }
+
+    // Note if they are a Notary Public
+    if (data.NotaryPublic === 'Yes') {
+      result.notary_public = 'Yes';
+    }
+
+    return result;
+  }
+
+    /**
    * Async generator that yields solicitor records from the Law Society of Scotland.
    *
    * Strategy:

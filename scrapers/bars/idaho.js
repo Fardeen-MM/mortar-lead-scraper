@@ -323,6 +323,116 @@ class IdahoScraper extends BaseScraper {
     return attorneys;
   }
 
+  /**
+   * Parse an ISB individual attorney profile page for additional contact info.
+   * URL pattern: https://apps.isb.idaho.gov/licensing/attorney_roster_ind.cfm?IDANumber=XXXX
+   *
+   * The profile page uses Bootstrap panels with dl-horizontal definition lists
+   * containing: Firm, Mailing Address, Phone, Bar Email, Website, Court eService Email.
+   */
+  parseProfilePage($) {
+    const result = {};
+
+    // The page uses <dl class="dl-horizontal"> with <dt>Label</dt><dd>Value</dd> pairs.
+    // Build a label->value map from all dt/dd pairs.
+    const fields = {};
+    $('dl.dl-horizontal dt').each((_, el) => {
+      const label = $(el).text().trim().toLowerCase();
+      const dd = $(el).next('dd');
+      if (dd.length) {
+        fields[label] = {
+          text: dd.text().trim().replace(/\s+/g, ' ').replace(/\u00a0/g, '').trim(),
+          html: dd.html() || '',
+          el: dd,
+        };
+      }
+    });
+
+    // Phone: from the "phone" dt/dd — the <a href="tel:..."> contains the number
+    if (fields['phone']) {
+      const telLink = fields['phone'].el.find('a[href^="tel:"]');
+      if (telLink.length) {
+        const phone = telLink.attr('href').replace('tel:', '').trim();
+        if (phone && phone.length > 5) {
+          result.phone = phone;
+        }
+      }
+      // Fallback to text content
+      if (!result.phone) {
+        const phoneText = fields['phone'].text;
+        if (phoneText && phoneText.length > 5) {
+          result.phone = phoneText;
+        }
+      }
+    }
+
+    // Email: from "bar email address" — the <a href="mailto:..."> contains the email
+    if (fields['bar email address']) {
+      const mailtoLink = fields['bar email address'].el.find('a[href^="mailto:"]');
+      if (mailtoLink.length) {
+        const email = mailtoLink.attr('href').replace('mailto:', '').split('?')[0].trim().toLowerCase();
+        if (email && email.includes('@')) {
+          result.email = email;
+        }
+      }
+      // Fallback to text content
+      if (!result.email) {
+        const emailText = fields['bar email address'].text.toLowerCase();
+        if (emailText.includes('@')) {
+          result.email = emailText;
+        }
+      }
+    }
+
+    // Website: from "website address" — the <a href="..."> contains the URL
+    if (fields['website address']) {
+      const websiteLink = fields['website address'].el.find('a[href]');
+      if (websiteLink.length) {
+        let href = websiteLink.attr('href') || '';
+        // ISB sometimes stores just domain without protocol, or empty "http://"
+        if (href && href !== 'http://' && href !== 'https://' && !this.isExcludedDomain(href)) {
+          if (!href.startsWith('http')) {
+            href = 'http://' + href;
+          }
+          result.website = href;
+        }
+      }
+    }
+
+    // Firm name
+    if (fields['firm']) {
+      const firm = fields['firm'].text;
+      if (firm && firm.length > 1 && firm.length < 200) {
+        result.firm_name = firm;
+      }
+    }
+
+    // Mailing address — may span multiple <dd> elements after the "mailing address" dt.
+    // The ISB page has: <dt>Mailing Address</dt><dd>street</dd><dd>city, ST zip</dd>
+    const addressParts = [];
+    $('dl.dl-horizontal dt').each((_, el) => {
+      if ($(el).text().trim().toLowerCase() === 'mailing address') {
+        // Collect all following dd elements until the next dt
+        let next = $(el).next();
+        while (next.length && next.prop('tagName')?.toLowerCase() === 'dd') {
+          const text = next.text().trim().replace(/\s+/g, ' ');
+          if (text && text !== ',') {
+            addressParts.push(text);
+          }
+          next = next.next();
+        }
+      }
+    });
+    if (addressParts.length > 0) {
+      const address = addressParts.join(', ').trim();
+      if (address && address.length > 3) {
+        result.address = address;
+      }
+    }
+
+    return result;
+  }
+
   extractResultCount($) {
     const text = $('body').text();
 
