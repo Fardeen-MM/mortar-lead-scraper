@@ -230,7 +230,11 @@ class IllinoisScraper extends BaseScraper {
 
       let totalForCity = 0;
 
-      for (const letter of this.lastNameLetters) {
+      const letters = options.maxPrefixes
+        ? this.lastNameLetters.slice(0, options.maxPrefixes)
+        : this.lastNameLetters;
+
+      for (const letter of letters) {
         // Step 1: GET search page for token + session cookie
         let sessionResponse;
         try {

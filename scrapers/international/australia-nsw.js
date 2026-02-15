@@ -342,6 +342,15 @@ class NswScraper extends BaseScraper {
 
     const cities = this.getCities(options);
     const seenIds = new Set();
+    const skipProfiles = options.skipProfiles || false;
+
+    // In test mode (maxPages set), use shorter delays between detail fetches
+    const detailDelayMin = options.maxPages ? 200 : 1000;
+    const detailDelayRange = options.maxPages ? 300 : 2000;
+
+    if (skipProfiles) {
+      log.info('AU-NSW: skipProfiles=true -- returning search listing data only (no detail fetches)');
+    }
 
     for (let ci = 0; ci < cities.length; ci++) {
       const city = cities[ci];
@@ -451,20 +460,22 @@ class NswScraper extends BaseScraper {
           if (seenIds.has(solId)) continue;
           seenIds.add(solId);
 
-          // Fetch full detail record for this solicitor
+          // Fetch full detail record for this solicitor (unless skipProfiles is set)
           let detail = null;
-          try {
-            await sleep(1000 + Math.random() * 2000); // 1-3s delay between detail fetches
-            const detailResp = await this.httpGetJson(`${this.detailUrl}${solId}`, rateLimiter);
+          if (!skipProfiles) {
+            try {
+              await sleep(detailDelayMin + Math.random() * detailDelayRange);
+              const detailResp = await this.httpGetJson(`${this.detailUrl}${solId}`, rateLimiter);
 
-            if (detailResp.statusCode === 200) {
-              detail = JSON.parse(detailResp.body);
-            } else if (detailResp.statusCode === 429 || detailResp.statusCode === 403) {
-              log.warn(`Rate limited on detail fetch for ID ${solId} -- using search data only`);
-              await rateLimiter.handleBlock(detailResp.statusCode);
+              if (detailResp.statusCode === 200) {
+                detail = JSON.parse(detailResp.body);
+              } else if (detailResp.statusCode === 429 || detailResp.statusCode === 403) {
+                log.warn(`Rate limited on detail fetch for ID ${solId} -- using search data only`);
+                await rateLimiter.handleBlock(detailResp.statusCode);
+              }
+            } catch (err) {
+              log.warn(`Detail fetch failed for ID ${solId}: ${err.message} -- using search data only`);
             }
-          } catch (err) {
-            log.warn(`Detail fetch failed for ID ${solId}: ${err.message} -- using search data only`);
           }
 
           const attorney = this._buildAttorneyRecord(result, detail);

@@ -209,7 +209,10 @@ class ScotlandScraper extends BaseScraper {
     const seen = new Set();
 
     // Letters for systematic searching to combat randomised results
-    const lastNameInitials = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    const allInitials = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    const lastNameInitials = options.maxPrefixes
+      ? allInitials.slice(0, options.maxPrefixes)
+      : allInitials;
 
     for (let ci = 0; ci < cities.length; ci++) {
       const city = cities[ci];

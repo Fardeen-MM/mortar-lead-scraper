@@ -357,10 +357,13 @@ class MartindaleScraper extends BaseScraper {
    *   maxPages  - Max pages to fetch per city (for testing)
    */
   async *search(practiceArea, options = {}) {
+    const isTestMode = !!(options.maxPages || options.maxCities);
     const rateLimiter = new RateLimiter({
-      minDelay: 5000,  // 5 seconds minimum between requests
-      maxDelay: 10000, // 10 seconds maximum
+      minDelay: isTestMode ? 2000 : 5000,
+      maxDelay: isTestMode ? 4000 : 10000,
     });
+    // In test mode, limit retries on 403/429 to avoid long backoff waits
+    const maxBlockRetries = isTestMode ? 1 : 3;
 
     // Build the list of city/state pairs to scrape
     const cityEntries = this._buildCityList(options);
@@ -403,17 +406,32 @@ class MartindaleScraper extends BaseScraper {
           response = await this.httpGet(url, rateLimiter);
         } catch (err) {
           log.error(`Request failed for ${city} page ${page}: ${err.message}`);
-          const shouldRetry = await rateLimiter.handleBlock(0);
-          if (shouldRetry) continue;
-          break;
+          if (rateLimiter.consecutiveBlocks >= maxBlockRetries) {
+            log.warn(`Reached max retries for ${city} — skipping to next city`);
+            rateLimiter.resetBackoff();
+            break;
+          }
+          rateLimiter.consecutiveBlocks++;
+          const backoffMs = isTestMode ? 3000 : (30000 * rateLimiter.backoffMultiplier);
+          rateLimiter.backoffMultiplier *= 2;
+          await new Promise(r => setTimeout(r, backoffMs));
+          continue;
         }
 
         // Handle rate limiting / blocking
         if (response.statusCode === 429 || response.statusCode === 403) {
-          log.warn(`Got ${response.statusCode} from Martindale`);
-          const shouldRetry = await rateLimiter.handleBlock(response.statusCode);
-          if (shouldRetry) continue;
-          break;
+          log.warn(`Got ${response.statusCode} from Martindale on page ${page} for ${city}`);
+          if (rateLimiter.consecutiveBlocks >= maxBlockRetries) {
+            log.warn(`Reached max block retries (${maxBlockRetries}) for ${city} — skipping to next city`);
+            rateLimiter.resetBackoff();
+            break;
+          }
+          const backoffMs = isTestMode ? 5000 : (30000 * rateLimiter.backoffMultiplier);
+          log.warn(`Backing off ${backoffMs / 1000}s (attempt ${rateLimiter.consecutiveBlocks + 1}/${maxBlockRetries})`);
+          rateLimiter.consecutiveBlocks++;
+          rateLimiter.backoffMultiplier *= 2;
+          await new Promise(r => setTimeout(r, backoffMs));
+          continue;
         }
 
         // 404 means we've gone past the last page
@@ -502,8 +520,12 @@ class MartindaleScraper extends BaseScraper {
       return [{ city: options.city, stateCode }];
     }
 
-    // Option 3: default cities
-    return [...this._cityEntries];
+    // Option 3: default cities (respect maxCities limit)
+    const entries = [...this._cityEntries];
+    if (options.maxCities && options.maxCities < entries.length) {
+      return entries.slice(0, options.maxCities);
+    }
+    return entries;
   }
 
   // ---------------------------------------------------------------------------

@@ -352,6 +352,8 @@ class HongKongScraper extends BaseScraper {
     let pagesFetched = 0;
     let consecutiveEmpty = 0;
     const seenIds = new Set();
+    let totalDetailFetches = 0;
+    const maxDetailFetches = options.maxPages ? 10 : Infinity; // Limit detail fetches in test mode
 
     while (true) {
       // Check max pages limit (--test flag sets this to 2)
@@ -427,12 +429,20 @@ class HongKongScraper extends BaseScraper {
         if (seenIds.has(member.memId)) continue;
         seenIds.add(member.memId);
 
-        // Fetch full detail record
+        // Fetch full detail record (skip if over limit in test mode)
         let detail = null;
         const detailUrl = `${this.memberDetailUrl}?MemId=${member.memId}`;
 
+        if (totalDetailFetches >= maxDetailFetches) {
+          // In test mode, skip detail fetch but still yield basic record
+          const attorney = this._buildAttorneyRecord(member, null);
+          yield this.transformResult(attorney, practiceArea);
+          continue;
+        }
+
         try {
           await sleep(1500 + Math.random() * 3000); // 1.5-4.5s delay between detail fetches
+          totalDetailFetches++;
           const detailResp = await this.httpGet(detailUrl, rateLimiter);
 
           if (detailResp.statusCode === 200) {

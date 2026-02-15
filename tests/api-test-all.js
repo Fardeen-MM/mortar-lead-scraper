@@ -96,6 +96,7 @@ async function testScraper(state) {
           fetchProfiles: true,
           crossRefMartindale: false,  // Skip in tests — adds minutes per city
           crossRefLawyersCom: false,  // Skip in tests — often has CAPTCHA
+          nameLookups: false,  // Skip in tests — CA/NY/AU-NSW APIs add minutes
           emailCrawl: false,  // Skip Puppeteer email crawl in tests
         },
         emailScrape: false,  // Skip Puppeteer in tests

@@ -192,7 +192,8 @@ class NewZealandScraper extends BaseScraper {
    */
   async fetchProfileDetails(profileUrl, rateLimiter) {
     try {
-      await rateLimiter.wait();
+      // Use shorter delay for profile pages (1-2s) vs full 5-10s for search pages
+      await sleep(1000 + Math.random() * 1000);
       const response = await this.httpGet(profileUrl, rateLimiter);
 
       if (response.statusCode !== 200) {
@@ -296,6 +297,8 @@ class NewZealandScraper extends BaseScraper {
       let totalResults = 0;
       let pagesFetched = 0;
       let consecutiveEmpty = 0;
+      let profileFetchCount = 0;
+      const maxProfileFetches = options.maxPages ? 3 : Infinity; // Limit in test mode
 
       while (true) {
         // Check max pages limit
@@ -370,7 +373,8 @@ class NewZealandScraper extends BaseScraper {
 
         // Optionally enrich each attorney with profile details
         for (const attorney of attorneys) {
-          if (!skipProfiles && attorney.profile_url) {
+          if (!skipProfiles && attorney.profile_url && profileFetchCount < maxProfileFetches) {
+            profileFetchCount++;
             log.info(`NZ: Fetching profile for ${attorney.full_name}`);
             const details = await this.fetchProfileDetails(attorney.profile_url, rateLimiter);
 

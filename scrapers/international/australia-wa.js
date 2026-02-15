@@ -202,7 +202,10 @@ class WaScraper extends BaseScraper {
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
 
-    const prefixes = this.surnamePrefixes;
+    const allPrefixes = this.surnamePrefixes;
+    const prefixes = options.maxPrefixes
+      ? allPrefixes.slice(0, options.maxPrefixes)
+      : allPrefixes;
     const totalPrefixes = prefixes.length;
     const seen = new Set(); // Track bar numbers to avoid duplicates within a run
 
