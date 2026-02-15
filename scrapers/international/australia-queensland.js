@@ -478,7 +478,7 @@ class QueenslandScraper extends BaseScraper {
         full_name: fullName,
         firm_name: firmName,
         city: suburb,
-        state: 'QLD',
+        state: 'AU-QLD',
         zip: postcode,
         country: 'Australia',
         phone: phone,

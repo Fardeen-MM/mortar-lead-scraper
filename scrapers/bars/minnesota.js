@@ -142,16 +142,23 @@ class MinnesotaScraper extends BaseScraper {
     const dataOffset = 30 + fileNameLength + extraFieldLength;
     const compressedData = zipBuffer.slice(dataOffset, dataOffset + compressedSize);
 
+    let rawBuffer;
     if (compressionMethod === 0) {
       // Stored (no compression)
-      return compressedData.toString('utf-8');
+      rawBuffer = compressedData;
     } else if (compressionMethod === 8) {
       // Deflated — use raw inflate (no header)
-      const decompressed = zlib.inflateRawSync(compressedData);
-      return decompressed.toString('utf-8');
+      rawBuffer = zlib.inflateRawSync(compressedData);
     } else {
       throw new Error(`Unsupported ZIP compression method: ${compressionMethod}`);
     }
+
+    // Detect UTF-16LE BOM (0xFF 0xFE) and convert to UTF-8
+    if (rawBuffer.length >= 2 && rawBuffer[0] === 0xFF && rawBuffer[1] === 0xFE) {
+      return rawBuffer.slice(2).toString('utf16le');
+    }
+
+    return rawBuffer.toString('utf-8');
   }
 
   /**
@@ -163,8 +170,18 @@ class MinnesotaScraper extends BaseScraper {
       const attorneys = [];
       const stream = Readable.from([csvContent]);
 
+      // MARS CSV has no header row — columns are positional:
+      //   0: LastName, 1: FirstName, 2: MiddleName, 3: (unused),
+      //   4: City, 5: State, 6: Zip, 7: Active, 8: Insured,
+      //   9: InsuranceCompany, 10: (unknown bool)
+      const headers = [
+        'LastName', 'FirstName', 'MiddleName', '_unused',
+        'City', 'State', 'Zip', 'Active', 'Insured',
+        'InsuranceCompany', '_flag'
+      ];
+
       stream
-        .pipe(csvParser())
+        .pipe(csvParser({ headers, skipLines: 0 }))
         .on('data', (row) => {
           attorneys.push(row);
         })
@@ -175,74 +192,50 @@ class MinnesotaScraper extends BaseScraper {
 
   /**
    * Normalize a CSV row into our standard attorney object format.
-   * CSV column names vary; this handles common MARS column patterns.
+   * Uses the explicit MARS column names assigned in _parseCsvContent().
    */
   _normalizeRow(row) {
-    // Try common column name patterns (case-insensitive lookup)
-    const get = (keys) => {
-      for (const key of keys) {
-        // Exact match
-        if (row[key] !== undefined && row[key] !== null) return String(row[key]).trim();
-        // Case-insensitive match
-        const found = Object.keys(row).find(k => k.toLowerCase().replace(/[_\s-]/g, '') === key.toLowerCase().replace(/[_\s-]/g, ''));
-        if (found && row[found] !== undefined && row[found] !== null) return String(row[found]).trim();
-      }
-      return '';
-    };
+    const val = (key) => (row[key] !== undefined && row[key] !== null) ? String(row[key]).trim() : '';
 
-    const firstName = get(['FirstName', 'First_Name', 'first_name', 'First Name', 'fname', 'FIRST_NAME']);
-    const lastName = get(['LastName', 'Last_Name', 'last_name', 'Last Name', 'lname', 'LAST_NAME']);
-    const fullName = get(['FullName', 'Full_Name', 'full_name', 'Name', 'Attorney Name', 'AttorneyName', 'FULL_NAME']);
-    const firmName = get(['FirmName', 'Firm_Name', 'firm_name', 'Firm Name', 'Company', 'Firm', 'FIRM_NAME']);
-    const city = get(['City', 'city', 'CITY', 'Office City', 'OfficeCity']);
-    const state = get(['State', 'state', 'STATE', 'Office State', 'OfficeState']);
-    const zip = get(['Zip', 'zip', 'ZIP', 'ZipCode', 'Zip Code', 'PostalCode']);
-    const phone = get(['Phone', 'phone', 'PHONE', 'Telephone', 'PhoneNumber', 'Phone Number', 'Office Phone']);
-    const email = get(['Email', 'email', 'EMAIL', 'EmailAddress', 'Email Address', 'E-mail']);
-    const website = get(['Website', 'website', 'WEBSITE', 'WebAddress', 'Web Address', 'URL']);
-    const barNumber = get(['BarNumber', 'Bar_Number', 'bar_number', 'Bar Number', 'License Number', 'LicenseNumber', 'BarNum', 'BARNUMBER', 'AttorneyId', 'Attorney ID']);
-    const barStatus = get(['Status', 'status', 'STATUS', 'Bar Status', 'BarStatus', 'LicenseStatus', 'License Status', 'MemberStatus']);
-    const admissionDate = get(['AdmissionDate', 'Admission_Date', 'admission_date', 'Admission Date', 'DateAdmitted', 'Date Admitted', 'AdmitDate']);
+    const firstName = this._titleCase(val('FirstName'));
+    const lastName = this._titleCase(val('LastName'));
+    const middleName = val('MiddleName');
+    const city = this._titleCase(val('City'));
+    const state = val('State') || 'MN';
+    const zip = val('Zip');
+    const isActive = val('Active') === 'true';
+    const insurer = val('InsuranceCompany');
 
-    // Build first/last from full name if individual parts are missing
-    let fName = firstName;
-    let lName = lastName;
-    let fFullName = fullName;
-
-    if (!fName && !lName && fullName) {
-      // Handle "Last, First" format
-      if (fullName.includes(',')) {
-        const parts = fullName.split(',');
-        lName = parts[0].trim();
-        fName = (parts[1] || '').trim().split(/\s+/)[0];
-        fFullName = `${fName} ${lName}`;
-      } else {
-        const split = this.splitName(fullName);
-        fName = split.firstName;
-        lName = split.lastName;
-      }
-    }
-    if (!fFullName && (fName || lName)) {
-      fFullName = `${fName} ${lName}`.trim();
-    }
+    // Build full name
+    const fullName = middleName
+      ? `${firstName} ${this._titleCase(middleName)} ${lastName}`
+      : `${firstName} ${lastName}`;
 
     return {
-      first_name: fName,
-      last_name: lName,
-      full_name: fFullName,
-      firm_name: firmName,
+      first_name: firstName,
+      last_name: lastName,
+      full_name: fullName.trim(),
+      firm_name: (insurer && insurer !== 'NA') ? insurer : '',
       city: city,
-      state: state || 'MN',
+      state: state,
       zip: zip,
-      phone: phone,
-      email: email,
-      website: website,
-      bar_number: barNumber,
-      bar_status: barStatus,
-      admission_date: admissionDate,
-      profile_url: barNumber ? `${this.baseUrl}Attorney/${barNumber}` : '',
+      phone: '',
+      email: '',
+      website: '',
+      bar_number: '',
+      bar_status: isActive ? 'Active' : 'Inactive',
+      admission_date: '',
+      profile_url: '',
       source: `${this.name}_bar`,
     };
+  }
+
+  /**
+   * Title-case a string (e.g. "MINNEAPOLIS" -> "Minneapolis").
+   */
+  _titleCase(str) {
+    if (!str) return '';
+    return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
   }
 
   /**

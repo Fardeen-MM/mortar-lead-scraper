@@ -268,7 +268,7 @@ class VictoriaScraper extends BaseScraper {
         full_name: fullName,
         firm_name: firmName,
         city: city,
-        state: 'VIC',
+        state: 'AU-VIC',
         zip: postcode,
         country: 'Australia',
         phone: '',

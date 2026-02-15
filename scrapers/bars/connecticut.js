@@ -125,7 +125,18 @@ class ConnecticutScraper extends BaseScraper {
       log.warn(`Could not extract __VIEWSTATE from CT search page`);
     }
 
-    return { viewState, viewStateGenerator, eventValidation };
+    // Extract city dropdown options — values are padded with trailing spaces
+    // and ASP.NET EventValidation rejects values that don't match exactly
+    const cityMap = {};
+    $('select[name="ctl00$ContentPlaceHolder1$ddlCityTown"] option').each((i, el) => {
+      const rawVal = $(el).attr('value') || '';
+      const normalized = rawVal.trim().toUpperCase();
+      if (normalized) {
+        cityMap[normalized] = rawVal;
+      }
+    });
+
+    return { viewState, viewStateGenerator, eventValidation, cityMap };
   }
 
   /**
@@ -138,118 +149,103 @@ class ConnecticutScraper extends BaseScraper {
   parseResultsPage($) {
     const attorneys = [];
 
-    // CT results are typically in a GridView table
-    $('table[id*="GridView"] tr, table[id*="grd"] tr, table.results tr, table tr').each((i, el) => {
-      const $row = $(el);
-      const cells = $row.find('td');
-      if (cells.length < 3) return;
+    // CT results are in table#ContentPlaceHolder1_GVDspCivInq
+    // Each data row has 5 direct <td> cells:
+    //   td[0] = Juris number, td[1] = Juris type (A=Attorney)
+    //   td[2] = nested table with spans: lblCivInqName, lblAdmittedDT, lblStatus
+    //   td[3] = nested table with span: lblFirm (firm name <br> address <br> city, ST zip)
+    //   td[4] = Check license link
+    const resultsTable = $('table#ContentPlaceHolder1_GVDspCivInq');
+    const rows = resultsTable.find('> tbody > tr, > tr');
 
-      const firstCellText = $(cells[0]).text().trim().toLowerCase();
-      if (firstCellText === 'name' || firstCellText === 'juris #' || firstCellText === 'attorney') return;
-      // Skip header rows with <th>
+    rows.each((i, el) => {
+      const $row = $(el);
+      // Skip header row
       if ($row.find('th').length > 0) return;
 
-      // Typical layout: Juris # | Name | Firm | City | Status
-      const jurisNumber = $(cells[0]).text().trim();
-      const nameCell = $(cells[1]);
-      const fullName = nameCell.text().trim();
-      const profileLink = nameCell.find('a').attr('href') || '';
-      const firmName = cells.length > 2 ? $(cells[2]).text().trim() : '';
-      const city = cells.length > 3 ? $(cells[3]).text().trim() : '';
-      const status = cells.length > 4 ? $(cells[4]).text().trim() : '';
-      const phone = cells.length > 5 ? $(cells[5]).text().trim() : '';
+      const tds = $row.find('> td');
+      if (tds.length < 4) return;
 
+      const jurisNumber = $(tds[0]).text().trim();
+      // Skip if juris number is not numeric
+      if (!/^\d+$/.test(jurisNumber)) return;
+
+      // Extract name from span
+      const nameSpan = $(tds[2]).find('span[id*="lblCivInqName"]');
+      const fullName = nameSpan.text().trim();
       if (!fullName || fullName.length < 2) return;
 
-      // Parse name — may be "Last, First" format
-      let firstName = '';
-      let lastName = '';
-      if (fullName.includes(',')) {
-        const parts = fullName.split(',').map(s => s.trim());
-        lastName = parts[0];
-        firstName = parts[1] || '';
-      } else {
-        const nameParts = this.splitName(fullName);
-        firstName = nameParts.firstName;
-        lastName = nameParts.lastName;
+      // Extract admission date
+      const admitSpan = $(tds[2]).find('span[id*="lblAdmittedDT"]');
+      const admitText = admitSpan.text().trim(); // "(Admitted:12/15/2020)"
+      const admitMatch = admitText.match(/Admitted:\s*([\d/]+)/);
+      const admissionDate = admitMatch ? admitMatch[1] : '';
+
+      // Skip firm entries — these have "Admitted: N/A" or firm-like names
+      if (/N\/A/.test(admitText) || /\b(LAW OFFICES?|LLC|LLP|P\.?C\.?|PLLC|INC|CORP)\b/i.test(fullName)) return;
+
+      // Extract status
+      const statusSpan = $(tds[2]).find('span[id*="lblStatus"]');
+      const statusText = statusSpan.text().trim(); // "Current Status: Active"
+      const statusMatch = statusText.match(/Status:\s*(.+)/i);
+      const barStatus = statusMatch ? statusMatch[1].trim() : '';
+
+      // Extract firm name and address from td[3]
+      // The span contains: "FIRM NAME <br> STREET <br> CITY, ST  ZIP"
+      const firmSpan = $(tds[3]).find('span[id*="lblFirm"]');
+      let firmName = '';
+      let street = '';
+      let cityStateZip = '';
+
+      if (firmSpan.length) {
+        // Replace <br> with newline before extracting text
+        const firmHtml = firmSpan.html() || '';
+        const firmLines = firmHtml.split(/<br\s*\/?>/i).map(s => s.replace(/<[^>]*>/g, '').trim()).filter(Boolean);
+        if (firmLines.length >= 1) firmName = firmLines[0].replace(/\s{2,}/g, ' ').trim();
+        // City/state/zip is always on the LAST line (addresses may have variable # of lines)
+        for (let li = firmLines.length - 1; li >= 1; li--) {
+          const line = firmLines[li].replace(/\s{2,}/g, ' ').trim();
+          if (/[A-Z]{2}\s+\d{5}/.test(line) || /,\s*[A-Z]{2}\s*$/.test(line)) {
+            cityStateZip = line;
+            break;
+          }
+        }
       }
 
-      let profileUrl = '';
-      if (profileLink) {
-        profileUrl = profileLink.startsWith('http')
-          ? profileLink
-          : `https://www.jud.ct.gov/attorneyfirminquiry/${profileLink}`;
+      // Parse city from city/state/zip line (e.g., "HARTFORD, CT 06103")
+      let city = '';
+      if (cityStateZip) {
+        const cszMatch = cityStateZip.match(/^([^,]+),\s*[A-Z]{2}/);
+        if (cszMatch) {
+          city = cszMatch[1].trim();
+        }
       }
+
+      // Parse name — CT returns "FIRST MIDDLE LAST" format (all caps)
+      // Convert to title case, and decode HTML entities
+      const toTitleCase = (s) => {
+        // First decode common HTML entities
+        let decoded = s.replace(/&amp;/gi, '&').replace(/&lt;/gi, '<').replace(/&gt;/gi, '>').replace(/&#39;/g, "'").replace(/&quot;/g, '"');
+        return decoded.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+      };
+      const nameParts = this.splitName(toTitleCase(fullName));
 
       attorneys.push({
-        first_name: firstName,
-        last_name: lastName,
-        full_name: fullName.includes(',') ? `${firstName} ${lastName}`.trim() : fullName,
-        firm_name: firmName,
-        city: city,
+        first_name: nameParts.firstName,
+        last_name: nameParts.lastName,
+        full_name: toTitleCase(fullName),
+        firm_name: toTitleCase(firmName),
+        city: toTitleCase(city),
         state: 'CT',
-        phone: phone,
+        phone: '',
         email: '',
         website: '',
-        bar_number: jurisNumber.replace(/[^0-9]/g, ''),
-        bar_status: status || 'Active',
-        profile_url: profileUrl,
+        bar_number: jurisNumber,
+        bar_status: barStatus,
+        admission_date: admissionDate,
+        profile_url: '',
       });
     });
-
-    // Fallback: div-based results
-    if (attorneys.length === 0) {
-      $('.attorney-result, .search-result, .result-item').each((_, el) => {
-        const $el = $(el);
-
-        const nameEl = $el.find('a').first();
-        const fullName = nameEl.text().trim() || $el.find('.name, .attorney-name, h3, h4').text().trim();
-        const profileLink = nameEl.attr('href') || '';
-
-        if (!fullName || fullName.length < 2) return;
-
-        let firstName = '';
-        let lastName = '';
-        if (fullName.includes(',')) {
-          const parts = fullName.split(',').map(s => s.trim());
-          lastName = parts[0];
-          firstName = parts[1] || '';
-        } else {
-          const nameParts = this.splitName(fullName);
-          firstName = nameParts.firstName;
-          lastName = nameParts.lastName;
-        }
-
-        const jurisNumber = ($el.find('.juris, .bar-number, .juris-number').text().trim() || '').replace(/[^0-9]/g, '');
-        const city = $el.find('.city, .location').text().trim();
-        const phone = $el.find('.phone').text().trim();
-        const email = $el.find('a[href^="mailto:"]').text().trim();
-        const firmName = $el.find('.firm, .firm-name').text().trim();
-        const status = $el.find('.status').text().trim();
-
-        let profileUrl = '';
-        if (profileLink) {
-          profileUrl = profileLink.startsWith('http')
-            ? profileLink
-            : `https://www.jud.ct.gov/attorneyfirminquiry/${profileLink}`;
-        }
-
-        attorneys.push({
-          first_name: firstName,
-          last_name: lastName,
-          full_name: fullName.includes(',') ? `${firstName} ${lastName}`.trim() : fullName,
-          firm_name: firmName,
-          city: city,
-          state: 'CT',
-          phone: phone,
-          email: email,
-          website: '',
-          bar_number: jurisNumber,
-          bar_status: status || 'Active',
-          profile_url: profileUrl,
-        });
-      });
-    }
 
     return attorneys;
   }
@@ -292,11 +288,34 @@ class ConnecticutScraper extends BaseScraper {
 
     const cities = this.getCities(options);
 
-    // Common last name prefixes for broad coverage
+    // CT bar requires at least 2 characters for name search.
+    // Use 2-letter prefixes for broad coverage of common last name starts.
     const lastNamePrefixes = [
-      'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-      'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-      'U', 'V', 'W', 'X', 'Y', 'Z',
+      'Ab', 'Ad', 'Al', 'Am', 'An', 'Ar', 'As', 'Au',
+      'Ba', 'Be', 'Bi', 'Bl', 'Bo', 'Br', 'Bu',
+      'Ca', 'Ce', 'Ch', 'Cl', 'Co', 'Cr', 'Cu',
+      'Da', 'De', 'Di', 'Do', 'Dr', 'Du',
+      'Ea', 'Ed', 'El', 'Em', 'En', 'Er', 'Es', 'Ev',
+      'Fa', 'Fe', 'Fi', 'Fl', 'Fo', 'Fr', 'Fu',
+      'Ga', 'Ge', 'Gi', 'Gl', 'Go', 'Gr', 'Gu',
+      'Ha', 'He', 'Hi', 'Ho', 'Hu', 'Hy',
+      'Ig', 'In', 'Ir', 'Is',
+      'Ja', 'Je', 'Ji', 'Jo', 'Ju',
+      'Ka', 'Ke', 'Ki', 'Kl', 'Kn', 'Ko', 'Kr', 'Ku',
+      'La', 'Le', 'Li', 'Lo', 'Lu', 'Ly',
+      'Ma', 'Mc', 'Me', 'Mi', 'Mo', 'Mu', 'My',
+      'Na', 'Ne', 'Ni', 'No', 'Nu',
+      'Ob', 'Od', 'Ol', 'Or', 'Os', 'Ow',
+      'Pa', 'Pe', 'Ph', 'Pi', 'Pl', 'Po', 'Pr', 'Pu',
+      'Qu',
+      'Ra', 'Re', 'Ri', 'Ro', 'Ru', 'Ry',
+      'Sa', 'Sc', 'Se', 'Sh', 'Si', 'Sl', 'Sm', 'Sn', 'So', 'Sp', 'St', 'Su', 'Sw',
+      'Ta', 'Te', 'Th', 'Ti', 'To', 'Tr', 'Tu',
+      'Ul', 'Un', 'Ur',
+      'Va', 'Ve', 'Vi', 'Vo',
+      'Wa', 'We', 'Wh', 'Wi', 'Wo', 'Wr', 'Wu',
+      'Ya', 'Ye', 'Yo', 'Yu',
+      'Za', 'Ze', 'Zi', 'Zo', 'Zu',
     ];
 
     for (let ci = 0; ci < cities.length; ci++) {
@@ -323,13 +342,15 @@ class ConnecticutScraper extends BaseScraper {
         }
 
         // Build ASP.NET form data with ViewState
-        // Actual form fields: txtCivInqName (last name/firm), txtJurisNo (juris number)
+        // ASP.NET WebForms requires ctl00$ContentPlaceHolder1$ prefix on all controls
         const formData = {
           '__VIEWSTATE': viewStateData.viewState,
           '__VIEWSTATEGENERATOR': viewStateData.viewStateGenerator,
           '__EVENTVALIDATION': viewStateData.eventValidation,
-          'txtCivInqName': prefix,
-          'txtJurisNo': '',
+          'ctl00$ContentPlaceHolder1$txtCivInqName': prefix,
+          'ctl00$ContentPlaceHolder1$txtJurisNo': '',
+          'ctl00$ContentPlaceHolder1$ddlCityTown': (viewStateData.cityMap && viewStateData.cityMap[city.toUpperCase()]) || city.toUpperCase(),
+          'ctl00$ContentPlaceHolder1$btnSubmit': 'Search',
         };
 
         log.info(`Searching ${city} — last name prefix "${prefix}" — POST ${this.baseUrl}`);
