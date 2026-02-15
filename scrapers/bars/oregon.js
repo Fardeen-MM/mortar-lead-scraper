@@ -127,6 +127,58 @@ class OregonScraper extends BaseScraper {
     return attorneys;
   }
 
+  /**
+   * Parse an OSB member detail page for additional contact info.
+   * URL pattern: https://www.osbar.org/members/membersearch_display.asp?b=XXXXXX
+   *
+   * The detail page has contact info, practice areas, and more.
+   */
+  parseProfilePage($) {
+    const result = {};
+    const bodyText = $('body').text();
+
+    // Phone
+    const phoneMatch = bodyText.match(/(?:Phone|Tel(?:ephone)?|Office):\s*([\d().\s-]+)/i) ||
+                       bodyText.match(/(\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4})/);
+    if (phoneMatch) {
+      result.phone = phoneMatch[1].trim();
+    }
+
+    // Email from mailto links
+    const mailtoLink = $('a[href^="mailto:"]').first();
+    if (mailtoLink.length) {
+      result.email = mailtoLink.attr('href').replace('mailto:', '').split('?')[0].trim().toLowerCase();
+    }
+
+    // Website
+    $('a[href]').each((_, el) => {
+      const href = $(el).attr('href') || '';
+      const text = $(el).text().toLowerCase().trim();
+      if ((text.includes('website') || text.includes('firm') || text.includes('visit')) &&
+          href.startsWith('http') && !href.includes('osbar.org')) {
+        result.website = href;
+        return false;
+      }
+    });
+
+    // Firm name
+    const firmMatch = bodyText.match(/(?:Firm|Employer|Company)(?:\s*Name)?:\s*(.+?)(?:\n|$)/i);
+    if (firmMatch) {
+      const firm = firmMatch[1].trim();
+      if (firm && firm.length > 1 && firm.length < 200) {
+        result.firm_name = firm;
+      }
+    }
+
+    // Practice areas
+    const practiceMatch = bodyText.match(/(?:Practice\s*Areas?|Specialt(?:y|ies)):\s*(.+?)(?:\n|$)/i);
+    if (practiceMatch) {
+      result.practice_areas = practiceMatch[1].trim();
+    }
+
+    return result;
+  }
+
   extractResultCount($) {
     const text = $('body').text();
 

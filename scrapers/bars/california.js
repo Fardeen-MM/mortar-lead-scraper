@@ -191,14 +191,81 @@ class CaliforniaScraper extends BaseScraper {
         state: 'CA',
         phone: '',
         email: '',
+        website: '',
         bar_number: barNumber,
         admission_date: admissionDate,
         bar_status: barStatus,
+        profile_url: barNumber ? `https://apps.calbar.ca.gov/attorney/Licensee/Detail/${barNumber}` : '',
         source: `${this.name}_bar`,
       });
     });
 
     return attorneys;
+  }
+
+  /**
+   * Parse a CalBar profile/detail page for additional contact info.
+   * URL pattern: https://apps.calbar.ca.gov/attorney/Licensee/Detail/{barNum}
+   *
+   * The detail page has sections for address, phone, email, and more.
+   */
+  parseProfilePage($) {
+    const result = {};
+
+    // Extract phone — look for phone patterns in the page text
+    const bodyText = $('body').text();
+
+    // Phone: CalBar shows phone in the address/contact section
+    const phoneMatch = bodyText.match(/Phone:\s*([\d().\s-]+)/i) ||
+                       bodyText.match(/(\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4})/);
+    if (phoneMatch) {
+      result.phone = phoneMatch[1].trim();
+    }
+
+    // Email: look for mailto links or email patterns
+    const mailtoLink = $('a[href^="mailto:"]').first();
+    if (mailtoLink.length) {
+      result.email = mailtoLink.attr('href').replace('mailto:', '').split('?')[0].trim().toLowerCase();
+    }
+
+    // Website: look for external links that aren't CalBar
+    $('a[href]').each((_, el) => {
+      const href = $(el).attr('href') || '';
+      const text = $(el).text().toLowerCase().trim();
+      if ((text.includes('website') || text.includes('firm') || text.includes('law office')) &&
+          href.startsWith('http') && !href.includes('calbar.ca.gov')) {
+        result.website = href;
+        return false; // break
+      }
+    });
+    // Fallback: find external http links that aren't known sites
+    if (!result.website) {
+      $('a[href^="http"]').each((_, el) => {
+        const href = $(el).attr('href') || '';
+        if (!href.includes('calbar.ca.gov') && !href.includes('google.com') &&
+            !href.includes('facebook.com') && !href.includes('twitter.com')) {
+          result.website = href;
+          return false;
+        }
+      });
+    }
+
+    // Firm name: look for "Firm Name" or employer section
+    const firmMatch = bodyText.match(/(?:Firm|Employer|Company)(?:\s*Name)?:\s*(.+?)(?:\n|$)/i);
+    if (firmMatch) {
+      const firm = firmMatch[1].trim();
+      if (firm && firm.length > 1 && firm.length < 200) {
+        result.firm_name = firm;
+      }
+    }
+
+    // Address
+    const addrMatch = bodyText.match(/Address:\s*(.+?)(?:\n|Phone|Email|$)/is);
+    if (addrMatch) {
+      result.address = addrMatch[1].trim().replace(/\s+/g, ' ');
+    }
+
+    return result;
   }
 
   /**

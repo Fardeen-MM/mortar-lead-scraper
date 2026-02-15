@@ -272,6 +272,74 @@ class MartindaleScraper extends BaseScraper {
   }
 
   // ---------------------------------------------------------------------------
+  // Profile page parsing
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Parse a Martindale profile page for additional contact info.
+   * Profile URLs come from the JSON-LD sameAs field.
+   * These pages have detailed attorney info including bio, education, etc.
+   */
+  parseProfilePage($) {
+    const result = {};
+
+    // Try JSON-LD first (Martindale profile pages also have structured data)
+    $('script[type="application/ld+json"]').each((_, el) => {
+      try {
+        const raw = $(el).html();
+        if (!raw) return;
+        const data = JSON.parse(raw);
+
+        if (data.telephone) {
+          const tel = Array.isArray(data.telephone) ? data.telephone[0] : data.telephone;
+          if (tel && !result.phone) result.phone = tel.trim();
+        }
+        if (data.email && !result.email) {
+          result.email = data.email.trim().toLowerCase();
+        }
+        if (data.url && !result.website) {
+          result.website = data.url.trim();
+        }
+        if (data.description && !result.bio) {
+          result.bio = data.description.trim().substring(0, 500);
+        }
+      } catch {
+        // JSON parse error — skip
+      }
+    });
+
+    // Email from mailto links
+    if (!result.email) {
+      const mailtoLink = $('a[href^="mailto:"]').first();
+      if (mailtoLink.length) {
+        result.email = mailtoLink.attr('href').replace('mailto:', '').split('?')[0].trim().toLowerCase();
+      }
+    }
+
+    // Phone from page text
+    if (!result.phone) {
+      const bodyText = $('body').text();
+      const phoneMatch = bodyText.match(/(\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4})/);
+      if (phoneMatch) result.phone = phoneMatch[1].trim();
+    }
+
+    // Website — external links not on martindale.com
+    if (!result.website) {
+      $('a[href^="http"]').each((_, el) => {
+        const href = $(el).attr('href') || '';
+        if (!href.includes('martindale.com') && !href.includes('lawyers.com') &&
+            !href.includes('google.com') && !href.includes('facebook.com') &&
+            !href.includes('twitter.com') && !href.includes('linkedin.com')) {
+          result.website = href;
+          return false;
+        }
+      });
+    }
+
+    return result;
+  }
+
+  // ---------------------------------------------------------------------------
   // Main search — overrides BaseScraper.search()
   // ---------------------------------------------------------------------------
 

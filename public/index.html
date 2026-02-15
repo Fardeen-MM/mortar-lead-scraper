@@ -93,10 +93,48 @@
         </div>
       </div>
 
-      <!-- Lead Enrichment -->
+      <!-- Data Enrichment (Waterfall) -->
       <div class="enrichment-section">
-        <h3>Lead Enrichment</h3>
-        <p class="hint">Enrich leads with website, title, LinkedIn, and more after scraping.</p>
+        <h3>Data Enrichment (Waterfall)</h3>
+        <p class="hint">Automatically cross-reference multiple sources to fill missing phone, email, and website data.</p>
+
+        <div class="form-group">
+          <label class="toggle-label sub-toggle">
+            <input type="checkbox" id="toggle-fetch-profiles" checked>
+            <span class="toggle-switch"></span>
+            Fetch detail pages from bar directory <span class="hint-inline">(free, fills phone/email/website)</span>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label class="toggle-label sub-toggle">
+            <input type="checkbox" id="toggle-crossref-martindale" checked>
+            <span class="toggle-switch"></span>
+            Cross-reference Martindale <span class="hint-inline">(free, adds phone/website from Martindale.com)</span>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label class="toggle-label sub-toggle">
+            <input type="checkbox" id="toggle-crossref-lawyerscom" checked>
+            <span class="toggle-switch"></span>
+            Cross-reference Lawyers.com <span class="hint-inline">(free, adds phone/website from Lawyers.com)</span>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label class="toggle-label sub-toggle">
+            <input type="checkbox" id="toggle-email-crawl" checked>
+            <span class="toggle-switch"></span>
+            Crawl firm websites for emails <span class="hint-inline">(free, ~3s/site, name-matched)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Deep Enrichment -->
+      <div class="enrichment-section">
+        <h3>Deep Enrichment</h3>
+        <p class="hint">Enrich leads with title, LinkedIn, bio, and more after scraping.</p>
 
         <div class="form-group">
           <label class="toggle-label">
@@ -186,6 +224,17 @@
 
       <div class="log-container" id="log-container">
         <div class="log-line log-info">Waiting for scrape to start...</div>
+      </div>
+
+      <!-- Waterfall Progress (hidden until waterfall starts) -->
+      <div id="waterfall-section" class="enrichment-progress hidden">
+        <h3>Waterfall Enrichment</h3>
+        <div class="enrichment-status">
+          <span id="waterfall-status-text">Waiting...</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar progress-bar-enrich" id="waterfall-progress-bar"></div>
+        </div>
       </div>
 
       <!-- Enrichment Progress (hidden until enrichment starts) -->

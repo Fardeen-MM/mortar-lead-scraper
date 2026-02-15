@@ -176,6 +176,68 @@ class BaseScraper {
     return null;
   }
 
+  // --- Profile page fetching ---
+
+  /**
+   * Fetch a profile/detail page and return a Cheerio instance.
+   * Reusable helper for scrapers that have profile_url fields.
+   *
+   * @param {string} url - The profile page URL
+   * @param {RateLimiter} rateLimiter - Rate limiter instance
+   * @returns {CheerioStatic|null} Cheerio instance or null on failure
+   */
+  async fetchProfilePage(url, rateLimiter) {
+    if (!url) return null;
+
+    try {
+      await rateLimiter.wait();
+      const response = await this.httpGet(url, rateLimiter);
+
+      if (response.statusCode !== 200) {
+        log.warn(`Profile page returned ${response.statusCode}: ${url}`);
+        return null;
+      }
+
+      if (this.detectCaptcha(response.body)) {
+        log.warn(`CAPTCHA on profile page: ${url}`);
+        return null;
+      }
+
+      return cheerio.load(response.body);
+    } catch (err) {
+      log.warn(`Failed to fetch profile page: ${err.message}`);
+      return null;
+    }
+  }
+
+  /**
+   * Parse a profile/detail page for additional fields.
+   * Override in subclasses that have profile pages.
+   *
+   * @param {CheerioStatic} $ - Cheerio instance of the profile page
+   * @returns {object} Additional fields extracted from the profile
+   */
+  parseProfilePage(/* $ */) {
+    return {};
+  }
+
+  /**
+   * Fetch and parse a profile page for a lead, returning additional fields.
+   * Used by the waterfall enrichment pipeline.
+   *
+   * @param {object} lead - The lead object (must have profile_url)
+   * @param {RateLimiter} rateLimiter - Rate limiter instance
+   * @returns {object} Additional fields from the profile page
+   */
+  async enrichFromProfile(lead, rateLimiter) {
+    if (!lead.profile_url) return {};
+
+    const $ = await this.fetchProfilePage(lead.profile_url, rateLimiter);
+    if (!$) return {};
+
+    return this.parseProfilePage($);
+  }
+
   // --- Override points ---
 
   /**

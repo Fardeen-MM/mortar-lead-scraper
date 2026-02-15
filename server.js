@@ -111,7 +111,7 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
 
 // Start a scrape job
 app.post('/api/scrape/start', (req, res) => {
-  const { state, practice, city, test, uploadId, enrich, enrichOptions } = req.body;
+  const { state, practice, city, test, uploadId, enrich, enrichOptions, waterfall } = req.body;
 
   if (!state) {
     return res.status(400).json({ error: 'State is required' });
@@ -134,10 +134,11 @@ app.post('/api/scrape/start', (req, res) => {
     practice: practice || undefined,
     city: city || undefined,
     test: !!test,
-    emailScrape: false, // Bar scraping doesn't typically need Puppeteer email scraping
+    emailScrape: req.body.emailScrape !== false, // Default on — crawl firm websites for emails
     existingLeads,
     enrich: !!enrich,
     enrichOptions: enrichOptions || {},
+    waterfall: waterfall || {},
   });
 
   // Store job
@@ -173,6 +174,10 @@ app.post('/api/scrape/start', (req, res) => {
 
   emitter.on('enrichment-progress', (data) => {
     broadcast(jobId, { type: 'enrichment-progress', ...data });
+  });
+
+  emitter.on('waterfall-progress', (data) => {
+    broadcast(jobId, { type: 'waterfall-progress', ...data });
   });
 
   // Schedule job cleanup after terminal state (30 min TTL)

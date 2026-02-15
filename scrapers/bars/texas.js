@@ -240,6 +240,55 @@ class TexasScraper extends BaseScraper {
   }
 
   /**
+   * Parse a Texas Bar detail page for additional contact info.
+   * URL pattern: .../MemberDirectoryDetail.cfm?ContactID={id}
+   *
+   * Detail pages have full contact info, bar number, practice areas.
+   */
+  parseProfilePage($) {
+    const result = {};
+    const bodyText = $('body').text();
+
+    // Phone
+    const phoneMatch = bodyText.match(/(?:Phone|Tel(?:ephone)?|Office):\s*([\d().\s-]+)/i) ||
+                       bodyText.match(/(\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4})/);
+    if (phoneMatch) {
+      result.phone = phoneMatch[1].trim();
+    }
+
+    // Email from mailto links
+    const mailtoLink = $('a[href^="mailto:"]').first();
+    if (mailtoLink.length) {
+      result.email = mailtoLink.attr('href').replace('mailto:', '').split('?')[0].trim().toLowerCase();
+    }
+
+    // Website — look for external links
+    $('a[href]').each((_, el) => {
+      const href = $(el).attr('href') || '';
+      const text = $(el).text().toLowerCase().trim();
+      if ((text.includes('website') || text.includes('firm') || text.includes('visit') || text.includes('www')) &&
+          href.startsWith('http') && !href.includes('texasbar.com')) {
+        result.website = href;
+        return false;
+      }
+    });
+
+    // Bar number
+    const barMatch = bodyText.match(/(?:Bar\s*(?:Card\s*)?Number|License\s*#?):\s*(\d+)/i);
+    if (barMatch) {
+      result.bar_number = barMatch[1];
+    }
+
+    // Practice areas from the detail page
+    const practiceEl = $('p.areas, .practice-areas');
+    if (practiceEl.length) {
+      result.practice_areas = practiceEl.text().replace(/Practice Areas:\s*/i, '').trim();
+    }
+
+    return result;
+  }
+
+  /**
    * Override search() entirely since Texas Bar uses POST requests.
    * Async generator that yields attorney records.
    */

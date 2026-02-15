@@ -534,6 +534,65 @@ class LawyersComScraper extends BaseScraper {
   }
 
   // ---------------------------------------------------------------------------
+  // Profile page parsing
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Parse a Lawyers.com profile page for additional contact info.
+   * Profile pages have detailed attorney info, phone, website, etc.
+   */
+  parseProfilePage($) {
+    const result = {};
+    const bodyText = $('body').text();
+
+    // Phone — from profile page elements or text
+    const phoneEl = $('[class*="phone"], [data-ctn-rtn]');
+    const rtn = phoneEl.attr('data-ctn-rtn') || '';
+    const rtnAlt = phoneEl.attr('data-ctn-rtn-alt') || '';
+    if (rtn) {
+      result.phone = rtn.trim();
+    } else if (rtnAlt) {
+      result.phone = rtnAlt.trim();
+    } else {
+      const phoneMatch = bodyText.match(/(\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4})/);
+      if (phoneMatch) result.phone = phoneMatch[1].trim();
+    }
+
+    // Email from mailto links
+    const mailtoLink = $('a[href^="mailto:"]').first();
+    if (mailtoLink.length) {
+      result.email = mailtoLink.attr('href').replace('mailto:', '').split('?')[0].trim().toLowerCase();
+    }
+
+    // Website
+    const websiteEl = $('a.srl-website, a[class*="website"], a[data-analytics*="website"]');
+    if (websiteEl.length) {
+      result.website = (websiteEl.first().attr('href') || '').trim();
+    } else {
+      $('a[href^="http"]').each((_, el) => {
+        const href = $(el).attr('href') || '';
+        const text = $(el).text().toLowerCase().trim();
+        if ((text.includes('visit') || text.includes('website')) &&
+            !href.includes('lawyers.com') && !href.includes('martindale.com')) {
+          result.website = href;
+          return false;
+        }
+      });
+    }
+
+    // Firm name
+    const firmEl = $('h1, .profile-name, [class*="firm-name"]').first();
+    if (firmEl.length) {
+      const firmText = firmEl.text().trim();
+      if (firmText && firmText.length > 1 && firmText.length < 200) {
+        result.firm_name = firmText;
+      }
+    }
+
+    return result;
+  }
+
+  // ---------------------------------------------------------------------------
   // Main search — overrides BaseScraper.search()
   // ---------------------------------------------------------------------------
 

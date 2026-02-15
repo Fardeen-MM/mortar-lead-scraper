@@ -332,6 +332,14 @@ const app = {
     // Reset heading
     document.getElementById('scrape-heading').textContent = 'Scraping...';
 
+    // Gather waterfall options
+    const waterfall = {
+      fetchProfiles: document.getElementById('toggle-fetch-profiles').checked,
+      crossRefMartindale: document.getElementById('toggle-crossref-martindale').checked,
+      crossRefLawyersCom: document.getElementById('toggle-crossref-lawyerscom').checked,
+      emailCrawl: document.getElementById('toggle-email-crawl').checked,
+    };
+
     // Gather enrichment options
     const enrich = document.getElementById('toggle-enrich').checked;
     const enrichOptions = enrich ? {
@@ -355,6 +363,8 @@ const app = {
     document.getElementById('btn-stop-scrape').hidden = false;
     document.getElementById('btn-stop-scrape').disabled = false;
     document.getElementById('btn-stop-scrape').textContent = 'Stop Scrape';
+    document.getElementById('waterfall-section').classList.add('hidden');
+    document.getElementById('waterfall-progress-bar').style.width = '0%';
     document.getElementById('enrichment-section').classList.add('hidden');
     document.getElementById('enrich-progress-bar').style.width = '0%';
 
@@ -363,7 +373,7 @@ const app = {
       const res = await fetch('/api/scrape/start', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ state, practice, city, test, uploadId: this.uploadId, enrich, enrichOptions }),
+        body: JSON.stringify({ state, practice, city, test, uploadId: this.uploadId, enrich, enrichOptions, waterfall, emailScrape: waterfall.emailCrawl }),
       });
       const data = await res.json();
 
@@ -564,6 +574,26 @@ const app = {
         this.leads.push(msg.data);
         break;
 
+      case 'waterfall-progress': {
+        const section = document.getElementById('waterfall-section');
+        if (section) {
+          section.classList.remove('hidden');
+          const pct = msg.total > 0 ? Math.round((msg.current / msg.total) * 100) : 0;
+          document.getElementById('waterfall-progress-bar').style.width = pct + '%';
+          const stepLabels = {
+            profiles: 'Fetching profile pages',
+            martindale: 'Cross-referencing Martindale',
+            'lawyers-com': 'Cross-referencing Lawyers.com',
+            'name-lookup': 'Name lookups',
+            'email-crawl': 'Crawling websites for emails',
+          };
+          const stepLabel = stepLabels[msg.step] || msg.step;
+          document.getElementById('waterfall-status-text').textContent =
+            `${stepLabel}: ${msg.current}/${msg.total} — ${msg.detail || ''}`;
+        }
+        break;
+      }
+
       case 'enrichment-progress': {
         const section = document.getElementById('enrichment-section');
         section.classList.remove('hidden');
@@ -582,6 +612,14 @@ const app = {
         this.$progressBar.style.width = '100%';
         document.getElementById('scrape-heading').textContent = 'Scrape Complete';
         this.showConnectionStatus(null);
+        // Mark waterfall as done if it was running
+        if (msg.stats.waterfall) {
+          const wfSection = document.getElementById('waterfall-section');
+          if (wfSection) {
+            document.getElementById('waterfall-progress-bar').style.width = '100%';
+            document.getElementById('waterfall-status-text').textContent = 'Waterfall enrichment complete';
+          }
+        }
         // Mark enrichment as done if it was running
         if (msg.stats.enrichment) {
           document.getElementById('enrich-progress-bar').style.width = '100%';
@@ -801,6 +839,15 @@ const app = {
     if (stats.captchaSkipped) rows.push(['CAPTCHA Skipped', stats.captchaSkipped]);
     if (stats.errorSkipped) rows.push(['Errors', stats.errorSkipped]);
 
+    // Waterfall stats
+    if (stats.waterfall) {
+      const w = stats.waterfall;
+      if (w.profilesFetched) rows.push(['Profiles Fetched', w.profilesFetched]);
+      if (w.crossRefMatches) rows.push(['Cross-Ref Matches', w.crossRefMatches]);
+      if (w.emailsCrawled) rows.push(['Emails from Websites', w.emailsCrawled]);
+      if (w.totalFieldsFilled) rows.push(['Fields Filled (Waterfall)', w.totalFieldsFilled]);
+    }
+
     // Enrichment stats
     if (stats.enrichment) {
       const e = stats.enrichment;
@@ -925,6 +972,9 @@ const app = {
     { key: 'bio', label: 'Bio', default: false },
     { key: 'education', label: 'Education', default: false },
     { key: 'languages', label: 'Languages', default: false },
+    { key: 'email_source', label: 'Email Source', default: false },
+    { key: 'phone_source', label: 'Phone Source', default: false },
+    { key: 'website_source', label: 'Website Source', default: false },
   ],
 
   getSelectedColumns() {
