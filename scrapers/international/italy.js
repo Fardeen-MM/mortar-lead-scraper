@@ -41,11 +41,14 @@ const { log } = require('../../lib/logger');
 const { RateLimiter } = require('../../lib/rate-limiter');
 
 /**
- * Cassa Forense search URL.
- * The form POSTs to this endpoint with cognome (surname) and ordine (bar association).
+ * Cassa Forense URLs.
+ * The main page is used for session init (GET to collect cookies + ordine values).
+ * Search results come from an AJAX POST to retRicerca.cfm, not the main page.
+ * Pagination uses GET to retRicerca.cfm?start=N&cognome=X&nome=&ordine=Y.
  */
 const CASSA_FORENSE_BASE = 'https://servizi.cassaforense.it/CFor/ElencoNazionaleAvvocati';
-const CASSA_FORENSE_SEARCH = `${CASSA_FORENSE_BASE}/elenconazionaleavvocati_pg.cfm`;
+const CASSA_FORENSE_MAIN = `${CASSA_FORENSE_BASE}/elenconazionaleavvocati_pg.cfm`;
+const CASSA_FORENSE_AJAX = `${CASSA_FORENSE_BASE}/retRicerca.cfm`;
 
 /**
  * SferaBit AlboSFERA platform URLs for regional bars.
@@ -198,7 +201,7 @@ class ItalyScraper extends BaseScraper {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Content-Length': bodyBuffer.length,
           'Origin': 'https://servizi.cassaforense.it',
-          'Referer': CASSA_FORENSE_SEARCH,
+          'Referer': CASSA_FORENSE_MAIN,
           'Connection': 'keep-alive',
           ...(cookies ? { 'Cookie': cookies } : {}),
         },
@@ -310,11 +313,80 @@ class ItalyScraper extends BaseScraper {
   }
 
   // -------------------------------------------------------------------------
-  // Cassa Forense parsing
+  // Cassa Forense AJAX response parsing
   // -------------------------------------------------------------------------
 
   /**
-   * Parse lawyer results from the Cassa Forense HTML response.
+   * Parse the AJAX HTML fragment returned by retRicerca.cfm.
+   *
+   * Structure:
+   *   <div class="organigramma-block">
+   *     <ul class="list list-personas">
+   *       <li class="persona">
+   *         <h4 class="persona-name">Avv. COGNOME NOME</h4>
+   *         <div class="sede persona-sede">
+   *           <p class="sede-name">Luogo di nascita : <span class="sede-city">CITY</span></p>
+   *           <p class="address sede-address"><b>Data di nascita : </b>**\/**\/Y-YY</p>
+   *         </div>
+   *         <div class="sede persona-sede">
+   *           <p class="sede-name">Consiglio dell'Ordine di <span class="sede-city">ORDINE</span></p>
+   *         </div>
+   *       </li>
+   *     </ul>
+   *   </div>
+   */
+  _parseCassaForenseAjax(html, searchCity) {
+    const $ = cheerio.load(html);
+    const results = [];
+
+    $('li.persona').each((_, el) => {
+      const $el = $(el);
+
+      // Extract name from h4.persona-name: "Avv. COGNOME NOME"
+      let rawName = $el.find('h4.persona-name').text().trim();
+      if (!rawName || rawName.length < 3) return;
+
+      // Remove "Avv. " prefix
+      rawName = rawName.replace(/^Avv\.\s*/i, '').trim();
+
+      const nameParts = this._parseItalianName(rawName);
+      if (!nameParts.lastName) return;
+
+      // Extract bar association (Ordine) from second sede block
+      let barName = '';
+      $el.find('.sede-city').each((i, span) => {
+        const parentText = $(span).parent().text();
+        if (parentText.includes("Ordine di") || parentText.includes("dell'Ordine")) {
+          barName = $(span).text().trim();
+        }
+      });
+
+      results.push({
+        first_name: nameParts.firstName,
+        last_name: nameParts.lastName,
+        full_name: nameParts.fullName,
+        firm_name: '',
+        city: searchCity,
+        state: 'IT',
+        postal_code: '',
+        address: '',
+        phone: '',
+        email: '',
+        website: '',
+        bar_number: '',
+        bar_name: barName ? `Ordine Avvocati ${barName}` : `Ordine Avvocati ${searchCity}`,
+        bar_status: 'Iscritto',
+        profile_url: '',
+        practice_area: '',
+        source: 'italy_bar',
+      });
+    });
+
+    return results;
+  }
+
+  /**
+   * Parse lawyer results from the Cassa Forense full-page HTML response (legacy).
    *
    * The search results page is a ColdFusion-generated HTML table.
    * Each row typically contains: Name, Ordine (bar), enrollment number,
@@ -606,11 +678,12 @@ class ItalyScraper extends BaseScraper {
     // Step 1: Initialize session with Cassa Forense
     let cookies = '';
     let sessionOk = false;
+    let ordineMap = {}; // Map of city name -> padded ordine value from <select>
 
     try {
       log.info('IT: Initializing session with Cassa Forense...');
       await rateLimiter.wait();
-      const initResponse = await this._httpGetWithCookies(CASSA_FORENSE_SEARCH, rateLimiter);
+      const initResponse = await this._httpGetWithCookies(CASSA_FORENSE_MAIN, rateLimiter);
 
       if (initResponse.statusCode === 200) {
         cookies = initResponse.cookies;
@@ -623,11 +696,17 @@ class ItalyScraper extends BaseScraper {
           sessionOk = false;
         }
 
-        // Check if the page has meaningful form content
-        if (!initResponse.body.includes('Cognome') && !initResponse.body.includes('cognome')) {
-          log.warn('IT: Cassa Forense page does not contain expected form fields — may require JS rendering');
-          log.warn('IT: The page may be behind a JavaScript challenge. Attempting to proceed with POST requests...');
-        }
+        // Extract ordine values from <select name="Ordine"> options
+        // The values are padded with spaces to ~50 chars which is required for the search
+        const $ = cheerio.load(initResponse.body);
+        $('select[name="Ordine"] option').each((_, opt) => {
+          const val = $(opt).attr('value') || '';
+          const text = val.trim();
+          if (text && text !== 'Seleziona Tutti') {
+            ordineMap[text] = val; // Store padded value
+          }
+        });
+        log.info(`IT: Extracted ${Object.keys(ordineMap).length} ordine values from form`);
       } else {
         log.warn(`IT: Cassa Forense returned status ${initResponse.statusCode} — will try SferaBit fallback`);
       }
@@ -641,12 +720,14 @@ class ItalyScraper extends BaseScraper {
       yield { _cityProgress: { current: ci + 1, total: cities.length } };
       log.scrape(`IT: Searching lawyers in ${city}`);
 
-      const ordine = CITY_TO_ORDINE[city] || city.toUpperCase();
+      const ordineName = CITY_TO_ORDINE[city] || city.toUpperCase();
+      // Use the padded ordine value from the form, or fall back to the name
+      const ordineValue = ordineMap[ordineName] || ordineName;
 
       if (sessionOk) {
-        // Primary path: Cassa Forense surname iteration
+        // Primary path: Cassa Forense AJAX search via retRicerca.cfm
         yield* this._searchCassaForense(
-          rateLimiter, city, ordine, cookies, seen, options
+          rateLimiter, city, ordineValue, cookies, seen, options
         );
       } else {
         // Fallback: SferaBit AlboSFERA
@@ -667,10 +748,15 @@ class ItalyScraper extends BaseScraper {
 
   /**
    * Search Cassa Forense by iterating through surname prefixes for a given Ordine.
+   *
+   * The search uses the AJAX endpoint retRicerca.cfm (not the main page).
+   * Initial search: POST with form fields (cognome, nome, Ordine, hd* copies).
+   * Pagination: GET retRicerca.cfm?start=N&cognome=X&nome=&ordine=Y (5 per page).
    */
   async *_searchCassaForense(rateLimiter, city, ordine, cookies, seen, options) {
     let totalForCity = 0;
     const maxRecords = options.maxPages ? options.maxPages * this.pageSize : 0;
+    const RESULTS_PER_PAGE = 5; // Cassa Forense returns 5 per AJAX page
 
     for (const prefix of SURNAME_PREFIXES) {
       if (maxRecords && totalForCity >= maxRecords) {
@@ -678,19 +764,28 @@ class ItalyScraper extends BaseScraper {
         break;
       }
 
-      const params = new URLSearchParams();
-      params.set('cognome', prefix);
-      params.set('nome', '');
-      params.set('ordine', ordine);
+      log.info(`IT: Cassa Forense — ${city} (${ordine.trim()}), surname prefix "${prefix}"`);
 
-      log.info(`IT: Cassa Forense — ${city} (${ordine}), surname prefix "${prefix}"`);
+      // Initial AJAX POST (page 1)
+      // Mimic the getquerystring() serialization from the JS form handler
+      const formFields = [
+        ['cognome', prefix],
+        ['nome', ''],
+        ['Ordine', ordine],
+        ['hdnome', ''],
+        ['hdcognome', prefix],
+        ['hdordine', ordine],
+      ];
+      const formBody = formFields
+        .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v || '')}`)
+        .join('&');
 
       let response;
       try {
         await rateLimiter.wait();
         response = await this._httpPost(
-          CASSA_FORENSE_SEARCH,
-          params.toString(),
+          CASSA_FORENSE_AJAX,
+          formBody,
           rateLimiter,
           cookies,
         );
@@ -726,40 +821,72 @@ class ItalyScraper extends BaseScraper {
         continue;
       }
 
-      // Parse results
-      const attorneys = this._parseCassaForenseResults(response.body, city);
+      // Extract total record count from the AJAX response
+      // The response contains: qryTot = NNN; in a <script> block
+      // and #totRec with "Record da X a Y di Z"
+      let totalResults = 0;
+      const qryMatch = response.body.match(/qryTot\s*=\s*(\d+)/);
+      if (qryMatch) totalResults = parseInt(qryMatch[1], 10);
 
-      if (attorneys.length === 0) {
-        // Check if the page contains an error message or empty result indicator
-        if (response.body.includes('Nessun risultato') || response.body.includes('nessun avvocato')) {
+      if (totalResults === 0) {
+        // No results for this prefix
+        if (response.body.length < 200) {
           log.info(`IT: No results for ${city} prefix "${prefix}"`);
-        } else if (response.body.length < 500) {
-          log.info(`IT: Empty/minimal response for ${city} prefix "${prefix}" (${response.body.length} bytes)`);
-        } else {
-          // Debug: log first 1000 chars of response to help diagnose parser issues
-          log.warn(`IT: 0 results parsed for ${city} prefix "${prefix}" but response is ${response.body.length} bytes`);
-          log.info(`IT: Response snippet: ${response.body.substring(0, 1000).replace(/\s+/g, ' ')}`);
         }
         continue;
       }
 
-      log.info(`IT: Found ${attorneys.length} lawyers for ${city} prefix "${prefix}"`);
+      const totalPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
+      log.info(`IT: Found ${totalResults} lawyers for ${city} prefix "${prefix}" (${totalPages} pages)`);
 
-      for (const attorney of attorneys) {
-        // Dedup by name + bar
-        const key = `${attorney.full_name}|${attorney.bar_name}|${attorney.bar_number}`.toLowerCase();
+      // Parse first page results
+      const firstPageAttorneys = this._parseCassaForenseAjax(response.body, city);
+      for (const attorney of firstPageAttorneys) {
+        const key = `${attorney.full_name}|${attorney.bar_name}`.toLowerCase();
         if (seen.has(key)) continue;
         seen.add(key);
-
-        attorney.practice_area = '';
-        attorney.source = 'italy_bar';
         yield attorney;
         totalForCity++;
-
         if (maxRecords && totalForCity >= maxRecords) break;
       }
 
-      // For test mode, only do first few prefixes
+      if (maxRecords && totalForCity >= maxRecords) break;
+
+      // Paginate through remaining pages (start=6, 11, 16, ...)
+      // In test mode, limit to first page
+      const maxPagesToFetch = options.maxPages ? 1 : totalPages;
+      for (let page = 2; page <= maxPagesToFetch; page++) {
+        if (maxRecords && totalForCity >= maxRecords) break;
+
+        const start = (page - 1) * RESULTS_PER_PAGE + 1;
+        const pageUrl = `${CASSA_FORENSE_AJAX}?start=${start}&cognome=${encodeURIComponent(prefix)}&nome=&ordine=${encodeURIComponent(ordine)}`;
+
+        let pageResp;
+        try {
+          await rateLimiter.wait();
+          pageResp = await this._httpGetWithCookies(pageUrl, rateLimiter, cookies);
+        } catch (err) {
+          log.error(`IT: Pagination failed for ${city} prefix "${prefix}" page ${page}: ${err.message}`);
+          break;
+        }
+
+        if (pageResp.statusCode !== 200) break;
+        if (pageResp.cookies) cookies = this._mergeCookies(cookies, pageResp.cookies);
+
+        const pageAttorneys = this._parseCassaForenseAjax(pageResp.body, city);
+        if (pageAttorneys.length === 0) break;
+
+        for (const attorney of pageAttorneys) {
+          const key = `${attorney.full_name}|${attorney.bar_name}`.toLowerCase();
+          if (seen.has(key)) continue;
+          seen.add(key);
+          yield attorney;
+          totalForCity++;
+          if (maxRecords && totalForCity >= maxRecords) break;
+        }
+      }
+
+      // For test mode, only do first prefix
       if (options.maxPages) break;
     }
 

@@ -64,6 +64,8 @@ const KNOWN_PLACEHOLDERS = new Set([
   'UK-EW',  // SRA API endpoint unknown
   'UK-NI',  // Client-side rendering
   // Australia — may need browser/special handling
+  'AU-NT',  // PDF scraper triggers CAPTCHA on some requests
+  // Australia — may need browser/special handling
   'AU-SA',    // ASP.NET ViewState — may require login
   'AU-TAS',   // WordPress Search & Filter — may need JS
   'AU-ACT',   // Bond MCRM — requires Puppeteer
