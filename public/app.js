@@ -52,8 +52,11 @@ const app = {
     stateSelect.innerHTML = '';
 
     // Group by country
-    const groups = { US: [], CA: [], UK: [] };
-    const groupLabels = { US: 'United States', CA: 'Canada', UK: 'United Kingdom' };
+    const groups = { US: [], CA: [], UK: [], AU: [], EU: [], INTL: [], DIRECTORY: [] };
+    const groupLabels = {
+      US: 'United States', CA: 'Canada', UK: 'United Kingdom',
+      AU: 'Australia', EU: 'Europe', INTL: 'International', DIRECTORY: 'Directories',
+    };
 
     for (const [code, meta] of Object.entries(this.config.states)) {
       const country = meta.country || 'US';
@@ -66,9 +69,9 @@ const app = {
       groups[country].sort((a, b) => a.name.localeCompare(b.name));
     }
 
-    // Build optgroups (US first, then CA, then UK)
-    for (const country of ['US', 'CA', 'UK']) {
-      if (groups[country].length === 0) continue;
+    // Build optgroups in display order
+    for (const country of ['US', 'CA', 'UK', 'AU', 'EU', 'INTL', 'DIRECTORY']) {
+      if (!groups[country] || groups[country].length === 0) continue;
       const optgroup = document.createElement('optgroup');
       optgroup.label = groupLabels[country] || country;
       for (const { code, name } of groups[country]) {
@@ -134,6 +137,9 @@ const app = {
         if (status) {
           const dot = status === 'green' ? '\u{1F7E2}' : status === 'yellow' ? '\u{1F7E1}' : '\u{1F534}';
           opt.textContent = `${dot} ${opt.textContent}`;
+          opt.title = status === 'green' ? 'Online — scraper is accessible'
+            : status === 'yellow' ? 'Degraded — server responded with errors'
+            : 'Offline — server unreachable';
         }
       }
     } catch (err) {
@@ -487,10 +493,20 @@ const app = {
     };
   },
 
+  manualReconnect() {
+    const btn = document.getElementById('btn-reconnect');
+    if (btn) btn.classList.add('hidden');
+    this.wsReconnectAttempts = 0;
+    this.addLog('info', 'Attempting to reconnect...');
+    this.connectWebSocket();
+  },
+
   reconnectWebSocket() {
     if (this.wsReconnectAttempts >= 5) {
       this.showConnectionStatus('disconnected');
-      this.addLog('error', 'Lost connection to server. Refresh the page to try again.');
+      this.addLog('error', 'Lost connection to server.');
+      const btn = document.getElementById('btn-reconnect');
+      if (btn) btn.classList.remove('hidden');
       return;
     }
 
@@ -628,13 +644,17 @@ const app = {
 
     // Empty state
     if (this.leads.length === 0) {
+      const dupesSkipped = this.stats?.duplicatesSkipped || 0;
+      const dupesHint = dupesSkipped > 0
+        ? `<p>${dupesSkipped.toLocaleString()} duplicate(s) were removed during deduplication. Try disabling the dedup CSV upload or using a different jurisdiction.</p>`
+        : '<p>Try adjusting your search criteria — select a different practice area, city, or jurisdiction.</p>';
       body.innerHTML = `
         <tr>
           <td colspan="9">
             <div class="empty-state">
               <span class="empty-state-icon">🔍</span>
               <h3>No leads found</h3>
-              <p>Try adjusting your search criteria — select a different practice area, city, or state.</p>
+              ${dupesHint}
             </div>
           </td>
         </tr>
@@ -704,6 +724,23 @@ const app = {
       this.sortAsc = true;
     }
     this.renderTable();
+    this.updateSortArrows();
+  },
+
+  updateSortArrows() {
+    document.querySelectorAll('.sort-arrow').forEach(el => { el.textContent = ''; });
+    if (!this.sortCol) return;
+    const colMap = {
+      first_name: 0, last_name: 1, firm_name: 2, title: 3,
+      city: 4, email: 5, phone: 6, _completeness: 8,
+    };
+    const idx = colMap[this.sortCol];
+    if (idx === undefined) return;
+    const th = document.querySelectorAll('#results-table thead th')[idx];
+    if (th) {
+      const arrow = th.querySelector('.sort-arrow');
+      if (arrow) arrow.textContent = this.sortAsc ? ' \u25B2' : ' \u25BC';
+    }
   },
 
   _filterDebounceTimer: null,

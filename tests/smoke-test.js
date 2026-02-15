@@ -63,12 +63,10 @@ const KNOWN_PLACEHOLDERS = new Set([
   // UK — inaccessible
   'UK-EW',  // SRA API endpoint unknown
   'UK-NI',  // Client-side rendering
-  'UK-SC',  // May need real POST testing
   // Australia — may need browser/special handling
   'AU-SA',    // ASP.NET ViewState — may require login
   'AU-TAS',   // WordPress Search & Filter — may need JS
   'AU-ACT',   // Bond MCRM — requires Puppeteer
-  'AU-NT',    // PDF-based — may hit CAPTCHA on index page
   // Europe — placeholder
   'ES',       // Spain CGAE — Liferay/Angular SPA
   // Asia-Pacific — placeholder
@@ -101,7 +99,8 @@ async function testScraper(code, loader) {
     );
 
     const searchPromise = (async () => {
-      for await (const item of scraper.search(null, { maxPages: 1, city })) {
+      // Skip profile fetching in smoke test to avoid timeouts (NZ, etc.)
+      for await (const item of scraper.search(null, { maxPages: 1, city, skipProfiles: true })) {
         if (item._cityProgress) continue;
 
         if (item._captcha) {

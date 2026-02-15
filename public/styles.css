@@ -714,6 +714,12 @@ tr:hover td {
   animation: pulse 1.2s ease-in-out infinite;
 }
 
+.btn-reconnect {
+  margin-left: 0.5rem;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.75rem;
+}
+
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.3; }

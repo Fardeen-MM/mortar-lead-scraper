@@ -88,7 +88,7 @@ class ScotlandScraper extends BaseScraper {
    * Results are in <div class="find-a-solicitor-list-item"> containers.
    * Name in <h2 class="h4"> as "Last, First".
    * Firm in <a class="overlay-link"> with data-heading attribute.
-   * Admission date in <p>Admission date: DD/MM/YYYY</p>.
+   * Admission date in <p>Admission date: DD/MM/YYYY</p> inside .findASolSummary.
    */
   parseResultsPage($) {
     const attorneys = [];
@@ -118,7 +118,7 @@ class ScotlandScraper extends BaseScraper {
       const firmName = $firmLink.attr('data-heading') || $firmLink.text().trim() || '';
 
       // Extract firm address from data-address attribute
-      const firmAddress = ($firmLink.attr('data-address') || '').replace(/\r/g, ', ');
+      const firmAddress = ($firmLink.attr('data-address') || '').replace(/\r/g, ', ').replace(/&#xD;/g, ', ');
 
       // Extract total solicitors count from data-partners attribute
       const totalSolicitors = $firmLink.attr('data-partners') || '';
@@ -164,17 +164,26 @@ class ScotlandScraper extends BaseScraper {
 
   /**
    * Extract total result count from the search results page.
-   * Looks for <div class="results-count"> with "N results found" text.
+   * The page displays "N results found" as plain text.
    */
   extractResultCount($) {
+    // Try dedicated results-count element first
     const countText = $('.results-count').text().trim();
     const match = countText.match(/([\d,]+)\s+results?\s+found/i);
     if (match) return parseInt(match[1].replace(/,/g, ''), 10);
 
-    // Fallback: try body text
+    // Fallback: search all text on page for "N results found"
     const text = $('body').text();
     const fallback = text.match(/([\d,]+)\s+results?\s+found/i);
     if (fallback) return parseInt(fallback[1].replace(/,/g, ''), 10);
+
+    // Fallback: count h2 elements that look like names (containing commas)
+    let nameCount = 0;
+    $('h2').each((_, el) => {
+      const t = $(el).text().trim();
+      if (t.includes(',') && t.length > 3 && t.length < 100) nameCount++;
+    });
+    if (nameCount > 0) return nameCount;
 
     return 0;
   }

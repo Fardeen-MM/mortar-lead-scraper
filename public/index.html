@@ -64,7 +64,7 @@
 
       <div class="form-grid">
         <div class="form-group">
-          <label for="select-state">State</label>
+          <label for="select-state">Jurisdiction</label>
           <select id="select-state">
             <option value="">Loading...</option>
           </select>
@@ -88,7 +88,7 @@
           <label class="toggle-label">
             <input type="checkbox" id="toggle-test">
             <span class="toggle-switch"></span>
-            Test Mode <span class="hint-inline">(2 pages per city)</span>
+            Test Mode <span class="hint-inline">— scrapes ~50 leads per city instead of full directory</span>
           </label>
         </div>
       </div>
@@ -158,6 +158,7 @@
       <div id="connection-status" class="connection-status connected hidden">
         <span class="connection-dot"></span>
         <span id="connection-text">Connected</span>
+        <button id="btn-reconnect" class="btn btn-secondary btn-reconnect hidden" onclick="app.manualReconnect()">Reconnect</button>
       </div>
 
       <div class="stats-bar">

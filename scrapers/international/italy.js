@@ -27,7 +27,7 @@
  *
  * Known limitations:
  *   - Cassa Forense requires at least 3 characters for surname search;
- *     we use 3-letter prefixes to broaden coverage.
+ *     we use common 3-letter Italian surname prefixes for broad coverage.
  *   - The CNF site requires full JavaScript rendering and is not scraper-friendly.
  *   - Some regional bars may have additional anti-bot protections.
  *   - Phone/email are typically not included in public search results.
@@ -94,11 +94,33 @@ const SFERABIT_IDS = {
 };
 
 /**
- * Alphabet prefixes for surname-based enumeration.
- * We use 2-letter prefixes to get more manageable result sets,
- * but the Cassa Forense requires minimum 3 characters.
+ * Surname prefixes for enumeration.
+ * Cassa Forense requires minimum 3 characters for surname search.
+ * We use common Italian 3-letter surname prefixes to get broad coverage.
+ * In test mode (maxPages), only the first prefix is used.
  */
-const SURNAME_PREFIXES = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const SURNAME_PREFIXES = [
+  'Abb', 'Acc', 'Agn', 'Alb', 'Ale', 'Ama', 'And', 'Ang', 'Ann', 'Ant', 'Ard', 'Are',
+  'Bar', 'Bas', 'Bel', 'Ben', 'Ber', 'Bia', 'Bon', 'Bor', 'Bra', 'Bri', 'Bru', 'Buo',
+  'Cac', 'Cal', 'Cam', 'Cap', 'Car', 'Cas', 'Cat', 'Cav', 'Cel', 'Cer', 'Chi', 'Cia',
+  'Col', 'Con', 'Cor', 'Cos', 'Cri', 'Cro', 'Cuc',
+  'Dal', 'Dam', 'Dan', 'DeA', 'DeL', 'DeM', 'DeR', 'DeS', 'Del', 'DiB', 'DiM', 'DiP',
+  'Esp', 'Fab', 'Fal', 'Fan', 'Far', 'Fas', 'Fer', 'Fil', 'Fio', 'For', 'Fra', 'Fur',
+  'Gal', 'Gar', 'Gas', 'Gen', 'Ghi', 'Gia', 'Gio', 'Gir', 'Giu', 'Gra', 'Gre', 'Gri',
+  'Gua', 'Gue', 'Imp', 'Ing',
+  'Lac', 'Lam', 'Lan', 'Lat', 'Leo', 'Lic', 'Lom', 'Lon', 'Lor', 'Luc',
+  'Mac', 'Mag', 'Mai', 'Man', 'Mar', 'Mas', 'Mat', 'Maz', 'Mel', 'Mer', 'Mic', 'Min',
+  'Mon', 'Mor', 'Mos', 'Mur', 'Mus',
+  'Nap', 'Nar', 'Neg', 'Ner', 'Nic', 'Nob', 'Noc',
+  'Oli', 'Orl', 'Pac', 'Pag', 'Pal', 'Pan', 'Pap', 'Par', 'Pas', 'Pel', 'Per', 'Pet',
+  'Pia', 'Pic', 'Pie', 'Pin', 'Pir', 'Pis', 'Pol', 'Pom', 'Por', 'Pri', 'Pro', 'Pug',
+  'Rag', 'Rai', 'Ram', 'Ran', 'Rav', 'Reg', 'Ric', 'Rig', 'Rin', 'Ris', 'Roc', 'Rom',
+  'Ros', 'Rot', 'Rub', 'Rus', 'Sab', 'Sal', 'San', 'Sar', 'Sav', 'Sca', 'Sch', 'Sci',
+  'Ser', 'Sil', 'Sim', 'Sol', 'Sor', 'Spa', 'Spi', 'Sta', 'Ste', 'Str',
+  'Tab', 'Tar', 'Ter', 'Tic', 'Tor', 'Tra', 'Tri', 'Tro', 'Tur',
+  'Val', 'Van', 'Vas', 'Vec', 'Ven', 'Ver', 'Vic', 'Vil', 'Vis', 'Vit', 'Vol',
+  'Zam', 'Zan', 'Zap', 'Zuc',
+];
 
 class ItalyScraper extends BaseScraper {
   constructor() {
@@ -195,7 +217,8 @@ class ItalyScraper extends BaseScraper {
           if (redirect.startsWith('/')) {
             redirect = `${parsed.protocol}//${parsed.host}${redirect}`;
           }
-          return resolve(this.httpGet(redirect, rateLimiter));
+          const merged = this._mergeCookies(cookies, newCookies);
+          return resolve(this._httpGetWithCookies(redirect, rateLimiter, merged));
         }
 
         let data = '';
@@ -649,18 +672,18 @@ class ItalyScraper extends BaseScraper {
     let totalForCity = 0;
     const maxRecords = options.maxPages ? options.maxPages * this.pageSize : 0;
 
-    for (const letter of SURNAME_PREFIXES) {
+    for (const prefix of SURNAME_PREFIXES) {
       if (maxRecords && totalForCity >= maxRecords) {
         log.info(`IT: Reached max records limit for ${city}`);
         break;
       }
 
       const params = new URLSearchParams();
-      params.set('cognome', letter);
+      params.set('cognome', prefix);
       params.set('nome', '');
       params.set('ordine', ordine);
 
-      log.info(`IT: Cassa Forense — ${city} (${ordine}), surname prefix "${letter}"`);
+      log.info(`IT: Cassa Forense — ${city} (${ordine}), surname prefix "${prefix}"`);
 
       let response;
       try {
@@ -672,7 +695,7 @@ class ItalyScraper extends BaseScraper {
           cookies,
         );
       } catch (err) {
-        log.error(`IT: Request failed for ${city} prefix "${letter}": ${err.message}`);
+        log.error(`IT: Request failed for ${city} prefix "${prefix}": ${err.message}`);
         continue;
       }
 
@@ -687,7 +710,7 @@ class ItalyScraper extends BaseScraper {
       }
 
       if (response.statusCode !== 200) {
-        log.warn(`IT: Cassa Forense returned status ${response.statusCode} for prefix "${letter}"`);
+        log.warn(`IT: Cassa Forense returned status ${response.statusCode} for prefix "${prefix}"`);
         continue;
       }
 
@@ -698,8 +721,8 @@ class ItalyScraper extends BaseScraper {
 
       // Check for CAPTCHA
       if (this.detectCaptcha(response.body)) {
-        log.warn(`IT: CAPTCHA detected on prefix "${letter}" for ${city} — skipping to next prefix`);
-        yield { _captcha: true, city, page: letter };
+        log.warn(`IT: CAPTCHA detected on prefix "${prefix}" for ${city} — skipping to next prefix`);
+        yield { _captcha: true, city, page: prefix };
         continue;
       }
 
@@ -709,14 +732,18 @@ class ItalyScraper extends BaseScraper {
       if (attorneys.length === 0) {
         // Check if the page contains an error message or empty result indicator
         if (response.body.includes('Nessun risultato') || response.body.includes('nessun avvocato')) {
-          log.info(`IT: No results for ${city} prefix "${letter}"`);
+          log.info(`IT: No results for ${city} prefix "${prefix}"`);
         } else if (response.body.length < 500) {
-          log.info(`IT: Empty/minimal response for ${city} prefix "${letter}" (${response.body.length} bytes)`);
+          log.info(`IT: Empty/minimal response for ${city} prefix "${prefix}" (${response.body.length} bytes)`);
+        } else {
+          // Debug: log first 1000 chars of response to help diagnose parser issues
+          log.warn(`IT: 0 results parsed for ${city} prefix "${prefix}" but response is ${response.body.length} bytes`);
+          log.info(`IT: Response snippet: ${response.body.substring(0, 1000).replace(/\s+/g, ' ')}`);
         }
         continue;
       }
 
-      log.info(`IT: Found ${attorneys.length} lawyers for ${city} prefix "${letter}"`);
+      log.info(`IT: Found ${attorneys.length} lawyers for ${city} prefix "${prefix}"`);
 
       for (const attorney of attorneys) {
         // Dedup by name + bar
@@ -732,7 +759,7 @@ class ItalyScraper extends BaseScraper {
         if (maxRecords && totalForCity >= maxRecords) break;
       }
 
-      // For test mode, only do first letter
+      // For test mode, only do first few prefixes
       if (options.maxPages) break;
     }
 
@@ -749,7 +776,7 @@ class ItalyScraper extends BaseScraper {
     let totalForCity = 0;
     const maxRecords = options.maxPages ? options.maxPages * this.pageSize : 0;
 
-    for (const letter of SURNAME_PREFIXES) {
+    for (const prefix of SURNAME_PREFIXES) {
       if (maxRecords && totalForCity >= maxRecords) {
         log.info(`IT: Reached max records limit for ${city} (SferaBit)`);
         break;
@@ -758,12 +785,12 @@ class ItalyScraper extends BaseScraper {
       // SferaBit expects parameters as query string in the POST body
       const params = new URLSearchParams();
       params.set('nRicerche', '1');
-      params.set('filtroRagioneSociale', letter);
+      params.set('filtroRagioneSociale', prefix);
       params.set('filtroIdTipiAnagraficheCategorie', '1'); // 1 = Avvocati (lawyers)
       params.set('id', String(sferaId));
       params.set('pag', '1');
 
-      log.info(`IT: SferaBit — ${city}, surname prefix "${letter}"`);
+      log.info(`IT: SferaBit — ${city}, surname prefix "${prefix}"`);
 
       let response;
       try {
@@ -774,12 +801,12 @@ class ItalyScraper extends BaseScraper {
           rateLimiter,
         );
       } catch (err) {
-        log.error(`IT: SferaBit request failed for ${city} prefix "${letter}": ${err.message}`);
+        log.error(`IT: SferaBit request failed for ${city} prefix "${prefix}": ${err.message}`);
         continue;
       }
 
       if (response.statusCode !== 200) {
-        log.warn(`IT: SferaBit returned status ${response.statusCode} for ${city} prefix "${letter}"`);
+        log.warn(`IT: SferaBit returned status ${response.statusCode} for ${city} prefix "${prefix}"`);
         continue;
       }
 
@@ -789,7 +816,7 @@ class ItalyScraper extends BaseScraper {
         continue;
       }
 
-      log.info(`IT: SferaBit found ${attorneys.length} lawyers for ${city} prefix "${letter}"`);
+      log.info(`IT: SferaBit found ${attorneys.length} lawyers for ${city} prefix "${prefix}"`);
 
       for (const attorney of attorneys) {
         const key = `${attorney.full_name}|${attorney.bar_name}`.toLowerCase();
@@ -804,7 +831,7 @@ class ItalyScraper extends BaseScraper {
         if (maxRecords && totalForCity >= maxRecords) break;
       }
 
-      // For test mode, only do first letter
+      // For test mode, only do first prefix
       if (options.maxPages) break;
     }
 
