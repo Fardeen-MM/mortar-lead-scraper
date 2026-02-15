@@ -346,9 +346,16 @@ class TasmaniaScraper extends BaseScraper {
     );
     if (practiceMatch) practiceAreas = practiceMatch[1].trim();
 
-    // Determine if this is a lawyer name or firm name
-    // If the title contains typical firm indicators, treat as firm
+    // Filter out blog posts / news articles that aren't lawyer records.
+    // Lawyer names are typically 2-5 words. Sentence-like titles (>6 words)
+    // without firm keywords are almost certainly not lawyer records.
+    const wordCount = cleanTitle.split(/\s+/).length;
     const isFirm = /(?:lawyers?|solicitors?|legal|law\s+firm|barristers?|associates?|partners?|&|pty|ltd)/i.test(cleanTitle);
+
+    // Skip obvious non-lawyer posts: long sentence titles, titles with verbs/articles
+    if (wordCount > 6 && !isFirm) return null;
+    if (/\b(is now|are now|has been|have been|will be|was |were |announcing|update|notice|event|seminar|workshop|conference|bulletin|newsletter|award|congratulations)\b/i.test(cleanTitle)) return null;
+    if (!cleanTitle || cleanTitle.length < 3) return null;
 
     let firstName = '';
     let lastName = '';
@@ -357,8 +364,13 @@ class TasmaniaScraper extends BaseScraper {
     if (isFirm) {
       firmName = cleanTitle;
     } else {
-      fullName = cleanTitle;
-      const nameParts = this.splitName(cleanTitle);
+      // Strip honorifics/post-nominals
+      const cleaned = cleanTitle
+        .replace(/^(?:Professor|Prof\.?|Dr\.?|Hon\.?|Justice|Judge|Magistrate|His Honour|Her Honour)\s+/i, '')
+        .replace(/\s+(?:KC|SC|QC|AM|AO|OAM|PSM|RFD)\s*$/i, '')
+        .trim();
+      fullName = cleaned;
+      const nameParts = this.splitName(cleaned);
       firstName = nameParts.firstName;
       lastName = nameParts.lastName;
     }
@@ -369,7 +381,7 @@ class TasmaniaScraper extends BaseScraper {
       full_name: fullName,
       firm_name: firmName,
       city: city,
-      state: 'TAS',
+      state: 'AU-TAS',
       zip: '',
       country: 'Australia',
       phone: phone,
@@ -534,7 +546,7 @@ class TasmaniaScraper extends BaseScraper {
         full_name: fullName,
         firm_name: firmName,
         city: city,
-        state: 'TAS',
+        state: 'AU-TAS',
         zip: '',
         country: 'Australia',
         phone: phone,
@@ -591,7 +603,7 @@ class TasmaniaScraper extends BaseScraper {
           full_name: name,
           firm_name: '',
           city: '',
-          state: 'TAS',
+          state: 'AU-TAS',
           zip: '',
           country: 'Australia',
           phone: '',
@@ -707,6 +719,7 @@ class TasmaniaScraper extends BaseScraper {
 
           for (const post of result.posts) {
             const lawyer = this._parseWpPost(post);
+            if (!lawyer) continue; // Filtered out (blog post, not a lawyer)
             const key = lawyer.full_name || lawyer.firm_name || String(post.id);
             if (seen.has(key)) continue;
             seen.add(key);

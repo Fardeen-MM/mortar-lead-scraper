@@ -62,12 +62,12 @@ class NewYorkScraper extends BaseScraper {
   async lookupByName(firstName, lastName, city, rateLimiter) {
     if (!firstName || !lastName) return null;
 
-    // Build SoQL query for exact name match
-    const escapedFirst = firstName.replace(/'/g, "''");
-    const escapedLast = lastName.replace(/'/g, "''");
-    let whereClause = `first_name='${escapedFirst}' AND last_name='${escapedLast}'`;
+    // Build SoQL query — NY data is ALL CAPS so use upper() for case-insensitive match
+    const escapedFirst = firstName.toUpperCase().replace(/'/g, "''");
+    const escapedLast = lastName.toUpperCase().replace(/'/g, "''");
+    let whereClause = `upper(first_name)='${escapedFirst}' AND upper(last_name)='${escapedLast}'`;
     if (city) {
-      whereClause += ` AND city='${city.replace(/'/g, "''")}'`;
+      whereClause += ` AND upper(city)='${city.toUpperCase().replace(/'/g, "''")}'`;
     }
 
     const params = new URLSearchParams();
@@ -180,11 +180,15 @@ class NewYorkScraper extends BaseScraper {
 
         // Map and yield each attorney record
         for (const rec of records) {
+          // NY Socrata data is ALL CAPS — title-case names and city
+          const toTitleCase = (s) => (s || '').trim().replace(/\b\w+/g,
+            w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+
           const attorney = {
-            first_name: (rec.first_name || '').trim(),
-            last_name: (rec.last_name || '').trim(),
+            first_name: toTitleCase(rec.first_name),
+            last_name: toTitleCase(rec.last_name),
             firm_name: (rec.company_name || '').trim(),
-            city: (rec.city || '').trim(),
+            city: toTitleCase(rec.city),
             state: (rec.state || 'NY').trim(),
             phone: (rec.phone_number || '').trim(),
             email: '',

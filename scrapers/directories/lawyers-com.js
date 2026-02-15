@@ -545,17 +545,19 @@ class LawyersComScraper extends BaseScraper {
     const result = {};
     const bodyText = $('body').text();
 
-    // Phone — from profile page elements or text
-    const phoneEl = $('[class*="phone"], [data-ctn-rtn]');
-    const rtn = phoneEl.attr('data-ctn-rtn') || '';
-    const rtnAlt = phoneEl.attr('data-ctn-rtn-alt') || '';
-    if (rtn) {
-      result.phone = rtn.trim();
-    } else if (rtnAlt) {
-      result.phone = rtnAlt.trim();
-    } else {
-      const phoneMatch = bodyText.match(/(\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4})/);
-      if (phoneMatch) result.phone = phoneMatch[1].trim();
+    // Phone — prefer real phone from text, NOT data-ctn-rtn (Lawyers.com call-tracking numbers)
+    const phoneMatch = bodyText.match(/(?:Phone|Tel(?:ephone)?|Office|Call)[:\s]*([\d().\s-]{10,})/i);
+    if (phoneMatch) {
+      const cleaned = phoneMatch[1].replace(/[^\d()-.\s]/g, '').trim();
+      if (/\d{3}.*\d{3}.*\d{4}/.test(cleaned)) result.phone = cleaned;
+    }
+    if (!result.phone) {
+      // Fallback: use data-ctn-rtn-alt (original number) over data-ctn-rtn (tracking number)
+      const phoneEl = $('[data-ctn-rtn-alt], [data-ctn-rtn]');
+      const rtnAlt = phoneEl.attr('data-ctn-rtn-alt') || '';
+      if (rtnAlt) {
+        result.phone = rtnAlt.trim();
+      }
     }
 
     // Email from mailto links
@@ -573,7 +575,7 @@ class LawyersComScraper extends BaseScraper {
         const href = $(el).attr('href') || '';
         const text = $(el).text().toLowerCase().trim();
         if ((text.includes('visit') || text.includes('website')) &&
-            !href.includes('lawyers.com') && !href.includes('martindale.com')) {
+            !href.includes('lawyers.com') && !this.isExcludedDomain(href)) {
           result.website = href;
           return false;
         }

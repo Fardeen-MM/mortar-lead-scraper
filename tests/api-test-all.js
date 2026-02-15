@@ -9,24 +9,33 @@
 const http = require('http');
 const https = require('https');
 
-const BASE = process.argv.find(a => a.startsWith('--base='))?.split('=')[1] || 'http://localhost:3000';
-const CONCURRENCY = parseInt(process.argv.find(a => a.startsWith('--concurrency='))?.split('=')[1] || '3', 10);
-const TIMEOUT_MS = parseInt(process.argv.find(a => a.startsWith('--timeout='))?.split('=')[1] || '120000', 10);
-const ONLY = process.argv.find(a => a.startsWith('--scrapers='))?.split('=')[1]?.split(',') || null;
+// Parse CLI args: supports both --flag=value and --flag value formats
+function getArg(name) {
+  const args = process.argv;
+  // --flag=value format
+  const eqArg = args.find(a => a.startsWith(`--${name}=`));
+  if (eqArg) return eqArg.split('=').slice(1).join('=');
+  // --flag value format
+  const idx = args.indexOf(`--${name}`);
+  if (idx !== -1 && idx + 1 < args.length) return args[idx + 1];
+  return null;
+}
 
-// Working scrapers we expect to return leads (from smoke test)
+const BASE = getArg('base') || 'http://localhost:3000';
+const CONCURRENCY = parseInt(getArg('concurrency') || '1', 10);
+const TIMEOUT_MS = parseInt(getArg('timeout') || '120000', 10);
+const ONLY = getArg('scrapers')?.split(',') || null;
+
+// All 34 working scrapers
 const WORKING_SCRAPERS = [
-  'AU-NSW', 'AU-QLD', 'AU-VIC', 'AU-WA',
+  'AU-NSW', 'AU-QLD', 'AU-SA', 'AU-TAS', 'AU-VIC', 'AU-WA',
   'CA', 'CA-AB', 'CA-BC', 'CA-NL', 'CA-PE', 'CA-YT',
   'CT', 'FL', 'FR', 'GA',
   'HK', 'ID', 'IE', 'IL',
   'IT', 'MARTINDALE', 'MD', 'MN',
-  'NC', 'NY', 'OH', 'OR', 'PA',
+  'NC', 'NZ', 'NY', 'OH', 'OR', 'PA',
   'SG', 'TX', 'UK-EW-BAR', 'UK-SC',
 ];
-
-// Scrapers that may or may not work (flaky, slow, etc.)
-const FLAKY = new Set(['AU-SA', 'AU-TAS', 'DE-BRAK', 'NZ']);
 
 function fetch(url, options = {}) {
   return new Promise((resolve, reject) => {
@@ -85,8 +94,8 @@ async function testScraper(state) {
         test: true,
         waterfall: {
           fetchProfiles: true,
-          crossRefMartindale: true,
-          crossRefLawyersCom: false,  // Skip lawyers.com (often has CAPTCHA)
+          crossRefMartindale: false,  // Skip in tests — adds minutes per city
+          crossRefLawyersCom: false,  // Skip in tests — often has CAPTCHA
           emailCrawl: false,  // Skip Puppeteer email crawl in tests
         },
         emailScrape: false,  // Skip Puppeteer in tests

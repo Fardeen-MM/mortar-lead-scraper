@@ -370,31 +370,52 @@ class SaScraper extends BaseScraper {
       if (!cellTexts[0] || cellTexts[0].length < 2) return;
 
       // First cell is typically the practitioner name
-      const fullName = cellTexts[0].replace(/\s+/g, ' ').trim();
+      let fullName = cellTexts[0].replace(/\s+/g, ' ').trim();
 
       // Skip if the "name" looks like a header or metadata
       if (fullName.toLowerCase().includes('name') && i === 0) return;
       if (fullName.toLowerCase().includes('no records')) return;
       if (fullName.toLowerCase().includes('please enter')) return;
 
+      // Strip post-nominal titles (KC = King's Counsel, SC = Senior Counsel, QC, AM, AO, etc.)
+      fullName = fullName.replace(/\s+(?:KC|SC|QC|AM|AO|OAM|PSM|RFD)\s*$/i, '').trim();
+
       const { firstName, lastName } = this.splitName(fullName);
 
-      // Try to identify other columns
+      // Try to identify other columns — detect if a column is a practitioner number (P#####)
       let firmName = '';
       let certType = '';
+      let barNumber = '';
       let location = '';
 
       if (cellTexts.length >= 4) {
-        // [Name, CertType, Firm, Location] pattern
-        certType = cellTexts[1] || '';
-        firmName = cellTexts[2] || '';
-        location = cellTexts[3] || '';
+        // Check if cellTexts[1] is a practitioner number (P followed by digits)
+        if (/^P\d+$/.test(cellTexts[1])) {
+          // [Name, PracNo, Firm/CertType, Location] pattern
+          barNumber = cellTexts[1];
+          firmName = cellTexts[2] || '';
+          location = cellTexts[3] || '';
+        } else {
+          // [Name, CertType, Firm, Location] pattern
+          certType = cellTexts[1] || '';
+          firmName = cellTexts[2] || '';
+          location = cellTexts[3] || '';
+        }
+      } else if (cellTexts.length >= 5) {
+        // [Name, PracNo, CertType, Firm, Location] pattern
+        barNumber = /^P\d+$/.test(cellTexts[1]) ? cellTexts[1] : '';
+        certType = cellTexts[2] || '';
+        firmName = cellTexts[3] || '';
+        location = cellTexts[4] || '';
       } else if (cellTexts.length === 3) {
-        // [Name, Firm, Location] pattern
-        firmName = cellTexts[1] || '';
-        location = cellTexts[2] || '';
+        if (/^P\d+$/.test(cellTexts[1])) {
+          barNumber = cellTexts[1];
+          location = cellTexts[2] || '';
+        } else {
+          firmName = cellTexts[1] || '';
+          location = cellTexts[2] || '';
+        }
       } else if (cellTexts.length === 2) {
-        // [Name, Firm] pattern
         firmName = cellTexts[1] || '';
       }
 
@@ -417,7 +438,7 @@ class SaScraper extends BaseScraper {
         phone: '',
         email: '',
         website: '',
-        bar_number: '',
+        bar_number: barNumber,
         bar_status: certType,
         admission_date: '',
         profile_url: '',

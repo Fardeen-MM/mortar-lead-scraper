@@ -229,15 +229,14 @@ class CaliforniaScraper extends BaseScraper {
     }
 
     // Website: look for external links that aren't CalBar or gov/social sites
-    const excludedDomains = [
+    const calbarDomains = [
       'calbar.ca.gov', 'calbar.primegov.com', 'calbarca.nextrequest.com',
-      'nextrequest.com', 'statebarcourt.ca.gov', '.ca.gov', '.gov/',
+      'nextrequest.com', 'statebarcourt.ca.gov',
       'powerbigov.us', 'powerbi.com', 'app.powerbigov',
       'calawyers.org', 'calbar.org',
-      'google.com', 'facebook.com', 'twitter.com', 'linkedin.com',
-      'youtube.com', 'instagram.com', 'yelp.com', 'apple.com',
     ];
-    const isExcluded = (href) => excludedDomains.some(d => href.includes(d));
+    const isExcluded = (href) =>
+      this.isExcludedDomain(href) || calbarDomains.some(d => href.includes(d));
 
     $('a[href]').each((_, el) => {
       const href = $(el).attr('href') || '';

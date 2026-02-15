@@ -339,6 +339,7 @@ const app = {
       fetchProfiles: document.getElementById('toggle-fetch-profiles').checked,
       crossRefMartindale: document.getElementById('toggle-crossref-martindale').checked,
       crossRefLawyersCom: document.getElementById('toggle-crossref-lawyerscom').checked,
+      nameLookups: document.getElementById('toggle-name-lookups').checked,
       emailCrawl: document.getElementById('toggle-email-crawl').checked,
     };
 
@@ -846,6 +847,7 @@ const app = {
       const w = stats.waterfall;
       if (w.profilesFetched) rows.push(['Profiles Fetched', w.profilesFetched]);
       if (w.crossRefMatches) rows.push(['Cross-Ref Matches', w.crossRefMatches]);
+      if (w.nameLookupsRun) rows.push(['Name Lookups', w.nameLookupsRun]);
       if (w.emailsCrawled) rows.push(['Emails from Websites', w.emailsCrawled]);
       if (w.totalFieldsFilled) rows.push(['Fields Filled (Waterfall)', w.totalFieldsFilled]);
     }

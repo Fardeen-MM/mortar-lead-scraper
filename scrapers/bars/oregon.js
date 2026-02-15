@@ -155,7 +155,8 @@ class OregonScraper extends BaseScraper {
       const href = $(el).attr('href') || '';
       const text = $(el).text().toLowerCase().trim();
       if ((text.includes('website') || text.includes('firm') || text.includes('visit')) &&
-          href.startsWith('http') && !href.includes('osbar.org')) {
+          href.startsWith('http') && !href.includes('osbar.org') &&
+          !this.isExcludedDomain(href)) {
         result.website = href;
         return false;
       }

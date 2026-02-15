@@ -431,14 +431,13 @@ class SingaporeScraper extends BaseScraper {
             }, practiceArea);
           }
         } else {
-          // No individual lawyers found, yield firm-level record
-          // Try to extract a name from the firm title
-          const { firstName, lastName } = this.splitName(firmName);
-
+          // No individual lawyers found — yield firm-level record.
+          // Don't try to split firm name as a person name (produces garbage
+          // like first=MARK, last=CORPORATION). Use empty name fields instead.
           yield this.transformResult({
-            first_name: firstName,
-            last_name: lastName,
-            full_name: firmName,
+            first_name: '',
+            last_name: '',
+            full_name: '',
             firm_name: firmName,
             city: 'Singapore',
             state: 'SG',

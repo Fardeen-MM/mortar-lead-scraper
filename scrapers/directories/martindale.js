@@ -323,13 +323,11 @@ class MartindaleScraper extends BaseScraper {
       if (phoneMatch) result.phone = phoneMatch[1].trim();
     }
 
-    // Website — external links not on martindale.com
+    // Website — external links not on martindale.com or other non-firm sites
     if (!result.website) {
       $('a[href^="http"]').each((_, el) => {
         const href = $(el).attr('href') || '';
-        if (!href.includes('martindale.com') && !href.includes('lawyers.com') &&
-            !href.includes('google.com') && !href.includes('facebook.com') &&
-            !href.includes('twitter.com') && !href.includes('linkedin.com')) {
+        if (!href.includes('martindale.com') && !this.isExcludedDomain(href)) {
           result.website = href;
           return false;
         }

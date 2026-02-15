@@ -266,8 +266,9 @@ class TexasScraper extends BaseScraper {
     $('a[href]').each((_, el) => {
       const href = $(el).attr('href') || '';
       const text = $(el).text().toLowerCase().trim();
-      if ((text.includes('website') || text.includes('firm') || text.includes('visit') || text.includes('www')) &&
-          href.startsWith('http') && !href.includes('texasbar.com')) {
+      if ((text.includes('website') || text.includes('firm') || text.includes('visit')) &&
+          href.startsWith('http') && !href.includes('texasbar.com') &&
+          !this.isExcludedDomain(href)) {
         result.website = href;
         return false;
       }

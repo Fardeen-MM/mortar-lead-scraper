@@ -49,6 +49,29 @@ class BaseScraper {
   // --- Shared utilities ---
 
   /**
+   * Check if a URL belongs to a non-firm domain (social media, bar associations, etc.)
+   * Used by parseProfilePage implementations to filter out irrelevant website links.
+   */
+  isExcludedDomain(href) {
+    if (!href) return true;
+    const lower = href.toLowerCase();
+    const excluded = [
+      'google.com', 'facebook.com', 'twitter.com', 'linkedin.com',
+      'youtube.com', 'instagram.com', 'yelp.com', 'tiktok.com',
+      'reddit.com', 'pinterest.com', 'apple.com',
+      'calendly.com', 'zoom.us', 'zoom.com',
+      'bit.ly', 'tinyurl.com', 'goo.gl',
+      'github.com', 'medium.com', 'substack.com',
+      'amazon.com', 'paypal.com',
+      'martindale.com', 'lawyers.com', 'avvo.com', 'justia.com',
+      'findlaw.com', 'nolo.com', 'superlawyers.com',
+    ];
+    return excluded.some(d => lower.includes(d)) ||
+           lower.includes('.gov/') || lower.includes('.gov"') ||
+           lower.endsWith('.gov');
+  }
+
+  /**
    * Decode Cloudflare email protection.
    * First 2 hex chars = XOR key, remaining pairs = email chars XORed with key.
    */
@@ -211,6 +234,14 @@ class BaseScraper {
   }
 
   /**
+   * Returns true if this scraper has profile page parsing implemented.
+   * The waterfall skips profile fetching for scrapers without this.
+   */
+  get hasProfileParser() {
+    return this.parseProfilePage !== BaseScraper.prototype.parseProfilePage;
+  }
+
+  /**
    * Parse a profile/detail page for additional fields.
    * Override in subclasses that have profile pages.
    *
@@ -231,6 +262,7 @@ class BaseScraper {
    */
   async enrichFromProfile(lead, rateLimiter) {
     if (!lead.profile_url) return {};
+    if (!this.hasProfileParser) return {}; // Skip if no parseProfilePage override
 
     const $ = await this.fetchProfilePage(lead.profile_url, rateLimiter);
     if (!$) return {};
@@ -269,7 +301,8 @@ class BaseScraper {
    * Get the list of cities to search. Override for county/zip-based states.
    */
   getCities(options) {
-    return options.city ? [options.city] : this.defaultCities;
+    const cities = options.city ? [options.city] : this.defaultCities;
+    return options.maxCities ? cities.slice(0, options.maxCities) : cities;
   }
 
   /**

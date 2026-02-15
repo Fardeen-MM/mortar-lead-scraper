@@ -111,6 +111,15 @@ class AlbertaScraper extends BaseScraper {
       const firstText = $(cells[0]).text().trim();
       // Skip header rows and empty rows
       if (/^(name|member|last|first|#|no\.)$/i.test(firstText)) return;
+      // Skip multi-word headers (e.g., "Lawyer Name", "Practising Status", "Member Number")
+      if (/\b(name|status|member|number|city|province|area)\b/i.test(firstText) &&
+          /\b(lawyer|practising|member|bar|first|last|firm|phone)\b/i.test(firstText)) return;
+      // Skip if second cell also looks like a header
+      if (cells.length > 1) {
+        const secondText = $(cells[1]).text().trim();
+        if (/\b(city|status|member|province|number)\b/i.test(secondText) &&
+            /\b(name|status|city|member|practising)\b/i.test(firstText)) return;
+      }
       if (!firstText || firstText.length < 2) return;
 
       const nameCell = $(cells[0]);
