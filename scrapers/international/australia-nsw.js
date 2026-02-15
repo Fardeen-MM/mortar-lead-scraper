@@ -252,6 +252,68 @@ class NswScraper extends BaseScraper {
     return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
   }
 
+  /**
+   * Look up a single solicitor by name and city/suburb.
+   * Used by waterfall Step 4 for cross-reference enrichment.
+   * Can look up solicitors from ANY Australian state via the NSW register.
+   *
+   * @param {string} firstName
+   * @param {string} lastName
+   * @param {string} city - Suburb/city name
+   * @param {RateLimiter} rateLimiter
+   * @returns {object|null} { phone, email, firm_name } or null
+   */
+  async lookupByName(firstName, lastName, city, rateLimiter) {
+    if (!lastName) return null;
+
+    const searchBody = {
+      lastName: lastName,
+      otherName: firstName || '',
+      lastNameSearchOption: 'StartsWith',
+      page: 1,
+      pageSize: 10,
+    };
+    if (city) searchBody.suburb = city;
+
+    try {
+      await rateLimiter.wait();
+      const response = await this.httpPostJson(this.searchUrl, searchBody, rateLimiter);
+      if (response.statusCode !== 200) return null;
+
+      const data = JSON.parse(response.body);
+      if (!data.results || data.results.length === 0) return null;
+
+      // Find the best match by name
+      const firstLower = (firstName || '').toLowerCase().trim();
+      const lastLower = lastName.toLowerCase().trim();
+      const match = data.results.find(r => {
+        const parsed = this._parseApiName(r.fullName);
+        return parsed.lastName.toLowerCase() === lastLower &&
+               parsed.firstName.toLowerCase().startsWith(firstLower.substring(0, 3));
+      });
+
+      if (!match) return null;
+
+      // Fetch detail for the match
+      await rateLimiter.wait();
+      const detailResp = await this.httpGetJson(`${this.detailUrl}${match.id}`, rateLimiter);
+      if (detailResp.statusCode !== 200) return null;
+
+      const detail = JSON.parse(detailResp.body);
+      const result = {};
+      const phone = (detail.phoneWithAreaCode || '').trim();
+      if (phone) result.phone = phone;
+      const email = (detail.email || detail.firmEmail || '').trim();
+      if (email) result.email = email;
+      const firm = (detail.placeOfPractice || '').trim();
+      if (firm) result.firm_name = firm;
+
+      return Object.keys(result).length > 0 ? result : null;
+    } catch {
+      return null;
+    }
+  }
+
   // --- Core search implementation ---
 
   /**

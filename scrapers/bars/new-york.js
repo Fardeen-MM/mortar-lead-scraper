@@ -50,6 +50,53 @@ class NewYorkScraper extends BaseScraper {
   }
 
   /**
+   * Look up a single attorney by name and city.
+   * Used by waterfall Step 4 for cross-reference enrichment.
+   *
+   * @param {string} firstName
+   * @param {string} lastName
+   * @param {string} city
+   * @param {RateLimiter} rateLimiter
+   * @returns {object|null} { phone, firm_name } or null
+   */
+  async lookupByName(firstName, lastName, city, rateLimiter) {
+    if (!firstName || !lastName) return null;
+
+    // Build SoQL query for exact name match
+    const escapedFirst = firstName.replace(/'/g, "''");
+    const escapedLast = lastName.replace(/'/g, "''");
+    let whereClause = `first_name='${escapedFirst}' AND last_name='${escapedLast}'`;
+    if (city) {
+      whereClause += ` AND city='${city.replace(/'/g, "''")}'`;
+    }
+
+    const params = new URLSearchParams();
+    params.set('$limit', '5');
+    params.set('$where', whereClause);
+    const url = `${this.baseUrl}?${params.toString()}`;
+
+    try {
+      await rateLimiter.wait();
+      const response = await this.httpGet(url, rateLimiter);
+      if (response.statusCode !== 200) return null;
+
+      const records = JSON.parse(response.body);
+      if (!Array.isArray(records) || records.length === 0) return null;
+
+      // Take the first match
+      const rec = records[0];
+      const result = {};
+      if (rec.phone_number) result.phone = rec.phone_number.trim();
+      if (rec.company_name) result.firm_name = rec.company_name.trim();
+      // NY SODA doesn't have email or website
+
+      return Object.keys(result).length > 0 ? result : null;
+    } catch {
+      return null;
+    }
+  }
+
+  /**
    * Async generator that yields attorney records from the NY SODA API.
    * Overrides BaseScraper.search() entirely since the data source is JSON, not HTML.
    */

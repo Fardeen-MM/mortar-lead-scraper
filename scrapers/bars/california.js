@@ -228,12 +228,22 @@ class CaliforniaScraper extends BaseScraper {
       result.email = mailtoLink.attr('href').replace('mailto:', '').split('?')[0].trim().toLowerCase();
     }
 
-    // Website: look for external links that aren't CalBar
+    // Website: look for external links that aren't CalBar or gov/social sites
+    const excludedDomains = [
+      'calbar.ca.gov', 'calbar.primegov.com', 'calbarca.nextrequest.com',
+      'nextrequest.com', 'statebarcourt.ca.gov', '.ca.gov', '.gov/',
+      'powerbigov.us', 'powerbi.com', 'app.powerbigov',
+      'calawyers.org', 'calbar.org',
+      'google.com', 'facebook.com', 'twitter.com', 'linkedin.com',
+      'youtube.com', 'instagram.com', 'yelp.com', 'apple.com',
+    ];
+    const isExcluded = (href) => excludedDomains.some(d => href.includes(d));
+
     $('a[href]').each((_, el) => {
       const href = $(el).attr('href') || '';
       const text = $(el).text().toLowerCase().trim();
       if ((text.includes('website') || text.includes('firm') || text.includes('law office')) &&
-          href.startsWith('http') && !href.includes('calbar.ca.gov')) {
+          href.startsWith('http') && !isExcluded(href)) {
         result.website = href;
         return false; // break
       }
@@ -242,8 +252,7 @@ class CaliforniaScraper extends BaseScraper {
     if (!result.website) {
       $('a[href^="http"]').each((_, el) => {
         const href = $(el).attr('href') || '';
-        if (!href.includes('calbar.ca.gov') && !href.includes('google.com') &&
-            !href.includes('facebook.com') && !href.includes('twitter.com')) {
+        if (!isExcluded(href)) {
           result.website = href;
           return false;
         }
@@ -266,6 +275,64 @@ class CaliforniaScraper extends BaseScraper {
     }
 
     return result;
+  }
+
+  /**
+   * Look up a single attorney by name and city.
+   * Used by waterfall Step 4 for cross-reference enrichment.
+   *
+   * @param {string} firstName
+   * @param {string} lastName
+   * @param {string} city
+   * @param {RateLimiter} rateLimiter
+   * @returns {object|null} { phone, email, website, firm_name } or null
+   */
+  async lookupByName(firstName, lastName, city, rateLimiter) {
+    const params = new URLSearchParams();
+    params.set('LastNameOption', 'b');
+    params.set('LastName', lastName || '');
+    params.set('FirstNameOption', 'b');
+    params.set('FirstName', firstName || '');
+    params.set('MiddleNameOption', 'b');
+    params.set('MiddleName', '');
+    params.set('FirmNameOption', 'b');
+    params.set('FirmName', '');
+    params.set('CityOption', city ? 'e' : '');
+    params.set('City', city || '');
+    params.set('State', 'CA');
+    params.set('Zip', '');
+    params.set('District', '');
+    params.set('County', '');
+    params.set('LegalSpecialty', '');
+    params.set('LanguageSpoken', '');
+    params.set('PracticeArea', '');
+    const url = `${this.baseUrl}?${params.toString()}`;
+
+    try {
+      await rateLimiter.wait();
+      const response = await this.httpGet(url, rateLimiter);
+      if (response.statusCode !== 200) return null;
+      if (this.detectCaptcha(response.body)) return null;
+
+      const $ = cheerio.load(response.body);
+      const attorneys = this._parseResultsTable($);
+
+      // Find exact name match
+      const firstLower = (firstName || '').toLowerCase().trim();
+      const lastLower = (lastName || '').toLowerCase().trim();
+      const match = attorneys.find(a =>
+        a.last_name.toLowerCase() === lastLower &&
+        a.first_name.toLowerCase().startsWith(firstLower.substring(0, 3))
+      );
+
+      if (!match || !match.profile_url) return null;
+
+      // Fetch profile page for contact details
+      const profileData = await this.enrichFromProfile(match, rateLimiter);
+      return Object.keys(profileData).length > 0 ? profileData : null;
+    } catch {
+      return null;
+    }
   }
 
   /**

@@ -59,6 +59,8 @@ const app = {
     };
 
     for (const [code, meta] of Object.entries(this.config.states)) {
+      // Only show working scrapers
+      if (!meta.working) continue;
       const country = meta.country || 'US';
       if (!groups[country]) groups[country] = [];
       groups[country].push({ code, name: meta.name });
