@@ -495,6 +495,14 @@ class QueenslandScraper extends BaseScraper {
     return attorneys;
   }
 
+  /**
+   * NOTE: parseProfilePage is intentionally NOT implemented for AU-QLD.
+   * The search result cards already provide all available fields (email, phone,
+   * firm, city, practice areas). Profile pages contain the same data but fetching
+   * them adds significant time (rate-limited requests per lead) with no new fields.
+   * The waterfall will skip profile fetching for QLD leads.
+   */
+
   // --- Practice area resolution override ---
 
   /**

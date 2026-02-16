@@ -162,6 +162,113 @@ class WaScraper extends BaseScraper {
   }
 
   /**
+   * Parse a WA practitioner profile/detail page for additional fields.
+   *
+   * Profile pages live at /{slug}/{id} and contain:
+   *   - Full name (with middle names) in .card-header h3.clean
+   *   - Definition list (dl.horizontal) with:
+   *     - Certificated: Yes/No
+   *     - Certificate Category: e.g. "Employee of a law practice"
+   *     - On the local (WA) roll of practitioners: Yes/No
+   *     - Admission date in WA: DD/MM/YYYY
+   *     - Primary Law Practice: firm name or "Not Practising"
+   *   - Conditions section with restriction codes:
+   *     - UNRESTRICTED, PMC (Practice Management Course),
+   *       NOTRUST (no trust money), TRUSTAU (authorised for trust), etc.
+   *     - Tooltip text on condition <span> elements gives full description.
+   *
+   * The search results already have most of the dl fields, but the profile
+   * adds: local roll status, conditions/restrictions with descriptions.
+   * There is no email, phone, address, or website on WA profile pages.
+   *
+   * @param {CheerioStatic} $ - Cheerio instance of the profile page
+   * @returns {object} Additional fields from the profile
+   */
+  parseProfilePage($) {
+    const result = {};
+    const detailPage = $('.container.practitioner-detail-page');
+    if (!detailPage.length) return result;
+
+    // --- Full name (may include middle names) ---
+    const nameEl = detailPage.find('.card-header h3.clean');
+    if (nameEl.length) {
+      const fullName = nameEl.text().trim();
+      if (fullName) {
+        result.full_name = fullName;
+        const { firstName, lastName } = this.splitName(fullName);
+        if (firstName) result.first_name = firstName;
+        if (lastName) result.last_name = lastName;
+      }
+    }
+
+    // --- Definition list fields ---
+    const fields = {};
+    detailPage.find('dl.horizontal dt').each((_, el) => {
+      const key = $(el).text().trim().replace(/:$/, '').toLowerCase();
+      const dd = $(el).next('dd');
+      if (dd.length && key && key.length > 1) {
+        const value = dd.text().trim();
+        if (value && value.length > 0) {
+          fields[key] = value;
+        }
+      }
+    });
+
+    // Certificated status + category -> bar_status
+    const certificated = fields['certificated'] || '';
+    const certificateCategory = fields['certificate category'] || '';
+    if (certificated.toLowerCase() === 'yes') {
+      result.bar_status = certificateCategory
+        ? `Certificated - ${certificateCategory}`
+        : 'Certificated';
+    } else if (certificated.toLowerCase() === 'no') {
+      result.bar_status = 'Not Certificated';
+    }
+
+    if (certificateCategory) {
+      result.certificate_category = certificateCategory;
+    }
+
+    // Local roll status
+    const onLocalRoll = fields['on the local (wa) roll of practitioners'] || '';
+    if (onLocalRoll) {
+      result.local_roll = onLocalRoll;
+    }
+
+    // Admission date
+    const admissionDate = fields['admission date in wa'] || fields['admission date'] || '';
+    if (admissionDate) {
+      result.admission_date = admissionDate;
+    }
+
+    // Firm name
+    const firmName = fields['primary law practice'] || '';
+    if (firmName && firmName !== 'Not Practising') {
+      result.firm_name = firmName;
+    }
+
+    // --- Conditions / restrictions ---
+    // Extract short condition codes (e.g., UNRESTRICTED, PMC, NOTRUST, TRUSTAU).
+    // The tooltip text on <span> elements has full descriptions, but we store
+    // just the codes for brevity in CSV output.
+    const conditions = [];
+    detailPage.find('.col-md-6 ul li').each((_, el) => {
+      const $li = $(el);
+      const $span = $li.find('span[data-bs-title]');
+      const code = ($span.length ? $span.text() : $li.text()).trim();
+      if (code) {
+        conditions.push(code);
+      }
+    });
+
+    if (conditions.length > 0) {
+      result.conditions = conditions.join(' | ');
+    }
+
+    return result;
+  }
+
+  /**
    * Extract total result count from the page.
    *
    * The LPBWA search does not display a total count. We estimate it from

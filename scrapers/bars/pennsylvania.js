@@ -7,6 +7,15 @@
  * The PA Disciplinary Board provides a REST API that accepts query params
  * (city, status, last, first, pageNumber, pageLength) and returns JSON
  * with paginated attorney records.
+ *
+ * Profile enrichment: A separate detail API at /api/attorney?id={attorneyId}
+ * returns full attorney info including street address (line1/line2/line3),
+ * state, postalCode, country, district, faxNumber, otherPhone, middleName,
+ * title, and pli (professional liability insurance). The search API returns
+ * most of these as null — the detail API is the only way to get them.
+ *
+ * Detail page: /for-the-public/find-attorney/attorney-detail/{attorneyId}
+ * (server-rendered HTML, but we use the JSON API instead for speed)
  */
 
 const https = require('https');
@@ -28,6 +37,9 @@ class PennsylvaniaScraper extends BaseScraper {
         'Media', 'Doylestown', 'West Chester', 'King of Prussia',
       ],
     });
+
+    this.detailApiUrl = 'https://www.padisciplinaryboard.org/api/attorney';
+    this.detailPageBaseUrl = 'https://www.padisciplinaryboard.org/for-the-public/find-attorney/attorney-detail';
   }
 
   buildSearchUrl() {
@@ -80,6 +92,186 @@ class PennsylvaniaScraper extends BaseScraper {
       req.on('timeout', () => { req.destroy(); reject(new Error('Request timed out')); });
       req.end();
     });
+  }
+
+  /**
+   * Fetch detailed attorney info from the PA detail API.
+   *
+   * GET /api/attorney?id={attorneyId} returns:
+   *   { attorney: { firstName, lastName, middleName, employer, phone,
+   *     faxNumber, otherPhone, email, line1, line2, line3, city, state,
+   *     postalCode, country, county, district, dateOfAdmission, status,
+   *     title, pli, hasDiscipline, ... }, error, message }
+   *
+   * @param {string|number} attorneyId - PA attorney ID
+   * @param {RateLimiter} rateLimiter - Rate limiter instance
+   * @returns {object|null} Attorney detail object or null on failure
+   */
+  async _getAttorneyDetail(attorneyId, rateLimiter) {
+    if (!attorneyId) return null;
+
+    const url = `${this.detailApiUrl}?id=${attorneyId}`;
+
+    try {
+      await rateLimiter.wait();
+      const response = await this._apiGet(url, rateLimiter);
+
+      if (response.statusCode !== 200 || !response.body) return null;
+      if (response.body.error) return null;
+
+      return response.body.attorney || null;
+    } catch (err) {
+      log.warn(`PA detail API failed for ${attorneyId}: ${err.message}`);
+      return null;
+    }
+  }
+
+  /**
+   * Override hasProfileParser to return true since we implement enrichFromProfile.
+   * PA uses a JSON detail API, not server-rendered profile pages, so we override
+   * enrichFromProfile directly (same pattern as Ohio).
+   */
+  get hasProfileParser() {
+    return true;
+  }
+
+  /**
+   * Fetch and parse attorney detail from the PA detail API.
+   * Overrides BaseScraper.enrichFromProfile because PA uses a JSON API,
+   * not a server-rendered profile page.
+   *
+   * The detail API returns full address, employer, phone, fax, district,
+   * title, and other fields that are null/missing in search results.
+   *
+   * @param {object} lead - The lead object (must have bar_number = attorneyId)
+   * @param {RateLimiter} rateLimiter - Rate limiter instance
+   * @returns {object} Additional fields from the detail API
+   */
+  async enrichFromProfile(lead, rateLimiter) {
+    const attorneyId = lead.bar_number;
+    if (!attorneyId) return {};
+
+    const detail = await this._getAttorneyDetail(attorneyId, rateLimiter);
+    if (!detail) return {};
+
+    const result = {};
+
+    // Phone (detail API often has phone when search API doesn't)
+    if (detail.phone) {
+      const phone = String(detail.phone).trim();
+      if (phone.length > 5) {
+        result.phone = phone;
+      }
+    }
+
+    // Email
+    if (detail.email) {
+      const email = String(detail.email).trim().toLowerCase();
+      if (email.includes('@')) {
+        result.email = email;
+      }
+    }
+
+    // Employer / firm name
+    if (detail.employer) {
+      const employer = String(detail.employer).trim();
+      if (employer.length > 1 && employer.length < 200) {
+        result.firm_name = employer;
+      }
+    }
+
+    // Full street address from line1 + line2 + line3
+    const addressParts = [detail.line1, detail.line2, detail.line3]
+      .map(s => (s || '').trim())
+      .filter(Boolean);
+    if (addressParts.length > 0) {
+      result.address = addressParts.join(', ');
+    }
+
+    // State (detail API returns full state name like "PENNSYLVANIA")
+    if (detail.state) {
+      const state = String(detail.state).trim();
+      if (state) {
+        result.state_full = state;
+      }
+    }
+
+    // ZIP / postal code
+    if (detail.postalCode) {
+      const zip = String(detail.postalCode).trim();
+      if (zip) {
+        result.zip = zip;
+      }
+    }
+
+    // City (detail API may have more accurate city than search param)
+    if (detail.city) {
+      const city = String(detail.city).trim();
+      if (city) {
+        result.city = city;
+      }
+    }
+
+    // County
+    if (detail.county) {
+      const county = String(detail.county).trim();
+      if (county) {
+        result.county = county;
+      }
+    }
+
+    // District
+    if (detail.district) {
+      const district = String(detail.district).trim();
+      if (district) {
+        result.district = district;
+      }
+    }
+
+    // Fax number
+    if (detail.faxNumber) {
+      const fax = String(detail.faxNumber).trim();
+      if (fax.length > 5) {
+        result.fax = fax;
+      }
+    }
+
+    // Title (job title)
+    if (detail.title) {
+      const title = String(detail.title).trim();
+      if (title.length > 1) {
+        result.title = title;
+      }
+    }
+
+    // Middle name (supplement the first_name)
+    if (detail.middleName) {
+      const middle = String(detail.middleName).trim();
+      if (middle) {
+        result.middle_name = middle;
+      }
+    }
+
+    // Date of admission (detail API returns ISO format: "1997-10-30T00:00:00")
+    if (detail.dateOfAdmission) {
+      const raw = String(detail.dateOfAdmission).trim();
+      // Convert ISO format to MM/DD/YYYY for consistency
+      const isoMatch = raw.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (isoMatch) {
+        result.admission_date = `${isoMatch[2]}/${isoMatch[3]}/${isoMatch[1]}`;
+      } else if (raw) {
+        result.admission_date = raw;
+      }
+    }
+
+    // Remove empty/null/undefined values
+    for (const key of Object.keys(result)) {
+      if (result[key] === '' || result[key] === undefined || result[key] === null) {
+        delete result[key];
+      }
+    }
+
+    return result;
   }
 
   /**
@@ -166,6 +358,7 @@ class PennsylvaniaScraper extends BaseScraper {
         }
 
         for (const item of items) {
+          const attyId = String(item.attorneyId ?? '').trim();
           const attorney = {
             first_name: (item.firstName || '').trim(),
             last_name: (item.lastName || '').trim(),
@@ -175,10 +368,11 @@ class PennsylvaniaScraper extends BaseScraper {
             phone: (item.phone || '').trim(),
             email: (item.email || '').trim(),
             website: '',
-            bar_number: String(item.attorneyId ?? '').trim(),
+            bar_number: attyId,
             admission_date: (item.dateOfAdmission || '').trim(),
             bar_status: (item.status || '').trim(),
             county: (item.county || '').trim(),
+            profile_url: attyId ? `${this.detailPageBaseUrl}/${attyId}` : '',
             source: `${this.name}_bar`,
           };
 
