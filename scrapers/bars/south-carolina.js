@@ -301,6 +301,278 @@ class SouthCarolinaScraper extends BaseScraper {
   }
 
   /**
+   * Parse a profile/detail page for additional fields.
+   *
+   * NOTE: SC Courts detail pages require a POST with an antiforgery token and
+   * session cookies — there are no publicly GETable profile pages.
+   * The enrichFromProfile() override handles the full POST flow.
+   * This method parses the already-fetched detail HTML for any additional fields
+   * not extracted during search(). It exists so hasProfileParser returns true.
+   *
+   * The detail page contains:
+   *   - h2: Full name with title prefix
+   *   - .attorney-contact: firm, address, phone (Office:), email (mailto:)
+   *   - Body text: admission date, practice areas, website link
+   *
+   * @param {CheerioStatic} $ - Cheerio instance of the detail page HTML
+   * @returns {object} Additional fields extracted from the profile
+   */
+  parseProfilePage($) {
+    const result = {};
+
+    // Parse name from h2 heading (format: "Mr./Ms. First Middle Last" or "Title. Last, First Middle")
+    const nameHeading = $('h2').first().text().trim();
+    const cleanName = nameHeading.replace(/^(?:Mr\.|Mrs\.|Ms\.|Dr\.|Hon\.|Judge)\s*/i, '').trim();
+    if (cleanName) {
+      result.full_name = cleanName;
+    }
+
+    // Parse contact info from .attorney-contact
+    const contact = $('.attorney-contact').first();
+    if (!contact.length) return result;
+
+    // Firm name from <strong> inside contact
+    const firmName = contact.find('strong').first().text().trim();
+    if (firmName) {
+      result.firm_name = firmName;
+    }
+
+    // Phone from "Office: (xxx) xxx-xxxx"
+    const contactText = contact.text();
+    const phoneMatch = contactText.match(/Office:\s*([\d()\s.-]+)/);
+    if (phoneMatch) {
+      const phone = phoneMatch[1].trim();
+      if (phone.length > 5) result.phone = phone;
+    }
+
+    // Email from mailto link
+    const emailLink = contact.find('a[href^="mailto:"]').first();
+    if (emailLink.length) {
+      const email = emailLink.attr('href').replace('mailto:', '').trim();
+      if (email && email.includes('@')) result.email = email;
+    }
+
+    // Website: look for non-mailto links that aren't excluded domains
+    contact.find('a[href]').each((_, el) => {
+      const href = $(el).attr('href') || '';
+      if (href.startsWith('mailto:')) return;
+      if (href.startsWith('tel:')) return;
+      if (href.startsWith('#')) return;
+      if (!href.startsWith('http')) return;
+      if (this.isExcludedDomain(href)) return;
+      if (!result.website) {
+        result.website = href;
+      }
+    });
+
+    // Also check body for any website links outside .attorney-contact
+    if (!result.website) {
+      $('a[href]').each((_, el) => {
+        const href = $(el).attr('href') || '';
+        if (href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('#')) return;
+        if (!href.startsWith('http')) return;
+        if (href.includes('sccourts.org')) return;
+        if (this.isExcludedDomain(href)) return;
+        // Check link text for "website" / "firm" hints
+        const text = $(el).text().toLowerCase();
+        if (text.includes('website') || text.includes('firm') || text.includes('law office')) {
+          result.website = href;
+          return false; // break
+        }
+      });
+    }
+
+    // Address parsing from the first <p>
+    const firstP = contact.find('p').first();
+    if (firstP.length) {
+      const addressHtml = firstP.html() || '';
+      const lines = addressHtml
+        .replace(/<strong[^>]*>.*?<\/strong>/gi, '')
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<[^>]+>/g, '')
+        .split('\n')
+        .map(l => l.trim())
+        .filter(l => l.length > 0);
+
+      if (lines.length > 0) {
+        const lastLine = lines[lines.length - 1];
+        const cityStateZip = lastLine.match(/^(.+),\s*([A-Z]{2})\s+(\d{5}(?:-\d{4})?)$/);
+        if (cityStateZip) {
+          result.city = cityStateZip[1].trim();
+          result.state = cityStateZip[2];
+          result.zip = cityStateZip[3];
+          result.address = lines.slice(0, -1).join(', ');
+        } else {
+          const cityState = lastLine.match(/^(.+),\s*([A-Z]{2})$/);
+          if (cityState) {
+            result.city = cityState[1].trim();
+            result.state = cityState[2];
+            result.address = lines.slice(0, -1).join(', ');
+          }
+        }
+      }
+    }
+
+    // Admission date from body text
+    const bodyText = $('body').text();
+    const admMatch = bodyText.match(/(?:Admitted|Admission)[:\s]*(\w+\s+\d{1,2},?\s+\d{4})/i);
+    if (admMatch) {
+      result.admission_date = admMatch[1];
+    }
+
+    // Practice areas — look for a section labeled "Practice Areas" or similar
+    const practiceAreas = [];
+    $('h3, h4, strong').each((_, el) => {
+      const heading = $(el).text().trim().toLowerCase();
+      if (heading.includes('practice area') || heading.includes('areas of practice')) {
+        // Grab the next sibling or parent's text for the list
+        const next = $(el).next();
+        if (next.length) {
+          next.find('li').each((_, li) => {
+            const area = $(li).text().trim();
+            if (area) practiceAreas.push(area);
+          });
+          // If no <li>, try comma-separated text
+          if (practiceAreas.length === 0) {
+            const txt = next.text().trim();
+            if (txt) practiceAreas.push(...txt.split(/,\s*/).filter(Boolean));
+          }
+        }
+      }
+    });
+    if (practiceAreas.length > 0) {
+      result.practice_areas = practiceAreas.join('; ');
+    }
+
+    // Education — look for "Law School" or "Education" labels
+    $('dt, strong, b').each((_, el) => {
+      const label = $(el).text().trim().toLowerCase().replace(/:$/, '');
+      if (label.includes('law school') || label.includes('education')) {
+        const next = $(el).is('dt') ? $(el).next('dd') : $(el).parent().next();
+        if (next.length) {
+          const edu = next.text().trim();
+          if (edu && edu.length > 2) {
+            result.education = edu;
+          }
+        }
+      }
+    });
+
+    // Remove empty values
+    for (const key of Object.keys(result)) {
+      if (result[key] === '' || result[key] === undefined || result[key] === null) {
+        delete result[key];
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Override hasProfileParser to return true since we implement enrichFromProfile.
+   * The base class checks if parseProfilePage is overridden, but for SC we
+   * override enrichFromProfile directly because the detail page requires a POST
+   * with an antiforgery token and session cookies.
+   */
+  get hasProfileParser() {
+    return true;
+  }
+
+  /**
+   * Fetch and parse attorney detail info from the SC Courts detail page.
+   * Overrides BaseScraper.enrichFromProfile because SC Courts detail pages
+   * require a POST with a __RequestVerificationToken and session cookies —
+   * a simple GET to the profile_url won't work.
+   *
+   * Flow:
+   * 1. Establish session — GET /attorneys/ to obtain cookies
+   * 2. Extract antiforgery token from the session page
+   * 3. Extract attorney ID from the lead's profile_url or bar_number
+   * 4. POST /attorneys/detail/ with token + id using full browser headers
+   * 5. Parse the response HTML with parseProfilePage($)
+   *
+   * @param {object} lead - The lead object (must have profile_url or bar_number)
+   * @param {RateLimiter} rateLimiter - Rate limiter instance
+   * @returns {object} Additional fields from the detail page
+   */
+  async enrichFromProfile(lead, rateLimiter) {
+    // Extract the attorney ID from profile_url or bar_number
+    let id = lead.bar_number || '';
+    if (!id && lead.profile_url) {
+      const urlMatch = lead.profile_url.match(/\/detail\/(\d+)/);
+      if (urlMatch) id = urlMatch[1];
+    }
+    if (!id) return {};
+
+    const ua = rateLimiter.getUserAgent();
+
+    try {
+      // Reuse cached session or establish a new one (avoid per-lead session overhead)
+      if (!this._enrichSession || !this._enrichSession.cookies || !this._enrichSession.token) {
+        await rateLimiter.wait();
+        const sessionResp = await this._httpGet(this.baseUrl, ua, null);
+        if (sessionResp.statusCode !== 200) {
+          log.warn(`SC enrichFromProfile: session init returned ${sessionResp.statusCode}`);
+          return {};
+        }
+        const $ = cheerio.load(sessionResp.body);
+        const token = this._getToken($);
+        if (!token) {
+          log.warn(`SC enrichFromProfile: no antiforgery token found`);
+          return {};
+        }
+        this._enrichSession = { cookies: sessionResp.cookies, token };
+      }
+
+      // POST to detail endpoint with cached session
+      await rateLimiter.wait();
+      const postBody = new URLSearchParams({
+        '__RequestVerificationToken': this._enrichSession.token,
+        'id': id,
+      }).toString();
+
+      const detailResp = await this._httpPost(this.detailUrl, postBody, ua, this._enrichSession.cookies);
+
+      if (detailResp.statusCode === 406 || detailResp.statusCode === 403) {
+        // Session expired or bot protection — refresh session and retry once
+        this._enrichSession = null;
+        await rateLimiter.wait();
+        const sessionResp = await this._httpGet(this.baseUrl, ua, null);
+        if (sessionResp.statusCode !== 200) return {};
+        const $ = cheerio.load(sessionResp.body);
+        const token = this._getToken($);
+        if (!token) return {};
+        this._enrichSession = { cookies: sessionResp.cookies, token };
+
+        await rateLimiter.wait();
+        const retryBody = new URLSearchParams({
+          '__RequestVerificationToken': token,
+          'id': id,
+        }).toString();
+        const retryResp = await this._httpPost(this.detailUrl, retryBody, ua, this._enrichSession.cookies);
+        if (retryResp.statusCode !== 200) return {};
+        const detail$ = cheerio.load(retryResp.body);
+        return this.parseProfilePage(detail$);
+      }
+
+      if (detailResp.statusCode !== 200) {
+        log.warn(`SC enrichFromProfile: detail POST returned ${detailResp.statusCode} for id=${id}`);
+        return {};
+      }
+
+      // Update cookies from response for session continuity
+      if (detailResp.cookies) this._enrichSession.cookies = detailResp.cookies;
+
+      const detail$ = cheerio.load(detailResp.body);
+      return this.parseProfilePage(detail$);
+    } catch (err) {
+      log.warn(`SC enrichFromProfile failed for id=${id}: ${err.message}`);
+      this._enrichSession = null; // Force session refresh on next call
+      return {};
+    }
+  }
+
+  /**
    * Override search() — iterate A-Z last name prefixes, paginate, fetch details.
    */
   async *search(practiceArea, options = {}) {

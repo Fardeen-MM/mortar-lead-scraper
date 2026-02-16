@@ -316,7 +316,122 @@ class MichiganScraper extends BaseScraper {
   }
 
   /**
+   * Parse a Michigan Bar member detail/profile page for additional fields.
+   *
+   * DNN element IDs (prefix: dnn_ctr13720_MemberDirectorySearchDetail_):
+   *   - lblMemberDetails: "First Last—P12345 (active and in good standing)"
+   *   - lblTitle:         Job title (e.g., "Secretary-Treasurer")
+   *   - lblCompany:       Firm/company name
+   *   - lblAddress1:      Street address line 1
+   *   - lblAddress2:      Street address line 2 (often empty)
+   *   - lblCityStateZip:  "City, ST ZIP" (e.g., "Detroit, MI 48208-1115")
+   *   - lblCountry:       Country (e.g., "UNITED STATES")
+   *   - hlnkPhone:        Phone number (inside <a href="tel:...">)
+   *   - trFax:            "Fax: (xxx) xxx-xxxx"
+   *   - hypEmail:         Email (inside <a href="mailto:...">)
+   *   - trSection:        "Sections: Labor & Employment Law, ..."
+   *   - trMemberLicensed: "Michigan Licensed: 11/3/2015"
+   *   - lblBio:           Bio text (usually empty)
+   *
+   * No website or education fields are available on MI bar detail pages.
+   *
+   * @param {CheerioStatic} $ - Cheerio instance of the profile page
+   * @returns {object} Additional fields extracted from the profile
+   */
+  parseProfilePage($) {
+    const result = {};
+    const prefix = 'dnn_ctr13720_MemberDirectorySearchDetail_';
+
+    // Member details header: "First Last—P12345 (active and in good standing)"
+    const memberDetails = $(`#${prefix}lblMemberDetails`).text().trim();
+    if (memberDetails) {
+      const detailMatch = memberDetails.match(/[—–-]P(\d+)\s*\(([^)]+)\)/);
+      if (detailMatch) {
+        result.bar_number = detailMatch[1];
+        result.bar_status = detailMatch[2].trim();
+      }
+    }
+
+    // Title (job title, not honorific)
+    const title = $(`#${prefix}lblTitle`).text().trim();
+    if (title) {
+      result.title = title;
+    }
+
+    // Firm / company name
+    const company = $(`#${prefix}lblCompany`).text().trim();
+    if (company) {
+      result.firm_name = company;
+    }
+
+    // Address
+    const address1 = $(`#${prefix}lblAddress1`).text().trim();
+    const address2 = $(`#${prefix}lblAddress2`).text().trim();
+    const fullAddress = [address1, address2].filter(Boolean).join(', ');
+    if (fullAddress) {
+      result.address = fullAddress;
+    }
+
+    // City, State, Zip
+    const cityStateZip = $(`#${prefix}lblCityStateZip`).text().trim();
+    if (cityStateZip) {
+      const parsed = this.parseCityStateZip(cityStateZip);
+      if (parsed.city) result.city = parsed.city;
+      if (parsed.state) result.state = parsed.state;
+      if (parsed.zip) result.zip = parsed.zip;
+    }
+
+    // Phone (from <a href="tel:..."> link)
+    const phone = $(`#${prefix}hlnkPhone`).text().trim();
+    if (phone && phone.length > 5) {
+      result.phone = phone;
+    }
+
+    // Fax — embedded as text in the <p> container: "Fax: (xxx) xxx-xxxx"
+    const faxText = $(`#${prefix}trFax`).text().trim();
+    if (faxText) {
+      const faxMatch = faxText.match(/Fax:\s*(.+)/i);
+      if (faxMatch) {
+        result.fax = faxMatch[1].trim();
+      }
+    }
+
+    // Email (from <a href="mailto:..."> link)
+    const email = $(`#${prefix}hypEmail`).text().trim();
+    if (email && email.includes('@')) {
+      result.email = email.toLowerCase();
+    }
+
+    // Sections (practice areas): "Sections: Labor & Employment Law, Insurance..."
+    const sectionText = $(`#${prefix}trSection`).text().trim();
+    if (sectionText) {
+      const secMatch = sectionText.match(/Sections?:\s*(.+)/i);
+      if (secMatch) {
+        result.practice_areas = secMatch[1].trim();
+      }
+    }
+
+    // Michigan Licensed date: "Michigan Licensed: 11/3/2015"
+    const licensedText = $(`#${prefix}trMemberLicensed`).text().trim();
+    if (licensedText) {
+      const licMatch = licensedText.match(/Licensed:\s*(.+)/i);
+      if (licMatch) {
+        result.admission_date = licMatch[1].trim();
+      }
+    }
+
+    // Bio (usually empty, but extract if present)
+    const bio = $(`#${prefix}lblBio`).text().trim();
+    if (bio && bio.length > 2) {
+      result.bio = bio;
+    }
+
+    return result;
+  }
+
+  /**
    * Fetch a member detail page and extract full attorney data.
+   * Delegates parsing to parseProfilePage($).
    */
   async _fetchDetail(memberId, rateLimiter) {
     const url = `${this.detailBaseUrl}${memberId}`;
@@ -331,50 +446,7 @@ class MichiganScraper extends BaseScraper {
       }
 
       const $ = cheerio.load(response.body);
-      const prefix = 'dnn_ctr13720_MemberDirectorySearchDetail_';
-
-      // Extract fields by DNN element IDs
-      const memberDetails = $(`#${prefix}lblMemberDetails`).text().trim();
-      const title = $(`#${prefix}lblTitle`).text().trim();
-      const company = $(`#${prefix}lblCompany`).text().trim();
-      const address1 = $(`#${prefix}lblAddress1`).text().trim();
-      const cityStateZip = $(`#${prefix}lblCityStateZip`).text().trim();
-      const phone = $(`#${prefix}hlnkPhone`).text().trim();
-      const email = $(`#${prefix}hypEmail`).text().trim();
-      const licensedText = $(`#${prefix}trMemberLicensed`).text().trim();
-
-      // Parse member details: "First Last—P12345 (active and in good standing)"
-      let barNumber = '';
-      let barStatus = '';
-      const detailMatch = memberDetails.match(/[—–-]P(\d+)\s*\(([^)]+)\)/);
-      if (detailMatch) {
-        barNumber = detailMatch[1];
-        barStatus = detailMatch[2].trim();
-      }
-
-      // Parse licensed date: "Michigan Licensed: 11/3/2015"
-      let admissionDate = '';
-      const licMatch = licensedText.match(/Licensed:\s*(.+)/i);
-      if (licMatch) {
-        admissionDate = licMatch[1].trim();
-      }
-
-      // Parse city/state/zip
-      const parsed = this.parseCityStateZip(cityStateZip);
-
-      return {
-        firm_name: company,
-        title: title,
-        address: address1,
-        city: parsed.city || '',
-        state: parsed.state || 'MI',
-        zip: parsed.zip || '',
-        phone: phone,
-        email: email ? email.toLowerCase() : '',
-        bar_number: barNumber,
-        bar_status: barStatus,
-        admission_date: admissionDate,
-      };
+      return this.parseProfilePage($);
     } catch (err) {
       log.warn(`Failed to fetch detail for member ${memberId}: ${err.message}`);
       return null;
@@ -496,15 +568,20 @@ class MichiganScraper extends BaseScraper {
           first_name: result.first_name,
           last_name: result.last_name,
           full_name: result.full_name,
-          firm_name: detail ? detail.firm_name : '',
-          city: detail ? detail.city : result.city,
-          state: detail ? detail.state : result.state,
-          phone: detail ? detail.phone : '',
-          email: detail ? detail.email : '',
+          firm_name: detail ? (detail.firm_name || '') : '',
+          title: detail ? (detail.title || '') : '',
+          address: detail ? (detail.address || '') : '',
+          city: detail ? (detail.city || result.city) : result.city,
+          state: detail ? (detail.state || result.state) : result.state,
+          zip: detail ? (detail.zip || '') : '',
+          phone: detail ? (detail.phone || '') : '',
+          fax: detail ? (detail.fax || '') : '',
+          email: detail ? (detail.email || '') : '',
           website: '',
-          bar_number: detail ? detail.bar_number : '',
-          bar_status: detail ? detail.bar_status : 'Active',
-          admission_date: detail ? detail.admission_date : '',
+          bar_number: detail ? (detail.bar_number || '') : '',
+          bar_status: detail ? (detail.bar_status || 'Active') : 'Active',
+          admission_date: detail ? (detail.admission_date || '') : '',
+          practice_areas: detail ? (detail.practice_areas || '') : '',
           profile_url: result.profile_url,
         };
 

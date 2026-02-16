@@ -18,7 +18,7 @@ const http = require('http');
 const cheerio = require('cheerio');
 const BaseScraper = require('../base-scraper');
 const { log } = require('../../lib/logger');
-const { RateLimiter } = require('../../lib/rate-limiter');
+const { RateLimiter, sleep } = require('../../lib/rate-limiter');
 
 class NorthCarolinaScraper extends BaseScraper {
   constructor() {
@@ -37,122 +37,49 @@ class NorthCarolinaScraper extends BaseScraper {
   }
 
   /**
-   * Establish a valid ASP.NET session for accessing viewer pages.
+   * Fetch a viewer page using the current session cookie.
    *
-   * The NC Bar viewer pages (viewer.aspx?ID=...) require server-side session state
-   * that is only set after a POST search. Simply GETting the search page is not
-   * sufficient. We perform a minimal search (last name "A" in "Raleigh") to
-   * establish the session, then cache the cookies for subsequent viewer requests.
+   * IMPORTANT: NC viewer pages (viewer.aspx?ID=...) are tied to the specific
+   * search session that produced them. A viewer page can ONLY be accessed with
+   * cookies from the POST search that returned that ID in its results. A generic
+   * "establish session" search will NOT work for arbitrary IDs.
    *
-   * @param {RateLimiter} rateLimiter - Rate limiter instance
-   * @returns {boolean} true if session was established successfully
-   */
-  async _establishProfileSession(rateLimiter) {
-    try {
-      // Step 1: GET search page for VIEWSTATE + session cookie
-      await rateLimiter.wait();
-      const getResp = await this._httpGetWithCookies(this.baseUrl, rateLimiter);
-      if (getResp.statusCode !== 200) {
-        log.warn(`NC: GET search page returned ${getResp.statusCode}`);
-        return false;
-      }
-
-      const $form = cheerio.load(getResp.body);
-      const formFields = this._extractFormFields($form);
-      if (!formFields.__VIEWSTATE) {
-        log.warn(`NC: No VIEWSTATE in search page for session init`);
-        return false;
-      }
-
-      // Step 2: POST a minimal search to establish server-side state
-      const postData = new URLSearchParams();
-      postData.set('__VIEWSTATE', formFields.__VIEWSTATE);
-      if (formFields.__EVENTVALIDATION) postData.set('__EVENTVALIDATION', formFields.__EVENTVALIDATION);
-      if (formFields.__VIEWSTATEGENERATOR) postData.set('__VIEWSTATEGENERATOR', formFields.__VIEWSTATEGENERATOR);
-      postData.set('ctl00$Content$txtFirst', '');
-      postData.set('ctl00$Content$txtMiddle', '');
-      postData.set('ctl00$Content$txtLast', 'A');
-      postData.set('ctl00$Content$txtCity', 'Raleigh');
-      postData.set('ctl00$Content$ddState', 'NC');
-      postData.set('ctl00$Content$ddLicStatus', 'A');
-      postData.set('ctl00$Content$ddJudicialDistrict', '');
-      postData.set('ctl00$Content$txtLicNum', '');
-      postData.set('ctl00$Content$ddLicType', '');
-      postData.set('ctl00$Content$ddSpecialization', '');
-      postData.set('ctl00$Content$btnSubmit', 'Search');
-
-      await rateLimiter.wait();
-      const postResp = await this._httpPostForm(
-        this.baseUrl,
-        postData.toString(),
-        rateLimiter,
-        getResp.cookies,
-      );
-
-      if (postResp.statusCode !== 200) {
-        log.warn(`NC: POST search for session init returned ${postResp.statusCode}`);
-        return false;
-      }
-
-      // Merge all cookies from GET and POST responses
-      const allCookies = [getResp.cookies, postResp.cookies].filter(Boolean).join('; ');
-      this._sessionCookie = allCookies;
-      log.info(`NC: Established session for profile page fetching via POST search`);
-      return true;
-    } catch (err) {
-      log.warn(`NC: Failed to establish profile session: ${err.message}`);
-      return false;
-    }
-  }
-
-  /**
-   * Fetch a profile page with session cookie support.
+   * Therefore, profile pages MUST be fetched inline during search(), immediately
+   * after the POST search that found them. The waterfall's enrichFromProfile()
+   * is overridden to return {} because post-hoc profile fetching is impossible.
    *
-   * NC viewer pages (viewer.aspx?ID=...) require a valid ASP.NET session that
-   * has been initialized via a POST search. On first call (or after session
-   * expiry), we perform a minimal search to establish the session, then cache
-   * the cookies for subsequent viewer requests.
+   * This helper is used by search() to fetch individual profiles within the
+   * current search session.
    *
-   * @param {string} url - The profile page URL
+   * @param {string} url - The viewer page URL
    * @param {RateLimiter} rateLimiter - Rate limiter instance
    * @returns {CheerioStatic|null} Cheerio instance or null on failure
    */
   async fetchProfilePage(url, rateLimiter) {
-    if (!url) return null;
+    if (!url || !this._sessionCookie) return null;
 
     try {
-      // Establish session if we don't have one
-      if (!this._sessionCookie) {
-        const ok = await this._establishProfileSession(rateLimiter);
-        if (!ok) return null;
-      }
-
-      // Fetch the viewer page with the session cookie
-      await rateLimiter.wait();
+      // Use shorter delay for profile pages (1-2s) vs full 5-10s for search pages.
+      // Profile pages are lightweight GET requests within the same session.
+      await sleep(1000 + Math.random() * 1000);
       const response = await this._httpGetWithCookies(url, rateLimiter, this._sessionCookie);
 
       if (response.statusCode !== 200) {
         log.warn(`NC profile page returned ${response.statusCode}: ${url}`);
-        // Session may have expired — clear it so next call re-establishes
-        if (response.statusCode === 302 || response.statusCode === 500) {
-          this._sessionCookie = null;
-          // Retry once with a fresh session
-          const ok = await this._establishProfileSession(rateLimiter);
-          if (!ok) return null;
-          await rateLimiter.wait();
-          const retry = await this._httpGetWithCookies(url, rateLimiter, this._sessionCookie);
-          if (retry.statusCode !== 200) {
-            log.warn(`NC profile page retry returned ${retry.statusCode}: ${url}`);
-            return null;
-          }
-          if (retry.cookies) this._sessionCookie = retry.cookies;
-          return cheerio.load(retry.body);
-        }
         return null;
       }
 
       if (this.detectCaptcha(response.body)) {
         log.warn(`CAPTCHA on NC profile page: ${url}`);
+        return null;
+      }
+
+      // Validate the page has actual profile content (<dt> tags).
+      // An expired or wrong-session response returns a generic 200 page
+      // with no <dt> tags (because _httpGetWithCookies follows 302 redirects
+      // transparently, masking the session failure).
+      if (!response.body.includes('<dt>')) {
+        log.warn(`NC profile page has no content (wrong session?): ${url}`);
         return null;
       }
 
@@ -166,6 +93,16 @@ class NorthCarolinaScraper extends BaseScraper {
       log.warn(`Failed to fetch NC profile page: ${err.message}`);
       return null;
     }
+  }
+
+  /**
+   * Override enrichFromProfile to prevent the waterfall from attempting
+   * post-hoc profile fetching. NC viewer pages are session-bound to the
+   * specific search that returned them — they cannot be fetched later
+   * with a different session. Profile data is fetched inline during search().
+   */
+  async enrichFromProfile(/* lead, rateLimiter */) {
+    return {};
   }
 
   /**
@@ -487,10 +424,19 @@ class NorthCarolinaScraper extends BaseScraper {
 
   /**
    * Async generator that yields attorney records from the NC Bar directory.
+   *
+   * NC viewer pages (viewer.aspx?ID=...) are tied to the specific ASP.NET
+   * search session that produced them. A viewer page can only be accessed with
+   * cookies from the POST search whose results included that ID. Therefore,
+   * profile pages are fetched inline here — immediately after each city's
+   * search, while the session is still valid for those results.
+   *
+   * Pass options.skipProfiles = true to skip profile fetching (e.g., in smoke tests).
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
     const cities = this.getCities(options);
+    const skipProfiles = !!options.skipProfiles;
 
     if (practiceArea) {
       log.warn(`NC Bar directory does not support practice area filtering — searching all attorneys`);
@@ -578,6 +524,41 @@ class NorthCarolinaScraper extends BaseScraper {
       }
 
       log.success(`Found ${attorneys.length} results for ${city}`);
+
+      // Fetch profile pages inline while the session is valid for this city's results.
+      // NC viewer pages are session-bound — they can only be accessed with cookies
+      // from the search that returned them, NOT from a separate session.
+      // In test mode (maxPages set), limit profile fetches to avoid timeout.
+      const maxProfileFetches = options.maxPages ? 20 : Infinity;
+      if (!skipProfiles) {
+        const fetchableCount = Math.min(attorneys.filter(a => a.profile_url).length, maxProfileFetches);
+        log.info(`Fetching ${fetchableCount} profile pages for ${city}...`);
+        let profilesFetched = 0;
+        let profilesFailed = 0;
+        for (const attorney of attorneys) {
+          if (!attorney.profile_url) continue;
+          if (profilesFetched + profilesFailed >= maxProfileFetches) break;
+          try {
+            const $profile = await this.fetchProfilePage(attorney.profile_url, rateLimiter);
+            if ($profile) {
+              const profileData = this.parseProfilePage($profile);
+              // Merge profile data into attorney record without overwriting
+              for (const [key, value] of Object.entries(profileData)) {
+                if (value && (!attorney[key] || attorney[key] === '')) {
+                  attorney[key] = value;
+                }
+              }
+              profilesFetched++;
+            } else {
+              profilesFailed++;
+            }
+          } catch (err) {
+            log.warn(`NC: Profile fetch error for ${attorney.first_name} ${attorney.last_name}: ${err.message}`);
+            profilesFailed++;
+          }
+        }
+        log.success(`Fetched ${profilesFetched} profiles for ${city} (${profilesFailed} failed)`);
+      }
 
       for (const attorney of attorneys) {
         if (options.minYear && attorney.admission_date) {
