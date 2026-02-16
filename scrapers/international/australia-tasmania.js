@@ -97,6 +97,99 @@ class TasmaniaScraper extends BaseScraper {
     this.wpApiUrl = `${this.baseUrl}/wp-json/wp/v2`;
   }
 
+  // --- Name validation ---
+
+  /**
+   * Validate whether a string looks like a real person name or firm name,
+   * as opposed to a blog post title, announcement, or other non-lawyer content.
+   *
+   * The WordPress REST API at lst.org.au returns blog posts (news, events,
+   * announcements) rather than lawyer directory entries. The actual lawyer
+   * directory is served via a FormTitan/Salesforce iframe that requires JS
+   * rendering. This validation acts as a safety net to reject garbage records
+   * from the blog post stream.
+   *
+   * @param {string} text - The title/name string to validate
+   * @returns {{ valid: boolean, reason: string }}
+   */
+  _isValidLawyerName(text) {
+    if (!text || text.length < 2) {
+      return { valid: false, reason: 'empty_or_too_short' };
+    }
+
+    const words = text.split(/\s+/);
+
+    // Real names are 2-5 words. Firm names can be longer but contain keywords.
+    // Blog titles are typically 5+ words and read like sentences.
+    if (words.length > 5) {
+      const isFirm = /(?:lawyers?|solicitors?|legal|law\s+firm|barristers?|associates?|partners?|&|pty|ltd)/i.test(text);
+      if (!isFirm) {
+        return { valid: false, reason: 'too_many_words_for_name' };
+      }
+    }
+
+    // Names must not contain digits/years (e.g. "2022", "2025", "100A")
+    if (/\d/.test(text)) {
+      return { valid: false, reason: 'contains_digits' };
+    }
+
+    // Reject titles containing verbs, articles, or sentence-like constructs
+    // These are strong indicators of blog post titles / announcements
+    const sentencePatterns = /\b(is now|are now|has been|have been|will be|was\b|were\b|can be|could be|should be|would be|may be|might be|shall be|announcing|announced|update|updated|notice|event|seminar|workshop|conference|bulletin|newsletter|award|congratulations|arrangements|circular|proceedings|commencing|sittings|seeking|conducting|meditation|appointment|appointed|welcome|welcomes|farewell|upcoming|invitation|registration|register now|applications|apply|please|click here|read more|download|view|subscribe)\b/i;
+    if (sentencePatterns.test(text)) {
+      return { valid: false, reason: 'sentence_pattern_detected' };
+    }
+
+    // Reject titles with common non-name words that indicate institutional/topic content
+    const institutionalPatterns = /\b(Supreme Court|Federal Court|High Court|Magistrates|Tribunal|Parliament|Government|Committee|Commission|Board|Department|Ministry|Office of|Council|Association|Institute|University|College|Hospital|Conference|Symposium|Annual General|AGM|CPD|CLE|Webinar|Podcast|Masterclass)\b/i;
+    if (institutionalPatterns.test(text)) {
+      // Allow if it looks like a firm name (e.g. "Court & Associates")
+      const isFirm = /(?:lawyers?|solicitors?|legal|barristers?|associates?|partners?|&|pty|ltd)/i.test(text);
+      if (!isFirm) {
+        return { valid: false, reason: 'institutional_content' };
+      }
+    }
+
+    // Reject common title-case topic words that appear in blog posts
+    const topicPatterns = /\b(Transcendental|Neurological|Medico|Criminal Sittings|Practising Certificate|Short-term|Office Space|Door Access|FOBS)\b/i;
+    if (topicPatterns.test(text)) {
+      return { valid: false, reason: 'topic_content' };
+    }
+
+    // Reject if the title contains common punctuation patterns of blog titles
+    // (em dashes, colons followed by long text, question marks)
+    if (/[\u2013\u2014–—]/.test(text)) {
+      return { valid: false, reason: 'contains_em_dash' };
+    }
+    if (/:\s*\w{3,}/.test(text) && words.length > 3) {
+      return { valid: false, reason: 'colon_in_long_title' };
+    }
+    if (/\?/.test(text)) {
+      return { valid: false, reason: 'contains_question_mark' };
+    }
+
+    // Individual name parts should each be 1-2 words, not sentences
+    // Check that each word looks like a name (starts with uppercase, mostly alpha)
+    for (const word of words) {
+      const clean = word.replace(/[.,'-]/g, '');
+      if (clean.length === 0) continue;
+      // Allow short connectors: de, van, von, O', Mc, Mac, etc.
+      if (/^(de|di|da|del|della|van|von|der|den|le|la|du|dos|das|e|y|i|and|the|of|for|in|at|to|on|or|nor|but|by|with|from)$/i.test(clean)) {
+        // "the", "of", "for", etc. in the middle of a name are red flags
+        if (/^(the|of|for|in|at|to|on|or|nor|but|by|with|from)$/i.test(clean)) {
+          return { valid: false, reason: 'contains_preposition_or_article' };
+        }
+        continue; // allow name connectors like de, van, von
+      }
+      // Name words should not be common non-name English words
+      if (/^(Seeking|Conducting|Examining|Commencing|Relating|Including|Following|Regarding|Concerning|Providing|Offering|Announcing|Celebrating|Hosting|Attending|Presenting|Delivering|Managing|Processing)$/i.test(clean)) {
+        return { valid: false, reason: 'contains_gerund_verb' };
+      }
+    }
+
+    return { valid: true, reason: 'ok' };
+  }
+
   // --- HTTP helpers ---
 
   /**
@@ -347,15 +440,18 @@ class TasmaniaScraper extends BaseScraper {
     if (practiceMatch) practiceAreas = practiceMatch[1].trim();
 
     // Filter out blog posts / news articles that aren't lawyer records.
-    // Lawyer names are typically 2-5 words. Sentence-like titles (>6 words)
-    // without firm keywords are almost certainly not lawyer records.
-    const wordCount = cleanTitle.split(/\s+/).length;
+    // IMPORTANT: The WordPress REST API at lst.org.au returns blog posts
+    // (announcements, news, events), NOT lawyer directory entries. The actual
+    // lawyer register is served via a FormTitan/Salesforce iframe. We apply
+    // strict validation to prevent garbage records from leaking through.
     const isFirm = /(?:lawyers?|solicitors?|legal|law\s+firm|barristers?|associates?|partners?|&|pty|ltd)/i.test(cleanTitle);
 
-    // Skip obvious non-lawyer posts: long sentence titles, titles with verbs/articles
-    if (wordCount > 6 && !isFirm) return null;
-    if (/\b(is now|are now|has been|have been|will be|was |were |announcing|update|notice|event|seminar|workshop|conference|bulletin|newsletter|award|congratulations)\b/i.test(cleanTitle)) return null;
-    if (!cleanTitle || cleanTitle.length < 3) return null;
+    // Apply comprehensive name validation
+    const validation = this._isValidLawyerName(cleanTitle);
+    if (!validation.valid) {
+      log.info(`AU-TAS: Skipping non-lawyer WP post: "${cleanTitle.substring(0, 60)}..." (reason: ${validation.reason})`);
+      return null;
+    }
 
     let firstName = '';
     let lastName = '';
@@ -373,6 +469,17 @@ class TasmaniaScraper extends BaseScraper {
       const nameParts = this.splitName(cleaned);
       firstName = nameParts.firstName;
       lastName = nameParts.lastName;
+
+      // Final check: validate the parsed name parts individually
+      if (!firstName || !lastName) {
+        log.info(`AU-TAS: Skipping record with missing name parts: fn="${firstName}" ln="${lastName}" from "${cleanTitle}"`);
+        return null;
+      }
+      const fnCheck = this._isValidLawyerName(firstName + ' ' + lastName);
+      if (!fnCheck.valid) {
+        log.info(`AU-TAS: Skipping record after name split: "${firstName} ${lastName}" (reason: ${fnCheck.reason})`);
+        return null;
+      }
     }
 
     return {
@@ -525,6 +632,10 @@ class TasmaniaScraper extends BaseScraper {
       );
       if (cityMatch) city = cityMatch[1];
 
+      // Validate the name before creating a record
+      const nameValidation = this._isValidLawyerName(name);
+      if (!nameValidation.valid) return; // Skip non-lawyer entries
+
       const isFirm = /(?:lawyers?|solicitors?|legal|law\s+firm|barristers?|associates?|&|pty|ltd)/i.test(name);
       let firstName = '';
       let lastName = '';
@@ -538,6 +649,8 @@ class TasmaniaScraper extends BaseScraper {
         const parts = this.splitName(name);
         firstName = parts.firstName;
         lastName = parts.lastName;
+        // Skip if name parts are empty after splitting
+        if (!firstName || !lastName) return;
       }
 
       lawyers.push({
@@ -594,6 +707,9 @@ class TasmaniaScraper extends BaseScraper {
       const name = $(el).text().trim();
       if (name && name.length > 2 && !name.toLowerCase().includes('find') &&
           !name.toLowerCase().includes('search') && !name.toLowerCase().includes('register')) {
+        // Validate name before creating record
+        const nameCheck = this._isValidLawyerName(name);
+        if (!nameCheck.valid) return;
         const link = $(el).attr('href') || '';
         const { firstName, lastName } = this.splitName(name);
 

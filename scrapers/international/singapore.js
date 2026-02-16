@@ -234,64 +234,75 @@ class SingaporeScraper extends BaseScraper {
       }
     });
 
-    // Extract individual lawyer names from content
-    // Lawyers are often in h3 headings or named sections within the firm page.
+    // Extract individual lawyer names from the "Our Lawyers" section.
     //
-    // Strategy: look for h3 headings that are actual names (not section headings).
-    // Clean whitespace carefully since Elementor HTML often has stray tabs/newlines.
+    // The page uses H2 headings for everything: section titles, lawyer names,
+    // and role/title headings. The pattern is:
+    //   H2: "Our Lawyers"       <-- triggers lawyer section
+    //   H2: "Julian Tay"        <-- lawyer name
+    //   H2: "Managing Partner"  <-- role title (skip)
+    //   H2: "Matthew Saw"       <-- lawyer name
+    //   H2: "Partner"           <-- role title (skip)
+    //   H2: "Languages"         <-- ends lawyer section
+    //
+    // We walk all H2 headings, collect text between "Our Lawyers" and the
+    // next section heading, then filter out role/title entries.
+
     const sectionHeadings = ['about', 'contact', 'language', 'area of practice',
       'our lawyer', 'our team', 'overview', 'practice area', 'services',
       'accreditation', 'membership', 'mediation', 'arbitration', 'dispute',
       'related', 'mental capacity', 'qualification', 'certification',
       'testimonial', 'achievement', 'award', 'recognition'];
 
-    $('h3').each((_, el) => {
-      // Get direct text, collapsing all whitespace
-      let name = $(el).text().replace(/[\t\n\r]+/g, ' ').replace(/\s+/g, ' ').trim();
-      // Sometimes h3 content bleeds into adjacent text; take only the first line
-      if (name.includes('\n')) name = name.split('\n')[0].trim();
-      // Truncate at common suffixes that indicate bio text bleeding in
-      const suffixCut = name.match(/^([A-Z][^.!?]{2,60}?)(?:\s+(?:Mr|Ms|Mrs|Dr|is|was|has|joined)\s)/);
-      if (suffixCut) name = suffixCut[1].trim();
+    // Role/title keywords -- these H2 entries are not names
+    const roleKeywords = [
+      'director', 'partner', 'associate', 'counsel', 'founder',
+      'managing', 'senior', 'deputy', 'head of', 'consultant',
+      'former', 'judge', 'solicitor', 'lawyer', 'mediator',
+      'co-managing',
+    ];
 
-      // A valid lawyer name should: be 2+ words, start with a capital letter,
-      // not be a section heading, and not contain "law", "and", "related" etc.
-      const lowerName = name.toLowerCase();
-      const isLikelyName = name.length > 2 && name.length < 60 &&
-          /^[A-Z]/.test(name) &&
-          name.split(/\s+/).length >= 2 &&
-          !sectionHeadings.some(h => lowerName.includes(h)) &&
-          !lowerName.includes(' law') &&
-          !lowerName.includes(' and ') &&
-          !lowerName.includes(' related') &&
-          !lowerName.includes(' resolution');
-      if (isLikelyName) {
-        result.lawyers.push(name);
+    // Non-name keywords that should disqualify an H2 from being a lawyer name
+    const nonNameKeywords = [
+      'year of', 'areas of', 'qualification', 'research',
+      'contact', ' law', ' and ', ' related', ' resolution',
+      'accreditation', 'membership', 'certification',
+    ];
+
+    let inLawyerSection = false;
+
+    $('h2').each((_, el) => {
+      const text = $(el).text().replace(/[\t\n\r]+/g, ' ').replace(/\s+/g, ' ').trim();
+      const lower = text.toLowerCase();
+
+      // Check if this H2 starts the "Our Lawyers" section
+      if (lower.includes('our lawyer') || lower.includes('our team')) {
+        inLawyerSection = true;
+        return;
       }
-    });
 
-    // If no h3 lawyers found, look for strong/bold names after "Our Lawyers" heading
-    if (result.lawyers.length === 0) {
-      $('h2, h4').each((_, el) => {
-        const heading = $(el).text().replace(/\s+/g, ' ').trim().toLowerCase();
-        if (heading.includes('our lawyer') || heading.includes('our team')) {
-          // Walk subsequent siblings looking for name-like headings or bold text
-          let sibling = $(el).parent().next();
-          for (let i = 0; i < 10 && sibling.length; i++) {
-            // Check for bold/strong names
-            sibling.find('strong, b, h3, h4').each((_, nameEl) => {
-              let name = $(nameEl).text().replace(/\s+/g, ' ').trim();
-              if (name.length > 3 && name.length < 60 &&
-                  !sectionHeadings.some(h => name.toLowerCase().includes(h)) &&
-                  /^[A-Z]/.test(name)) {
-                result.lawyers.push(name);
-              }
-            });
-            sibling = sibling.next();
-          }
-        }
-      });
-    }
+      // Check if this H2 ends the lawyer section (a known section heading)
+      if (inLawyerSection && sectionHeadings.some(h => lower.includes(h))) {
+        inLawyerSection = false;
+        return;
+      }
+
+      if (!inLawyerSection) return;
+
+      // Skip if it looks like a role/title heading
+      if (roleKeywords.some(r => lower.includes(r))) return;
+
+      // Skip if it contains non-name keywords
+      if (nonNameKeywords.some(k => lower.includes(k))) return;
+
+      // A valid name should be 2+ chars, start with a letter, and have at least 2 words
+      // (allowing for single-word Chinese names written in English)
+      if (text.length < 3 || text.length > 80) return;
+      if (!/^[A-Z]/.test(text)) return;
+      if (text.split(/\s+/).length < 2) return;
+
+      result.lawyers.push(text);
+    });
 
     return result;
   }
@@ -328,6 +339,10 @@ class SingaporeScraper extends BaseScraper {
     let page = 1;
     let totalFirms = 0;
     let pagesFetched = 0;
+
+    // Deduplicate: same firm appears under multiple practice area categories.
+    // Track seen firm+lawyer combinations to avoid duplicate records.
+    const seen = new Set();
 
     while (true) {
       // Check max pages limit
@@ -411,6 +426,12 @@ class SingaporeScraper extends BaseScraper {
         // If we found individual lawyers, yield one record per lawyer
         if (parsed.lawyers.length > 0) {
           for (const lawyerName of parsed.lawyers) {
+            // Deduplicate by firm+lawyer combo (same lawyer appears in multiple
+            // practice area listings for the same firm)
+            const dedupeKey = `${firmName}|${lawyerName}`;
+            if (seen.has(dedupeKey)) continue;
+            seen.add(dedupeKey);
+
             const { firstName, lastName } = this.splitName(lawyerName);
 
             yield this.transformResult({
@@ -431,25 +452,9 @@ class SingaporeScraper extends BaseScraper {
             }, practiceArea);
           }
         } else {
-          // No individual lawyers found — yield firm-level record.
-          // Don't try to split firm name as a person name (produces garbage
-          // like first=MARK, last=CORPORATION). Use empty name fields instead.
-          yield this.transformResult({
-            first_name: '',
-            last_name: '',
-            full_name: '',
-            firm_name: firmName,
-            city: 'Singapore',
-            state: 'SG',
-            phone: parsed.phone,
-            email: parsed.email,
-            website: parsed.website,
-            bar_number: '',
-            bar_status: '',
-            practice_areas_list: categoryNames.join('; '),
-            address: parsed.address,
-            profile_url: profileUrl,
-          }, practiceArea);
+          // No individual lawyers found -- skip this entry.
+          // Firm-only records without person names are not useful as leads.
+          log.info(`SG: No individual lawyers found for "${firmName}" -- skipping`);
         }
       }
 

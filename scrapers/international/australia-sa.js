@@ -349,98 +349,90 @@ class SaScraper extends BaseScraper {
       });
     }
 
+    // Known post-nominal abbreviations used in SA legal register.
+    // These appear after a comma in the name field, e.g. "Jane Abbey, KC"
+    // or combined: "Michael Abbott, AO KC"
+    const POST_NOMINALS = ['KC', 'SC', 'QC', 'AM', 'AO', 'OAM', 'PSM', 'RFD', 'CSC', 'OBE', 'AC'];
+    const postNominalPattern = new RegExp(
+      ',?\\s+(?:' + POST_NOMINALS.join('|') + ')(?:\\s+(?:' + POST_NOMINALS.join('|') + '))*\\s*$',
+      'i'
+    );
+
+    // Certificate category codes: C = Corporate, A = Sole Practitioner,
+    // BA = Barrister & Solicitor (typical SA categories)
+    const CERT_CATEGORIES = {
+      'C':  'Corporate Practising Certificate',
+      'A':  'Sole Practitioner Practising Certificate',
+      'BA': 'Barrister Practising Certificate',
+    };
+
     rows.each((i, row) => {
       const $row = $(row);
       const cells = $row.find('td');
 
-      // Skip header rows
+      // Skip header rows and rows with <th> elements
       if (cells.length === 0 || $row.find('th').length > 0) return;
 
       // Skip rows that are clearly navigation/paging
       if ($row.hasClass('rgPager') || $row.hasClass('rgFooter')) return;
 
-      // Extract data from cells -- column order varies by iMIS configuration
-      // Common patterns: [Name, Certificate Type, Firm, Location] or [Name, Firm, Location]
+      // The register table has exactly 4 columns:
+      //   [Name, Date of Admission in SA, P Code, Practising Certificate Category]
+      // Skip rows that don't have 4 data cells (pager rows, etc.)
+      if (cells.length !== 4) return;
+
       const cellTexts = [];
       cells.each((_, cell) => {
         cellTexts.push($(cell).text().trim());
       });
 
-      if (cellTexts.length < 2) return;
-      if (!cellTexts[0] || cellTexts[0].length < 2) return;
-
-      // First cell is typically the practitioner name
+      // Column 0: Full name (may include post-nominals after comma)
       let fullName = cellTexts[0].replace(/\s+/g, ' ').trim();
 
       // Skip if the "name" looks like a header or metadata
-      if (fullName.toLowerCase().includes('name') && i === 0) return;
+      if (fullName.toLowerCase().includes('name') && i < 10) return;
       if (fullName.toLowerCase().includes('no records')) return;
       if (fullName.toLowerCase().includes('please enter')) return;
+      if (fullName.toLowerCase().includes('data pager')) return;
+      if (fullName.length < 3) return;
 
-      // Strip post-nominal titles (KC = King's Counsel, SC = Senior Counsel, QC, AM, AO, etc.)
-      fullName = fullName.replace(/\s+(?:KC|SC|QC|AM|AO|OAM|PSM|RFD)\s*$/i, '').trim();
+      // Extract post-nominal titles (KC, SC, QC, AM, AO, OAM, etc.)
+      // Names appear as "Jane Abbey, KC" or "Michael Abbott, AO KC"
+      let postNominals = '';
+      const pnMatch = fullName.match(postNominalPattern);
+      if (pnMatch) {
+        postNominals = pnMatch[0].replace(/^,?\s+/, '').trim();
+        fullName = fullName.replace(postNominalPattern, '').trim();
+      }
 
       const { firstName, lastName } = this.splitName(fullName);
 
-      // Try to identify other columns — detect if a column is a practitioner number (P#####)
-      let firmName = '';
-      let certType = '';
-      let barNumber = '';
-      let location = '';
+      // Column 1: Date of Admission in SA (e.g., "23/09/2008")
+      const admissionDate = cellTexts[1] || '';
 
-      if (cellTexts.length >= 4) {
-        // Check if cellTexts[1] is a practitioner number (P followed by digits)
-        if (/^P\d+$/.test(cellTexts[1])) {
-          // [Name, PracNo, Firm/CertType, Location] pattern
-          barNumber = cellTexts[1];
-          firmName = cellTexts[2] || '';
-          location = cellTexts[3] || '';
-        } else {
-          // [Name, CertType, Firm, Location] pattern
-          certType = cellTexts[1] || '';
-          firmName = cellTexts[2] || '';
-          location = cellTexts[3] || '';
-        }
-      } else if (cellTexts.length >= 5) {
-        // [Name, PracNo, CertType, Firm, Location] pattern
-        barNumber = /^P\d+$/.test(cellTexts[1]) ? cellTexts[1] : '';
-        certType = cellTexts[2] || '';
-        firmName = cellTexts[3] || '';
-        location = cellTexts[4] || '';
-      } else if (cellTexts.length === 3) {
-        if (/^P\d+$/.test(cellTexts[1])) {
-          barNumber = cellTexts[1];
-          location = cellTexts[2] || '';
-        } else {
-          firmName = cellTexts[1] || '';
-          location = cellTexts[2] || '';
-        }
-      } else if (cellTexts.length === 2) {
-        firmName = cellTexts[1] || '';
-      }
+      // Column 2: P Code (practitioner number, e.g., "P10986")
+      const barNumber = cellTexts[2] || '';
 
-      // Parse location into city/state
-      let city = '';
-      let state = 'SA';
-      const locParts = this._parseAuAddress(location);
-      if (locParts.city) city = locParts.city;
-      if (locParts.state) state = locParts.state;
+      // Column 3: Practising Certificate Category (e.g., "C", "A", "BA")
+      const certCode = cellTexts[3] || '';
+      const certType = CERT_CATEGORIES[certCode] || certCode;
 
       attorneys.push({
         first_name: firstName,
         last_name: lastName,
         full_name: fullName,
-        firm_name: firmName,
-        city: city,
-        state: state,
-        zip: locParts.postcode || '',
+        firm_name: '',
+        city: '',
+        state: 'SA',
+        zip: '',
         country: 'Australia',
         phone: '',
         email: '',
         website: '',
         bar_number: barNumber,
         bar_status: certType,
-        admission_date: '',
+        admission_date: admissionDate,
+        title: postNominals,
         profile_url: '',
         practice_areas: '',
       });

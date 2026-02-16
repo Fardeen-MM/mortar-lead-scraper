@@ -11,6 +11,7 @@
 const BaseScraper = require('../base-scraper');
 const { log } = require('../../lib/logger');
 const { RateLimiter } = require('../../lib/rate-limiter');
+const { titleCase } = require('../../lib/normalizer');
 
 class NewYorkScraper extends BaseScraper {
   constructor() {
@@ -180,15 +181,13 @@ class NewYorkScraper extends BaseScraper {
 
         // Map and yield each attorney record
         for (const rec of records) {
-          // NY Socrata data is ALL CAPS — title-case names and city
-          const toTitleCase = (s) => (s || '').trim().replace(/\b\w+/g,
-            w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+          // NY Socrata data is ALL CAPS — smart title-case names and city
 
           const attorney = {
-            first_name: toTitleCase(rec.first_name),
-            last_name: toTitleCase(rec.last_name),
+            first_name: titleCase(rec.first_name),
+            last_name: titleCase(rec.last_name),
             firm_name: (rec.company_name || '').trim(),
-            city: toTitleCase(rec.city),
+            city: titleCase(rec.city),
             state: (rec.state || 'NY').trim(),
             phone: (rec.phone_number || '').trim(),
             email: '',
