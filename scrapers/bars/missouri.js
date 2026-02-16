@@ -41,6 +41,22 @@ class MissouriScraper extends BaseScraper {
     this.gridId = 'ctl01$TemplateBody$WebPartManager1$gwpciLawyerDirectory$ciLawyerDirectory$ResultsGrid$Grid1';
   }
 
+  /**
+   * NOTE: The MO Bar Official Directory does NOT provide individual profile/detail
+   * pages. The Telerik RadGrid only shows: Name, City, Zip, Status.
+   * No phone, email, firm, or website data is available from this source.
+   *
+   * The separate "Find a Lawyer" public search (mobar.org/public/LawyerSearch.aspx)
+   * is an opt-in system with different data and does not link back to the Official
+   * Directory entries.
+   *
+   * Enrichment for MO leads should come from cross-reference sources
+   * (Martindale, Lawyers.com) rather than profile page fetching.
+   *
+   * parseProfilePage is intentionally NOT implemented — hasProfileParser will
+   * return false, and the waterfall will skip profile fetching for MO leads.
+   */
+
   buildSearchUrl() {
     throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden`);
   }

@@ -5,6 +5,17 @@
  * Method: ASP.NET POST with __VIEWSTATE, __VIEWSTATEGENERATOR, __EVENTVALIDATION
  * The search form requires fetching the page first to obtain ViewState tokens,
  * then submitting a POST with the hidden fields plus search parameters.
+ *
+ * Profile pages: CT has a detail page at /attorneyfirminquiry/JurisDetail.aspx
+ * but it is SESSION-DEPENDENT — accessed by clicking "Select" in search results
+ * (ASP.NET __doPostBack), which sets server-side session state, then redirects
+ * to JurisDetail.aspx. There is no standalone profile URL with a juris number
+ * parameter. The detail page shows: juris number, status, admission date,
+ * office address (with phone) — most of which is already in search results.
+ * The only new field is the phone number. Because the detail page requires
+ * an active search session with valid ViewState, parseProfilePage() CANNOT be
+ * implemented without maintaining full ASP.NET session state per attorney.
+ * The scraper yields profile_url: '' (empty) to indicate this limitation.
  */
 
 const https = require('https');

@@ -200,6 +200,86 @@ class TennesseeScraper extends BaseScraper {
   }
 
   /**
+   * Parse a TN attorney profile/detail page for additional fields.
+   *
+   * TN profile pages use <dl> with <dt>/<dd> pairs:
+   *   - Name: "Last, First Middle"
+   *   - Public Phone Number: "615-726-5600" (optional, only if attorney opted in)
+   *   - BPR Number: "020000"
+   *   - Status: "Active" / "Inactive" / "Suspended" etc.
+   *   - Office County: "Davidson"
+   *   - Licensed in TN Since: "1999"
+   *   - Law School: "University of Memphis - Cecil C. Humphreys School of Law"
+   *
+   * @param {CheerioStatic} $ - Cheerio instance of the profile page
+   * @returns {object} Additional fields extracted from the profile
+   */
+  parseProfilePage($) {
+    const result = {};
+
+    // Build a label -> value map from all dt/dd pairs
+    const fields = {};
+    $('dl dt').each((_, el) => {
+      const label = $(el).text().trim().replace(/:$/, '').toLowerCase();
+      const dd = $(el).next('dd');
+      if (dd.length) {
+        fields[label] = {
+          text: dd.text().trim().replace(/\s+/g, ' '),
+          html: dd.html() || '',
+          el: dd,
+        };
+      }
+    });
+
+    // Phone: "Public Phone Number" field (only present if attorney opted in)
+    if (fields['public phone number']) {
+      const phone = fields['public phone number'].text;
+      if (phone && phone.length > 5) {
+        result.phone = phone;
+      }
+    }
+
+    // Bar status — from the status field (contains modal, extract first word/phrase)
+    if (fields['status']) {
+      // The status dd contains a modal div with all definitions.
+      // The actual status is in the .js-btn element.
+      const statusBtn = fields['status'].el.find('.js-btn');
+      if (statusBtn.length) {
+        const status = statusBtn.text().trim();
+        if (status) {
+          result.bar_status = status;
+        }
+      }
+    }
+
+    // Admission date: "Licensed in TN Since" → year only (e.g., "1999")
+    if (fields['licensed in tn since']) {
+      const year = fields['licensed in tn since'].text;
+      if (year && /^\d{4}$/.test(year)) {
+        result.admission_date = year;
+      }
+    }
+
+    // Law school / education
+    if (fields['law school']) {
+      const school = fields['law school'].text;
+      if (school && school.length > 2) {
+        result.education = school;
+      }
+    }
+
+    // Office county — useful geographic info
+    if (fields['office county']) {
+      const county = fields['office county'].text;
+      if (county && county.length > 1) {
+        result.county = this._titleCase(county);
+      }
+    }
+
+    return result;
+  }
+
+  /**
    * Not used — search() is overridden for prefix-based iteration.
    */
   buildSearchUrl() {

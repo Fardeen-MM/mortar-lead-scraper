@@ -14,6 +14,11 @@
  *
  * Search results contain: AttorneyNumber, FirstName, MiddleName, LastName,
  * Status, AdmittedBy, AdmissionDate. City/phone/email are NOT in search results.
+ *
+ * Profile enrichment: The SPA has a GetAttyInfo action that returns detailed
+ * attorney info including Employer, BusinessPhoneNumber, LawSchool, JobTitle,
+ * and Address. This is called via enrichFromProfile() using the bar_number
+ * (AttorneyNumber) as the regNumber parameter.
  */
 
 const https = require('https');
@@ -128,6 +133,137 @@ class OhioScraper extends BaseScraper {
   }
 
   /**
+   * Fetch detailed attorney info via the GetAttyInfo Ajax action.
+   * Returns the parsed JSON response or null on failure.
+   *
+   * @param {string|number} regNumber - Attorney registration number
+   * @param {RateLimiter} rateLimiter - Rate limiter instance
+   * @returns {object|null} Attorney detail JSON or null
+   */
+  async _getAttyInfo(regNumber, rateLimiter) {
+    if (!regNumber) return null;
+    if (!this.csrfToken) {
+      try {
+        await rateLimiter.wait();
+        this.csrfToken = await this._fetchCsrfToken(rateLimiter);
+      } catch (err) {
+        log.warn(`Failed to refresh CSRF token: ${err.message}`);
+        return null;
+      }
+    }
+
+    try {
+      await rateLimiter.wait();
+      const response = await this._ajaxPost({
+        action: 'GetAttyInfo',
+        attyNumber: 0,
+        regNumber: String(regNumber),
+      }, rateLimiter);
+
+      if (response.statusCode !== 200 || !response.body) return null;
+      if (response.rawBody === 'No Data') return null;
+      return response.body;
+    } catch (err) {
+      log.warn(`GetAttyInfo failed for ${regNumber}: ${err.message}`);
+      return null;
+    }
+  }
+
+  /**
+   * Parse a profile page for additional fields.
+   *
+   * NOTE: Ohio is an Ember.js SPA — there are no server-rendered profile pages.
+   * The enrichFromProfile() override uses the GetAttyInfo Ajax API instead.
+   * This method exists for interface compliance but is not called directly.
+   *
+   * @param {CheerioStatic} $ - Cheerio instance (unused for Ohio)
+   * @returns {object} Empty object
+   */
+  parseProfilePage(/* $ */) {
+    // Ohio does not have server-rendered profile pages.
+    // See enrichFromProfile() which uses the GetAttyInfo API instead.
+    return {};
+  }
+
+  /**
+   * Override hasProfileParser to return true since we implement enrichFromProfile.
+   * The base class checks if parseProfilePage is overridden, but for Ohio we
+   * override enrichFromProfile directly because the SPA uses an API, not HTML.
+   */
+  get hasProfileParser() {
+    return true;
+  }
+
+  /**
+   * Fetch and parse attorney detail info from the Ohio GetAttyInfo API.
+   * Overrides BaseScraper.enrichFromProfile because Ohio is a SPA with
+   * no server-rendered profile pages — enrichment uses the Ajax API.
+   *
+   * The GetAttyInfo API returns:
+   *   FormalName, Employer, BusinessPhoneNumber, LawSchool, JobTitle,
+   *   Address, City, State, ZipCode, County, Status, AdmissionDate,
+   *   HasDiscipline, MyDisciplines, MyPreviousNames
+   *
+   * @param {object} lead - The lead object (must have bar_number)
+   * @param {RateLimiter} rateLimiter - Rate limiter instance
+   * @returns {object} Additional fields from the profile
+   */
+  async enrichFromProfile(lead, rateLimiter) {
+    const regNumber = lead.bar_number;
+    if (!regNumber) return {};
+
+    const info = await this._getAttyInfo(regNumber, rateLimiter);
+    if (!info) return {};
+
+    const result = {};
+
+    // Phone
+    if (info.BusinessPhoneNumber && info.HasBusinessPhoneNumber) {
+      result.phone = info.BusinessPhoneNumber.trim();
+    }
+
+    // Firm / Employer
+    if (info.Employer) {
+      const employer = info.Employer.trim();
+      if (employer.length > 1 && employer.length < 200) {
+        result.firm_name = employer;
+      }
+    }
+
+    // Education (law school)
+    if (info.LawSchool) {
+      result.education = info.LawSchool.trim();
+    }
+
+    // Job title
+    if (info.JobTitle) {
+      const title = info.JobTitle.trim();
+      if (title.length > 1) {
+        result.job_title = title;
+      }
+    }
+
+    // Address — may contain multiline address with city, state, zip, county
+    if (info.Address) {
+      result.address = info.Address.replace(/\r\n/g, ', ').replace(/\s+/g, ' ').trim();
+    }
+
+    // City/State/Zip from detail (more reliable than search city param)
+    if (info.City) result.city = info.City.trim();
+    if (info.State) result.state = info.State.trim();
+    if (info.ZipCode) result.zip = info.ZipCode.trim();
+
+    // Remove empty/null values
+    for (const key of Object.keys(result)) {
+      if (result[key] === '' || result[key] === undefined || result[key] === null) {
+        delete result[key];
+      }
+    }
+
+    return result;
+  }
+
+  /**
    * Async generator that yields attorney records from the Ohio Supreme Court API.
    */
   async *search(practiceArea, options = {}) {
@@ -215,6 +351,7 @@ class OhioScraper extends BaseScraper {
       log.success(`Found ${records.length} results for ${city}`);
 
       for (const rec of records) {
+        const attyNum = (rec.AttorneyNumber || '').toString().trim();
         const attorney = {
           first_name: (rec.FirstName || '').trim(),
           last_name: (rec.LastName || '').trim(),
@@ -224,9 +361,10 @@ class OhioScraper extends BaseScraper {
           phone: '',
           email: '',
           website: '',
-          bar_number: (rec.AttorneyNumber || '').toString().trim(),
+          bar_number: attyNum,
           admission_date: (rec.AdmissionDate || '').trim(),
           bar_status: (rec.Status || '').trim(),
+          profile_url: attyNum ? `${this.baseUrl}#/detail/${attyNum}` : '',
           source: `${this.name}_bar`,
         };
 

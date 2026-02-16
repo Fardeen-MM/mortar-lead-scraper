@@ -95,6 +95,11 @@ class TasmaniaScraper extends BaseScraper {
     this.ajaxUrl = `${this.baseUrl}/wp-admin/admin-ajax.php`;
     this.findLawyerUrl = `${this.baseUrl}/find-a-lawyer/`;
     this.wpApiUrl = `${this.baseUrl}/wp-json/wp/v2`;
+
+    // WordPress category ID for "Author Bios" — these are lawyer/author profile
+    // posts, distinct from blog posts, CPD events, and news articles. Discovered
+    // via /wp-json/wp/v2/categories/312 which returns name="Author Bios", count=93.
+    this.authorBiosCategoryId = 312;
   }
 
   // --- Name validation ---
@@ -344,18 +349,24 @@ class TasmaniaScraper extends BaseScraper {
    * @param {string} searchTerm - Name or keyword to search for
    * @param {number} page - Page number (1-based)
    * @param {object} rateLimiter - RateLimiter instance
+   * @param {object} opts - Optional parameters
+   * @param {number} opts.categoryId - WordPress category ID to filter by
    * @returns {object} { posts, totalPages, totalResults }
    */
-  async _wpApiSearch(searchTerm, page, rateLimiter) {
+  async _wpApiSearch(searchTerm, page, rateLimiter, opts = {}) {
     const params = new URLSearchParams();
     params.set('per_page', '100'); // Max allowed by WP REST API
     params.set('page', String(page));
     params.set('orderby', 'title');
     params.set('order', 'asc');
-    params.set('_fields', 'id,title,content,excerpt,link,tags,area_of_practice');
+    params.set('_fields', 'id,title,content,excerpt,link,tags,categories,area_of_practice');
 
     if (searchTerm) {
       params.set('search', searchTerm);
+    }
+
+    if (opts.categoryId) {
+      params.set('categories', String(opts.categoryId));
     }
 
     const url = `${this.wpApiUrl}/posts?${params.toString()}`;
@@ -382,8 +393,13 @@ class TasmaniaScraper extends BaseScraper {
   /**
    * Parse a WordPress post into a lawyer record.
    * The post content typically contains lawyer details embedded in HTML.
+   *
+   * @param {object} post - WordPress REST API post object
+   * @param {object} opts - Options
+   * @param {boolean} opts.trustedCategory - If true, skip blog-post name validation
+   *   (used when posts are already filtered by the Author Bios category)
    */
-  _parseWpPost(post) {
+  _parseWpPost(post, opts = {}) {
     const title = (post.title && post.title.rendered) || '';
     const content = (post.content && post.content.rendered) || '';
     const excerpt = (post.excerpt && post.excerpt.rendered) || '';
@@ -391,6 +407,11 @@ class TasmaniaScraper extends BaseScraper {
 
     // Parse the title as the lawyer/firm name
     const cleanTitle = this.decodeEntities(title.replace(/<[^>]+>/g, '')).trim();
+
+    // Skip template/placeholder posts
+    if (/^author\s+bio\s+master\s+template$/i.test(cleanTitle) || !cleanTitle) {
+      return null;
+    }
 
     // Parse content HTML for contact details
     const $ = cheerio.load(content);
@@ -440,17 +461,19 @@ class TasmaniaScraper extends BaseScraper {
     if (practiceMatch) practiceAreas = practiceMatch[1].trim();
 
     // Filter out blog posts / news articles that aren't lawyer records.
-    // IMPORTANT: The WordPress REST API at lst.org.au returns blog posts
-    // (announcements, news, events), NOT lawyer directory entries. The actual
-    // lawyer register is served via a FormTitan/Salesforce iframe. We apply
-    // strict validation to prevent garbage records from leaking through.
+    // When fetching from the Author Bios category (trustedCategory=true), we
+    // skip the aggressive name validation since ALL posts in that category are
+    // known to be lawyer/legal professional profiles. When fetching from the
+    // general posts pool (fallback), we apply strict validation.
     const isFirm = /(?:lawyers?|solicitors?|legal|law\s+firm|barristers?|associates?|partners?|&|pty|ltd)/i.test(cleanTitle);
 
-    // Apply comprehensive name validation
-    const validation = this._isValidLawyerName(cleanTitle);
-    if (!validation.valid) {
-      log.info(`AU-TAS: Skipping non-lawyer WP post: "${cleanTitle.substring(0, 60)}..." (reason: ${validation.reason})`);
-      return null;
+    if (!opts.trustedCategory) {
+      // Apply comprehensive name validation (only for unfiltered post streams)
+      const validation = this._isValidLawyerName(cleanTitle);
+      if (!validation.valid) {
+        log.info(`AU-TAS: Skipping non-lawyer WP post: "${cleanTitle.substring(0, 60)}..." (reason: ${validation.reason})`);
+        return null;
+      }
     }
 
     let firstName = '';
@@ -460,10 +483,16 @@ class TasmaniaScraper extends BaseScraper {
     if (isFirm) {
       firmName = cleanTitle;
     } else {
-      // Strip honorifics/post-nominals
+      // Strip honorifics/post-nominals (e.g. "The Honourable Justice Robert Pearce",
+      // "Christopher Shanahan SC", "Dr Alice Chang", "Professor Benjamin J. Richardson",
+      // "Robert Benjamin AM KC")
       const cleaned = cleanTitle
-        .replace(/^(?:Professor|Prof\.?|Dr\.?|Hon\.?|Justice|Judge|Magistrate|His Honour|Her Honour)\s+/i, '')
-        .replace(/\s+(?:KC|SC|QC|AM|AO|OAM|PSM|RFD)\s*$/i, '')
+        // Prefix honorifics: "The Honourable Associate Justice", "Professor", "Dr", etc.
+        .replace(/^(?:The\s+Honourable\s+(?:Associate\s+)?(?:Justice|Judge|Magistrate)\s+|(?:Professor|Prof\.?|Dr\.?|Hon\.?)\s+|(?:His|Her)\s+Honour\s+)/i, '')
+        // Remove middle initials (single letter with optional period, e.g. "Benjamin J. Richardson")
+        .replace(/\s+[A-Z]\.?\s+/g, ' ')
+        // Post-nominals: strip one or more (KC, SC, QC, AM, AO, AC, OAM, PSM, RFD)
+        .replace(/(?:\s+(?:KC|SC|QC|AM|AO|AC|OAM|PSM|RFD))+\s*$/i, '')
         .trim();
       fullName = cleaned;
       const nameParts = this.splitName(cleaned);
@@ -475,10 +504,12 @@ class TasmaniaScraper extends BaseScraper {
         log.info(`AU-TAS: Skipping record with missing name parts: fn="${firstName}" ln="${lastName}" from "${cleanTitle}"`);
         return null;
       }
-      const fnCheck = this._isValidLawyerName(firstName + ' ' + lastName);
-      if (!fnCheck.valid) {
-        log.info(`AU-TAS: Skipping record after name split: "${firstName} ${lastName}" (reason: ${fnCheck.reason})`);
-        return null;
+      if (!opts.trustedCategory) {
+        const fnCheck = this._isValidLawyerName(firstName + ' ' + lastName);
+        if (!fnCheck.valid) {
+          log.info(`AU-TAS: Skipping record after name split: "${firstName} ${lastName}" (reason: ${fnCheck.reason})`);
+          return null;
+        }
       }
     }
 
@@ -795,38 +826,95 @@ class TasmaniaScraper extends BaseScraper {
     const cities = this.getCities(options);
     log.scrape('AU-TAS: Starting Law Society of Tasmania directory scrape');
     log.info(`AU-TAS: Directory URL: ${this.findLawyerUrl}`);
-    log.info(`AU-TAS: Searching cities: ${cities.join(', ')}`);
 
-    // ---- Strategy 1: WordPress REST API ----
-    log.info('AU-TAS: Trying WordPress REST API approach (wp-json/wp/v2/posts)');
+    // ---- Strategy 1: WordPress REST API with "Author Bios" category filter ----
+    // The lst.org.au WordPress site stores lawyer/author profiles under category 312
+    // ("Author Bios"). Fetching by category avoids mixing in the 1000+ blog posts,
+    // CPD events, and news articles that dominate the unfiltered posts endpoint.
+    // City-based WP search does NOT work here -- lawyer profile posts are titled
+    // with just the person's name and WP full-text search on city names returns
+    // only blog posts that happen to mention those cities.
+    log.info('AU-TAS: Fetching lawyer profiles via WP REST API (category=Author Bios)');
 
     let wpApiWorks = false;
+    let page = 1;
+    let totalPages = 1;
+    const maxApiPages = options.maxPages || 10; // safety limit
 
-    for (let ci = 0; ci < cities.length; ci++) {
-      const city = cities[ci];
-      yield { _cityProgress: { current: ci + 1, total: cities.length } };
-      log.scrape(`AU-TAS: Searching "${city}" via WP REST API`);
+    while (page <= totalPages && page <= maxApiPages) {
+      try {
+        await rateLimiter.wait();
+        const result = await this._wpApiSearch('', page, rateLimiter, {
+          categoryId: this.authorBiosCategoryId,
+        });
 
-      if (options.maxPages && ci >= options.maxPages) {
-        log.info(`AU-TAS: Reached max search limit (${options.maxPages}) -- stopping`);
+        if (page === 1) {
+          totalPages = result.totalPages || 1;
+          if (result.totalResults > 0) {
+            log.success(`AU-TAS: WP API found ${result.totalResults} Author Bio posts (${totalPages} pages)`);
+            wpApiWorks = true;
+            yield { _cityProgress: { current: 1, total: 1 } };
+          } else {
+            log.info('AU-TAS: WP API returned 0 Author Bio posts -- category may have changed');
+            break;
+          }
+        }
+
+        if (result.posts.length === 0) break;
+
+        for (const post of result.posts) {
+          const lawyer = this._parseWpPost(post, { trustedCategory: true });
+          if (!lawyer) continue; // Filtered out (template, etc.)
+          const key = lawyer.full_name || lawyer.firm_name || String(post.id);
+          if (seen.has(key)) continue;
+          seen.add(key);
+
+          // Apply city filter if user specified one
+          if (options.city && lawyer.city &&
+              lawyer.city.toLowerCase() !== options.city.toLowerCase()) {
+            continue;
+          }
+
+          if (options.minYear && lawyer.admission_date) {
+            const year = parseInt((lawyer.admission_date.match(/\d{4}/) || ['0'])[0], 10);
+            if (year > 0 && year < options.minYear) continue;
+          }
+          yield this.transformResult(lawyer, practiceArea);
+          totalYielded++;
+        }
+
+        page++;
+      } catch (err) {
+        log.error(`AU-TAS: WP API error on page ${page}: ${err.message}`);
         break;
       }
+    }
 
-      let page = 1;
-      let totalPages = 1;
+    if (wpApiWorks && totalYielded > 0) {
+      log.success(`AU-TAS: WP REST API yielded ${totalYielded} lawyer records`);
+      return;
+    }
 
-      while (page <= totalPages) {
+    // ---- Strategy 1b: Fallback -- enumerate ALL posts without category filter ----
+    // If the Author Bios category ID changed or was removed, fall back to fetching
+    // all posts and relying on the name filter to separate lawyers from blog posts.
+    if (!wpApiWorks) {
+      log.info('AU-TAS: Category-based fetch failed. Trying full post enumeration with name filtering.');
+
+      page = 1;
+      totalPages = 1;
+
+      while (page <= totalPages && page <= maxApiPages) {
         try {
           await rateLimiter.wait();
-          const result = await this._wpApiSearch(city, page, rateLimiter);
+          const result = await this._wpApiSearch('', page, rateLimiter);
 
           if (page === 1) {
             totalPages = result.totalPages || 1;
             if (result.totalResults > 0) {
-              log.success(`AU-TAS: WP API found ${result.totalResults} posts for "${city}" (${totalPages} pages)`);
+              log.success(`AU-TAS: WP API found ${result.totalResults} total posts (${totalPages} pages)`);
               wpApiWorks = true;
             } else {
-              log.info(`AU-TAS: WP API returned 0 results for "${city}"`);
               break;
             }
           }
@@ -835,34 +923,31 @@ class TasmaniaScraper extends BaseScraper {
 
           for (const post of result.posts) {
             const lawyer = this._parseWpPost(post);
-            if (!lawyer) continue; // Filtered out (blog post, not a lawyer)
+            if (!lawyer) continue;
             const key = lawyer.full_name || lawyer.firm_name || String(post.id);
             if (seen.has(key)) continue;
             seen.add(key);
 
-            // Filter by city if the post content mentions it
-            // (WP search is fuzzy, so we do our own filtering)
-            if (lawyer.city || !options.city) {
-              if (options.minYear && lawyer.admission_date) {
-                const year = parseInt((lawyer.admission_date.match(/\d{4}/) || ['0'])[0], 10);
-                if (year > 0 && year < options.minYear) continue;
-              }
-              yield this.transformResult(lawyer, practiceArea);
-              totalYielded++;
+            if (options.city && lawyer.city &&
+                lawyer.city.toLowerCase() !== options.city.toLowerCase()) {
+              continue;
             }
+
+            yield this.transformResult(lawyer, practiceArea);
+            totalYielded++;
           }
 
           page++;
         } catch (err) {
-          log.error(`AU-TAS: WP API error for "${city}" page ${page}: ${err.message}`);
+          log.error(`AU-TAS: WP API error on page ${page}: ${err.message}`);
           break;
         }
       }
-    }
 
-    if (wpApiWorks && totalYielded > 0) {
-      log.success(`AU-TAS: WP REST API yielded ${totalYielded} records`);
-      return;
+      if (totalYielded > 0) {
+        log.success(`AU-TAS: Full enumeration yielded ${totalYielded} records`);
+        return;
+      }
     }
 
     // ---- Strategy 2: Search & Filter Pro AJAX ----

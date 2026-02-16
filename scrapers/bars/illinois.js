@@ -13,6 +13,14 @@
  * This scraper iterates A-Z for each city to get comprehensive coverage.
  *
  * Grid columns: id, include-former-names, name, city, state, date-admitted, authorized-to-practice
+ *
+ * Profile pages: The IARDC grid renders attorney names as
+ *   <a href="#" class="show-lawyer-profile" data-id="GUID">
+ * but individual attorney detail is loaded via JavaScript row expansion
+ * within the MVC Grid. There is no standalone profile URL accessible via
+ * HTTP GET or POST — the detail view requires client-side JavaScript execution.
+ * Therefore, parseProfilePage() CANNOT be implemented without a headless browser.
+ * The scraper does NOT yield profile_url.
  */
 
 const https = require('https');

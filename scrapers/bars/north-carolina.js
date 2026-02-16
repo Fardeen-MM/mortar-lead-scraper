@@ -36,6 +36,256 @@ class NorthCarolinaScraper extends BaseScraper {
     });
   }
 
+  /**
+   * Establish a valid ASP.NET session for accessing viewer pages.
+   *
+   * The NC Bar viewer pages (viewer.aspx?ID=...) require server-side session state
+   * that is only set after a POST search. Simply GETting the search page is not
+   * sufficient. We perform a minimal search (last name "A" in "Raleigh") to
+   * establish the session, then cache the cookies for subsequent viewer requests.
+   *
+   * @param {RateLimiter} rateLimiter - Rate limiter instance
+   * @returns {boolean} true if session was established successfully
+   */
+  async _establishProfileSession(rateLimiter) {
+    try {
+      // Step 1: GET search page for VIEWSTATE + session cookie
+      await rateLimiter.wait();
+      const getResp = await this._httpGetWithCookies(this.baseUrl, rateLimiter);
+      if (getResp.statusCode !== 200) {
+        log.warn(`NC: GET search page returned ${getResp.statusCode}`);
+        return false;
+      }
+
+      const $form = cheerio.load(getResp.body);
+      const formFields = this._extractFormFields($form);
+      if (!formFields.__VIEWSTATE) {
+        log.warn(`NC: No VIEWSTATE in search page for session init`);
+        return false;
+      }
+
+      // Step 2: POST a minimal search to establish server-side state
+      const postData = new URLSearchParams();
+      postData.set('__VIEWSTATE', formFields.__VIEWSTATE);
+      if (formFields.__EVENTVALIDATION) postData.set('__EVENTVALIDATION', formFields.__EVENTVALIDATION);
+      if (formFields.__VIEWSTATEGENERATOR) postData.set('__VIEWSTATEGENERATOR', formFields.__VIEWSTATEGENERATOR);
+      postData.set('ctl00$Content$txtFirst', '');
+      postData.set('ctl00$Content$txtMiddle', '');
+      postData.set('ctl00$Content$txtLast', 'A');
+      postData.set('ctl00$Content$txtCity', 'Raleigh');
+      postData.set('ctl00$Content$ddState', 'NC');
+      postData.set('ctl00$Content$ddLicStatus', 'A');
+      postData.set('ctl00$Content$ddJudicialDistrict', '');
+      postData.set('ctl00$Content$txtLicNum', '');
+      postData.set('ctl00$Content$ddLicType', '');
+      postData.set('ctl00$Content$ddSpecialization', '');
+      postData.set('ctl00$Content$btnSubmit', 'Search');
+
+      await rateLimiter.wait();
+      const postResp = await this._httpPostForm(
+        this.baseUrl,
+        postData.toString(),
+        rateLimiter,
+        getResp.cookies,
+      );
+
+      if (postResp.statusCode !== 200) {
+        log.warn(`NC: POST search for session init returned ${postResp.statusCode}`);
+        return false;
+      }
+
+      // Merge all cookies from GET and POST responses
+      const allCookies = [getResp.cookies, postResp.cookies].filter(Boolean).join('; ');
+      this._sessionCookie = allCookies;
+      log.info(`NC: Established session for profile page fetching via POST search`);
+      return true;
+    } catch (err) {
+      log.warn(`NC: Failed to establish profile session: ${err.message}`);
+      return false;
+    }
+  }
+
+  /**
+   * Fetch a profile page with session cookie support.
+   *
+   * NC viewer pages (viewer.aspx?ID=...) require a valid ASP.NET session that
+   * has been initialized via a POST search. On first call (or after session
+   * expiry), we perform a minimal search to establish the session, then cache
+   * the cookies for subsequent viewer requests.
+   *
+   * @param {string} url - The profile page URL
+   * @param {RateLimiter} rateLimiter - Rate limiter instance
+   * @returns {CheerioStatic|null} Cheerio instance or null on failure
+   */
+  async fetchProfilePage(url, rateLimiter) {
+    if (!url) return null;
+
+    try {
+      // Establish session if we don't have one
+      if (!this._sessionCookie) {
+        const ok = await this._establishProfileSession(rateLimiter);
+        if (!ok) return null;
+      }
+
+      // Fetch the viewer page with the session cookie
+      await rateLimiter.wait();
+      const response = await this._httpGetWithCookies(url, rateLimiter, this._sessionCookie);
+
+      if (response.statusCode !== 200) {
+        log.warn(`NC profile page returned ${response.statusCode}: ${url}`);
+        // Session may have expired — clear it so next call re-establishes
+        if (response.statusCode === 302 || response.statusCode === 500) {
+          this._sessionCookie = null;
+          // Retry once with a fresh session
+          const ok = await this._establishProfileSession(rateLimiter);
+          if (!ok) return null;
+          await rateLimiter.wait();
+          const retry = await this._httpGetWithCookies(url, rateLimiter, this._sessionCookie);
+          if (retry.statusCode !== 200) {
+            log.warn(`NC profile page retry returned ${retry.statusCode}: ${url}`);
+            return null;
+          }
+          if (retry.cookies) this._sessionCookie = retry.cookies;
+          return cheerio.load(retry.body);
+        }
+        return null;
+      }
+
+      if (this.detectCaptcha(response.body)) {
+        log.warn(`CAPTCHA on NC profile page: ${url}`);
+        return null;
+      }
+
+      // Update cookies if the server sent new ones
+      if (response.cookies) {
+        this._sessionCookie = response.cookies;
+      }
+
+      return cheerio.load(response.body);
+    } catch (err) {
+      log.warn(`Failed to fetch NC profile page: ${err.message}`);
+      return null;
+    }
+  }
+
+  /**
+   * Parse a NC attorney profile/viewer page for additional fields.
+   *
+   * NC viewer pages (viewer.aspx?ID=...) use <dl> with <dt>/<dd> pairs:
+   *   - Bar #: "32407"
+   *   - Name: "Ms. Amanda Joy Smith"
+   *   - Address: "207 Furches" (may include <br /> for multiple lines)
+   *   - City: "Raleigh"
+   *   - State: "NC"
+   *   - Zip Code: "27607"
+   *   - Work Phone: "919-645-1792"
+   *   - Email: "mandy_smith@nced.uscourts.gov"
+   *   - Status: (inside <span class="label">)
+   *   - Date Admitted: "04/08/2004"
+   *   - Status Date: "04/08/2004"
+   *   - Judicial District: "10 - Wake"
+   *   - Board Certified In: (optional specialization)
+   *
+   * @param {CheerioStatic} $ - Cheerio instance of the profile page
+   * @returns {object} Additional fields extracted from the profile
+   */
+  parseProfilePage($) {
+    const result = {};
+
+    // Build a label -> value map from all dt/dd pairs
+    const fields = {};
+    $('dt').each((_, el) => {
+      const label = $(el).text().trim().replace(/:$/, '').toLowerCase();
+      const dd = $(el).next('dd');
+      if (dd.length) {
+        fields[label] = {
+          text: dd.text().trim().replace(/\s+/g, ' '),
+          html: dd.html() || '',
+          el: dd,
+        };
+      }
+    });
+
+    // Phone: "Work Phone"
+    if (fields['work phone']) {
+      const phone = fields['work phone'].text;
+      if (phone && phone.length > 5) {
+        result.phone = phone;
+      }
+    }
+
+    // Email
+    if (fields['email']) {
+      const email = fields['email'].text.trim().toLowerCase();
+      if (email && email.includes('@')) {
+        result.email = email;
+      }
+    }
+
+    // Address — may contain <br /> for multi-line
+    if (fields['address']) {
+      const addressHtml = fields['address'].html;
+      const addressParts = addressHtml
+        .split(/<br\s*\/?>/)
+        .map(s => s.replace(/<[^>]+>/g, '').trim())
+        .filter(Boolean);
+      const address = addressParts.join(', ');
+      if (address && address.length > 3) {
+        result.address = address;
+      }
+    }
+
+    // City (may be more detailed than the search results)
+    if (fields['city']) {
+      const city = fields['city'].text;
+      if (city && city.length > 1) {
+        result.city = city;
+      }
+    }
+
+    // State
+    if (fields['state']) {
+      const state = fields['state'].text;
+      if (state && state.length === 2) {
+        result.state = state;
+      }
+    }
+
+    // Zip code
+    if (fields['zip code']) {
+      const zip = fields['zip code'].text;
+      if (zip && zip.length >= 5) {
+        result.zip = zip;
+      }
+    }
+
+    // Admission date
+    if (fields['date admitted']) {
+      const dateAdmitted = fields['date admitted'].text;
+      if (dateAdmitted && dateAdmitted.length >= 4) {
+        result.admission_date = dateAdmitted;
+      }
+    }
+
+    // Board certified specialization
+    if (fields['board certified in']) {
+      const cert = fields['board certified in'].text;
+      if (cert && cert.length > 2) {
+        result.practice_areas = cert;
+      }
+    }
+
+    // Judicial district
+    if (fields['judicial district']) {
+      const district = fields['judicial district'].text;
+      if (district && district.length > 1) {
+        result.judicial_district = district;
+      }
+    }
+
+    return result;
+  }
+
   buildSearchUrl() {
     throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden`);
   }
@@ -71,6 +321,17 @@ class NorthCarolinaScraper extends BaseScraper {
       };
 
       const req = https.request(options, (res) => {
+        // Follow 302 redirects (needed for viewer.aspx session redirects)
+        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          let redirect = res.headers.location;
+          if (redirect.startsWith('/')) redirect = `https://${parsed.hostname}${redirect}`;
+          const newCookies = (res.headers['set-cookie'] || [])
+            .map(c => c.split(';')[0])
+            .join('; ');
+          const allCookies = [cookies, newCookies].filter(Boolean).join('; ');
+          res.resume();
+          return resolve(this._httpGetWithCookies(redirect, rateLimiter, allCookies));
+        }
         const setCookies = (res.headers['set-cookie'] || [])
           .map(c => c.split(';')[0])
           .join('; ');
@@ -174,6 +435,10 @@ class NorthCarolinaScraper extends BaseScraper {
       const status = $(cells[3]).text().trim();
       const location = $(cells[4]).text().trim();
 
+      // Extract profile URL from the name link (e.g., /Verification/viewer.aspx?ID=32407)
+      const nameLink = $(cells[1]).find('a').attr('href') || '';
+      const profileUrl = nameLink ? `https://portal.ncbar.gov${nameLink}` : '';
+
       if (!fullName || type !== 'Attorney') return;
 
       // Parse "City, ST" from location
@@ -212,6 +477,7 @@ class NorthCarolinaScraper extends BaseScraper {
         admission_date: '',
         bar_status: status,
         practice_area: '',
+        profile_url: profileUrl,
         source: `${this.name}_bar`,
       });
     });
@@ -298,6 +564,10 @@ class NorthCarolinaScraper extends BaseScraper {
       }
 
       rateLimiter.resetBackoff();
+
+      // Save session cookies for profile page fetching (viewer.aspx needs active session)
+      const allSearchCookies = [sessionCookies, searchResponse.cookies].filter(Boolean).join('; ');
+      this._sessionCookie = allSearchCookies;
 
       const $ = cheerio.load(searchResponse.body);
       const attorneys = this._parseResultsTable($);
