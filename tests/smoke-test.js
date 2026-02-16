@@ -43,14 +43,12 @@ const KNOWN_PLACEHOLDERS = new Set([
   'NV',   // CV5 memberdll system
   'OK',   // eWeb/iMIS form fields unknown
   'RI',   // Response format unknown
-  'SC',   // 406 bot protection
   'TN',   // Response format unknown
   'UT',   // DNN iframe
   'VT',   // Login required
   'WA',   // Too many redirects
   'WY',   // WordPress directory plugin
   'DE',   // DOE Legal ASP.NET — field names need browser inspection
-  'MO',   // iMIS ASP.NET — 302 redirect needs session debugging
   'VA',   // VSB RadGrid — delta response parsing needs browser inspection
   // Canada — inaccessible
   'CA-MB',  // reCAPTCHA v3

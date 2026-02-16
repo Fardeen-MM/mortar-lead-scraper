@@ -1,19 +1,24 @@
 /**
- * South Carolina Bar Association Scraper
+ * South Carolina Bar Scraper (SC Courts)
  *
  * Source: https://www.sccourts.org/attorneys/
- * Alt:    https://www.scbar.org/lawyers/directory/
- * Method: Returns 406 error (bot protection) — try with proper Accept headers and Referer
+ * Method: GET search by last name prefix, paginated. POST to fetch detail pages.
  *
- * The SC Courts attorney directory has bot protection that returns 406 Not Acceptable
- * for requests without proper browser-like headers. This scraper attempts to:
- *  1. Mimic a real browser with proper Accept, Referer, and security headers
- *  2. Parse the HTML search form and submit searches
- *  3. Extract attorney data from results tables
+ * Flow:
+ * 1. GET /attorneys/ — establish session (antiforgery cookie)
+ * 2. GET /attorneys/?last=<prefix>&page=<N> — paginated name search (20 per page)
+ *    Returns attorney names with internal IDs (which ARE the bar numbers).
+ * 3. POST /attorneys/detail/ with __RequestVerificationToken + id — full detail:
+ *    name, firm, address, city, state, zip, phone, email, bar number, admission date
+ *
+ * Since there is no city/location filter, we iterate A-Z last name prefixes.
+ * For test mode (maxPages=1), we fetch 1 page per letter (1 letter = 20 results).
+ *
+ * The site requires full browser headers (Sec-Fetch-*, Sec-Ch-Ua-*) on POST
+ * requests to avoid 406 Not Acceptable bot protection.
  */
 
 const https = require('https');
-const http = require('http');
 const cheerio = require('cheerio');
 const BaseScraper = require('../base-scraper');
 const { log } = require('../../lib/logger');
@@ -25,27 +30,8 @@ class SouthCarolinaScraper extends BaseScraper {
       name: 'south-carolina',
       stateCode: 'SC',
       baseUrl: 'https://www.sccourts.org/attorneys/',
-      altUrl: 'https://www.scbar.org/lawyers/directory/',
-      pageSize: 50,
-      practiceAreaCodes: {
-        'bankruptcy':            'bankruptcy',
-        'business':              'business',
-        'civil litigation':      'civil litigation',
-        'corporate':             'corporate',
-        'criminal':              'criminal',
-        'criminal defense':      'criminal defense',
-        'elder':                 'elder law',
-        'employment':            'employment',
-        'environmental':         'environmental',
-        'estate planning':       'estate planning',
-        'family':                'family law',
-        'family law':            'family law',
-        'immigration':           'immigration',
-        'intellectual property': 'intellectual property',
-        'personal injury':       'personal injury',
-        'real estate':           'real estate',
-        'tax':                   'tax',
-      },
+      pageSize: 20,
+      practiceAreaCodes: {},
       defaultCities: [
         'Charleston', 'Columbia', 'Greenville', 'Mount Pleasant',
         'Rock Hill', 'Summerville', 'North Charleston', 'Spartanburg',
@@ -53,137 +39,105 @@ class SouthCarolinaScraper extends BaseScraper {
     });
 
     this.origin = 'https://www.sccourts.org';
+    this.detailUrl = 'https://www.sccourts.org/attorneys/detail/';
+    this.lastNameLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   }
 
   buildSearchUrl() {
-    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden for SC Courts`);
+    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden`);
   }
 
   parseResultsPage() {
-    throw new Error(`${this.name}: parseResultsPage() is not used — search() is overridden for SC Courts`);
+    throw new Error(`${this.name}: parseResultsPage() is not used — search() is overridden`);
   }
 
   extractResultCount() {
-    throw new Error(`${this.name}: extractResultCount() is not used — search() is overridden for SC Courts`);
+    throw new Error(`${this.name}: extractResultCount() is not used — search() is overridden`);
   }
 
   /**
    * Build full browser headers to bypass 406 bot protection.
    */
-  _getBrowserHeaders(rateLimiter) {
-    return {
-      'User-Agent': rateLimiter.getUserAgent(),
-      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+  _browserHeaders(ua, cookies, isPost) {
+    const h = {
+      'User-Agent': ua,
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
       'Accept-Language': 'en-US,en;q=0.9',
       'Accept-Encoding': 'identity',
-      'Cache-Control': 'max-age=0',
       'Sec-Ch-Ua': '"Chromium";v="122", "Not(A:Brand";v="24", "Google Chrome";v="122"',
       'Sec-Ch-Ua-Mobile': '?0',
       'Sec-Ch-Ua-Platform': '"macOS"',
       'Sec-Fetch-Dest': 'document',
       'Sec-Fetch-Mode': 'navigate',
-      'Sec-Fetch-Site': 'same-origin',
+      'Sec-Fetch-Site': isPost ? 'same-origin' : 'none',
       'Sec-Fetch-User': '?1',
       'Upgrade-Insecure-Requests': '1',
       'Connection': 'keep-alive',
-      'Referer': this.baseUrl,
     };
+    if (cookies) h['Cookie'] = cookies;
+    return h;
   }
 
   /**
-   * HTTP GET with full browser headers, capturing cookies.
+   * HTTP GET with cookie tracking and redirect following.
    */
-  _httpGetBrowser(url, rateLimiter) {
+  _httpGet(url, ua, cookies) {
     return new Promise((resolve, reject) => {
       const parsed = new URL(url);
-      const headers = this._getBrowserHeaders(rateLimiter);
-      if (this._cookies) {
-        headers['Cookie'] = this._cookies;
-      }
+      const headers = this._browserHeaders(ua, cookies, false);
 
-      const opts = {
-        hostname: parsed.hostname,
-        path: parsed.pathname + parsed.search,
-        method: 'GET',
-        headers,
-        timeout: 15000,
-      };
-
-      const proto = parsed.protocol === 'https:' ? https : http;
-      const req = proto.request(opts, (res) => {
-        // Capture cookies
-        const setCookies = res.headers['set-cookie'] || [];
-        if (setCookies.length > 0) {
-          this._cookies = setCookies.map(c => c.split(';')[0]).join('; ');
-        }
+      https.get(url, { headers, timeout: 15000 }, (res) => {
+        const setCookies = (res.headers['set-cookie'] || []).map(c => c.split(';')[0]).join('; ');
+        const allCookies = [cookies, setCookies].filter(Boolean).join('; ');
 
         if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
           res.resume();
-          let redirect = res.headers.location;
-          if (redirect.startsWith('/')) {
-            redirect = `${parsed.protocol}//${parsed.host}${redirect}`;
-          }
-          return resolve(this._httpGetBrowser(redirect, rateLimiter));
+          let loc = res.headers.location;
+          if (loc.startsWith('/')) loc = `${this.origin}${loc}`;
+          return resolve(this._httpGet(loc, ua, allCookies));
         }
 
-        let body = '';
-        res.on('data', c => body += c);
-        res.on('end', () => resolve({ statusCode: res.statusCode, body }));
-      });
-      req.on('error', reject);
-      req.on('timeout', () => { req.destroy(); reject(new Error('Request timed out')); });
-      req.end();
+        let data = '';
+        res.on('data', c => data += c);
+        res.on('end', () => resolve({ statusCode: res.statusCode, body: data, cookies: allCookies }));
+      }).on('error', reject);
     });
   }
 
   /**
-   * HTTP POST with form data and browser headers.
+   * HTTP POST with full browser headers.
    */
-  httpPost(url, formData, rateLimiter, headers = {}) {
+  _httpPost(url, postBody, ua, cookies) {
     return new Promise((resolve, reject) => {
       const parsed = new URL(url);
-      const postBody = typeof formData === 'string'
-        ? formData
-        : new URLSearchParams(formData).toString();
+      const headers = this._browserHeaders(ua, cookies, true);
+      headers['Content-Type'] = 'application/x-www-form-urlencoded';
+      headers['Content-Length'] = Buffer.byteLength(postBody);
+      headers['Origin'] = this.origin;
+      headers['Referer'] = this.baseUrl;
 
-      const browserHeaders = this._getBrowserHeaders(rateLimiter);
       const opts = {
         hostname: parsed.hostname,
         path: parsed.pathname + parsed.search,
         method: 'POST',
-        headers: {
-          ...browserHeaders,
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Content-Length': Buffer.byteLength(postBody),
-          'Origin': this.origin,
-          'Sec-Fetch-Dest': 'document',
-          'Sec-Fetch-Mode': 'navigate',
-          'Sec-Fetch-Site': 'same-origin',
-          ...(this._cookies ? { 'Cookie': this._cookies } : {}),
-          ...headers,
-        },
-        timeout: 20000,
+        headers,
+        timeout: 15000,
       };
 
-      const proto = parsed.protocol === 'https:' ? https : http;
-      const req = proto.request(opts, (res) => {
-        const setCookies = res.headers['set-cookie'] || [];
-        if (setCookies.length > 0) {
-          this._cookies = setCookies.map(c => c.split(';')[0]).join('; ');
-        }
+      const req = https.request(opts, (res) => {
+        const setCookies = (res.headers['set-cookie'] || []).map(c => c.split(';')[0]).join('; ');
+        const allCookies = [cookies, setCookies].filter(Boolean).join('; ');
 
         if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
           res.resume();
-          let redirect = res.headers.location;
-          if (redirect.startsWith('/')) {
-            redirect = `${parsed.protocol}//${parsed.host}${redirect}`;
-          }
-          return resolve(this._httpGetBrowser(redirect, rateLimiter));
+          let loc = res.headers.location;
+          if (loc.startsWith('/')) loc = `${this.origin}${loc}`;
+          return resolve(this._httpGet(loc, ua, allCookies));
         }
 
-        let body = '';
-        res.on('data', c => body += c);
-        res.on('end', () => resolve({ statusCode: res.statusCode, body }));
+        let data = '';
+        res.on('data', c => data += c);
+        res.on('end', () => resolve({ statusCode: res.statusCode, body: data, cookies: allCookies }));
       });
       req.on('error', reject);
       req.on('timeout', () => { req.destroy(); reject(new Error('Request timed out')); });
@@ -193,169 +147,207 @@ class SouthCarolinaScraper extends BaseScraper {
   }
 
   /**
-   * Parse attorney records from HTML search results.
+   * Parse the search results page to extract attorney name/ID pairs.
+   * Returns: [{ name, id }]
    */
-  _parseAttorneys(body) {
-    const attorneys = [];
-    const $ = cheerio.load(body);
-
-    // Try table-based results
-    $('table tr, .table tr, .results tr').each((i, row) => {
-      const $row = $(row);
-      if ($row.find('th').length > 0) return;
-
-      const cells = $row.find('td');
-      if (cells.length < 2) return;
-
-      const nameCell = $(cells[0]);
-      const nameLink = nameCell.find('a');
-      const fullName = (nameLink.length ? nameLink.text() : nameCell.text()).trim();
-      const profileUrl = nameLink.attr('href') || '';
-
-      if (!fullName || /^(name|search|result)/i.test(fullName)) return;
-
-      let firstName = '';
-      let lastName = '';
-      if (fullName.includes(',')) {
-        const parts = fullName.split(',').map(s => s.trim());
-        lastName = parts[0];
-        firstName = (parts[1] || '').split(/\s+/)[0];
-      } else {
-        const split = this.splitName(fullName);
-        firstName = split.firstName;
-        lastName = split.lastName;
+  _parseSearchResults($) {
+    const results = [];
+    $('.result form').each((_, el) => {
+      const name = $(el).find('button').text().trim();
+      const id = $(el).find('input[name="id"]').val();
+      if (name && id) {
+        results.push({ name, id });
       }
-
-      const barNumber = cells.length > 1 ? $(cells[1]).text().trim().replace(/[^0-9]/g, '') : '';
-      const city = cells.length > 2 ? $(cells[2]).text().trim() : '';
-      const status = cells.length > 3 ? $(cells[3]).text().trim() : '';
-      const phone = cells.length > 4 ? $(cells[4]).text().trim().replace(/[^\d()-.\s+]/g, '') : '';
-
-      attorneys.push({
-        first_name: firstName,
-        last_name: lastName,
-        full_name: fullName.includes(',') ? `${firstName} ${lastName}`.trim() : fullName,
-        firm_name: '',
-        city: city,
-        state: 'SC',
-        phone: phone,
-        email: '',
-        website: '',
-        bar_number: barNumber,
-        bar_status: status || 'Active',
-        profile_url: profileUrl ? (profileUrl.startsWith('http') ? profileUrl : `${this.origin}${profileUrl}`) : '',
-      });
     });
-
-    // Fallback: div/list results
-    if (attorneys.length === 0) {
-      $('.attorney-result, .search-result, .result-item, .member-listing, .attorney-card').each((_, el) => {
-        const $el = $(el);
-        const nameEl = $el.find('a, h3, h4, .name, .attorney-name').first();
-        const fullName = nameEl.text().trim();
-        if (!fullName) return;
-
-        let firstName = '';
-        let lastName = '';
-        if (fullName.includes(',')) {
-          const parts = fullName.split(',').map(s => s.trim());
-          lastName = parts[0];
-          firstName = (parts[1] || '').split(/\s+/)[0];
-        } else {
-          const split = this.splitName(fullName);
-          firstName = split.firstName;
-          lastName = split.lastName;
-        }
-
-        attorneys.push({
-          first_name: firstName,
-          last_name: lastName,
-          full_name: fullName.includes(',') ? `${firstName} ${lastName}` : fullName,
-          firm_name: $el.find('.firm, .firm-name, .company').text().trim(),
-          city: $el.find('.city, .location').text().trim(),
-          state: 'SC',
-          phone: ($el.find('.phone').text().trim() || '').replace(/[^\d()-.\s+]/g, ''),
-          email: $el.find('a[href^="mailto:"]').attr('href')?.replace('mailto:', '') || '',
-          website: '',
-          bar_number: $el.find('.bar-number, .barnum').text().trim().replace(/[^0-9]/g, ''),
-          bar_status: $el.find('.status').text().trim() || 'Active',
-          profile_url: nameEl.attr('href') ? `${this.origin}${nameEl.attr('href')}` : '',
-        });
-      });
-    }
-
-    return attorneys;
+    return results;
   }
 
   /**
-   * Extract result count from response.
+   * Extract total result count from the page text.
    */
-  _extractResultCount(body) {
-    const text = cheerio.load(body)('body').text();
-    const match = text.match(/([\d,]+)\s*(?:results?|records?|attorneys?|lawyers?)\s*(?:found|returned|total)/i) ||
-                  text.match(/(?:of|total[:\s]*)\s*([\d,]+)/i) ||
-                  text.match(/Showing\s+\d+\s*[-–]\s*\d+\s+of\s+([\d,]+)/i);
+  _getResultCount($) {
+    const text = $('body').text();
+    const match = text.match(/([\d,]+)\s*result/i);
     return match ? parseInt(match[1].replace(/,/g, ''), 10) : 0;
   }
 
   /**
-   * Override search() for SC Courts with 406 bot protection.
+   * Extract the antiforgery token from a results page.
+   */
+  _getToken($) {
+    return $('input[name="__RequestVerificationToken"]').first().val() || '';
+  }
+
+  /**
+   * Fetch attorney detail page and parse contact info.
+   */
+  async _fetchDetail(id, token, ua, cookies, rateLimiter) {
+    const postBody = new URLSearchParams({
+      '__RequestVerificationToken': token,
+      'id': id,
+    }).toString();
+
+    await rateLimiter.wait();
+    const res = await this._httpPost(this.detailUrl, postBody, ua, cookies);
+
+    if (res.statusCode !== 200) {
+      log.warn(`Detail page returned ${res.statusCode} for id=${id}`);
+      return null;
+    }
+
+    const $ = cheerio.load(res.body);
+
+    // Parse name from h2 heading (format: "Mr./Ms. First Middle Last" or "Title. Last, First Middle")
+    const nameHeading = $('h2').first().text().trim();
+    // Remove title prefix (Mr., Mrs., Ms., Hon., etc.)
+    const cleanName = nameHeading.replace(/^(?:Mr\.|Mrs\.|Ms\.|Dr\.|Hon\.|Judge)\s*/i, '').trim();
+
+    // Parse contact info from .attorney-contact
+    const contact = $('.attorney-contact').first();
+    if (!contact.length) {
+      log.warn(`No contact info found for id=${id}`);
+      return null;
+    }
+
+    // Firm name from <strong> inside contact
+    const firmName = contact.find('strong').first().text().trim();
+
+    // Phone from "Office: (xxx) xxx-xxxx"
+    const contactText = contact.text();
+    const phoneMatch = contactText.match(/Office:\s*([\d()\s.-]+)/);
+    const phone = phoneMatch ? phoneMatch[1].trim() : '';
+
+    // Email from mailto link
+    const emailLink = contact.find('a[href^="mailto:"]').first();
+    const email = emailLink.length ? emailLink.attr('href').replace('mailto:', '').trim() : '';
+
+    // Address parsing from the first <p>
+    const firstP = contact.find('p').first();
+    let city = '';
+    let state = '';
+    let zip = '';
+    let address = '';
+
+    if (firstP.length) {
+      // The first <p> has address lines separated by <br>
+      const addressHtml = firstP.html() || '';
+      const lines = addressHtml
+        .replace(/<strong[^>]*>.*?<\/strong>/gi, '') // remove firm name
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<[^>]+>/g, '')
+        .split('\n')
+        .map(l => l.trim())
+        .filter(l => l.length > 0);
+
+      // Last line is usually "City, ST ZIP"
+      if (lines.length > 0) {
+        const lastLine = lines[lines.length - 1];
+        const cityStateZip = lastLine.match(/^(.+),\s*([A-Z]{2})\s+(\d{5}(?:-\d{4})?)$/);
+        if (cityStateZip) {
+          city = cityStateZip[1].trim();
+          state = cityStateZip[2];
+          zip = cityStateZip[3];
+          address = lines.slice(0, -1).join(', ');
+        } else {
+          // Try without zip
+          const cityState = lastLine.match(/^(.+),\s*([A-Z]{2})$/);
+          if (cityState) {
+            city = cityState[1].trim();
+            state = cityState[2];
+            address = lines.slice(0, -1).join(', ');
+          }
+        }
+      }
+    }
+
+    // Admission date
+    const admMatch = res.body.match(/(?:Admitted|Admission)[:\s]*(\w+\s+\d{1,2},?\s+\d{4})/i);
+    const admissionDate = admMatch ? admMatch[1] : '';
+
+    // Parse first/last from cleanName
+    let firstName = '';
+    let lastName = '';
+    if (cleanName.includes(',')) {
+      const parts = cleanName.split(',').map(s => s.trim());
+      lastName = parts[0];
+      firstName = (parts[1] || '').split(/\s+/)[0];
+    } else {
+      const nameParts = cleanName.split(/\s+/);
+      if (nameParts.length >= 2) {
+        firstName = nameParts[0];
+        lastName = nameParts[nameParts.length - 1];
+      } else {
+        lastName = cleanName;
+      }
+    }
+
+    return {
+      first_name: firstName,
+      last_name: lastName,
+      full_name: cleanName,
+      firm_name: firmName,
+      city: city,
+      state: state || 'SC',
+      phone: phone,
+      email: email,
+      website: '',
+      bar_number: id,
+      bar_status: 'Active',
+      admission_date: admissionDate,
+      address: address,
+      zip: zip,
+      source: `${this.name}_bar`,
+    };
+  }
+
+  /**
+   * Override search() — iterate A-Z last name prefixes, paginate, fetch details.
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
-    this._cookies = null;
+    const ua = rateLimiter.getUserAgent();
+
+    if (practiceArea) {
+      log.warn(`SC Courts does not support practice area filtering — ignoring "${practiceArea}"`);
+    }
 
     // Step 1: Establish session
     log.info('Establishing session with SC Courts directory...');
-
-    let sessionOk = false;
-    let formTokens = {};
+    let sessionCookies;
 
     try {
       await rateLimiter.wait();
-      const response = await this._httpGetBrowser(this.baseUrl, rateLimiter);
-
-      if (response.statusCode === 200) {
-        sessionOk = true;
-        log.success('Session established with SC Courts');
-
-        const $ = cheerio.load(response.body);
-        $('input[type="hidden"]').each((_, el) => {
-          const name = $(el).attr('name') || '';
-          const value = $(el).attr('value') || '';
-          if (name) formTokens[name] = value;
-        });
-
-        // Check for a search form action URL
-        const formAction = $('form').attr('action') || '';
-        if (formAction && formAction !== '#') {
-          this._searchActionUrl = formAction.startsWith('http')
-            ? formAction
-            : `${this.origin}${formAction.startsWith('/') ? '' : '/'}${formAction}`;
-        }
-      } else if (response.statusCode === 406) {
-        log.warn(`SC Courts returned 406 Not Acceptable — bot protection active`);
-        log.warn(`SC: This directory blocks automated requests even with browser headers.`);
-        yield { _captcha: true, city: 'all', reason: '406 Not Acceptable — bot protection cannot be bypassed' };
-        return;
-      } else {
-        log.warn(`SC Courts returned status ${response.statusCode}`);
-        yield { _captcha: true, city: 'all', reason: `HTTP ${response.statusCode} from SC Courts` };
+      const session = await this._httpGet(this.baseUrl, ua, null);
+      if (session.statusCode !== 200) {
+        log.error(`SC Courts returned ${session.statusCode} on session init`);
+        yield { _captcha: true, city: 'all', reason: `HTTP ${session.statusCode}` };
         return;
       }
+      sessionCookies = session.cookies;
+      log.success('Session established with SC Courts');
     } catch (err) {
       log.error(`Failed to connect to SC Courts: ${err.message}`);
-      yield { _captcha: true, city: 'all', reason: `Connection failed: ${err.message}` };
+      yield { _captcha: true, city: 'all', reason: err.message };
       return;
     }
 
-    const cities = this.getCities(options);
-    const searchUrl = this._searchActionUrl || this.baseUrl;
+    // Determine letters to iterate
+    const letters = options.maxPrefixes
+      ? this.lastNameLetters.slice(0, options.maxPrefixes)
+      : this.lastNameLetters;
 
-    for (let ci = 0; ci < cities.length; ci++) {
-      const city = cities[ci];
-      yield { _cityProgress: { current: ci + 1, total: cities.length } };
-      log.scrape(`Searching: ${practiceArea || 'all'} attorneys in ${city}, ${this.stateCode}`);
+    // In test mode with maxCities=1, only do 1 letter
+    const maxLetters = options.maxCities || letters.length;
+    const activeLetters = letters.slice(0, maxLetters);
+
+    let totalYielded = 0;
+    let totalDetailFetches = 0;
+    const maxDetailFetches = options.maxPages ? 10 : Infinity;
+
+    for (let li = 0; li < activeLetters.length; li++) {
+      const letter = activeLetters[li];
+      yield { _cityProgress: { current: li + 1, total: activeLetters.length } };
+      log.scrape(`Searching: attorneys with last name starting with "${letter}" in SC`);
 
       let page = 1;
       let pagesFetched = 0;
@@ -363,86 +355,103 @@ class SouthCarolinaScraper extends BaseScraper {
 
       while (true) {
         if (options.maxPages && pagesFetched >= options.maxPages) {
-          log.info(`Reached max pages limit (${options.maxPages}) for ${city}`);
+          log.info(`Reached max pages limit (${options.maxPages}) for letter ${letter}`);
           break;
         }
 
-        const formData = {
-          ...formTokens,
-          'city': city,
-          'state': 'SC',
-          'status': 'Active',
-          'submit': 'Search',
-        };
-        if (page > 1) formData['page'] = String(page);
-
-        log.info(`Page ${page} — POST ${searchUrl} [City=${city}]`);
+        const searchUrl = page === 1
+          ? `${this.baseUrl}?last=${letter}`
+          : `${this.baseUrl}?last=${letter}&page=${page}`;
 
         let response;
         try {
           await rateLimiter.wait();
-          response = await this.httpPost(searchUrl, formData, rateLimiter);
+          response = await this._httpGet(searchUrl, ua, sessionCookies);
         } catch (err) {
-          log.error(`Request failed for ${city}: ${err.message}`);
-          const shouldRetry = await rateLimiter.handleBlock(0);
-          if (shouldRetry) continue;
+          log.error(`Search request failed for ${letter} page ${page}: ${err.message}`);
           break;
         }
 
-        if (response.statusCode === 429 || response.statusCode === 403 || response.statusCode === 406) {
-          log.warn(`Got ${response.statusCode} from ${this.name}`);
-          const shouldRetry = await rateLimiter.handleBlock(response.statusCode);
+        if (response.statusCode === 406) {
+          log.warn('SC Courts returned 406 — bot protection triggered');
+          const shouldRetry = await rateLimiter.handleBlock(406);
           if (shouldRetry) continue;
+          yield { _captcha: true, city: letter, reason: '406 Not Acceptable' };
           break;
         }
 
         if (response.statusCode !== 200) {
-          log.error(`Unexpected status ${response.statusCode} for ${city}`);
+          log.error(`Search returned ${response.statusCode} for letter ${letter}`);
           break;
         }
 
         rateLimiter.resetBackoff();
+        sessionCookies = response.cookies;
 
-        if (this.detectCaptcha(response.body)) {
-          log.warn(`CAPTCHA detected for ${city} — skipping`);
-          yield { _captcha: true, city, page };
-          break;
-        }
+        const $ = cheerio.load(response.body);
 
         if (page === 1) {
-          totalResults = this._extractResultCount(response.body);
+          totalResults = this._getResultCount($);
           if (totalResults > 0) {
-            log.success(`Found ${totalResults.toLocaleString()} results for ${city}`);
+            log.success(`Found ${totalResults.toLocaleString()} attorneys for letter "${letter}"`);
           }
         }
 
-        const attorneys = this._parseAttorneys(response.body);
+        const searchResults = this._parseSearchResults($);
+        const token = this._getToken($);
 
-        if (attorneys.length === 0) {
-          if (page === 1) log.info(`No results for ${practiceArea || 'all'} in ${city}`);
+        if (searchResults.length === 0) {
+          if (page === 1) log.info(`No results for letter "${letter}"`);
           break;
         }
 
         if (page === 1 && totalResults === 0) {
-          log.success(`Found ${attorneys.length} results for ${city}`);
+          log.success(`Found ${searchResults.length} results for letter "${letter}"`);
         }
 
-        for (const attorney of attorneys) {
-          if (options.minYear && attorney.admission_date) {
-            const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
-            if (year > 0 && year < options.minYear) continue;
+        // Fetch detail for each result (limited in test mode)
+        for (const sr of searchResults) {
+          if (totalDetailFetches >= maxDetailFetches) {
+            // In test mode, yield listing-level data without detail fetch
+            yield this.transformResult({
+              first_name: sr.name.includes(',') ? sr.name.split(',')[1]?.trim().split(' ')[0] || '' : '',
+              last_name: sr.name.includes(',') ? sr.name.split(',')[0]?.trim() || '' : sr.name,
+              city: '', state: 'SC', bar_number: sr.id, bar_status: 'Active',
+              profile_url: `${this.detailUrl}${sr.id}`,
+            }, practiceArea);
+            totalYielded++;
+            continue;
           }
-          yield this.transformResult(attorney, practiceArea);
+          try {
+            totalDetailFetches++;
+            const attorney = await this._fetchDetail(sr.id, token, ua, sessionCookies, rateLimiter);
+            if (attorney) {
+              // Apply city filter if specified
+              if (options.cities && options.cities.length > 0) {
+                const matchesCity = options.cities.some(c =>
+                  attorney.city.toLowerCase().includes(c.toLowerCase())
+                );
+                if (!matchesCity) continue;
+              }
+
+              attorney.practice_area = practiceArea || '';
+              yield this.transformResult(attorney, practiceArea);
+              totalYielded++;
+            }
+          } catch (err) {
+            log.warn(`Failed to fetch detail for ${sr.name} (id=${sr.id}): ${err.message}`);
+          }
         }
 
-        if (attorneys.length < this.pageSize) {
-          log.success(`Completed all results for ${city}`);
+        // Check for more pages
+        if (searchResults.length < this.pageSize) {
+          log.success(`Completed all results for letter "${letter}"`);
           break;
         }
 
         const totalPages = totalResults > 0 ? Math.ceil(totalResults / this.pageSize) : 0;
         if (totalPages > 0 && page >= totalPages) {
-          log.success(`Completed all ${totalPages} pages for ${city}`);
+          log.success(`Completed all ${totalPages} pages for letter "${letter}"`);
           break;
         }
 
@@ -450,6 +459,8 @@ class SouthCarolinaScraper extends BaseScraper {
         pagesFetched++;
       }
     }
+
+    log.success(`SC scrape complete: ${totalYielded} attorneys yielded`);
   }
 }
 
