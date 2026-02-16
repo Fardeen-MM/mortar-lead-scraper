@@ -25,15 +25,12 @@ const KNOWN_PLACEHOLDERS = new Set([
   'AK',   // CV5 response format unknown
   'AL',   // ASP.NET AJAX UpdatePanels
   'AR',   // DNS not found
-  'AZ',   // API requires auth key
   'HI',   // Algolia key not found
   'IA',   // Lucee CMS form fields unknown
-  'CO',   // Cloudflare 403
   'IN',   // 403 on fetch
   'KS',   // SPA 403
   'KY',   // Iframe-embedded search
   'ME',   // Response format unknown
-  'MI',   // React SPA
   'MS',   // 403 Forbidden
   'MT',   // LicensedLawyer.org JS SPA
   'ND',   // CMS search fields unknown
@@ -43,13 +40,10 @@ const KNOWN_PLACEHOLDERS = new Set([
   'NV',   // CV5 memberdll system
   'OK',   // eWeb/iMIS form fields unknown
   'RI',   // Response format unknown
-  'TN',   // Response format unknown
   'UT',   // DNN iframe
   'VT',   // Login required
-  'WA',   // Too many redirects
   'WY',   // WordPress directory plugin
   'DE',   // DOE Legal ASP.NET — field names need browser inspection
-  'VA',   // VSB RadGrid — delta response parsing needs browser inspection
   // Canada — inaccessible
   'CA-MB',  // reCAPTCHA v3
   'CA-NB',  // Alinity CAPTCHA
@@ -63,9 +57,6 @@ const KNOWN_PLACEHOLDERS = new Set([
   'UK-NI',  // Client-side rendering
   // Australia — may need browser/special handling
   'AU-NT',  // PDF scraper triggers CAPTCHA on some requests
-  // Australia — may need browser/special handling
-  'AU-SA',    // ASP.NET ViewState — may require login
-  'AU-TAS',   // WordPress Search & Filter — may need JS
   'AU-ACT',   // Bond MCRM — requires Puppeteer
   // Europe — placeholder
   'ES',       // Spain CGAE — Liferay/Angular SPA

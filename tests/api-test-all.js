@@ -29,12 +29,12 @@ const ONLY = getArg('scrapers')?.split(',') || null;
 // All 39 working scrapers
 const WORKING_SCRAPERS = [
   'AU-NSW', 'AU-QLD', 'AU-SA', 'AU-TAS', 'AU-VIC', 'AU-WA',
-  'CA', 'CA-AB', 'CA-BC', 'CA-NL', 'CA-PE', 'CA-YT',
+  'AZ', 'CA', 'CA-AB', 'CA-BC', 'CA-NL', 'CA-PE', 'CA-YT',
   'CO', 'CT', 'FL', 'FR', 'GA', 'HK',
   'ID', 'IE', 'IL', 'IT', 'LAWYERS-COM', 'MARTINDALE',
   'MD', 'MI', 'MN', 'MO', 'NC', 'NY',
   'NZ', 'OH', 'OR', 'PA', 'SC', 'SG',
-  'TN', 'TX', 'UK-EW-BAR', 'UK-SC', 'VA',
+  'TN', 'TX', 'UK-EW-BAR', 'UK-SC', 'VA', 'WA',
 ];
 
 function fetch(url, options = {}) {
