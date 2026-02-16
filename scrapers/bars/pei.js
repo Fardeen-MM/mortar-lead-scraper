@@ -10,7 +10,13 @@
  * lspei_companyname, address2_city, address2_stateorprovince,
  * lspei_businessphonenumber, emailaddress1.
  *
+ * Profile data is fetched via the same API with POST field: profile={id}.
+ * Profile responses include additional fields: lspei_baradmissiondate,
+ * membership_type_name, address2_line1, address2_postalcode,
+ * lspei_businessfaxnumber, and emailaddress1 (often only in profile).
+ *
  * Overrides search() to query the JSON API directly (no HTML parsing needed).
+ * Overrides fetchProfilePage() / parseProfilePage() for JSON-based profile enrichment.
  */
 
 const BaseScraper = require('../base-scraper');
@@ -120,6 +126,136 @@ class PEIScraper extends BaseScraper {
   }
 
   /**
+   * Override fetchProfilePage to handle JSON API-based profile fetching.
+   *
+   * Profile data is fetched by POSTing { profile: id } to the same API endpoint.
+   * The response is a JSON array (not HTML), so we return the parsed JSON object
+   * instead of a Cheerio instance.
+   *
+   * @param {string} url - Profile URL (pei-api://{id} format)
+   * @param {RateLimiter} rateLimiter - Rate limiter instance
+   * @returns {object|null} Parsed profile JSON object or null on failure
+   */
+  async fetchProfilePage(url, rateLimiter) {
+    if (!url) return null;
+
+    // Parse the pei-api:// pseudo URL
+    const match = url.match(/^pei-api:\/\/(\d+)$/);
+    if (!match) {
+      log.warn(`${this.name}: Invalid profile URL format: ${url}`);
+      return null;
+    }
+
+    const lawyerId = match[1];
+
+    try {
+      await rateLimiter.wait();
+      const response = await this.httpPostForm(this.apiUrl, {
+        'profile': lawyerId,
+      }, rateLimiter);
+
+      if (response.statusCode !== 200) {
+        log.warn(`${this.name}: Profile API returned ${response.statusCode} for id=${lawyerId}`);
+        return null;
+      }
+
+      const data = JSON.parse(response.body);
+
+      // API returns an array; take the first element
+      const profile = Array.isArray(data) ? data[0] : data;
+      if (!profile || !profile.fullname) {
+        log.warn(`${this.name}: Empty profile response for id=${lawyerId}`);
+        return null;
+      }
+
+      return profile;
+    } catch (err) {
+      log.warn(`${this.name}: Failed to fetch profile for id=${lawyerId}: ${err.message}`);
+      return null;
+    }
+  }
+
+  /**
+   * Parse a PEI profile response for additional contact info.
+   *
+   * The profile API returns JSON with these fields:
+   *   - fullname                     — Full name
+   *   - lspei_membershiptype         — Membership type code (e.g. 848150001)
+   *   - membership_type_name         — Status description (e.g. "Practising Lawyer")
+   *   - lspei_baradmissiondate       — Admission date (e.g. "1990-06-01")
+   *   - lspei_companyname            — Firm/company name
+   *   - address2_line1               — Street address
+   *   - address2_city                — City
+   *   - address2_stateorprovince     — Province
+   *   - address2_postalcode          — Postal code
+   *   - lspei_businessphonenumber    — Phone
+   *   - lspei_businessfaxnumber      — Fax
+   *   - emailaddress1                — Email
+   *
+   * NOTE: The parameter here is a JSON object, NOT a Cheerio instance.
+   * This is because PEI profiles are fetched via JSON API, not HTML pages.
+   *
+   * @param {object} profile - Parsed JSON profile object (from fetchProfilePage)
+   * @returns {object} Additional fields: email, phone, firm_name, address, admission_date, fax
+   */
+  parseProfilePage(profile) {
+    if (!profile || typeof profile !== 'object') return {};
+
+    const result = {};
+
+    // Email — often only available in the profile response
+    const email = (profile.emailaddress1 || '').trim().toLowerCase();
+    if (email && email.includes('@')) {
+      result.email = email;
+    }
+
+    // Phone
+    const phone = (profile.lspei_businessphonenumber || '').trim();
+    if (phone) {
+      result.phone = phone;
+    }
+
+    // Fax
+    const fax = (profile.lspei_businessfaxnumber || '').trim();
+    if (fax) {
+      result.fax = fax;
+    }
+
+    // Firm name
+    const firmName = (profile.lspei_companyname || '').trim();
+    if (firmName) {
+      result.firm_name = firmName;
+    }
+
+    // Bar status (descriptive name)
+    const statusName = (profile.membership_type_name || '').trim();
+    if (statusName) {
+      result.bar_status = statusName;
+    }
+
+    // Admission date
+    const admissionDate = (profile.lspei_baradmissiondate || '').trim();
+    if (admissionDate) {
+      // Format: "1990-06-01" or similar — store as-is
+      result.admission_date = admissionDate;
+    }
+
+    // Build address from address2 fields
+    const addrParts = [
+      (profile.address2_line1 || '').trim(),
+      (profile.address2_city || '').trim(),
+      (profile.address2_stateorprovince || '').trim(),
+      (profile.address2_postalcode || '').trim(),
+    ].filter(Boolean);
+
+    if (addrParts.length > 0) {
+      result.address = addrParts.join(', ');
+    }
+
+    return result;
+  }
+
+  /**
    * Async generator that yields attorney records from the PEI JSON API.
    * The API accepts POST with FormData: search[name], search[firm], search[city].
    * Returns JSON arrays with known fields.
@@ -188,6 +324,11 @@ class PEIScraper extends BaseScraper {
 
         const { firstName, lastName } = this.splitName(fullName);
 
+        // Build profile_url using the API id field
+        // Format: pei-api://{id} — a pseudo-URL handled by fetchProfilePage()
+        const lawyerId = (rec.id || '').toString().trim();
+        const profileUrl = lawyerId ? `pei-api://${lawyerId}` : '';
+
         const attorney = {
           first_name: firstName,
           last_name: lastName,
@@ -198,9 +339,9 @@ class PEIScraper extends BaseScraper {
           phone: (rec.lspei_businessphonenumber || '').trim(),
           email: (rec.emailaddress1 || '').trim(),
           website: '',
-          bar_number: (rec.id || '').toString().trim(),
+          bar_number: lawyerId,
           bar_status: (rec.lspei_membershiptype || 'Active').trim(),
-          profile_url: '',
+          profile_url: profileUrl,
         };
 
         // Apply min year filter
