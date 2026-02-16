@@ -2,7 +2,7 @@
  * Lawyers.com Lawyer Directory Scraper
  *
  * Source: https://www.lawyers.com/
- * Method: HTTP GET + Cheerio HTML parsing (server-rendered, no anti-scraping)
+ * Method: HTTP GET + Cheerio HTML parsing (server-rendered via Cloudflare CDN)
  * Owner:  Internet Brands (same parent as Martindale)
  *
  * URL Patterns:
@@ -10,20 +10,31 @@
  *   Paginated:               https://www.lawyers.com/{practice-area}/{city}/{state}/law-firms/?page=2
  *   All lawyers in a city:   https://www.lawyers.com/all/{city}/{state}/law-firms/
  *
- * Data per listing (from HTML):
- *   - Firm name (<h2> within profile-link)
- *   - Location/serving area (class srl-serving)
- *   - Practice areas (<li> with briefcase icon)
- *   - Phone (class srl-phone, data-ctn-rtn / data-ctn-rtn-alt attributes)
- *   - Attorney name (class attorney within lawyers-at-firms div)
- *   - Attorney specialty/position (class position)
- *   - Review rating (stars)
- *   - Review count
- *   - Profile URL (from href)
- *   - Website link (class srl-website)
+ * HTML Structure (as of 2026-02):
+ *   Listings are within `.search-results-list` as alternating sibling divs:
+ *     - `.summary-content`  — firm name, attorney name, serving area, practice areas
+ *     - `.contact-info`     — phone (`.srl-phone`) and website (`.srl-website`)
+ *   These two sibling divs form one logical listing.
  *
- * HIGH PRIORITY data source — fully server-rendered, no Cloudflare, no CAPTCHA.
+ * Data per listing:
+ *   - Firm name (<h2> within a.profile-link)
+ *   - Attorney name (a.attorney within .main-attorney)
+ *   - Position (.position within .main-attorney)
+ *   - Serving area / address (.srl-serving)
+ *   - Phone (.srl-phone: data-ctn-rtn-alt attr or inner a[href^="tel:"])
+ *   - Website (.srl-website a href)
+ *   - Profile URL (a.profile-link href for firm, a.attorney href for attorney)
+ *   - Rating (.number within .review-summary-header)
+ *   - Review count (.number-of-reviews text)
+ *   - Practice areas (text near briefcase icon)
+ *
+ * IMPORTANT: The page HTML includes the word "recaptcha" in CSS rules for an
+ * error form, but this is NOT an actual blocking CAPTCHA. The detectCaptcha()
+ * method from BaseScraper must be overridden to avoid false positives.
+ *
+ * HIGH PRIORITY data source — server-rendered, no blocking CAPTCHA.
  * Covers US + Canada with granular practice area categorization.
+ * Used for waterfall cross-reference enrichment (matching by city+name).
  */
 
 const BaseScraper = require('../base-scraper');
@@ -115,7 +126,7 @@ class LawyersComScraper extends BaseScraper {
       name: 'lawyers-com',
       stateCode: 'LAWYERS-COM',
       baseUrl: 'https://www.lawyers.com',
-      pageSize: 25, // ~25 listings per page on Lawyers.com
+      pageSize: 31, // ~31 listings per page on Lawyers.com
       practiceAreaCodes: PRACTICE_AREA_SLUGS,
       defaultCities: DEFAULT_CITY_ENTRIES.map(e => e.city),
       maxConsecutiveEmpty: 2,
@@ -163,6 +174,26 @@ class LawyersComScraper extends BaseScraper {
     if (entry) return entry.stateCode;
 
     return null;
+  }
+
+  // ---------------------------------------------------------------------------
+  // CAPTCHA detection override
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Override BaseScraper.detectCaptcha() because Lawyers.com pages contain
+   * the word "recaptcha" in CSS/JS (for an error form), which is NOT an actual
+   * blocking CAPTCHA. We check for real blocking signals instead.
+   */
+  detectCaptcha(body) {
+    if (!body) return false;
+    const lower = body.toLowerCase();
+    // Real CAPTCHA blocking: Cloudflare challenge page or explicit challenge-form
+    if (lower.includes('challenge-form')) return true;
+    if (lower.includes('cf-challenge-running')) return true;
+    if (lower.includes('just a moment') && lower.includes('cloudflare') && body.length < 10000) return true;
+    // If we got a real HTML page with content, it's not a CAPTCHA
+    return false;
   }
 
   // ---------------------------------------------------------------------------
@@ -236,233 +267,132 @@ class LawyersComScraper extends BaseScraper {
   // ---------------------------------------------------------------------------
 
   /**
-   * Parse a single listing card and extract all available data fields.
-   */
-  _parseListing($, el) {
-    const $el = $(el);
-
-    // --- Firm name (h2 within profile-link) ---
-    const firmNameEl = $el.find('.profile-link h2, a.profile-link h2, h2');
-    const firmName = firmNameEl.first().text().trim();
-
-    // --- Profile URL (from profile-link href) ---
-    const profileLinkEl = $el.find('a.profile-link, .profile-link a, a[href*="/lawyer/"], a[href*="/law-firm/"]');
-    let profileUrl = (profileLinkEl.first().attr('href') || '').trim();
-    if (profileUrl && profileUrl.startsWith('/')) {
-      profileUrl = `${this.baseUrl}${profileUrl}`;
-    }
-
-    // --- Location / serving area ---
-    const servingText = $el.find('.srl-serving').text().trim();
-
-    // --- Practice areas (li items with briefcase icon or within practice area list) ---
-    const practiceAreas = [];
-    $el.find('.srl-practice-areas li, .practice-areas li').each((_, li) => {
-      const area = $(li).text().trim();
-      if (area) practiceAreas.push(area);
-    });
-    // Fallback: look for spans/text near briefcase icons
-    if (practiceAreas.length === 0) {
-      $el.find('[class*="briefcase"] + span, [class*="briefcase"] ~ span, li:has([class*="briefcase"])').each((_, li) => {
-        const area = $(li).text().trim();
-        if (area) practiceAreas.push(area);
-      });
-    }
-
-    // --- Phone number ---
-    const phoneEl = $el.find('.srl-phone, [class*="phone"]');
-    let phone = '';
-    // Prefer the tracking number attributes
-    const rtn = phoneEl.attr('data-ctn-rtn') || '';
-    const rtnAlt = phoneEl.attr('data-ctn-rtn-alt') || '';
-    if (rtn) {
-      phone = rtn.trim();
-    } else if (rtnAlt) {
-      phone = rtnAlt.trim();
-    } else {
-      phone = phoneEl.first().text().trim();
-    }
-    // Clean phone number
-    phone = phone.replace(/[^0-9+()-\s]/g, '').trim();
-
-    // --- Attorneys listed at the firm ---
-    const attorneys = [];
-    $el.find('.lawyers-at-firms .attorney, .attorney').each((_, attyEl) => {
-      const name = $(attyEl).text().trim();
-      if (name) {
-        const positionEl = $(attyEl).closest('div, li').find('.position');
-        const position = positionEl.text().trim();
-        attorneys.push({ name, position });
-      }
-    });
-
-    // --- Review rating (stars) ---
-    let rating = 0;
-    const ratingEl = $el.find('[class*="star"], [class*="rating"]');
-    const ratingText = ratingEl.attr('data-rating') || ratingEl.attr('title') || ratingEl.text() || '';
-    const ratingMatch = ratingText.match(/([\d.]+)/);
-    if (ratingMatch) {
-      rating = parseFloat(ratingMatch[1]);
-    }
-    // Also check for filled star count
-    if (!rating) {
-      const filledStars = $el.find('.star-filled, .star.active, [class*="star"][class*="full"]').length;
-      if (filledStars > 0) rating = filledStars;
-    }
-
-    // --- Review count ---
-    let reviewCount = 0;
-    const reviewEl = $el.find('[class*="review-count"], [class*="reviews"]');
-    const reviewText = reviewEl.text() || '';
-    const reviewMatch = reviewText.match(/(\d+)\s*review/i);
-    if (reviewMatch) {
-      reviewCount = parseInt(reviewMatch[1], 10);
-    }
-
-    // --- Website link ---
-    const websiteEl = $el.find('.srl-website a, a.srl-website, a[class*="website"]');
-    let website = (websiteEl.first().attr('href') || '').trim();
-
-    // --- Address parsing ---
-    // Try to extract city, state, zip from dedicated address elements first
-    const addressEl = $el.find('.srl-address, [class*="address"]');
-    const addressText = addressEl.text().trim();
-
-    let city = '';
-    let state = '';
-    let zip = '';
-
-    if (addressText) {
-      // Dedicated address element: parse "City, ST ZIP"
-      const csz = this.parseCityStateZip(addressText);
-      if (csz.city) {
-        city = csz.city;
-        state = csz.state;
-        zip = csz.zip;
-      }
-    }
-
-    // Fall back to serving text if no address element found
-    if (!city && servingText) {
-      // Handle "Serving City, ST and Nearby Areas" — strip the "Serving" prefix
-      const servingMatch = servingText.match(/Serving\s+(.+?),\s*([A-Z]{2})/i);
-      if (servingMatch) {
-        city = servingMatch[1].trim();
-        state = servingMatch[2];
-      } else {
-        // No "Serving" prefix — try plain "City, ST"
-        const plainMatch = servingText.match(/^(.+?),\s*([A-Z]{2})/);
-        if (plainMatch) {
-          city = plainMatch[1].trim();
-          state = plainMatch[2];
-        }
-      }
-    }
-
-    return {
-      firm_name: firmName,
-      profile_url: profileUrl,
-      serving_area: servingText,
-      practice_areas: practiceAreas,
-      phone,
-      attorneys,
-      rating,
-      review_count: reviewCount,
-      website,
-      city,
-      state,
-      zip,
-    };
-  }
-
-  /**
    * Parse all listings from a Lawyers.com search results page.
-   * Returns an array of normalized attorney/firm objects.
+   *
+   * The HTML structure uses alternating sibling divs within .search-results-list:
+   *   <div class="summary-content">  — firm name, attorney, serving area
+   *   <div class="contact-info ..."> — phone (.srl-phone) and website (.srl-website)
+   *   <div class="contact-info mobile ..."> — duplicate for mobile (skip)
+   *   <div class="summary-content">  — next listing
+   *   ...
+   *
+   * We iterate each .summary-content and grab the immediately following
+   * .contact-info sibling (desktop, not mobile) for phone/website data.
    */
   parseResultsPage($) {
     const results = [];
+    const summaryContents = $('.search-results-list .summary-content');
 
-    // Lawyers.com listings are typically in search result list items or divs
-    const listingSelectors = [
-      '.srl-container',          // search result list container items
-      '.search-result-list > li',
-      '.search-results > li',
-      '[class*="search-result"]',
-      '.lawyer-listing',
-      '.law-firm-listing',
-    ];
-
-    let $listings = $();
-
-    // Try each selector until we find listings
-    for (const selector of listingSelectors) {
-      $listings = $(selector);
-      if ($listings.length > 0) break;
-    }
-
-    // Fallback: look for any element that contains a profile-link
-    if ($listings.length === 0) {
-      $listings = $('*:has(> .profile-link), *:has(> a.profile-link)').filter((_, el) => {
-        // Make sure this is a listing container, not the whole page
-        const tag = (el.tagName || '').toLowerCase();
-        return tag === 'li' || tag === 'div' || tag === 'article' || tag === 'section';
-      });
-    }
-
-    $listings.each((_, el) => {
+    summaryContents.each((_, el) => {
       try {
-        const listing = this._parseListing($, el);
-        if (!listing.firm_name && listing.attorneys.length === 0) return; // skip empty
+        const $listing = $(el);
+        // Get the next sibling .contact-info (desktop version, not mobile)
+        const $contactInfo = $listing.next('.contact-info');
 
-        // Normalize: create one record per attorney if attorneys are listed,
-        // otherwise create one record for the firm
-        if (listing.attorneys.length > 0) {
-          for (const atty of listing.attorneys) {
-            const { firstName, lastName } = this.splitName(atty.name);
-            results.push({
-              first_name: firstName,
-              last_name: lastName,
-              full_name: atty.name,
-              firm_name: listing.firm_name,
-              position: atty.position,
-              city: listing.city,
-              state: listing.state,
-              zip: listing.zip,
-              phone: listing.phone,
-              email: '',  // Not available in listing HTML
-              website: listing.website,
-              profile_url: listing.profile_url,
-              serving_area: listing.serving_area,
-              practice_areas: listing.practice_areas.join(', '),
-              rating: listing.rating,
-              review_count: listing.review_count,
-              source: 'lawyers-com',
-            });
-          }
-        } else {
-          // No individual attorneys listed — record the firm itself
-          results.push({
-            first_name: '',
-            last_name: '',
-            full_name: '',
-            firm_name: listing.firm_name,
-            position: '',
-            city: listing.city,
-            state: listing.state,
-            zip: listing.zip,
-            phone: listing.phone,
-            email: '',
-            website: listing.website,
-            profile_url: listing.profile_url,
-            serving_area: listing.serving_area,
-            practice_areas: listing.practice_areas.join(', '),
-            rating: listing.rating,
-            review_count: listing.review_count,
-            source: 'lawyers-com',
-          });
+        // --- Firm name ---
+        const firmName = $listing.find('a.profile-link h2').first().text().trim();
+
+        // --- Firm profile URL ---
+        let firmProfileUrl = ($listing.find('a.profile-link').first().attr('href') || '').trim();
+        if (firmProfileUrl && firmProfileUrl.startsWith('//')) {
+          firmProfileUrl = `https:${firmProfileUrl}`;
+        } else if (firmProfileUrl && firmProfileUrl.startsWith('/')) {
+          firmProfileUrl = `${this.baseUrl}${firmProfileUrl}`;
         }
+
+        // --- Main attorney name and URL ---
+        const attorneyEl = $listing.find('.main-attorney a.attorney');
+        const attorneyName = attorneyEl.text().trim();
+        let attorneyUrl = (attorneyEl.attr('href') || '').trim();
+        if (attorneyUrl && attorneyUrl.startsWith('//')) {
+          attorneyUrl = `https:${attorneyUrl}`;
+        } else if (attorneyUrl && attorneyUrl.startsWith('/')) {
+          attorneyUrl = `${this.baseUrl}${attorneyUrl}`;
+        }
+
+        // --- Position ---
+        const position = $listing.find('.main-attorney .position').text().trim();
+
+        // --- Serving area / address ---
+        const servingText = $listing.find('.srl-serving').text().trim();
+
+        // --- Practice areas (text from briefcase icon list items) ---
+        const practiceAreas = [];
+        $listing.find('li:has(use[xlink\\:href="#iconBriefcaseSearch"]) p').each((_, pEl) => {
+          const text = $(pEl).text().trim();
+          if (text) practiceAreas.push(text);
+        });
+
+        // --- Rating ---
+        let rating = 0;
+        const ratingText = $listing.find('.review-summary-header .number').first().text().trim();
+        if (ratingText) {
+          const parsed = parseFloat(ratingText);
+          if (!isNaN(parsed)) rating = parsed;
+        }
+
+        // --- Review count ---
+        let reviewCount = 0;
+        const reviewText = $listing.find('.number-of-reviews').text().trim();
+        const reviewMatch = reviewText.match(/(\d+)\s*review/i);
+        if (reviewMatch) {
+          reviewCount = parseInt(reviewMatch[1], 10);
+        }
+
+        // --- Phone (from contact-info sibling) ---
+        let phone = '';
+        const phoneEl = $contactInfo.find('.srl-phone');
+        // Prefer data-ctn-rtn-alt (the original number, not the tracking number)
+        const rtnAlt = phoneEl.attr('data-ctn-rtn-alt') || '';
+        if (rtnAlt) {
+          phone = rtnAlt.trim();
+        } else {
+          // Fallback: use the tel: href from the inner <a> element
+          const telHref = phoneEl.find('a[href^="tel:"]').attr('href') || '';
+          if (telHref) {
+            phone = telHref.replace('tel:', '').trim();
+          } else {
+            // Last fallback: use data-ctn-rtn (tracking number, better than nothing)
+            const rtn = phoneEl.attr('data-ctn-rtn') || '';
+            if (rtn) phone = rtn.trim();
+          }
+        }
+
+        // --- Website (from contact-info sibling) ---
+        let website = ($contactInfo.find('.srl-website a').attr('href') || '').trim();
+
+        // --- Parse city/state/zip from serving text ---
+        const location = this._parseServingText(servingText);
+
+        // --- Split attorney name ---
+        const { firstName, lastName } = this.splitName(attorneyName);
+
+        // Skip if we have neither firm name nor attorney name
+        if (!firmName && !attorneyName) return;
+
+        results.push({
+          first_name: firstName,
+          last_name: lastName,
+          full_name: attorneyName,
+          firm_name: firmName,
+          position: position,
+          city: location.city,
+          state: location.state,
+          zip: location.zip,
+          address: location.address,
+          phone: phone,
+          email: '',  // Not available in listing HTML
+          website: website,
+          profile_url: attorneyUrl || firmProfileUrl,
+          firm_profile_url: firmProfileUrl,
+          serving_area: servingText,
+          practice_areas: practiceAreas.join('; '),
+          rating: rating,
+          review_count: reviewCount,
+          source: 'lawyers-com',
+        });
       } catch (err) {
-        log.warn(`Failed to parse listing: ${err.message}`);
+        log.warn(`Lawyers.com: Failed to parse listing: ${err.message}`);
       }
     });
 
@@ -470,36 +400,74 @@ class LawyersComScraper extends BaseScraper {
   }
 
   /**
-   * Extract total result count from the page.
-   * Lawyers.com typically shows "N results" or "Showing X-Y of Z" in the header.
+   * Parse the serving/address text to extract city, state, zip, and street address.
+   *
+   * Lawyers.com uses several formats:
+   *   "Serving New York, NY and Statewide"
+   *   "546 5th Avenue, 5th Floor, New York, NY 10036"
+   *   "745 5th Avenue, Suite 500, New York, NY 10151+7 locations"
+   *   "New York, NY"
    */
-  extractResultCount($) {
-    // Look for result count text patterns
-    const countSelectors = [
-      '.result-count',
-      '.search-result-count',
-      '[class*="result-count"]',
-      '.srl-header',
-      'h1',
-    ];
+  _parseServingText(text) {
+    if (!text) return { city: '', state: '', zip: '', address: '' };
 
-    for (const selector of countSelectors) {
-      const text = $(selector).first().text();
-      // Match patterns like "123 results", "Showing 1-25 of 456", "123 Law Firms"
-      const match = text.match(/(?:of\s+)?(\d[\d,]*)\s*(?:result|law\s*firm|lawyer|attorney|match)/i);
-      if (match) {
-        return parseInt(match[1].replace(/,/g, ''), 10);
-      }
-      // Also try just a standalone number at the beginning
-      const numMatch = text.match(/^(\d[\d,]*)\s/);
-      if (numMatch) {
-        return parseInt(numMatch[1].replace(/,/g, ''), 10);
-      }
+    // Remove "Serving " prefix
+    let cleaned = text.replace(/^Serving\s+/i, '');
+    // Remove trailing "+N locations" or "and Nearby Areas" or "and Statewide"
+    cleaned = cleaned.replace(/\+\d+\s*location[s]?/i, '').replace(/\s*and\s+(nearby|statewide).*/i, '').trim();
+
+    // Try full address pattern: "Street, City, ST ZIP" or "Street, Floor, City, ST ZIP"
+    // Match the last occurrence of "City, ST ZIP" or "City, ST"
+    const fullMatch = cleaned.match(/^(.*?),\s*([^,]+),\s*([A-Z]{2})\s*([\d-]*)\s*$/);
+    if (fullMatch) {
+      return {
+        address: fullMatch[1].trim(),
+        city: fullMatch[2].trim(),
+        state: fullMatch[3],
+        zip: (fullMatch[4] || '').trim(),
+      };
     }
 
-    // Fallback: count listings on the page and assume there are more
-    const listings = this.parseResultsPage($);
-    return listings.length > 0 ? 99999 : 0;
+    // Try "City, ST ZIP"
+    const cszMatch = cleaned.match(/^([^,]+),\s*([A-Z]{2})\s*([\d-]*)\s*$/);
+    if (cszMatch) {
+      return {
+        address: '',
+        city: cszMatch[1].trim(),
+        state: cszMatch[2],
+        zip: (cszMatch[3] || '').trim(),
+      };
+    }
+
+    // Fallback: try to find "City, ST" anywhere in the text
+    const fallbackMatch = cleaned.match(/([A-Za-z\s.]+),\s*([A-Z]{2})/);
+    if (fallbackMatch) {
+      return {
+        address: '',
+        city: fallbackMatch[1].trim(),
+        state: fallbackMatch[2],
+        zip: '',
+      };
+    }
+
+    return { city: '', state: '', zip: '', address: '' };
+  }
+
+  /**
+   * Extract total result count from the page.
+   * Lawyers.com shows "N Results" text on the page.
+   */
+  extractResultCount($) {
+    const bodyText = $('body').text();
+    // Match patterns like "4,950 Results", "123 Results"
+    const countMatch = bodyText.match(/(\d[\d,]*)\s*Result/i);
+    if (countMatch) {
+      return parseInt(countMatch[1].replace(/,/g, ''), 10);
+    }
+
+    // Fallback: count listings on the page
+    const listings = $('.search-results-list .summary-content').length;
+    return listings > 0 ? 99999 : 0;
   }
 
   /**
@@ -508,9 +476,9 @@ class LawyersComScraper extends BaseScraper {
   hasNextPage($, currentPage) {
     const nextPage = currentPage + 1;
 
-    // Look for pagination link to next page
+    // Look for pagination link to next page number
     let found = false;
-    $('a[href]').each((_, el) => {
+    $('a[href*="page="]').each((_, el) => {
       const href = $(el).attr('href') || '';
       if (href.includes(`page=${nextPage}`)) {
         found = true;
@@ -519,14 +487,10 @@ class LawyersComScraper extends BaseScraper {
     });
     if (found) return true;
 
-    // Check for "Next" link patterns
-    const nextLink = $('a[rel="next"], a.next, a:contains("Next"), a:contains("next"), a.pagination-next, [class*="pagination"] a:contains("Next")');
-    if (nextLink.length > 0) return true;
-
-    // Check for right-arrow pagination links
-    const arrowLink = $('[class*="pagination"] a:last-child, .pagination a:last-child');
-    if (arrowLink.length > 0) {
-      const href = arrowLink.attr('href') || '';
+    // Check for "Next" link
+    const nextLink = $('a:contains("Next")');
+    if (nextLink.length > 0) {
+      const href = nextLink.attr('href') || '';
       if (href.includes('page=')) return true;
     }
 
@@ -552,8 +516,8 @@ class LawyersComScraper extends BaseScraper {
       if (/\d{3}.*\d{3}.*\d{4}/.test(cleaned)) result.phone = cleaned;
     }
     if (!result.phone) {
-      // Fallback: use data-ctn-rtn-alt (original number) over data-ctn-rtn (tracking number)
-      const phoneEl = $('[data-ctn-rtn-alt], [data-ctn-rtn]');
+      // Fallback: use data-ctn-rtn-alt (original number)
+      const phoneEl = $('[data-ctn-rtn-alt]');
       const rtnAlt = phoneEl.attr('data-ctn-rtn-alt') || '';
       if (rtnAlt) {
         result.phone = rtnAlt.trim();
@@ -567,10 +531,14 @@ class LawyersComScraper extends BaseScraper {
     }
 
     // Website
-    const websiteEl = $('a.srl-website, a[class*="website"], a[data-analytics*="website"]');
+    const websiteEl = $('a.website-click, a[class*="website"]');
     if (websiteEl.length) {
-      result.website = (websiteEl.first().attr('href') || '').trim();
-    } else {
+      const href = (websiteEl.first().attr('href') || '').trim();
+      if (href && !href.includes('lawyers.com')) {
+        result.website = href;
+      }
+    }
+    if (!result.website) {
       $('a[href^="http"]').each((_, el) => {
         const href = $(el).attr('href') || '';
         const text = $(el).text().toLowerCase().trim();
@@ -580,15 +548,6 @@ class LawyersComScraper extends BaseScraper {
           return false;
         }
       });
-    }
-
-    // Firm name
-    const firmEl = $('h1, .profile-name, [class*="firm-name"]').first();
-    if (firmEl.length) {
-      const firmText = firmEl.text().trim();
-      if (firmText && firmText.length > 1 && firmText.length < 200) {
-        result.firm_name = firmText;
-      }
     }
 
     return result;
@@ -601,24 +560,20 @@ class LawyersComScraper extends BaseScraper {
   /**
    * Async generator that yields attorney/firm records from Lawyers.com.
    *
-   * Lawyers.com is a US-wide directory (also covers Canada), so the search
-   * logic handles multi-city + practice area URL generation:
-   * - Each city needs a corresponding state for the URL
-   * - Practice areas map to URL slugs (e.g., "family-law", "personal-injury")
-   * - Pagination via ?page=N query parameter
-   * - Data is extracted from server-rendered HTML via Cheerio
-   *
    * Options:
    *   city      - Single city name (string)
    *   state     - State code for the city (e.g., 'NY', 'CA')
    *   cities    - Array of { city, stateCode } objects
    *   maxPages  - Max pages to fetch per city (for testing)
+   *   maxCities - Max cities to search (for testing)
    */
   async *search(practiceArea, options = {}) {
+    const isTestMode = !!(options.maxPages || options.maxCities);
     const rateLimiter = new RateLimiter({
-      minDelay: 5000,  // 5 seconds minimum between requests
-      maxDelay: 10000, // 10 seconds maximum
+      minDelay: isTestMode ? 2000 : 5000,
+      maxDelay: isTestMode ? 4000 : 10000,
     });
+    const maxBlockRetries = isTestMode ? 1 : 3;
 
     // Resolve practice area to URL slug
     const practiceSlug = this.resolvePracticeCode(practiceArea);
@@ -670,17 +625,32 @@ class LawyersComScraper extends BaseScraper {
           response = await this.httpGet(url, rateLimiter);
         } catch (err) {
           log.error(`Request failed for ${city} page ${page}: ${err.message}`);
-          const shouldRetry = await rateLimiter.handleBlock(0);
-          if (shouldRetry) continue;
-          break;
+          if (rateLimiter.consecutiveBlocks >= maxBlockRetries) {
+            log.warn(`Reached max retries for ${city} — skipping to next city`);
+            rateLimiter.resetBackoff();
+            break;
+          }
+          rateLimiter.consecutiveBlocks++;
+          const backoffMs = isTestMode ? 3000 : (30000 * rateLimiter.backoffMultiplier);
+          rateLimiter.backoffMultiplier *= 2;
+          await new Promise(r => setTimeout(r, backoffMs));
+          continue;
         }
 
         // Handle rate limiting / blocking
         if (response.statusCode === 429 || response.statusCode === 403) {
-          log.warn(`Got ${response.statusCode} from Lawyers.com`);
-          const shouldRetry = await rateLimiter.handleBlock(response.statusCode);
-          if (shouldRetry) continue;
-          break;
+          log.warn(`Got ${response.statusCode} from Lawyers.com on page ${page} for ${city}`);
+          if (rateLimiter.consecutiveBlocks >= maxBlockRetries) {
+            log.warn(`Reached max block retries (${maxBlockRetries}) for ${city} — skipping to next city`);
+            rateLimiter.resetBackoff();
+            break;
+          }
+          const backoffMs = isTestMode ? 5000 : (30000 * rateLimiter.backoffMultiplier);
+          log.warn(`Backing off ${backoffMs / 1000}s (attempt ${rateLimiter.consecutiveBlocks + 1}/${maxBlockRetries})`);
+          rateLimiter.consecutiveBlocks++;
+          rateLimiter.backoffMultiplier *= 2;
+          await new Promise(r => setTimeout(r, backoffMs));
+          continue;
         }
 
         // 404 means we've gone past the last page or invalid URL
@@ -696,9 +666,9 @@ class LawyersComScraper extends BaseScraper {
 
         rateLimiter.resetBackoff();
 
-        // Check for CAPTCHA (unlikely on Lawyers.com, but safety check)
+        // Check for real CAPTCHA/challenge (uses our override, not BaseScraper's)
         if (this.detectCaptcha(response.body)) {
-          log.warn(`CAPTCHA detected on page ${page} for ${city} — skipping`);
+          log.warn(`CAPTCHA/challenge detected on page ${page} for ${city} — skipping`);
           yield { _captcha: true, city, page };
           break;
         }
@@ -769,8 +739,12 @@ class LawyersComScraper extends BaseScraper {
       return [{ city: options.city, stateCode }];
     }
 
-    // Option 3: default cities
-    return [...this._cityEntries];
+    // Option 3: default cities (respect maxCities limit)
+    const entries = [...this._cityEntries];
+    if (options.maxCities && options.maxCities < entries.length) {
+      return entries.slice(0, options.maxCities);
+    }
+    return entries;
   }
 
   // ---------------------------------------------------------------------------

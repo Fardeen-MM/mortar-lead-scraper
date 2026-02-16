@@ -1,18 +1,23 @@
 /**
- * Michigan Bar Association Scraper
+ * Michigan State Bar Scraper
  *
- * Source: https://sbm.reliaguide.com/lawyer/search
- * Method: React SPA (ReliaGuide platform) — discover API endpoint from JS bundles
+ * Source: https://www.michbar.org/memberdirectory/home
+ * Method: ASP.NET POST with ViewState + DNN (DotNetNuke) form fields
  *
- * The State Bar of Michigan uses the ReliaGuide platform, a React SPA
- * that renders attorney data via a REST API. This scraper attempts to:
- *  1. Fetch the SPA shell and extract API endpoint URLs from JS bundles
- *  2. Try common ReliaGuide API patterns like /api/lawyer/search
- *  3. Query discovered endpoints with JSON payloads
+ * The State Bar of Michigan member directory uses a DNN module with:
+ *   - Search form at /memberdirectory/home (POST with ViewState)
+ *   - Results at /memberdirectory/results (10 per page, ASP.NET postback paging)
+ *   - Detail pages at /memberdirectory/detail/id=XXXXX
+ *
+ * Detail pages include: name, P-number, status, title, firm, address,
+ * city/state/zip, phone, fax, email, sections, licensed date.
+ *
+ * Paging uses __doPostBack('...lnkNextPageTop','') with ViewState — complex
+ * but manageable. We don't paginate for now (10 results per city search, but
+ * we cover many cities to get broad coverage).
  */
 
 const https = require('https');
-const http = require('http');
 const cheerio = require('cheerio');
 const BaseScraper = require('../base-scraper');
 const { log } = require('../../lib/logger');
@@ -23,398 +28,487 @@ class MichiganScraper extends BaseScraper {
     super({
       name: 'michigan',
       stateCode: 'MI',
-      baseUrl: 'https://sbm.reliaguide.com/lawyer/search',
-      pageSize: 25,
+      baseUrl: 'https://www.michbar.org/memberdirectory/home',
+      pageSize: 10,
       practiceAreaCodes: {
         'administrative':        'Administrative Law',
-        'bankruptcy':            'Bankruptcy',
+        'appellate':             'Appellate Practice',
+        'bankruptcy':            'Business Law',
         'business':              'Business Law',
-        'civil litigation':      'Civil Litigation',
-        'corporate':             'Corporate Law',
+        'civil litigation':      'Litigation',
+        'corporate':             'Business Law',
         'criminal':              'Criminal Law',
-        'criminal defense':      'Criminal Defense',
-        'elder':                 'Elder Law',
-        'employment':            'Employment Law',
+        'criminal defense':      'Criminal Law',
+        'elder':                 'Elder Law & Disability Rights',
+        'employment':            'Labor and Employment Law',
         'environmental':         'Environmental Law',
-        'estate planning':       'Estate Planning',
+        'estate planning':       'Probate and Estate Planning',
         'family':                'Family Law',
         'family law':            'Family Law',
+        'health care':           'Health Care Law',
         'immigration':           'Immigration Law',
-        'intellectual property': 'Intellectual Property',
-        'personal injury':       'Personal Injury',
-        'real estate':           'Real Estate',
-        'tax':                   'Tax Law',
-        'workers comp':          'Workers Compensation',
+        'insurance':             'Insurance and Indemnity Law',
+        'intellectual property': 'Intellectual Property Law',
+        'labor':                 'Labor and Employment Law',
+        'litigation':            'Litigation',
+        'personal injury':       'Negligence Law',
+        'real estate':           'Real Property Law',
+        'tax':                   'Taxation',
+        'tax law':               'Taxation',
+        'workers comp':          'Workers\' Compensation Law',
       },
       defaultCities: [
-        'Detroit', 'Grand Rapids', 'Ann Arbor', 'Lansing',
-        'Troy', 'Southfield', 'Farmington Hills', 'Kalamazoo',
+        'Detroit', 'Grand Rapids', 'Ann Arbor', 'Lansing', 'Troy',
+        'Southfield', 'Farmington Hills', 'Kalamazoo', 'Flint',
+        'Traverse City', 'Saginaw', 'Bloomfield Hills', 'Birmingham',
+        'Royal Oak', 'Novi', 'Dearborn', 'Livonia', 'East Lansing',
       ],
     });
 
-    this.origin = 'https://sbm.reliaguide.com';
+    this.resultsUrl = 'https://www.michbar.org/memberdirectory/results';
+    this.detailBaseUrl = 'https://www.michbar.org/memberdirectory/detail/id=';
 
-    // ReliaGuide-specific API patterns
-    this.apiCandidates = [
-      '/api/lawyer/search',
-      '/api/lawyers/search',
-      '/api/v1/lawyer/search',
-      '/api/v1/lawyers/search',
-      '/api/member/search',
-      '/api/members/search',
-      '/api/attorney/search',
-      '/api/attorneys/search',
-      '/api/search',
-      '/api/directory/search',
-      '/lawyer/api/search',
-      '/api/v2/lawyer/search',
-    ];
-  }
-
-  buildSearchUrl() {
-    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden for ReliaGuide SPA`);
-  }
-
-  parseResultsPage() {
-    throw new Error(`${this.name}: parseResultsPage() is not used — search() is overridden for ReliaGuide SPA`);
-  }
-
-  extractResultCount() {
-    throw new Error(`${this.name}: extractResultCount() is not used — search() is overridden for ReliaGuide SPA`);
+    // DNN form field prefixes
+    this._searchPrefix = 'dnn$ctr13718$MembeDirectorySearch$';
+    this._resultPrefix = 'dnn$ctr13719$MemberDirectorySearchResult$';
+    this._pagerPrefix = 'dnn$ctr13719$MemberDirectorySearchResult$ctrlPager$';
   }
 
   /**
-   * HTTP POST for JSON API requests.
+   * HTTP GET that returns cookies for session management.
    */
-  httpPost(url, data, rateLimiter, headers = {}) {
+  httpGetWithCookies(url, cookies) {
     return new Promise((resolve, reject) => {
+      https.get(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.9',
+          'Accept-Encoding': 'identity',
+          'Cookie': cookies || '',
+          'Connection': 'keep-alive',
+        },
+        timeout: 20000,
+      }, (res) => {
+        const newCookies = (res.headers['set-cookie'] || [])
+          .map(c => c.split(';')[0]);
+
+        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          res.resume();
+          let loc = res.headers.location;
+          if (loc.startsWith('/')) {
+            const u = new URL(url);
+            loc = `${u.protocol}//${u.host}${loc}`;
+          }
+          // Merge cookies
+          let allCookies = cookies || '';
+          newCookies.forEach(c => { allCookies += '; ' + c; });
+          return resolve(this.httpGetWithCookies(loc, allCookies));
+        }
+
+        let body = '';
+        res.on('data', chunk => { body += chunk; });
+        res.on('end', () => {
+          let allCookies = cookies || '';
+          newCookies.forEach(c => { allCookies += '; ' + c; });
+          resolve({ statusCode: res.statusCode, body, cookies: allCookies });
+        });
+      }).on('error', reject).on('timeout', function() {
+        this.destroy();
+        reject(new Error('Request timed out'));
+      });
+    });
+  }
+
+  /**
+   * HTTP POST with URL-encoded form data and cookie management.
+   */
+  httpPostWithCookies(url, formData, cookies) {
+    return new Promise((resolve, reject) => {
+      const postBody = new URLSearchParams(formData).toString();
       const parsed = new URL(url);
-      const postData = typeof data === 'string' ? data : JSON.stringify(data);
-      const opts = {
+
+      const req = https.request({
         hostname: parsed.hostname,
         path: parsed.pathname + parsed.search,
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(postData),
-          'User-Agent': rateLimiter.getUserAgent(),
-          'Accept': 'application/json,text/html,*/*',
-          'Origin': this.origin,
-          'Referer': this.baseUrl,
-          'Sec-Fetch-Dest': 'empty',
-          'Sec-Fetch-Mode': 'cors',
-          'Sec-Fetch-Site': 'same-origin',
-          ...headers,
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.9',
+          'Accept-Encoding': 'identity',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Length': Buffer.byteLength(postBody),
+          'Cookie': cookies || '',
+          'Referer': url,
+          'Connection': 'keep-alive',
         },
-      };
-      const proto = parsed.protocol === 'https:' ? require('https') : require('http');
-      const req = proto.request(opts, (res) => {
+        timeout: 30000,
+      }, (res) => {
+        const newCookies = (res.headers['set-cookie'] || [])
+          .map(c => c.split(';')[0]);
+        let allCookies = cookies || '';
+        newCookies.forEach(c => { allCookies += '; ' + c; });
+
+        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          res.resume();
+          let loc = res.headers.location;
+          if (loc.startsWith('/')) loc = `${parsed.protocol}//${parsed.host}${loc}`;
+          return resolve(this.httpGetWithCookies(loc, allCookies));
+        }
+
         let body = '';
-        res.on('data', c => body += c);
-        res.on('end', () => resolve({ statusCode: res.statusCode, body }));
+        res.on('data', chunk => { body += chunk; });
+        res.on('end', () => resolve({ statusCode: res.statusCode, body, cookies: allCookies }));
       });
+
       req.on('error', reject);
-      req.setTimeout(15000);
-      req.write(postData);
+      req.on('timeout', () => { req.destroy(); reject(new Error('Request timed out')); });
+      req.write(postBody);
       req.end();
     });
   }
 
   /**
-   * Discover API endpoint from SPA page source and JS bundles.
+   * Extract ASP.NET hidden fields from a page.
    */
-  async _discoverApiEndpoint(rateLimiter) {
-    log.info('Fetching ReliaGuide SPA to discover API endpoints...');
+  _extractHiddenFields(body) {
+    const fields = {};
+    const vsMatch = body.match(/id="__VIEWSTATE" value="([^"]*)"/);
+    if (vsMatch) fields.__VIEWSTATE = vsMatch[1];
+
+    const evMatch = body.match(/id="__EVENTVALIDATION" value="([^"]*)"/);
+    if (evMatch) fields.__EVENTVALIDATION = evMatch[1];
+
+    const vsgMatch = body.match(/__VIEWSTATEGENERATOR" value="([^"]*)"/);
+    if (vsgMatch) fields.__VIEWSTATEGENERATOR = vsgMatch[1];
+
+    const rvMatch = body.match(/__RequestVerificationToken" type="hidden" value="([^"]*)"/);
+    if (rvMatch) fields.__RequestVerificationToken = rvMatch[1];
+
+    return fields;
+  }
+
+  /**
+   * Get a fresh search form page with ViewState and cookies.
+   */
+  async _getSearchForm(rateLimiter) {
+    await rateLimiter.wait();
+    const response = await this.httpGetWithCookies(this.baseUrl, '');
+
+    if (response.statusCode !== 200) {
+      throw new Error(`Search form returned status ${response.statusCode}`);
+    }
+
+    const hidden = this._extractHiddenFields(response.body);
+    if (!hidden.__VIEWSTATE || !hidden.__EVENTVALIDATION) {
+      throw new Error('Could not extract ViewState from search form');
+    }
+
+    return { hidden, cookies: response.cookies };
+  }
+
+  /**
+   * Submit a city search and return the results page.
+   */
+  async _submitSearch(city, hidden, cookies, rateLimiter) {
+    const formData = {
+      '__EVENTTARGET': '',
+      '__EVENTARGUMENT': '',
+      '__VIEWSTATE': hidden.__VIEWSTATE,
+      '__VIEWSTATEGENERATOR': hidden.__VIEWSTATEGENERATOR || '',
+      '__VIEWSTATEENCRYPTED': '',
+      '__EVENTVALIDATION': hidden.__EVENTVALIDATION,
+      [`${this._searchPrefix}txtFirstName`]: '',
+      [`${this._searchPrefix}txtLastName`]: '',
+      [`${this._searchPrefix}txtMemberNumber`]: '',
+      [`${this._searchPrefix}txtFirmName`]: '',
+      [`${this._searchPrefix}txtCity`]: city,
+      [`${this._searchPrefix}ddlState`]: 'MI',
+      [`${this._searchPrefix}ddlCountry`]: '',
+      [`${this._searchPrefix}ddlCounty`]: '',
+      [`${this._searchPrefix}ddlCommittee`]: '',
+      [`${this._searchPrefix}ddlSection`]: '',
+      [`${this._searchPrefix}rdbMemberType`]: '0',  // 0 = All active
+      [`${this._searchPrefix}btnSearch`]: 'Search',
+      'ScrollTop': '',
+      '__dnnVariable': '',
+    };
+
+    if (hidden.__RequestVerificationToken) {
+      formData.__RequestVerificationToken = hidden.__RequestVerificationToken;
+    }
+
+    await rateLimiter.wait();
+    return this.httpPostWithCookies(this.baseUrl, formData, cookies);
+  }
+
+  /**
+   * Submit a next-page postback on the results page.
+   */
+  async _submitNextPage(hidden, cookies, rateLimiter) {
+    const formData = {
+      '__EVENTTARGET': `${this._pagerPrefix}lnkNextPageTop`,
+      '__EVENTARGUMENT': '',
+      '__VIEWSTATE': hidden.__VIEWSTATE,
+      '__VIEWSTATEGENERATOR': hidden.__VIEWSTATEGENERATOR || '',
+      '__VIEWSTATEENCRYPTED': '',
+      '__EVENTVALIDATION': hidden.__EVENTVALIDATION,
+      'ScrollTop': '',
+      '__dnnVariable': '',
+    };
+
+    if (hidden.__RequestVerificationToken) {
+      formData.__RequestVerificationToken = hidden.__RequestVerificationToken;
+    }
+
+    await rateLimiter.wait();
+    return this.httpPostWithCookies(this.resultsUrl, formData, cookies);
+  }
+
+  buildSearchUrl() {
+    throw new Error(`${this.name}: buildSearchUrl() is not used`);
+  }
+
+  /**
+   * Parse results grid from the search results page.
+   * Returns array of { name, city, state, memberId, profileUrl }.
+   */
+  parseResultsPage($) {
+    const results = [];
+
+    $('table.gridTable tbody tr').each((_, row) => {
+      const $row = $(row);
+      const nameLink = $row.find('a[href*="/memberdirectory/detail/"]');
+      if (!nameLink.length) return;
+
+      const fullName = nameLink.text().trim();
+      const href = nameLink.attr('href') || '';
+      const city = $row.find('span[id*="lblCity"]').text().trim();
+      const state = $row.find('span[id*="lblState"]').text().trim();
+
+      // Extract member ID from href: /memberdirectory/detail/id=95956
+      const idMatch = href.match(/id=(\d+)/);
+      const memberId = idMatch ? idMatch[1] : '';
+
+      if (!fullName || !memberId) return;
+
+      const { firstName, lastName } = this.splitName(fullName);
+
+      results.push({
+        first_name: firstName,
+        last_name: lastName,
+        full_name: fullName,
+        city: city,
+        state: state || 'MI',
+        member_id: memberId,
+        profile_url: `https://www.michbar.org${href}`,
+      });
+    });
+
+    return results;
+  }
+
+  extractResultCount($) {
+    const bodyText = $('body').text();
+    const match = bodyText.match(/([\d,]+)\s+member/i);
+    return match ? parseInt(match[1].replace(/,/g, ''), 10) : 0;
+  }
+
+  /**
+   * Fetch a member detail page and extract full attorney data.
+   */
+  async _fetchDetail(memberId, rateLimiter) {
+    const url = `${this.detailBaseUrl}${memberId}`;
 
     try {
       await rateLimiter.wait();
-      const response = await this.httpGet(this.baseUrl, rateLimiter);
+      const response = await this.httpGetWithCookies(url, '');
 
       if (response.statusCode !== 200) {
-        log.warn(`ReliaGuide page returned status ${response.statusCode}`);
+        log.warn(`Detail page returned ${response.statusCode} for member ${memberId}`);
         return null;
       }
 
       const $ = cheerio.load(response.body);
+      const prefix = 'dnn_ctr13720_MemberDirectorySearchDetail_';
 
-      // Look for API references in inline scripts and page source
-      const apiMatches = response.body.match(/["'](\/api\/[^"']+)["']/g) || [];
-      for (const match of apiMatches) {
-        const url = match.replace(/["']/g, '');
-        if (url.includes('search') || url.includes('lawyer') || url.includes('member')) {
-          log.info(`Found API reference in page: ${url}`);
-          return `${this.origin}${url}`;
-        }
+      // Extract fields by DNN element IDs
+      const memberDetails = $(`#${prefix}lblMemberDetails`).text().trim();
+      const title = $(`#${prefix}lblTitle`).text().trim();
+      const company = $(`#${prefix}lblCompany`).text().trim();
+      const address1 = $(`#${prefix}lblAddress1`).text().trim();
+      const cityStateZip = $(`#${prefix}lblCityStateZip`).text().trim();
+      const phone = $(`#${prefix}hlnkPhone`).text().trim();
+      const email = $(`#${prefix}hypEmail`).text().trim();
+      const licensedText = $(`#${prefix}trMemberLicensed`).text().trim();
+
+      // Parse member details: "First Last—P12345 (active and in good standing)"
+      let barNumber = '';
+      let barStatus = '';
+      const detailMatch = memberDetails.match(/[—–-]P(\d+)\s*\(([^)]+)\)/);
+      if (detailMatch) {
+        barNumber = detailMatch[1];
+        barStatus = detailMatch[2].trim();
       }
 
-      // Look for REST API patterns in data attributes
-      $('[data-api], [data-url], [data-endpoint]').each((_, el) => {
-        const apiUrl = $(el).attr('data-api') || $(el).attr('data-url') || $(el).attr('data-endpoint');
-        if (apiUrl) {
-          log.info(`Found API URL in data attribute: ${apiUrl}`);
-        }
-      });
-
-      // Scan JS bundles for API references
-      const scriptSrcs = [];
-      $('script[src]').each((_, el) => {
-        const src = $(el).attr('src') || '';
-        if (src.includes('chunk') || src.includes('app') || src.includes('main') ||
-            src.includes('bundle') || src.includes('static/js')) {
-          scriptSrcs.push(src.startsWith('http') ? src : `${this.origin}${src.startsWith('/') ? '' : '/'}${src}`);
-        }
-      });
-
-      for (const scriptUrl of scriptSrcs.slice(0, 6)) {
-        try {
-          await rateLimiter.wait();
-          const jsResp = await this.httpGet(scriptUrl, rateLimiter);
-          if (jsResp.statusCode === 200) {
-            // Look for API endpoint patterns in React app bundles
-            const patterns = [
-              /["'](\/api\/[^"'\s]+(?:search|lawyer|member|attorney)[^"'\s]*)["']/g,
-              /(?:fetch|axios|ajax)\s*\(\s*["'](\/[^"'\s]+)["']/g,
-              /(?:baseURL|apiUrl|API_BASE|apiBase)\s*[:=]\s*["']([^"']+)["']/g,
-            ];
-
-            for (const pattern of patterns) {
-              let m;
-              while ((m = pattern.exec(jsResp.body)) !== null) {
-                const found = m[1];
-                if (found.includes('search') || found.includes('lawyer') || found.includes('member')) {
-                  log.info(`Found API endpoint in JS bundle: ${found}`);
-                  return found.startsWith('http') ? found : `${this.origin}${found}`;
-                }
-              }
-            }
-          }
-        } catch (err) {
-          // Continue
-        }
+      // Parse licensed date: "Michigan Licensed: 11/3/2015"
+      let admissionDate = '';
+      const licMatch = licensedText.match(/Licensed:\s*(.+)/i);
+      if (licMatch) {
+        admissionDate = licMatch[1].trim();
       }
+
+      // Parse city/state/zip
+      const parsed = this.parseCityStateZip(cityStateZip);
+
+      return {
+        firm_name: company,
+        title: title,
+        address: address1,
+        city: parsed.city || '',
+        state: parsed.state || 'MI',
+        zip: parsed.zip || '',
+        phone: phone,
+        email: email ? email.toLowerCase() : '',
+        bar_number: barNumber,
+        bar_status: barStatus,
+        admission_date: admissionDate,
+      };
     } catch (err) {
-      log.warn(`Failed to fetch ReliaGuide page: ${err.message}`);
+      log.warn(`Failed to fetch detail for member ${memberId}: ${err.message}`);
+      return null;
     }
-
-    return null;
   }
 
   /**
-   * Try candidate API endpoints.
-   */
-  async _tryApiEndpoints(city, rateLimiter) {
-    for (const path of this.apiCandidates) {
-      const url = `${this.origin}${path}`;
-
-      // Try POST with JSON
-      try {
-        await rateLimiter.wait();
-        const resp = await this.httpPost(url, {
-          city: city,
-          state: 'MI',
-          status: 'Active',
-          page: 1,
-          pageSize: this.pageSize,
-          searchType: 'city',
-        }, rateLimiter);
-
-        if (resp.statusCode === 200) {
-          try {
-            const data = JSON.parse(resp.body);
-            if (data && (Array.isArray(data) || data.results || data.data || data.lawyers || data.members)) {
-              log.success(`ReliaGuide API found (POST): ${url}`);
-              return { url, method: 'POST', data };
-            }
-          } catch (_) { /* not JSON */ }
-        }
-      } catch (_) { /* continue */ }
-
-      // Try GET
-      try {
-        const getUrl = `${url}?city=${encodeURIComponent(city)}&state=MI&page=1&pageSize=${this.pageSize}`;
-        await rateLimiter.wait();
-        const resp = await this.httpGet(getUrl, rateLimiter);
-        if (resp.statusCode === 200) {
-          try {
-            const data = JSON.parse(resp.body);
-            if (data && (Array.isArray(data) || data.results || data.data || data.lawyers || data.members)) {
-              log.success(`ReliaGuide API found (GET): ${url}`);
-              return { url, method: 'GET', data };
-            }
-          } catch (_) { /* not JSON */ }
-        }
-      } catch (_) { /* continue */ }
-    }
-
-    return null;
-  }
-
-  /**
-   * Parse attorney records from JSON API response.
-   */
-  _parseApiResponse(data) {
-    const attorneys = [];
-    const records = Array.isArray(data)
-      ? data
-      : (data.results || data.data || data.lawyers || data.members || data.attorneys || data.items || []);
-
-    if (!Array.isArray(records)) return attorneys;
-
-    for (const rec of records) {
-      const fullName = rec.fullName || rec.full_name || rec.name || rec.displayName ||
-        `${rec.firstName || rec.first_name || ''} ${rec.lastName || rec.last_name || ''}`.trim();
-      if (!fullName) continue;
-
-      const { firstName, lastName } = this.splitName(fullName);
-
-      attorneys.push({
-        first_name: rec.firstName || rec.first_name || firstName,
-        last_name: rec.lastName || rec.last_name || lastName,
-        full_name: fullName,
-        firm_name: rec.firmName || rec.firm_name || rec.firm || rec.organization || '',
-        city: rec.city || '',
-        state: rec.state || 'MI',
-        phone: rec.phone || rec.phoneNumber || rec.telephone || '',
-        email: rec.email || rec.emailAddress || '',
-        website: rec.website || rec.url || rec.websiteUrl || '',
-        bar_number: String(rec.barNumber || rec.bar_number || rec.pNumber || rec.licenseNumber || rec.id || ''),
-        bar_status: rec.status || rec.memberStatus || 'Active',
-        profile_url: rec.profileUrl || rec.profile_url || rec.detailUrl || '',
-      });
-    }
-
-    return attorneys;
-  }
-
-  /**
-   * Override search() for Michigan ReliaGuide SPA.
+   * Override search() for Michigan DNN member directory.
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
     const cities = this.getCities(options);
 
-    // Step 1: Discover API
-    let apiUrl = await this._discoverApiEndpoint(rateLimiter);
-    let apiMethod = null;
-
-    // Step 2: Try common patterns
-    if (!apiUrl) {
-      log.info('No API discovered from page — trying ReliaGuide API patterns...');
-      const discovery = await this._tryApiEndpoints(cities[0], rateLimiter);
-      if (discovery) {
-        apiUrl = discovery.url;
-        apiMethod = discovery.method;
-
-        const attorneys = this._parseApiResponse(discovery.data);
-        if (attorneys.length > 0) {
-          yield { _cityProgress: { current: 1, total: cities.length } };
-          log.success(`Found ${attorneys.length} attorneys for ${cities[0]}`);
-          for (const attorney of attorneys) {
-            yield this.transformResult(attorney, practiceArea);
-          }
-        }
-      }
-    }
-
-    if (!apiUrl) {
-      log.warn(`MI: ReliaGuide React SPA — could not discover API endpoint.`);
-      log.warn(`MI: The directory at ${this.baseUrl} requires JavaScript rendering.`);
-      log.warn(`MI: Try visiting the URL in a browser and checking Network tab for API calls.`);
-      yield { _captcha: true, city: 'all', reason: 'React SPA — no API endpoint discovered' };
+    // Get initial search form
+    let formState;
+    try {
+      formState = await this._getSearchForm(rateLimiter);
+    } catch (err) {
+      log.error(`MI: Failed to load search form: ${err.message}`);
+      yield { _captcha: true, city: 'N/A', page: 0 };
       return;
     }
 
-    // Step 3: Iterate cities
-    const startCity = apiMethod ? 1 : 0;
+    // In test mode, limit detail page fetches to avoid timeouts (HK/NZ pattern)
+    const maxDetailFetches = options.maxPages ? 5 : Infinity;
+    let totalDetailFetches = 0;
 
-    for (let ci = startCity; ci < cities.length; ci++) {
+    for (let ci = 0; ci < cities.length; ci++) {
       const city = cities[ci];
       yield { _cityProgress: { current: ci + 1, total: cities.length } };
       log.scrape(`Searching: ${practiceArea || 'all'} attorneys in ${city}, ${this.stateCode}`);
 
-      let page = 1;
-      let pagesFetched = 0;
+      // Submit search for this city
+      let response;
+      try {
+        // Need a fresh form for each city search
+        formState = await this._getSearchForm(rateLimiter);
+        response = await this._submitSearch(city, formState.hidden, formState.cookies, rateLimiter);
+      } catch (err) {
+        log.error(`Search failed for ${city}: ${err.message}`);
+        continue;
+      }
 
-      while (true) {
+      if (response.statusCode !== 200) {
+        log.error(`Search returned status ${response.statusCode} for ${city}`);
+        continue;
+      }
+
+      const $ = cheerio.load(response.body);
+      const totalResults = this.extractResultCount($);
+      const totalPages = Math.ceil(totalResults / this.pageSize);
+
+      if (totalResults === 0) {
+        log.info(`No results for ${practiceArea || 'all'} in ${city}`);
+        continue;
+      }
+
+      log.success(`Found ${totalResults} results (${totalPages} pages) for ${city}`);
+
+      // Parse first page
+      let results = this.parseResultsPage($);
+      let pagesFetched = 1;
+      let allResults = [...results];
+
+      // Paginate through results
+      let currentBody = response.body;
+      let currentCookies = response.cookies;
+
+      while (pagesFetched < totalPages) {
         if (options.maxPages && pagesFetched >= options.maxPages) {
           log.info(`Reached max pages limit (${options.maxPages}) for ${city}`);
           break;
         }
 
-        let response;
+        const hidden = this._extractHiddenFields(currentBody);
+        if (!hidden.__VIEWSTATE || !hidden.__EVENTVALIDATION) {
+          log.warn(`Lost ViewState on page ${pagesFetched} for ${city} — stopping pagination`);
+          break;
+        }
+
         try {
-          await rateLimiter.wait();
-          if (apiMethod === 'POST' || !apiMethod) {
-            const payload = {
-              city: city,
-              state: 'MI',
-              status: 'Active',
-              page: page,
-              pageSize: this.pageSize,
-              searchType: 'city',
-            };
-            if (practiceArea) {
-              payload.practiceArea = this.resolvePracticeCode(practiceArea) || practiceArea;
-            }
-            response = await this.httpPost(apiUrl, payload, rateLimiter);
-          } else {
-            const params = new URLSearchParams({
-              city, state: 'MI', page: String(page),
-              pageSize: String(this.pageSize),
-            });
-            if (practiceArea) params.set('practiceArea', this.resolvePracticeCode(practiceArea) || practiceArea);
-            response = await this.httpGet(`${apiUrl}?${params}`, rateLimiter);
+          const nextResponse = await this._submitNextPage(hidden, currentCookies, rateLimiter);
+
+          if (nextResponse.statusCode !== 200) {
+            log.warn(`Page ${pagesFetched + 1} returned ${nextResponse.statusCode} for ${city}`);
+            break;
           }
+
+          const $next = cheerio.load(nextResponse.body);
+          const nextResults = this.parseResultsPage($next);
+
+          if (nextResults.length === 0) {
+            log.info(`No more results on page ${pagesFetched + 1} for ${city}`);
+            break;
+          }
+
+          allResults.push(...nextResults);
+          currentBody = nextResponse.body;
+          currentCookies = nextResponse.cookies;
+          pagesFetched++;
+
+          log.info(`Page ${pagesFetched}: ${nextResults.length} results (${allResults.length} total)`);
         } catch (err) {
-          log.error(`API request failed for ${city}: ${err.message}`);
+          log.error(`Pagination failed on page ${pagesFetched + 1} for ${city}: ${err.message}`);
           break;
         }
+      }
 
-        if (response.statusCode === 429 || response.statusCode === 403) {
-          log.warn(`Got ${response.statusCode} from ${this.name}`);
-          const shouldRetry = await rateLimiter.handleBlock(response.statusCode);
-          if (shouldRetry) continue;
-          break;
+      // Fetch detail pages for each result (limited in test mode to avoid timeouts)
+      for (const result of allResults) {
+        let detail = null;
+
+        if (totalDetailFetches < maxDetailFetches) {
+          detail = await this._fetchDetail(result.member_id, rateLimiter);
+          totalDetailFetches++;
         }
 
-        if (response.statusCode !== 200) {
-          log.error(`Unexpected status ${response.statusCode} for ${city}`);
-          break;
-        }
+        const attorney = {
+          first_name: result.first_name,
+          last_name: result.last_name,
+          full_name: result.full_name,
+          firm_name: detail ? detail.firm_name : '',
+          city: detail ? detail.city : result.city,
+          state: detail ? detail.state : result.state,
+          phone: detail ? detail.phone : '',
+          email: detail ? detail.email : '',
+          website: '',
+          bar_number: detail ? detail.bar_number : '',
+          bar_status: detail ? detail.bar_status : 'Active',
+          admission_date: detail ? detail.admission_date : '',
+          profile_url: result.profile_url,
+        };
 
-        rateLimiter.resetBackoff();
-
-        let data;
-        try {
-          data = JSON.parse(response.body);
-        } catch (_) {
-          log.warn(`Non-JSON response for ${city}`);
-          break;
-        }
-
-        const attorneys = this._parseApiResponse(data);
-
-        if (attorneys.length === 0) {
-          if (page === 1) log.info(`No results for ${practiceArea || 'all'} in ${city}`);
-          break;
-        }
-
-        if (page === 1) {
-          const total = data.totalCount || data.total || data.count || attorneys.length;
-          log.success(`Found ${total} results for ${city}`);
-        }
-
-        for (const attorney of attorneys) {
-          yield this.transformResult(attorney, practiceArea);
-        }
-
-        if (attorneys.length < this.pageSize) {
-          log.success(`Completed all results for ${city}`);
-          break;
-        }
-
-        page++;
-        pagesFetched++;
+        yield this.transformResult(attorney, practiceArea);
       }
     }
   }

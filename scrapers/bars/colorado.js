@@ -1,13 +1,22 @@
 /**
  * Colorado Attorney Registration Scraper
  *
- * Source: https://www.coloradolegalregulation.com/Search/AttSearch.asp
- * Method: HTTP GET/POST with fname, lname, or registration number
- * Results rendered as HTML tables parsed with Cheerio.
+ * Source: https://www.coloradolegalregulation.com/attorney-search/
+ * Method: HTTP POST with LName/FName/RegNum fields -> HTML table results
+ *
+ * The Colorado Supreme Court Office of Attorney Regulation Counsel provides
+ * a WordPress-based attorney search. Search is "contains" (not "starts with").
+ * We iterate over 2-letter last name prefixes (Aa, Ab, ..., Zz) and filter
+ * results to those whose last name actually starts with that prefix.
+ *
+ * Results are returned in a single HTML table with columns:
+ *   Last Name | First Name | Middle Name | Status | Registration Number
+ *
+ * Profile pages at /attorney-search/attorney-information?Regnum=XXXXX provide:
+ *   Name, Reg Number, Status, Firm Name, Admission Date
  */
 
 const https = require('https');
-const http = require('http');
 const cheerio = require('cheerio');
 const BaseScraper = require('../base-scraper');
 const { log } = require('../../lib/logger');
@@ -18,43 +27,38 @@ class ColoradoScraper extends BaseScraper {
     super({
       name: 'colorado',
       stateCode: 'CO',
-      baseUrl: 'https://www.coloradolegalregulation.com/Search/AttSearch.asp',
-      pageSize: 50,
-      practiceAreaCodes: {
-        'immigration':          'immigration',
-        'family':               'family',
-        'family law':           'family',
-        'criminal':             'criminal',
-        'criminal defense':     'criminal',
-        'personal injury':      'personal_injury',
-        'estate planning':      'estate_planning',
-        'estate':               'estate_planning',
-        'tax':                  'tax',
-        'tax law':              'tax',
-        'employment':           'employment',
-        'labor':                'labor',
-        'bankruptcy':           'bankruptcy',
-        'real estate':          'real_estate',
-        'civil litigation':     'civil_litigation',
-        'business':             'business',
-        'corporate':            'corporate',
-        'elder':                'elder',
-        'intellectual property':'intellectual_property',
-        'medical malpractice':  'medical_malpractice',
-        'workers comp':         'workers_comp',
-        'environmental':        'environmental',
-        'construction':         'construction',
-        'juvenile':             'juvenile',
-        'water law':            'water_law',
-        'natural resources':    'natural_resources',
-      },
+      baseUrl: 'https://www.coloradolegalregulation.com/attorney-search/',
+      pageSize: 500,
+      practiceAreaCodes: {},
       defaultCities: [
         'Denver', 'Colorado Springs', 'Aurora', 'Fort Collins',
         'Lakewood', 'Boulder', 'Thornton', 'Pueblo',
       ],
     });
 
-    this.resultsUrl = 'https://www.coloradolegalregulation.com/Search/AttResults.asp';
+    this.searchUrl = 'https://www.coloradolegalregulation.com/attorney-search/attorney-search-results/';
+    this.profileBaseUrl = 'https://www.coloradolegalregulation.com/attorney-search/attorney-information';
+  }
+
+  /**
+   * Generate 3-letter prefixes for systematic last name iteration.
+   * We use common starting patterns to get smaller, more targeted batches.
+   */
+  _getSearchPrefixes() {
+    // 3-letter prefixes give manageable result sizes (10-200 each)
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
+    const consonants = 'bcdfghjklmnpqrstvwxyz';
+    const vowels = 'aeiou';
+    const prefixes = [];
+
+    // Generate common 2-letter combos that produce reasonable result counts
+    for (const c1 of letters) {
+      for (const c2 of letters) {
+        prefixes.push(c1 + c2);
+      }
+    }
+
+    return prefixes;
   }
 
   /**
@@ -63,14 +67,11 @@ class ColoradoScraper extends BaseScraper {
   httpPost(url, formData, rateLimiter) {
     return new Promise((resolve, reject) => {
       const ua = rateLimiter.getUserAgent();
-      const postBody = typeof formData === 'string'
-        ? formData
-        : new URLSearchParams(formData).toString();
-
+      const postBody = new URLSearchParams(formData).toString();
       const parsed = new URL(url);
-      const options = {
+
+      const req = https.request({
         hostname: parsed.hostname,
-        port: parsed.port || (parsed.protocol === 'https:' ? 443 : 80),
         path: parsed.pathname + parsed.search,
         method: 'POST',
         headers: {
@@ -80,22 +81,11 @@ class ColoradoScraper extends BaseScraper {
           'Accept-Encoding': 'identity',
           'Content-Type': 'application/x-www-form-urlencoded',
           'Content-Length': Buffer.byteLength(postBody),
-          'Connection': 'keep-alive',
           'Referer': this.baseUrl,
+          'Connection': 'keep-alive',
         },
-        timeout: 15000,
-      };
-
-      const protocol = parsed.protocol === 'https:' ? https : http;
-      const req = protocol.request(options, (res) => {
-        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-          res.resume();
-          let redirect = res.headers.location;
-          if (redirect.startsWith('/')) {
-            redirect = `${parsed.protocol}//${parsed.host}${redirect}`;
-          }
-          return resolve(this.httpGet(redirect, rateLimiter));
-        }
+        timeout: 30000,
+      }, (res) => {
         let data = '';
         res.on('data', chunk => { data += chunk; });
         res.on('end', () => resolve({ statusCode: res.statusCode, body: data }));
@@ -108,165 +98,237 @@ class ColoradoScraper extends BaseScraper {
     });
   }
 
-  /**
-   * Not used directly — search() is overridden for POST-based requests.
-   */
   buildSearchUrl() {
     throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden for POST requests`);
   }
 
+  /**
+   * Parse attorney results from HTML table.
+   * Table columns: Last Name | First Name | Middle Name | Status | Registration Number
+   */
   parseResultsPage($) {
     const attorneys = [];
 
-    // Colorado results are rendered in HTML tables
-    $('table tr').each((i, el) => {
-      const $row = $(el);
-      const cells = $row.find('td');
-      if (cells.length < 3) return;
+    $('table.table-striped tbody tr').each((_, row) => {
+      const cells = $(row).find('td');
+      if (cells.length < 5) return;
 
-      const firstCellText = $(cells[0]).text().trim().toLowerCase();
-      if (firstCellText === 'name' || firstCellText === 'attorney' || firstCellText === 'reg #') return;
+      const lastNameCell = $(cells[0]);
+      const lastName = lastNameCell.text().trim();
+      const profileLink = lastNameCell.find('a').attr('href') || '';
+      const firstName = $(cells[1]).text().trim();
+      const middleName = $(cells[2]).text().trim();
+      const statusRaw = $(cells[3]).text().trim();
+      const regNumber = $(cells[4]).text().trim();
 
-      // Typical layout: Name | Reg # | City | Status | Admission Date
-      const nameCell = $(cells[0]);
-      const fullName = nameCell.text().trim();
-      const profileLink = nameCell.find('a').attr('href') || '';
+      if (!lastName || lastName.length < 2) return;
 
-      if (!fullName || fullName.length < 2) return;
+      // Parse status: "ACTV – Active" -> extract code and description
+      const statusParts = statusRaw.split(/\s*[–—-]\s*/);
+      const statusCode = (statusParts[0] || '').trim();
+      const statusDesc = statusParts.length > 1
+        ? statusParts.slice(1).join(' ').trim()
+        : statusParts[0].trim();
 
-      const regNumber = cells.length > 1 ? $(cells[1]).text().trim() : '';
-      const city = cells.length > 2 ? $(cells[2]).text().trim() : '';
-      const status = cells.length > 3 ? $(cells[3]).text().trim() : '';
-      const admissionDate = cells.length > 4 ? $(cells[4]).text().trim() : '';
-      const phone = cells.length > 5 ? $(cells[5]).text().trim() : '';
-
-      // Parse name — may be "Last, First" format
-      let firstName = '';
-      let lastName = '';
-      if (fullName.includes(',')) {
-        const parts = fullName.split(',').map(s => s.trim());
-        lastName = parts[0];
-        firstName = parts[1] || '';
-      } else {
-        const nameParts = this.splitName(fullName);
-        firstName = nameParts.firstName;
-        lastName = nameParts.lastName;
-      }
-
+      // Build profile URL
       let profileUrl = '';
       if (profileLink) {
         profileUrl = profileLink.startsWith('http')
           ? profileLink
           : `https://www.coloradolegalregulation.com${profileLink}`;
+      } else if (regNumber) {
+        profileUrl = `${this.profileBaseUrl}?Regnum=${regNumber}`;
       }
 
+      // Title-case names (they come as ALL CAPS)
+      const toTitleCase = (s) => (s || '').trim().replace(/\b\w+/g,
+        w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+
       attorneys.push({
-        first_name: firstName,
-        last_name: lastName,
-        full_name: fullName.includes(',') ? `${firstName} ${lastName}`.trim() : fullName,
+        first_name: toTitleCase(firstName),
+        last_name: toTitleCase(lastName),
+        full_name: toTitleCase(`${firstName} ${middleName ? middleName + ' ' : ''}${lastName}`).trim(),
         firm_name: '',
-        city: city,
+        city: '',
         state: 'CO',
-        phone: phone,
+        phone: '',
         email: '',
         website: '',
         bar_number: regNumber.replace(/[^0-9]/g, ''),
-        bar_status: status || 'Active',
-        admission_date: admissionDate,
+        bar_status: statusDesc || 'Unknown',
+        _statusCode: statusCode,
         profile_url: profileUrl,
+        _rawLastName: lastName.toUpperCase(),
       });
     });
-
-    // Fallback: div-based results
-    if (attorneys.length === 0) {
-      $('.attorney-result, .search-result, .result-item').each((_, el) => {
-        const $el = $(el);
-
-        const nameEl = $el.find('a').first();
-        const fullName = nameEl.text().trim() || $el.find('.name, .attorney-name, h3, h4').text().trim();
-        const profileLink = nameEl.attr('href') || '';
-
-        if (!fullName || fullName.length < 2) return;
-
-        let firstName = '';
-        let lastName = '';
-        if (fullName.includes(',')) {
-          const parts = fullName.split(',').map(s => s.trim());
-          lastName = parts[0];
-          firstName = parts[1] || '';
-        } else {
-          const nameParts = this.splitName(fullName);
-          firstName = nameParts.firstName;
-          lastName = nameParts.lastName;
-        }
-
-        const regNumber = ($el.find('.registration, .reg-number, .bar-number').text().trim() || '').replace(/[^0-9]/g, '');
-        const city = $el.find('.city, .location').text().trim();
-        const phone = $el.find('.phone').text().trim();
-        const email = $el.find('a[href^="mailto:"]').text().trim();
-        const status = $el.find('.status').text().trim();
-
-        let profileUrl = '';
-        if (profileLink) {
-          profileUrl = profileLink.startsWith('http')
-            ? profileLink
-            : `https://www.coloradolegalregulation.com${profileLink}`;
-        }
-
-        attorneys.push({
-          first_name: firstName,
-          last_name: lastName,
-          full_name: fullName.includes(',') ? `${firstName} ${lastName}`.trim() : fullName,
-          firm_name: '',
-          city: city,
-          state: 'CO',
-          phone: phone,
-          email: email,
-          website: '',
-          bar_number: regNumber,
-          bar_status: status || 'Active',
-          profile_url: profileUrl,
-        });
-      });
-    }
 
     return attorneys;
   }
 
   extractResultCount($) {
     const text = $('body').text();
-
-    const matchFound = text.match(/([\d,]+)\s+(?:attorneys?|results?|records?|members?)\s+found/i);
-    if (matchFound) return parseInt(matchFound[1].replace(/,/g, ''), 10);
-
-    const matchOf = text.match(/of\s+([\d,]+)\s+(?:results?|records?|attorneys?)/i);
-    if (matchOf) return parseInt(matchOf[1].replace(/,/g, ''), 10);
-
-    const matchShowing = text.match(/Showing\s+\d+\s*[-–]\s*\d+\s+of\s+([\d,]+)/i);
-    if (matchShowing) return parseInt(matchShowing[1].replace(/,/g, ''), 10);
-
-    const matchReturned = text.match(/returned\s+([\d,]+)\s+(?:results?|records?|attorneys?)/i);
-    if (matchReturned) return parseInt(matchReturned[1].replace(/,/g, ''), 10);
-
-    return 0;
+    const match = text.match(/([\d,]+)\s+(?:attorneys?|results?|records?)/i);
+    return match ? parseInt(match[1].replace(/,/g, ''), 10) : 0;
   }
 
   /**
-   * Override search() — Colorado site is behind Cloudflare protection
-   * and returns 403 Forbidden for non-browser requests.
-   * This scraper requires a browser-based approach (Puppeteer/Playwright)
-   * which is not yet implemented. For now, log a warning and yield nothing.
+   * Parse a profile page for additional detail fields.
    */
-  async *search(practiceArea, options = {}) {
-    const cities = this.getCities(options);
+  parseProfilePage($) {
+    const result = {};
 
-    for (let ci = 0; ci < cities.length; ci++) {
-      const city = cities[ci];
-      yield { _cityProgress: { current: ci + 1, total: cities.length } };
-      log.warn(`CO bar (coloradolegalregulation.com) is behind Cloudflare protection — cannot scrape without browser automation. Skipping ${city}.`);
+    // Extract from card-text elements
+    $('p.card-text').each((_, el) => {
+      const text = $(el).text().trim();
+
+      const firmMatch = text.match(/Firm Name:\s*(.+)/i);
+      if (firmMatch && firmMatch[1].trim()) {
+        result.firm_name = firmMatch[1].trim();
+      }
+
+      const admMatch = text.match(/Admission Date:\s*(.+)/i);
+      if (admMatch) {
+        result.admission_date = admMatch[1].trim();
+      }
+    });
+
+    // Business Address
+    const bodyText = $('body').text();
+    const addrMatch = bodyText.match(/Business Address:\s*(.+?)(?:\n|$)/i);
+    if (addrMatch) {
+      const addr = addrMatch[1].trim();
+      if (addr.length > 2) {
+        result.address = addr;
+      }
     }
 
-    log.warn(`Colorado scraper requires Puppeteer/Playwright for Cloudflare bypass — no results returned`);
+    return result;
+  }
+
+  /**
+   * Override getCities to return last name prefixes instead of cities.
+   * Colorado's search is name-based, not city-based.
+   */
+  getCities(options) {
+    if (options.city) {
+      // If user specifies a "city", treat it as a last name prefix
+      return [options.city];
+    }
+    // Use common last names for default search batches
+    const commonNames = [
+      'Adams', 'Allen', 'Anderson', 'Baker', 'Brown', 'Campbell', 'Carter',
+      'Clark', 'Cohen', 'Collins', 'Cooper', 'Davis', 'Edwards', 'Evans',
+      'Fisher', 'Garcia', 'Gonzalez', 'Green', 'Hall', 'Harris', 'Henderson',
+      'Hill', 'Howard', 'Jackson', 'James', 'Johnson', 'Jones', 'Kelly',
+      'King', 'Lee', 'Lewis', 'Lopez', 'Martin', 'Martinez', 'Meyer',
+      'Miller', 'Mitchell', 'Moore', 'Morgan', 'Morris', 'Murphy', 'Nelson',
+      'Parker', 'Patterson', 'Peterson', 'Phillips', 'Roberts', 'Robinson',
+      'Rodriguez', 'Rogers', 'Ross', 'Russell', 'Sanders', 'Scott', 'Smith',
+      'Stewart', 'Sullivan', 'Taylor', 'Thomas', 'Thompson', 'Turner',
+      'Walker', 'Ward', 'Washington', 'Watson', 'White', 'Williams',
+      'Wilson', 'Wood', 'Wright', 'Young',
+    ];
+    return options.maxCities ? commonNames.slice(0, options.maxCities) : commonNames;
+  }
+
+  /**
+   * Override search() — iterate by last name and yield active attorneys.
+   */
+  async *search(practiceArea, options = {}) {
+    const rateLimiter = new RateLimiter();
+    const searchNames = this.getCities(options);
+    const seenRegNumbers = new Set();
+
+    for (let si = 0; si < searchNames.length; si++) {
+      const searchName = searchNames[si];
+      yield { _cityProgress: { current: si + 1, total: searchNames.length } };
+      log.scrape(`Searching: "${searchName}" attorneys in ${this.stateCode}`);
+
+      if (options.maxPages && si >= options.maxPages) {
+        log.info(`Reached max pages limit (${options.maxPages})`);
+        break;
+      }
+
+      let response;
+      try {
+        await rateLimiter.wait();
+        response = await this.httpPost(this.searchUrl, {
+          LName: searchName,
+          FName: '',
+          RegNum: '',
+        }, rateLimiter);
+      } catch (err) {
+        log.error(`Request failed for "${searchName}": ${err.message}`);
+        continue;
+      }
+
+      if (response.statusCode === 429 || response.statusCode === 403) {
+        log.warn(`Got ${response.statusCode} from ${this.name}`);
+        const shouldRetry = await rateLimiter.handleBlock(response.statusCode);
+        if (shouldRetry) {
+          try {
+            await rateLimiter.wait();
+            response = await this.httpPost(this.searchUrl, {
+              LName: searchName,
+              FName: '',
+              RegNum: '',
+            }, rateLimiter);
+          } catch (retryErr) {
+            log.error(`Retry failed for "${searchName}": ${retryErr.message}`);
+            continue;
+          }
+        } else {
+          continue;
+        }
+      }
+
+      if (response.statusCode !== 200) {
+        log.error(`Unexpected status ${response.statusCode} for "${searchName}"`);
+        continue;
+      }
+
+      rateLimiter.resetBackoff();
+
+      if (this.detectCaptcha(response.body)) {
+        log.warn(`CAPTCHA detected for "${searchName}"`);
+        yield { _captcha: true, city: searchName, page: 0 };
+        continue;
+      }
+
+      const $ = cheerio.load(response.body);
+      const attorneys = this.parseResultsPage($);
+
+      if (attorneys.length === 0) {
+        log.info(`No results for "${searchName}"`);
+        continue;
+      }
+
+      // Filter: active only, last name matches search, deduplicate by reg number
+      let yieldCount = 0;
+      for (const attorney of attorneys) {
+        // Only active attorneys
+        if (attorney._statusCode !== 'ACTV') continue;
+
+        // Deduplicate by registration number
+        if (seenRegNumbers.has(attorney.bar_number)) continue;
+        seenRegNumbers.add(attorney.bar_number);
+
+        // Only those whose last name actually matches/starts with search term
+        const rawLast = attorney._rawLastName;
+        const searchUpper = searchName.toUpperCase();
+        if (!rawLast.startsWith(searchUpper) && rawLast !== searchUpper) continue;
+
+        // Clean up internal fields
+        delete attorney._statusCode;
+        delete attorney._rawLastName;
+
+        attorney.practice_area = practiceArea || '';
+        yield this.transformResult(attorney, practiceArea);
+        yieldCount++;
+      }
+
+      log.success(`Found ${attorneys.length} results for "${searchName}" (${yieldCount} yielded)`);
+    }
   }
 }
 

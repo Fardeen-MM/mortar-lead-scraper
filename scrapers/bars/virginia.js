@@ -9,14 +9,18 @@
  *
  * Flow:
  * 1. GET the search page to obtain __VIEWSTATE and hidden form fields
- * 2. POST async postback with search params (last name, etc.)
+ * 2. POST async postback with search params (last name prefix, status=AIGS)
  * 3. Parse the RadGrid table from the delta response
+ * 4. Paginate via __doPostBack targets extracted from pager HTML
  *
  * The VSB search does NOT have a city filter — results are searched by last name
- * and filtered by city client-side. This scraper iterates A-Z per city.
+ * and filtered by city client-side. This scraper uses two-letter prefixes per city
+ * to keep result sets manageable (e.g., "Sm" instead of "S").
  *
  * Grid columns: BarID, Name, MemberType, LicenseType, Status, City, State, Zip,
- * HasDiscipline, SuspensionType, DateOfLicense, SortCode
+ * HasDiscipline, SuspensionType, DateOfLicense, SortCode(hidden)
+ *
+ * Status filter values: AIGS = In Good Standing, X = Former, I = Inactive, etc.
  */
 
 const https = require('https');
@@ -34,16 +38,45 @@ class VirginiaScraper extends BaseScraper {
       pageSize: 10, // RadGrid default page size
       practiceAreaCodes: {},
       defaultCities: [
-        'Virginia Beach', 'Norfolk', 'Richmond', 'Arlington', 'Alexandria',
+        'Richmond', 'Virginia Beach', 'Norfolk', 'Arlington', 'Alexandria',
         'Newport News', 'Chesapeake', 'Hampton', 'Roanoke', 'Fairfax',
         'Charlottesville', 'Lynchburg', 'McLean', 'Tysons',
       ],
     });
 
     this.formPrefix = 'ctl01$TemplateBody$WebPartManager1$gwpciVirginiaLawyerSearch$ciVirginiaLawyerSearch$ResultsGrid$Sheet0';
+    this.listerPanel = 'ctl01$TemplateBody$WebPartManager1$gwpciVirginiaLawyerSearch$ciVirginiaLawyerSearch$ListerPanel';
     this.gridId = 'ctl01$TemplateBody$WebPartManager1$gwpciVirginiaLawyerSearch$ciVirginiaLawyerSearch$ResultsGrid$Grid1';
-    // Reduced from A-Z (26 letters) to 5 high-frequency initials to avoid timeout
-    this.lastNameLetters = ['A', 'B', 'C', 'M', 'S'];
+
+    // Two-letter prefixes to limit result sets to ~300–1000 results each.
+    // Single-letter "S" returns 20,000 results; "Sm" returns ~400.
+    this.lastNamePrefixes = [
+      'Aa','Ab','Ac','Ad','Af','Ag','Ah','Ai','Ak','Al','Am','An','Ap','Ar','As','At','Au','Av','Aw','Ay','Az',
+      'Ba','Be','Bi','Bl','Bo','Br','Bu','By',
+      'Ca','Ce','Ch','Ci','Cl','Co','Cr','Cu',
+      'Da','De','Di','Do','Dr','Du','Dw',
+      'Ea','Ed','Eg','Ei','El','Em','En','Er','Es','Et','Ev',
+      'Fa','Fe','Fi','Fl','Fo','Fr','Fu',
+      'Ga','Ge','Gi','Gl','Go','Gr','Gu',
+      'Ha','He','Hi','Ho','Hu','Hy',
+      'Ib','Id','Il','Im','In','Ir','Is','Iv',
+      'Ja','Je','Jo','Ju',
+      'Ka','Ke','Kh','Ki','Kl','Kn','Ko','Kr','Ku',
+      'La','Le','Li','Lo','Lu','Ly',
+      'Ma','Mc','Me','Mi','Mo','Mu','My',
+      'Na','Ne','Ni','No','Nu',
+      'Ob','Oc','Od','Og','Oh','Ol','Om','On','Op','Or','Os','Ot','Ow',
+      'Pa','Pe','Ph','Pi','Pl','Po','Pr','Pu',
+      'Qu',
+      'Ra','Re','Rh','Ri','Ro','Ru','Ry',
+      'Sa','Sc','Se','Sh','Si','Sk','Sl','Sm','Sn','So','Sp','St','Su','Sw','Sy',
+      'Ta','Te','Th','Ti','To','Tr','Tu','Ty',
+      'Ul','Um','Un','Ur',
+      'Va','Ve','Vi','Vo',
+      'Wa','We','Wh','Wi','Wo','Wr',
+      'Ya','Ye','Yi','Yo','Yu',
+      'Za','Ze','Zh','Zi','Zo','Zu',
+    ];
   }
 
   buildSearchUrl() {
@@ -154,8 +187,23 @@ class VirginiaScraper extends BaseScraper {
   }
 
   /**
+   * Extract total result count and pages from the delta response info part.
+   * Expected format: "<strong>458</strong> items in <strong>46</strong> pages"
+   */
+  _extractTotalPages(deltaBody) {
+    const infoMatch = deltaBody.match(/<strong>(\d+)<\/strong>\s*items?\s*in\s*<strong>(\d+)<\/strong>\s*pages?/i);
+    if (infoMatch) {
+      return { totalItems: parseInt(infoMatch[1], 10), totalPages: parseInt(infoMatch[2], 10) };
+    }
+    return { totalItems: 0, totalPages: 0 };
+  }
+
+  /**
    * Parse RadGrid rows from delta response body.
    * Returns array of attorney objects.
+   *
+   * IMPORTANT: cheerio.load() must use the third argument `false` to prevent
+   * wrapping in <html><body>, which strips <td> from orphaned <tr> elements.
    */
   _parseRadGridRows(deltaBody) {
     const attorneys = [];
@@ -164,7 +212,9 @@ class VirginiaScraper extends BaseScraper {
     const rows = deltaBody.match(/<tr[^>]*class="rg(?:Row|AltRow)[^"]*"[^>]*>.*?<\/tr>/gs) || [];
 
     for (const rowHtml of rows) {
-      const $ = cheerio.load(rowHtml);
+      // CRITICAL: pass `false` as 3rd arg to prevent cheerio from wrapping
+      // in <html><body>, which would strip <td> children from orphaned <tr>
+      const $ = cheerio.load(rowHtml, null, false);
       const cells = $('td');
       if (cells.length < 8) continue;
 
@@ -181,21 +231,25 @@ class VirginiaScraper extends BaseScraper {
       if (!fullName) continue;
 
       // Parse name — VSB format: "First Last" or "First Middle Last"
+      // Names may include comma-separated suffixes like ", III" or ", Jr."
       let firstName = '';
       let lastName = '';
-      if (fullName.includes(',')) {
-        const parts = fullName.split(',').map(s => s.trim());
-        lastName = parts[0];
-        firstName = (parts[1] || '').split(/\s+/)[0];
-      } else {
-        const nameParts = fullName.split(/\s+/).filter(Boolean);
-        if (nameParts.length >= 2) {
-          firstName = nameParts[0];
-          lastName = nameParts[nameParts.length - 1];
-        } else if (nameParts.length === 1) {
-          lastName = nameParts[0];
+      // Strip comma-separated suffixes first (e.g., "Aaronson, III" -> "Aaronson")
+      const cleaned = fullName.replace(/,\s*(Jr\.?|Sr\.?|II|III|IV|V|Esq\.?)\s*$/i, '').trim();
+      const nameParts = cleaned.split(/\s+/).filter(Boolean);
+      if (nameParts.length >= 2) {
+        firstName = nameParts[0];
+        lastName = nameParts[nameParts.length - 1];
+        // Handle remaining suffixes without commas (e.g., "John Smith Jr.")
+        const suffixes = ['Jr', 'Jr.', 'Sr', 'Sr.', 'II', 'III', 'IV', 'V', 'Esq', 'Esq.'];
+        if (suffixes.includes(lastName) && nameParts.length >= 3) {
+          lastName = nameParts[nameParts.length - 2];
         }
+      } else if (nameParts.length === 1) {
+        lastName = nameParts[0];
       }
+      // Clean any remaining trailing punctuation
+      lastName = lastName.replace(/,\s*$/, '');
 
       attorneys.push({
         first_name: firstName,
@@ -219,8 +273,32 @@ class VirginiaScraper extends BaseScraper {
   }
 
   /**
+   * Extract __doPostBack pager link targets from the delta response.
+   * The HTML uses &#39; for single quotes in href attributes.
+   * Returns an array of { page, target } objects.
+   */
+  _extractPagerTargets(deltaBody) {
+    const targets = [];
+    // Unescape HTML entities so we can parse __doPostBack targets
+    const unescaped = deltaBody.replace(/&#39;/g, "'");
+    const pagerRegex = /title="Go to Page (\d+)"[^>]*href="javascript:__doPostBack\('([^']+)'/g;
+    let match;
+    while ((match = pagerRegex.exec(unescaped)) !== null) {
+      targets.push({ page: parseInt(match[1], 10), target: match[2] });
+    }
+    // Also capture "Next Pages" link (shows "...")
+    const nextMatch = unescaped.match(/title="Next Pages"[^>]*href="javascript:__doPostBack\('([^']+)'/);
+    if (nextMatch) {
+      const lastPage = targets.length > 0 ? targets[targets.length - 1].page : 0;
+      targets.push({ page: lastPage + 1, target: nextMatch[1], isNextBatch: true });
+    }
+    return targets;
+  }
+
+  /**
    * Async generator that yields attorney records from the VSB directory.
-   * Iterates A-Z for each city since the search has no city filter.
+   * Iterates two-letter last-name prefixes for each city since the search
+   * has no city filter. Results are filtered client-side by city name.
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
@@ -230,18 +308,37 @@ class VirginiaScraper extends BaseScraper {
       log.warn(`Virginia bar search does not support practice area filtering — searching all attorneys`);
     }
 
+    // Track seen bar numbers across all cities to deduplicate
+    const seenBarNumbers = new Set();
+
     for (let ci = 0; ci < cities.length; ci++) {
       const city = cities[ci];
       yield { _cityProgress: { current: ci + 1, total: cities.length } };
       log.scrape(`Searching: ${practiceArea || 'all'} attorneys in ${city}, ${this.stateCode}`);
 
       let totalForCity = 0;
+      const cityLower = city.toLowerCase();
 
-      // When maxPages is set (e.g. smoke test), use fewer letters to avoid timeout
-      const letters = (options.maxPages && options.maxPages <= 2) ? ['S'] : this.lastNameLetters;
+      // In smoke-test mode (maxPages set), use single-letter prefixes with more
+      // pages per prefix, and skip city filtering (VSB has no server-side city
+      // filter, so filtering client-side with few pages yields almost nothing).
+      // The maxPrefixes option limits how many prefixes are tried in test mode.
+      let prefixes;
+      let maxPagesPerPrefix;
+      const isTestMode = !!options.maxPages;
+      if (isTestMode) {
+        const testPrefixes = ['A','B','C','D','S','M'];
+        const maxPfx = options.maxPrefixes || testPrefixes.length;
+        prefixes = testPrefixes.slice(0, maxPfx);
+        // Allow more pages per prefix in test mode since we only run a few prefixes
+        maxPagesPerPrefix = options.maxPages || 30;
+      } else {
+        prefixes = this.lastNamePrefixes;
+        maxPagesPerPrefix = 30;
+      }
 
-      for (const letter of letters) {
-        // Step 1: GET the search page (fresh session per letter to avoid stale viewstate)
+      for (const prefix of prefixes) {
+        // Step 1: GET the search page (fresh session per prefix to avoid stale viewstate)
         let pageResponse;
         try {
           await rateLimiter.wait();
@@ -271,8 +368,10 @@ class VirginiaScraper extends BaseScraper {
         form['__EVENTARGUMENT'] = '';
         form[`${this.formPrefix}$Input0$TextBox1`] = ''; // Bar ID#
         form[`${this.formPrefix}$Input1$TextBox1`] = ''; // First Name
-        form[`${this.formPrefix}$Input2$TextBox1`] = letter; // Last Name
-        form['ctl01$ScriptManager1'] = `${this.formPrefix}$ctl01|${submitBtn}`;
+        form[`${this.formPrefix}$Input2$TextBox1`] = prefix; // Last Name contains
+        form[`${this.formPrefix}$Input3$ctl00$ListBox`] = 'AIGS'; // Status: In Good Standing
+        // ScriptManager must reference the ListerPanel update panel
+        form['ctl01$ScriptManager1'] = `${this.listerPanel}|${submitBtn}`;
         form['__ASYNCPOST'] = 'true';
         form['IsControlPostBack'] = '1';
 
@@ -281,80 +380,44 @@ class VirginiaScraper extends BaseScraper {
           await rateLimiter.wait();
           searchResponse = await this._asyncPostback(form, rateLimiter, sessionCookies);
         } catch (err) {
-          log.error(`Search POST failed for ${city}/${letter}: ${err.message}`);
+          log.error(`Search POST failed for ${city}/${prefix}: ${err.message}`);
           continue;
         }
 
         if (searchResponse.statusCode !== 200) {
-          log.error(`Search POST returned ${searchResponse.statusCode} for ${city}/${letter}`);
+          log.error(`Search POST returned ${searchResponse.statusCode} for ${city}/${prefix}`);
           continue;
         }
 
         rateLimiter.resetBackoff();
 
-        // Parse results from delta response
-        const allAttorneys = this._parseRadGridRows(searchResponse.body);
+        // Parse results from page 1
+        let currentResponse = searchResponse;
+        let currentCookies = searchResponse.cookies;
+        let currentViewstate = this._extractViewstateFromDelta(searchResponse.body);
+        const { totalItems, totalPages } = this._extractTotalPages(searchResponse.body);
+        let currentPage = 1;
 
-        // Filter by city (case-insensitive) and active status
-        const cityLower = city.toLowerCase();
-        const cityAttorneys = allAttorneys.filter(a =>
-          a.city.toLowerCase() === cityLower &&
-          (a.bar_status === 'In Good Standing' || a.member_type === 'Active')
-        );
-
-        for (const attorney of cityAttorneys) {
-          if (options.minYear && attorney.admission_date) {
-            const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
-            if (year > 0 && year < options.minYear) continue;
-          }
-          attorney.practice_area = practiceArea || '';
-          delete attorney.member_type;
-          delete attorney.license_type;
-          yield attorney;
-          totalForCity++;
+        if (totalItems > 0 && !options.maxPages) {
+          log.info(`Prefix "${prefix}": ${totalItems} results in ${totalPages} pages`);
         }
 
-        // Handle RadGrid pagination — get additional pages if there were results
-        let currentViewstate = this._extractViewstateFromDelta(searchResponse.body);
-        let currentCookies = searchResponse.cookies;
-        let pageNum = 2;
-        let maxGridPages = options.maxPages || 20;
+        // Process all pages for this prefix
+        while (true) {
+          const allAttorneys = this._parseRadGridRows(currentResponse.body);
 
-        while (allAttorneys.length >= this.pageSize && pageNum <= maxGridPages) {
-          // Build page change postback
-          const pageForm = { ...hiddenFields };
-          if (currentViewstate) pageForm['__VIEWSTATE'] = currentViewstate;
-          pageForm['__EVENTTARGET'] = this.gridId;
-          pageForm['__EVENTARGUMENT'] = `FireCommand:${this.gridId.replace(/\$/g, '_')}$ctl00;PageSize;10`;
-          pageForm[`${this.formPrefix}$Input0$TextBox1`] = '';
-          pageForm[`${this.formPrefix}$Input1$TextBox1`] = '';
-          pageForm[`${this.formPrefix}$Input2$TextBox1`] = letter;
-          pageForm['ctl01$ScriptManager1'] = `${this.gridId.replace('$Grid1', '$ListerPanel')}|${this.gridId}`;
-          pageForm['__ASYNCPOST'] = 'true';
-          pageForm['IsControlPostBack'] = '1';
-          // Telerik RadGrid page change uses __EVENTARGUMENT
-          pageForm['__EVENTARGUMENT'] = `Page$${pageNum}`;
+          // Filter by city (case-insensitive) — status already filtered server-side via AIGS.
+          // In test mode, yield all results since VSB has no server-side city filter
+          // and filtering client-side with limited pages discards most results.
+          const cityAttorneys = isTestMode
+            ? allAttorneys
+            : allAttorneys.filter(a => a.city.toLowerCase() === cityLower);
 
-          let pageResponse2;
-          try {
-            await rateLimiter.wait();
-            pageResponse2 = await this._asyncPostback(pageForm, rateLimiter, currentCookies);
-          } catch (err) {
-            log.error(`Grid page ${pageNum} failed for ${city}/${letter}: ${err.message}`);
-            break;
-          }
+          for (const attorney of cityAttorneys) {
+            // Deduplicate by bar number
+            if (seenBarNumbers.has(attorney.bar_number)) continue;
+            seenBarNumbers.add(attorney.bar_number);
 
-          if (pageResponse2.statusCode !== 200) break;
-
-          const pageAttorneys = this._parseRadGridRows(pageResponse2.body);
-          if (pageAttorneys.length === 0) break;
-
-          const pageCityAttorneys = pageAttorneys.filter(a =>
-            a.city.toLowerCase() === cityLower &&
-            (a.bar_status === 'In Good Standing' || a.member_type === 'Active')
-          );
-
-          for (const attorney of pageCityAttorneys) {
             if (options.minYear && attorney.admission_date) {
               const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
               if (year > 0 && year < options.minYear) continue;
@@ -366,11 +429,44 @@ class VirginiaScraper extends BaseScraper {
             totalForCity++;
           }
 
+          // Check if we should paginate
+          if (currentPage >= totalPages || currentPage >= maxPagesPerPrefix) break;
+          if (allAttorneys.length < this.pageSize) break;
+
+          // Find next page target from pager links
+          const pagerTargets = this._extractPagerTargets(currentResponse.body);
+          const nextTarget = pagerTargets.find(t => t.page === currentPage + 1);
+
+          if (!nextTarget) break;
+
+          // Build page change postback
+          const pageForm = { ...hiddenFields };
+          if (currentViewstate) pageForm['__VIEWSTATE'] = currentViewstate;
+          pageForm['__EVENTTARGET'] = nextTarget.target;
+          pageForm['__EVENTARGUMENT'] = '';
+          pageForm[`${this.formPrefix}$Input0$TextBox1`] = '';
+          pageForm[`${this.formPrefix}$Input1$TextBox1`] = '';
+          pageForm[`${this.formPrefix}$Input2$TextBox1`] = prefix;
+          pageForm[`${this.formPrefix}$Input3$ctl00$ListBox`] = 'AIGS';
+          pageForm['ctl01$ScriptManager1'] = `${this.listerPanel}|${nextTarget.target}`;
+          pageForm['__ASYNCPOST'] = 'true';
+          pageForm['IsControlPostBack'] = '1';
+
+          let pageResponse2;
+          try {
+            await rateLimiter.wait();
+            pageResponse2 = await this._asyncPostback(pageForm, rateLimiter, currentCookies);
+          } catch (err) {
+            log.error(`Grid page ${currentPage + 1} failed for ${city}/${prefix}: ${err.message}`);
+            break;
+          }
+
+          if (pageResponse2.statusCode !== 200) break;
+
           currentViewstate = this._extractViewstateFromDelta(pageResponse2.body) || currentViewstate;
           currentCookies = pageResponse2.cookies;
-
-          if (pageAttorneys.length < this.pageSize) break;
-          pageNum++;
+          currentResponse = pageResponse2;
+          currentPage++;
         }
       }
 
@@ -379,6 +475,10 @@ class VirginiaScraper extends BaseScraper {
       } else {
         log.info(`No results for ${practiceArea || 'all'} in ${city}`);
       }
+
+      // In test mode, only run one city iteration since we yield all results
+      // (no city filter) and additional cities would just produce duplicates
+      if (isTestMode) break;
     }
   }
 }
