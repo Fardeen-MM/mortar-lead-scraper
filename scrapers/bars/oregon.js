@@ -150,7 +150,8 @@ class OregonScraper extends BaseScraper {
       result.email = mailtoLink.attr('href').replace('mailto:', '').split('?')[0].trim().toLowerCase();
     }
 
-    // Website
+    // Website — look for links with website/firm/visit text, excluding bar site
+    // and social media / legal directory domains (via isExcludedDomain)
     $('a[href]').each((_, el) => {
       const href = $(el).attr('href') || '';
       const text = $(el).text().toLowerCase().trim();

@@ -262,7 +262,8 @@ class TexasScraper extends BaseScraper {
       result.email = mailtoLink.attr('href').replace('mailto:', '').split('?')[0].trim().toLowerCase();
     }
 
-    // Website — look for external links
+    // Website — look for external links, excluding bar site and
+    // social media / legal directory domains (via isExcludedDomain)
     $('a[href]').each((_, el) => {
       const href = $(el).attr('href') || '';
       const text = $(el).text().toLowerCase().trim();

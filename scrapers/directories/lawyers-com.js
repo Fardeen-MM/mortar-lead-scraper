@@ -340,26 +340,23 @@ class LawyersComScraper extends BaseScraper {
         }
 
         // --- Phone (from contact-info sibling) ---
+        // IMPORTANT: Do NOT use data-ctn-rtn or data-ctn-rtn-alt attributes.
+        // These are Lawyers.com call-tracking numbers (routed through their system),
+        // NOT the firm's real phone number. Using them gives users misleading data.
+        // Only extract phone from actual tel: links in the page content.
         let phone = '';
         const phoneEl = $contactInfo.find('.srl-phone');
-        // Prefer data-ctn-rtn-alt (the original number, not the tracking number)
-        const rtnAlt = phoneEl.attr('data-ctn-rtn-alt') || '';
-        if (rtnAlt) {
-          phone = rtnAlt.trim();
-        } else {
-          // Fallback: use the tel: href from the inner <a> element
-          const telHref = phoneEl.find('a[href^="tel:"]').attr('href') || '';
-          if (telHref) {
-            phone = telHref.replace('tel:', '').trim();
-          } else {
-            // Last fallback: use data-ctn-rtn (tracking number, better than nothing)
-            const rtn = phoneEl.attr('data-ctn-rtn') || '';
-            if (rtn) phone = rtn.trim();
-          }
+        const telHref = phoneEl.find('a[href^="tel:"]').attr('href') || '';
+        if (telHref) {
+          phone = telHref.replace('tel:', '').trim();
         }
 
         // --- Website (from contact-info sibling) ---
         let website = ($contactInfo.find('.srl-website a').attr('href') || '').trim();
+        // Filter out social media and non-firm domains
+        if (website && this.isExcludedDomain(website)) {
+          website = '';
+        }
 
         // --- Parse city/state/zip from serving text ---
         const location = this._parseServingText(servingText);
@@ -509,19 +506,14 @@ class LawyersComScraper extends BaseScraper {
     const result = {};
     const bodyText = $('body').text();
 
-    // Phone — prefer real phone from text, NOT data-ctn-rtn (Lawyers.com call-tracking numbers)
+    // Phone — only extract real phone from page text content.
+    // IMPORTANT: Do NOT use data-ctn-rtn or data-ctn-rtn-alt attributes anywhere.
+    // These are Lawyers.com call-tracking numbers (routed through their system),
+    // NOT the firm's real phone number. They change per session and mislead users.
     const phoneMatch = bodyText.match(/(?:Phone|Tel(?:ephone)?|Office|Call)[:\s]*([\d().\s-]{10,})/i);
     if (phoneMatch) {
       const cleaned = phoneMatch[1].replace(/[^\d()-.\s]/g, '').trim();
       if (/\d{3}.*\d{3}.*\d{4}/.test(cleaned)) result.phone = cleaned;
-    }
-    if (!result.phone) {
-      // Fallback: use data-ctn-rtn-alt (original number)
-      const phoneEl = $('[data-ctn-rtn-alt]');
-      const rtnAlt = phoneEl.attr('data-ctn-rtn-alt') || '';
-      if (rtnAlt) {
-        result.phone = rtnAlt.trim();
-      }
     }
 
     // Email from mailto links
@@ -534,7 +526,7 @@ class LawyersComScraper extends BaseScraper {
     const websiteEl = $('a.website-click, a[class*="website"]');
     if (websiteEl.length) {
       const href = (websiteEl.first().attr('href') || '').trim();
-      if (href && !href.includes('lawyers.com')) {
+      if (href && !this.isExcludedDomain(href)) {
         result.website = href;
       }
     }
@@ -543,7 +535,7 @@ class LawyersComScraper extends BaseScraper {
         const href = $(el).attr('href') || '';
         const text = $(el).text().toLowerCase().trim();
         if ((text.includes('visit') || text.includes('website')) &&
-            !href.includes('lawyers.com') && !this.isExcludedDomain(href)) {
+            !this.isExcludedDomain(href)) {
           result.website = href;
           return false;
         }

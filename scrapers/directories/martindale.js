@@ -218,6 +218,11 @@ class MartindaleScraper extends BaseScraper {
           const image = Array.isArray(entry.image) ? entry.image[0] : entry.image;
           const telephone = Array.isArray(entry.telephone) ? entry.telephone[0] : entry.telephone;
 
+          // Filter website URL through excluded domain check to avoid
+          // capturing social media, legal directories, or other non-firm URLs
+          const rawUrl = (entry.url || '').trim();
+          const website = (rawUrl && !this.isExcludedDomain(rawUrl)) ? rawUrl : '';
+
           attorneys.push({
             first_name: firstName,
             last_name: lastName,
@@ -230,7 +235,7 @@ class MartindaleScraper extends BaseScraper {
             country: (address.addressCountry || 'US').trim(),
             phone: (telephone || '').trim(),
             email: '',  // Not available in Martindale JSON-LD
-            website: (entry.url || '').trim(),
+            website: website,
             profile_url: (sameAs || '').trim(),
             image_url: (image || '').trim(),
             source: 'martindale',
