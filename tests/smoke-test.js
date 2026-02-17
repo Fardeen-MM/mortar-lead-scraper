@@ -43,7 +43,6 @@ const KNOWN_PLACEHOLDERS = new Set([
   'UT',   // DNN iframe
   'VT',   // Login required
   'WY',   // WordPress directory plugin
-  'DE',   // DOE Legal ASP.NET — field names need browser inspection
   // Canada — inaccessible
   'CA-MB',  // reCAPTCHA v3
   'CA-NB',  // Alinity CAPTCHA

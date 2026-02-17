@@ -7,13 +7,26 @@
  * The DE Bar uses a DOE Legal ASP.NET WebForms application for its public
  * attorney search. The form supports auto-complete (AJAX) for name fields
  * and returns: Attorney name, Firm, Phone, Supreme Court ID, Admit Date, Status.
- * Paging supports 5-250 records per page.
+ * Paging supports 5-250 records per page (defaults to 250).
+ *
+ * The search is keyword-based (matches names, firms) — not city-based.
+ * We iterate common last name prefixes to get broad coverage.
  *
  * Flow:
  * 1. GET the search page to obtain __VIEWSTATE and hidden fields
- * 2. POST search form with name/city filters
- * 3. Parse the ASP.NET GridView table results
- * 4. Paginate via __doPostBack events with updated ViewState
+ * 2. POST search form with name keyword (SearchButton is an image button)
+ * 3. Parse the #VwPublicSearchTableControlGrid table results
+ * 4. Paginate via Next Page image button with updated ViewState
+ *
+ * Key field names (confirmed via live inspection):
+ *   Search input:  ctl00$PageContent$SearchText
+ *   Search button: ctl00$PageContent$SearchButton (image — send .x and .y)
+ *   Page size:     ctl00$PageContent$Pagination$_PageSizeSelector
+ *   Next page:     ctl00$PageContent$Pagination$_NextPage (image — send .x and .y)
+ *   Current page:  ctl00$PageContent$Pagination$_CurrentPage
+ *
+ * Name format: "LAST FIRST M" (all caps, space-separated, NO comma)
+ * Firm cell:   "FIRM NAME\n\nCITY \nST" (city/state embedded in firm cell)
  */
 
 const https = require('https');
@@ -22,13 +35,27 @@ const BaseScraper = require('../base-scraper');
 const { log } = require('../../lib/logger');
 const { RateLimiter } = require('../../lib/rate-limiter');
 
+// Common last name prefixes for broad coverage of the directory.
+// The DOE Legal search is keyword-based; we use these to systematically
+// sweep the directory. With page size 250, most prefixes fit on one page.
+const SEARCH_TERMS = [
+  'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Davis', 'Miller',
+  'Wilson', 'Moore', 'Taylor', 'Anderson', 'Thomas', 'Jackson', 'White',
+  'Harris', 'Martin', 'Thompson', 'Garcia', 'Martinez', 'Robinson',
+  'Clark', 'Lewis', 'Lee', 'Walker', 'Hall', 'Allen', 'Young', 'King',
+  'Wright', 'Green', 'Baker', 'Adams', 'Nelson', 'Hill', 'Campbell',
+  'Mitchell', 'Roberts', 'Carter', 'Phillips', 'Evans', 'Turner',
+  'Collins', 'Murphy', 'Kelly', 'Sullivan', 'Ryan', 'Cohen', 'Schwartz',
+  'Ross', 'Stewart', 'Morgan', 'Bell', 'Murray', 'Fox', 'Gordon',
+];
+
 class DelawareScraper extends BaseScraper {
   constructor() {
     super({
       name: 'delaware',
       stateCode: 'DE',
       baseUrl: 'https://rp470541.doelegal.com/vwPublicSearch/Show-VwPublicSearch-Table.aspx',
-      pageSize: 50,
+      pageSize: 250,
       practiceAreaCodes: {
         'administrative':        'Administrative',
         'bankruptcy':            'Bankruptcy',
@@ -58,6 +85,9 @@ class DelawareScraper extends BaseScraper {
         'Georgetown', 'Milford', 'Smyrna', 'Lewes',
       ],
     });
+
+    // Track yielded bar numbers to dedup across search terms
+    this._seenBarNumbers = new Set();
   }
 
   buildSearchUrl() {
@@ -126,7 +156,7 @@ class DelawareScraper extends BaseScraper {
   /**
    * HTTP POST with URL-encoded form data and cookie tracking.
    */
-  httpPost(url, formData, rateLimiter, cookies = '') {
+  _httpPost(url, formData, rateLimiter, cookies = '') {
     return new Promise((resolve, reject) => {
       const ua = rateLimiter.getUserAgent();
       const postBody = typeof formData === 'string'
@@ -150,7 +180,7 @@ class DelawareScraper extends BaseScraper {
           'Connection': 'keep-alive',
           ...(cookies ? { 'Cookie': cookies } : {}),
         },
-        timeout: 20000,
+        timeout: 30000,
       };
 
       const req = https.request(options, (res) => {
@@ -175,83 +205,127 @@ class DelawareScraper extends BaseScraper {
 
   /**
    * Extract all hidden form fields from ASP.NET page.
+   * Handles both attribute orderings: type before name, and name before type.
    */
   _extractHiddenFields(html) {
     const fields = {};
-    const regex = /<input[^>]*type="hidden"[^>]*name="([^"]*)"[^>]*value="([^"]*)"/g;
+    const regex = /<input[^>]+type\s*=\s*"hidden"[^>]*/gi;
     let match;
     while ((match = regex.exec(html)) !== null) {
-      fields[match[1]] = match[2];
-    }
-    const regex2 = /<input[^>]*value="([^"]*)"[^>]*type="hidden"[^>]*name="([^"]*)"/g;
-    while ((match = regex2.exec(html)) !== null) {
-      if (!fields[match[2]]) fields[match[2]] = match[1];
+      const tag = match[0];
+      const nameM = tag.match(/name\s*=\s*"([^"]*)"/);
+      const valueM = tag.match(/value\s*=\s*"([^"]*)"/);
+      if (nameM) {
+        fields[nameM[1]] = valueM ? valueM[1] : '';
+      }
     }
     return fields;
   }
 
   /**
-   * Parse attorneys from the ASP.NET GridView table.
-   * Expected columns: Attorney Name, Firm, Phone, Supreme Court ID, Admit Date, Status
+   * Parse attorneys from the DOE Legal #VwPublicSearchTableControlGrid table.
+   *
+   * Columns: Attorney | Firm/Employer | Phone | Supreme Court ID | Admit Date | Current Status
+   * Name format: "LAST FIRST M" (all caps, space-separated)
+   * Firm cell: "FIRM NAME\n\nCITY \nST" (city/state embedded after <br>)
    */
   _parseAttorneys($) {
     const attorneys = [];
 
-    // Only match GridView/data tables — avoid generic "table tbody tr" which catches nav tables
-    $('table.GridView tr, table[id*="GridView"] tr, table[id*="gv"] tr, table.rgMasterTable tr').each((_, row) => {
+    // The data table has id="VwPublicSearchTableControlGrid"
+    $('#VwPublicSearchTableControlGrid tr').each((_, row) => {
       const $row = $(row);
-      if ($row.find('th').length > 0) return;
+      // Skip header rows
+      if ($row.hasClass('tch') || $row.find('th').length > 0) return;
 
       const cells = $row.find('td');
-      if (cells.length < 3) return;
+      if (cells.length < 6) return;
 
-      // DOE Legal GridView columns: Name, Firm, Phone, Supreme Court ID, Admit Date, Status
-      const nameCell = $(cells[0]);
-      const nameLink = nameCell.find('a');
-      let fullName = (nameLink.length ? nameLink.text() : nameCell.text()).trim();
-      const profileUrl = nameLink.attr('href') || '';
+      // Column 0: Attorney name (format: "LAST FIRST M")
+      const rawName = $(cells[0]).text().trim();
+      if (!rawName || rawName.length < 3) return;
+      // Skip non-name entries
+      if (/^(name|attorney|search|no\s|page|N\/A)/i.test(rawName)) return;
+      // Names must contain at least one space (first + last)
+      if (!rawName.includes(' ')) return;
 
-      if (!fullName || /^(name|attorney|search|no\s|page)/i.test(fullName)) return;
-      // Skip pagination row cells
-      if (fullName.match(/^\d+$/) && fullName.length <= 3) return;
-      // Skip navigation/menu text that leaks through
-      if (/^(home|about|contact|login|register|sign|delaware|menu|faq|help|privacy|terms|copyright)/i.test(fullName)) return;
-      // Names must contain at least one space or comma (first + last) and look like a person name
-      if (!fullName.includes(',') && !fullName.includes(' ')) return;
+      // Column 1: Firm/Employer — contains firm name, city, and state
+      const firmHtml = $(cells[1]).html() || '';
+      const firmText = $(cells[1]).text().trim();
 
-      const firmName = cells.length > 1 ? $(cells[1]).text().trim() : '';
-      const phone = cells.length > 2 ? $(cells[2]).text().trim().replace(/[^\d()-.\s+]/g, '') : '';
-      const supremeCourtId = cells.length > 3 ? $(cells[3]).text().trim() : '';
-      const admitDate = cells.length > 4 ? $(cells[4]).text().trim() : '';
-      const barStatus = cells.length > 5 ? $(cells[5]).text().trim() : 'Active';
+      // Parse firm cell: "FIRM NAME<br>CITY &nbsp;\nST"
+      let firmName = '';
+      let city = '';
+      let state = 'DE';
 
-      // Handle "Last, First" name format
-      let firstName, lastName;
-      if (fullName.includes(',')) {
-        const nameParts = fullName.split(',');
-        lastName = nameParts[0].trim();
-        firstName = (nameParts[1] || '').trim().split(/\s+/)[0];
-        fullName = `${firstName} ${lastName}`.trim();
-      } else {
-        const parsed = this.splitName(fullName);
-        firstName = parsed.firstName;
-        lastName = parsed.lastName;
+      // Split on <br> to separate firm from location
+      const firmParts = firmHtml.split(/<br\s*\/?>/i);
+      if (firmParts.length >= 1) {
+        firmName = cheerio.load(firmParts[0]).text().trim();
       }
+      if (firmParts.length >= 2) {
+        // The location part: "CITY &nbsp;\nST" or "CITY  \nST"
+        const locationText = cheerio.load(firmParts.slice(1).join(' ')).text().trim();
+        // Parse "CITY  ST" or "CITY\nST"
+        const locationMatch = locationText.match(/^(.+?)\s{2,}([A-Z]{2})$/) ||
+                              locationText.match(/^(.+?)\s+([A-Z]{2})$/);
+        if (locationMatch) {
+          city = locationMatch[1].trim();
+          state = locationMatch[2];
+        } else if (locationText) {
+          city = locationText.trim();
+        }
+      }
+
+      // Column 2: Phone
+      const phone = $(cells[2]).text().trim().replace(/[^\d()-.\s+]/g, '');
+
+      // Column 3: Supreme Court ID (bar number)
+      const supremeCourtId = $(cells[3]).text().trim();
+
+      // Column 4: Admit Date
+      const admitDate = $(cells[4]).text().trim();
+
+      // Column 5: Current Status
+      const barStatus = $(cells[5]).text().trim() || 'Active';
+
+      // Parse name: format is "LAST FIRST M" (all caps, space-separated)
+      // Convert to title case and split into first/last
+      const nameParts = rawName.split(/\s+/);
+      let lastName, firstName;
+
+      if (nameParts.length >= 2) {
+        // First token is last name, second is first name
+        lastName = nameParts[0];
+        firstName = nameParts[1];
+        // Handle suffixes like JR., II, III that may be at end
+      } else {
+        lastName = nameParts[0] || '';
+        firstName = '';
+      }
+
+      // Title-case the names
+      const toTitleCase = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+      firstName = firstName ? toTitleCase(firstName) : '';
+      lastName = lastName ? toTitleCase(lastName) : '';
+
+      // Build full name as "First Last"
+      const fullName = `${firstName} ${lastName}`.trim();
 
       attorneys.push({
         first_name: firstName,
         last_name: lastName,
         full_name: fullName,
-        firm_name: firmName,
-        city: '',
-        state: 'DE',
+        firm_name: firmName.replace(/\s+/g, ' ').trim(),
+        city: city,
+        state: state,
         phone: phone,
         email: '',
         website: '',
         bar_number: supremeCourtId.replace(/[^\d]/g, ''),
         admission_date: admitDate,
-        bar_status: barStatus || 'Active',
-        profile_url: profileUrl.startsWith('http') ? profileUrl : (profileUrl ? `https://rp470541.doelegal.com${profileUrl}` : ''),
+        bar_status: barStatus,
+        profile_url: '',
       });
     });
 
@@ -259,46 +333,40 @@ class DelawareScraper extends BaseScraper {
   }
 
   /**
-   * Extract result count from ASP.NET page.
-   */
-  _extractResultCountFromHtml($) {
-    const text = $('body').text();
-
-    const matchOf = text.match(/([\d,]+)\s+(?:results?|records?|attorneys?|members?)\s+found/i);
-    if (matchOf) return parseInt(matchOf[1].replace(/,/g, ''), 10);
-
-    const matchShowing = text.match(/Showing\s+\d+\s*[-–]\s*\d+\s+of\s+([\d,]+)/i);
-    if (matchShowing) return parseInt(matchShowing[1].replace(/,/g, ''), 10);
-
-    const matchRecords = text.match(/(\d+)\s+records?/i);
-    if (matchRecords) return parseInt(matchRecords[1], 10);
-
-    const matchItems = text.match(/Items?\s+\d+\s*[-–]\s*\d+\s+of\s+([\d,]+)/i);
-    if (matchItems) return parseInt(matchItems[1].replace(/,/g, ''), 10);
-
-    return 0;
-  }
-
-  /**
    * Async generator that yields attorney records from the DE Bar directory.
+   *
+   * The DOE Legal search is keyword-based, not city-based.
+   * We use getCities() to provide search terms (common last names) OR
+   * actual cities if the user specifies one.
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
     const practiceCode = this.resolvePracticeCode(practiceArea);
+    this._seenBarNumbers = new Set();
 
     if (!practiceCode && practiceArea) {
       log.warn(`Unknown practice area "${practiceArea}" for DE — searching without filter`);
       log.info(`Available areas: ${Object.keys(this.practiceAreaCodes).join(', ')}`);
     }
 
-    const cities = this.getCities(options);
+    // Determine search terms: if user specified a city, use it as a search term.
+    // Otherwise, use common last names for broad coverage.
+    let searchTerms;
+    if (options.city) {
+      searchTerms = [options.city];
+    } else {
+      searchTerms = SEARCH_TERMS;
+      if (options.maxCities) {
+        searchTerms = searchTerms.slice(0, options.maxCities);
+      }
+    }
 
-    for (let ci = 0; ci < cities.length; ci++) {
-      const city = cities[ci];
-      yield { _cityProgress: { current: ci + 1, total: cities.length } };
-      log.scrape(`Searching: ${practiceArea || 'all'} attorneys in ${city}, ${this.stateCode}`);
+    for (let ci = 0; ci < searchTerms.length; ci++) {
+      const searchTerm = searchTerms[ci];
+      yield { _cityProgress: { current: ci + 1, total: searchTerms.length } };
+      log.scrape(`Searching DE Bar: "${searchTerm}" (${ci + 1}/${searchTerms.length})`);
 
-      // Step 1: GET the search page to obtain ViewState
+      // Step 1: GET the search page to obtain ViewState + session cookies
       let pageResponse;
       try {
         await rateLimiter.wait();
@@ -320,29 +388,23 @@ class DelawareScraper extends BaseScraper {
         log.warn(`No __VIEWSTATE found on DE Bar search page`);
       }
 
-      // Step 2: POST search form
-      // DOE Legal SearchText is a name field, not city. Search by last name initial.
-      const searchName = 'Smith';
+      // Step 2: POST search form with image button click
       const formData = {
         ...hiddenFields,
         '__EVENTTARGET': '',
         '__EVENTARGUMENT': '',
+        'ctl00$PageContent$SearchText': searchTerm,
+        // Image button requires .x and .y coordinates
+        'ctl00$PageContent$SearchButton.x': '10',
+        'ctl00$PageContent$SearchButton.y': '10',
       };
-
-      // DOE Legal uses ctl00$PageContent$ prefix with SearchText autocomplete field
-      formData['ctl00$PageContent$SearchText'] = searchName;
-      formData['ctl00$PageContent$ddlPageSize'] = String(this.pageSize);
-      formData['ctl00$PageContent$btnSearch'] = 'Search';
-      // Also try common alternate prefixes
-      formData['ctl00$ContentPlaceHolder1$SearchText'] = searchName;
-      formData['ctl00$MainContent$SearchText'] = searchName;
 
       let searchResponse;
       try {
         await rateLimiter.wait();
-        searchResponse = await this.httpPost(this.baseUrl, formData, rateLimiter, sessionCookies);
+        searchResponse = await this._httpPost(this.baseUrl, formData, rateLimiter, sessionCookies);
       } catch (err) {
-        log.error(`Search POST failed for ${city}: ${err.message}`);
+        log.error(`Search POST failed for "${searchTerm}": ${err.message}`);
         continue;
       }
 
@@ -354,79 +416,93 @@ class DelawareScraper extends BaseScraper {
       }
 
       if (searchResponse.statusCode !== 200) {
-        log.error(`Search returned ${searchResponse.statusCode} for ${city}`);
+        log.error(`Search returned ${searchResponse.statusCode} for "${searchTerm}"`);
         continue;
       }
 
       rateLimiter.resetBackoff();
 
       if (this.detectCaptcha(searchResponse.body)) {
-        log.warn(`CAPTCHA detected for ${city} — skipping`);
-        yield { _captcha: true, city };
+        log.warn(`CAPTCHA detected for "${searchTerm}" — skipping`);
+        yield { _captcha: true, city: searchTerm };
         continue;
       }
 
       const $ = cheerio.load(searchResponse.body);
-      const totalResults = this._extractResultCountFromHtml($);
       const attorneys = this._parseAttorneys($);
 
       if (attorneys.length === 0) {
-        log.info(`No results for ${practiceArea || 'all'} in ${city}`);
+        log.info(`No results for "${searchTerm}"`);
         continue;
       }
 
-      log.success(`Found ${totalResults || attorneys.length} results for ${city}`);
+      log.success(`Found ${attorneys.length} results for "${searchTerm}"`);
 
-      // Assign city to results (DOE Legal table may not include city column)
+      // Yield results, deduplicating by bar number
+      let newCount = 0;
       for (const attorney of attorneys) {
-        if (!attorney.city) attorney.city = city;
+        // Filter by city if user specified one
+        if (options.city && attorney.city &&
+            attorney.city.toLowerCase() !== options.city.toLowerCase()) {
+          continue;
+        }
+
+        // Filter by admission year
         if (options.minYear && attorney.admission_date) {
           const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
           if (year > 0 && year < options.minYear) continue;
         }
+
+        // Dedup by bar number
+        if (attorney.bar_number && this._seenBarNumbers.has(attorney.bar_number)) {
+          continue;
+        }
+        if (attorney.bar_number) {
+          this._seenBarNumbers.add(attorney.bar_number);
+        }
+
+        newCount++;
         yield this.transformResult(attorney, practiceArea);
       }
 
-      // Step 3: Paginate via ASP.NET GridView postback
+      log.info(`Yielded ${newCount} new attorneys from "${searchTerm}" (${this._seenBarNumbers.size} total unique)`);
+
+      // Step 3: Paginate via Next Page image button
       let currentHtml = searchResponse.body;
       let currentCookies = searchResponse.cookies || sessionCookies;
       let pagesFetched = 1;
 
       while (true) {
         if (options.maxPages && pagesFetched >= options.maxPages) {
-          log.info(`Reached max pages limit (${options.maxPages}) for ${city}`);
+          log.info(`Reached max pages limit (${options.maxPages}) for "${searchTerm}"`);
           break;
         }
 
+        // Check if the current page value indicates more pages
         const $current = cheerio.load(currentHtml);
+        const currentPage = parseInt($current('input[name="ctl00$PageContent$Pagination$_CurrentPage"]').val() || '0', 10);
 
-        // ASP.NET GridView pagination: look for __doPostBack links with Page$ arguments
-        const nextLink = $current('a[href*="__doPostBack"]').filter((_, el) => {
-          const href = $current(el).attr('href') || '';
-          const text = $current(el).text().trim();
-          // Match "Next", ">", or the next page number
-          return (text === '>' || text === 'Next' || text === '...' || text === String(pagesFetched + 1)) &&
-                 href.includes('__doPostBack');
-        }).first();
+        // If we only got < pageSize results, there's no next page
+        const currentAttorneys = this._parseAttorneys($current);
+        if (currentAttorneys.length < this.pageSize) break;
 
-        if (!nextLink.length) break;
-
-        const postbackMatch = (nextLink.attr('href') || '').match(/__doPostBack\('([^']+)','([^']*)'\)/);
-        if (!postbackMatch) break;
-
+        // POST with Next Page image button click
         const pageHidden = this._extractHiddenFields(currentHtml);
         const pageFormData = {
           ...pageHidden,
-          '__EVENTTARGET': postbackMatch[1].replace(/\\'/g, "'"),
-          '__EVENTARGUMENT': postbackMatch[2].replace(/\\'/g, "'"),
+          '__EVENTTARGET': '',
+          '__EVENTARGUMENT': '',
+          'ctl00$PageContent$SearchText': searchTerm,
+          'ctl00$PageContent$Pagination$_NextPage.x': '10',
+          'ctl00$PageContent$Pagination$_NextPage.y': '10',
         };
 
         let pageResponse2;
         try {
           await rateLimiter.wait();
-          pageResponse2 = await this.httpPost(this.baseUrl, pageFormData, rateLimiter, currentCookies);
+          pageResponse2 = await this._httpPost(this.baseUrl, pageFormData, rateLimiter, currentCookies);
         } catch (err) {
-          log.error(`Pagination failed for ${city} page ${pagesFetched + 1}: ${err.message}`);
+          log.error(`Pagination failed for "${searchTerm}" page ${pagesFetched + 1}: ${err.message}`);
           break;
         }
 
@@ -437,22 +513,41 @@ class DelawareScraper extends BaseScraper {
 
         if (pageAttorneys.length === 0) break;
 
+        // Check if we got the same results (page didn't actually advance)
+        const newPage = parseInt($page('input[name="ctl00$PageContent$Pagination$_CurrentPage"]').val() || '0', 10);
+        if (newPage <= currentPage) break;
+
+        let pageNewCount = 0;
         for (const attorney of pageAttorneys) {
-          if (!attorney.city) attorney.city = city;
+          if (options.city && attorney.city &&
+              attorney.city.toLowerCase() !== options.city.toLowerCase()) {
+            continue;
+          }
           if (options.minYear && attorney.admission_date) {
             const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
             if (year > 0 && year < options.minYear) continue;
           }
+          if (attorney.bar_number && this._seenBarNumbers.has(attorney.bar_number)) {
+            continue;
+          }
+          if (attorney.bar_number) {
+            this._seenBarNumbers.add(attorney.bar_number);
+          }
+          pageNewCount++;
           yield this.transformResult(attorney, practiceArea);
         }
+
+        log.info(`Page ${pagesFetched + 1}: ${pageNewCount} new attorneys`);
 
         currentHtml = pageResponse2.body;
         currentCookies = pageResponse2.cookies || currentCookies;
         pagesFetched++;
       }
 
-      log.success(`Completed ${pagesFetched} page(s) for ${city}`);
+      log.success(`Completed ${pagesFetched} page(s) for "${searchTerm}"`);
     }
+
+    log.success(`DE scraper complete: ${this._seenBarNumbers.size} unique attorneys found`);
   }
 }
 
