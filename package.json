@@ -6,12 +6,14 @@
   "scripts": {
     "start": "node server.js",
     "scrape": "node scrape.js",
+    "signals": "node signals.js",
     "dedup": "node dedup.js",
     "test": "jest --forceExit",
     "test:smoke": "jest --testPathPattern=smoke --forceExit --testTimeout=30000"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
+    "better-sqlite3": "^11.10.0",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0",
     "commander": "^12.1.0",
@@ -21,6 +23,7 @@
     "express": "^4.21.0",
     "fuse.js": "^7.0.0",
     "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
     "puppeteer": "^23.0.0",
     "ws": "^8.18.0"
   },

@@ -371,6 +371,17 @@ const server = app.listen(PORT, () => {
   console.log(`  UI:  http://localhost:${PORT}`);
   console.log(`  API: http://localhost:${PORT}/api/config`);
   console.log(`  WS:  ws://localhost:${PORT}/ws\n`);
+
+  // Signal Engine — scan Indeed every 6 hours
+  if (process.env.NODE_ENV === 'production' || process.env.ENABLE_CRONS) {
+    const cron = require('node-cron');
+    cron.schedule('0 */6 * * *', () => {
+      require('./watchers/job-boards').run()
+        .then(count => console.log(`[Cron] Signal scan found ${count} new signals`))
+        .catch(err => console.error(`[Cron] Signal scan failed: ${err.message}`));
+    });
+    console.log('  📡 Signal Engine: job board scan scheduled every 6 hours\n');
+  }
 });
 
 const wss = new WebSocketServer({ server, path: '/ws' });
