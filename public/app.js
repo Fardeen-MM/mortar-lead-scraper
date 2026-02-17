@@ -59,16 +59,17 @@ const app = {
     };
 
     for (const [code, meta] of Object.entries(this.config.states)) {
-      // Only show working scrapers
-      if (!meta.working) continue;
       const country = meta.country || 'US';
       if (!groups[country]) groups[country] = [];
-      groups[country].push({ code, name: meta.name });
+      groups[country].push({ code, name: meta.name, working: meta.working });
     }
 
-    // Sort each group alphabetically by name
+    // Sort each group: working first, then alphabetically by name
     for (const country of Object.keys(groups)) {
-      groups[country].sort((a, b) => a.name.localeCompare(b.name));
+      groups[country].sort((a, b) => {
+        if (a.working !== b.working) return a.working ? -1 : 1;
+        return a.name.localeCompare(b.name);
+      });
     }
 
     // Build optgroups in display order
@@ -76,10 +77,16 @@ const app = {
       if (!groups[country] || groups[country].length === 0) continue;
       const optgroup = document.createElement('optgroup');
       optgroup.label = groupLabels[country] || country;
-      for (const { code, name } of groups[country]) {
+      for (const { code, name, working } of groups[country]) {
         const opt = document.createElement('option');
         opt.value = code;
-        opt.textContent = `${code} — ${name}`;
+        if (working) {
+          opt.textContent = `${code} — ${name}`;
+        } else {
+          opt.textContent = `${code} — ${name} (unavailable)`;
+          opt.disabled = true;
+          opt.style.color = '#999';
+        }
         optgroup.appendChild(opt);
       }
       stateSelect.appendChild(optgroup);
