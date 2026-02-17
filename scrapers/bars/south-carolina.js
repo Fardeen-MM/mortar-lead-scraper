@@ -614,7 +614,7 @@ class SouthCarolinaScraper extends BaseScraper {
 
     let totalYielded = 0;
     let totalDetailFetches = 0;
-    const maxDetailFetches = options.maxPages ? 10 : Infinity;
+    const maxDetailFetches = options.maxPages ? 5 : Infinity;
 
     for (let li = 0; li < activeLetters.length; li++) {
       const letter = activeLetters[li];
@@ -685,11 +685,12 @@ class SouthCarolinaScraper extends BaseScraper {
         for (const sr of searchResults) {
           if (totalDetailFetches >= maxDetailFetches) {
             // In test mode, yield listing-level data without detail fetch
+            // NOTE: Don't set profile_url — SC detail pages require POST with
+            // antiforgery token, so waterfall profile enrichment is too slow
             yield this.transformResult({
               first_name: sr.name.includes(',') ? sr.name.split(',')[1]?.trim().split(' ')[0] || '' : '',
               last_name: sr.name.includes(',') ? sr.name.split(',')[0]?.trim() || '' : sr.name,
               city: '', state: 'SC', bar_number: sr.id, bar_status: 'Active',
-              profile_url: `${this.detailUrl}${sr.id}`,
             }, practiceArea);
             totalYielded++;
             continue;
