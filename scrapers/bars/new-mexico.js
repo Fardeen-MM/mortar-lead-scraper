@@ -1,60 +1,61 @@
 /**
- * State Bar of New Mexico Scraper
+ * State Bar of New Mexico — CV5 (cvweb) Search API
  *
  * Source: https://www.sbnm.org/For-Public/I-Need-a-Lawyer/Online-Bar-Directory
- * Method: Discover and query underlying search API endpoint
+ * Platform: Euclid Technology CV Web Templates v4 (embedded iframe)
+ * Method: POST to utilities.dll/customList with QNAME=FINDALAWYER
  *
- * The SBNM Online Bar Directory is hosted on a CMS that wraps an internal
- * member database (~8,618 lawyers, mandatory bar). The search interface
- * may use an embedded iframe, AJAX call, or redirect to a member database
- * provider. This scraper discovers the actual API endpoint and queries it
- * with city/practice area filters.
+ * Search API:
+ *   POST https://www.sbnm.org/cvweb/cgi-bin/utilities.dll/customList
+ *   Form params: QNAME=FINDALAWYER, CITY=..., RANGE=start/pagesize
+ *   Returns HTML table: Name (with customerCd), Status, Phone, County, Admission Date
+ *
+ * Profile API:
+ *   GET customList?QNAME=FINDALAWYER&WBP=LawyerProfilex.htm&customercd={id}
+ *   Returns: full name, organization, address, phone, fax, email, admission date
+ *
+ * Total records: ~8,600 active attorneys
  */
 
 const https = require('https');
-const http = require('http');
 const cheerio = require('cheerio');
 const BaseScraper = require('../base-scraper');
 const { log } = require('../../lib/logger');
 const { RateLimiter } = require('../../lib/rate-limiter');
+
+const SEARCH_URL = 'https://www.sbnm.org/cvweb/cgi-bin/utilities.dll/customList';
 
 class NewMexicoScraper extends BaseScraper {
   constructor() {
     super({
       name: 'new-mexico',
       stateCode: 'NM',
-      baseUrl: 'https://www.sbnm.org/For-Public/I-Need-a-Lawyer/Online-Bar-Directory',
-      pageSize: 50,
+      baseUrl: SEARCH_URL,
+      pageSize: 25,
       practiceAreaCodes: {
-        'administrative':         'Administrative',
-        'appellate':              'Appellate',
-        'bankruptcy':             'Bankruptcy',
-        'business':               'Business',
-        'civil litigation':       'Civil Litigation',
-        'corporate':              'Corporate',
-        'criminal':               'Criminal',
-        'criminal defense':       'Criminal Defense',
-        'elder':                  'Elder Law',
-        'employment':             'Employment',
-        'environmental':          'Environmental',
-        'estate planning':        'Estate Planning',
-        'family':                 'Family',
-        'family law':             'Family',
-        'general practice':       'General Practice',
-        'immigration':            'Immigration',
-        'indian law':             'Indian/Tribal Law',
-        'insurance':              'Insurance',
-        'intellectual property':  'Intellectual Property',
-        'labor':                  'Labor',
-        'medical malpractice':    'Medical Malpractice',
-        'natural resources':      'Natural Resources',
-        'personal injury':        'Personal Injury',
-        'probate':                'Probate',
-        'real estate':            'Real Estate',
-        'tax':                    'Tax',
-        'tax law':                'Tax',
-        'water law':              'Water Law',
-        'workers comp':           'Workers Compensation',
+        'administrative':         'ADMIN',
+        'appellate':              'APPELLATE',
+        'bankruptcy':             'BANKRUPTCY',
+        'business':               'BUS',
+        'civil litigation':       'CIV',
+        'criminal':               'CRIMINAL',
+        'criminal defense':       'CRIMINAL',
+        'elder':                  'ELDER',
+        'employment':             'EMPLOYMENT',
+        'environmental':          'ENVIRONMENT',
+        'estate planning':        'PROBATE',
+        'family':                 'FAMILY',
+        'family law':             'FAMILY',
+        'immigration':            'IMMIGRATION',
+        'indian law':             'INDIAN',
+        'insurance':              'INSURANCE',
+        'intellectual property':  'IP',
+        'personal injury':        'PERSONALINJURY',
+        'real estate':            'REALESTATE',
+        'tax':                    'TAX',
+        'tax law':                'TAX',
+        'water law':              'WATER',
+        'workers comp':           'WORKERS',
       },
       defaultCities: [
         'Albuquerque', 'Santa Fe', 'Las Cruces', 'Rio Rancho',
@@ -62,323 +63,270 @@ class NewMexicoScraper extends BaseScraper {
       ],
     });
 
-    // Potential API endpoints to discover
-    this.apiEndpoints = [
-      'https://www.sbnm.org/api/member/search',
-      'https://www.sbnm.org/DesktopModules/MemberDirectory/API/Search',
-      'https://members.sbnm.org/search',
-      'https://members.sbnm.org/api/members',
-    ];
-
-    this.discoveredEndpoint = null;
+    this.profileBaseUrl = SEARCH_URL;
   }
 
-  /**
-   * Not used directly -- search() is overridden with API discovery.
-   */
   buildSearchUrl() {
-    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden for API discovery`);
+    throw new Error(`${this.name}: buildSearchUrl() is not used — search() is overridden`);
   }
 
   parseResultsPage() {
-    throw new Error(`${this.name}: parseResultsPage() is not used — search() is overridden for API discovery`);
+    throw new Error(`${this.name}: parseResultsPage() is not used — search() is overridden`);
   }
 
   extractResultCount() {
-    throw new Error(`${this.name}: extractResultCount() is not used — search() is overridden for API discovery`);
+    throw new Error(`${this.name}: extractResultCount() is not used — search() is overridden`);
   }
 
   /**
-   * HTTP POST with JSON or form data for the discovered API endpoint.
+   * Override CAPTCHA detection — NM's CV5 pages include reCAPTCHA v3 script
+   * that triggers the base class false positive. Only flag actual CAPTCHA
+   * challenge forms, not the presence of the recaptcha library.
    */
-  httpPost(url, data, rateLimiter, contentType = 'application/x-www-form-urlencoded') {
-    return new Promise((resolve, reject) => {
-      const postData = typeof data === 'string' ? data : (
-        contentType.includes('json') ? JSON.stringify(data) : new URLSearchParams(data).toString()
-      );
+  detectCaptcha(body) {
+    const stripped = body.replace(/<script[^>]*recaptcha[^>]*>[\s\S]*?<\/script>/gi, '')
+                        .replace(/<!--[\s\S]*?-->/g, '');
+    return stripped.includes('captcha') || stripped.includes('CAPTCHA') ||
+           stripped.includes('challenge-form');
+  }
 
+  /**
+   * HTTP POST to the cvweb search API.
+   */
+  _httpPost(url, formData, ua) {
+    return new Promise((resolve, reject) => {
+      const postBody = new URLSearchParams(formData).toString();
       const parsed = new URL(url);
-      const options = {
+
+      const req = https.request({
         hostname: parsed.hostname,
-        port: parsed.port || (parsed.protocol === 'https:' ? 443 : 80),
         path: parsed.pathname + parsed.search,
         method: 'POST',
         headers: {
-          'Content-Type': contentType,
-          'Content-Length': Buffer.byteLength(postData),
-          'User-Agent': rateLimiter.getUserAgent(),
-          'Accept': 'text/html,application/json,*/*',
+          'User-Agent': ua,
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
           'Accept-Language': 'en-US,en;q=0.9',
-          'Referer': this.baseUrl,
+          'Accept-Encoding': 'identity',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Length': Buffer.byteLength(postBody),
           'Origin': 'https://www.sbnm.org',
+          'Referer': 'https://www.sbnm.org/cvweb/cgi-bin/utilities.dll/openpage?wrp=membersearch.htm',
+          'Connection': 'keep-alive',
         },
-        timeout: 15000,
-      };
-
-      const protocol = parsed.protocol === 'https:' ? https : http;
-      const req = protocol.request(options, (res) => {
+        timeout: 20000,
+      }, (res) => {
         if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
           res.resume();
-          let redirect = res.headers.location;
-          if (redirect.startsWith('/')) {
-            redirect = `${parsed.protocol}//${parsed.host}${redirect}`;
-          }
-          return resolve(this.httpGet(redirect, rateLimiter));
+          let loc = res.headers.location;
+          if (loc.startsWith('/')) loc = `https://www.sbnm.org${loc}`;
+          return resolve(this.httpGet(loc, { getUserAgent: () => ua, wait: async () => {} }));
         }
         let body = '';
-        res.on('data', chunk => body += chunk);
+        res.on('data', chunk => { body += chunk; });
         res.on('end', () => resolve({ statusCode: res.statusCode, body }));
       });
+
       req.on('error', reject);
-      req.on('timeout', () => { req.destroy(); reject(new Error('timeout')); });
-      req.setTimeout(15000);
-      req.write(postData);
+      req.on('timeout', () => { req.destroy(); reject(new Error('Request timed out')); });
+      req.write(postBody);
       req.end();
     });
   }
 
   /**
-   * Discover the actual search endpoint by examining the directory page.
-   * Looks for iframe src, AJAX URLs in scripts, form actions, and API calls.
+   * Build profile page URL for a customer code.
    */
-  async discoverEndpoint(rateLimiter) {
-    if (this.discoveredEndpoint) return this.discoveredEndpoint;
+  _buildProfileUrl(customerCd) {
+    return `${this.profileBaseUrl}?QNAME=FINDALAWYER&WHP=none&WBP=LawyerProfilex.htm&customercd=${customerCd}`;
+  }
 
-    log.info(`Discovering search endpoint for ${this.name}...`);
+  /**
+   * Parse search results HTML table.
+   *
+   * Table structure:
+   *   <table id="myTable">
+   *     <thead>: Name | Status | Phone | County | Admission Date
+   *     <tbody>:
+   *       <tr>
+   *         <td id="lawyerName_{id}"><a onclick="getCVPageLink('lawyerProfile','{id}')">Name</a></td>
+   *         <td>Active Attorney</td>
+   *         <td>(505) 200-2331</td>
+   *         <td>Bernalillo</td>
+   *         <td>9/30/2002</td>
+   *       </tr>
+   */
+  _parseSearchResults($) {
+    const results = [];
+
+    $('table#myTable tbody tr, table.tablesorter tbody tr').each((_, row) => {
+      const cells = $(row).find('td');
+      if (cells.length < 3) return;
+
+      // Extract customer code from onclick
+      const nameLink = $(cells[0]).find('a[onclick*="getCVPageLink"], a.profile-link').first();
+      if (!nameLink.length) return;
+
+      const onclick = nameLink.attr('onclick') || '';
+      const idMatch = onclick.match(/getCVPageLink\s*\(\s*'lawyerProfile'\s*,\s*'(\d+)'\s*\)/);
+      if (!idMatch) return;
+
+      const customerCd = idMatch[1];
+
+      // Get full name (remove any nickname span)
+      const nameClone = nameLink.clone();
+      nameClone.find('span').remove();
+      const fullName = nameClone.text().trim();
+      if (!fullName) return;
+
+      const status = $(cells[1]).text().trim();
+      const phone = $(cells[2]).text().trim();
+      const county = cells.length > 3 ? $(cells[3]).text().trim() : '';
+      const admissionDate = cells.length > 4 ? $(cells[4]).text().trim() : '';
+
+      results.push({ fullName, customerCd, status, phone, county, admissionDate });
+    });
+
+    return results;
+  }
+
+  /**
+   * Extract total result count from heading.
+   * Format: " - 83 Match(es)"
+   */
+  _getResultCount($) {
+    const heading = $('h2, h3').text() || '';
+    const match = heading.match(/([\d,]+)\s+Match/i);
+    return match ? parseInt(match[1].replace(/,/g, ''), 10) : 0;
+  }
+
+  /**
+   * Parse a NM profile page for additional attorney fields.
+   *
+   * Profile uses <p class="nomargin"> elements in order:
+   *   Member Type, Organization, Address, City/State/Zip, Phone, Fax, Email, Admission Date
+   */
+  /**
+   * Override enrichFromProfile to prevent waterfall from fetching profiles
+   * post-scrape. NM handles profile fetching inline during search() via
+   * _fetchProfile(). The waterfall's sequential profile fetch is too slow
+   * for NM's server (~8s per request due to reCAPTCHA v3).
+   */
+  async enrichFromProfile() {
+    return {};
+  }
+
+  _parseProfilePage($) {
+    const result = {};
+
+    // Full name from <h3> or heading
+    const heading = $('h3').first().text().trim();
+    if (heading) {
+      result.full_name = heading;
+      const { firstName, lastName } = this.splitName(heading);
+      result.first_name = firstName;
+      result.last_name = lastName;
+    }
+
+    // Try to extract labeled fields from text content
+    const bodyText = $('body').text() || '';
+
+    // Email from mailto link
+    const emailLink = $('a[href^="mailto:"]').first();
+    if (emailLink.length) {
+      const email = emailLink.attr('href').replace('mailto:', '').split('?')[0].trim().toLowerCase();
+      if (email && email.includes('@')) result.email = email;
+    }
+
+    // Organization
+    const orgMatch = bodyText.match(/(?:Organization|Firm|Company)\s*[:\-]\s*([^\n]+)/i);
+    if (orgMatch) result.firm_name = orgMatch[1].trim();
+
+    // Phone from profile (may be different from search result)
+    const phoneMatch = bodyText.match(/(?:Phone|Telephone)\s*[:\-]\s*\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}/i);
+    if (phoneMatch) {
+      const ph = phoneMatch[0].replace(/.*?[:\-]\s*/, '').trim();
+      if (ph.length > 5) result.phone = ph;
+    }
+
+    // Fax
+    const faxMatch = bodyText.match(/Fax\s*[:\-]\s*\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}/i);
+    if (faxMatch) {
+      result.fax = faxMatch[0].replace(/.*?[:\-]\s*/, '').trim();
+    }
+
+    // Address from text patterns
+    const addrMatch = bodyText.match(/([A-Z][a-z]+(?:\s[A-Z][a-z]+)*),\s*([A-Z]{2})\s+(\d{5}(?:-\d{4})?)/);
+    if (addrMatch) {
+      result.city = addrMatch[1].trim();
+      result.state = addrMatch[2];
+      result.zip = addrMatch[3];
+    }
+
+    // Also parse structured <p> elements (CV5 profile layout)
+    $('p.nomargin, div.row p').each((_, el) => {
+      const text = $(el).text().trim();
+      if (!text) return;
+
+      // City, ST ZIP pattern
+      const cityStateZip = text.match(/^(.+),\s*([A-Z]{2})\s+(\d{5}(?:-\d{4})?)$/);
+      if (cityStateZip) {
+        result.city = cityStateZip[1].trim();
+        result.state = cityStateZip[2];
+        result.zip = cityStateZip[3];
+      }
+    });
+
+    // Website link
+    $('a[href]').each((_, el) => {
+      const href = ($(el).attr('href') || '').trim();
+      if (href.startsWith('http') && !href.includes('mailto:') && !href.includes('sbnm.org') && !this.isExcludedDomain(href)) {
+        if (!result.website) result.website = href;
+      }
+    });
+
+    return result;
+  }
+
+  /**
+   * Fetch a profile page and parse it.
+   */
+  async _fetchProfile(customerCd, rateLimiter) {
+    const url = this._buildProfileUrl(customerCd);
 
     try {
-      const response = await this.httpGet(this.baseUrl, rateLimiter);
+      await rateLimiter.wait();
+      const response = await this.httpGet(url, rateLimiter);
+
       if (response.statusCode !== 200) {
-        log.warn(`Could not load directory page: ${response.statusCode}`);
+        log.warn(`NM profile returned ${response.statusCode} for ${customerCd}`);
+        return null;
+      }
+
+      if (this.detectCaptcha(response.body)) {
+        log.warn(`CAPTCHA on NM profile for ${customerCd}`);
         return null;
       }
 
       const $ = cheerio.load(response.body);
-
-      // Check for iframe pointing to member directory
-      const iframe = $('iframe[src*="member"], iframe[src*="directory"], iframe[src*="search"]');
-      if (iframe.length) {
-        const src = iframe.attr('src');
-        log.info(`Found iframe endpoint: ${src}`);
-        this.discoveredEndpoint = src;
-        return src;
-      }
-
-      // Check for form action
-      const form = $('form[action*="member"], form[action*="directory"], form[action*="search"]');
-      if (form.length) {
-        const action = form.attr('action');
-        const fullUrl = action.startsWith('http') ? action : new URL(action, 'https://www.sbnm.org').href;
-        log.info(`Found form endpoint: ${fullUrl}`);
-        this.discoveredEndpoint = fullUrl;
-        return fullUrl;
-      }
-
-      // Check script tags for API URLs
-      const scripts = $('script').map((_, el) => $(el).html()).get().join('\n');
-      const apiMatch = scripts.match(/(?:url|endpoint|api|ajax)\s*[:=]\s*['"](https?:\/\/[^'"]+(?:member|directory|search)[^'"]*)['"]/i);
-      if (apiMatch) {
-        log.info(`Found API endpoint in scripts: ${apiMatch[1]}`);
-        this.discoveredEndpoint = apiMatch[1];
-        return apiMatch[1];
-      }
-
-      // Check for data attributes
-      const dataUrl = $('[data-url*="member"], [data-url*="search"], [data-api*="member"]').first();
-      if (dataUrl.length) {
-        const url = dataUrl.attr('data-url') || dataUrl.attr('data-api');
-        log.info(`Found data attribute endpoint: ${url}`);
-        this.discoveredEndpoint = url;
-        return url;
-      }
+      return this._parseProfilePage($);
     } catch (err) {
-      log.warn(`Endpoint discovery failed: ${err.message}`);
+      log.warn(`Failed to fetch NM profile for ${customerCd}: ${err.message}`);
+      return null;
     }
-
-    // Try known API endpoints
-    for (const endpoint of this.apiEndpoints) {
-      try {
-        const response = await this.httpGet(endpoint, rateLimiter);
-        if (response.statusCode === 200 || response.statusCode === 400) {
-          log.info(`Found working API endpoint: ${endpoint}`);
-          this.discoveredEndpoint = endpoint;
-          return endpoint;
-        }
-      } catch {
-        // Try next endpoint
-      }
-    }
-
-    return null;
   }
 
   /**
-   * Parse JSON API response into attorney objects.
-   */
-  parseJsonResponse(body) {
-    const attorneys = [];
-
-    let data;
-    try {
-      data = JSON.parse(body);
-    } catch {
-      return attorneys;
-    }
-
-    // Handle various JSON response shapes
-    const records = Array.isArray(data)
-      ? data
-      : (data.results || data.members || data.data || data.Records || data.Items || []);
-
-    for (const rec of records) {
-      const fullName = rec.FullName || rec.full_name || rec.Name ||
-        `${rec.FirstName || rec.first_name || ''} ${rec.LastName || rec.last_name || ''}`.trim();
-      if (!fullName) continue;
-
-      const { firstName, lastName } = this.splitName(fullName);
-
-      attorneys.push({
-        first_name: rec.FirstName || rec.first_name || firstName,
-        last_name: rec.LastName || rec.last_name || lastName,
-        full_name: fullName,
-        firm_name: (rec.Company || rec.Firm || rec.firm_name || rec.FirmName || '').trim(),
-        city: (rec.City || rec.city || '').trim(),
-        state: (rec.State || rec.state || 'NM').trim(),
-        phone: (rec.Phone || rec.phone || rec.PhoneNumber || '').trim(),
-        email: (rec.Email || rec.email || '').trim(),
-        website: (rec.Website || rec.website || rec.WebsiteUrl || '').trim(),
-        bar_number: String(rec.BarNumber || rec.bar_number || rec.MemberNumber || ''),
-        bar_status: (rec.Status || rec.status || rec.MemberStatus || 'Active').trim(),
-        profile_url: rec.ProfileUrl || rec.profile_url || rec.DetailUrl || '',
-      });
-    }
-
-    return attorneys;
-  }
-
-  /**
-   * Parse HTML response into attorney objects.
-   */
-  parseHtmlResponse(body) {
-    const attorneys = [];
-    const $ = cheerio.load(body);
-
-    // Try table-based results
-    $('table').each((_, table) => {
-      const rows = $(table).find('tr');
-      rows.each((i, row) => {
-        if (i === 0) return;
-        const cells = $(row).find('td');
-        if (cells.length < 3) return;
-
-        const fullName = $(cells[0]).text().trim();
-        if (!fullName || /^(name|member|attorney|first|last)/i.test(fullName)) return;
-
-        const { firstName, lastName } = this.splitName(fullName);
-        const profileLink = $(cells[0]).find('a').attr('href') || '';
-
-        attorneys.push({
-          first_name: firstName,
-          last_name: lastName,
-          full_name: fullName,
-          firm_name: cells.length > 1 ? $(cells[1]).text().trim() : '',
-          city: cells.length > 2 ? $(cells[2]).text().trim() : '',
-          state: 'NM',
-          phone: cells.length > 3 ? $(cells[3]).text().trim() : '',
-          email: '',
-          website: '',
-          bar_number: cells.length > 4 ? $(cells[4]).text().trim().replace(/[^\d]/g, '') : '',
-          bar_status: 'Active',
-          profile_url: profileLink
-            ? new URL(profileLink, 'https://www.sbnm.org').href
-            : '',
-        });
-      });
-    });
-
-    // Try card-based results
-    if (attorneys.length === 0) {
-      $('.member-result, .search-result, .directory-entry, .attorney-card, .result-item').each((_, el) => {
-        const $card = $(el);
-        const nameEl = $card.find('a, .name, .member-name, h3, h4, strong').first();
-        const fullName = nameEl.text().trim();
-        if (!fullName || fullName.length < 3) return;
-
-        const { firstName, lastName } = this.splitName(fullName);
-        const profileLink = $card.find('a').first().attr('href') || '';
-
-        let phone = '';
-        const telLink = $card.find('a[href^="tel:"]');
-        if (telLink.length) phone = telLink.attr('href').replace('tel:', '');
-
-        let email = '';
-        const mailLink = $card.find('a[href^="mailto:"]');
-        if (mailLink.length) email = mailLink.attr('href').replace('mailto:', '').split('?')[0];
-
-        attorneys.push({
-          first_name: firstName,
-          last_name: lastName,
-          full_name: fullName,
-          firm_name: $card.find('.firm, .company').text().trim(),
-          city: $card.find('.city, .location').text().trim(),
-          state: 'NM',
-          phone: phone,
-          email: email,
-          website: '',
-          bar_number: '',
-          bar_status: 'Active',
-          profile_url: profileLink
-            ? new URL(profileLink, 'https://www.sbnm.org').href
-            : '',
-        });
-      });
-    }
-
-    return attorneys;
-  }
-
-  /**
-   * Extract total result count from JSON or HTML response.
-   */
-  extractCountFromResponse(body) {
-    // Try JSON first
-    try {
-      const data = JSON.parse(body);
-      return data.totalCount || data.TotalCount || data.total || data.Total ||
-             data.totalRows || data.TotalRows || data.recordCount || 0;
-    } catch {
-      // Not JSON, try HTML
-    }
-
-    const $ = cheerio.load(body);
-    const text = $.text();
-
-    const matchOf = text.match(/(?:of|total)\s*([\d,]+)\s*(?:results?|members?|records?|attorneys?)/i);
-    if (matchOf) return parseInt(matchOf[1].replace(/,/g, ''), 10);
-
-    const matchFound = text.match(/([\d,]+)\s*(?:results?|members?|records?|attorneys?)\s*(?:found|returned)/i);
-    if (matchFound) return parseInt(matchFound[1].replace(/,/g, ''), 10);
-
-    return 0;
-  }
-
-  /**
-   * Override search() to discover the SBNM search endpoint and query it.
-   * Tries multiple approaches: JSON API, HTML form POST, and direct page scraping.
+   * Search the SBNM CV5 directory by city, paginate, and fetch profiles.
    */
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
-    const practiceCode = this.resolvePracticeCode(practiceArea);
-
-    if (!practiceCode && practiceArea) {
-      log.warn(`Unknown practice area "${practiceArea}" for ${this.stateCode} — searching without filter`);
-    }
-
-    // Step 1: Discover the search endpoint
-    await rateLimiter.wait();
-    const endpoint = await this.discoverEndpoint(rateLimiter);
-
+    const ua = rateLimiter.getUserAgent();
     const cities = this.getCities(options);
+    const practiceCode = this.resolvePracticeCode(practiceArea) || '';
+
+    // Limit profile fetches in test mode to avoid timeouts (NM profiles are slow ~8s each)
+    const maxDetailFetches = options.maxPages ? 3 : Infinity;
+    let totalDetailFetches = 0;
 
     for (let ci = 0; ci < cities.length; ci++) {
       const city = cities[ci];
@@ -396,91 +344,84 @@ class NewMexicoScraper extends BaseScraper {
           break;
         }
 
-        const offset = (page - 1) * this.pageSize;
-        let response;
+        const rangeStart = (page - 1) * this.pageSize + 1;
+        const formData = {
+          'QNAME': 'FINDALAWYER',
+          'WBP': 'LawyerList.htm',
+          'WHP': 'LawyerList_header.htm',
+          'WMT': 'none',
+          'WNR': 'none',
+          'WEM': 'none',
+          'RANGE': `${rangeStart}/${this.pageSize}`,
+          'SORT': 'LASTNAME,FIRSTNAME',
+          'SHOWSQL': 'N',
+          'DISPLAYLAWYERPROFILE': 'N',
+          'LISTDESCRIPTION': 'Find a Lawyer',
+          'LASTNAME': '',
+          'FIRSTNAME': '',
+          'PREFNAME': '',
+          'ORGNAME': '',
+          'CITY': city,
+          'STATECD': '',
+          'SECTIONLIST': '',
+          'PRACTICEAREALIST': practiceCode,
+          'COUNTYLIST': '',
+          'LANGUAGELIST': '',
+          'CONTACTTYPE': '',
+          'APPROVEDMENTOR': '',
+        };
 
+        log.info(`Page ${page} — RANGE=${rangeStart}/${this.pageSize} for ${city}`);
+
+        let response;
         try {
           await rateLimiter.wait();
-
-          if (endpoint) {
-            // Try JSON API POST
-            const searchData = {
-              city: city,
-              state: 'NM',
-              status: 'Active',
-              practiceArea: practiceCode || '',
-              pageSize: this.pageSize,
-              pageIndex: page - 1,
-              skip: offset,
-              take: this.pageSize,
-            };
-
-            log.info(`Page ${page} — POST ${endpoint} [City=${city}]`);
-            response = await this.httpPost(endpoint, searchData, rateLimiter, 'application/json');
-          } else {
-            // Fallback: POST to the main directory URL
-            const formData = {
-              'city': city,
-              'state': 'NM',
-              'status': 'Active',
-              'page': String(page),
-            };
-
-            if (practiceCode) {
-              formData['practiceArea'] = practiceCode;
-            }
-
-            log.info(`Page ${page} — POST ${this.baseUrl} [City=${city}]`);
-            response = await this.httpPost(this.baseUrl, formData, rateLimiter);
-          }
+          response = await this._httpPost(SEARCH_URL, formData, ua);
         } catch (err) {
-          log.error(`Request failed for ${city}: ${err.message}`);
+          log.error(`NM search request failed: ${err.message}`);
           const shouldRetry = await rateLimiter.handleBlock(0);
           if (shouldRetry) continue;
           break;
         }
 
         if (response.statusCode === 429 || response.statusCode === 403) {
-          log.warn(`Got ${response.statusCode} from ${this.name}`);
+          log.warn(`Got ${response.statusCode} from NM Bar`);
           const shouldRetry = await rateLimiter.handleBlock(response.statusCode);
           if (shouldRetry) continue;
           break;
         }
 
         if (response.statusCode !== 200) {
-          log.error(`Unexpected status ${response.statusCode} — skipping`);
+          log.error(`NM Bar returned ${response.statusCode}`);
           break;
         }
 
         rateLimiter.resetBackoff();
 
         if (this.detectCaptcha(response.body)) {
-          log.warn(`CAPTCHA detected on page ${page} for ${city} — skipping`);
+          log.warn(`CAPTCHA detected on NM page ${page} for ${city}`);
           yield { _captcha: true, city, page };
           break;
         }
 
+        const $ = cheerio.load(response.body);
+
         if (page === 1) {
-          totalResults = this.extractCountFromResponse(response.body);
-          if (totalResults > 0) {
-            log.success(`Found ${totalResults.toLocaleString()} results for ${city}`);
-          }
-        }
-
-        // Try parsing as JSON first, then as HTML
-        let attorneys = this.parseJsonResponse(response.body);
-        if (attorneys.length === 0) {
-          attorneys = this.parseHtmlResponse(response.body);
-        }
-
-        if (attorneys.length === 0) {
-          if (page === 1) {
+          totalResults = this._getResultCount($);
+          if (totalResults === 0) {
             log.info(`No results for ${practiceArea || 'all'} in ${city}`);
             break;
           }
+          const totalPages = Math.ceil(totalResults / this.pageSize);
+          log.success(`Found ${totalResults.toLocaleString()} results (${totalPages} pages) for ${city}`);
+        }
+
+        const searchResults = this._parseSearchResults($);
+
+        if (searchResults.length === 0) {
           consecutiveEmpty++;
           if (consecutiveEmpty >= this.maxConsecutiveEmpty) {
-            log.warn(`${this.maxConsecutiveEmpty} consecutive empty pages — stopping pagination for ${city}`);
+            log.warn(`${this.maxConsecutiveEmpty} consecutive empty pages — stopping for ${city}`);
             break;
           }
           page++;
@@ -489,27 +430,45 @@ class NewMexicoScraper extends BaseScraper {
         }
 
         consecutiveEmpty = 0;
+        log.info(`Page ${page}: ${searchResults.length} results parsed`);
 
-        if (page === 1 && totalResults === 0) {
-          totalResults = attorneys.length;
-          log.success(`Found ${attorneys.length} results for ${city}`);
-        }
+        for (const sr of searchResults) {
+          const profileUrl = this._buildProfileUrl(sr.customerCd);
 
-        for (const attorney of attorneys) {
-          if (options.minYear && attorney.admission_date) {
-            const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
-            if (year > 0 && year < options.minYear) continue;
+          // Fetch profile for email/firm details
+          let detail = null;
+          if (totalDetailFetches < maxDetailFetches) {
+            detail = await this._fetchProfile(sr.customerCd, rateLimiter);
+            totalDetailFetches++;
           }
+
+          const { firstName, lastName } = this.splitName(sr.fullName);
+
+          const attorney = {
+            first_name: detail?.first_name || firstName,
+            last_name: detail?.last_name || lastName,
+            full_name: detail?.full_name || sr.fullName,
+            firm_name: detail?.firm_name || '',
+            city: detail?.city || city,
+            state: detail?.state || 'NM',
+            zip: detail?.zip || '',
+            county: sr.county || '',
+            phone: sr.phone || detail?.phone || '',
+            email: detail?.email || '',
+            website: detail?.website || '',
+            fax: detail?.fax || '',
+            bar_number: sr.customerCd,
+            bar_status: sr.status || '',
+            admission_date: sr.admissionDate || '',
+            profile_url: profileUrl,
+          };
+
           yield this.transformResult(attorney, practiceArea);
         }
 
-        if (attorneys.length < this.pageSize) {
-          log.success(`Completed all results for ${city}`);
-          break;
-        }
-
-        const totalPages = totalResults > 0 ? Math.ceil(totalResults / this.pageSize) : 0;
-        if (totalPages > 0 && page >= totalPages) {
+        // Check if we've reached the last page
+        const totalPages = Math.ceil(totalResults / this.pageSize);
+        if (page >= totalPages) {
           log.success(`Completed all ${totalPages} pages for ${city}`);
           break;
         }

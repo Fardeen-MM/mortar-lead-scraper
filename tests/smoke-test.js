@@ -22,27 +22,27 @@ const KNOWN_PLACEHOLDERS = new Set([
   'WV',   // 403 Forbidden
   'SD',   // React SPA referral only
   // US — inaccessible/unknown format
-  'AK',   // CV5 response format unknown
+  // 'AK', // WORKING — CV5 search + address AJAX
   'AL',   // ASP.NET AJAX UpdatePanels
   'AR',   // DNS not found
   // 'HI' — REMOVED: Algolia index discovered, scraper now functional
   'IA',   // Lucee CMS form fields unknown
   'IN',   // 403 on fetch
   'KS',   // SPA 403
-  'KY',   // Iframe-embedded search
+  // 'KY', // WORKING — CV5 search + profile pages
   // 'ME', // WORKING — session-based CGI POST with browser headers
   'MS',   // 403 Forbidden
   'MT',   // LicensedLawyer.org JS SPA
   'ND',   // CMS search fields unknown
   'NE',   // Vue.js SPA
   'NJ',   // Incapsula WAF
-  'NM',   // Needs inspection
+  // 'NM', // WORKING — CV5 QNAME=FINDALAWYER + profile pages
   'NV',   // CV5 memberdll system
   'OK',   // eWeb/iMIS form fields unknown
   'RI',   // Response format unknown
   'UT',   // DNN iframe
   'VT',   // Login required
-  'WY',   // WordPress directory plugin
+  // 'WY', // WORKING — WordPress REST API with JSON
   // Canada — inaccessible
   'CA-MB',  // reCAPTCHA v3
   'CA-NB',  // Alinity CAPTCHA

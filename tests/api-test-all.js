@@ -26,15 +26,15 @@ const CONCURRENCY = parseInt(getArg('concurrency') || '1', 10);
 const TIMEOUT_MS = parseInt(getArg('timeout') || '120000', 10);
 const ONLY = getArg('scrapers')?.split(',') || null;
 
-// All 40 working scrapers
+// All 50 working scrapers
 const WORKING_SCRAPERS = [
-  'AU-NSW', 'AU-QLD', 'AU-SA', 'AU-TAS', 'AU-VIC', 'AU-WA',
+  'AK', 'AU-NSW', 'AU-QLD', 'AU-SA', 'AU-TAS', 'AU-VIC', 'AU-WA',
   'AZ', 'CA', 'CA-AB', 'CA-BC', 'CA-NL', 'CA-PE', 'CA-YT',
   'CO', 'CT', 'DE', 'FL', 'FR', 'GA', 'HI', 'HK',
   'ID', 'IE', 'IL', 'IT', 'KY', 'LAWYERS-COM', 'MARTINDALE',
-  'MD', 'ME', 'MI', 'MN', 'MO', 'NC', 'NY',
+  'MD', 'ME', 'MI', 'MN', 'MO', 'NC', 'NM', 'NY',
   'NZ', 'OH', 'OR', 'PA', 'SC', 'SG',
-  'TN', 'TX', 'UK-EW-BAR', 'UK-SC', 'VA', 'WA',
+  'TN', 'TX', 'UK-EW-BAR', 'UK-SC', 'VA', 'WA', 'WY',
 ];
 
 function fetch(url, options = {}) {
