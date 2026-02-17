@@ -25,12 +25,12 @@ const KNOWN_PLACEHOLDERS = new Set([
   'AK',   // CV5 response format unknown
   'AL',   // ASP.NET AJAX UpdatePanels
   'AR',   // DNS not found
-  'HI',   // Algolia key not found
+  // 'HI' — REMOVED: Algolia index discovered, scraper now functional
   'IA',   // Lucee CMS form fields unknown
   'IN',   // 403 on fetch
   'KS',   // SPA 403
   'KY',   // Iframe-embedded search
-  'ME',   // Response format unknown
+  // 'ME', // WORKING — session-based CGI POST with browser headers
   'MS',   // 403 Forbidden
   'MT',   // LicensedLawyer.org JS SPA
   'ND',   // CMS search fields unknown

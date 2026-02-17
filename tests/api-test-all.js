@@ -30,9 +30,9 @@ const ONLY = getArg('scrapers')?.split(',') || null;
 const WORKING_SCRAPERS = [
   'AU-NSW', 'AU-QLD', 'AU-SA', 'AU-TAS', 'AU-VIC', 'AU-WA',
   'AZ', 'CA', 'CA-AB', 'CA-BC', 'CA-NL', 'CA-PE', 'CA-YT',
-  'CO', 'CT', 'DE', 'FL', 'FR', 'GA', 'HK',
+  'CO', 'CT', 'DE', 'FL', 'FR', 'GA', 'HI', 'HK',
   'ID', 'IE', 'IL', 'IT', 'KY', 'LAWYERS-COM', 'MARTINDALE',
-  'MD', 'MI', 'MN', 'MO', 'NC', 'NY',
+  'MD', 'ME', 'MI', 'MN', 'MO', 'NC', 'NY',
   'NZ', 'OH', 'OR', 'PA', 'SC', 'SG',
   'TN', 'TX', 'UK-EW-BAR', 'UK-SC', 'VA', 'WA',
 ];
