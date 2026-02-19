@@ -313,16 +313,37 @@ app.get('/api/signals', (req, res) => {
   res.json({ signals, total });
 });
 
-// Trigger a manual scan
-app.post('/api/signals/scan', async (req, res) => {
-  try {
-    const jobBoards = require('./watchers/job-boards');
-    const newSignals = await jobBoards.run();
-    res.json({ newSignals });
-  } catch (err) {
-    console.error('[Signal] Manual scan error:', err.message);
-    res.status(500).json({ error: err.message });
+// Trigger a manual scan (non-blocking — responds immediately, runs in background)
+let _scanRunning = false;
+let _lastScanResult = null;
+
+app.post('/api/signals/scan', (req, res) => {
+  if (_scanRunning) {
+    return res.json({ status: 'already_running', message: 'Scan is already in progress' });
   }
+
+  _scanRunning = true;
+  res.json({ status: 'started', message: 'Scan started in background' });
+
+  const jobBoards = require('./watchers/job-boards');
+  jobBoards.run()
+    .then(count => {
+      _lastScanResult = { newSignals: count, completedAt: new Date().toISOString() };
+      console.log(`[Signal] Manual scan complete — ${count} new signals`);
+    })
+    .catch(err => {
+      _lastScanResult = { error: err.message, completedAt: new Date().toISOString() };
+      console.error('[Signal] Manual scan error:', err.message);
+    })
+    .finally(() => { _scanRunning = false; });
+});
+
+// Check scan status
+app.get('/api/signals/scan-status', (req, res) => {
+  res.json({
+    running: _scanRunning,
+    lastResult: _lastScanResult,
+  });
 });
 
 // Enrichment preview — sample 3 leads from a job

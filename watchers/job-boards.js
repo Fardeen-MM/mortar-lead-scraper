@@ -128,21 +128,32 @@ function searchIndeedJobSpy(searchTerm, location = 'United States', hoursOld = 7
 
 /**
  * Fallback: Search Indeed via Puppeteer scraping.
+ * Requires Chrome/Chromium (installed via puppeteer or system package).
  */
 async function searchIndeedPuppeteer(query, location = 'United States', hoursOld = 72) {
   let browser;
   try {
     const puppeteer = require('puppeteer');
-    browser = await puppeteer.launch({
+    const launchOptions = {
       headless: 'new',
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+        '--single-process',
+      ],
+    };
+    // Use system Chromium on Railway/Docker
+    if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+      launchOptions.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
+    }
+    browser = await puppeteer.launch(launchOptions);
     const page = await browser.newPage();
     await page.setUserAgent(
-      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
     );
 
-    // Pick the right Indeed domain based on location
     const domain = getIndeedDomain(location);
     const days = Math.ceil(hoursOld / 24);
     const url = `https://${domain}/jobs?q=${encodeURIComponent(query)}&l=${encodeURIComponent(location)}&fromage=${days}&sort=date`;
@@ -196,10 +207,10 @@ function getIndeedDomain(location) {
 }
 
 /**
- * Search Indeed — try JobSpy first, fall back to Puppeteer.
+ * Search Indeed — try JobSpy first, fall back to HTTP+Cheerio.
  */
 async function searchIndeed(searchTerm, location, hoursOld) {
-  // Try JobSpy Python bridge first (preferred — better results on Railway)
+  // Try JobSpy Python bridge first (preferred — structured data)
   const jobspyResult = searchIndeedJobSpy(searchTerm, location, hoursOld);
   if (jobspyResult !== null) {
     if (jobspyResult.error) {
@@ -209,7 +220,7 @@ async function searchIndeed(searchTerm, location, hoursOld) {
     return jobspyResult;
   }
 
-  // Fallback to Puppeteer
+  // Fallback to Puppeteer (needs Chrome — installed via Dockerfile on Railway)
   return searchIndeedPuppeteer(searchTerm, location, hoursOld);
 }
 

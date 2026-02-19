@@ -396,19 +396,47 @@
       try {
         const res = await fetch('/api/signals/scan', { method: 'POST' });
         const data = await res.json();
-        btn.textContent = `${data.newSignals} new`;
-        setTimeout(() => {
-          btn.textContent = 'Scan Now';
-          btn.classList.remove('scanning');
-        }, 2000);
-        // Reload signals
-        await loadSignals();
+
+        if (data.status === 'already_running') {
+          btn.textContent = 'Already running...';
+        }
+
+        // Poll for completion
+        pollScanStatus(btn);
       } catch (err) {
         btn.textContent = 'Error';
         btn.classList.remove('scanning');
         setTimeout(() => { btn.textContent = 'Scan Now'; }, 2000);
         console.error('Scan failed:', err);
       }
+    }
+
+    function pollScanStatus(btn) {
+      const startCount = allSignals.length;
+      const interval = setInterval(async () => {
+        try {
+          const res = await fetch('/api/signals/scan-status');
+          const data = await res.json();
+
+          // Refresh signals list while scanning
+          await loadSignals();
+          const newCount = allSignals.length - startCount;
+          btn.textContent = `Scanning... (${newCount} new)`;
+
+          if (!data.running) {
+            clearInterval(interval);
+            await loadSignals();
+            const finalNew = allSignals.length - startCount;
+            btn.textContent = `Done! ${finalNew} new`;
+            btn.classList.remove('scanning');
+            setTimeout(() => { btn.textContent = 'Scan Now'; }, 3000);
+          }
+        } catch (err) {
+          clearInterval(interval);
+          btn.textContent = 'Scan Now';
+          btn.classList.remove('scanning');
+        }
+      }, 5000);
     }
 
     // Event listeners
