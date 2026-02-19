@@ -141,6 +141,19 @@
       margin-left: 0.5rem;
       text-transform: uppercase;
     }
+
+    .signal-description {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid #f3f4f6;
+    }
+
+    .country-flag {
+      font-size: 0.85rem;
+    }
   </style>
 </head>
 <body>
@@ -188,6 +201,13 @@
     <!-- Search + Filter -->
     <div class="signal-controls">
       <input type="text" class="search-input" id="search-input" placeholder="Search firms, titles, cities...">
+      <select id="filter-country" style="min-width:100px;">
+        <option value="">All Countries</option>
+        <option value="US">US</option>
+        <option value="UK">UK</option>
+        <option value="CA">Canada</option>
+        <option value="AU">Australia</option>
+      </select>
       <select id="filter-state" style="min-width:100px;">
         <option value="">All States</option>
       </select>
@@ -245,16 +265,20 @@
       return d >= weekAgo;
     }
 
+    const COUNTRY_FLAGS = { US: '🇺🇸', UK: '🇬🇧', CA: '🇨🇦', AU: '🇦🇺' };
+
     function renderSignal(signal) {
       const card = document.createElement('div');
       card.className = 'signal-card';
 
       const location = [signal.city, signal.state].filter(Boolean).join(', ') || 'Unknown';
       const isNew = isToday(signal.detected_at);
+      const flag = COUNTRY_FLAGS[signal.country] || '';
+      const desc = signal.description ? signal.description.trim() : '';
 
       card.innerHTML = `
         <div class="signal-top">
-          <div class="signal-firm">${esc(signal.firm_name)}${isNew ? '<span class="new-badge">new</span>' : ''}</div>
+          <div class="signal-firm">${flag ? `<span class="country-flag">${flag}</span> ` : ''}${esc(signal.firm_name)}${isNew ? '<span class="new-badge">new</span>' : ''}</div>
           <div class="signal-date">${formatDate(signal.detected_at)}</div>
         </div>
         <div class="signal-title">
@@ -264,8 +288,10 @@
         </div>
         <div class="signal-meta">
           <span class="signal-tag">${esc(location)}</span>
+          <span class="signal-tag">${esc(signal.country || 'US')}</span>
           <span class="signal-tag">${esc(signal.source || 'indeed')}</span>
         </div>
+        ${desc ? `<div class="signal-description">${esc(desc)}</div>` : ''}
       `;
       return card;
     }
@@ -280,11 +306,13 @@
     function getFilteredSignals() {
       const query = document.getElementById('search-input').value.toLowerCase().trim();
       const stateFilter = document.getElementById('filter-state').value;
+      const countryFilter = document.getElementById('filter-country').value;
 
       return allSignals.filter(s => {
+        if (countryFilter && s.country !== countryFilter) return false;
         if (stateFilter && s.state !== stateFilter) return false;
         if (query) {
-          const hay = [s.firm_name, s.job_title, s.city, s.state].join(' ').toLowerCase();
+          const hay = [s.firm_name, s.job_title, s.city, s.state, s.description].join(' ').toLowerCase();
           return hay.includes(query);
         }
         return true;
@@ -390,6 +418,7 @@
     });
 
     document.getElementById('filter-state').addEventListener('change', renderFeed);
+    document.getElementById('filter-country').addEventListener('change', renderFeed);
 
     // Initial load
     loadSignals();
