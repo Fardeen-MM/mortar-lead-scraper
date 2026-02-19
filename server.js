@@ -302,6 +302,29 @@ app.get('/api/health', async (req, res) => {
   res.json(results);
 });
 
+// --- Signal Engine Endpoints ---
+
+// Get signals (paginated)
+app.get('/api/signals', (req, res) => {
+  const { getRecent, getCount } = require('./lib/signal-db');
+  const limit = Math.min(parseInt(req.query.limit) || 50, 5000);
+  const signals = getRecent(limit);
+  const total = getCount();
+  res.json({ signals, total });
+});
+
+// Trigger a manual scan
+app.post('/api/signals/scan', async (req, res) => {
+  try {
+    const jobBoards = require('./watchers/job-boards');
+    const newSignals = await jobBoards.run();
+    res.json({ newSignals });
+  } catch (err) {
+    console.error('[Signal] Manual scan error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Enrichment preview — sample 3 leads from a job
 app.get('/api/scrape/:id/enrich-preview', async (req, res) => {
   const job = jobs.get(req.params.id);

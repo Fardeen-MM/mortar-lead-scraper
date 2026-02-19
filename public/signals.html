@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mortar Signal Engine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--indigo);
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+    }
+    .nav-link:hover { text-decoration: underline; }
+
+    .signals-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .signals-header h2 { margin-bottom: 0; }
+
+    .signal-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .signal-controls .search-input { flex: 1; }
+
+    .signal-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      background: white;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      animation: fadeIn 0.3s ease;
+    }
+    .signal-card:hover {
+      border-color: var(--indigo-light);
+      box-shadow: var(--shadow);
+    }
+
+    .signal-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .signal-firm {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .signal-date {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .signal-title {
+      font-size: 0.9rem;
+      color: var(--indigo);
+      font-weight: 500;
+      margin-bottom: 0.35rem;
+    }
+    .signal-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .signal-title a:hover { text-decoration: underline; }
+
+    .signal-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .signal-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.1rem 0.5rem;
+      background: var(--cream);
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .load-more-wrap {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .scan-btn {
+      position: relative;
+    }
+    .scan-btn.scanning {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+    .scan-btn.scanning::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 16px; height: 16px;
+      margin: -8px 0 0 -8px;
+      border: 2px solid transparent;
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .new-badge {
+      display: inline-block;
+      padding: 0.1rem 0.45rem;
+      background: #ecfdf5;
+      color: var(--success);
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">🧱</span>
+        <span class="logo-text">Mortar</span>
+      </div>
+      <p class="subtitle">Signal Engine</p>
+    </header>
+
+    <a href="/" class="nav-link">&larr; Back to Lead Scraper</a>
+
+    <!-- Stats -->
+    <div class="stats-bar" id="stats-bar">
+      <div class="stat">
+        <span class="stat-value" id="stat-total">-</span>
+        <span class="stat-label">Total Signals</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="stat-today">-</span>
+        <span class="stat-label">Today</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="stat-week">-</span>
+        <span class="stat-label">This Week</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="stat-firms">-</span>
+        <span class="stat-label">Unique Firms</span>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="panel" style="display:block; margin-bottom: 1rem;">
+      <div class="signals-header">
+        <h2>Hiring Signals</h2>
+        <button class="btn btn-primary scan-btn" id="scan-btn" onclick="runScan()">Scan Now</button>
+      </div>
+      <p class="hint" style="margin-bottom:0;">Law firms hiring marketing, intake, and business development roles — detected from Indeed.</p>
+    </div>
+
+    <!-- Search + Filter -->
+    <div class="signal-controls">
+      <input type="text" class="search-input" id="search-input" placeholder="Search firms, titles, cities...">
+      <select id="filter-state" style="min-width:100px;">
+        <option value="">All States</option>
+      </select>
+      <span class="result-count" id="result-count"></span>
+    </div>
+
+    <!-- Signal Feed -->
+    <div id="signal-feed"></div>
+
+    <!-- Load More -->
+    <div class="load-more-wrap" id="load-more-wrap" style="display:none;">
+      <button class="btn btn-secondary" onclick="loadMore()">Load More</button>
+    </div>
+
+    <!-- Empty State -->
+    <div id="empty-state" class="empty-state" style="display:none;">
+      <span class="empty-state-icon">📡</span>
+      <h3>No signals yet</h3>
+      <p>Click "Scan Now" to search Indeed for law firms hiring marketing, intake, and BD roles.</p>
+    </div>
+  </div>
+
+  <script>
+    let allSignals = [];
+    let displayedCount = 0;
+    const PAGE_SIZE = 50;
+    let searchTimeout = null;
+
+    // Format date as relative time or date
+    function formatDate(dateStr) {
+      const d = new Date(dateStr + 'Z'); // SQLite stores UTC
+      const now = new Date();
+      const diffMs = now - d;
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHours = Math.floor(diffMs / 3600000);
+      const diffDays = Math.floor(diffMs / 86400000);
+
+      if (diffMins < 1) return 'just now';
+      if (diffMins < 60) return `${diffMins}m ago`;
+      if (diffHours < 24) return `${diffHours}h ago`;
+      if (diffDays < 7) return `${diffDays}d ago`;
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+
+    function isToday(dateStr) {
+      const d = new Date(dateStr + 'Z');
+      const now = new Date();
+      return d.toDateString() === now.toDateString();
+    }
+
+    function isThisWeek(dateStr) {
+      const d = new Date(dateStr + 'Z');
+      const now = new Date();
+      const weekAgo = new Date(now.getTime() - 7 * 86400000);
+      return d >= weekAgo;
+    }
+
+    function renderSignal(signal) {
+      const card = document.createElement('div');
+      card.className = 'signal-card';
+
+      const location = [signal.city, signal.state].filter(Boolean).join(', ') || 'Unknown';
+      const isNew = isToday(signal.detected_at);
+
+      card.innerHTML = `
+        <div class="signal-top">
+          <div class="signal-firm">${esc(signal.firm_name)}${isNew ? '<span class="new-badge">new</span>' : ''}</div>
+          <div class="signal-date">${formatDate(signal.detected_at)}</div>
+        </div>
+        <div class="signal-title">
+          ${signal.job_url
+            ? `<a href="${esc(signal.job_url)}" target="_blank" rel="noopener">${esc(signal.job_title)} &rarr;</a>`
+            : esc(signal.job_title)}
+        </div>
+        <div class="signal-meta">
+          <span class="signal-tag">${esc(location)}</span>
+          <span class="signal-tag">${esc(signal.source || 'indeed')}</span>
+        </div>
+      `;
+      return card;
+    }
+
+    function esc(str) {
+      if (!str) return '';
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function getFilteredSignals() {
+      const query = document.getElementById('search-input').value.toLowerCase().trim();
+      const stateFilter = document.getElementById('filter-state').value;
+
+      return allSignals.filter(s => {
+        if (stateFilter && s.state !== stateFilter) return false;
+        if (query) {
+          const hay = [s.firm_name, s.job_title, s.city, s.state].join(' ').toLowerCase();
+          return hay.includes(query);
+        }
+        return true;
+      });
+    }
+
+    function renderFeed() {
+      const feed = document.getElementById('signal-feed');
+      const filtered = getFilteredSignals();
+
+      feed.innerHTML = '';
+      displayedCount = Math.min(PAGE_SIZE, filtered.length);
+
+      for (let i = 0; i < displayedCount; i++) {
+        feed.appendChild(renderSignal(filtered[i]));
+      }
+
+      document.getElementById('result-count').textContent = `${filtered.length} signal${filtered.length !== 1 ? 's' : ''}`;
+      document.getElementById('load-more-wrap').style.display = displayedCount < filtered.length ? '' : 'none';
+      document.getElementById('empty-state').style.display = allSignals.length === 0 ? '' : 'none';
+    }
+
+    function loadMore() {
+      const feed = document.getElementById('signal-feed');
+      const filtered = getFilteredSignals();
+      const nextBatch = Math.min(displayedCount + PAGE_SIZE, filtered.length);
+
+      for (let i = displayedCount; i < nextBatch; i++) {
+        feed.appendChild(renderSignal(filtered[i]));
+      }
+
+      displayedCount = nextBatch;
+      document.getElementById('load-more-wrap').style.display = displayedCount < filtered.length ? '' : 'none';
+    }
+
+    function updateStats() {
+      const total = allSignals.length;
+      const today = allSignals.filter(s => isToday(s.detected_at)).length;
+      const week = allSignals.filter(s => isThisWeek(s.detected_at)).length;
+      const firms = new Set(allSignals.map(s => s.firm_name)).size;
+
+      document.getElementById('stat-total').textContent = total;
+      document.getElementById('stat-today').textContent = today;
+      document.getElementById('stat-week').textContent = week;
+      document.getElementById('stat-firms').textContent = firms;
+    }
+
+    function populateStateFilter() {
+      const select = document.getElementById('filter-state');
+      const states = [...new Set(allSignals.map(s => s.state).filter(Boolean))].sort();
+      // Keep existing selection
+      const current = select.value;
+      select.innerHTML = '<option value="">All States</option>';
+      states.forEach(st => {
+        const opt = document.createElement('option');
+        opt.value = st;
+        opt.textContent = st;
+        select.appendChild(opt);
+      });
+      select.value = current;
+    }
+
+    async function loadSignals() {
+      try {
+        const res = await fetch('/api/signals?limit=1000');
+        const data = await res.json();
+        allSignals = data.signals || [];
+        updateStats();
+        populateStateFilter();
+        renderFeed();
+      } catch (err) {
+        console.error('Failed to load signals:', err);
+      }
+    }
+
+    async function runScan() {
+      const btn = document.getElementById('scan-btn');
+      btn.classList.add('scanning');
+      btn.textContent = 'Scanning...';
+
+      try {
+        const res = await fetch('/api/signals/scan', { method: 'POST' });
+        const data = await res.json();
+        btn.textContent = `${data.newSignals} new`;
+        setTimeout(() => {
+          btn.textContent = 'Scan Now';
+          btn.classList.remove('scanning');
+        }, 2000);
+        // Reload signals
+        await loadSignals();
+      } catch (err) {
+        btn.textContent = 'Error';
+        btn.classList.remove('scanning');
+        setTimeout(() => { btn.textContent = 'Scan Now'; }, 2000);
+        console.error('Scan failed:', err);
+      }
+    }
+
+    // Event listeners
+    document.getElementById('search-input').addEventListener('input', () => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(renderFeed, 200);
+    });
+
+    document.getElementById('filter-state').addEventListener('change', renderFeed);
+
+    // Initial load
+    loadSignals();
+  </script>
+</body>
+</html>
