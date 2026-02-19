@@ -470,8 +470,8 @@ class MichiganScraper extends BaseScraper {
       return;
     }
 
-    // In test mode, limit detail page fetches to avoid timeouts (HK/NZ pattern)
-    const maxDetailFetches = options.maxPages ? 5 : Infinity;
+    // In test mode, limit detail page fetches to avoid timeouts
+    const maxDetailFetches = options.maxPages ? 2 : Infinity;
     let totalDetailFetches = 0;
 
     for (let ci = 0; ci < cities.length; ci++) {
