@@ -806,6 +806,101 @@
     }
     .health-state { font-weight: 600; }
     .health-stats { color: var(--text-muted); font-size: 0.72rem; }
+
+    /* Quick Filter Chips */
+    .quick-filters {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+    .qf-chip {
+      padding: 0.2rem 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      background: white;
+      color: var(--text-muted);
+      font-weight: 500;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .qf-chip:hover { border-color: var(--indigo); color: var(--indigo); }
+    .qf-chip.active { background: var(--indigo); color: white; border-color: var(--indigo); }
+
+    /* Dark Mode */
+    body.dark {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --indigo: #818cf8;
+      --success: #34d399;
+      background: var(--bg);
+      color: var(--text);
+    }
+    body.dark .container { background: var(--bg); }
+    body.dark .tam-card,
+    body.dark .breakdown-panel,
+    body.dark .lists-panel,
+    body.dark .panel,
+    body.dark .modal,
+    body.dark .cmd-dialog,
+    body.dark .kbd-hint,
+    body.dark .list-card,
+    body.dark .dupe-card,
+    body.dark .health-card,
+    body.dark .completeness-item,
+    body.dark .import-zone,
+    body.dark .import-result,
+    body.dark .qf-chip { background: var(--surface); border-color: var(--border); }
+    body.dark .leads-table th { background: var(--surface); border-color: var(--border); color: var(--text-muted); }
+    body.dark .leads-table td { border-color: var(--border); color: var(--text); }
+    body.dark .leads-table tr:hover td { background: rgba(255,255,255,0.03); }
+    body.dark .leads-table tr.selected td { background: rgba(99,102,241,0.15); }
+    body.dark .recs-panel { background: linear-gradient(135deg, #1e293b 0%, #312e81 100%); border-color: #4338ca; }
+    body.dark .cmd-input { background: transparent; color: var(--text); }
+    body.dark .cmd-item:hover, body.dark .cmd-item.active { background: rgba(99,102,241,0.15); }
+    body.dark input, body.dark select, body.dark textarea { background: var(--surface); color: var(--text); border-color: var(--border); }
+    body.dark .dupe-side { background: var(--bg); }
+    body.dark .fab { background: #4338ca; }
+    body.dark .view-chip { background: var(--surface); }
+    body.dark .cov-btn { background: var(--surface); color: var(--text-muted); border-color: var(--border); }
+    body.dark .col-toggle { background: var(--surface); border-color: var(--border); }
+    body.dark .list-card-count { background: #334155; }
+    body.dark .cmd-overlay { background: rgba(0,0,0,0.7); }
+    body.dark .modal-overlay { background: rgba(0,0,0,0.7); }
+    body.dark a { color: var(--indigo); }
+    body.dark .btn-secondary { background: var(--surface); color: var(--text); border-color: var(--border); }
+    body.dark .panel-tab { color: var(--text-muted); border-bottom-color: transparent; }
+    body.dark .panel-tab.active { color: var(--indigo); border-bottom-color: var(--indigo); }
+
+    /* Dark mode toggle button */
+    .dark-toggle {
+      padding: 0.25rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    body.dark .dark-toggle { background: var(--surface); color: var(--text-muted); border-color: var(--border); }
+
+    /* Copy button */
+    .copy-btn {
+      padding: 0.2rem 0.5rem;
+      font-size: 0.72rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: white;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .copy-btn:hover { border-color: var(--indigo); color: var(--indigo); }
+    body.dark .copy-btn { background: var(--surface); border-color: var(--border); }
   </style>
 </head>
 <body>
@@ -822,6 +917,7 @@
       <a href="/" class="nav-link">&larr; Lead Scraper</a>
       <a href="/signals.html" class="nav-link">Signals</a>
       <span class="auto-refresh-badge" id="refresh-badge">Auto-refresh: 60s</span>
+      <button class="dark-toggle" id="dark-toggle" onclick="toggleDarkMode()">Dark Mode</button>
     </div>
 
     <!-- TAM Overview -->
@@ -1033,6 +1129,17 @@
     <!-- Column Toggles -->
     <div class="col-toggles" id="col-toggles" style="display:none;"></div>
 
+    <!-- Quick Filter Chips -->
+    <div class="quick-filters" id="quick-filters">
+      <span class="qf-chip" onclick="applyQuickFilter('gold')">Gold Leads</span>
+      <span class="qf-chip" onclick="applyQuickFilter('missing-email')">Missing Email</span>
+      <span class="qf-chip" onclick="applyQuickFilter('has-website-no-email')">Has Website, No Email</span>
+      <span class="qf-chip" onclick="applyQuickFilter('excellent')">Excellent Score</span>
+      <span class="qf-chip" onclick="applyQuickFilter('needs-enrichment')">Needs Enrichment</span>
+      <span class="qf-chip" onclick="applyQuickFilter('new-today')">New Today</span>
+      <span class="qf-chip" onclick="applyQuickFilter('clear')">Clear All</span>
+    </div>
+
     <!-- Search/Filter Row 1 -->
     <div class="lead-controls">
       <input type="text" class="search-input" id="search-input" placeholder="Search name, firm, city, email...">
@@ -1074,6 +1181,7 @@
       <label style="font-size:0.8rem; display:flex; align-items:center; gap:0.25rem;">
         <input type="checkbox" id="filter-website"> Website
       </label>
+      <button class="copy-btn" onclick="copyAllEmails()" title="Copy all emails from current filtered results">Copy Emails</button>
       <span id="result-count" style="font-size:0.8rem; color:var(--text-muted); margin-left:auto;"></span>
     </div>
 
@@ -2735,6 +2843,92 @@
           }
         });
       });
+    }
+
+    // --- Dark Mode ---
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      localStorage.setItem('mortar_dark_mode', isDark ? '1' : '0');
+      document.getElementById('dark-toggle').textContent = isDark ? 'Light Mode' : 'Dark Mode';
+    }
+    // Restore dark mode from localStorage
+    if (localStorage.getItem('mortar_dark_mode') === '1') {
+      document.body.classList.add('dark');
+      document.getElementById('dark-toggle').textContent = 'Light Mode';
+    }
+
+    // --- Quick Filter Presets ---
+    let _activeQuickFilter = null;
+
+    function applyQuickFilter(preset) {
+      // Clear previous
+      document.querySelectorAll('.qf-chip').forEach(c => c.classList.remove('active'));
+      _activeQuickFilter = preset === 'clear' ? null : preset;
+
+      // Reset all filters first
+      document.getElementById('search-input').value = '';
+      document.getElementById('filter-country').value = '';
+      document.getElementById('filter-state').value = '';
+      document.getElementById('filter-practice').value = '';
+      document.getElementById('filter-score').value = '';
+      document.getElementById('filter-email').checked = false;
+      document.getElementById('filter-phone').checked = false;
+      document.getElementById('filter-website').checked = false;
+
+      if (preset === 'clear') { loadLeads(); return; }
+
+      // Highlight active chip
+      event.target.classList.add('active');
+
+      switch (preset) {
+        case 'gold':
+          document.getElementById('filter-email').checked = true;
+          document.getElementById('filter-phone').checked = true;
+          break;
+        case 'missing-email':
+          // Search for leads WITHOUT email — we use score filter for poor leads
+          document.getElementById('filter-score').value = '0-29';
+          break;
+        case 'has-website-no-email':
+          document.getElementById('filter-website').checked = true;
+          // Note: we can't filter "no email" directly, but website+low score approximates it
+          break;
+        case 'excellent':
+          document.getElementById('filter-score').value = '80-100';
+          break;
+        case 'needs-enrichment':
+          document.getElementById('filter-score').value = '0-29';
+          break;
+        case 'new-today':
+          document.getElementById('search-input').value = '';
+          _currentSort = 'created';
+          _currentOrder = 'desc';
+          break;
+      }
+      loadLeads();
+    }
+
+    // --- Copy All Emails ---
+    async function copyAllEmails() {
+      const emails = _currentLeads.filter(l => l.email).map(l => l.email);
+      if (emails.length === 0) {
+        document.getElementById('bulk-status').textContent = 'No emails to copy in current page';
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(emails.join('\n'));
+        document.getElementById('bulk-status').textContent = `Copied ${emails.length} emails to clipboard`;
+      } catch {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = emails.join('\n');
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        document.getElementById('bulk-status').textContent = `Copied ${emails.length} emails to clipboard`;
+      }
     }
 
     // --- Refresh All ---

@@ -28,6 +28,7 @@ const app = {
     this.setupDropZone();
     this.setupBeforeUnload();
     await this.loadConfig();
+    this.loadDbStats();
 
     // Try to restore a previous session from localStorage
     const savedJobId = localStorage.getItem('mortar-jobId');
@@ -96,7 +97,7 @@ const app = {
     this.fetchHealthStatus();
 
     // Listen for state change to update practice areas and cities
-    stateSelect.addEventListener('change', () => this.onStateChange());
+    stateSelect.addEventListener('change', () => { this.onStateChange(); this.updateStateInfo(); });
 
     // Initialize with first state
     this.onStateChange();
@@ -131,6 +132,39 @@ const app = {
       opt.textContent = city;
       citySelect.appendChild(opt);
     }
+  },
+
+  // --- DB Stats Banner ---
+
+  async loadDbStats() {
+    try {
+      const res = await fetch('/api/leads/stats');
+      if (!res.ok) return;
+      const d = await res.json();
+      const banner = document.getElementById('db-stats-banner');
+      if (!banner) return;
+      banner.style.display = '';
+      document.getElementById('db-total').textContent = (d.total || 0).toLocaleString();
+      document.getElementById('db-email').textContent = (d.withEmail || 0).toLocaleString();
+      document.getElementById('db-phone').textContent = (d.withPhone || 0).toLocaleString();
+    } catch {}
+  },
+
+  async updateStateInfo() {
+    const code = document.getElementById('select-state').value;
+    const infoEl = document.getElementById('db-state-info');
+    if (!infoEl || !code) return;
+    try {
+      const res = await fetch('/api/leads/coverage');
+      if (!res.ok) return;
+      const data = await res.json();
+      const stateData = data.find(s => s.state === code);
+      if (stateData) {
+        infoEl.textContent = `${code}: ${stateData.total} leads in DB (${stateData.email_pct}% email, ${stateData.phone_pct}% phone)`;
+      } else {
+        infoEl.textContent = `${code}: 0 leads in DB`;
+      }
+    } catch {}
   },
 
   // --- Health Status ---
