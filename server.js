@@ -193,6 +193,26 @@ app.post('/api/scrape/start', (req, res) => {
     job.stats = data.stats;
     job.outputFile = data.outputFile;
     console.log(`[job:${jobId}] Complete — ${data.stats.netNew} new leads, output=${data.outputFile || 'none'}`);
+
+    // Auto-save leads to master database
+    if (data.leads && data.leads.length > 0) {
+      try {
+        const leadDb = require('./lib/lead-db');
+        const dbStats = leadDb.batchUpsert(data.leads, `scraper:${state}`);
+        leadDb.recordScrapeRun({
+          state, source: `scraper:${state}`,
+          practice_area: practice || 'all',
+          leadsFound: data.leads.length,
+          leadsNew: dbStats.inserted,
+          leadsUpdated: dbStats.updated,
+          emailsFound: data.leads.filter(l => l.email).length,
+        });
+        console.log(`[job:${jobId}] Saved to master DB: ${dbStats.inserted} new, ${dbStats.updated} updated, ${dbStats.unchanged} unchanged`);
+      } catch (err) {
+        console.error(`[job:${jobId}] Failed to save to master DB:`, err.message);
+      }
+    }
+
     broadcast(jobId, { type: 'complete', stats: data.stats, jobId });
     scheduleJobCleanup();
   });
@@ -344,6 +364,114 @@ app.get('/api/signals/scan-status', (req, res) => {
     running: _scanRunning,
     lastResult: _lastScanResult,
   });
+});
+
+// --- Lead Database Endpoints ---
+
+// Get TAM stats
+app.get('/api/leads/stats', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getStats());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Search leads
+app.get('/api/leads', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { q, state, country, hasEmail, limit, offset } = req.query;
+    const leads = leadDb.searchLeads(q, {
+      state, country,
+      hasEmail: hasEmail === 'true',
+      limit: Math.min(parseInt(limit) || 100, 1000),
+      offset: parseInt(offset) || 0,
+    });
+    res.json({ leads, count: leads.length });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Export leads as CSV
+app.get('/api/leads/export', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { writeCSV, generateOutputPath } = require('./lib/csv-handler');
+    const { state, country, hasEmail, verified } = req.query;
+    const leads = leadDb.exportLeads({
+      state, country,
+      hasEmail: hasEmail === 'true',
+      verified: verified === 'true',
+    });
+    if (leads.length === 0) {
+      return res.status(404).json({ error: 'No leads match filters' });
+    }
+    const outputFile = generateOutputPath('EXPORT', '');
+    writeCSV(outputFile, leads).then(() => {
+      const filename = path.basename(outputFile);
+      res.download(outputFile, filename);
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Email Verification Endpoint ---
+
+// Verify emails for leads in the database (or a specific batch)
+let _verifyRunning = false;
+let _verifyProgress = null;
+
+app.post('/api/leads/verify-emails', (req, res) => {
+  if (_verifyRunning) {
+    return res.json({ status: 'already_running', progress: _verifyProgress });
+  }
+
+  _verifyRunning = true;
+  _verifyProgress = { current: 0, total: 0, found: 0, verified: 0, invalid: 0 };
+  res.json({ status: 'started', message: 'Email verification started in background' });
+
+  const EmailVerifier = require('./lib/email-verifier');
+  const leadDb = require('./lib/lead-db');
+  const verifier = new EmailVerifier();
+
+  (async () => {
+    // Get leads needing email (have website but no email)
+    const leadsNeedingEmail = leadDb.getLeadsNeedingEmail(req.body.limit || 200);
+    _verifyProgress.total = leadsNeedingEmail.length;
+
+    const stats = await verifier.batchProcess(leadsNeedingEmail, {
+      verifyExisting: false,
+      findMissing: true,
+      onProgress: (current, total) => {
+        _verifyProgress.current = current;
+        _verifyProgress.total = total;
+      },
+      isCancelled: () => !_verifyRunning,
+    });
+
+    _verifyProgress.found = stats.found;
+    _verifyProgress.verified = stats.verified;
+    _verifyProgress.invalid = stats.invalid;
+
+    // Save found emails back to DB
+    for (const lead of leadsNeedingEmail) {
+      if (lead.email) {
+        leadDb.upsertLead(lead);
+      }
+    }
+
+    console.log(`[Email Verify] Done — found ${stats.found} new emails, verified ${stats.verified}`);
+  })()
+    .catch(err => console.error('[Email Verify] Error:', err.message))
+    .finally(() => { _verifyRunning = false; });
+});
+
+app.get('/api/leads/verify-status', (req, res) => {
+  res.json({ running: _verifyRunning, progress: _verifyProgress });
 });
 
 // Enrichment preview — sample 3 leads from a job

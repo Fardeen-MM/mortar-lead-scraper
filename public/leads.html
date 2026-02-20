@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mortar Lead Database</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--indigo);
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+    }
+    .nav-link:hover { text-decoration: underline; }
+
+    .tam-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .tam-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .tam-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--indigo);
+    }
+    .tam-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    .tam-pct {
+      font-size: 0.7rem;
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    .coverage-bar {
+      height: 6px;
+      background: #f3f4f6;
+      border-radius: 3px;
+      margin-top: 0.5rem;
+      overflow: hidden;
+    }
+    .coverage-bar .fill {
+      height: 100%;
+      background: var(--indigo);
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+
+    .breakdown-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 768px) {
+      .breakdown-section { grid-template-columns: 1fr; }
+    }
+    .breakdown-panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+    }
+    .breakdown-panel h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.3rem 0;
+      font-size: 0.82rem;
+    }
+    .breakdown-key { color: var(--text-muted); }
+    .breakdown-val { font-weight: 600; color: var(--text); }
+
+    .lead-controls {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .lead-controls .search-input { flex: 1; min-width: 200px; }
+    .lead-controls select { min-width: 100px; }
+
+    .leads-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    .leads-table th {
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      background: #f9fafb;
+      border-bottom: 2px solid var(--border);
+      font-weight: 600;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .leads-table td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid #f3f4f6;
+      color: var(--text);
+    }
+    .leads-table tr:hover td {
+      background: #f9fafb;
+    }
+    .has-data { color: var(--success); }
+    .no-data { color: var(--text-muted); opacity: 0.4; }
+
+    .action-btns {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .verify-status {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-left: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">🧱</span>
+        <span class="logo-text">Mortar</span>
+      </div>
+      <p class="subtitle">Lead Database</p>
+    </header>
+
+    <a href="/" class="nav-link">&larr; Back to Lead Scraper</a>
+
+    <!-- TAM Overview -->
+    <div class="tam-grid" id="tam-grid">
+      <div class="tam-card">
+        <div class="tam-value" id="tam-total">-</div>
+        <div class="tam-label">Total Leads</div>
+      </div>
+      <div class="tam-card">
+        <div class="tam-value" id="tam-email">-</div>
+        <div class="tam-label">With Email</div>
+        <div class="tam-pct" id="tam-email-pct"></div>
+        <div class="coverage-bar"><div class="fill" id="email-bar" style="width:0%"></div></div>
+      </div>
+      <div class="tam-card">
+        <div class="tam-value" id="tam-phone">-</div>
+        <div class="tam-label">With Phone</div>
+        <div class="tam-pct" id="tam-phone-pct"></div>
+        <div class="coverage-bar"><div class="fill" id="phone-bar" style="width:0%"></div></div>
+      </div>
+      <div class="tam-card">
+        <div class="tam-value" id="tam-website">-</div>
+        <div class="tam-label">With Website</div>
+        <div class="tam-pct" id="tam-website-pct"></div>
+        <div class="coverage-bar"><div class="fill" id="website-bar" style="width:0%"></div></div>
+      </div>
+      <div class="tam-card">
+        <div class="tam-value" id="tam-firms">-</div>
+        <div class="tam-label">Unique Firms</div>
+      </div>
+      <div class="tam-card">
+        <div class="tam-value" id="tam-verified">-</div>
+        <div class="tam-label">Verified</div>
+      </div>
+    </div>
+
+    <!-- Breakdowns -->
+    <div class="breakdown-section">
+      <div class="breakdown-panel">
+        <h3>By State</h3>
+        <div id="by-state"></div>
+      </div>
+      <div class="breakdown-panel">
+        <h3>By Source</h3>
+        <div id="by-source"></div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="panel" style="display:block; margin-bottom: 1rem;">
+      <h2 style="margin-bottom: 0.5rem;">Lead Explorer</h2>
+      <div class="action-btns">
+        <button class="btn btn-primary" onclick="startVerify()">Find Missing Emails (SMTP)</button>
+        <span class="verify-status" id="verify-status"></span>
+        <a href="/api/leads/export?hasEmail=true" class="btn btn-secondary" style="text-decoration:none;">Export CSV (with email)</a>
+      </div>
+    </div>
+
+    <!-- Search/Filter -->
+    <div class="lead-controls">
+      <input type="text" class="search-input" id="search-input" placeholder="Search leads...">
+      <select id="filter-state">
+        <option value="">All States</option>
+      </select>
+      <label style="font-size:0.82rem; display:flex; align-items:center; gap:0.3rem;">
+        <input type="checkbox" id="filter-email"> Has email
+      </label>
+      <span id="result-count" style="font-size:0.82rem; color:var(--text-muted);"></span>
+    </div>
+
+    <!-- Leads Table -->
+    <div style="overflow-x: auto;">
+      <table class="leads-table" id="leads-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Firm</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Website</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody id="leads-body"></tbody>
+      </table>
+    </div>
+
+    <div style="text-align:center; margin-top:1rem;" id="load-more-wrap" hidden>
+      <button class="btn btn-secondary" onclick="loadMore()">Load More</button>
+    </div>
+
+    <div id="empty-state" class="empty-state" style="display:none;">
+      <span class="empty-state-icon">📊</span>
+      <h3>No leads yet</h3>
+      <p>Run some scrapes from the Lead Scraper to populate the database.</p>
+    </div>
+  </div>
+
+  <script>
+    let currentOffset = 0;
+    const PAGE_SIZE = 100;
+    let searchTimeout = null;
+
+    function esc(str) {
+      if (!str) return '';
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function fmt(n) {
+      return n.toLocaleString();
+    }
+
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/leads/stats');
+        const d = await res.json();
+
+        document.getElementById('tam-total').textContent = fmt(d.total);
+        document.getElementById('tam-email').textContent = fmt(d.withEmail);
+        document.getElementById('tam-phone').textContent = fmt(d.withPhone);
+        document.getElementById('tam-website').textContent = fmt(d.withWebsite);
+        document.getElementById('tam-firms').textContent = fmt(d.uniqueFirms);
+        document.getElementById('tam-verified').textContent = fmt(d.verified);
+
+        document.getElementById('tam-email-pct').textContent = d.coverage.email + '%';
+        document.getElementById('tam-phone-pct').textContent = d.coverage.phone + '%';
+        document.getElementById('tam-website-pct').textContent = d.coverage.website + '%';
+
+        document.getElementById('email-bar').style.width = d.coverage.email + '%';
+        document.getElementById('phone-bar').style.width = d.coverage.phone + '%';
+        document.getElementById('website-bar').style.width = d.coverage.website + '%';
+
+        // By state
+        const stateEl = document.getElementById('by-state');
+        stateEl.innerHTML = (d.byState || []).slice(0, 15).map(s =>
+          `<div class="breakdown-row"><span class="breakdown-key">${esc(s.state)}</span><span class="breakdown-val">${fmt(s.count)}</span></div>`
+        ).join('');
+
+        // By source
+        const sourceEl = document.getElementById('by-source');
+        sourceEl.innerHTML = (d.bySource || []).slice(0, 15).map(s =>
+          `<div class="breakdown-row"><span class="breakdown-key">${esc(s.source)}</span><span class="breakdown-val">${fmt(s.count)}</span></div>`
+        ).join('');
+
+        // Populate state filter
+        const stateSelect = document.getElementById('filter-state');
+        const current = stateSelect.value;
+        stateSelect.innerHTML = '<option value="">All States</option>';
+        (d.byState || []).forEach(s => {
+          const opt = document.createElement('option');
+          opt.value = s.state;
+          opt.textContent = `${s.state} (${fmt(s.count)})`;
+          stateSelect.appendChild(opt);
+        });
+        stateSelect.value = current;
+
+        document.getElementById('empty-state').style.display = d.total === 0 ? '' : 'none';
+      } catch (err) {
+        console.error('Failed to load stats:', err);
+      }
+    }
+
+    async function loadLeads(append = false) {
+      const q = document.getElementById('search-input').value.trim();
+      const state = document.getElementById('filter-state').value;
+      const hasEmail = document.getElementById('filter-email').checked;
+
+      if (!append) currentOffset = 0;
+
+      const params = new URLSearchParams({
+        limit: PAGE_SIZE,
+        offset: currentOffset,
+      });
+      if (q) params.set('q', q);
+      if (state) params.set('state', state);
+      if (hasEmail) params.set('hasEmail', 'true');
+
+      try {
+        const res = await fetch('/api/leads?' + params);
+        const d = await res.json();
+
+        const tbody = document.getElementById('leads-body');
+        if (!append) tbody.innerHTML = '';
+
+        for (const lead of d.leads) {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${esc(lead.first_name)} ${esc(lead.last_name)}</strong></td>
+            <td>${esc(lead.firm_name)}</td>
+            <td>${esc(lead.city)}</td>
+            <td>${esc(lead.state)}</td>
+            <td class="${lead.email ? 'has-data' : 'no-data'}">${lead.email ? esc(lead.email) : '-'}</td>
+            <td class="${lead.phone ? 'has-data' : 'no-data'}">${lead.phone ? esc(lead.phone) : '-'}</td>
+            <td class="${lead.website ? 'has-data' : 'no-data'}">${lead.website ? '<a href="' + (lead.website.startsWith('http') ? '' : 'https://') + esc(lead.website) + '" target="_blank" rel="noopener">' + esc(lead.website).substring(0, 30) + '</a>' : '-'}</td>
+            <td>${esc(lead.primary_source)}</td>
+          `;
+          tbody.appendChild(tr);
+        }
+
+        currentOffset += d.leads.length;
+        document.getElementById('result-count').textContent = d.leads.length > 0 ? `Showing ${currentOffset} leads` : 'No leads found';
+        document.getElementById('load-more-wrap').hidden = d.leads.length < PAGE_SIZE;
+      } catch (err) {
+        console.error('Failed to load leads:', err);
+      }
+    }
+
+    function loadMore() {
+      loadLeads(true);
+    }
+
+    async function startVerify() {
+      const btn = event.target;
+      btn.disabled = true;
+      btn.textContent = 'Starting...';
+
+      try {
+        const res = await fetch('/api/leads/verify-emails', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{"limit":200}' });
+        const d = await res.json();
+
+        if (d.status === 'already_running') {
+          btn.textContent = 'Already running';
+        } else {
+          btn.textContent = 'Running...';
+          pollVerifyStatus(btn);
+        }
+      } catch (err) {
+        btn.textContent = 'Error';
+        btn.disabled = false;
+      }
+    }
+
+    function pollVerifyStatus(btn) {
+      const interval = setInterval(async () => {
+        try {
+          const res = await fetch('/api/leads/verify-status');
+          const d = await res.json();
+          const p = d.progress || {};
+          document.getElementById('verify-status').textContent =
+            `${p.current || 0}/${p.total || 0} processed, ${p.found || 0} found`;
+
+          if (!d.running) {
+            clearInterval(interval);
+            btn.textContent = 'Find Missing Emails (SMTP)';
+            btn.disabled = false;
+            document.getElementById('verify-status').textContent =
+              `Done: ${p.found || 0} emails found`;
+            loadStats();
+            loadLeads();
+          }
+        } catch {
+          clearInterval(interval);
+          btn.textContent = 'Find Missing Emails (SMTP)';
+          btn.disabled = false;
+        }
+      }, 3000);
+    }
+
+    // Event listeners
+    document.getElementById('search-input').addEventListener('input', () => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => loadLeads(), 300);
+    });
+    document.getElementById('filter-state').addEventListener('change', () => loadLeads());
+    document.getElementById('filter-email').addEventListener('change', () => loadLeads());
+
+    // Initial load
+    loadStats();
+    loadLeads();
+  </script>
+</body>
+</html>
