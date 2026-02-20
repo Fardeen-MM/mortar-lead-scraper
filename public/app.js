@@ -343,6 +343,7 @@ const app = {
 
     // Gather waterfall options
     const waterfall = {
+      masterDbLookup: document.getElementById('toggle-master-db').checked,
       fetchProfiles: document.getElementById('toggle-fetch-profiles').checked,
       crossRefMartindale: document.getElementById('toggle-crossref-martindale').checked,
       crossRefLawyersCom: document.getElementById('toggle-crossref-lawyerscom').checked,
@@ -591,11 +592,14 @@ const app = {
           const pct = msg.total > 0 ? Math.round((msg.current / msg.total) * 100) : 0;
           document.getElementById('waterfall-progress-bar').style.width = pct + '%';
           const stepLabels = {
+            'master-db': 'Cross-referencing master database',
             profiles: 'Fetching profile pages',
             martindale: 'Cross-referencing Martindale',
             'lawyers-com': 'Cross-referencing Lawyers.com',
             'name-lookup': 'Name lookups',
+            'website-find': 'Finding firm websites',
             'email-crawl': 'Crawling websites for emails',
+            'smtp-patterns': 'SMTP email pattern matching',
           };
           const stepLabel = stepLabels[msg.step] || msg.step;
           document.getElementById('waterfall-status-text').textContent =

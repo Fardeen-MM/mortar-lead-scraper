@@ -534,6 +534,158 @@ class TasmaniaScraper extends BaseScraper {
     };
   }
 
+  // --- Profile page parsing ---
+
+  /**
+   * Parse a Tasmania lawyer profile page for additional contact details.
+   *
+   * Profile pages are WordPress posts at lst.org.au. The post content
+   * contains lawyer details in free-form HTML. We extract:
+   *   - Phone: patterns like "Phone: 03 6234 1234" or "+61 3 6234 1234"
+   *   - Email: standard email addresses or Cloudflare-encoded emails
+   *   - Website: links to external (non-lst.org.au) domains
+   *   - Firm name: extracted from content or <title>
+   *   - City/locality: Tasmanian place names
+   *   - Practice areas: from "Practice Areas:" or "Areas of Practice:" labels
+   *   - Address: street addresses with Tasmanian locality names
+   *
+   * @param {CheerioStatic} $ - Cheerio instance of the profile page
+   * @returns {object} Additional fields extracted from the profile
+   */
+  parseProfilePage($) {
+    const result = {};
+
+    // Gather content from the main WordPress content area
+    const contentSelectors = [
+      '.post-content',
+      '.entry-content',
+      '.fusion-text',
+      'article .content',
+      '#content',
+      'main',
+    ];
+
+    let contentArea = $();
+    for (const selector of contentSelectors) {
+      contentArea = $(selector);
+      if (contentArea.length > 0) break;
+    }
+
+    // Fall back to body if no content area found
+    if (!contentArea.length) {
+      contentArea = $('body');
+    }
+
+    const contentText = contentArea.text().replace(/\s+/g, ' ').trim();
+    const contentHtml = contentArea.html() || '';
+
+    // --- Phone ---
+    const phoneMatch = contentText.match(/(?:Phone|Tel|Ph|Telephone|T)[:\s]*([+\d\s()-]{8,})/i) ||
+                       contentText.match(/\b((?:\+61|0[2-9])\s*\d[\d\s-]{6,})\b/);
+    if (phoneMatch) {
+      const phone = phoneMatch[1].replace(/\s+/g, ' ').trim();
+      if (phone.length >= 8) result.phone = phone;
+    }
+
+    // --- Email ---
+    // Check for Cloudflare-protected emails first
+    contentArea.find('a[href^="/cdn-cgi/l/email-protection"]').each((_, el) => {
+      if (result.email) return;
+      const encoded = $(el).attr('data-cfemail') || ($(el).attr('href') || '').split('#')[1];
+      if (encoded) {
+        const decoded = this.decodeCloudflareEmail(encoded);
+        if (decoded && decoded.includes('@')) {
+          result.email = decoded;
+        }
+      }
+    });
+
+    // Check for Cloudflare <span> elements with data-cfemail
+    if (!result.email) {
+      contentArea.find('span[data-cfemail], .__cf_email__[data-cfemail]').each((_, el) => {
+        if (result.email) return;
+        const encoded = $(el).attr('data-cfemail');
+        if (encoded) {
+          const decoded = this.decodeCloudflareEmail(encoded);
+          if (decoded && decoded.includes('@')) {
+            result.email = decoded;
+          }
+        }
+      });
+    }
+
+    // Standard mailto links
+    if (!result.email) {
+      contentArea.find('a[href^="mailto:"]').each((_, el) => {
+        if (result.email) return;
+        const mailto = ($(el).attr('href') || '').replace('mailto:', '').split('?')[0].trim();
+        if (mailto && mailto.includes('@')) {
+          result.email = mailto;
+        }
+      });
+    }
+
+    // Plain-text email in content
+    if (!result.email) {
+      const emailMatch = contentText.match(/[\w.+-]+@[\w.-]+\.\w{2,}/);
+      if (emailMatch) result.email = emailMatch[0];
+    }
+
+    // --- Website ---
+    // Look for external links that aren't social media or lst.org.au itself
+    contentArea.find('a[href]').each((_, el) => {
+      if (result.website) return;
+      const href = ($(el).attr('href') || '').trim();
+      if (!href || href.startsWith('#') || href.startsWith('/') || href.startsWith('mailto:') ||
+          href.startsWith('tel:') || href.includes('lst.org.au') ||
+          href.includes('cdn-cgi')) return;
+
+      if (!this.isExcludedDomain(href) && href.startsWith('http')) {
+        result.website = href;
+      }
+    });
+
+    // --- Firm name ---
+    // Look for firm name patterns in content. Use word boundary to avoid matching
+    // "Practice Areas" or "Practising in". Only match "Firm:" / "Practice:" / "Company:"
+    // when followed by a colon (indicating a label, not a sentence).
+    const firmMatch = contentText.match(/(?:Firm|Company|Employer|Law Practice)\s*:\s*([^\n.]{3,80})/i);
+    if (firmMatch) {
+      const firm = firmMatch[1].replace(/\s+/g, ' ').trim();
+      // Validate it looks like a firm name, not a sentence
+      if (firm.length < 80 && !/\b(is|are|was|were|has|have|the|this|that|which)\b/i.test(firm)) {
+        result.firm_name = firm;
+      }
+    }
+
+    // --- City/locality ---
+    const cityMatch = contentText.match(
+      /\b(Hobart|Launceston|Devonport|Burnie|Kingston|Sandy Bay|Glenorchy|Clarence|Moonah|New Town|Sorell|Ulverstone|Smithton|Queenstown|Rosny|Lindisfarne|Howrah|Bellerive|Battery Point|George Town|Huonville|Bridgewater|Brighton|Claremont|Scottsdale|Wynyard|Deloraine|Longford|Campbell Town|Oatlands|Swansea|St Helens|Bicheno|Triabunna|Dover|Geeveston|Cygnet|Franklin|Margate)\b/i
+    );
+    if (cityMatch) result.city = cityMatch[1];
+
+    // --- Address ---
+    // Match street address patterns: "42 Murray Street, Hobart" or "Level 3, 10 Collins St Hobart"
+    // Use a more constrained pattern to avoid over-matching
+    const addressMatch = contentText.match(
+      /(\d+[A-Za-z\s/,-]{1,50}(?:Street|St|Road|Rd|Avenue|Ave|Drive|Dr|Place|Pl|Terrace|Tce|Court|Ct|Crescent|Cres|Highway|Hwy|Lane|Ln|Way|Boulevard|Blvd)[\s,]*(?:Hobart|Launceston|Devonport|Burnie|Kingston|Sandy Bay|Glenorchy|Clarence|Moonah|New Town|Sorell|Ulverstone|Smithton|Queenstown)(?:\s+(?:TAS|Tasmania))?(?:\s+\d{4})?)/i
+    );
+    if (addressMatch) result.address = addressMatch[1].replace(/\s+/g, ' ').trim();
+
+    // --- Practice areas ---
+    // Match "Practice Areas: X, Y, Z" up to a sentence boundary (period, colon, or
+    // a known label keyword that starts a new field)
+    const practiceMatch = contentText.match(
+      /(?:Practice\s+Areas?|Areas?\s+of\s+Practice|Specialising?\s+in|Specialties|Specialisations?)\s*:\s*((?:(?!\b(?:Firm|Phone|Tel|Email|Address|Website|Company|Employer|Admission)\b)[^.]){5,300})/i
+    );
+    if (practiceMatch) {
+      const areas = practiceMatch[1].replace(/\s+/g, ' ').trim();
+      if (areas.length < 300) result.practice_areas = areas;
+    }
+
+    return result;
+  }
+
   // --- Search & Filter Pro AJAX approach ---
 
   /**

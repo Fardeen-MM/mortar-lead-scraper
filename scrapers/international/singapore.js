@@ -308,6 +308,76 @@ class SingaporeScraper extends BaseScraper {
   }
 
   /**
+   * Parse a Singapore Law Society firm profile page for additional fields.
+   *
+   * The profile pages are WordPress "firm" post type pages rendered with Elementor.
+   * They contain the same content as the WP REST API response but rendered as a
+   * full page. This method extracts: phone, email, website, firm_name, and address.
+   *
+   * Used by enrichFromProfile() in the waterfall pipeline to refresh or fill gaps
+   * in previously scraped records.
+   *
+   * @param {CheerioStatic} $ - Cheerio instance of the firm profile page
+   * @returns {object} Additional fields: { phone, email, website, firm_name, address }
+   */
+  parseProfilePage($) {
+    const result = {};
+
+    // Extract firm name from the page title or h1
+    const h1 = $('h1').first().text().trim();
+    if (h1) result.firm_name = this.decodeEntities(h1);
+
+    // Extract phone from tel: links
+    const $phoneLink = $('a[href^="tel:"]').first();
+    if ($phoneLink.length) {
+      const phone = decodeURIComponent($phoneLink.attr('href').replace('tel:', '')).trim();
+      if (phone) result.phone = phone;
+    }
+
+    // Extract email from mailto: links
+    const $emailLink = $('a[href^="mailto:"]').first();
+    if ($emailLink.length) {
+      const email = $emailLink.attr('href').replace('mailto:', '').trim();
+      if (email) result.email = email;
+    }
+
+    // Extract website (external links not on lawsociety.org.sg)
+    $('a[href^="http"]').each((_, el) => {
+      if (result.website) return;
+      const href = $(el).attr('href') || '';
+      if (!href.includes('lawsociety.org.sg') &&
+          !href.includes('mailto:') &&
+          !href.includes('tel:') &&
+          !this.isExcludedDomain(href)) {
+        result.website = href;
+      }
+    });
+
+    // Extract address -- Singapore addresses contain "Singapore" + 6-digit postal code
+    $('div, p, span, li').each((_, el) => {
+      if (result.address) return;
+      const $el = $(el);
+      if ($el.children().length > 3) return;
+      const text = $el.text().replace(/[\t\n\r]+/g, ' ').replace(/\s+/g, ' ').trim();
+      if (text.length > 10 && text.length < 150 && /Singapore\s+\d{6}/.test(text)) {
+        const addrMatch = text.match(/(\d+[A-Z]?\s+[^,]+(?:,\s*[^,]+)*,?\s*Singapore\s+\d{6})/);
+        if (addrMatch) {
+          result.address = addrMatch[1].replace(/\s+/g, ' ').trim();
+        } else {
+          result.address = text;
+        }
+      }
+    });
+
+    // Remove empty values
+    for (const key of Object.keys(result)) {
+      if (!result[key]) delete result[key];
+    }
+
+    return result;
+  }
+
+  /**
    * Not used -- we override search() entirely.
    */
   parseResultsPage() { return []; }

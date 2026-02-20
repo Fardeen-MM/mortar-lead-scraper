@@ -191,6 +191,103 @@ class IndianaScraper extends BaseScraper {
   }
 
   /**
+   * Parse an Indiana Roll of Attorneys profile page for additional contact info.
+   *
+   * Indiana attorney profile pages (linked from search results) are HTML pages
+   * at courtapps.in.gov/rollofattorneys/ that may contain: phone, email,
+   * firm name, address, admission date, and status details.
+   *
+   * @param {CheerioStatic} $ - Cheerio instance of the profile page
+   * @returns {object} Additional fields extracted from the profile
+   */
+  parseProfilePage($) {
+    const result = {};
+    const bodyText = $('body').text();
+
+    // Phone — look for tel: links first, then labeled patterns
+    const telLink = $('a[href^="tel:"]').first();
+    if (telLink.length) {
+      result.phone = telLink.attr('href').replace('tel:', '').trim();
+    } else {
+      const phoneMatch = bodyText.match(/(?:Phone|Telephone|Office|Work|Business)[:\s]*([\d().\s-]+)/i) ||
+                         bodyText.match(/(\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4})/);
+      if (phoneMatch) {
+        result.phone = phoneMatch[1].trim();
+      }
+    }
+
+    // Email — look for mailto: links
+    const mailtoLink = $('a[href^="mailto:"]').first();
+    if (mailtoLink.length) {
+      result.email = mailtoLink.attr('href').replace('mailto:', '').split('?')[0].trim().toLowerCase();
+    } else {
+      // Fallback: email pattern in text
+      const emailMatch = bodyText.match(/(?:Email|E-mail)[:\s]+([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/i);
+      if (emailMatch) {
+        result.email = emailMatch[1].toLowerCase();
+      }
+    }
+
+    // Website — external links that aren't IN courts or excluded domains
+    const inExcluded = ['courtapps.in.gov', 'courts.in.gov', 'in.gov', 'indianabar.org', 'inbar.org'];
+    const isExcluded = (href) =>
+      this.isExcludedDomain(href) || inExcluded.some(d => href.includes(d));
+
+    $('a[href^="http"]').each((_, el) => {
+      const href = $(el).attr('href') || '';
+      if (!isExcluded(href)) {
+        result.website = href;
+        return false; // break
+      }
+    });
+
+    // Firm name / employer
+    const firmMatch = bodyText.match(/(?:Firm|Employer|Company|Organization)[:\s]+(.+?)(?:\n|$)/i);
+    if (firmMatch) {
+      const firm = firmMatch[1].trim();
+      if (firm && firm.length > 1 && firm.length < 200) {
+        result.firm_name = firm;
+      }
+    }
+
+    // Address — look for labeled address or structured address blocks
+    const addrMatch = bodyText.match(/(?:Address|Location)[:\s]+(.+?)(?:\n\n|\nPhone|\nEmail|\nFirm|$)/is);
+    if (addrMatch) {
+      result.address = addrMatch[1].trim().replace(/\s+/g, ' ');
+    }
+
+    // Admission date
+    const admitMatch = bodyText.match(/(?:Admit(?:ted|ssion)\s*(?:Date)?)[:\s]+(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\w+\s+\d{1,2},?\s+\d{4}|\d{4})/i);
+    if (admitMatch) {
+      result.admission_date = admitMatch[1].trim();
+    }
+
+    // Bar status
+    const statusMatch = bodyText.match(/(?:Status|Standing)[:\s]+(Active|Inactive|Suspended|Retired|Resigned|Deceased|Disbarred)/i);
+    if (statusMatch) {
+      result.bar_status = statusMatch[1].trim();
+    }
+
+    // Education / law school
+    const eduMatch = bodyText.match(/(?:Law\s*School|Education|J\.?D\.?)[:\s]+(.+?)(?:\n|$)/i);
+    if (eduMatch) {
+      const edu = eduMatch[1].trim();
+      if (edu && edu.length > 2 && edu.length < 200) {
+        result.education = edu;
+      }
+    }
+
+    // Remove empty string values before returning
+    for (const key of Object.keys(result)) {
+      if (result[key] === '' || result[key] === undefined || result[key] === null) {
+        delete result[key];
+      }
+    }
+
+    return result;
+  }
+
+  /**
    * Parse attorney records from HTML results page.
    */
   _parseAttorneys(body) {

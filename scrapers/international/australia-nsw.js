@@ -506,6 +506,112 @@ class NswScraper extends BaseScraper {
   }
 
   /**
+   * Enrich a lead from its profile page (JSON API detail endpoint).
+   *
+   * The AU-NSW profile_url is a hash-based SPA URL:
+   *   https://ros.lawsociety.com.au/?tab=lawyer#id=12345
+   * This cannot be fetched as HTML. Instead, we extract the numeric ID
+   * and call the JSON detail API at /api/lawyer/{id}.
+   *
+   * Returns additional fields: phone, email, firm_name, admission_date,
+   * bar_status, practice_areas, languages.
+   *
+   * @param {object} lead - Lead object with profile_url
+   * @param {RateLimiter} rateLimiter - Rate limiter instance
+   * @returns {object} Additional fields from the detail API
+   */
+  async enrichFromProfile(lead, rateLimiter) {
+    if (!lead.profile_url) return {};
+
+    // Extract the solicitor ID from the profile URL hash fragment
+    // Format: https://ros.lawsociety.com.au/?tab=lawyer#id=12345
+    const idMatch = lead.profile_url.match(/#id=(\d+)/);
+    const solId = idMatch ? idMatch[1] : (lead.bar_number || '');
+
+    if (!solId) {
+      log.warn(`AU-NSW: Cannot extract solicitor ID from profile_url: ${lead.profile_url}`);
+      return {};
+    }
+
+    try {
+      await rateLimiter.wait();
+      const detailResp = await this.httpGetJson(`${this.detailUrl}${solId}`, rateLimiter);
+
+      if (detailResp.statusCode !== 200) {
+        log.warn(`AU-NSW: Detail API returned ${detailResp.statusCode} for ID ${solId}`);
+        return {};
+      }
+
+      const detail = JSON.parse(detailResp.body);
+      const result = {};
+
+      // Phone
+      const phone = (detail.phoneWithAreaCode || '').trim();
+      if (phone) result.phone = phone;
+      if (!phone && detail.firmPhoneAreaCode && detail.firmPhone) {
+        result.phone = `${detail.firmPhoneAreaCode} ${detail.firmPhone}`.trim();
+      }
+
+      // Email
+      const email = (detail.email || detail.firmEmail || '').trim();
+      if (email) result.email = email;
+
+      // Firm name
+      const firmName = (detail.placeOfPractice || '').trim();
+      if (firmName) result.firm_name = firmName;
+
+      // Full name from detail (may have separate first/last)
+      if (detail.firstName && detail.lastName) {
+        result.first_name = detail.firstName.trim();
+        result.last_name = detail.lastName.trim();
+        result.full_name = `${detail.firstName.trim()} ${detail.lastName.trim()}`;
+      }
+
+      // Address
+      if (detail.streetAddress) {
+        const street = (detail.streetAddress.street || '').trim();
+        const suburb = (detail.streetAddress.suburb || '').trim();
+        const state = (detail.streetAddress.state || '').trim();
+        const postCode = (detail.streetAddress.postCode || '').trim();
+        if (street) result.address = this._titleCase(street);
+        if (suburb) result.city = this._titleCase(suburb);
+        if (state) result.state = state;
+        if (postCode) result.zip = postCode;
+      }
+
+      // Bar status / certificate type
+      let barStatus = (detail.certificateType || '').trim();
+      if (detail.pcType && detail.pcType !== barStatus) {
+        barStatus = barStatus ? `${barStatus} (${detail.pcType})` : detail.pcType;
+      }
+      if (barStatus) result.bar_status = barStatus;
+
+      // Admission date
+      if (detail.admissionDate) {
+        result.admission_date = detail.admissionDate.split('T')[0] || detail.admissionDate;
+      }
+
+      // Specialist accreditations -> practice_areas
+      if (detail.specialistAccreditation && detail.specialistAccreditation.length > 0) {
+        result.practice_areas = detail.specialistAccreditation.join(', ');
+      }
+
+      // Languages
+      if (detail.languages && detail.languages.length > 0) {
+        result.languages = detail.languages.map(l => this._titleCase(l)).join(', ');
+      }
+
+      return result;
+    } catch (err) {
+      log.warn(`AU-NSW: enrichFromProfile failed for ID ${solId}: ${err.message}`);
+      return {};
+    }
+  }
+
+  // Override hasProfileParser to signal the waterfall that this scraper supports profile enrichment
+  get hasProfileParser() { return true; }
+
+  /**
    * Build a normalized attorney record from the search result and detail data.
    *
    * @param {object} searchResult - Basic record from the search listing

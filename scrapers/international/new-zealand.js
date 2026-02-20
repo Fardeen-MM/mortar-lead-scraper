@@ -188,6 +188,79 @@ class NewZealandScraper extends BaseScraper {
   }
 
   /**
+   * Parse a NZ Law Society profile page for contact details.
+   *
+   * Profile pages at /register/<slug>/?glh=1 contain definition lists (dt/dd pairs)
+   * with: email, telephone, workplace, preferred name, regulatory/practising status,
+   * admission date, postal address, and website.
+   *
+   * Used by enrichFromProfile() in the waterfall pipeline and by
+   * fetchProfileDetails() during inline search enrichment.
+   *
+   * @param {CheerioStatic} $ - Cheerio instance of the profile page
+   * @returns {object} Extracted fields: { email, phone, website, firm_name,
+   *   bar_status, admission_date, address, preferred_name }
+   */
+  parseProfilePage($) {
+    const result = {};
+
+    // Extract all dt/dd pairs
+    $('dt').each((_, dtEl) => {
+      const $dt = $(dtEl);
+      const $dd = $dt.next('dd');
+      if (!$dd.length) return;
+
+      const label = $dt.text().replace(/\s+/g, ' ').trim().toLowerCase();
+      const ddHtml = $dd.html() || '';
+      const ddText = $dd.text().replace(/\s+/g, ' ').trim();
+
+      if (label.includes('email')) {
+        const mailMatch = ddHtml.match(/mailto:([^"]+)/);
+        if (mailMatch) result.email = mailMatch[1].trim();
+      } else if (label.includes('telephone') || label.includes('phone')) {
+        const telMatch = ddHtml.match(/tel:([^"]+)/);
+        if (telMatch) result.phone = telMatch[1].trim();
+      } else if (label.includes('workplace') || label.includes('firm')) {
+        // Parse workplace to extract firm name
+        // Patterns: "Sole Practitioner at <firm>", "Partner at <firm>", "<role> at <firm>"
+        const atMatch = ddText.match(/(?:at|with)\s+(.+)/i);
+        if (atMatch) {
+          result.firm_name = atMatch[1].trim();
+        } else if (ddText) {
+          result.firm_name = ddText;
+        }
+      } else if (label.includes('preferred name')) {
+        if (ddText) result.preferred_name = ddText;
+      } else if (label.includes('regulatory') || label.includes('practising')) {
+        // Extract certificate type (Barrister, Barrister & Solicitor, etc.)
+        const certMatch = ddText.match(/as a (Barrister(?: & Solicitor)?)/i);
+        let barStatus = certMatch ? certMatch[1] : '';
+        // Check if current
+        if (ddText.toLowerCase().includes('currently holds')) {
+          barStatus = (barStatus || '') + ' (Current)';
+        }
+        if (barStatus) result.bar_status = barStatus.trim();
+      } else if (label.includes('admitted')) {
+        if (ddText) result.admission_date = ddText;
+      } else if (label.includes('post') || label.includes('address')) {
+        if (ddText) result.address = ddText;
+      } else if (label.includes('website') || label.includes('web')) {
+        const urlMatch = ddHtml.match(/href="(https?:\/\/[^"]+)"/);
+        if (urlMatch && !this.isExcludedDomain(urlMatch[1])) {
+          result.website = urlMatch[1];
+        }
+      }
+    });
+
+    // Remove empty values
+    for (const key of Object.keys(result)) {
+      if (!result[key]) delete result[key];
+    }
+
+    return result;
+  }
+
+  /**
    * Fetch a single lawyer's profile page and extract detailed contact info.
    */
   async fetchProfileDetails(profileUrl, rateLimiter) {

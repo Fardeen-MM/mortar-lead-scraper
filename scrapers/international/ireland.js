@@ -399,7 +399,7 @@ class IrelandScraper extends BaseScraper {
         website,
         bar_number: solId,
         bar_status: barStatus,
-        profile_url: '',
+        profile_url: `https://www.lawsociety.ie/find-a-solicitor/Solicitor-Firm-Search/?solicitorId=${solId}`,
         address,
         fax,
         admission_date: admissionDate,
@@ -407,6 +407,149 @@ class IrelandScraper extends BaseScraper {
     });
 
     return attorneys;
+  }
+
+  /**
+   * Parse a solicitor profile/detail page for additional fields.
+   *
+   * The Law Society of Ireland does not have standalone profile pages. All
+   * solicitor data is embedded in the search results via expandable card
+   * sections. The parseResultsPage() method already extracts: phone, email,
+   * website, firm_name, address, fax, admission_date, and bar_status.
+   *
+   * This parseProfilePage handles the case where we re-fetch a solicitor's
+   * data by solicitor ID through the search form. The page structure is the
+   * same as a normal search results page.
+   *
+   * @param {CheerioStatic} $ - Cheerio instance of the page
+   * @returns {object} Additional fields from the profile
+   */
+  parseProfilePage($) {
+    const result = {};
+
+    // The page structure is identical to search results.
+    // Find the first solicitor card section.
+    const $section = $('section').first();
+    const $card = $section.find('.cardcontainer').first();
+    if (!$card.length) return result;
+
+    // Extract phone from tel: link
+    const $phoneLink = $section.find('a[href^="tel:"]').first();
+    if ($phoneLink.length) {
+      const phone = $phoneLink.text().trim();
+      if (phone) result.phone = phone;
+    }
+
+    // Extract email from mailto: link
+    const $emailLink = $section.find('a[href^="mailto:"]').first();
+    if ($emailLink.length) {
+      const email = $emailLink.attr('href').replace('mailto:', '').trim();
+      if (email) result.email = email;
+    }
+
+    // Extract website from expandedFieldsWebsite div
+    const $websiteDiv = $section.find('[id^="expandedFieldsWebsite_"]');
+    const $websiteLink = $websiteDiv.find('a[href]').first();
+    if ($websiteLink.length) {
+      const website = $websiteLink.attr('href') || '';
+      if (website && !this.isExcludedDomain(website)) result.website = website;
+    }
+
+    // Extract firm and location
+    const $infoDiv = $card.children('div').eq(1);
+    const $firmLocationDiv = $infoDiv.find('.margin--bottom__05rem').last();
+    const firmLocationDivs = $firmLocationDiv.children('div');
+    if (firmLocationDivs.length >= 2) {
+      const firmName = $(firmLocationDivs[0]).text().trim();
+      if (firmName) result.firm_name = firmName;
+    }
+
+    // Extract address
+    const $addressDiv = $section.find('[id^="expandedFieldsAddress_"]');
+    if ($addressDiv.length) {
+      let address = $addressDiv.find('.cardcontainer--icon__label').html() || '';
+      address = address.replace(/<br\s*\/?>/gi, ', ').replace(/<[^>]+>/g, '').trim();
+      if (address) result.address = address;
+    }
+
+    // Extract fax
+    const $faxDiv = $section.find('[id^="expandedFieldsFax_"]');
+    if ($faxDiv.length) {
+      const fax = $faxDiv.find('.cardcontainer--icon__label').text().trim();
+      if (fax) result.fax = fax;
+    }
+
+    // Extract admission year
+    const admissionText = $section.find('[id^="expandedFieldsAdmittedCounty_"]').text().trim();
+    const admMatch = admissionText.match(/Admitted\s+(\d{4})/i);
+    if (admMatch) result.admission_date = admMatch[1];
+
+    // Remove empty values
+    for (const key of Object.keys(result)) {
+      if (!result[key]) delete result[key];
+    }
+
+    return result;
+  }
+
+  /**
+   * Override enrichFromProfile because Ireland has no standalone profile pages.
+   * Instead, we re-search the Law Society form using the solicitor's name to
+   * retrieve the latest data from the expandable card section.
+   *
+   * Since the search results already contain full contact details, this is only
+   * useful for refreshing stale data or filling gaps in previously scraped records.
+   *
+   * @param {object} lead - The lead object
+   * @param {RateLimiter} rateLimiter - Rate limiter instance
+   * @returns {object} Additional fields from the profile
+   */
+  async enrichFromProfile(lead, rateLimiter) {
+    if (!lead.bar_number && !lead.full_name) return {};
+
+    // The Law Society of Ireland does not have direct profile URLs.
+    // We perform a targeted search using the solicitor's name to find their card.
+    try {
+      // First, get a fresh anti-forgery token
+      const tokenData = await this.fetchTokenWithCookies(rateLimiter);
+      const { token, cookies } = tokenData;
+
+      // Search by the solicitor's name
+      const searchName = lead.full_name || `${lead.first_name} ${lead.last_name}`.trim();
+      if (!searchName) return {};
+
+      const formData = this.buildFormData({
+        city: searchName,
+        county: '',
+        page: 1,
+        token,
+        sortBy: 'Name',
+      });
+
+      await rateLimiter.wait();
+      const response = await this.httpPost(this.searchUrl, formData, rateLimiter, cookies);
+
+      if (response.statusCode !== 200) return {};
+
+      const cheerio = require('cheerio');
+      const $ = cheerio.load(response.body);
+
+      // Find the specific solicitor by their bar number (solicitor ID)
+      if (lead.bar_number) {
+        const $targetSection = $(`[id*="${lead.bar_number}"]`).closest('section');
+        if ($targetSection.length) {
+          const subHtml = $.html($targetSection);
+          const $sub = cheerio.load(subHtml);
+          return this.parseProfilePage($sub);
+        }
+      }
+
+      // Fallback: parse the first result if it's the only one
+      return this.parseProfilePage($);
+    } catch (err) {
+      log.warn(`IE: Failed to enrich profile for ${lead.full_name}: ${err.message}`);
+      return {};
+    }
   }
 
   /**

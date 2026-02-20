@@ -250,6 +250,54 @@ class HongKongScraper extends BaseScraper {
   }
 
   /**
+   * Parse a HK Law Society member detail page for additional fields.
+   *
+   * The detail page at /en/Serve-the-Public/The-Law-List/Member-Details?MemId={id}
+   * contains a table with personal details (name, admission date, email) and
+   * firm details (post, firm name, address, phone, fax, email).
+   *
+   * This method delegates to parseMemberDetail() and maps the result to the
+   * standard field names used by the waterfall enrichment pipeline.
+   *
+   * @param {CheerioStatic} $ - Cheerio instance of the detail page
+   * @returns {object} Additional fields: { phone, email, website, firm_name,
+   *   bar_status, admission_date, address, fax, position }
+   */
+  parseProfilePage($) {
+    // parseMemberDetail expects raw HTML, but we have a Cheerio instance.
+    // Re-serialize the HTML and pass it through.
+    const html = $.html();
+    const detail = this.parseMemberDetail(html);
+    const result = {};
+
+    // Map parseMemberDetail fields to standard enrichment fields
+    if (detail.firm_phone) result.phone = detail.firm_phone;
+    if (detail.personal_email || detail.firm_email) {
+      result.email = detail.personal_email || detail.firm_email;
+    }
+    if (detail.firm_name_en) result.firm_name = detail.firm_name_en;
+    if (detail.firm_address_en) result.address = detail.firm_address_en;
+    if (detail.firm_fax) result.fax = detail.firm_fax;
+    if (detail.admission_hk) result.admission_date = detail.admission_hk;
+    if (detail.post) result.position = detail.post;
+    if (detail.remark) result.bar_status = detail.remark;
+    if (detail.name_cn) result.name_chinese = detail.name_cn;
+
+    // Infer city from the firm address
+    if (detail.firm_address_en) {
+      const city = this._inferRegion(detail.firm_address_en);
+      if (city) result.city = city;
+    }
+
+    // Remove empty values
+    for (const key of Object.keys(result)) {
+      if (!result[key]) delete result[key];
+    }
+
+    return result;
+  }
+
+  /**
    * Parse a full name in "LAST FIRST MIDDLE" format (all uppercase) into components.
    * HK Law Society lists names as: SURNAME GIVEN_NAMES (e.g., "ABATE DUNCAN ARTHUR WILLIAM")
    *

@@ -333,6 +333,175 @@ class DelawareScraper extends BaseScraper {
   }
 
   /**
+   * Parse a Delaware attorney profile/detail page for additional contact info.
+   *
+   * The DOE Legal system may expose detail pages with additional fields
+   * such as email, website, and expanded address information beyond what
+   * the search results table provides.
+   *
+   * @param {CheerioStatic} $ - Cheerio instance of the profile page
+   * @returns {object} Additional fields extracted from the profile
+   */
+  parseProfilePage($) {
+    const result = {};
+    const bodyText = $('body').text();
+
+    // Phone — look for tel: links first, then labeled patterns
+    const telLink = $('a[href^="tel:"]').first();
+    if (telLink.length) {
+      result.phone = telLink.attr('href').replace('tel:', '').trim();
+    } else {
+      const phoneMatch = bodyText.match(/(?:Phone|Telephone|Office|Work|Business)[:\s]*([\d().\s-]+)/i) ||
+                         bodyText.match(/(\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4})/);
+      if (phoneMatch) {
+        result.phone = phoneMatch[1].trim();
+      }
+    }
+
+    // Email — look for mailto: links
+    const mailtoLink = $('a[href^="mailto:"]').first();
+    if (mailtoLink.length) {
+      result.email = mailtoLink.attr('href').replace('mailto:', '').split('?')[0].trim().toLowerCase();
+    } else {
+      const emailMatch = bodyText.match(/(?:Email|E-mail)[:\s]+([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/i);
+      if (emailMatch) {
+        result.email = emailMatch[1].toLowerCase();
+      }
+    }
+
+    // Website — external links that aren't DE bar or excluded domains
+    const deExcluded = [
+      'doelegal.com', 'courts.delaware.gov', 'dsba.org',
+      'delaware.gov', 'delawarebar.org',
+    ];
+    const isExcluded = (href) =>
+      this.isExcludedDomain(href) || deExcluded.some(d => href.includes(d));
+
+    $('a[href^="http"]').each((_, el) => {
+      const href = $(el).attr('href') || '';
+      if (!isExcluded(href)) {
+        result.website = href;
+        return false; // break
+      }
+    });
+
+    // Firm name / employer
+    const firmMatch = bodyText.match(/(?:Firm|Employer|Company|Organization)[:\s]+(.+?)(?:\n|$)/i);
+    if (firmMatch) {
+      const firm = firmMatch[1].trim();
+      if (firm && firm.length > 1 && firm.length < 200) {
+        result.firm_name = firm;
+      }
+    }
+
+    // Address
+    const addrMatch = bodyText.match(/(?:Address|Location)[:\s]+(.+?)(?:\n\n|\nPhone|\nEmail|\nFirm|$)/is);
+    if (addrMatch) {
+      result.address = addrMatch[1].trim().replace(/\s+/g, ' ');
+    }
+
+    // Admission date
+    const admitMatch = bodyText.match(/(?:Admit(?:ted|ssion)\s*(?:Date)?)[:\s]+(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\w+\s+\d{1,2},?\s+\d{4}|\d{4})/i);
+    if (admitMatch) {
+      result.admission_date = admitMatch[1].trim();
+    }
+
+    // Bar status
+    const statusMatch = bodyText.match(/(?:Status|Standing)[:\s]+(Active|Inactive|Suspended|Retired|Resigned|Deceased|Disbarred)/i);
+    if (statusMatch) {
+      result.bar_status = statusMatch[1].trim();
+    }
+
+    // Remove empty string values before returning
+    for (const key of Object.keys(result)) {
+      if (result[key] === '' || result[key] === undefined || result[key] === null) {
+        delete result[key];
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Override enrichFromProfile to search by bar number (Supreme Court ID) when
+   * no profile_url is available. The DOE Legal system is ViewState-based so
+   * individual profile pages aren't directly addressable by URL. Instead, we
+   * perform a targeted search using the bar number to get the detail record.
+   *
+   * @param {object} lead - The lead object (may have bar_number)
+   * @param {RateLimiter} rateLimiter - Rate limiter instance
+   * @returns {object} Additional fields (typically empty unless a detail page is found)
+   */
+  async enrichFromProfile(lead, rateLimiter) {
+    // If a profile_url exists, use the base class flow (fetch + parseProfilePage)
+    if (lead.profile_url) {
+      const $ = await this.fetchProfilePage(lead.profile_url, rateLimiter);
+      if (!$) return {};
+      return this.parseProfilePage($);
+    }
+
+    // No profile_url — attempt a targeted search by bar number to re-fetch
+    // the record with detail. The DOE Legal ASP.NET form requires ViewState,
+    // so we need to do a full form submission.
+    if (!lead.bar_number) return {};
+
+    try {
+      await rateLimiter.wait();
+      const pageResponse = await this._httpGet(this.baseUrl, rateLimiter);
+      if (pageResponse.statusCode !== 200) return {};
+
+      const hiddenFields = this._extractHiddenFields(pageResponse.body);
+      if (!hiddenFields.__VIEWSTATE) return {};
+
+      const formData = {
+        ...hiddenFields,
+        '__EVENTTARGET': '',
+        '__EVENTARGUMENT': '',
+        'ctl00$PageContent$SearchText': lead.bar_number,
+        'ctl00$PageContent$SearchButton.x': '10',
+        'ctl00$PageContent$SearchButton.y': '10',
+      };
+
+      await rateLimiter.wait();
+      const searchResponse = await this._httpPost(
+        this.baseUrl, formData, rateLimiter, pageResponse.cookies
+      );
+      if (searchResponse.statusCode !== 200) return {};
+
+      const $ = cheerio.load(searchResponse.body);
+      const attorneys = this._parseAttorneys($);
+
+      // Find the matching attorney by bar number
+      const match = attorneys.find(a => a.bar_number === lead.bar_number);
+      if (!match) return {};
+
+      // Return any fields that might fill gaps (phone, firm, city)
+      const result = {};
+      if (match.phone && !lead.phone) result.phone = match.phone;
+      if (match.firm_name && !lead.firm_name) result.firm_name = match.firm_name;
+      if (match.city && !lead.city) result.city = match.city;
+      if (match.admission_date && !lead.admission_date) result.admission_date = match.admission_date;
+
+      // Remove empty values
+      for (const key of Object.keys(result)) {
+        if (!result[key]) delete result[key];
+      }
+
+      return result;
+    } catch (err) {
+      log.warn(`DE enrichFromProfile failed for bar#${lead.bar_number}: ${err.message}`);
+      return {};
+    }
+  }
+
+  /**
+   * Override hasProfileParser since we implement enrichFromProfile directly.
+   */
+  get hasProfileParser() {
+    return true;
+  }
+
+  /**
    * Async generator that yields attorney records from the DE Bar directory.
    *
    * The DOE Legal search is keyword-based, not city-based.

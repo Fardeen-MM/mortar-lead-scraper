@@ -215,6 +215,88 @@ class MarylandScraper extends BaseScraper {
     return attorneys;
   }
 
+  /**
+   * Parse a Maryland attorney profile page for additional contact info.
+   *
+   * MD Courts profile pages (linked from div-based results) may contain:
+   * phone, email, firm name, address, website, and admission details.
+   *
+   * @param {CheerioStatic} $ - Cheerio instance of the profile page
+   * @returns {object} Additional fields extracted from the profile
+   */
+  parseProfilePage($) {
+    const result = {};
+    const bodyText = $('body').text();
+
+    // Phone — look for tel: links first, then phone patterns in text
+    const telLink = $('a[href^="tel:"]').first();
+    if (telLink.length) {
+      result.phone = telLink.attr('href').replace('tel:', '').trim();
+    } else {
+      const phoneMatch = bodyText.match(/Phone[:\s]*([\d().\s-]+)/i) ||
+                         bodyText.match(/Telephone[:\s]*([\d().\s-]+)/i) ||
+                         bodyText.match(/(\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4})/);
+      if (phoneMatch) {
+        result.phone = phoneMatch[1].trim();
+      }
+    }
+
+    // Email — look for mailto: links
+    const mailtoLink = $('a[href^="mailto:"]').first();
+    if (mailtoLink.length) {
+      result.email = mailtoLink.attr('href').replace('mailto:', '').split('?')[0].trim().toLowerCase();
+    }
+
+    // Website — external links that aren't government, social, or bar association sites
+    const mdExcluded = ['mdcourts.gov', 'courts.state.md.us', 'marylandbar.org', 'msba.org'];
+    const isExcluded = (href) =>
+      this.isExcludedDomain(href) || mdExcluded.some(d => href.includes(d));
+
+    $('a[href^="http"]').each((_, el) => {
+      const href = $(el).attr('href') || '';
+      if (!isExcluded(href)) {
+        result.website = href;
+        return false; // break
+      }
+    });
+
+    // Firm name — look for common label patterns
+    const firmMatch = bodyText.match(/(?:Firm|Employer|Company|Organization)[:\s]+(.+?)(?:\n|$)/i);
+    if (firmMatch) {
+      const firm = firmMatch[1].trim();
+      if (firm && firm.length > 1 && firm.length < 200) {
+        result.firm_name = firm;
+      }
+    }
+
+    // Address
+    const addrMatch = bodyText.match(/Address[:\s]+(.+?)(?:\n|Phone|Email|Firm|$)/is);
+    if (addrMatch) {
+      result.address = addrMatch[1].trim().replace(/\s+/g, ' ');
+    }
+
+    // Admission date
+    const admitMatch = bodyText.match(/(?:Admit(?:ted|ssion)\s*(?:Date)?)[:\s]+(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\w+\s+\d{1,2},?\s+\d{4})/i);
+    if (admitMatch) {
+      result.admission_date = admitMatch[1].trim();
+    }
+
+    // Bar status
+    const statusMatch = bodyText.match(/(?:Status|Standing)[:\s]+(Active|Inactive|Suspended|Retired|Resigned|Deceased|Disbarred)/i);
+    if (statusMatch) {
+      result.bar_status = statusMatch[1].trim();
+    }
+
+    // Remove empty string values before returning
+    for (const key of Object.keys(result)) {
+      if (result[key] === '' || result[key] === undefined || result[key] === null) {
+        delete result[key];
+      }
+    }
+
+    return result;
+  }
+
   extractResultCount($) {
     const text = $('body').text();
 

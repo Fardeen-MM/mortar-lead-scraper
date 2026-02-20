@@ -288,6 +288,97 @@ class MinnesotaScraper extends BaseScraper {
   }
 
   /**
+   * Parse a Minnesota attorney profile page for additional contact info.
+   *
+   * Used by the waterfall pipeline when profile_url is available (typically
+   * from the HTML fallback search results, not the CSV download path).
+   * Profile pages may contain: phone, email, firm name, address, and
+   * admission details.
+   *
+   * @param {CheerioStatic} $ - Cheerio instance of the profile page
+   * @returns {object} Additional fields extracted from the profile
+   */
+  parseProfilePage($) {
+    const result = {};
+    const bodyText = $('body').text();
+
+    // Phone — look for tel: links first, then labeled patterns
+    const telLink = $('a[href^="tel:"]').first();
+    if (telLink.length) {
+      result.phone = telLink.attr('href').replace('tel:', '').trim();
+    } else {
+      const phoneMatch = bodyText.match(/(?:Phone|Telephone|Office|Work|Business)[:\s]*([\d().\s-]+)/i) ||
+                         bodyText.match(/(\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4})/);
+      if (phoneMatch) {
+        result.phone = phoneMatch[1].trim();
+      }
+    }
+
+    // Email — look for mailto: links
+    const mailtoLink = $('a[href^="mailto:"]').first();
+    if (mailtoLink.length) {
+      result.email = mailtoLink.attr('href').replace('mailto:', '').split('?')[0].trim().toLowerCase();
+    } else {
+      const emailMatch = bodyText.match(/(?:Email|E-mail)[:\s]+([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/i);
+      if (emailMatch) {
+        result.email = emailMatch[1].toLowerCase();
+      }
+    }
+
+    // Website — external links that aren't MN courts or excluded domains
+    const mnExcluded = [
+      'mars.courts.state.mn.us', 'courts.state.mn.us', 'mncourts.gov',
+      'mnbar.org', 'lprb.mncourts.gov',
+    ];
+    const isExcluded = (href) =>
+      this.isExcludedDomain(href) || mnExcluded.some(d => href.includes(d));
+
+    $('a[href^="http"]').each((_, el) => {
+      const href = $(el).attr('href') || '';
+      if (!isExcluded(href)) {
+        result.website = href;
+        return false; // break
+      }
+    });
+
+    // Firm name / employer
+    const firmMatch = bodyText.match(/(?:Firm|Employer|Company|Organization)[:\s]+(.+?)(?:\n|$)/i);
+    if (firmMatch) {
+      const firm = firmMatch[1].trim();
+      if (firm && firm.length > 1 && firm.length < 200) {
+        result.firm_name = firm;
+      }
+    }
+
+    // Address
+    const addrMatch = bodyText.match(/(?:Address|Location)[:\s]+(.+?)(?:\n\n|\nPhone|\nEmail|\nFirm|$)/is);
+    if (addrMatch) {
+      result.address = addrMatch[1].trim().replace(/\s+/g, ' ');
+    }
+
+    // Admission date
+    const admitMatch = bodyText.match(/(?:Admit(?:ted|ssion)\s*(?:Date)?)[:\s]+(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\w+\s+\d{1,2},?\s+\d{4}|\d{4})/i);
+    if (admitMatch) {
+      result.admission_date = admitMatch[1].trim();
+    }
+
+    // Bar status
+    const statusMatch = bodyText.match(/(?:Status|Standing|Registration)[:\s]+(Active|Inactive|Suspended|Retired|Resigned|Deceased|Disbarred)/i);
+    if (statusMatch) {
+      result.bar_status = statusMatch[1].trim();
+    }
+
+    // Remove empty string values before returning
+    for (const key of Object.keys(result)) {
+      if (result[key] === '' || result[key] === undefined || result[key] === null) {
+        delete result[key];
+      }
+    }
+
+    return result;
+  }
+
+  /**
    * Fallback: parse the HTML search form results page.
    * Used when CSV download is not available.
    */
