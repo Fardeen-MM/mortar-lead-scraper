@@ -1060,6 +1060,36 @@
       <div id="recs-list"></div>
     </div>
 
+    <!-- Pipeline Kanban Board -->
+    <div id="pipeline-board" style="margin-bottom:1.5rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+        <h3 style="margin:0;">Pipeline</h3>
+        <div style="display:flex;gap:0.5rem;align-items:center;">
+          <span id="pipeline-total" style="font-size:0.8rem;color:#6b7280;"></span>
+          <button onclick="togglePipelineExpand()" class="btn-sm" style="font-size:0.75rem;padding:0.25rem 0.5rem;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:4px;cursor:pointer;">Expand</button>
+        </div>
+      </div>
+      <div id="pipeline-columns" style="display:grid;grid-template-columns:repeat(5,1fr);gap:0.75rem;"></div>
+    </div>
+
+    <!-- Smart Segments -->
+    <div id="segments-panel" style="margin-bottom:1.5rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+        <h3 style="margin:0;">Smart Segments</h3>
+        <button onclick="openSegmentBuilder()" class="btn-sm" style="font-size:0.75rem;padding:0.25rem 0.6rem;background:#4f46e5;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Segment</button>
+      </div>
+      <div id="segments-list" style="display:flex;flex-wrap:wrap;gap:0.5rem;"></div>
+    </div>
+
+    <!-- Scheduled Scrapes -->
+    <div id="schedules-panel" style="margin-bottom:1.5rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+        <h3 style="margin:0;">Scheduled Scrapes</h3>
+        <button onclick="openScheduleBuilder()" class="btn-sm" style="font-size:0.75rem;padding:0.25rem 0.6rem;background:#059669;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ Add Schedule</button>
+      </div>
+      <div id="schedules-list" style="display:flex;flex-direction:column;gap:0.5rem;"></div>
+    </div>
+
     <!-- Breakdowns + Activity -->
     <div class="breakdown-section" style="grid-template-columns: 1fr 1fr 1fr;">
       <div class="breakdown-panel">
@@ -1091,10 +1121,24 @@
     </div>
 
     <!-- State Coverage Grid Map -->
+    <!-- Geographic Heat Map -->
     <div class="panel" style="display:block; margin-bottom: 1rem;">
-      <h2 style="margin-bottom: 0.5rem;">Coverage Map</h2>
-      <p class="hint" style="margin-bottom:0.75rem;">Lead coverage by jurisdiction. Click a cell to filter leads by that state.</p>
-      <div id="coverage-map" style="display:flex;flex-wrap:wrap;gap:2px;"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+        <h2 style="margin:0;">Geographic View</h2>
+        <div style="display:flex;gap:0.3rem;">
+          <button class="btn btn-secondary geo-tab active" style="font-size:0.65rem;padding:0.1rem 0.4rem;" onclick="switchGeoTab('map', this)">US Map</button>
+          <button class="btn btn-secondary geo-tab" style="font-size:0.65rem;padding:0.1rem 0.4rem;" onclick="switchGeoTab('world', this)">World</button>
+          <button class="btn btn-secondary geo-tab" style="font-size:0.65rem;padding:0.1rem 0.4rem;" onclick="switchGeoTab('grid', this)">Grid</button>
+        </div>
+      </div>
+      <div id="geo-map-view">
+        <div id="us-geo-map" style="position:relative;width:100%;max-width:700px;margin:0 auto;"></div>
+        <div id="geo-legend" style="display:flex;gap:1rem;justify-content:center;margin-top:0.5rem;font-size:0.7rem;color:#6b7280;"></div>
+      </div>
+      <div id="geo-world-view" style="display:none;"></div>
+      <div id="geo-grid-view" style="display:none;">
+        <div id="coverage-map" style="display:flex;flex-wrap:wrap;gap:2px;"></div>
+      </div>
     </div>
 
     <!-- Growth Chart -->
@@ -1407,6 +1451,66 @@
     </div>
   </div>
 
+  <!-- Segment Builder Modal -->
+  <div class="modal-overlay" id="segment-modal" onclick="if(event.target===this)closeSegmentModal()" style="display:none;">
+    <div class="modal" style="max-width:650px;">
+      <h2>Build Segment <button class="modal-close" onclick="closeSegmentModal()">&times;</button></h2>
+      <div style="margin-bottom:1rem;">
+        <input type="text" id="seg-name" placeholder="Segment name..." style="width:100%;padding:0.5rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.9rem;margin-bottom:0.5rem;">
+        <input type="text" id="seg-desc" placeholder="Description (optional)" style="width:100%;padding:0.5rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+      </div>
+      <div id="seg-conditions" style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem;"></div>
+      <button onclick="addSegCondition()" style="font-size:0.8rem;padding:0.3rem 0.75rem;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:4px;cursor:pointer;margin-bottom:1rem;">+ Add Condition</button>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding-top:0.75rem;border-top:1px solid #e5e7eb;">
+        <span id="seg-preview-count" style="font-size:0.85rem;color:#6b7280;"></span>
+        <div style="display:flex;gap:0.5rem;">
+          <button onclick="previewSegment()" style="padding:0.4rem 1rem;background:#f3f4f6;border:1px solid #d1d5db;border-radius:6px;cursor:pointer;">Preview</button>
+          <button onclick="saveSegment()" style="padding:0.4rem 1rem;background:#4f46e5;color:#fff;border:none;border-radius:6px;cursor:pointer;">Save Segment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Schedule Builder Modal -->
+  <div class="modal-overlay" id="schedule-modal" onclick="if(event.target===this)closeScheduleModal()" style="display:none;">
+    <div class="modal" style="max-width:450px;">
+      <h2>Schedule Scrape <button class="modal-close" onclick="closeScheduleModal()">&times;</button></h2>
+      <div style="display:flex;flex-direction:column;gap:0.75rem;">
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Jurisdiction</label>
+          <select id="sched-state" style="width:100%;padding:0.5rem;border:1px solid #d1d5db;border-radius:6px;"></select>
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Frequency</label>
+          <select id="sched-freq" style="width:100%;padding:0.5rem;border:1px solid #d1d5db;border-radius:6px;">
+            <option value="daily">Daily</option>
+            <option value="weekly" selected>Weekly</option>
+            <option value="monthly">Monthly</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Day of Week</label>
+          <select id="sched-dow" style="width:100%;padding:0.5rem;border:1px solid #d1d5db;border-radius:6px;">
+            <option value="0">Sunday</option><option value="1" selected>Monday</option><option value="2">Tuesday</option>
+            <option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Hour (UTC)</label>
+          <select id="sched-hour" style="width:100%;padding:0.5rem;border:1px solid #d1d5db;border-radius:6px;">
+            <option value="0">0:00</option><option value="1">1:00</option><option value="2">2:00</option><option value="3">3:00</option>
+            <option value="4">4:00</option><option value="5">5:00</option><option value="6" selected>6:00</option><option value="7">7:00</option>
+            <option value="8">8:00</option><option value="9">9:00</option><option value="10">10:00</option><option value="11">11:00</option>
+            <option value="12">12:00</option><option value="13">13:00</option><option value="14">14:00</option><option value="15">15:00</option>
+            <option value="16">16:00</option><option value="17">17:00</option><option value="18">18:00</option><option value="19">19:00</option>
+            <option value="20">20:00</option><option value="21">21:00</option><option value="22">22:00</option><option value="23">23:00</option>
+          </select>
+        </div>
+        <button onclick="saveSchedule()" style="padding:0.5rem;background:#059669;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;margin-top:0.5rem;">Create Schedule</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Keyboard shortcut hint -->
   <div class="kbd-hint" id="kbd-hint">
     <div><kbd>&#x2318;K</kbd> Command palette &nbsp; <kbd>/</kbd> Search &nbsp; <kbd>Esc</kbd> Clear/Close &nbsp; <kbd>?</kbd> Toggle hints</div>
@@ -1436,6 +1540,7 @@
     <button onclick="addSelectedToList()">Add to List</button>
     <button onclick="generatePersonalization()">Personalize</button>
     <button onclick="tagSelected()">Tag</button>
+    <button onclick="moveSelectedToStage()">Move Stage</button>
     <button onclick="deleteSelected()">Delete</button>
     <button onclick="clearSelection()" style="background:transparent;border-color:rgba(255,255,255,0.4);">&times; Clear</button>
   </div>
@@ -4013,11 +4118,480 @@
       return date.toLocaleDateString();
     }
 
+    // --- Geographic Map View ---
+    // US state grid positions (row, col) — "tile grid map" layout
+    const US_GRID = {
+      AK:[0,0],HI:[7,0],ME:[0,10],VT:[1,9],NH:[1,10],WA:[2,1],MT:[2,2],ND:[2,3],MN:[2,4],WI:[2,5],MI:[2,7],NY:[2,8],MA:[2,9],CT:[2,10],RI:[2,11],
+      ID:[3,1],WY:[3,2],SD:[3,3],IA:[3,4],IL:[3,5],IN:[3,6],OH:[3,7],PA:[3,8],NJ:[3,9],
+      OR:[4,1],NV:[4,2],CO:[4,3],NE:[4,4],MO:[4,5],KY:[4,6],WV:[4,7],VA:[4,8],MD:[4,9],DE:[4,10],DC:[4,11],
+      CA:[5,1],UT:[5,2],NM:[5,3],KS:[5,4],AR:[5,5],TN:[5,6],NC:[5,7],SC:[5,8],
+      AZ:[6,2],OK:[6,3],LA:[6,4],MS:[6,5],AL:[6,6],GA:[6,7],FL:[6,8],
+      TX:[7,3],
+    };
+
+    function switchGeoTab(tab, btn) {
+      document.querySelectorAll('.geo-tab').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      document.getElementById('geo-map-view').style.display = tab === 'map' ? '' : 'none';
+      document.getElementById('geo-world-view').style.display = tab === 'world' ? '' : 'none';
+      document.getElementById('geo-grid-view').style.display = tab === 'grid' ? '' : 'none';
+      if (tab === 'world') loadWorldView();
+    }
+
+    async function loadGeoMap() {
+      try {
+        const coverage = await fetch('/api/leads/coverage').then(r => r.json());
+        const byState = {};
+        let maxCount = 0;
+        for (const row of coverage) {
+          byState[row.state] = row;
+          if (row.total > maxCount) maxCount = row.total;
+        }
+
+        const COLS = 12, ROWS = 8;
+        const cellW = 100 / COLS;
+        const cellH = 100 / ROWS;
+
+        let html = '<div style="position:relative;width:100%;padding-bottom:' + (ROWS * 100 / COLS) + '%;">';
+        for (const [st, [r, c]] of Object.entries(US_GRID)) {
+          const d = byState[st];
+          const count = d ? d.total : 0;
+          const emailPct = d ? d.email_pct : 0;
+          // Color: intensity based on lead count, hue based on email coverage
+          let bg, textColor;
+          if (count === 0) {
+            bg = '#f3f4f6'; textColor = '#9ca3af';
+          } else {
+            const intensity = Math.min(count / Math.max(maxCount * 0.3, 1), 1);
+            if (emailPct > 30) {
+              bg = `rgba(16,185,129,${0.15 + intensity * 0.7})`; // green = has email
+              textColor = intensity > 0.5 ? '#fff' : '#065f46';
+            } else if (count > 50) {
+              bg = `rgba(99,102,241,${0.15 + intensity * 0.7})`; // indigo = many leads
+              textColor = intensity > 0.5 ? '#fff' : '#312e81';
+            } else {
+              bg = `rgba(245,158,11,${0.2 + intensity * 0.5})`; // amber = sparse
+              textColor = '#92400e';
+            }
+          }
+          html += `<div onclick="openStateModal('${st}')" title="${st}: ${count} leads, ${emailPct}% email"
+            style="position:absolute;left:${c * cellW}%;top:${r * cellH * (COLS / ROWS)}%;width:${cellW - 0.3}%;padding-bottom:${cellW - 0.3}%;
+              background:${bg};border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+              transition:transform 0.15s;font-size:0.65rem;font-weight:600;color:${textColor};"
+            onmouseover="this.style.transform='scale(1.15)';this.style.zIndex=10" onmouseout="this.style.transform='';this.style.zIndex=''">
+            <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">${st}</span>
+            ${count > 0 ? '<span style="position:absolute;bottom:1px;left:50%;transform:translateX(-50%);font-size:0.5rem;opacity:0.8;">' + (count > 999 ? (count/1000).toFixed(1)+'k' : count) + '</span>' : ''}
+          </div>`;
+        }
+        html += '</div>';
+
+        document.getElementById('us-geo-map').innerHTML = html;
+        document.getElementById('geo-legend').innerHTML = `
+          <span><span style="display:inline-block;width:10px;height:10px;background:#f3f4f6;border-radius:2px;margin-right:3px;"></span>No data</span>
+          <span><span style="display:inline-block;width:10px;height:10px;background:rgba(245,158,11,0.5);border-radius:2px;margin-right:3px;"></span>Sparse</span>
+          <span><span style="display:inline-block;width:10px;height:10px;background:rgba(99,102,241,0.6);border-radius:2px;margin-right:3px;"></span>Good coverage</span>
+          <span><span style="display:inline-block;width:10px;height:10px;background:rgba(16,185,129,0.7);border-radius:2px;margin-right:3px;"></span>Has email data</span>
+        `;
+      } catch (err) { console.error('Geo map error:', err); }
+    }
+
+    async function loadWorldView() {
+      try {
+        const coverage = await fetch('/api/leads/coverage').then(r => r.json());
+        // Group by country
+        const countries = {};
+        for (const row of coverage) {
+          const c = row.country || 'US';
+          if (!countries[c]) countries[c] = { states: [], total: 0, email: 0, phone: 0, website: 0 };
+          countries[c].states.push(row);
+          countries[c].total += row.total;
+          countries[c].email += row.with_email || 0;
+          countries[c].phone += row.with_phone || 0;
+          countries[c].website += row.with_website || 0;
+        }
+        const FLAGS = { US: '&#x1F1FA;&#x1F1F8;', CA: '&#x1F1E8;&#x1F1E6;', UK: '&#x1F1EC;&#x1F1E7;', AU: '&#x1F1E6;&#x1F1FA;', FR: '&#x1F1EB;&#x1F1F7;', IE: '&#x1F1EE;&#x1F1EA;', IT: '&#x1F1EE;&#x1F1F9;', DE: '&#x1F1E9;&#x1F1EA;', HK: '&#x1F1ED;&#x1F1F0;', NZ: '&#x1F1F3;&#x1F1FF;', SG: '&#x1F1F8;&#x1F1EC;', IN: '&#x1F1EE;&#x1F1F3;', ZA: '&#x1F1FF;&#x1F1E6;' };
+        const sorted = Object.entries(countries).sort((a, b) => b[1].total - a[1].total);
+
+        let html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;">';
+        for (const [code, data] of sorted) {
+          const emailPct = data.total > 0 ? (data.email / data.total * 100).toFixed(0) : 0;
+          const phonePct = data.total > 0 ? (data.phone / data.total * 100).toFixed(0) : 0;
+          html += `<div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:0.75rem;cursor:pointer;" onclick="document.getElementById('filter-country').value='${code}';loadLeads();">
+            <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+              <span style="font-size:1.5rem;">${FLAGS[code] || '&#x1F30D;'}</span>
+              <div>
+                <div style="font-weight:700;font-size:0.9rem;">${code}</div>
+                <div style="font-size:0.75rem;color:#6b7280;">${data.states.length} jurisdictions</div>
+              </div>
+              <span style="margin-left:auto;font-weight:700;font-size:1.1rem;">${data.total.toLocaleString()}</span>
+            </div>
+            <div style="display:flex;gap:0.5rem;font-size:0.7rem;">
+              <span style="color:#059669;">${emailPct}% email</span>
+              <span style="color:#0ea5e9;">${phonePct}% phone</span>
+            </div>
+            <div style="margin-top:0.4rem;height:4px;background:#f3f4f6;border-radius:2px;overflow:hidden;">
+              <div style="height:100%;width:${emailPct}%;background:linear-gradient(90deg,#10b981,#059669);border-radius:2px;"></div>
+            </div>
+          </div>`;
+        }
+        html += '</div>';
+        document.getElementById('geo-world-view').innerHTML = html;
+      } catch (err) { console.error('World view error:', err); }
+    }
+
+    // --- Pipeline Kanban Board ---
+    const STAGE_META = {
+      new: { label: 'New', color: '#6366f1', icon: '&#x2728;' },
+      contacted: { label: 'Contacted', color: '#0ea5e9', icon: '&#x1F4E7;' },
+      replied: { label: 'Replied', color: '#f59e0b', icon: '&#x1F4AC;' },
+      meeting: { label: 'Meeting', color: '#8b5cf6', icon: '&#x1F4C5;' },
+      client: { label: 'Client', color: '#10b981', icon: '&#x2705;' },
+    };
+    let _pipelineExpanded = false;
+
+    async function loadPipeline() {
+      try {
+        const data = await fetch('/api/pipeline/stats').then(r => r.json());
+        const container = document.getElementById('pipeline-columns');
+        document.getElementById('pipeline-total').textContent = `${data.total} leads in pipeline`;
+        let html = '';
+        for (const stage of data.stageOrder) {
+          const meta = STAGE_META[stage];
+          const s = data.stages[stage];
+          const pct = data.total > 0 ? ((s.count / data.total) * 100).toFixed(0) : 0;
+          html += `<div class="pipeline-col" data-stage="${stage}" style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:0.75rem;min-height:80px;border-top:3px solid ${meta.color};"
+            ondragover="event.preventDefault();this.style.background='#f0f4ff'" ondragleave="this.style.background='#fff'"
+            ondrop="handlePipelineDrop(event,'${stage}');this.style.background='#fff'">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+              <span style="font-weight:600;font-size:0.85rem;">${meta.icon} ${meta.label}</span>
+              <span style="background:${meta.color}15;color:${meta.color};font-size:0.75rem;padding:0.1rem 0.4rem;border-radius:10px;font-weight:600;">${s.count}</span>
+            </div>
+            <div style="font-size:0.75rem;color:#9ca3af;">${pct}% of total</div>
+            <div style="font-size:0.7rem;color:#6b7280;margin-top:0.25rem;">${s.withEmail} with email</div>
+            <div id="pipeline-cards-${stage}" style="margin-top:0.5rem;display:${_pipelineExpanded ? 'flex' : 'none'};flex-direction:column;gap:0.35rem;"></div>
+          </div>`;
+        }
+        container.innerHTML = html;
+        if (_pipelineExpanded) loadPipelineCards();
+      } catch (err) { console.error('Pipeline load error:', err); }
+    }
+
+    async function loadPipelineCards() {
+      for (const stage of Object.keys(STAGE_META)) {
+        try {
+          const leads = await fetch(`/api/pipeline/stage/${stage}?limit=10`).then(r => r.json());
+          const container = document.getElementById('pipeline-cards-' + stage);
+          if (!container) continue;
+          container.innerHTML = leads.map(l => `
+            <div draggable="true" data-lead-id="${l.id}" ondragstart="event.dataTransfer.setData('text/plain','${l.id}')"
+              style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:0.4rem 0.5rem;cursor:grab;font-size:0.75rem;"
+              onclick="openLeadDetail(${l.id})">
+              <div style="font-weight:600;">${esc(l.first_name)} ${esc(l.last_name)}</div>
+              <div style="color:#6b7280;">${esc(l.firm_name || '')} &middot; ${esc(l.city || '')}</div>
+              ${l.email ? '<div style="color:#059669;">&#x2709; has email</div>' : ''}
+            </div>
+          `).join('');
+        } catch (err) { /* skip */ }
+      }
+    }
+
+    function togglePipelineExpand() {
+      _pipelineExpanded = !_pipelineExpanded;
+      loadPipeline();
+    }
+
+    async function handlePipelineDrop(event, stage) {
+      event.preventDefault();
+      const leadId = event.dataTransfer.getData('text/plain');
+      if (!leadId) return;
+      try {
+        await fetch('/api/pipeline/move', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leadId: parseInt(leadId), stage })
+        });
+        toast(`Moved to ${STAGE_META[stage].label}`, 'success');
+        loadPipeline();
+      } catch (err) { toast('Failed to move lead', 'error'); }
+    }
+
+    async function moveSelectedToStage() {
+      const stages = Object.entries(STAGE_META).map(([k, v]) => `${v.icon} ${v.label}`);
+      const choice = prompt('Move to stage:\\n1. New\\n2. Contacted\\n3. Replied\\n4. Meeting\\n5. Client\\n\\nEnter number:');
+      if (!choice) return;
+      const stageKeys = Object.keys(STAGE_META);
+      const idx = parseInt(choice) - 1;
+      if (idx < 0 || idx >= stageKeys.length) return;
+      const stage = stageKeys[idx];
+      const ids = Array.from(_selectedLeads);
+      try {
+        await fetch('/api/pipeline/bulk-move', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leadIds: ids, stage })
+        });
+        toast(`Moved ${ids.length} leads to ${STAGE_META[stage].label}`, 'success');
+        clearSelection();
+        loadPipeline();
+      } catch (err) { toast('Failed to move leads', 'error'); }
+    }
+
+    // --- Smart Segments ---
+    let _segments = [];
+    let _editingSegmentId = null;
+
+    async function loadSegments() {
+      try {
+        _segments = await fetch('/api/segments').then(r => r.json());
+        const container = document.getElementById('segments-list');
+        if (_segments.length === 0) {
+          container.innerHTML = '<span style="font-size:0.8rem;color:#9ca3af;">No segments yet. Create one to save filter combinations.</span>';
+          return;
+        }
+        container.innerHTML = _segments.map(seg => {
+          const condText = seg.filters.map(f => `${f.field} ${f.operator} ${f.value || ''}`).join(', ');
+          return `<div onclick="applySegment(${seg.id})" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.75rem;background:${seg.color}15;border:1px solid ${seg.color}40;border-radius:20px;cursor:pointer;font-size:0.8rem;transition:all 0.15s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <span style="width:8px;height:8px;border-radius:50%;background:${seg.color};"></span>
+            <strong style="color:${seg.color};">${esc(seg.name)}</strong>
+            <span style="color:#6b7280;font-size:0.7rem;" title="${esc(condText)}">${seg.filters.length} rules</span>
+            <span onclick="event.stopPropagation();deleteSegmentUI(${seg.id})" style="color:#9ca3af;font-size:0.7rem;cursor:pointer;" title="Delete">&times;</span>
+          </div>`;
+        }).join('');
+      } catch (err) { console.error('Segments load error:', err); }
+    }
+
+    function openSegmentBuilder(segId) {
+      _editingSegmentId = segId || null;
+      const modal = document.getElementById('segment-modal');
+      modal.style.display = 'flex';
+      document.getElementById('seg-name').value = '';
+      document.getElementById('seg-desc').value = '';
+      document.getElementById('seg-conditions').innerHTML = '';
+      document.getElementById('seg-preview-count').textContent = '';
+      if (segId) {
+        const seg = _segments.find(s => s.id === segId);
+        if (seg) {
+          document.getElementById('seg-name').value = seg.name;
+          document.getElementById('seg-desc').value = seg.description || '';
+          for (const f of seg.filters) addSegCondition(f);
+          return;
+        }
+      }
+      addSegCondition();
+    }
+
+    function closeSegmentModal() {
+      document.getElementById('segment-modal').style.display = 'none';
+    }
+
+    const SEG_FIELDS = [
+      { value: 'state', label: 'State' },
+      { value: 'country', label: 'Country' },
+      { value: 'city', label: 'City' },
+      { value: 'firm_name', label: 'Firm' },
+      { value: 'practice_area', label: 'Practice Area' },
+      { value: 'email', label: 'Email' },
+      { value: 'phone', label: 'Phone' },
+      { value: 'website', label: 'Website' },
+      { value: 'tags', label: 'Tags' },
+      { value: 'primary_source', label: 'Source' },
+      { value: 'pipeline_stage', label: 'Pipeline Stage' },
+      { value: 'lead_score', label: 'Score' },
+      { value: 'title', label: 'Title' },
+      { value: 'bar_status', label: 'Bar Status' },
+    ];
+    const SEG_OPS = [
+      { value: 'equals', label: '=' },
+      { value: 'not_equals', label: '!=' },
+      { value: 'contains', label: 'contains' },
+      { value: 'starts_with', label: 'starts with' },
+      { value: 'is_empty', label: 'is empty' },
+      { value: 'is_not_empty', label: 'is not empty' },
+      { value: 'greater_than', label: '>' },
+      { value: 'less_than', label: '<' },
+    ];
+
+    function addSegCondition(preset) {
+      const container = document.getElementById('seg-conditions');
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex;gap:0.4rem;align-items:center;';
+      const fieldSel = `<select class="seg-field" style="padding:0.35rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.8rem;" onchange="segOpChanged(this)">
+        ${SEG_FIELDS.map(f => `<option value="${f.value}" ${preset && preset.field === f.value ? 'selected' : ''}>${f.label}</option>`).join('')}
+      </select>`;
+      const opSel = `<select class="seg-op" style="padding:0.35rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.8rem;">
+        ${SEG_OPS.map(o => `<option value="${o.value}" ${preset && preset.operator === o.value ? 'selected' : ''}>${o.label}</option>`).join('')}
+      </select>`;
+      const valInput = `<input type="text" class="seg-val" value="${preset ? esc(preset.value || '') : ''}" placeholder="value" style="flex:1;padding:0.35rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.8rem;">`;
+      row.innerHTML = `${fieldSel} ${opSel} ${valInput} <button onclick="this.parentElement.remove()" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:1rem;">&times;</button>`;
+      container.appendChild(row);
+    }
+
+    function segOpChanged(sel) {
+      const valInput = sel.parentElement.querySelector('.seg-val');
+      const op = sel.parentElement.querySelector('.seg-op').value;
+      if (op === 'is_empty' || op === 'is_not_empty') {
+        valInput.style.display = 'none';
+      } else {
+        valInput.style.display = '';
+      }
+    }
+
+    function getSegFilters() {
+      const rows = document.querySelectorAll('#seg-conditions > div');
+      const filters = [];
+      for (const row of rows) {
+        const field = row.querySelector('.seg-field').value;
+        const operator = row.querySelector('.seg-op').value;
+        const value = row.querySelector('.seg-val').value;
+        filters.push({ field, operator, value });
+      }
+      return filters;
+    }
+
+    async function previewSegment() {
+      const filters = getSegFilters();
+      if (filters.length === 0) return;
+      try {
+        const data = await fetch('/api/segments/query', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filters })
+        }).then(r => r.json());
+        document.getElementById('seg-preview-count').textContent = `${data.count} leads match`;
+      } catch (err) { toast('Preview failed', 'error'); }
+    }
+
+    async function saveSegment() {
+      const name = document.getElementById('seg-name').value.trim();
+      if (!name) return toast('Name required', 'error');
+      const filters = getSegFilters();
+      if (filters.length === 0) return toast('Add at least one condition', 'error');
+      const description = document.getElementById('seg-desc').value.trim();
+      try {
+        if (_editingSegmentId) {
+          await fetch('/api/segments/' + _editingSegmentId, {
+            method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, description, filters })
+          });
+        } else {
+          await fetch('/api/segments', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, description, filters })
+          });
+        }
+        closeSegmentModal();
+        toast('Segment saved', 'success');
+        loadSegments();
+      } catch (err) { toast('Failed to save segment', 'error'); }
+    }
+
+    async function applySegment(segId) {
+      const seg = _segments.find(s => s.id === segId);
+      if (!seg) return;
+      try {
+        const leads = await fetch('/api/segments/query/leads', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filters: seg.filters, limit: 200 })
+        }).then(r => r.json());
+        _allLeads = leads;
+        _currentPage = 1;
+        renderLeadsTable();
+        toast(`Segment "${seg.name}": ${leads.length} leads`, 'info');
+      } catch (err) { toast('Failed to apply segment', 'error'); }
+    }
+
+    async function deleteSegmentUI(segId) {
+      if (!confirm('Delete this segment?')) return;
+      await fetch('/api/segments/' + segId, { method: 'DELETE' });
+      toast('Segment deleted', 'success');
+      loadSegments();
+    }
+
+    // --- Scheduled Scrapes ---
+    async function loadSchedules() {
+      try {
+        const schedules = await fetch('/api/schedules').then(r => r.json());
+        const container = document.getElementById('schedules-list');
+        if (schedules.length === 0) {
+          container.innerHTML = '<span style="font-size:0.8rem;color:#9ca3af;">No scheduled scrapes. Add one to auto-refresh lead data.</span>';
+          return;
+        }
+        const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        container.innerHTML = schedules.map(s => {
+          const lastRun = s.last_run_at ? timeAgo(new Date(s.last_run_at)) : 'Never';
+          const nextRun = s.next_run_at ? new Date(s.next_run_at).toLocaleDateString() + ' ' + new Date(s.next_run_at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : '—';
+          return `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0.75rem;background:#fff;border:1px solid #e5e7eb;border-radius:8px;">
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <label style="cursor:pointer;display:flex;align-items:center;">
+                <input type="checkbox" ${s.enabled ? 'checked' : ''} onchange="toggleSchedule(${s.id}, this.checked)" style="cursor:pointer;">
+              </label>
+              <div>
+                <div style="font-weight:600;font-size:0.85rem;">${esc(s.state)}</div>
+                <div style="font-size:0.75rem;color:#6b7280;">${s.frequency} &middot; ${DAYS[s.day_of_week]} ${s.hour}:00 UTC</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:1rem;">
+              <div style="text-align:right;">
+                <div style="font-size:0.7rem;color:#9ca3af;">Last: ${lastRun}</div>
+                <div style="font-size:0.7rem;color:#6b7280;">Next: ${nextRun}</div>
+              </div>
+              <button onclick="deleteScheduleUI(${s.id})" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:0.9rem;" title="Delete">&times;</button>
+            </div>
+          </div>`;
+        }).join('');
+      } catch (err) { console.error('Schedules load error:', err); }
+    }
+
+    function openScheduleBuilder() {
+      const modal = document.getElementById('schedule-modal');
+      modal.style.display = 'flex';
+      // Populate state dropdown from existing config
+      const sel = document.getElementById('sched-state');
+      if (sel.options.length <= 1) {
+        fetch('/api/config').then(r => r.json()).then(data => {
+          sel.innerHTML = data.scrapers.filter(s => s.working).map(s => `<option value="${s.stateCode}">${s.stateCode} — ${s.name}</option>`).join('');
+        });
+      }
+    }
+
+    function closeScheduleModal() {
+      document.getElementById('schedule-modal').style.display = 'none';
+    }
+
+    async function saveSchedule() {
+      const state = document.getElementById('sched-state').value;
+      const frequency = document.getElementById('sched-freq').value;
+      const dayOfWeek = parseInt(document.getElementById('sched-dow').value);
+      const hour = parseInt(document.getElementById('sched-hour').value);
+      try {
+        await fetch('/api/schedules', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ state, frequency, dayOfWeek, hour })
+        });
+        closeScheduleModal();
+        toast(`Scheduled ${state} scrape (${frequency})`, 'success');
+        loadSchedules();
+      } catch (err) { toast('Failed to create schedule', 'error'); }
+    }
+
+    async function toggleSchedule(id, enabled) {
+      await fetch('/api/schedules/' + id, {
+        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enabled: enabled ? 1 : 0 })
+      });
+      toast(enabled ? 'Schedule enabled' : 'Schedule paused', 'info');
+    }
+
+    async function deleteScheduleUI(id) {
+      if (!confirm('Delete this schedule?')) return;
+      await fetch('/api/schedules/' + id, { method: 'DELETE' });
+      toast('Schedule deleted', 'success');
+      loadSchedules();
+    }
+
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules()]);
       loadCoverage();
       loadCoverageMap();
+      loadGeoMap();
       loadLeads();
     }
 

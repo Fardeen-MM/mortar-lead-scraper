@@ -1167,6 +1167,120 @@ app.post('/api/quality/resolve/:id', (req, res) => {
   }
 });
 
+// --- Pipeline Stages ---
+app.get('/api/pipeline/stats', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getPipelineStats());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/pipeline/stage/:stage', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 50;
+    res.json(leadDb.getLeadsByStage(req.params.stage, limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/pipeline/move', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadId, stage } = req.body;
+    if (!leadId || !stage) return res.status(400).json({ error: 'leadId and stage required' });
+    res.json(leadDb.moveLeadToStage(leadId, stage));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/pipeline/bulk-move', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds, stage } = req.body;
+    if (!leadIds || !stage) return res.status(400).json({ error: 'leadIds and stage required' });
+    res.json(leadDb.bulkMoveToStage(leadIds, stage));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// --- Scheduled Scrapes ---
+app.get('/api/schedules', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getSchedules());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/schedules', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { state, practiceArea, frequency, dayOfWeek, hour } = req.body;
+    if (!state) return res.status(400).json({ error: 'state required' });
+    res.json(leadDb.createSchedule({ state, practiceArea, frequency, dayOfWeek, hour }));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.patch('/api/schedules/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.updateSchedule(parseInt(req.params.id), req.body));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/schedules/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.deleteSchedule(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// --- Smart Segments ---
+app.get('/api/segments', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getSegments());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/segments', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, description, filters, color } = req.body;
+    if (!name || !filters) return res.status(400).json({ error: 'name and filters required' });
+    res.json(leadDb.createSegment(name, description || '', filters, color));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.patch('/api/segments/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.updateSegment(parseInt(req.params.id), req.body));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/segments/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.deleteSegment(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/segments/query', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { filters } = req.body;
+    if (!filters) return res.status(400).json({ error: 'filters required' });
+    res.json(leadDb.querySegment(filters));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/segments/query/leads', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { filters, limit = 100, offset = 0 } = req.body;
+    if (!filters) return res.status(400).json({ error: 'filters required' });
+    res.json(leadDb.querySegmentLeads(filters, limit, offset));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 app.get('/api/leads/sources', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
@@ -1744,3 +1858,43 @@ function broadcastAll(data) {
     }
   }
 }
+
+// --- Schedule Runner (checks every 5 minutes for due scrapes) ---
+setInterval(() => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const due = leadDb.getDueSchedules();
+    for (const sched of due) {
+      if (jobs.has('schedule-' + sched.id)) continue; // already running
+      console.log(`[schedule] Running scheduled scrape for ${sched.state}`);
+      const jobId = 'schedule-' + sched.id + '-' + Date.now();
+      const job = {
+        id: jobId, state: sched.state, practiceArea: sched.practice_area || '',
+        testMode: false, status: 'running', stats: { scraped: 0, dupes: 0, new: 0, emails: 0 },
+        startTime: Date.now(), leads: [],
+      };
+      jobs.set(jobId, job);
+      runPipeline({
+        state: sched.state, practiceArea: sched.practice_area || '',
+        testMode: false, emailScrape: false, enrich: false,
+        waterfall: { fetchProfiles: true, crossrefMartindale: false, crossrefLawyersCom: false, nameLookups: false, emailCrawl: false },
+        dedup: { enabled: true, masterDb: true },
+        onProgress: (data) => {
+          if (data.stats) Object.assign(job.stats, data.stats);
+          if (data.type === 'complete') {
+            job.status = 'complete';
+            leadDb.markScheduleRun(sched.id);
+            broadcastAll({ type: 'db-update', event: 'schedule-complete', state: sched.state });
+            setTimeout(() => jobs.delete(jobId), 300000);
+          }
+        },
+      }).catch(err => {
+        console.error(`[schedule] Error scraping ${sched.state}:`, err.message);
+        job.status = 'error';
+        setTimeout(() => jobs.delete(jobId), 300000);
+      });
+    }
+  } catch (err) {
+    console.error('[schedule] Error checking schedules:', err.message);
+  }
+}, 5 * 60 * 1000); // Check every 5 minutes
