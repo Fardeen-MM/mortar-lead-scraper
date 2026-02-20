@@ -731,6 +731,59 @@ app.post('/api/leads/deduce-websites', (req, res) => {
   }
 });
 
+// One-click "Enrich All" — chains all enrichment steps
+let _enrichAllRunning = false;
+let _enrichAllProgress = null;
+
+app.post('/api/leads/enrich-all', (req, res) => {
+  if (_enrichAllRunning) {
+    return res.json({ status: 'already_running', progress: _enrichAllProgress });
+  }
+
+  _enrichAllRunning = true;
+  _enrichAllProgress = { step: '', steps: [], totalUpdated: 0 };
+  res.json({ status: 'started', message: 'Enrich All started in background' });
+
+  const leadDb = require('./lib/lead-db');
+
+  (async () => {
+    // Step 1: Merge duplicates
+    _enrichAllProgress.step = 'Merging duplicates...';
+    const mergeResult = leadDb.mergeDuplicates({});
+    _enrichAllProgress.steps.push({ name: 'Merge Dupes', result: `${mergeResult.merged} merged, ${mergeResult.fieldsRecovered} fields recovered` });
+    _enrichAllProgress.totalUpdated += mergeResult.merged;
+
+    // Step 2: Share firm data
+    _enrichAllProgress.step = 'Sharing firm data...';
+    const firmResult = leadDb.shareFirmData();
+    _enrichAllProgress.steps.push({ name: 'Firm Share', result: `${firmResult.leadsUpdated} leads updated across ${firmResult.firmsProcessed} firms` });
+    _enrichAllProgress.totalUpdated += firmResult.leadsUpdated;
+
+    // Step 3: Deduce websites from email
+    _enrichAllProgress.step = 'Deducing websites...';
+    const deduceResult = leadDb.deduceWebsitesFromEmail();
+    _enrichAllProgress.steps.push({ name: 'Website Deduction', result: `${deduceResult.leadsUpdated} websites from email domains` });
+    _enrichAllProgress.totalUpdated += deduceResult.leadsUpdated;
+
+    // Step 4: Re-score all leads
+    _enrichAllProgress.step = 'Scoring leads...';
+    const scoreResult = leadDb.batchScoreLeads();
+    _enrichAllProgress.steps.push({ name: 'Score', result: `${scoreResult.scored} scored, avg: ${scoreResult.avgScore}` });
+
+    _enrichAllProgress.step = 'Done';
+    console.log(`[Enrich All] Done: ${_enrichAllProgress.totalUpdated} total updates`);
+  })()
+    .catch(err => {
+      _enrichAllProgress.step = `Error: ${err.message}`;
+      console.error('[Enrich All] Error:', err.message);
+    })
+    .finally(() => { _enrichAllRunning = false; });
+});
+
+app.get('/api/leads/enrich-all/status', (req, res) => {
+  res.json({ running: _enrichAllRunning, progress: _enrichAllProgress });
+});
+
 // Batch score all leads
 app.post('/api/leads/score', (req, res) => {
   try {

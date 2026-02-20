@@ -332,6 +332,7 @@
         <button class="btn btn-secondary" id="prepop-btn" onclick="startPrepopulate()">Pre-populate DB</button>
         <button class="btn btn-secondary" id="website-btn" onclick="startWebsiteFinder()">Find Websites</button>
         <button class="btn btn-secondary" id="email-btn" onclick="startVerify()">Find Emails (SMTP)</button>
+        <button class="btn btn-primary" id="enrich-all-btn" onclick="enrichAll()" style="background:#f59e0b;border-color:#f59e0b;">Enrich All</button>
         <button class="btn btn-secondary" id="firm-share-btn" onclick="shareFirmData()">Share Firm Data</button>
         <button class="btn btn-secondary" id="deduce-btn" onclick="deduceWebsites()">Deduce Websites</button>
         <button class="btn btn-secondary" id="score-btn" onclick="scoreLeads()">Score All</button>
@@ -871,6 +872,48 @@
           btn.disabled = false;
         }
       }, 5000);
+    }
+
+    // --- Enrich All ---
+    async function enrichAll() {
+      const btn = document.getElementById('enrich-all-btn');
+      btn.disabled = true;
+      btn.textContent = 'Enriching...';
+      const statusEl = document.getElementById('bulk-status');
+
+      try {
+        const res = await fetch('/api/leads/enrich-all', { method: 'POST' });
+        const d = await res.json();
+        if (d.status === 'already_running') {
+          btn.textContent = 'Already running';
+          return;
+        }
+        // Poll for completion
+        const interval = setInterval(async () => {
+          try {
+            const res2 = await fetch('/api/leads/enrich-all/status');
+            const d2 = await res2.json();
+            const p = d2.progress || {};
+            if (d2.running) {
+              statusEl.innerHTML = `Enriching: <strong>${esc(p.step)}</strong>`;
+            } else {
+              clearInterval(interval);
+              btn.textContent = 'Enrich All';
+              btn.disabled = false;
+              const stepSummary = (p.steps || []).map(s => `${s.name}: ${s.result}`).join(' | ');
+              statusEl.innerHTML = `<strong>Enrichment done</strong> | ${p.totalUpdated} updates | ${stepSummary}`;
+              refreshAll();
+            }
+          } catch {
+            clearInterval(interval);
+            btn.textContent = 'Enrich All';
+            btn.disabled = false;
+          }
+        }, 2000);
+      } catch {
+        btn.textContent = 'Enrich All';
+        btn.disabled = false;
+      }
     }
 
     // --- Share Firm Data ---
