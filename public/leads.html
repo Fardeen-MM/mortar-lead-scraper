@@ -220,6 +220,75 @@
       opacity: 0.6;
       margin-left: auto;
     }
+
+    /* Lead Detail Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 1000;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 3rem 1rem;
+      overflow-y: auto;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: white;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 100%;
+      padding: 1.5rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .modal h2 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 0.25rem;
+    }
+    .modal-close:hover { color: var(--text); }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 0.3rem 0.75rem;
+      font-size: 0.85rem;
+    }
+    .detail-label {
+      color: var(--text-muted);
+      font-weight: 500;
+      text-align: right;
+    }
+    .detail-value {
+      color: var(--text);
+      word-break: break-all;
+    }
+    .detail-value a { color: var(--indigo); }
+    .detail-sources {
+      margin-top: 1rem;
+      border-top: 1px solid var(--border);
+      padding-top: 0.75rem;
+    }
+    .source-badge {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      background: #e0e7ff;
+      color: #3730a3;
+      margin: 0.15rem 0.1rem;
+    }
   </style>
 </head>
 <body>
@@ -425,6 +494,15 @@
       <span class="empty-state-icon">📊</span>
       <h3>No leads yet</h3>
       <p>Run some scrapes from the Lead Scraper to populate the database.</p>
+    </div>
+  </div>
+
+  <!-- Lead Detail Modal -->
+  <div class="modal-overlay" id="lead-modal" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <h2><span id="modal-name"></span><button class="modal-close" onclick="closeModal()">&times;</button></h2>
+      <div class="detail-grid" id="modal-details"></div>
+      <div class="detail-sources" id="modal-sources"></div>
     </div>
   </div>
 
@@ -637,6 +715,8 @@
           const scoreColor = score >= 80 ? '#166534' : score >= 55 ? '#1e40af' : score >= 30 ? '#92400e' : '#991b1b';
           const scoreBg = score >= 80 ? '#dcfce7' : score >= 55 ? '#dbeafe' : score >= 30 ? '#fef3c7' : '#fee2e2';
           const tr = document.createElement('tr');
+          tr.style.cursor = 'pointer';
+          tr.addEventListener('click', () => showLeadDetail(lead));
           tr.innerHTML = `
             <td><strong>${esc(lead.first_name)} ${esc(lead.last_name)}</strong></td>
             <td>${esc(lead.firm_name)}</td>
@@ -969,6 +1049,60 @@
       btn.textContent = 'Score All';
       btn.disabled = false;
     }
+
+    // --- Lead Detail Modal ---
+    function showLeadDetail(lead) {
+      document.getElementById('modal-name').textContent = `${lead.first_name} ${lead.last_name}`;
+      const score = lead.lead_score || 0;
+      const scoreColor = score >= 80 ? '#166534' : score >= 55 ? '#1e40af' : score >= 30 ? '#92400e' : '#991b1b';
+      const scoreBg = score >= 80 ? '#dcfce7' : score >= 55 ? '#dbeafe' : score >= 30 ? '#fef3c7' : '#fee2e2';
+
+      const fields = [
+        ['Firm', lead.firm_name],
+        ['City', lead.city],
+        ['State', lead.state],
+        ['Country', lead.country],
+        ['Score', `<span style="padding:0.1rem 0.4rem;border-radius:4px;font-size:0.8rem;font-weight:600;background:${scoreBg};color:${scoreColor};">${score}/100</span>`],
+        ['Email', lead.email ? `<a href="mailto:${esc(lead.email)}">${esc(lead.email)}</a>` : '-'],
+        ['Phone', lead.phone || '-'],
+        ['Website', lead.website ? `<a href="${lead.website.startsWith('http') ? '' : 'https://'}${esc(lead.website)}" target="_blank">${esc(lead.website)}</a>` : '-'],
+        ['Bar Number', lead.bar_number || '-'],
+        ['Bar Status', lead.bar_status || '-'],
+        ['Admitted', lead.admission_date || '-'],
+        ['Practice Area', lead.practice_area || '-'],
+        ['Title', lead.title || '-'],
+        ['LinkedIn', lead.linkedin_url ? `<a href="${esc(lead.linkedin_url)}" target="_blank">View</a>` : '-'],
+        ['Education', lead.education || '-'],
+        ['Email Source', lead.email_source || '-'],
+        ['Phone Source', lead.phone_source || '-'],
+        ['Website Src', lead.website_source || '-'],
+        ['Primary Source', lead.primary_source || '-'],
+      ].filter(([, v]) => v && v !== '-');
+
+      document.getElementById('modal-details').innerHTML = fields.map(([label, value]) =>
+        `<div class="detail-label">${label}</div><div class="detail-value">${value}</div>`
+      ).join('');
+
+      // Show sources (from lead_sources table would need an API call, show primary for now)
+      const sources = [lead.primary_source, lead.email_source, lead.phone_source, lead.website_source]
+        .filter(Boolean).filter(s => s !== '-');
+      const uniqueSources = [...new Set(sources)];
+      document.getElementById('modal-sources').innerHTML = uniqueSources.length > 0
+        ? '<div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.4rem;font-weight:600;">Data Sources</div>' +
+          uniqueSources.map(s => `<span class="source-badge">${esc(s)}</span>`).join('')
+        : '';
+
+      document.getElementById('lead-modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('lead-modal').classList.remove('active');
+    }
+
+    // Close modal on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
 
     // --- Event Listeners ---
     document.getElementById('search-input').addEventListener('input', () => {
