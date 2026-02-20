@@ -877,6 +877,42 @@
     body.dark .panel-tab { color: var(--text-muted); border-bottom-color: transparent; }
     body.dark .panel-tab.active { color: var(--indigo); border-bottom-color: var(--indigo); }
 
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 3000;
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+    .toast {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.6rem 1rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      pointer-events: auto;
+      animation: toastIn 0.3s ease;
+      max-width: 350px;
+    }
+    .toast.leaving { animation: toastOut 0.3s ease forwards; }
+    .toast-icon { font-size: 1rem; flex-shrink: 0; }
+    .toast-msg { flex: 1; }
+    .toast.success { border-left: 3px solid #22c55e; }
+    .toast.error { border-left: 3px solid #ef4444; }
+    .toast.info { border-left: 3px solid #3b82f6; }
+    body.dark .toast { background: var(--surface); border-color: var(--border); }
+    @keyframes toastIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateX(50%); } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
     /* Dark mode toggle button */
     .dark-toggle {
       padding: 0.25rem 0.5rem;
@@ -912,6 +948,25 @@
       </div>
       <p class="subtitle">Lead Database</p>
     </header>
+
+    <!-- Power Bar -->
+    <div id="power-bar" style="display:flex;align-items:center;gap:0.75rem;padding:0.4rem 0.75rem;background:linear-gradient(135deg,#312e81,#4338ca);border-radius:8px;margin-bottom:0.75rem;color:white;font-size:0.72rem;flex-wrap:wrap;">
+      <span style="display:flex;align-items:center;gap:0.3rem;">
+        <span style="width:8px;height:8px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite;"></span>
+        <strong id="pb-total" style="font-size:0.85rem;">-</strong> leads
+      </span>
+      <span style="opacity:0.4;">|</span>
+      <span id="pb-states">- states</span>
+      <span style="opacity:0.4;">|</span>
+      <span id="pb-countries">- countries</span>
+      <span style="opacity:0.4;">|</span>
+      <span style="color:#86efac;" id="pb-emails">- emails</span>
+      <span style="opacity:0.4;">|</span>
+      <span style="color:#93c5fd;" id="pb-phones">- phones</span>
+      <span style="opacity:0.4;">|</span>
+      <span style="color:#c4b5fd;" id="pb-websites">- websites</span>
+      <span style="margin-left:auto;opacity:0.6;" id="pb-updated"></span>
+    </div>
 
     <div class="nav-links">
       <a href="/" class="nav-link">&larr; Lead Scraper</a>
@@ -1031,6 +1086,48 @@
         <h3>Email Sources</h3>
         <div id="by-email-source"></div>
       </div>
+    </div>
+
+    <!-- State Coverage Grid Map -->
+    <div class="panel" style="display:block; margin-bottom: 1rem;">
+      <h2 style="margin-bottom: 0.5rem;">Coverage Map</h2>
+      <p class="hint" style="margin-bottom:0.75rem;">Lead coverage by jurisdiction. Click a cell to filter leads by that state.</p>
+      <div id="coverage-map" style="display:flex;flex-wrap:wrap;gap:2px;"></div>
+    </div>
+
+    <!-- Enrichment Dashboard -->
+    <div class="panel" style="display:block; margin-bottom: 1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+        <h2 style="margin:0;">Enrichment Pipeline</h2>
+        <span id="enrichment-enriched-badge" style="font-size:0.72rem;font-weight:600;padding:0.2rem 0.6rem;border-radius:12px;background:#eef2ff;color:#4f46e5;"></span>
+      </div>
+      <p class="hint" style="margin-bottom:0.75rem;">Data sources and opportunities for filling missing fields.</p>
+
+      <!-- Enrichment Opportunities -->
+      <div id="enrich-opportunities" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.5rem;margin-bottom:1rem;"></div>
+
+      <!-- Source Attribution -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;">
+        <div>
+          <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted,#6b7280);margin-bottom:0.3rem;">Email Sources</div>
+          <div id="enrich-email-sources"></div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted,#6b7280);margin-bottom:0.3rem;">Phone Sources</div>
+          <div id="enrich-phone-sources"></div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted,#6b7280);margin-bottom:0.3rem;">Website Sources</div>
+          <div id="enrich-website-sources"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity Feed -->
+    <div class="panel" style="display:block; margin-bottom: 1rem;">
+      <h2 style="margin-bottom: 0.5rem;">Activity Feed</h2>
+      <p class="hint" style="margin-bottom:0.75rem;">Recent scrape runs and enrichment activity.</p>
+      <div id="activity-feed" style="max-height:300px;overflow-y:auto;"></div>
     </div>
 
     <!-- Lead Lists / Campaigns -->
@@ -1181,6 +1278,12 @@
       <label style="font-size:0.8rem; display:flex; align-items:center; gap:0.25rem;">
         <input type="checkbox" id="filter-website"> Website
       </label>
+      <select id="filter-tags" style="max-width:120px;">
+        <option value="">All Tags</option>
+      </select>
+      <select id="filter-source" style="max-width:120px;">
+        <option value="">All Sources</option>
+      </select>
       <button class="copy-btn" onclick="copyAllEmails()" title="Copy all emails from current filtered results">Copy Emails</button>
       <span id="result-count" style="font-size:0.8rem; color:var(--text-muted); margin-left:auto;"></span>
     </div>
@@ -1251,12 +1354,26 @@
     </div>
   </div>
 
+  <!-- State Drilldown Modal -->
+  <div class="modal-overlay" id="state-modal" onclick="if(event.target===this)closeStateModal()">
+    <div class="modal" style="max-width:700px;">
+      <h2>
+        <span id="state-modal-title"></span>
+        <button class="modal-close" onclick="closeStateModal()">&times;</button>
+      </h2>
+      <div id="state-modal-body"></div>
+    </div>
+  </div>
+
   <!-- Keyboard shortcut hint -->
   <div class="kbd-hint" id="kbd-hint">
     <div><kbd>&#x2318;K</kbd> Command palette &nbsp; <kbd>/</kbd> Search &nbsp; <kbd>Esc</kbd> Clear/Close &nbsp; <kbd>?</kbd> Toggle hints</div>
     <div><kbd>j</kbd>/<kbd>k</kbd> Navigate rows &nbsp; <kbd>Enter</kbd> Open detail &nbsp; <kbd>x</kbd> Toggle select</div>
-    <div><kbd>r</kbd> Refresh &nbsp; <kbd>e</kbd> Export all</div>
+    <div><kbd>r</kbd> Refresh &nbsp; <kbd>e</kbd> Export &nbsp; <kbd>c</kbd> Copy emails &nbsp; <kbd>d</kbd> Dark mode</div>
   </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
 
   <!-- Command Palette (Cmd+K) -->
   <div class="cmd-overlay" id="cmd-palette" onclick="if(event.target===this)closeCmdPalette()">
@@ -1272,6 +1389,8 @@
   <div class="fab" id="fab">
     <span id="fab-count">0 selected</span>
     <button onclick="exportSelected()">Export CSV</button>
+    <button onclick="exportSelectedInstantly()">Instantly</button>
+    <button onclick="copySelectedEmails()">Copy Emails</button>
     <button onclick="addSelectedToList()">Add to List</button>
     <button onclick="tagSelected()">Tag</button>
     <button onclick="deleteSelected()">Delete</button>
@@ -1279,6 +1398,20 @@
   </div>
 
   <script>
+    // --- Toast Notification System ---
+    function toast(msg, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const icons = { success: '&#x2705;', error: '&#x274C;', info: '&#x2139;&#xFE0F;' };
+      const el = document.createElement('div');
+      el.className = `toast ${type}`;
+      el.innerHTML = `<span class="toast-icon">${icons[type] || icons.info}</span><span class="toast-msg">${msg}</span>`;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.classList.add('leaving');
+        setTimeout(() => el.remove(), 300);
+      }, 4000);
+    }
+
     let currentOffset = 0;
     const PAGE_SIZE = 100;
     let searchTimeout = null;
@@ -1377,6 +1510,15 @@
         stateSelect.value = current;
 
         document.getElementById('empty-state').style.display = d.total === 0 ? '' : 'none';
+
+        // Power bar
+        document.getElementById('pb-total').textContent = fmt(d.total);
+        document.getElementById('pb-states').textContent = (d.byState || []).length + ' states';
+        document.getElementById('pb-countries').textContent = (d.byCountry || []).length + ' countries';
+        document.getElementById('pb-emails').textContent = fmt(d.withEmail) + ' emails';
+        document.getElementById('pb-phones').textContent = fmt(d.withPhone) + ' phones';
+        document.getElementById('pb-websites').textContent = fmt(d.withWebsite) + ' websites';
+        document.getElementById('pb-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
       } catch (err) {
         console.error('Failed to load stats:', err);
       }
@@ -1536,7 +1678,7 @@
           }
           const qg = qualityGrade(s.email_pct, s.phone_pct, s.website_pct);
           return `<tr>
-            <td><strong>${esc(s.state)}</strong></td>
+            <td><strong style="cursor:pointer;color:#4f46e5;" onclick="openStateModal('${esc(s.state)}')">${esc(s.state)}</strong></td>
             <td>${esc(s.country)}</td>
             <td><span class="quality-grade ${qg.cls}">${qg.grade}</span></td>
             <td>${fmt(s.total)}</td>
@@ -1742,6 +1884,7 @@
         });
         const d = await res.json();
         document.getElementById('bulk-status').textContent = `Added ${d.added} leads to "${list.name}"`;
+        toast(`Added ${d.added} leads to "${list.name}"`);
         clearSelection();
         loadLists();
       } catch {}
@@ -1793,6 +1936,11 @@
       { label: 'Export Gold', desc: 'Export leads with email+phone', icon: '&#x1F31F;', action: () => { window.location.href = '/api/leads/export?hasEmail=true&hasPhone=true'; } },
       { label: 'Export Instantly', desc: 'Export in Instantly.ai format', icon: '&#x1F4E8;', action: () => { window.location.href = '/api/leads/export/instantly'; } },
       { label: 'New List', desc: 'Create a new lead list/campaign', icon: '&#x1F4CB;', action: () => createNewList() },
+      { label: 'Export SmartLead', desc: 'Export in SmartLead format', icon: '&#x1F4AC;', action: () => { window.location.href = '/api/leads/export/smartlead'; } },
+      { label: 'Pre-populate DB', desc: 'Quick scrape all for database seeding', icon: '&#x1F4BE;', action: () => startPrepopulate() },
+      { label: 'Copy Emails', desc: 'Copy filtered lead emails to clipboard', icon: '&#x1F4CB;', action: () => copyAllEmails() },
+      { label: 'Compare Selected', desc: 'Side-by-side compare selected leads', icon: '&#x1F50D;', action: () => compareSelectedLeads() },
+      { label: 'Dark Mode', desc: 'Toggle dark/light theme', icon: '&#x1F319;', action: () => toggleDarkMode() },
       { label: 'Clear Filters', desc: 'Reset all search filters', icon: '&#x1F6AB;', action: () => { document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })); } },
       { label: 'Refresh Data', desc: 'Reload all dashboard data', icon: '&#x1F504;', action: () => refreshAll() },
     ];
@@ -1812,29 +1960,54 @@
       document.getElementById('cmd-palette').classList.remove('active');
     }
 
+    // State name map for command palette search
+    const STATE_NAMES = {
+      AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming',
+      'CA-AB':'Alberta','CA-BC':'British Columbia','CA-NL':'Newfoundland','CA-PE':'Prince Edward Island','CA-YT':'Yukon',
+      'UK-SC':'Scotland','UK-EW-BAR':'England Wales Bar',
+      'AU-NSW':'New South Wales','AU-QLD':'Queensland','AU-SA':'South Australia','AU-TAS':'Tasmania','AU-VIC':'Victoria','AU-WA':'Western Australia',
+      FR:'France',IE:'Ireland',IT:'Italy',HK:'Hong Kong',NZ:'New Zealand',SG:'Singapore',
+    };
+
+    let _cmdDynamicActions = [];
+
     function renderCmdResults(query) {
       const q = query.toLowerCase();
       let items = CMD_ACTIONS;
+      _cmdDynamicActions = [];
+
       if (q) {
         items = items.filter(a =>
           a.label.toLowerCase().includes(q) ||
           a.desc.toLowerCase().includes(q)
         );
+
+        // Add dynamic state search results
+        for (const [code, name] of Object.entries(STATE_NAMES)) {
+          if (code.toLowerCase().includes(q) || name.toLowerCase().includes(q)) {
+            _cmdDynamicActions.push(
+              { label: `View ${code} leads`, desc: name, icon: '&#x1F50D;', action: () => { document.getElementById('filter-state').value = code; loadLeads(); } },
+              { label: `Scrape ${code}`, desc: `Quick scrape ${name}`, icon: '&#x26A1;', action: () => quickScrape(code) },
+              { label: `${code} Analytics`, desc: `View ${name} analytics`, icon: '&#x1F4CA;', action: () => openStateModal(code) },
+            );
+          }
+        }
       }
-      _cmdSelectedIdx = Math.min(_cmdSelectedIdx, items.length - 1);
+
+      const allItems = [...items, ..._cmdDynamicActions].slice(0, 15);
+      _cmdSelectedIdx = Math.min(_cmdSelectedIdx, allItems.length - 1);
       if (_cmdSelectedIdx < 0) _cmdSelectedIdx = 0;
 
-      document.getElementById('cmd-results').innerHTML = items.map((item, i) =>
-        `<div class="cmd-item ${i === _cmdSelectedIdx ? 'active' : ''}" onmouseenter="_cmdSelectedIdx=${i};renderCmdResults(document.getElementById('cmd-input').value)" onclick="executeCmdItem(${CMD_ACTIONS.indexOf(item)})">
+      document.getElementById('cmd-results').innerHTML = allItems.map((item, i) =>
+        `<div class="cmd-item ${i === _cmdSelectedIdx ? 'active' : ''}" data-idx="${i}"
+          onmouseenter="_cmdSelectedIdx=${i};renderCmdResults(document.getElementById('cmd-input').value)"
+          onclick="_cmdAllItems[${i}].action();closeCmdPalette();">
           <span class="cmd-icon">${item.icon}</span>
           <span class="cmd-label">${esc(item.label)}<small>${esc(item.desc)}</small></span>
         </div>`
       ).join('') || '<div style="padding:1rem;text-align:center;color:var(--text-muted);font-size:0.85rem;">No matching actions</div>';
-    }
 
-    function executeCmdItem(idx) {
-      closeCmdPalette();
-      CMD_ACTIONS[idx].action();
+      window._cmdAllItems = allItems;
     }
 
     document.getElementById('cmd-input').addEventListener('input', (e) => {
@@ -1922,6 +2095,8 @@
       const hasWebsite = document.getElementById('filter-website').checked;
       const practice = document.getElementById('filter-practice').value;
       const scoreRange = document.getElementById('filter-score').value;
+      const tag = document.getElementById('filter-tags').value;
+      const source = document.getElementById('filter-source').value;
 
       if (!append) currentOffset = 0;
 
@@ -1933,6 +2108,8 @@
       if (hasPhone) params.set('hasPhone', 'true');
       if (hasWebsite) params.set('hasWebsite', 'true');
       if (practice) params.set('practiceArea', practice);
+      if (tag) params.set('tag', tag);
+      if (source) params.set('source', source);
       if (scoreRange) {
         const [min, max] = scoreRange.split('-').map(Number);
         params.set('minScore', min);
@@ -2068,6 +2245,39 @@
       updateFab();
     }
 
+    function compareSelectedLeads() {
+      if (_selectedIds.size < 2) { toast('Select at least 2 leads to compare', 'info'); return; }
+      if (_selectedIds.size > 4) { toast('Select at most 4 leads to compare', 'info'); return; }
+      const leads = _currentLeads.filter(l => _selectedIds.has(l.id));
+      if (leads.length < 2) return;
+
+      const fields = ['email','phone','website','firm_name','city','state','bar_number','practice_area','title','linkedin_url','lead_score'];
+      const fieldLabels = { email:'Email', phone:'Phone', website:'Website', firm_name:'Firm', city:'City', state:'State', bar_number:'Bar #', practice_area:'Practice', title:'Title', linkedin_url:'LinkedIn', lead_score:'Score' };
+
+      let html = '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.75rem;">';
+      html += '<thead><tr><th style="text-align:left;padding:0.3rem;border-bottom:2px solid var(--border,#e5e7eb);"></th>';
+      leads.forEach(l => {
+        html += `<th style="padding:0.3rem;border-bottom:2px solid var(--border,#e5e7eb);min-width:120px;"><strong>${esc(l.first_name)} ${esc(l.last_name)}</strong></th>`;
+      });
+      html += '</tr></thead><tbody>';
+
+      fields.forEach(f => {
+        html += `<tr><td style="font-weight:600;padding:0.3rem 0.5rem;color:var(--text-muted,#6b7280);border-bottom:1px solid var(--border,#f3f4f6);">${fieldLabels[f] || f}</td>`;
+        leads.forEach(l => {
+          const val = l[f] || '';
+          const hasVal = val && val.toString().trim();
+          html += `<td style="padding:0.3rem 0.5rem;border-bottom:1px solid var(--border,#f3f4f6);${hasVal ? 'color:var(--text-primary,#111);' : 'color:var(--text-muted,#d1d5db);'}">${hasVal ? esc(val.toString()) : '-'}</td>`;
+        });
+        html += '</tr>';
+      });
+      html += '</tbody></table></div>';
+
+      // Show in state modal (reuse it)
+      document.getElementById('state-modal-title').textContent = 'Compare Leads';
+      document.getElementById('state-modal-body').innerHTML = html;
+      document.getElementById('state-modal').classList.add('active');
+    }
+
     function exportSelected() {
       if (_selectedIds.size === 0) return;
       // Build CSV from selected leads in current page
@@ -2089,6 +2299,49 @@
       a.click();
     }
 
+    function exportSelectedInstantly() {
+      if (_selectedIds.size === 0) return;
+      const selected = _currentLeads.filter(l => _selectedIds.has(l.id) && l.email);
+      if (selected.length === 0) { toast('No selected leads have email addresses', 'info'); return; }
+
+      const headers = ['email','first_name','last_name','company_name','personalization'];
+      const rows = [headers.join(',')];
+      for (const l of selected) {
+        const firm = (l.firm_name || '').replace(/"/g, '""');
+        const person = `${l.first_name || ''} is a lawyer${l.practice_area ? ' specializing in ' + l.practice_area : ''} at ${l.firm_name || 'their firm'} in ${l.city || l.state || ''}`.replace(/"/g, '""');
+        rows.push([
+          l.email,
+          l.first_name || '',
+          l.last_name || '',
+          firm.includes(',') ? '"' + firm + '"' : firm,
+          '"' + person + '"'
+        ].join(','));
+      }
+      const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `instantly-${selected.length}-leads.csv`;
+      a.click();
+      toast(`Exported ${selected.length} leads in Instantly format`);
+    }
+
+    async function copySelectedEmails() {
+      const selected = _currentLeads.filter(l => _selectedIds.has(l.id) && l.email);
+      if (selected.length === 0) { toast('No selected leads have email addresses', 'info'); return; }
+      const emails = selected.map(l => l.email);
+      try {
+        await navigator.clipboard.writeText(emails.join('\n'));
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = emails.join('\n');
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      toast(`Copied ${emails.length} emails to clipboard`);
+    }
+
     function tagSelected() {
       if (_selectedIds.size === 0) return;
       const tag = prompt('Enter tag name:');
@@ -2101,6 +2354,7 @@
         .then(r => r.json())
         .then(d => {
           document.getElementById('bulk-status').textContent = `Tagged ${d.updated} leads with "${tag.trim()}"`;
+          toast(`Tagged ${d.updated} leads with "${tag.trim()}"`);
           clearSelection();
         })
         .catch(() => {});
@@ -2117,6 +2371,7 @@
         .then(r => r.json())
         .then(d => {
           document.getElementById('bulk-status').textContent = `Deleted ${d.deleted} leads`;
+          toast(`Deleted ${d.deleted} leads`);
           clearSelection();
           refreshAll();
         })
@@ -2231,6 +2486,7 @@
         });
         const d = await res.json();
         statusEl.textContent = `Merged ${d.merged} duplicates (${d.fieldsRecovered} fields recovered)`;
+        toast(`Merged ${d.merged} duplicates`);
         refreshAll();
       } catch {
         statusEl.textContent = 'Merge failed';
@@ -2379,6 +2635,7 @@
         const res = await fetch('/api/leads/share-firm-data', { method: 'POST' });
         const d = await res.json();
         statusEl.textContent = `Shared data across ${d.firmsProcessed} firms, ${d.leadsUpdated} leads updated, ${d.fieldsShared} fields shared`;
+        toast(`Shared firm data: ${d.leadsUpdated} leads updated`);
         refreshAll();
       } catch {
         statusEl.textContent = 'Firm data sharing failed';
@@ -2397,6 +2654,7 @@
         const res = await fetch('/api/leads/deduce-websites', { method: 'POST' });
         const d = await res.json();
         statusEl.textContent = `Deduced ${d.leadsUpdated} websites from email domains`;
+        toast(`Deduced ${d.leadsUpdated} websites`);
         refreshAll();
       } catch {
         statusEl.textContent = 'Website deduction failed';
@@ -2415,6 +2673,7 @@
         const res = await fetch('/api/leads/score', { method: 'POST' });
         const d = await res.json();
         statusEl.textContent = `Scored ${fmt(d.scored)} leads (avg: ${d.avgScore})`;
+        toast(`Scored ${fmt(d.scored)} leads (avg: ${d.avgScore})`);
         refreshAll();
       } catch {
         statusEl.textContent = 'Scoring failed';
@@ -2434,6 +2693,13 @@
       document.getElementById('modal-edit').style.display = 'none';
       document.getElementById('modal-edit-btn').textContent = 'Edit';
       document.getElementById('modal-name').textContent = `${lead.first_name} ${lead.last_name}`;
+
+      // Completeness meter
+      const fields = ['email','phone','website','firm_name','city','bar_number','practice_area','title','linkedin_url','education'];
+      const filled = fields.filter(f => lead[f] && lead[f].trim()).length;
+      const pct = Math.round(100 * filled / fields.length);
+      const meterColor = pct >= 80 ? '#22c55e' : pct >= 50 ? '#3b82f6' : pct >= 30 ? '#f59e0b' : '#ef4444';
+
       const score = lead.lead_score || 0;
       const scoreColor = score >= 80 ? '#166534' : score >= 55 ? '#1e40af' : score >= 30 ? '#92400e' : '#991b1b';
       const scoreBg = score >= 80 ? '#dcfce7' : score >= 55 ? '#dbeafe' : score >= 30 ? '#fef3c7' : '#fee2e2';
@@ -2461,19 +2727,63 @@
         ['Primary Source', lead.primary_source || '-'],
       ].filter(([, v]) => v && v !== '-');
 
-      document.getElementById('modal-details').innerHTML = fields.map(([label, value]) =>
-        `<div class="detail-label">${label}</div><div class="detail-value">${value}</div>`
-      ).join('');
+      document.getElementById('modal-details').innerHTML =
+        `<div style="grid-column:1/-1;margin-bottom:0.3rem;">
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <span style="font-size:0.72rem;color:var(--text-muted,#6b7280);font-weight:500;">Completeness</span>
+            <div style="flex:1;height:6px;background:var(--bg-primary,#f3f4f6);border-radius:3px;">
+              <div style="width:${pct}%;height:100%;background:${meterColor};border-radius:3px;transition:width 0.3s;"></div>
+            </div>
+            <span style="font-size:0.72rem;font-weight:600;color:${meterColor};">${filled}/${fields.length}</span>
+          </div>
+        </div>` +
+        fields.map(([label, value]) =>
+          `<div class="detail-label">${label}</div><div class="detail-value">${value}</div>`
+        ).join('');
 
       document.getElementById('modal-notes').textContent = lead.notes || 'No notes yet. Click Edit to add.';
 
-      const sources = [lead.primary_source, lead.email_source, lead.phone_source, lead.website_source]
-        .filter(Boolean).filter(s => s !== '-');
-      const uniqueSources = [...new Set(sources)];
-      document.getElementById('modal-sources').innerHTML = uniqueSources.length > 0
-        ? '<div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.4rem;font-weight:600;">Data Sources</div>' +
-          uniqueSources.map(s => `<span class="source-badge">${esc(s)}</span>`).join('')
-        : '';
+      // Data provenance pipeline
+      const pipelineSteps = [
+        { key: 'bar', label: 'Bar Scrape', icon: '\u{1F3DB}\uFE0F' },
+        { key: 'profile', label: 'Profile Page', icon: '\u{1F517}' },
+        { key: 'martindale', label: 'Martindale', icon: '\u{1F4D6}' },
+        { key: 'lawyers-com', label: 'Lawyers.com', icon: '\u{1F4CB}' },
+        { key: 'website-crawl', label: 'Website Crawl', icon: '\u{1F310}' },
+        { key: 'email-domain', label: 'Email Domain', icon: '\u2709\uFE0F' },
+        { key: 'firm-share', label: 'Firm Share', icon: '\u{1F3E2}' },
+        { key: 'domain-guess', label: 'Domain Guess', icon: '\u{1F50E}' },
+      ];
+      const activeSources = new Set([lead.primary_source, lead.email_source, lead.phone_source, lead.website_source].filter(Boolean));
+      const enrichSteps = (lead.enrichment_steps || '').split(',').filter(Boolean);
+      enrichSteps.forEach(s => activeSources.add(s.trim()));
+
+      let sourcesHtml = '<div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.4rem;font-weight:600;">Data Pipeline</div>';
+      sourcesHtml += '<div style="display:flex;flex-wrap:wrap;gap:0.3rem;margin-bottom:0.5rem;">';
+      pipelineSteps.forEach(step => {
+        const active = activeSources.has(step.key);
+        sourcesHtml += `<span style="display:inline-flex;align-items:center;gap:0.2rem;padding:0.15rem 0.5rem;border-radius:12px;font-size:0.7rem;font-weight:500;
+          ${active ? 'background:#dcfce7;color:#166534;border:1px solid #86efac;' : 'background:var(--bg-secondary,#f3f4f6);color:var(--text-muted,#9ca3af);border:1px solid var(--border,#e5e7eb);opacity:0.5;'}">
+          <span style="font-size:0.8rem;">${step.icon}</span> ${step.label}
+        </span>`;
+      });
+      sourcesHtml += '</div>';
+
+      // Source attribution per field
+      const fieldSources = [
+        lead.email_source && { field: 'Email', source: lead.email_source },
+        lead.phone_source && { field: 'Phone', source: lead.phone_source },
+        lead.website_source && { field: 'Website', source: lead.website_source },
+      ].filter(Boolean);
+      if (fieldSources.length > 0) {
+        sourcesHtml += '<div style="font-size:0.7rem;color:var(--text-secondary,#6b7280);margin-top:0.3rem;">';
+        fieldSources.forEach(fs => {
+          sourcesHtml += `<span style="margin-right:0.75rem;">${fs.field}: <strong>${esc(fs.source)}</strong></span>`;
+        });
+        sourcesHtml += '</div>';
+      }
+
+      document.getElementById('modal-sources').innerHTML = sourcesHtml;
 
       document.getElementById('lead-modal').classList.add('active');
     }
@@ -2542,9 +2852,11 @@
           _currentModalLead = { ..._currentModalLead, ...updates, lead_score: updated.lead_score };
           toggleEditMode();
           showLeadDetail(_currentModalLead);
-          loadLeads(); // Refresh table
+          toast('Lead updated successfully');
+          loadLeads();
         }
       } catch (err) {
+        toast('Failed to save lead', 'error');
         console.error('Failed to save lead:', err);
       }
     }
@@ -2554,9 +2866,113 @@
       document.getElementById('lead-modal').classList.remove('active');
     }
 
+    // --- State Drilldown Modal ---
+    async function openStateModal(stateCode) {
+      document.getElementById('state-modal-title').textContent = stateCode + ' Analytics';
+      document.getElementById('state-modal-body').innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">Loading...</p>';
+      document.getElementById('state-modal').classList.add('active');
+
+      try {
+        const res = await fetch(`/api/leads/state-details/${encodeURIComponent(stateCode)}`);
+        const d = await res.json();
+        if (d.error) throw new Error(d.error);
+
+        const pctBar = (cnt, total, color) => {
+          const p = Math.round(100 * cnt / Math.max(total, 1));
+          return `<div style="display:flex;align-items:center;gap:0.4rem;">
+            <div style="flex:1;height:8px;background:var(--bg-primary,#f3f4f6);border-radius:4px;">
+              <div style="width:${p}%;height:100%;background:${color};border-radius:4px;"></div>
+            </div>
+            <span style="font-size:0.72rem;min-width:60px;text-align:right;">${cnt.toLocaleString()} (${p}%)</span>
+          </div>`;
+        };
+
+        const sd = d.scoreDistribution;
+        const sdTotal = (sd.excellent || 0) + (sd.good || 0) + (sd.fair || 0) + (sd.poor || 0);
+
+        let html = `
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+            <div style="text-align:center;padding:0.75rem;background:var(--bg-secondary,#f9fafb);border-radius:8px;">
+              <div style="font-size:1.5rem;font-weight:700;color:var(--text-primary,#111);">${d.total.toLocaleString()}</div>
+              <div style="font-size:0.72rem;color:var(--text-muted,#6b7280);">Total Leads</div>
+            </div>
+            <div style="text-align:center;padding:0.75rem;background:var(--bg-secondary,#f9fafb);border-radius:8px;">
+              <div style="font-size:1.5rem;font-weight:700;color:${d.fields.avg_score >= 55 ? '#22c55e' : '#f59e0b'};">${d.fields.avg_score || 0}</div>
+              <div style="font-size:0.72rem;color:var(--text-muted,#6b7280);">Avg Score</div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:1rem;">
+            <div style="font-size:0.82rem;font-weight:600;margin-bottom:0.5rem;">Field Coverage</div>
+            <div style="display:grid;gap:0.3rem;">
+              <div style="display:flex;align-items:center;gap:0.5rem;"><span style="font-size:0.72rem;min-width:70px;">Email</span>${pctBar(d.fields.email, d.total, '#22c55e')}</div>
+              <div style="display:flex;align-items:center;gap:0.5rem;"><span style="font-size:0.72rem;min-width:70px;">Phone</span>${pctBar(d.fields.phone, d.total, '#3b82f6')}</div>
+              <div style="display:flex;align-items:center;gap:0.5rem;"><span style="font-size:0.72rem;min-width:70px;">Website</span>${pctBar(d.fields.website, d.total, '#8b5cf6')}</div>
+              <div style="display:flex;align-items:center;gap:0.5rem;"><span style="font-size:0.72rem;min-width:70px;">Firm</span>${pctBar(d.fields.firm, d.total, '#f59e0b')}</div>
+              <div style="display:flex;align-items:center;gap:0.5rem;"><span style="font-size:0.72rem;min-width:70px;">Practice</span>${pctBar(d.fields.practice, d.total, '#ec4899')}</div>
+              <div style="display:flex;align-items:center;gap:0.5rem;"><span style="font-size:0.72rem;min-width:70px;">Profile URL</span>${pctBar(d.fields.profile_url, d.total, '#14b8a6')}</div>
+              <div style="display:flex;align-items:center;gap:0.5rem;"><span style="font-size:0.72rem;min-width:70px;">Title</span>${pctBar(d.fields.title, d.total, '#6366f1')}</div>
+              <div style="display:flex;align-items:center;gap:0.5rem;"><span style="font-size:0.72rem;min-width:70px;">LinkedIn</span>${pctBar(d.fields.linkedin, d.total, '#0077b5')}</div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+            <div>
+              <div style="font-size:0.82rem;font-weight:600;margin-bottom:0.3rem;">Score Distribution</div>
+              <div style="display:grid;gap:0.2rem;">
+                <div style="display:flex;align-items:center;gap:0.3rem;font-size:0.72rem;"><span style="width:8px;height:8px;border-radius:2px;background:#22c55e;"></span>Excellent: ${sd.excellent || 0}</div>
+                <div style="display:flex;align-items:center;gap:0.3rem;font-size:0.72rem;"><span style="width:8px;height:8px;border-radius:2px;background:#3b82f6;"></span>Good: ${sd.good || 0}</div>
+                <div style="display:flex;align-items:center;gap:0.3rem;font-size:0.72rem;"><span style="width:8px;height:8px;border-radius:2px;background:#f59e0b;"></span>Fair: ${sd.fair || 0}</div>
+                <div style="display:flex;align-items:center;gap:0.3rem;font-size:0.72rem;"><span style="width:8px;height:8px;border-radius:2px;background:#ef4444;"></span>Poor: ${sd.poor || 0}</div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:0.82rem;font-weight:600;margin-bottom:0.3rem;">Top Cities</div>
+              <div style="display:grid;gap:0.15rem;">
+                ${d.topCities.map(c => `<div style="display:flex;justify-content:space-between;font-size:0.72rem;"><span>${esc(c.city)}</span><span style="color:var(--text-muted,#9ca3af);">${c.cnt}</span></div>`).join('')}
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:1rem;">
+            <div style="font-size:0.82rem;font-weight:600;margin-bottom:0.3rem;">Top Firms</div>
+            <div style="display:flex;flex-wrap:wrap;gap:0.3rem;">
+              ${d.topFirms.map(f => `<span style="font-size:0.68rem;padding:0.15rem 0.4rem;background:var(--bg-secondary,#f3f4f6);border:1px solid var(--border,#e5e7eb);border-radius:4px;">${esc(f.firm_name)} <strong>${f.cnt}</strong></span>`).join('')}
+            </div>
+          </div>
+
+          ${d.recentRuns.length > 0 ? `
+            <div>
+              <div style="font-size:0.82rem;font-weight:600;margin-bottom:0.3rem;">Recent Scrape Runs</div>
+              <div style="display:grid;gap:0.2rem;">
+                ${d.recentRuns.map(r => `<div style="display:flex;justify-content:space-between;font-size:0.72rem;padding:0.2rem 0;border-bottom:1px solid var(--border,#f3f4f6);">
+                  <span>${new Date(r.started_at + 'Z').toLocaleDateString()}</span>
+                  <span>${r.leads_found} found, ${r.leads_new} new${r.emails_found ? ', ' + r.emails_found + ' emails' : ''}</span>
+                </div>`).join('')}
+              </div>
+            </div>
+          ` : ''}
+
+          <div style="margin-top:1rem;display:flex;gap:0.5rem;">
+            <button class="btn btn-primary" style="font-size:0.78rem;" onclick="document.getElementById('filter-state').value='${esc(stateCode)}';loadLeads();closeStateModal();">View Leads</button>
+            <a href="/api/leads/export/state/${encodeURIComponent(stateCode)}" class="btn btn-secondary" style="font-size:0.78rem;text-decoration:none;">Export CSV</a>
+            <button class="btn btn-secondary" style="font-size:0.78rem;" onclick="quickScrape('${esc(stateCode)}');closeStateModal();">Scrape Now</button>
+          </div>
+        `;
+
+        document.getElementById('state-modal-body').innerHTML = html;
+      } catch (err) {
+        document.getElementById('state-modal-body').innerHTML = `<p style="color:#ef4444;text-align:center;padding:1rem;">${err.message}</p>`;
+      }
+    }
+
+    function closeStateModal() {
+      document.getElementById('state-modal').classList.remove('active');
+    }
+
     // Close modal on Escape
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal();
+      if (e.key === 'Escape') { closeModal(); closeStateModal(); }
     });
 
     // --- Event Listeners ---
@@ -2571,6 +2987,41 @@
     document.getElementById('filter-website').addEventListener('change', () => loadLeads());
     document.getElementById('filter-practice').addEventListener('change', () => loadLeads());
     document.getElementById('filter-score').addEventListener('change', () => loadLeads());
+    document.getElementById('filter-tags').addEventListener('change', () => loadLeads());
+    document.getElementById('filter-source').addEventListener('change', () => loadLeads());
+
+    // Populate tags and source dropdowns
+    async function loadFilterOptions() {
+      try {
+        const [tagsRes, sourcesRes] = await Promise.all([
+          fetch('/api/leads/tags'),
+          fetch('/api/leads/sources'),
+        ]);
+        if (tagsRes.ok) {
+          const tags = await tagsRes.json();
+          const sel = document.getElementById('filter-tags');
+          tags.forEach(t => {
+            const o = document.createElement('option');
+            o.value = t;
+            o.textContent = t;
+            sel.appendChild(o);
+          });
+        }
+        if (sourcesRes.ok) {
+          const sources = await sourcesRes.json();
+          const sel = document.getElementById('filter-source');
+          sources.forEach(s => {
+            const o = document.createElement('option');
+            o.value = s;
+            o.textContent = s;
+            sel.appendChild(o);
+          });
+        }
+      } catch (err) {
+        console.error('Failed to load filter options:', err);
+      }
+    }
+    loadFilterOptions();
 
     // --- CSV Import ---
     const importZone = document.getElementById('import-zone');
@@ -2620,6 +3071,7 @@
         }
         resultEl.innerHTML = `<strong>Import complete</strong> | ${fmt(d.total)} rows processed | ${fmt(d.imported)} new | ${fmt(d.updated)} updated | ${fmt(d.skipped)} skipped` +
           (d.mapping ? `<br><span style="color:var(--text-muted);">Mapped: ${Object.entries(d.mapping).filter(([k,v]) => v && !k.startsWith('_')).map(([k,v]) => `${k}=${v}`).join(', ')}</span>` : '');
+        toast(`Imported ${fmt(d.imported)} new leads, ${fmt(d.updated)} updated`);
         refreshAll();
       } catch (err) {
         resultEl.innerHTML = `<span style="color:#dc2626;">Import error: ${esc(err.message)}</span>`;
@@ -2706,9 +3158,16 @@
           break;
         case 'r': // Refresh
           refreshAll();
+          toast('Refreshing data...', 'info');
           break;
         case 'e': // Export
           window.location.href = '/api/leads/export';
+          break;
+        case 'c': // Copy emails
+          copyAllEmails();
+          break;
+        case 'd': // Toggle dark mode
+          toggleDarkMode();
           break;
       }
     });
@@ -2913,28 +3372,203 @@
     async function copyAllEmails() {
       const emails = _currentLeads.filter(l => l.email).map(l => l.email);
       if (emails.length === 0) {
-        document.getElementById('bulk-status').textContent = 'No emails to copy in current page';
+        toast('No emails to copy in current page', 'info');
         return;
       }
       try {
         await navigator.clipboard.writeText(emails.join('\n'));
-        document.getElementById('bulk-status').textContent = `Copied ${emails.length} emails to clipboard`;
+        toast(`Copied ${emails.length} emails to clipboard`);
       } catch {
-        // Fallback
         const ta = document.createElement('textarea');
         ta.value = emails.join('\n');
         document.body.appendChild(ta);
         ta.select();
         document.execCommand('copy');
         document.body.removeChild(ta);
-        document.getElementById('bulk-status').textContent = `Copied ${emails.length} emails to clipboard`;
+        toast(`Copied ${emails.length} emails to clipboard`);
       }
+    }
+
+    // --- Coverage Map (Visual Grid) ---
+    async function loadCoverageMap() {
+      try {
+        const res = await fetch('/api/leads/coverage');
+        const data = await res.json();
+        const container = document.getElementById('coverage-map');
+        if (!container || !data.length) return;
+
+        // Group by country
+        const countries = {};
+        data.forEach(s => {
+          if (!countries[s.country]) countries[s.country] = [];
+          countries[s.country].push(s);
+        });
+
+        // Country display order and flag
+        const countryOrder = ['US','CA','UK','AU','NZ','FR','IE','IT','DE','HK','SG'];
+        const countryFlags = { US:'\u{1F1FA}\u{1F1F8}', CA:'\u{1F1E8}\u{1F1E6}', UK:'\u{1F1EC}\u{1F1E7}', AU:'\u{1F1E6}\u{1F1FA}', NZ:'\u{1F1F3}\u{1F1FF}', FR:'\u{1F1EB}\u{1F1F7}', IE:'\u{1F1EE}\u{1F1EA}', IT:'\u{1F1EE}\u{1F1F9}', DE:'\u{1F1E9}\u{1F1EA}', HK:'\u{1F1ED}\u{1F1F0}', SG:'\u{1F1F8}\u{1F1EC}' };
+
+        // Color scale based on lead count
+        const maxTotal = Math.max(...data.map(s => s.total));
+        function cellColor(total, emailPct) {
+          if (total === 0) return { bg: 'var(--bg-secondary, #f3f4f6)', border: 'var(--border, #e5e7eb)', text: 'var(--text-muted, #9ca3af)' };
+          const intensity = Math.min(total / Math.max(maxTotal * 0.5, 1), 1);
+          if (emailPct >= 30) return { bg: `rgba(34,197,94,${0.15 + intensity * 0.5})`, border: '#22c55e', text: '#166534' };
+          if (emailPct > 0 || total > 100) return { bg: `rgba(59,130,246,${0.15 + intensity * 0.5})`, border: '#3b82f6', text: '#1e40af' };
+          return { bg: `rgba(245,158,11,${0.15 + intensity * 0.4})`, border: '#f59e0b', text: '#92400e' };
+        }
+
+        let html = '';
+        const sortedCountries = Object.keys(countries).sort((a, b) => {
+          const ai = countryOrder.indexOf(a), bi = countryOrder.indexOf(b);
+          return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+        });
+
+        sortedCountries.forEach(country => {
+          const states = countries[country].sort((a, b) => b.total - a.total);
+          const flag = countryFlags[country] || '';
+          html += `<div style="width:100%;margin:0.5rem 0 0.25rem;display:flex;align-items:center;gap:0.3rem;">
+            <span style="font-size:0.85rem;">${flag}</span>
+            <span style="font-size:0.75rem;font-weight:600;color:var(--text-primary,#111);">${country}</span>
+            <span style="font-size:0.7rem;color:var(--text-muted,#9ca3af);">${states.reduce((s,x) => s + x.total, 0).toLocaleString()} leads</span>
+          </div>`;
+          states.forEach(s => {
+            const c = cellColor(s.total, s.email_pct);
+            const shortState = s.state.replace(country + '-', '');
+            const tooltip = `${s.state}: ${s.total.toLocaleString()} leads | Email: ${s.email_pct}% | Phone: ${s.phone_pct}% | Web: ${s.website_pct}%`;
+            html += `<div class="cov-cell" title="${esc(tooltip)}" onclick="openStateModal('${esc(s.state)}')"
+              style="display:inline-flex;flex-direction:column;align-items:center;justify-content:center;
+              width:56px;height:48px;border-radius:6px;cursor:pointer;
+              background:${c.bg};border:1.5px solid ${c.border};transition:transform 0.15s;"
+              onmouseenter="this.style.transform='scale(1.08)'" onmouseleave="this.style.transform='scale(1)'">
+              <span style="font-size:0.72rem;font-weight:700;color:${c.text};">${esc(shortState)}</span>
+              <span style="font-size:0.6rem;color:${c.text};opacity:0.8;">${s.total >= 1000 ? (s.total/1000).toFixed(1)+'k' : s.total}</span>
+            </div>`;
+          });
+        });
+
+        // Legend
+        html += `<div style="width:100%;margin-top:0.75rem;display:flex;gap:1rem;font-size:0.65rem;color:var(--text-muted,#9ca3af);align-items:center;">
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(34,197,94,0.5);margin-right:3px;vertical-align:middle;"></span>Has email</span>
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(59,130,246,0.5);margin-right:3px;vertical-align:middle;"></span>100+ leads</span>
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(245,158,11,0.4);margin-right:3px;vertical-align:middle;"></span>Sparse data</span>
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bg-secondary,#f3f4f6);border:1px solid var(--border,#e5e7eb);margin-right:3px;vertical-align:middle;"></span>No data</span>
+        </div>`;
+
+        container.innerHTML = html;
+      } catch (err) {
+        console.error('Failed to load coverage map:', err);
+      }
+    }
+
+    // --- Enrichment Dashboard ---
+    async function loadEnrichmentDashboard() {
+      try {
+        const res = await fetch('/api/leads/enrichment-stats');
+        const data = await res.json();
+
+        // Badge
+        const badge = document.getElementById('enrichment-enriched-badge');
+        if (badge) badge.textContent = `${data.enriched.toLocaleString()} enriched of ${data.total.toLocaleString()}`;
+
+        // Opportunities cards
+        const opps = document.getElementById('enrich-opportunities');
+        if (opps) {
+          const cards = [
+            { label: 'Need Email', count: data.opportunities.needsEmail, color: '#ef4444', icon: '\u2709\uFE0F', pct: Math.round(100 * data.opportunities.needsEmail / Math.max(data.total, 1)) },
+            { label: 'Need Phone', count: data.opportunities.needsPhone, color: '#f59e0b', icon: '\u{1F4DE}', pct: Math.round(100 * data.opportunities.needsPhone / Math.max(data.total, 1)) },
+            { label: 'Website \u2192 Email', count: data.opportunities.hasWebsiteNoEmail, color: '#3b82f6', icon: '\u{1F310}', pct: Math.round(100 * data.opportunities.hasWebsiteNoEmail / Math.max(data.opportunities.needsEmail, 1)) },
+            { label: 'Profile \u2192 Email', count: data.opportunities.hasProfileNoEmail, color: '#8b5cf6', icon: '\u{1F517}', pct: Math.round(100 * data.opportunities.hasProfileNoEmail / Math.max(data.opportunities.needsEmail, 1)) },
+          ];
+          opps.innerHTML = cards.map(c => `
+            <div style="background:var(--bg-secondary,#f9fafb);border:1px solid var(--border,#e5e7eb);border-radius:8px;padding:0.6rem 0.75rem;text-align:center;">
+              <div style="font-size:1.2rem;margin-bottom:0.2rem;">${c.icon}</div>
+              <div style="font-size:1.1rem;font-weight:700;color:${c.color};">${c.count.toLocaleString()}</div>
+              <div style="font-size:0.68rem;color:var(--text-muted,#6b7280);">${c.label}</div>
+              <div style="margin-top:0.3rem;height:4px;background:var(--bg-primary,#e5e7eb);border-radius:2px;">
+                <div style="width:${c.pct}%;height:100%;background:${c.color};border-radius:2px;"></div>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        // Source attribution bars
+        function renderSources(containerId, sources, total, color) {
+          const el = document.getElementById(containerId);
+          if (!el || !sources.length) { if (el) el.innerHTML = '<span style="font-size:0.7rem;color:var(--text-muted,#9ca3af);">No data</span>'; return; }
+          const max = sources[0].cnt;
+          el.innerHTML = sources.map(s => {
+            const pct = Math.round(100 * s.cnt / Math.max(total, 1));
+            const barPct = Math.round(100 * s.cnt / Math.max(max, 1));
+            const src = s.email_source || s.phone_source || s.website_source;
+            return `<div style="display:flex;align-items:center;gap:0.4rem;margin-bottom:0.25rem;">
+              <span style="font-size:0.68rem;min-width:70px;color:var(--text-secondary,#374151);">${esc(src)}</span>
+              <div style="flex:1;height:6px;background:var(--bg-primary,#f3f4f6);border-radius:3px;">
+                <div style="width:${barPct}%;height:100%;background:${color};border-radius:3px;"></div>
+              </div>
+              <span style="font-size:0.65rem;color:var(--text-muted,#9ca3af);min-width:30px;text-align:right;">${s.cnt}</span>
+            </div>`;
+          }).join('');
+        }
+        renderSources('enrich-email-sources', data.emailSources, data.withEmail, '#22c55e');
+        renderSources('enrich-phone-sources', data.phoneSources, data.withPhone, '#3b82f6');
+        renderSources('enrich-website-sources', data.websiteSources, data.withWebsite, '#8b5cf6');
+      } catch (err) {
+        console.error('Failed to load enrichment dashboard:', err);
+      }
+    }
+
+    // --- Activity Feed ---
+    async function loadActivityFeed() {
+      try {
+        const res = await fetch('/api/activity?limit=20');
+        const data = await res.json();
+        const container = document.getElementById('activity-feed');
+        if (!container) return;
+
+        if (!data.length) {
+          container.innerHTML = '<p style="font-size:0.75rem;color:var(--text-muted,#9ca3af);text-align:center;padding:1rem;">No activity yet. Start a scrape to see results here.</p>';
+          return;
+        }
+
+        container.innerHTML = data.map(a => {
+          const time = new Date(a.started_at + 'Z');
+          const ago = timeAgo(time);
+          const isRecent = (Date.now() - time.getTime()) < 3600000;
+          return `<div style="display:flex;align-items:center;gap:0.6rem;padding:0.4rem 0;border-bottom:1px solid var(--border,#f3f4f6);${isRecent ? 'background:var(--bg-secondary,#fefce8);border-radius:4px;padding:0.4rem 0.5rem;' : ''}">
+            <div style="width:32px;height:32px;border-radius:8px;background:${a.leads_new > 0 ? '#dcfce7' : '#f3f4f6'};display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;">
+              ${a.leads_new > 0 ? '\u2705' : '\u{1F504}'}
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:0.78rem;font-weight:500;color:var(--text-primary,#111);">
+                ${esc(a.state)} scrape
+                <span style="font-size:0.68rem;font-weight:400;color:var(--text-muted,#9ca3af);margin-left:0.3rem;">${ago}</span>
+              </div>
+              <div style="font-size:0.68rem;color:var(--text-secondary,#6b7280);">
+                ${a.leads_found} found, ${a.leads_new} new${a.emails_found ? ', ' + a.emails_found + ' emails' : ''}${a.duration ? ' \u00B7 ' + a.duration : ''}
+              </div>
+            </div>
+          </div>`;
+        }).join('');
+      } catch (err) {
+        console.error('Failed to load activity feed:', err);
+      }
+    }
+
+    function timeAgo(date) {
+      const secs = Math.floor((Date.now() - date.getTime()) / 1000);
+      if (secs < 60) return 'just now';
+      if (secs < 3600) return Math.floor(secs / 60) + 'm ago';
+      if (secs < 86400) return Math.floor(secs / 3600) + 'h ago';
+      if (secs < 604800) return Math.floor(secs / 86400) + 'd ago';
+      return date.toLocaleDateString();
     }
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed()]);
       loadCoverage();
+      loadCoverageMap();
       loadLeads();
     }
 

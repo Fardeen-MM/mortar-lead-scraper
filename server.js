@@ -484,9 +484,9 @@ app.get('/api/leads/stats', (req, res) => {
 app.get('/api/leads', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
-    const { q, state, country, hasEmail, hasPhone, hasWebsite, practiceArea, minScore, maxScore, tags, sort, order, limit, offset } = req.query;
+    const { q, state, country, hasEmail, hasPhone, hasWebsite, practiceArea, minScore, maxScore, tags, tag, source, sort, order, limit, offset } = req.query;
     const result = leadDb.searchLeads(q, {
-      state, country, practiceArea, tags,
+      state, country, practiceArea, tags: tags || tag, source,
       hasEmail: hasEmail === 'true',
       hasPhone: hasPhone === 'true',
       hasWebsite: hasWebsite === 'true',
@@ -1000,6 +1000,26 @@ app.get('/api/leads/tags', (req, res) => {
   }
 });
 
+app.get('/api/leads/state-details/:state', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const data = leadDb.getStateDetails(req.params.state);
+    if (!data) return res.status(404).json({ error: 'No data for this state' });
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/leads/sources', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getDistinctSources());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.post('/api/leads/tag', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
@@ -1253,6 +1273,27 @@ app.get('/api/scrapers/health', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
     res.json(leadDb.getScraperHealth());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Enrichment Stats ---
+app.get('/api/leads/enrichment-stats', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getEnrichmentStats());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Activity Feed ---
+app.get('/api/activity', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 50;
+    res.json(leadDb.getActivityFeed(limit));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
