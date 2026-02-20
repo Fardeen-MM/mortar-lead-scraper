@@ -1151,6 +1151,113 @@ function autoMapColumns(headers) {
   return mapping;
 }
 
+// === Lead Lists / Campaigns ===
+app.get('/api/lists', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getLists());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/lists', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, description, color } = req.body;
+    if (!name || !name.trim()) return res.status(400).json({ error: 'Name required' });
+    const list = leadDb.createList(name.trim(), description || '', color || '#6366f1');
+    res.json(list);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/lists/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const list = leadDb.getList(parseInt(req.params.id));
+    if (!list) return res.status(404).json({ error: 'List not found' });
+    res.json(list);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.patch('/api/lists/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.updateList(parseInt(req.params.id), req.body);
+    res.json({ updated: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/lists/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.deleteList(parseInt(req.params.id));
+    res.json({ deleted: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/lists/:id/add', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds } = req.body;
+    if (!leadIds || !Array.isArray(leadIds)) return res.status(400).json({ error: 'leadIds array required' });
+    const result = leadDb.addToList(parseInt(req.params.id), leadIds);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/lists/:id/remove', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds } = req.body;
+    if (!leadIds || !Array.isArray(leadIds)) return res.status(400).json({ error: 'leadIds array required' });
+    const result = leadDb.removeFromList(parseInt(req.params.id), leadIds);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/lists/:id/export', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { createObjectCsvWriter } = require('csv-writer');
+    const list = leadDb.getList(parseInt(req.params.id));
+    if (!list || list.members.length === 0) return res.status(404).json({ error: 'List empty or not found' });
+    const tmpPath = path.join(OUTPUT_DIR, `list-${list.name.replace(/\W+/g, '-')}-${Date.now()}.csv`);
+    const headers = Object.keys(list.members[0]).filter(k => k !== 'id' && k !== 'lead_score')
+      .map(k => ({ id: k, title: k }));
+    const writer = createObjectCsvWriter({ path: tmpPath, header: headers });
+    writer.writeRecords(list.members).then(() => {
+      res.download(tmpPath, `${list.name.replace(/\W+/g, '-')}-leads.csv`, () => {
+        try { fs.unlinkSync(tmpPath); } catch {}
+      });
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// === Scraper Health ===
+app.get('/api/scrapers/health', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getScraperHealth());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // --- Growth/Trend Data for Charts ---
 app.get('/api/leads/growth', (req, res) => {
   try {

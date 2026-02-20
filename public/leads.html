@@ -654,6 +654,158 @@
       color: var(--text-muted);
     }
     .col-toggle.active { background: #eef2ff; color: var(--indigo); border-color: var(--indigo); }
+
+    /* Lead Lists */
+    .lists-panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .lists-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .lists-header h3 { font-size: 0.9rem; font-weight: 600; margin: 0; }
+    .list-cards {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .list-card {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      transition: all 0.15s;
+      border: 1px solid var(--border);
+      background: white;
+    }
+    .list-card:hover { border-color: var(--indigo); }
+    .list-card.active { border-color: var(--indigo); background: #eef2ff; }
+    .list-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .list-card-name { font-weight: 500; }
+    .list-card-count {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      background: #f3f4f6;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+    }
+    .list-card .list-x {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      opacity: 0;
+      cursor: pointer;
+      margin-left: 0.1rem;
+    }
+    .list-card:hover .list-x { opacity: 0.6; }
+    .list-card .list-x:hover { opacity: 1; color: #ef4444; }
+
+    /* Command Palette */
+    .cmd-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+      justify-content: center;
+      padding-top: 15vh;
+    }
+    .cmd-overlay.active { display: flex; }
+    .cmd-dialog {
+      background: white;
+      border-radius: 12px;
+      width: 550px;
+      max-height: 400px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+    .cmd-input-wrap {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .cmd-input {
+      width: 100%;
+      border: none;
+      font-size: 1rem;
+      outline: none;
+      font-family: inherit;
+    }
+    .cmd-results {
+      max-height: 320px;
+      overflow-y: auto;
+      padding: 0.25rem 0;
+    }
+    .cmd-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .cmd-item:hover, .cmd-item.active { background: #f0f4ff; }
+    .cmd-icon {
+      width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      background: #f3f4f6;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+    .cmd-label { flex: 1; }
+    .cmd-label small { display: block; color: var(--text-muted); font-size: 0.72rem; }
+    .cmd-shortcut {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      padding: 0.1rem 0.3rem;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      font-family: monospace;
+    }
+
+    /* Scraper Health */
+    .health-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.5rem;
+    }
+    .health-card {
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .health-indicator {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .health-good { background: #22c55e; }
+    .health-warn { background: #f59e0b; }
+    .health-bad { background: #ef4444; }
+    .health-info {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .health-state { font-weight: 600; }
+    .health-stats { color: var(--text-muted); font-size: 0.72rem; }
   </style>
 </head>
 <body>
@@ -785,6 +937,17 @@
       </div>
     </div>
 
+    <!-- Lead Lists / Campaigns -->
+    <div class="lists-panel" id="lists-panel">
+      <div class="lists-header">
+        <h3>Lists & Campaigns</h3>
+        <button class="btn btn-secondary" style="font-size:0.72rem;padding:0.2rem 0.5rem;" onclick="createNewList()">+ New List</button>
+      </div>
+      <div class="list-cards" id="list-cards">
+        <span style="font-size:0.82rem;color:var(--text-muted);">No lists yet. Create one to organize leads for campaigns.</span>
+      </div>
+    </div>
+
     <!-- Bulk Operations -->
     <div class="panel" style="display:block; margin-bottom: 1rem;">
       <h2 style="margin-bottom: 0.5rem;">Bulk Operations</h2>
@@ -829,6 +992,7 @@
     <div class="panel" style="display:block; margin-bottom: 1rem;">
       <div class="panel-tabs">
         <div class="panel-tab active" onclick="switchTab(this, 'tab-coverage')">Coverage & Freshness</div>
+        <div class="panel-tab" onclick="switchTab(this, 'tab-health')">Scraper Health</div>
         <div class="panel-tab" onclick="switchTab(this, 'tab-duplicates')">Duplicates <span id="dupe-count-badge" style="background:#fee2e2;color:#991b1b;padding:0.05rem 0.3rem;border-radius:8px;font-size:0.68rem;font-weight:600;margin-left:0.3rem;display:none;">0</span></div>
       </div>
       <div class="tab-content active" id="tab-coverage">
@@ -842,6 +1006,10 @@
             <tbody id="coverage-body"></tbody>
           </table>
         </div>
+      </div>
+      <div class="tab-content" id="tab-health">
+        <p class="hint" style="margin-bottom:0.75rem;">Success rate, average yields, and last run time per scraper.</p>
+        <div class="health-grid" id="health-grid"></div>
       </div>
       <div class="tab-content" id="tab-duplicates">
         <p class="hint" style="margin-bottom:0.75rem;">Potential duplicate leads found by matching email, phone, or name+city.</p>
@@ -977,15 +1145,26 @@
 
   <!-- Keyboard shortcut hint -->
   <div class="kbd-hint" id="kbd-hint">
-    <div><kbd>/</kbd> Search &nbsp; <kbd>Esc</kbd> Clear/Close &nbsp; <kbd>?</kbd> Toggle hints</div>
+    <div><kbd>&#x2318;K</kbd> Command palette &nbsp; <kbd>/</kbd> Search &nbsp; <kbd>Esc</kbd> Clear/Close &nbsp; <kbd>?</kbd> Toggle hints</div>
     <div><kbd>j</kbd>/<kbd>k</kbd> Navigate rows &nbsp; <kbd>Enter</kbd> Open detail &nbsp; <kbd>x</kbd> Toggle select</div>
     <div><kbd>r</kbd> Refresh &nbsp; <kbd>e</kbd> Export all</div>
+  </div>
+
+  <!-- Command Palette (Cmd+K) -->
+  <div class="cmd-overlay" id="cmd-palette" onclick="if(event.target===this)closeCmdPalette()">
+    <div class="cmd-dialog">
+      <div class="cmd-input-wrap">
+        <input type="text" class="cmd-input" id="cmd-input" placeholder="Search leads, states, or actions..." autocomplete="off">
+      </div>
+      <div class="cmd-results" id="cmd-results"></div>
+    </div>
   </div>
 
   <!-- Floating Action Bar for batch operations -->
   <div class="fab" id="fab">
     <span id="fab-count">0 selected</span>
     <button onclick="exportSelected()">Export CSV</button>
+    <button onclick="addSelectedToList()">Add to List</button>
     <button onclick="tagSelected()">Tag</button>
     <button onclick="deleteSelected()">Delete</button>
     <button onclick="clearSelection()" style="background:transparent;border-color:rgba(255,255,255,0.4);">&times; Clear</button>
@@ -1298,6 +1477,7 @@
       tab.classList.add('active');
       document.getElementById(contentId).classList.add('active');
       if (contentId === 'tab-duplicates') loadDuplicates();
+      if (contentId === 'tab-health') loadScraperHealth();
     }
 
     // --- Duplicates ---
@@ -1372,6 +1552,204 @@
         btn.textContent = 'Error';
       }
     }
+
+    // --- Lead Lists / Campaigns ---
+    let _lists = [];
+    let _activeListId = null;
+
+    async function loadLists() {
+      try {
+        const res = await fetch('/api/lists');
+        _lists = await res.json();
+        renderLists();
+      } catch (err) {
+        console.error('Failed to load lists:', err);
+      }
+    }
+
+    function renderLists() {
+      const el = document.getElementById('list-cards');
+      if (_lists.length === 0) {
+        el.innerHTML = '<span style="font-size:0.82rem;color:var(--text-muted);">No lists yet. Create one to organize leads for campaigns.</span>';
+        return;
+      }
+      el.innerHTML = _lists.map(l => `
+        <div class="list-card ${_activeListId === l.id ? 'active' : ''}" onclick="toggleListFilter(${l.id})">
+          <span class="list-dot" style="background:${esc(l.color)};"></span>
+          <span class="list-card-name">${esc(l.name)}</span>
+          <span class="list-card-count">${l.member_count}</span>
+          <span class="list-x" onclick="event.stopPropagation();deleteListUI(${l.id})">&times;</span>
+        </div>
+      `).join('');
+    }
+
+    async function createNewList() {
+      const name = prompt('List name (e.g. "NYC Corporate Campaign"):');
+      if (!name || !name.trim()) return;
+      const colors = ['#6366f1', '#22c55e', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899'];
+      const color = colors[_lists.length % colors.length];
+      try {
+        const res = await fetch('/api/lists', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: name.trim(), color }),
+        });
+        await res.json();
+        loadLists();
+      } catch {}
+    }
+
+    async function deleteListUI(id) {
+      if (!confirm('Delete this list? Leads will NOT be deleted.')) return;
+      try {
+        await fetch('/api/lists/' + id, { method: 'DELETE' });
+        if (_activeListId === id) _activeListId = null;
+        loadLists();
+      } catch {}
+    }
+
+    function toggleListFilter(id) {
+      _activeListId = _activeListId === id ? null : id;
+      renderLists();
+      // TODO: filter leads by list membership (would need server-side support)
+    }
+
+    // Add selected leads to a list (from FAB)
+    async function addSelectedToList() {
+      if (_selectedIds.size === 0) return;
+      if (_lists.length === 0) {
+        alert('Create a list first');
+        return;
+      }
+      const options = _lists.map(l => l.name).join(', ');
+      const name = prompt(`Add to which list? (${options})`);
+      if (!name) return;
+      const list = _lists.find(l => l.name.toLowerCase() === name.toLowerCase());
+      if (!list) { alert('List not found: ' + name); return; }
+      try {
+        const res = await fetch(`/api/lists/${list.id}/add`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leadIds: [..._selectedIds] }),
+        });
+        const d = await res.json();
+        document.getElementById('bulk-status').textContent = `Added ${d.added} leads to "${list.name}"`;
+        clearSelection();
+        loadLists();
+      } catch {}
+    }
+
+    // --- Scraper Health ---
+    async function loadScraperHealth() {
+      try {
+        const res = await fetch('/api/scrapers/health');
+        const data = await res.json();
+        const el = document.getElementById('health-grid');
+        if (!data || data.length === 0) {
+          el.innerHTML = '<div style="color:var(--text-muted);font-size:0.82rem;">No scrape runs yet</div>';
+          return;
+        }
+        el.innerHTML = data.map(s => {
+          const healthCls = s.success_rate >= 80 ? 'health-good' : s.success_rate >= 50 ? 'health-warn' : 'health-bad';
+          return `<div class="health-card">
+            <span class="health-indicator ${healthCls}"></span>
+            <div class="health-info">
+              <div>
+                <span class="health-state">${esc(s.state)}</span>
+                <span class="health-stats">${s.total_runs} runs, avg ${s.avg_leads} leads</span>
+              </div>
+              <span style="font-size:0.72rem;font-weight:600;color:${s.success_rate >= 80 ? '#22c55e' : s.success_rate >= 50 ? '#f59e0b' : '#ef4444'};">${s.success_rate}%</span>
+            </div>
+          </div>`;
+        }).join('');
+      } catch (err) {
+        console.error('Failed to load scraper health:', err);
+      }
+    }
+
+    // --- Command Palette (Cmd+K / Ctrl+K) ---
+    let _cmdActive = false;
+    let _cmdSelectedIdx = 0;
+
+    const CMD_ACTIONS = [
+      { label: 'Scrape All', desc: 'Run all working scrapers', icon: '&#x26A1;', action: () => startBulkScrape() },
+      { label: 'Test Mode', desc: 'Quick test scrape all scrapers', icon: '&#x1F9EA;', action: () => startBulkScrape(true) },
+      { label: 'Enrich All', desc: 'Run waterfall enrichment pipeline', icon: '&#x2728;', action: () => enrichAll() },
+      { label: 'Find Websites', desc: 'Google search for firm websites', icon: '&#x1F310;', action: () => startWebsiteFinder() },
+      { label: 'Find Emails', desc: 'SMTP verification for emails', icon: '&#x1F4E7;', action: () => startVerify() },
+      { label: 'Score All', desc: 'Recompute lead quality scores', icon: '&#x1F4CA;', action: () => scoreLeads() },
+      { label: 'Merge Duplicates', desc: 'Auto-merge duplicate leads', icon: '&#x1F501;', action: () => mergeDuplicates() },
+      { label: 'Share Firm Data', desc: 'Propagate firm info across leads', icon: '&#x1F3E2;', action: () => shareFirmData() },
+      { label: 'Deduce Websites', desc: 'Infer websites from email domains', icon: '&#x1F517;', action: () => deduceWebsites() },
+      { label: 'Export All', desc: 'Download all leads as CSV', icon: '&#x1F4E5;', action: () => { window.location.href = '/api/leads/export'; } },
+      { label: 'Export Gold', desc: 'Export leads with email+phone', icon: '&#x1F31F;', action: () => { window.location.href = '/api/leads/export?hasEmail=true&hasPhone=true'; } },
+      { label: 'Export Instantly', desc: 'Export in Instantly.ai format', icon: '&#x1F4E8;', action: () => { window.location.href = '/api/leads/export/instantly'; } },
+      { label: 'New List', desc: 'Create a new lead list/campaign', icon: '&#x1F4CB;', action: () => createNewList() },
+      { label: 'Clear Filters', desc: 'Reset all search filters', icon: '&#x1F6AB;', action: () => { document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })); } },
+      { label: 'Refresh Data', desc: 'Reload all dashboard data', icon: '&#x1F504;', action: () => refreshAll() },
+    ];
+
+    function openCmdPalette() {
+      _cmdActive = true;
+      _cmdSelectedIdx = 0;
+      document.getElementById('cmd-palette').classList.add('active');
+      const input = document.getElementById('cmd-input');
+      input.value = '';
+      input.focus();
+      renderCmdResults('');
+    }
+
+    function closeCmdPalette() {
+      _cmdActive = false;
+      document.getElementById('cmd-palette').classList.remove('active');
+    }
+
+    function renderCmdResults(query) {
+      const q = query.toLowerCase();
+      let items = CMD_ACTIONS;
+      if (q) {
+        items = items.filter(a =>
+          a.label.toLowerCase().includes(q) ||
+          a.desc.toLowerCase().includes(q)
+        );
+      }
+      _cmdSelectedIdx = Math.min(_cmdSelectedIdx, items.length - 1);
+      if (_cmdSelectedIdx < 0) _cmdSelectedIdx = 0;
+
+      document.getElementById('cmd-results').innerHTML = items.map((item, i) =>
+        `<div class="cmd-item ${i === _cmdSelectedIdx ? 'active' : ''}" onmouseenter="_cmdSelectedIdx=${i};renderCmdResults(document.getElementById('cmd-input').value)" onclick="executeCmdItem(${CMD_ACTIONS.indexOf(item)})">
+          <span class="cmd-icon">${item.icon}</span>
+          <span class="cmd-label">${esc(item.label)}<small>${esc(item.desc)}</small></span>
+        </div>`
+      ).join('') || '<div style="padding:1rem;text-align:center;color:var(--text-muted);font-size:0.85rem;">No matching actions</div>';
+    }
+
+    function executeCmdItem(idx) {
+      closeCmdPalette();
+      CMD_ACTIONS[idx].action();
+    }
+
+    document.getElementById('cmd-input').addEventListener('input', (e) => {
+      _cmdSelectedIdx = 0;
+      renderCmdResults(e.target.value);
+    });
+
+    document.getElementById('cmd-input').addEventListener('keydown', (e) => {
+      const items = document.querySelectorAll('.cmd-item');
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        _cmdSelectedIdx = Math.min(_cmdSelectedIdx + 1, items.length - 1);
+        renderCmdResults(document.getElementById('cmd-input').value);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        _cmdSelectedIdx = Math.max(_cmdSelectedIdx - 1, 0);
+        renderCmdResults(document.getElementById('cmd-input').value);
+      } else if (e.key === 'Enter' && items[_cmdSelectedIdx]) {
+        items[_cmdSelectedIdx].click();
+      } else if (e.key === 'Escape') {
+        closeCmdPalette();
+      }
+    });
 
     // --- Quick Scrape per state ---
     async function quickScrape(state) {
@@ -2145,6 +2523,14 @@
     let _kbdVisible = false;
 
     document.addEventListener('keydown', (e) => {
+      // Command palette: Cmd+K / Ctrl+K (works everywhere)
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        if (_cmdActive) closeCmdPalette();
+        else openCmdPalette();
+        return;
+      }
+
       // Don't handle shortcuts when typing in inputs
       const tag = e.target.tagName;
       if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') {
@@ -2353,7 +2739,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists()]);
       loadCoverage();
       loadLeads();
     }
