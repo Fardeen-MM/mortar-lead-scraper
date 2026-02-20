@@ -965,6 +965,8 @@
       <span style="color:#93c5fd;" id="pb-phones">- phones</span>
       <span style="opacity:0.4;">|</span>
       <span style="color:#c4b5fd;" id="pb-websites">- websites</span>
+      <span style="opacity:0.4;">|</span>
+      <span id="pb-health" style="font-weight:700;"></span>
       <span style="margin-left:auto;opacity:0.6;" id="pb-updated"></span>
     </div>
 
@@ -1432,6 +1434,7 @@
     <button onclick="exportSelectedInstantly()">Instantly</button>
     <button onclick="copySelectedEmails()">Copy Emails</button>
     <button onclick="addSelectedToList()">Add to List</button>
+    <button onclick="generatePersonalization()">Personalize</button>
     <button onclick="tagSelected()">Tag</button>
     <button onclick="deleteSelected()">Delete</button>
     <button onclick="clearSelection()" style="background:transparent;border-color:rgba(255,255,255,0.4);">&times; Clear</button>
@@ -2286,6 +2289,95 @@
       updateFab();
     }
 
+    async function generatePersonalization() {
+      if (_selectedIds.size === 0) { toast('Select leads first', 'info'); return; }
+
+      const template = prompt('Template: default, referral, or value', 'default');
+      if (!template) return;
+
+      try {
+        toast('Generating personalization...', 'info');
+        const res = await fetch('/api/leads/generate-personalization', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leadIds: [..._selectedIds], template }),
+        });
+        const d = await res.json();
+
+        // Show results in state modal (reuse)
+        const leads = d.leads.filter(l => l.email);
+        let html = `<p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">${leads.length} leads with email (${d.count} total selected)</p>`;
+
+        if (leads.length > 0) {
+          html += '<div style="max-height:400px;overflow-y:auto;">';
+          leads.forEach(l => {
+            html += `<div style="padding:0.4rem 0;border-bottom:1px solid var(--border,#f3f4f6);">
+              <div style="font-size:0.75rem;font-weight:600;">${esc(l.first_name)} ${esc(l.last_name)} <span style="color:var(--text-muted);font-weight:400;">(${esc(l.email || '')})</span></div>
+              <div style="font-size:0.72rem;color:var(--text-secondary,#374151);margin-top:0.2rem;font-style:italic;">${esc(l.personalization)}</div>
+            </div>`;
+          });
+          html += '</div>';
+
+          // Export as Instantly CSV button
+          html += `<div style="margin-top:0.75rem;display:flex;gap:0.5rem;">
+            <button class="btn btn-primary" style="font-size:0.78rem;" onclick="downloadPersonalizationCSV()">Download Instantly CSV</button>
+            <button class="btn btn-secondary" style="font-size:0.78rem;" onclick="copyPersonalizationText()">Copy All Text</button>
+          </div>`;
+
+          // Store for download
+          window._lastPersonalization = leads;
+        } else {
+          html += '<p style="color:#ef4444;">No selected leads have email addresses.</p>';
+        }
+
+        document.getElementById('state-modal-title').textContent = 'Personalized Outreach';
+        document.getElementById('state-modal-body').innerHTML = html;
+        document.getElementById('state-modal').classList.add('active');
+        toast(`Generated personalization for ${leads.length} leads`);
+      } catch (err) {
+        toast('Failed to generate personalization', 'error');
+      }
+    }
+
+    function downloadPersonalizationCSV() {
+      const leads = window._lastPersonalization;
+      if (!leads || !leads.length) return;
+      const headers = ['email', 'first_name', 'last_name', 'company_name', 'personalization'];
+      const rows = [headers.join(',')];
+      leads.forEach(l => {
+        rows.push([
+          l.email,
+          l.first_name || '',
+          l.last_name || '',
+          `"${(l.company_name || '').replace(/"/g, '""')}"`,
+          `"${(l.personalization || '').replace(/"/g, '""')}"`,
+        ].join(','));
+      });
+      const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `instantly-personalized-${leads.length}-leads.csv`;
+      a.click();
+      toast(`Downloaded ${leads.length} personalized leads`);
+    }
+
+    async function copyPersonalizationText() {
+      const leads = window._lastPersonalization;
+      if (!leads || !leads.length) return;
+      const text = leads.map(l => `${l.email}: ${l.personalization}`).join('\n');
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      toast(`Copied ${leads.length} personalization texts`);
+    }
+
     function compareSelectedLeads() {
       if (_selectedIds.size < 2) { toast('Select at least 2 leads to compare', 'info'); return; }
       if (_selectedIds.size > 4) { toast('Select at most 4 leads to compare', 'info'); return; }
@@ -2828,11 +2920,14 @@
 
       document.getElementById('lead-modal').classList.add('active');
 
-      // Load changelog async (non-blocking)
-      loadLeadChangelog(lead.id).then(html => {
-        if (html) {
-          document.getElementById('modal-sources').insertAdjacentHTML('beforeend', html);
-        }
+      // Load changelog and similar leads async (non-blocking)
+      Promise.all([
+        loadLeadChangelog(lead.id),
+        loadSimilarLeads(lead.id),
+      ]).then(([changelogHtml, similarHtml]) => {
+        const container = document.getElementById('modal-sources');
+        if (changelogHtml) container.insertAdjacentHTML('beforeend', changelogHtml);
+        if (similarHtml) container.insertAdjacentHTML('beforeend', similarHtml);
       });
     }
 
@@ -3509,6 +3604,50 @@
       }
     }
 
+    // --- Database Health Score ---
+    async function loadHealthScore() {
+      try {
+        const res = await fetch('/api/leads/health-score');
+        const d = await res.json();
+        const el = document.getElementById('pb-health');
+        if (!el) return;
+        const colors = { A: '#22c55e', B: '#3b82f6', C: '#f59e0b', D: '#ef4444', F: '#991b1b' };
+        el.textContent = `Health: ${d.grade} (${d.score})`;
+        el.style.color = colors[d.grade] || '#9ca3af';
+      } catch {}
+    }
+
+    // --- Similar Leads ---
+    async function loadSimilarLeads(leadId) {
+      try {
+        const res = await fetch(`/api/leads/similar/${leadId}`);
+        const d = await res.json();
+
+        let html = '';
+        if (d.sameFirm.length > 0) {
+          html += `<div style="margin-top:0.75rem;border-top:1px solid var(--border);padding-top:0.5rem;">
+            <div style="font-size:0.82rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">Same Firm</div>
+            <div style="display:flex;flex-wrap:wrap;gap:0.3rem;">
+              ${d.sameFirm.map(l => `<span style="font-size:0.68rem;padding:0.15rem 0.4rem;background:var(--bg-secondary,#f3f4f6);border:1px solid var(--border,#e5e7eb);border-radius:4px;cursor:pointer;"
+                onclick="showLeadDetail(${JSON.stringify(l).replace(/"/g, '&quot;')})">${esc(l.first_name)} ${esc(l.last_name)} ${l.email ? '\u2709' : ''}</span>`).join('')}
+            </div>
+          </div>`;
+        }
+        if (d.sameCity.length > 0) {
+          html += `<div style="margin-top:0.5rem;">
+            <div style="font-size:0.82rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">Same City</div>
+            <div style="display:flex;flex-wrap:wrap;gap:0.3rem;">
+              ${d.sameCity.map(l => `<span style="font-size:0.68rem;padding:0.15rem 0.4rem;background:var(--bg-secondary,#f3f4f6);border:1px solid var(--border,#e5e7eb);border-radius:4px;cursor:pointer;"
+                onclick="showLeadDetail(${JSON.stringify(l).replace(/"/g, '&quot;')})">${esc(l.first_name)} ${esc(l.last_name)} (${esc(l.firm_name || '').substring(0, 20)}) ${l.email ? '\u2709' : ''}</span>`).join('')}
+            </div>
+          </div>`;
+        }
+        return html;
+      } catch {
+        return '';
+      }
+    }
+
     // --- Firm Intelligence ---
     async function loadFirmIntel() {
       try {
@@ -3876,7 +4015,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore()]);
       loadCoverage();
       loadCoverageMap();
       loadLeads();

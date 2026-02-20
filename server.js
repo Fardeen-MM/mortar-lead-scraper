@@ -1013,6 +1013,75 @@ app.get('/api/leads/state-details/:state', (req, res) => {
   }
 });
 
+// --- Database Health Score ---
+app.get('/api/leads/health-score', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getDatabaseHealth());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Similar Leads ---
+app.get('/api/leads/similar/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.findSimilarLeads(parseInt(req.params.id)));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Email Template Generator ---
+app.post('/api/leads/generate-personalization', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds, template } = req.body;
+    if (!leadIds || !Array.isArray(leadIds)) {
+      return res.status(400).json({ error: 'leadIds array required' });
+    }
+
+    const db = leadDb.getDb();
+    const leads = db.prepare(`SELECT * FROM leads WHERE id IN (${leadIds.map(() => '?').join(',')})`).all(...leadIds);
+
+    const tmpl = template || 'default';
+    const results = leads.map(lead => {
+      let personalization = '';
+      const firstName = lead.first_name || 'there';
+      const city = lead.city || '';
+      const state = lead.state || '';
+      const firm = lead.firm_name || '';
+      const practice = lead.practice_area || '';
+
+      if (tmpl === 'default' || tmpl === 'intro') {
+        const parts = [`Hi ${firstName}`];
+        if (firm && firm !== 'N/A') parts.push(`I noticed you're at ${firm}`);
+        else if (city) parts.push(`I noticed you're based in ${city}`);
+        if (practice) parts.push(`and specialize in ${practice.toLowerCase()}`);
+        personalization = parts.join(', ') + '.';
+      } else if (tmpl === 'referral') {
+        personalization = `Hi ${firstName}, I came across your profile${firm ? ' at ' + firm : ''}${city ? ' in ' + city : ''} and thought you might be interested in a quick conversation.`;
+      } else if (tmpl === 'value') {
+        personalization = `Hi ${firstName}, I work with ${practice ? practice.toLowerCase() + ' ' : ''}attorneys${city ? ' in ' + city : ''} and wanted to share something that might help your practice.`;
+      }
+
+      return {
+        id: lead.id,
+        email: lead.email,
+        first_name: lead.first_name,
+        last_name: lead.last_name,
+        company_name: firm,
+        personalization,
+      };
+    });
+
+    res.json({ leads: results, count: results.length });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // --- Top Firms ---
 app.get('/api/leads/top-firms', (req, res) => {
   try {
