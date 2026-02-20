@@ -1095,6 +1095,20 @@
       <div id="coverage-map" style="display:flex;flex-wrap:wrap;gap:2px;"></div>
     </div>
 
+    <!-- Growth Chart -->
+    <div class="panel" style="display:block; margin-bottom: 1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+        <h2 style="margin:0;">Lead Growth</h2>
+        <div style="display:flex;gap:0.3rem;">
+          <button class="btn btn-secondary growth-range-btn active" style="font-size:0.65rem;padding:0.1rem 0.4rem;" onclick="loadGrowthChart(7, this)">7d</button>
+          <button class="btn btn-secondary growth-range-btn" style="font-size:0.65rem;padding:0.1rem 0.4rem;" onclick="loadGrowthChart(30, this)">30d</button>
+          <button class="btn btn-secondary growth-range-btn" style="font-size:0.65rem;padding:0.1rem 0.4rem;" onclick="loadGrowthChart(90, this)">90d</button>
+        </div>
+      </div>
+      <div id="growth-chart" style="width:100%;height:180px;"></div>
+      <div id="growth-legend" style="display:flex;gap:1rem;justify-content:center;margin-top:0.3rem;font-size:0.65rem;color:var(--text-muted,#6b7280);"></div>
+    </div>
+
     <!-- Enrichment Dashboard -->
     <div class="panel" style="display:block; margin-bottom: 1rem;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
@@ -1128,6 +1142,32 @@
       <h2 style="margin-bottom: 0.5rem;">Activity Feed</h2>
       <p class="hint" style="margin-bottom:0.75rem;">Recent scrape runs and enrichment activity.</p>
       <div id="activity-feed" style="max-height:300px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Quality Alerts Panel -->
+    <div class="panel" style="display:block; margin-bottom: 1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+        <h2 style="margin:0;">Data Quality</h2>
+        <div style="display:flex;gap:0.3rem;">
+          <span id="alert-badge" style="font-size:0.72rem;font-weight:600;padding:0.15rem 0.5rem;border-radius:12px;background:#fef3c7;color:#92400e;"></span>
+          <button class="btn btn-secondary" style="font-size:0.72rem;padding:0.2rem 0.5rem;" onclick="runQualityCheck()">Run Check</button>
+        </div>
+      </div>
+      <div id="alert-summary" style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.5rem;"></div>
+      <div id="alert-list" style="max-height:250px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Firm Intelligence -->
+    <div class="panel" style="display:block; margin-bottom: 1rem;">
+      <h2 style="margin-bottom: 0.5rem;">Top Firms</h2>
+      <p class="hint" style="margin-bottom:0.75rem;">Firms with the most leads in your database. Click to filter.</p>
+      <div id="firm-intel" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.5rem;"></div>
+    </div>
+
+    <!-- Export History -->
+    <div class="panel" style="display:block; margin-bottom: 1rem;">
+      <h2 style="margin-bottom: 0.5rem;">Export History</h2>
+      <div id="export-history" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
     <!-- Lead Lists / Campaigns -->
@@ -1940,6 +1980,7 @@
       { label: 'Pre-populate DB', desc: 'Quick scrape all for database seeding', icon: '&#x1F4BE;', action: () => startPrepopulate() },
       { label: 'Copy Emails', desc: 'Copy filtered lead emails to clipboard', icon: '&#x1F4CB;', action: () => copyAllEmails() },
       { label: 'Compare Selected', desc: 'Side-by-side compare selected leads', icon: '&#x1F50D;', action: () => compareSelectedLeads() },
+      { label: 'Quality Check', desc: 'Scan for data quality issues', icon: '&#x1F50D;', action: () => runQualityCheck() },
       { label: 'Dark Mode', desc: 'Toggle dark/light theme', icon: '&#x1F319;', action: () => toggleDarkMode() },
       { label: 'Clear Filters', desc: 'Reset all search filters', icon: '&#x1F6AB;', action: () => { document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })); } },
       { label: 'Refresh Data', desc: 'Reload all dashboard data', icon: '&#x1F504;', action: () => refreshAll() },
@@ -2786,6 +2827,13 @@
       document.getElementById('modal-sources').innerHTML = sourcesHtml;
 
       document.getElementById('lead-modal').classList.add('active');
+
+      // Load changelog async (non-blocking)
+      loadLeadChangelog(lead.id).then(html => {
+        if (html) {
+          document.getElementById('modal-sources').insertAdjacentHTML('beforeend', html);
+        }
+      });
     }
 
     function toggleEditMode() {
@@ -3461,6 +3509,268 @@
       }
     }
 
+    // --- Firm Intelligence ---
+    async function loadFirmIntel() {
+      try {
+        const res = await fetch('/api/leads/top-firms?limit=12');
+        const data = await res.json();
+        const container = document.getElementById('firm-intel');
+        if (!container) return;
+
+        if (!data.length) {
+          container.innerHTML = '<p style="font-size:0.75rem;color:var(--text-muted);text-align:center;grid-column:1/-1;padding:0.5rem;">No firm data yet.</p>';
+          return;
+        }
+
+        const maxCount = data[0].lead_count;
+        container.innerHTML = data.map(f => {
+          const emailPct = Math.round(100 * f.with_email / f.lead_count);
+          const phonePct = Math.round(100 * f.with_phone / f.lead_count);
+          const states = (f.states || '').split(',').slice(0, 3).join(', ');
+          const barW = Math.round(100 * f.lead_count / maxCount);
+          return `<div style="background:var(--bg-secondary,#f9fafb);border:1px solid var(--border,#e5e7eb);border-radius:8px;padding:0.5rem 0.6rem;cursor:pointer;transition:border-color 0.15s;"
+            onmouseenter="this.style.borderColor='#6366f1'" onmouseleave="this.style.borderColor=''"
+            onclick="document.getElementById('search-input').value='${esc(f.firm_name.replace(/'/g, ''))}';loadLeads();">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-primary,#111);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${esc(f.firm_name)}">${esc(f.firm_name)}</div>
+            <div style="display:flex;align-items:center;gap:0.3rem;margin:0.25rem 0;">
+              <div style="flex:1;height:4px;background:var(--bg-primary,#e5e7eb);border-radius:2px;">
+                <div style="width:${barW}%;height:100%;background:#6366f1;border-radius:2px;"></div>
+              </div>
+              <span style="font-size:0.68rem;font-weight:600;color:#6366f1;min-width:20px;text-align:right;">${f.lead_count}</span>
+            </div>
+            <div style="display:flex;gap:0.5rem;font-size:0.6rem;color:var(--text-muted,#9ca3af);">
+              <span style="color:${emailPct > 0 ? '#22c55e' : '#d1d5db'};">\u2709 ${emailPct}%</span>
+              <span style="color:${phonePct > 0 ? '#3b82f6' : '#d1d5db'};">\u{1F4DE} ${phonePct}%</span>
+              <span>${states}</span>
+            </div>
+          </div>`;
+        }).join('');
+      } catch (err) {
+        console.error('Failed to load firm intel:', err);
+      }
+    }
+
+    // --- Growth Chart (SVG) ---
+    async function loadGrowthChart(days = 7, btnEl) {
+      // Update active button
+      if (btnEl) {
+        document.querySelectorAll('.growth-range-btn').forEach(b => b.classList.remove('active'));
+        btnEl.classList.add('active');
+      }
+
+      try {
+        const res = await fetch(`/api/leads/growth?days=${days}`);
+        const data = await res.json();
+        const container = document.getElementById('growth-chart');
+        if (!container || !data.length) {
+          if (container) container.innerHTML = '<p style="text-align:center;color:var(--text-muted);font-size:0.75rem;padding:2rem;">No growth data yet. Start scraping to see trends.</p>';
+          return;
+        }
+
+        const w = container.clientWidth || 600;
+        const h = 170;
+        const pad = { top: 10, right: 10, bottom: 25, left: 45 };
+        const chartW = w - pad.left - pad.right;
+        const chartH = h - pad.top - pad.bottom;
+
+        const maxVal = Math.max(...data.map(d => d.created), 1);
+        const xScale = (i) => pad.left + (i / Math.max(data.length - 1, 1)) * chartW;
+        const yScale = (v) => pad.top + chartH - (v / maxVal) * chartH;
+
+        // Build SVG paths for each series
+        const series = [
+          { key: 'created', color: '#6366f1', label: 'Total' },
+          { key: 'with_email', color: '#22c55e', label: 'Email' },
+          { key: 'with_phone', color: '#3b82f6', label: 'Phone' },
+          { key: 'with_website', color: '#8b5cf6', label: 'Website' },
+        ];
+
+        let svg = `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">`;
+
+        // Grid lines
+        for (let i = 0; i <= 4; i++) {
+          const y = pad.top + (i / 4) * chartH;
+          const val = Math.round(maxVal * (1 - i / 4));
+          svg += `<line x1="${pad.left}" y1="${y}" x2="${w - pad.right}" y2="${y}" stroke="var(--border,#e5e7eb)" stroke-dasharray="3,3"/>`;
+          svg += `<text x="${pad.left - 5}" y="${y + 4}" text-anchor="end" font-size="9" fill="var(--text-muted,#9ca3af)">${val >= 1000 ? (val/1000).toFixed(0) + 'k' : val}</text>`;
+        }
+
+        // X axis labels (show every few days)
+        const step = Math.max(1, Math.floor(data.length / 6));
+        data.forEach((d, i) => {
+          if (i % step === 0 || i === data.length - 1) {
+            const x = xScale(i);
+            const label = new Date(d.day).toLocaleDateString('en', { month: 'short', day: 'numeric' });
+            svg += `<text x="${x}" y="${h - 3}" text-anchor="middle" font-size="9" fill="var(--text-muted,#9ca3af)">${label}</text>`;
+          }
+        });
+
+        // Draw filled area + line for each series
+        series.forEach(s => {
+          if (data.every(d => d[s.key] === 0)) return;
+
+          // Filled area
+          let areaPath = `M${xScale(0)},${yScale(data[0][s.key])}`;
+          data.forEach((d, i) => { if (i > 0) areaPath += ` L${xScale(i)},${yScale(d[s.key])}`; });
+          areaPath += ` L${xScale(data.length - 1)},${pad.top + chartH} L${xScale(0)},${pad.top + chartH} Z`;
+          svg += `<path d="${areaPath}" fill="${s.color}" fill-opacity="0.08"/>`;
+
+          // Line
+          let linePath = `M${xScale(0)},${yScale(data[0][s.key])}`;
+          data.forEach((d, i) => { if (i > 0) linePath += ` L${xScale(i)},${yScale(d[s.key])}`; });
+          svg += `<path d="${linePath}" stroke="${s.color}" stroke-width="2" fill="none"/>`;
+
+          // End dot
+          const lastIdx = data.length - 1;
+          svg += `<circle cx="${xScale(lastIdx)}" cy="${yScale(data[lastIdx][s.key])}" r="3" fill="${s.color}"/>`;
+        });
+
+        svg += '</svg>';
+        container.innerHTML = svg;
+
+        // Legend
+        const legendEl = document.getElementById('growth-legend');
+        if (legendEl) {
+          legendEl.innerHTML = series.map(s =>
+            `<span style="display:flex;align-items:center;gap:0.2rem;">
+              <span style="width:10px;height:3px;background:${s.color};border-radius:1px;"></span> ${s.label}
+            </span>`
+          ).join('');
+        }
+      } catch (err) {
+        console.error('Failed to load growth chart:', err);
+      }
+    }
+
+    // --- Quality Alerts ---
+    async function runQualityCheck() {
+      try {
+        toast('Running quality checks...', 'info');
+        const res = await fetch('/api/quality/check', { method: 'POST' });
+        const d = await res.json();
+        toast(`Found ${d.alertsCreated} quality issues`);
+        loadQualityAlerts();
+      } catch (err) {
+        toast('Quality check failed', 'error');
+      }
+    }
+
+    async function loadQualityAlerts() {
+      try {
+        const [alertsRes, summaryRes] = await Promise.all([
+          fetch('/api/quality/alerts?limit=50'),
+          fetch('/api/quality/summary'),
+        ]);
+        const alerts = await alertsRes.json();
+        const summary = await summaryRes.json();
+
+        // Badge
+        const totalAlerts = summary.reduce((s, a) => s + a.cnt, 0);
+        const badge = document.getElementById('alert-badge');
+        if (badge) badge.textContent = totalAlerts > 0 ? `${totalAlerts} issues` : 'Clean';
+        if (badge) badge.style.background = totalAlerts > 0 ? '#fef3c7' : '#dcfce7';
+        if (badge) badge.style.color = totalAlerts > 0 ? '#92400e' : '#166534';
+
+        // Summary chips
+        const summaryEl = document.getElementById('alert-summary');
+        if (summaryEl) {
+          const colors = { error: '#fee2e2', warning: '#fef3c7', info: '#dbeafe' };
+          const textColors = { error: '#991b1b', warning: '#92400e', info: '#1e40af' };
+          summaryEl.innerHTML = summary.map(s =>
+            `<span style="font-size:0.68rem;padding:0.15rem 0.5rem;border-radius:12px;background:${colors[s.severity] || '#f3f4f6'};color:${textColors[s.severity] || '#6b7280'};">
+              ${esc(s.alert_type.replace(/-/g, ' '))} (${s.cnt})
+            </span>`
+          ).join('');
+        }
+
+        // Alert list
+        const listEl = document.getElementById('alert-list');
+        if (listEl) {
+          if (alerts.length === 0) {
+            listEl.innerHTML = '<p style="font-size:0.75rem;color:var(--text-muted);text-align:center;padding:0.5rem;">No quality alerts. Run a check to scan for issues.</p>';
+            return;
+          }
+          const sevIcons = { error: '\u274C', warning: '\u26A0\uFE0F', info: '\u2139\uFE0F' };
+          listEl.innerHTML = alerts.map(a =>
+            `<div style="display:flex;align-items:flex-start;gap:0.5rem;padding:0.35rem 0;border-bottom:1px solid var(--border,#f3f4f6);font-size:0.72rem;">
+              <span style="font-size:0.8rem;flex-shrink:0;">${sevIcons[a.severity] || '\u2139\uFE0F'}</span>
+              <div style="flex:1;min-width:0;">
+                <div style="color:var(--text-primary,#111);">${esc(a.message)}</div>
+                ${a.first_name ? `<div style="color:var(--text-muted,#9ca3af);font-size:0.65rem;">${esc(a.first_name)} ${esc(a.last_name)} (${esc(a.state || '')})</div>` : ''}
+              </div>
+              <button style="font-size:0.6rem;padding:0.1rem 0.3rem;border:1px solid var(--border);border-radius:3px;background:transparent;color:var(--text-muted);cursor:pointer;flex-shrink:0;"
+                onclick="resolveAlertUI(${a.id})">Dismiss</button>
+            </div>`
+          ).join('');
+        }
+      } catch (err) {
+        console.error('Failed to load quality alerts:', err);
+      }
+    }
+
+    async function resolveAlertUI(alertId) {
+      try {
+        await fetch(`/api/quality/resolve/${alertId}`, { method: 'POST' });
+        loadQualityAlerts();
+      } catch {}
+    }
+
+    // --- Export History ---
+    async function loadExportHistory() {
+      try {
+        const res = await fetch('/api/exports/history');
+        const data = await res.json();
+        const container = document.getElementById('export-history');
+        if (!container) return;
+
+        if (!data.length) {
+          container.innerHTML = '<p style="font-size:0.75rem;color:var(--text-muted);text-align:center;padding:0.5rem;">No exports yet.</p>';
+          return;
+        }
+
+        container.innerHTML = data.map(e => {
+          const time = new Date(e.created_at + 'Z');
+          const ago = timeAgo(time);
+          return `<div style="display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid var(--border,#f3f4f6);font-size:0.72rem;">
+            <span style="font-size:0.85rem;">\u{1F4E5}</span>
+            <div style="flex:1;">
+              <span style="font-weight:500;">${esc(e.format)}</span>
+              <span style="color:var(--text-muted,#9ca3af);margin-left:0.3rem;">${e.lead_count} leads</span>
+            </div>
+            <span style="color:var(--text-muted,#9ca3af);font-size:0.65rem;">${ago}</span>
+          </div>`;
+        }).join('');
+      } catch (err) {
+        console.error('Failed to load export history:', err);
+      }
+    }
+
+    // --- Lead Changelog in Modal ---
+    async function loadLeadChangelog(leadId) {
+      try {
+        const res = await fetch(`/api/leads/changelog/${leadId}`);
+        const data = await res.json();
+        if (!data.length) return '';
+
+        return `<div style="margin-top:0.75rem;border-top:1px solid var(--border);padding-top:0.5rem;">
+          <div style="font-size:0.82rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">Change History</div>
+          <div style="max-height:150px;overflow-y:auto;">
+            ${data.slice(0, 10).map(c => {
+              const time = new Date(c.created_at + 'Z');
+              return `<div style="font-size:0.68rem;padding:0.2rem 0;border-bottom:1px solid var(--border,#f9fafb);color:var(--text-secondary,#6b7280);">
+                <strong>${esc(c.action)}</strong> ${c.field ? esc(c.field) : ''}
+                ${c.old_value ? `<span style="text-decoration:line-through;color:#ef4444;">${esc(c.old_value).substring(0, 30)}</span>` : ''}
+                ${c.new_value ? `<span style="color:#22c55e;">\u2192 ${esc(c.new_value).substring(0, 30)}</span>` : ''}
+                <span style="color:var(--text-muted,#9ca3af);margin-left:0.3rem;">${timeAgo(time)}</span>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>`;
+      } catch {
+        return '';
+      }
+    }
+
     // --- Enrichment Dashboard ---
     async function loadEnrichmentDashboard() {
       try {
@@ -3566,15 +3876,68 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel()]);
       loadCoverage();
       loadCoverageMap();
       loadLeads();
     }
 
+    // --- WebSocket Real-Time Updates ---
+    let _ws = null;
+    let _wsReconnectTimer = null;
+
+    function connectWebSocket() {
+      const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+      _ws = new WebSocket(`${protocol}//${location.host}/ws`);
+
+      _ws.onopen = () => {
+        console.log('[ws] Connected to server');
+        _ws.send(JSON.stringify({ type: 'subscribe-all' }));
+        // Update power bar pulse to green
+        const pulse = document.querySelector('#power-bar span:first-child span');
+        if (pulse) pulse.style.background = '#22c55e';
+      };
+
+      _ws.onmessage = (event) => {
+        try {
+          const msg = JSON.parse(event.data);
+          if (msg.type === 'db-update') {
+            // Auto-refresh dashboard when scrape completes
+            toast(`${msg.state || 'Scrape'} complete: ${msg.stats?.netNew || 0} new leads`, 'success');
+            refreshAll();
+          } else if (msg.type === 'lead') {
+            // Live lead coming in — update the power bar counter
+            const pbTotal = document.getElementById('pb-total');
+            if (pbTotal) {
+              const current = parseInt(pbTotal.textContent.replace(/,/g, '')) || 0;
+              pbTotal.textContent = fmt(current + 1);
+              pbTotal.style.color = '#86efac';
+              setTimeout(() => { pbTotal.style.color = ''; }, 500);
+            }
+          }
+        } catch {}
+      };
+
+      _ws.onclose = () => {
+        console.log('[ws] Disconnected');
+        const pulse = document.querySelector('#power-bar span:first-child span');
+        if (pulse) pulse.style.background = '#f59e0b';
+        // Auto-reconnect after 5s
+        if (!_wsReconnectTimer) {
+          _wsReconnectTimer = setTimeout(() => {
+            _wsReconnectTimer = null;
+            connectWebSocket();
+          }, 5000);
+        }
+      };
+
+      _ws.onerror = () => {};
+    }
+
     // Initial load
     renderViews();
     refreshAll();
+    connectWebSocket();
 
     // Auto-refresh every 60s
     setInterval(refreshAll, 60000);

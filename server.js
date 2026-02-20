@@ -224,6 +224,7 @@ app.post('/api/scrape/start', (req, res) => {
     }
 
     broadcast(jobId, { type: 'complete', stats: data.stats, jobId });
+    broadcastAll({ type: 'db-update', event: 'scrape-complete', state: job.state, stats: data.stats });
     scheduleJobCleanup();
   });
 
@@ -542,6 +543,7 @@ app.get('/api/leads/export', (req, res) => {
     const outputFile = generateOutputPath('EXPORT', '');
     writeCSV(outputFile, leads).then(() => {
       const filename = path.basename(outputFile);
+      leadDb.recordExport('csv', leads.length, req.query, filename);
       res.download(outputFile, filename);
     });
   } catch (err) {
@@ -1006,6 +1008,91 @@ app.get('/api/leads/state-details/:state', (req, res) => {
     const data = leadDb.getStateDetails(req.params.state);
     if (!data) return res.status(404).json({ error: 'No data for this state' });
     res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Top Firms ---
+app.get('/api/leads/top-firms', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 20;
+    res.json(leadDb.getTopFirms(limit));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Lead Changelog ---
+app.get('/api/leads/changelog', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 100;
+    res.json(leadDb.getRecentChanges(limit));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/leads/changelog/:leadId', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getLeadChangelog(parseInt(req.params.leadId)));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Export History ---
+app.get('/api/exports/history', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getExportHistory());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Quality Alerts ---
+app.post('/api/quality/check', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const result = leadDb.runQualityChecks();
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/quality/alerts', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { type, resolved, limit } = req.query;
+    res.json(leadDb.getQualityAlerts({
+      type,
+      resolved: resolved === 'true',
+      limit: parseInt(limit) || 100,
+    }));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/quality/summary', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getAlertSummary());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/quality/resolve/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.resolveAlert(parseInt(req.params.id));
+    res.json({ resolved: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -1540,6 +1627,9 @@ wss.on('connection', (ws) => {
       if (msg.type === 'subscribe' && msg.jobId) {
         wsClients.set(ws, msg.jobId);
         console.log(`[ws] Client subscribed to ${msg.jobId}`);
+      } else if (msg.type === 'subscribe-all') {
+        wsClients.set(ws, '__all__');
+        console.log(`[ws] Client subscribed to all events`);
       }
     } catch (err) {
       console.error('[ws] Failed to parse message:', raw.toString().substring(0, 200), err.message);
@@ -1571,6 +1661,16 @@ function broadcast(jobId, data) {
   const payload = JSON.stringify(data);
   for (const [ws, subscribedJob] of wsClients.entries()) {
     if (subscribedJob === jobId && ws.readyState === 1) {
+      ws.send(payload);
+    }
+  }
+}
+
+// Broadcast to ALL connected WS clients (for global notifications like DB updates)
+function broadcastAll(data) {
+  const payload = JSON.stringify(data);
+  for (const ws of wss.clients) {
+    if (ws.readyState === 1) {
       ws.send(payload);
     }
   }
