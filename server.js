@@ -480,19 +480,23 @@ app.get('/api/leads/stats', (req, res) => {
   }
 });
 
-// Search leads
+// Search leads (enhanced with sorting, score range, practice area, tags)
 app.get('/api/leads', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
-    const { q, state, country, hasEmail, hasPhone, limit, offset } = req.query;
-    const leads = leadDb.searchLeads(q, {
-      state, country,
+    const { q, state, country, hasEmail, hasPhone, hasWebsite, practiceArea, minScore, maxScore, tags, sort, order, limit, offset } = req.query;
+    const result = leadDb.searchLeads(q, {
+      state, country, practiceArea, tags,
       hasEmail: hasEmail === 'true',
       hasPhone: hasPhone === 'true',
+      hasWebsite: hasWebsite === 'true',
+      minScore: minScore ? Number(minScore) : undefined,
+      maxScore: maxScore ? Number(maxScore) : undefined,
+      sort, order,
       limit: Math.min(parseInt(limit) || 100, 1000),
       offset: parseInt(offset) || 0,
     });
-    res.json({ leads, count: leads.length });
+    res.json({ leads: result.leads, count: result.leads.length, total: result.total });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -963,6 +967,157 @@ app.get('/api/scrape/:id/enrich-preview', async (req, res) => {
   }));
 
   res.json({ samples, totalLeads: job.leads.length, enrichableCount: enrichable.length });
+});
+
+// --- Activity Timeline ---
+app.get('/api/leads/activity', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = Math.min(parseInt(req.query.limit) || 50, 200);
+    res.json(leadDb.getRecentActivity(limit));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Practice Areas ---
+app.get('/api/leads/practice-areas', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getDistinctPracticeAreas());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Tags ---
+app.get('/api/leads/tags', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getDistinctTags());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/leads/tag', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds, tag, remove } = req.body;
+    if (!leadIds || !Array.isArray(leadIds) || !tag) {
+      return res.status(400).json({ error: 'leadIds (array) and tag (string) required' });
+    }
+    res.json(leadDb.tagLeads(leadIds, tag, remove === true));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Delete Leads ---
+app.post('/api/leads/delete', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds } = req.body;
+    if (!leadIds || !Array.isArray(leadIds)) {
+      return res.status(400).json({ error: 'leadIds (array) required' });
+    }
+    res.json(leadDb.deleteLeads(leadIds));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Get Lead Detail ---
+app.get('/api/leads/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const lead = leadDb.getLeadById(parseInt(req.params.id));
+    if (!lead) return res.status(404).json({ error: 'Lead not found' });
+    res.json(lead);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Quick Scrape (single state from coverage table) ---
+app.post('/api/scrape/quick', (req, res) => {
+  const { state, test = true } = req.body;
+  if (!state) return res.status(400).json({ error: 'state required' });
+
+  const jobId = `quick-${state}-${Date.now()}`;
+  const emitter = runPipeline({ state, test: !!test });
+
+  const job = { id: jobId, state, status: 'running', leads: [], stats: {}, startedAt: Date.now() };
+  jobs.set(jobId, job);
+
+  emitter.on('lead', d => job.leads.push(d.data));
+  emitter.on('complete', (data) => {
+    job.status = 'complete';
+    job.stats = data.stats || {};
+
+    // Save to master DB
+    if (job.leads.length > 0) {
+      try {
+        const leadDb = require('./lib/lead-db');
+        const dbStats = leadDb.batchUpsert(job.leads, `scraper:${state}`);
+        leadDb.recordScrapeRun({
+          state, source: `${state.toLowerCase()}_bar`,
+          leadsFound: job.leads.length,
+          leadsNew: dbStats.inserted,
+          leadsUpdated: dbStats.updated,
+          emailsFound: job.leads.filter(l => l.email).length,
+        });
+        if (dbStats.inserted > 0) {
+          leadDb.shareFirmData();
+          leadDb.deduceWebsitesFromEmail();
+        }
+        job.dbStats = dbStats;
+      } catch (err) {
+        console.error(`[quick:${state}] DB save failed:`, err.message);
+      }
+    }
+  });
+  emitter.on('error', (data) => {
+    job.status = 'error';
+    job.error = data.message;
+  });
+
+  res.json({ jobId, state });
+});
+
+app.get('/api/scrape/quick/:jobId', (req, res) => {
+  const job = jobs.get(req.params.jobId);
+  if (!job) return res.status(404).json({ error: 'Job not found' });
+  res.json({
+    status: job.status,
+    state: job.state,
+    leads: job.leads.length,
+    stats: job.stats,
+    dbStats: job.dbStats,
+    error: job.error,
+  });
+});
+
+// --- Export leads for a specific state (per-state quick export) ---
+app.get('/api/leads/export/state/:state', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { createObjectCsvWriter } = require('csv-writer');
+    const leads = leadDb.exportLeads({ state: req.params.state });
+    if (leads.length === 0) return res.status(404).json({ error: 'No leads for this state' });
+
+    const tmpPath = path.join(OUTPUT_DIR, `${req.params.state}-export-${Date.now()}.csv`);
+    const headers = Object.keys(leads[0]).filter(k => k !== 'id' && k !== 'lead_score')
+      .map(k => ({ id: k, title: k }));
+    const writer = createObjectCsvWriter({ path: tmpPath, header: headers });
+    writer.writeRecords(leads).then(() => {
+      res.download(tmpPath, `${req.params.state}-leads.csv`, () => {
+        try { fs.unlinkSync(tmpPath); } catch {}
+      });
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // --- Debug Endpoints (dev only) ---

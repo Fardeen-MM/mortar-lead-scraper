@@ -120,7 +120,10 @@
       padding: 0.5rem 0.25rem;
       border-radius: 6px;
       font-size: 0.72rem;
+      cursor: pointer;
+      transition: transform 0.1s;
     }
+    .score-tier:hover { transform: scale(1.03); }
     .score-tier .val { font-size: 1rem; font-weight: 700; }
     .tier-excellent { background: #dcfce7; color: #166534; }
     .tier-good { background: #dbeafe; color: #1e40af; }
@@ -160,13 +163,13 @@
 
     .lead-controls {
       display: flex;
-      gap: 0.75rem;
+      gap: 0.5rem;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       flex-wrap: wrap;
     }
-    .lead-controls .search-input { flex: 1; min-width: 200px; }
-    .lead-controls select { min-width: 100px; }
+    .lead-controls .search-input { flex: 1; min-width: 180px; }
+    .lead-controls select { min-width: 90px; font-size: 0.8rem; }
 
     .leads-table {
       width: 100%;
@@ -187,12 +190,20 @@
       top: 0;
       z-index: 1;
     }
+    .leads-table th.sortable {
+      cursor: pointer;
+      user-select: none;
+    }
+    .leads-table th.sortable:hover { color: var(--indigo); }
+    .leads-table th .sort-arrow { font-size: 0.65rem; margin-left: 0.2rem; opacity: 0.4; }
+    .leads-table th.active .sort-arrow { opacity: 1; color: var(--indigo); }
     .leads-table td {
       padding: 0.5rem 0.75rem;
       border-bottom: 1px solid #f3f4f6;
       color: var(--text);
     }
     .leads-table tr:hover td { background: #f9fafb; }
+    .leads-table tr.selected td { background: #eef2ff; }
     .has-data { color: var(--success); }
     .no-data { color: var(--text-muted); opacity: 0.4; }
 
@@ -289,13 +300,95 @@
       color: #3730a3;
       margin: 0.15rem 0.1rem;
     }
+
+    /* Activity Timeline */
+    .timeline {
+      max-height: 250px;
+      overflow-y: auto;
+    }
+    .tl-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.4rem 0;
+      font-size: 0.8rem;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .tl-item:last-child { border-bottom: none; }
+    .tl-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .tl-dot.success { background: #22c55e; }
+    .tl-dot.zero { background: #f59e0b; }
+    .tl-time { color: var(--text-muted); font-size: 0.72rem; min-width: 60px; }
+    .tl-state { font-weight: 600; min-width: 60px; }
+    .tl-stats { color: var(--text-muted); flex: 1; }
+
+    /* Floating Action Bar */
+    .fab {
+      display: none;
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--indigo);
+      color: white;
+      border-radius: 12px;
+      padding: 0.75rem 1.25rem;
+      box-shadow: 0 8px 32px rgba(99,102,241,0.35);
+      z-index: 999;
+      gap: 0.75rem;
+      align-items: center;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .fab.active { display: flex; }
+    .fab button {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .fab button:hover { background: rgba(255,255,255,0.3); }
+
+    /* Coverage table actions */
+    .cov-actions { display: flex; gap: 0.3rem; }
+    .cov-btn {
+      padding: 0.15rem 0.4rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.68rem;
+      cursor: pointer;
+      background: white;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .cov-btn:hover { border-color: var(--indigo); color: var(--indigo); }
+    .cov-btn.scraping { background: #eef2ff; color: var(--indigo); cursor: wait; }
+
+    /* Pagination info */
+    .pagination-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .pagination-info .page-btns { display: flex; gap: 0.3rem; }
   </style>
 </head>
 <body>
   <div class="container">
     <header class="header">
       <div class="logo">
-        <span class="logo-icon">🧱</span>
+        <span class="logo-icon">&#x1F9F1;</span>
         <span class="logo-text">Mortar</span>
       </div>
       <p class="subtitle">Lead Database</p>
@@ -353,10 +446,10 @@
 
     <!-- Lead Quality Score Distribution -->
     <div class="score-grid" id="score-grid" style="margin-bottom:1.5rem;">
-      <div class="score-tier tier-excellent"><div class="val" id="score-excellent">-</div>Excellent (80+)</div>
-      <div class="score-tier tier-good"><div class="val" id="score-good">-</div>Good (55-79)</div>
-      <div class="score-tier tier-fair"><div class="val" id="score-fair">-</div>Fair (30-54)</div>
-      <div class="score-tier tier-poor"><div class="val" id="score-poor">-</div>Poor (&lt;30)</div>
+      <div class="score-tier tier-excellent" onclick="filterByScore(80,100)"><div class="val" id="score-excellent">-</div>Excellent (80+)</div>
+      <div class="score-tier tier-good" onclick="filterByScore(55,79)"><div class="val" id="score-good">-</div>Good (55-79)</div>
+      <div class="score-tier tier-fair" onclick="filterByScore(30,54)"><div class="val" id="score-fair">-</div>Fair (30-54)</div>
+      <div class="score-tier tier-poor" onclick="filterByScore(0,29)"><div class="val" id="score-poor">-</div>Poor (&lt;30)</div>
     </div>
 
     <!-- Recommendations -->
@@ -365,7 +458,7 @@
       <div id="recs-list"></div>
     </div>
 
-    <!-- Breakdowns -->
+    <!-- Breakdowns + Activity -->
     <div class="breakdown-section" style="grid-template-columns: 1fr 1fr 1fr;">
       <div class="breakdown-panel">
         <h3>By Country</h3>
@@ -376,11 +469,15 @@
         <div id="by-city"></div>
       </div>
       <div class="breakdown-panel">
+        <h3>Recent Activity</h3>
+        <div class="timeline" id="activity-timeline"></div>
+      </div>
+    </div>
+    <div class="breakdown-section" style="grid-template-columns: 1fr 1fr 1fr;">
+      <div class="breakdown-panel">
         <h3>By State (Top 15)</h3>
         <div id="by-state"></div>
       </div>
-    </div>
-    <div class="breakdown-section" style="grid-template-columns: 1fr 1fr;">
       <div class="breakdown-panel">
         <h3>By Source</h3>
         <div id="by-source"></div>
@@ -394,7 +491,7 @@
     <!-- Bulk Operations -->
     <div class="panel" style="display:block; margin-bottom: 1rem;">
       <h2 style="margin-bottom: 0.5rem;">Bulk Operations</h2>
-      <p class="hint" style="margin-bottom:0.75rem;">Scrape all jurisdictions, enrich leads, find emails, and export — all in one place.</p>
+      <p class="hint" style="margin-bottom:0.75rem;">Scrape all jurisdictions, enrich leads, find emails, and export.</p>
       <div class="action-btns">
         <button class="btn btn-primary" id="bulk-btn" onclick="startBulkScrape()">Scrape All</button>
         <button class="btn btn-secondary" id="bulk-test-btn" onclick="startBulkScrape(true)">Test Mode</button>
@@ -422,12 +519,12 @@
     <!-- Coverage + Freshness Table -->
     <div class="panel" style="display:block; margin-bottom: 1rem;">
       <h2 style="margin-bottom: 0.5rem;">Coverage & Freshness</h2>
-      <p class="hint" style="margin-bottom:0.75rem;">Data quality and freshness per jurisdiction. Green = fresh (&lt;3 days), yellow = stale (3-7 days), red = old (&gt;7 days).</p>
+      <p class="hint" style="margin-bottom:0.75rem;">Data quality per jurisdiction. Click Scrape to refresh, Export to download.</p>
       <div style="overflow-x:auto; max-height:400px; overflow-y:auto;">
         <table class="leads-table" id="coverage-table">
           <thead><tr>
             <th>State</th><th>Country</th><th>Leads</th>
-            <th>Email</th><th>Phone</th><th>Website</th><th>Freshness</th>
+            <th>Email</th><th>Phone</th><th>Website</th><th>Freshness</th><th>Actions</th>
           </tr></thead>
           <tbody id="coverage-body"></tbody>
         </table>
@@ -435,11 +532,11 @@
     </div>
 
     <!-- Lead Explorer -->
-    <div class="panel" style="display:block; margin-bottom: 1rem;">
+    <div class="panel" style="display:block; margin-bottom: 0.5rem;">
       <h2 style="margin-bottom: 0.5rem;">Lead Explorer</h2>
     </div>
 
-    <!-- Search/Filter -->
+    <!-- Search/Filter Row 1 -->
     <div class="lead-controls">
       <input type="text" class="search-input" id="search-input" placeholder="Search name, firm, city, email...">
       <select id="filter-country">
@@ -450,6 +547,7 @@
         <option value="AU">Australia</option>
         <option value="FR">France</option>
         <option value="IE">Ireland</option>
+        <option value="IT">Italy</option>
         <option value="HK">Hong Kong</option>
         <option value="NZ">New Zealand</option>
         <option value="SG">Singapore</option>
@@ -457,13 +555,29 @@
       <select id="filter-state">
         <option value="">All States</option>
       </select>
-      <label style="font-size:0.82rem; display:flex; align-items:center; gap:0.3rem;">
+      <select id="filter-practice">
+        <option value="">All Practice Areas</option>
+      </select>
+    </div>
+    <!-- Search/Filter Row 2 -->
+    <div class="lead-controls">
+      <select id="filter-score">
+        <option value="">All Scores</option>
+        <option value="80-100">Excellent (80+)</option>
+        <option value="55-79">Good (55-79)</option>
+        <option value="30-54">Fair (30-54)</option>
+        <option value="0-29">Poor (&lt;30)</option>
+      </select>
+      <label style="font-size:0.8rem; display:flex; align-items:center; gap:0.25rem;">
         <input type="checkbox" id="filter-email"> Email
       </label>
-      <label style="font-size:0.82rem; display:flex; align-items:center; gap:0.3rem;">
+      <label style="font-size:0.8rem; display:flex; align-items:center; gap:0.25rem;">
         <input type="checkbox" id="filter-phone"> Phone
       </label>
-      <span id="result-count" style="font-size:0.82rem; color:var(--text-muted);"></span>
+      <label style="font-size:0.8rem; display:flex; align-items:center; gap:0.25rem;">
+        <input type="checkbox" id="filter-website"> Website
+      </label>
+      <span id="result-count" style="font-size:0.8rem; color:var(--text-muted); margin-left:auto;"></span>
     </div>
 
     <!-- Leads Table -->
@@ -471,27 +585,32 @@
       <table class="leads-table" id="leads-table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Firm</th>
-            <th>City</th>
-            <th>State</th>
-            <th>Score</th>
+            <th style="width:30px;"><input type="checkbox" id="select-all" title="Select all"></th>
+            <th class="sortable" data-sort="name">Name <span class="sort-arrow">&#x25B2;&#x25BC;</span></th>
+            <th class="sortable" data-sort="firm">Firm <span class="sort-arrow">&#x25B2;&#x25BC;</span></th>
+            <th class="sortable" data-sort="city">City <span class="sort-arrow">&#x25B2;&#x25BC;</span></th>
+            <th class="sortable" data-sort="state">State <span class="sort-arrow">&#x25B2;&#x25BC;</span></th>
+            <th class="sortable active" data-sort="score">Score <span class="sort-arrow">&#x25BC;</span></th>
             <th>Email</th>
             <th>Phone</th>
             <th>Website</th>
-            <th>Source</th>
+            <th class="sortable" data-sort="source">Source <span class="sort-arrow">&#x25B2;&#x25BC;</span></th>
           </tr>
         </thead>
         <tbody id="leads-body"></tbody>
       </table>
     </div>
 
-    <div style="text-align:center; margin-top:1rem;" id="load-more-wrap" hidden>
-      <button class="btn btn-secondary" onclick="loadMore()">Load More</button>
+    <div class="pagination-info" id="pagination-info">
+      <span id="page-info"></span>
+      <div class="page-btns">
+        <button class="btn btn-secondary" style="padding:0.25rem 0.6rem;font-size:0.75rem;" id="prev-page-btn" onclick="prevPage()" disabled>&larr; Prev</button>
+        <button class="btn btn-secondary" style="padding:0.25rem 0.6rem;font-size:0.75rem;" id="next-page-btn" onclick="nextPage()">Next &rarr;</button>
+      </div>
     </div>
 
     <div id="empty-state" class="empty-state" style="display:none;">
-      <span class="empty-state-icon">📊</span>
+      <span class="empty-state-icon">&#x1F4CA;</span>
       <h3>No leads yet</h3>
       <p>Run some scrapes from the Lead Scraper to populate the database.</p>
     </div>
@@ -506,11 +625,25 @@
     </div>
   </div>
 
+  <!-- Floating Action Bar for batch operations -->
+  <div class="fab" id="fab">
+    <span id="fab-count">0 selected</span>
+    <button onclick="exportSelected()">Export CSV</button>
+    <button onclick="tagSelected()">Tag</button>
+    <button onclick="deleteSelected()">Delete</button>
+    <button onclick="clearSelection()" style="background:transparent;border-color:rgba(255,255,255,0.4);">&times; Clear</button>
+  </div>
+
   <script>
     let currentOffset = 0;
     const PAGE_SIZE = 100;
     let searchTimeout = null;
-    let _freshnessMap = {}; // state → { days, last_scraped }
+    let _freshnessMap = {};
+    let _currentSort = 'score';
+    let _currentOrder = 'desc';
+    let _totalResults = 0;
+    let _selectedIds = new Set();
+    let _currentLeads = []; // Cache current page leads
 
     function esc(str) {
       if (!str) return '';
@@ -524,12 +657,26 @@
       return n.toLocaleString();
     }
 
+    function timeAgo(dateStr) {
+      if (!dateStr) return '';
+      const d = new Date(dateStr + (dateStr.includes('Z') ? '' : 'Z'));
+      const now = new Date();
+      const mins = Math.floor((now - d) / 60000);
+      if (mins < 1) return 'just now';
+      if (mins < 60) return mins + 'm ago';
+      const hrs = Math.floor(mins / 60);
+      if (hrs < 24) return hrs + 'h ago';
+      const days = Math.floor(hrs / 24);
+      return days + 'd ago';
+    }
+
     // --- Stats ---
     async function loadStats() {
       try {
         const res = await fetch('/api/leads/stats');
         const d = await res.json();
 
+        document.title = `Mortar (${fmt(d.total)}) Lead Database`;
         document.getElementById('tam-total').textContent = fmt(d.total);
         document.getElementById('tam-contactable').textContent = fmt(d.contactable || 0);
         document.getElementById('tam-gold').textContent = fmt(d.goldLeads || 0);
@@ -549,32 +696,27 @@
         document.getElementById('website-bar').style.width = d.coverage.website + '%';
 
         // By country
-        const countryEl = document.getElementById('by-country');
-        countryEl.innerHTML = (d.byCountry || []).map(c =>
+        document.getElementById('by-country').innerHTML = (d.byCountry || []).map(c =>
           `<div class="breakdown-row"><span class="breakdown-key">${esc(c.country)}</span><span class="breakdown-val">${fmt(c.count)}</span></div>`
         ).join('');
 
         // By state
-        const stateEl = document.getElementById('by-state');
-        stateEl.innerHTML = (d.byState || []).slice(0, 15).map(s =>
+        document.getElementById('by-state').innerHTML = (d.byState || []).slice(0, 15).map(s =>
           `<div class="breakdown-row"><span class="breakdown-key">${esc(s.state)}</span><span class="breakdown-val">${fmt(s.count)}</span></div>`
         ).join('');
 
         // By source
-        const sourceEl = document.getElementById('by-source');
-        sourceEl.innerHTML = (d.bySource || []).slice(0, 15).map(s =>
+        document.getElementById('by-source').innerHTML = (d.bySource || []).slice(0, 15).map(s =>
           `<div class="breakdown-row"><span class="breakdown-key">${esc(s.source)}</span><span class="breakdown-val">${fmt(s.count)}</span></div>`
         ).join('');
 
         // Top cities
-        const cityEl = document.getElementById('by-city');
-        cityEl.innerHTML = (d.topCities || []).slice(0, 15).map(c =>
+        document.getElementById('by-city').innerHTML = (d.topCities || []).slice(0, 15).map(c =>
           `<div class="breakdown-row"><span class="breakdown-key">${esc(c.location)}</span><span class="breakdown-val">${fmt(c.count)}</span></div>`
         ).join('');
 
         // Email sources
-        const emailSourceEl = document.getElementById('by-email-source');
-        emailSourceEl.innerHTML = (d.emailSources || []).map(s =>
+        document.getElementById('by-email-source').innerHTML = (d.emailSources || []).map(s =>
           `<div class="breakdown-row"><span class="breakdown-key">${esc(s.email_source)}</span><span class="breakdown-val">${fmt(s.count)}</span></div>`
         ).join('') || '<div class="breakdown-row"><span class="breakdown-key">No email sources yet</span></div>';
 
@@ -619,10 +761,7 @@
         const panel = document.getElementById('recs-panel');
         const list = document.getElementById('recs-list');
 
-        if (!recs || recs.length === 0) {
-          panel.style.display = 'none';
-          return;
-        }
+        if (!recs || recs.length === 0) { panel.style.display = 'none'; return; }
 
         panel.style.display = '';
         list.innerHTML = recs.map(r => `
@@ -636,6 +775,51 @@
         `).join('');
       } catch (err) {
         console.error('Failed to load recommendations:', err);
+      }
+    }
+
+    // --- Activity Timeline ---
+    async function loadActivity() {
+      try {
+        const res = await fetch('/api/leads/activity?limit=20');
+        const data = await res.json();
+        const el = document.getElementById('activity-timeline');
+        if (!data || data.length === 0) {
+          el.innerHTML = '<div style="color:var(--text-muted);font-size:0.8rem;padding:0.5rem 0;">No scrape runs yet</div>';
+          return;
+        }
+        el.innerHTML = data.map(r => {
+          const dotClass = r.leads_found > 0 ? 'success' : 'zero';
+          const dur = r.duration_secs ? `${Math.round(r.duration_secs)}s` : '';
+          return `<div class="tl-item">
+            <span class="tl-dot ${dotClass}"></span>
+            <span class="tl-state">${esc(r.state)}</span>
+            <span class="tl-stats">${fmt(r.leads_found)} leads, ${fmt(r.leads_new)} new${r.emails_found ? `, ${fmt(r.emails_found)} emails` : ''}${dur ? ` (${dur})` : ''}</span>
+            <span class="tl-time">${timeAgo(r.completed_at)}</span>
+          </div>`;
+        }).join('');
+      } catch (err) {
+        console.error('Failed to load activity:', err);
+      }
+    }
+
+    // --- Practice Areas ---
+    async function loadPracticeAreas() {
+      try {
+        const res = await fetch('/api/leads/practice-areas');
+        const data = await res.json();
+        const select = document.getElementById('filter-practice');
+        const current = select.value;
+        select.innerHTML = '<option value="">All Practice Areas</option>';
+        (data || []).forEach(p => {
+          const opt = document.createElement('option');
+          opt.value = p.practice_area;
+          opt.textContent = `${p.practice_area} (${fmt(p.count)})`;
+          select.appendChild(opt);
+        });
+        select.value = current;
+      } catch (err) {
+        console.error('Failed to load practice areas:', err);
       }
     }
 
@@ -653,7 +837,7 @@
       }
     }
 
-    // --- Coverage + Freshness Table ---
+    // --- Coverage + Freshness Table (with actions) ---
     async function loadCoverage() {
       try {
         const res = await fetch('/api/leads/coverage');
@@ -679,6 +863,10 @@
             <td>${pctBar(s.phone_pct)}</td>
             <td>${pctBar(s.website_pct)}</td>
             <td>${freshHtml}</td>
+            <td class="cov-actions">
+              <button class="cov-btn" id="cov-scrape-${s.state}" onclick="quickScrape('${esc(s.state)}')">Scrape</button>
+              <a class="cov-btn" href="/api/leads/export/state/${encodeURIComponent(s.state)}" style="text-decoration:none;">Export</a>
+            </td>
           </tr>`;
         }).join('');
       } catch (err) {
@@ -686,26 +874,92 @@
       }
     }
 
-    // --- Leads ---
+    // --- Quick Scrape per state ---
+    async function quickScrape(state) {
+      const btn = document.getElementById('cov-scrape-' + state);
+      if (!btn || btn.classList.contains('scraping')) return;
+      btn.classList.add('scraping');
+      btn.textContent = '...';
+
+      try {
+        const res = await fetch('/api/scrape/quick', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ state, test: true }),
+        });
+        const d = await res.json();
+        if (d.jobId) {
+          pollQuickScrape(d.jobId, state, btn);
+        }
+      } catch {
+        btn.classList.remove('scraping');
+        btn.textContent = 'Scrape';
+      }
+    }
+
+    function pollQuickScrape(jobId, state, btn) {
+      const interval = setInterval(async () => {
+        try {
+          const res = await fetch('/api/scrape/quick/' + jobId);
+          const d = await res.json();
+          if (d.status === 'complete' || d.status === 'error') {
+            clearInterval(interval);
+            btn.classList.remove('scraping');
+            btn.textContent = d.leads > 0 ? `+${d.leads}` : 'Done';
+            setTimeout(() => { btn.textContent = 'Scrape'; }, 3000);
+            if (d.leads > 0) refreshAll();
+          } else {
+            btn.textContent = d.leads > 0 ? d.leads + '...' : '...';
+          }
+        } catch {
+          clearInterval(interval);
+          btn.classList.remove('scraping');
+          btn.textContent = 'Scrape';
+        }
+      }, 3000);
+    }
+
+    // --- Score Tier Filter ---
+    function filterByScore(min, max) {
+      document.getElementById('filter-score').value = min + '-' + max;
+      loadLeads();
+      // Scroll to lead explorer
+      document.getElementById('leads-table').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // --- Leads (enhanced with sort, pagination, selection) ---
     async function loadLeads(append = false) {
       const q = document.getElementById('search-input').value.trim();
       const country = document.getElementById('filter-country').value;
       const state = document.getElementById('filter-state').value;
       const hasEmail = document.getElementById('filter-email').checked;
       const hasPhone = document.getElementById('filter-phone').checked;
+      const hasWebsite = document.getElementById('filter-website').checked;
+      const practice = document.getElementById('filter-practice').value;
+      const scoreRange = document.getElementById('filter-score').value;
 
       if (!append) currentOffset = 0;
 
-      const params = new URLSearchParams({ limit: PAGE_SIZE, offset: currentOffset });
+      const params = new URLSearchParams({ limit: PAGE_SIZE, offset: currentOffset, sort: _currentSort, order: _currentOrder });
       if (q) params.set('q', q);
       if (country) params.set('country', country);
       if (state) params.set('state', state);
       if (hasEmail) params.set('hasEmail', 'true');
       if (hasPhone) params.set('hasPhone', 'true');
+      if (hasWebsite) params.set('hasWebsite', 'true');
+      if (practice) params.set('practiceArea', practice);
+      if (scoreRange) {
+        const [min, max] = scoreRange.split('-').map(Number);
+        params.set('minScore', min);
+        params.set('maxScore', max);
+      }
 
       try {
         const res = await fetch('/api/leads?' + params);
         const d = await res.json();
+
+        _totalResults = d.total || 0;
+        _currentLeads = d.leads;
 
         const tbody = document.getElementById('leads-body');
         if (!append) tbody.innerHTML = '';
@@ -714,11 +968,13 @@
           const score = lead.lead_score || 0;
           const scoreColor = score >= 80 ? '#166534' : score >= 55 ? '#1e40af' : score >= 30 ? '#92400e' : '#991b1b';
           const scoreBg = score >= 80 ? '#dcfce7' : score >= 55 ? '#dbeafe' : score >= 30 ? '#fef3c7' : '#fee2e2';
+          const isSelected = _selectedIds.has(lead.id);
           const tr = document.createElement('tr');
-          tr.style.cursor = 'pointer';
-          tr.addEventListener('click', () => showLeadDetail(lead));
+          tr.dataset.id = lead.id;
+          if (isSelected) tr.classList.add('selected');
           tr.innerHTML = `
-            <td><strong>${esc(lead.first_name)} ${esc(lead.last_name)}</strong></td>
+            <td><input type="checkbox" class="lead-cb" data-id="${lead.id}" ${isSelected ? 'checked' : ''}></td>
+            <td style="cursor:pointer;"><strong>${esc(lead.first_name)} ${esc(lead.last_name)}</strong></td>
             <td>${esc(lead.firm_name)}</td>
             <td>${esc(lead.city)}</td>
             <td>${esc(lead.state)}</td>
@@ -728,18 +984,159 @@
             <td class="${lead.website ? 'has-data' : 'no-data'}">${lead.website ? '<a href="' + (lead.website.startsWith('http') ? '' : 'https://') + esc(lead.website) + '" target="_blank" rel="noopener">' + esc(lead.website).substring(0, 30) + '</a>' : '-'}</td>
             <td>${esc(lead.primary_source)}</td>
           `;
+          // Click name to open detail (but not checkbox)
+          tr.querySelectorAll('td:not(:first-child)').forEach(td => {
+            td.style.cursor = 'pointer';
+            td.addEventListener('click', () => showLeadDetail(lead));
+          });
           tbody.appendChild(tr);
         }
 
-        currentOffset += d.leads.length;
-        document.getElementById('result-count').textContent = d.leads.length > 0 ? `Showing ${currentOffset} leads` : 'No leads found';
-        document.getElementById('load-more-wrap').hidden = d.leads.length < PAGE_SIZE;
+        if (!append) currentOffset = d.leads.length;
+        else currentOffset += d.leads.length;
+
+        // Pagination info
+        const showing = Math.min(currentOffset, _totalResults);
+        const pageStart = currentOffset - d.leads.length + 1;
+        document.getElementById('page-info').textContent = _totalResults > 0
+          ? `Showing ${fmt(pageStart)}-${fmt(showing)} of ${fmt(_totalResults)} leads`
+          : 'No leads found';
+        document.getElementById('prev-page-btn').disabled = (currentOffset - d.leads.length) <= 0;
+        document.getElementById('next-page-btn').disabled = currentOffset >= _totalResults;
+
+        document.getElementById('result-count').textContent = `${fmt(_totalResults)} total`;
+
+        // Update checkbox listeners
+        document.querySelectorAll('.lead-cb').forEach(cb => {
+          cb.addEventListener('change', () => {
+            const id = parseInt(cb.dataset.id);
+            if (cb.checked) _selectedIds.add(id);
+            else _selectedIds.delete(id);
+            cb.closest('tr').classList.toggle('selected', cb.checked);
+            updateFab();
+          });
+        });
       } catch (err) {
         console.error('Failed to load leads:', err);
       }
     }
 
+    function nextPage() {
+      loadLeads(true);
+    }
+    function prevPage() {
+      currentOffset = Math.max(0, currentOffset - PAGE_SIZE * 2);
+      loadLeads(true);
+    }
     function loadMore() { loadLeads(true); }
+
+    // --- Sortable columns ---
+    document.querySelectorAll('.leads-table th.sortable').forEach(th => {
+      th.addEventListener('click', () => {
+        const sort = th.dataset.sort;
+        if (_currentSort === sort) {
+          _currentOrder = _currentOrder === 'asc' ? 'desc' : 'asc';
+        } else {
+          _currentSort = sort;
+          _currentOrder = 'desc';
+        }
+        // Update header styles
+        document.querySelectorAll('.leads-table th.sortable').forEach(h => h.classList.remove('active'));
+        th.classList.add('active');
+        th.querySelector('.sort-arrow').innerHTML = _currentOrder === 'asc' ? '&#x25B2;' : '&#x25BC;';
+        loadLeads();
+      });
+    });
+
+    // --- Select All ---
+    document.getElementById('select-all').addEventListener('change', (e) => {
+      const checked = e.target.checked;
+      document.querySelectorAll('.lead-cb').forEach(cb => {
+        cb.checked = checked;
+        const id = parseInt(cb.dataset.id);
+        if (checked) _selectedIds.add(id);
+        else _selectedIds.delete(id);
+        cb.closest('tr').classList.toggle('selected', checked);
+      });
+      updateFab();
+    });
+
+    // --- Floating Action Bar ---
+    function updateFab() {
+      const fab = document.getElementById('fab');
+      const count = _selectedIds.size;
+      if (count > 0) {
+        fab.classList.add('active');
+        document.getElementById('fab-count').textContent = `${count} selected`;
+      } else {
+        fab.classList.remove('active');
+      }
+    }
+
+    function clearSelection() {
+      _selectedIds.clear();
+      document.querySelectorAll('.lead-cb').forEach(cb => {
+        cb.checked = false;
+        cb.closest('tr').classList.remove('selected');
+      });
+      document.getElementById('select-all').checked = false;
+      updateFab();
+    }
+
+    function exportSelected() {
+      if (_selectedIds.size === 0) return;
+      // Build CSV from selected leads in current page
+      const selected = _currentLeads.filter(l => _selectedIds.has(l.id));
+      if (selected.length === 0) return;
+
+      const headers = ['first_name','last_name','firm_name','city','state','country','email','phone','website','bar_number','bar_status','practice_area','lead_score','primary_source'];
+      const rows = [headers.join(',')];
+      for (const l of selected) {
+        rows.push(headers.map(h => {
+          const v = (l[h] || '').toString().replace(/"/g, '""');
+          return v.includes(',') || v.includes('"') ? '"' + v + '"' : v;
+        }).join(','));
+      }
+      const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `mortar-selected-${_selectedIds.size}-leads.csv`;
+      a.click();
+    }
+
+    function tagSelected() {
+      if (_selectedIds.size === 0) return;
+      const tag = prompt('Enter tag name:');
+      if (!tag || !tag.trim()) return;
+      fetch('/api/leads/tag', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ leadIds: [..._selectedIds], tag: tag.trim() }),
+      })
+        .then(r => r.json())
+        .then(d => {
+          document.getElementById('bulk-status').textContent = `Tagged ${d.updated} leads with "${tag.trim()}"`;
+          clearSelection();
+        })
+        .catch(() => {});
+    }
+
+    function deleteSelected() {
+      if (_selectedIds.size === 0) return;
+      if (!confirm(`Delete ${_selectedIds.size} leads? This cannot be undone.`)) return;
+      fetch('/api/leads/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ leadIds: [..._selectedIds] }),
+      })
+        .then(r => r.json())
+        .then(d => {
+          document.getElementById('bulk-status').textContent = `Deleted ${d.deleted} leads`;
+          clearSelection();
+          refreshAll();
+        })
+        .catch(() => {});
+    }
 
     // --- Bulk Scrape ---
     async function startBulkScrape(test = false) {
@@ -850,7 +1247,7 @@
         const d = await res.json();
         statusEl.textContent = `Merged ${d.merged} duplicates (${d.fieldsRecovered} fields recovered)`;
         refreshAll();
-      } catch (err) {
+      } catch {
         statusEl.textContent = 'Merge failed';
       }
       btn.textContent = 'Merge Dupes';
@@ -869,9 +1266,7 @@
           body: JSON.stringify({ limit: 500 }),
         });
         const d = await res.json();
-        if (d.status === 'already_running') {
-          btn.textContent = 'Already running';
-        }
+        if (d.status === 'already_running') btn.textContent = 'Already running';
         pollWebsiteStatus(btn);
       } catch {
         btn.textContent = 'Find Websites';
@@ -915,11 +1310,8 @@
           body: JSON.stringify({ sources: ['AVVO', 'FINDLAW'], test: true }),
         });
         const d = await res.json();
-        if (d.status === 'already_running') {
-          btn.textContent = 'Already running';
-        } else {
-          btn.textContent = 'Running...';
-        }
+        if (d.status === 'already_running') btn.textContent = 'Already running';
+        else btn.textContent = 'Running...';
         pollPrepopStatus(btn);
       } catch {
         btn.textContent = 'Pre-populate DB';
@@ -964,11 +1356,7 @@
       try {
         const res = await fetch('/api/leads/enrich-all', { method: 'POST' });
         const d = await res.json();
-        if (d.status === 'already_running') {
-          btn.textContent = 'Already running';
-          return;
-        }
-        // Poll for completion
+        if (d.status === 'already_running') { btn.textContent = 'Already running'; return; }
         const interval = setInterval(async () => {
           try {
             const res2 = await fetch('/api/leads/enrich-all/status');
@@ -1043,7 +1431,7 @@
         const d = await res.json();
         statusEl.textContent = `Scored ${fmt(d.scored)} leads (avg: ${d.avgScore})`;
         refreshAll();
-      } catch (err) {
+      } catch {
         statusEl.textContent = 'Scoring failed';
       }
       btn.textContent = 'Score All';
@@ -1073,6 +1461,7 @@
         ['Title', lead.title || '-'],
         ['LinkedIn', lead.linkedin_url ? `<a href="${esc(lead.linkedin_url)}" target="_blank">View</a>` : '-'],
         ['Education', lead.education || '-'],
+        ['Tags', lead.tags || '-'],
         ['Email Source', lead.email_source || '-'],
         ['Phone Source', lead.phone_source || '-'],
         ['Website Src', lead.website_source || '-'],
@@ -1083,7 +1472,6 @@
         `<div class="detail-label">${label}</div><div class="detail-value">${value}</div>`
       ).join('');
 
-      // Show sources (from lead_sources table would need an API call, show primary for now)
       const sources = [lead.primary_source, lead.email_source, lead.phone_source, lead.website_source]
         .filter(Boolean).filter(s => s !== '-');
       const uniqueSources = [...new Set(sources)];
@@ -1113,11 +1501,14 @@
     document.getElementById('filter-state').addEventListener('change', () => loadLeads());
     document.getElementById('filter-email').addEventListener('change', () => loadLeads());
     document.getElementById('filter-phone').addEventListener('change', () => loadLeads());
+    document.getElementById('filter-website').addEventListener('change', () => loadLeads());
+    document.getElementById('filter-practice').addEventListener('change', () => loadLeads());
+    document.getElementById('filter-score').addEventListener('change', () => loadLeads());
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness()]);
-      loadCoverage(); // Depends on freshness
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas()]);
+      loadCoverage();
       loadLeads();
     }
 
