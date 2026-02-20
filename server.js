@@ -709,6 +709,28 @@ app.get('/api/leads/scores', (req, res) => {
   }
 });
 
+// Share data across firm members
+app.post('/api/leads/share-firm-data', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const result = leadDb.shareFirmData();
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Deduce websites from email domains
+app.post('/api/leads/deduce-websites', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const result = leadDb.deduceWebsitesFromEmail();
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Batch score all leads
 app.post('/api/leads/score', (req, res) => {
   try {

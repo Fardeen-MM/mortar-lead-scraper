@@ -332,6 +332,8 @@
         <button class="btn btn-secondary" id="prepop-btn" onclick="startPrepopulate()">Pre-populate DB</button>
         <button class="btn btn-secondary" id="website-btn" onclick="startWebsiteFinder()">Find Websites</button>
         <button class="btn btn-secondary" id="email-btn" onclick="startVerify()">Find Emails (SMTP)</button>
+        <button class="btn btn-secondary" id="firm-share-btn" onclick="shareFirmData()">Share Firm Data</button>
+        <button class="btn btn-secondary" id="deduce-btn" onclick="deduceWebsites()">Deduce Websites</button>
         <button class="btn btn-secondary" id="score-btn" onclick="scoreLeads()">Score All</button>
         <button class="btn btn-secondary" id="dedup-btn" onclick="mergeDuplicates()">Merge Dupes</button>
       </div>
@@ -869,6 +871,42 @@
           btn.disabled = false;
         }
       }, 5000);
+    }
+
+    // --- Share Firm Data ---
+    async function shareFirmData() {
+      const btn = document.getElementById('firm-share-btn');
+      btn.disabled = true;
+      btn.textContent = 'Sharing...';
+      const statusEl = document.getElementById('bulk-status');
+      try {
+        const res = await fetch('/api/leads/share-firm-data', { method: 'POST' });
+        const d = await res.json();
+        statusEl.textContent = `Shared data across ${d.firmsProcessed} firms, ${d.leadsUpdated} leads updated, ${d.fieldsShared} fields shared`;
+        refreshAll();
+      } catch {
+        statusEl.textContent = 'Firm data sharing failed';
+      }
+      btn.textContent = 'Share Firm Data';
+      btn.disabled = false;
+    }
+
+    // --- Deduce Websites ---
+    async function deduceWebsites() {
+      const btn = document.getElementById('deduce-btn');
+      btn.disabled = true;
+      btn.textContent = 'Deducing...';
+      const statusEl = document.getElementById('bulk-status');
+      try {
+        const res = await fetch('/api/leads/deduce-websites', { method: 'POST' });
+        const d = await res.json();
+        statusEl.textContent = `Deduced ${d.leadsUpdated} websites from email domains`;
+        refreshAll();
+      } catch {
+        statusEl.textContent = 'Website deduction failed';
+      }
+      btn.textContent = 'Deduce Websites';
+      btn.disabled = false;
     }
 
     // --- Score Leads ---
