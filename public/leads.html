@@ -372,6 +372,62 @@
     .cov-btn:hover { border-color: var(--indigo); color: var(--indigo); }
     .cov-btn.scraping { background: #eef2ff; color: var(--indigo); cursor: wait; }
 
+    /* CSV Import */
+    .import-zone {
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 1rem;
+      background: #fafbfc;
+    }
+    .import-zone:hover, .import-zone.dragover {
+      border-color: var(--indigo);
+      background: #f0f4ff;
+    }
+    .import-zone input[type="file"] { display: none; }
+    .import-zone .iz-icon { font-size: 1.5rem; margin-bottom: 0.3rem; }
+    .import-zone .iz-text { font-size: 0.82rem; color: var(--text-muted); }
+    .import-zone .iz-text strong { color: var(--indigo); }
+    .import-result {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-size: 0.82rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Keyboard shortcut hints */
+    .kbd-hint {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      z-index: 900;
+      display: none;
+      line-height: 1.6;
+    }
+    .kbd-hint.active { display: block; }
+    .kbd-hint kbd {
+      display: inline-block;
+      padding: 0.05rem 0.35rem;
+      border: 1px solid #d1d5db;
+      border-radius: 3px;
+      background: #f9fafb;
+      font-family: monospace;
+      font-size: 0.7rem;
+      margin: 0 0.1rem;
+    }
+
     /* Pagination info */
     .pagination-info {
       display: flex;
@@ -516,6 +572,18 @@
       <span id="verify-status" style="font-size:0.82rem;color:var(--text-muted);"></span>
     </div>
 
+    <!-- CSV Import -->
+    <div class="panel" style="display:block; margin-bottom: 1rem;">
+      <h2 style="margin-bottom: 0.5rem;">Import Leads</h2>
+      <p class="hint" style="margin-bottom:0.75rem;">Drop a CSV file to merge external leads (Apify, Apollo, etc.) into your database.</p>
+      <div class="import-zone" id="import-zone" onclick="document.getElementById('import-file').click()">
+        <input type="file" id="import-file" accept=".csv">
+        <div class="iz-icon">&#x1F4C1;</div>
+        <div class="iz-text">Click or drag a <strong>.csv file</strong> here to import</div>
+      </div>
+      <div id="import-result" class="import-result" style="display:none;"></div>
+    </div>
+
     <!-- Coverage + Freshness Table -->
     <div class="panel" style="display:block; margin-bottom: 1rem;">
       <h2 style="margin-bottom: 0.5rem;">Coverage & Freshness</h2>
@@ -623,6 +691,13 @@
       <div class="detail-grid" id="modal-details"></div>
       <div class="detail-sources" id="modal-sources"></div>
     </div>
+  </div>
+
+  <!-- Keyboard shortcut hint -->
+  <div class="kbd-hint" id="kbd-hint">
+    <div><kbd>/</kbd> Search &nbsp; <kbd>Esc</kbd> Clear/Close &nbsp; <kbd>?</kbd> Toggle hints</div>
+    <div><kbd>j</kbd>/<kbd>k</kbd> Navigate rows &nbsp; <kbd>Enter</kbd> Open detail &nbsp; <kbd>x</kbd> Toggle select</div>
+    <div><kbd>r</kbd> Refresh &nbsp; <kbd>e</kbd> Export all</div>
   </div>
 
   <!-- Floating Action Bar for batch operations -->
@@ -1504,6 +1579,157 @@
     document.getElementById('filter-website').addEventListener('change', () => loadLeads());
     document.getElementById('filter-practice').addEventListener('change', () => loadLeads());
     document.getElementById('filter-score').addEventListener('change', () => loadLeads());
+
+    // --- CSV Import ---
+    const importZone = document.getElementById('import-zone');
+    const importFile = document.getElementById('import-file');
+
+    importZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      importZone.classList.add('dragover');
+    });
+    importZone.addEventListener('dragleave', () => {
+      importZone.classList.remove('dragover');
+    });
+    importZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      importZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length > 0) {
+        handleImportFile(e.dataTransfer.files[0]);
+      }
+    });
+    importFile.addEventListener('change', () => {
+      if (importFile.files.length > 0) {
+        handleImportFile(importFile.files[0]);
+        importFile.value = '';
+      }
+    });
+
+    async function handleImportFile(file) {
+      if (!file.name.endsWith('.csv')) {
+        alert('Please select a CSV file');
+        return;
+      }
+
+      const resultEl = document.getElementById('import-result');
+      resultEl.style.display = '';
+      resultEl.innerHTML = `Importing <strong>${esc(file.name)}</strong>...`;
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('source', 'csv-import');
+
+      try {
+        const res = await fetch('/api/leads/import', { method: 'POST', body: formData });
+        const d = await res.json();
+        if (d.error) {
+          resultEl.innerHTML = `<span style="color:#dc2626;">Import failed: ${esc(d.error)}</span>`;
+          return;
+        }
+        resultEl.innerHTML = `<strong>Import complete</strong> | ${fmt(d.total)} rows processed | ${fmt(d.imported)} new | ${fmt(d.updated)} updated | ${fmt(d.skipped)} skipped` +
+          (d.mapping ? `<br><span style="color:var(--text-muted);">Mapped: ${Object.entries(d.mapping).filter(([k,v]) => v && !k.startsWith('_')).map(([k,v]) => `${k}=${v}`).join(', ')}</span>` : '');
+        refreshAll();
+      } catch (err) {
+        resultEl.innerHTML = `<span style="color:#dc2626;">Import error: ${esc(err.message)}</span>`;
+      }
+    }
+
+    // --- Keyboard Shortcuts ---
+    let _focusedRow = -1;
+    let _kbdVisible = false;
+
+    document.addEventListener('keydown', (e) => {
+      // Don't handle shortcuts when typing in inputs
+      const tag = e.target.tagName;
+      if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') {
+        if (e.key === 'Escape') {
+          e.target.blur();
+          e.target.value = '';
+          loadLeads();
+        }
+        return;
+      }
+
+      // Modal open check
+      if (document.getElementById('lead-modal').classList.contains('active')) {
+        if (e.key === 'Escape') closeModal();
+        return;
+      }
+
+      switch (e.key) {
+        case '/':
+          e.preventDefault();
+          document.getElementById('search-input').focus();
+          break;
+        case '?':
+          _kbdVisible = !_kbdVisible;
+          document.getElementById('kbd-hint').classList.toggle('active', _kbdVisible);
+          break;
+        case 'Escape':
+          // Reset all filters
+          document.getElementById('search-input').value = '';
+          document.getElementById('filter-country').value = '';
+          document.getElementById('filter-state').value = '';
+          document.getElementById('filter-practice').value = '';
+          document.getElementById('filter-score').value = '';
+          document.getElementById('filter-email').checked = false;
+          document.getElementById('filter-phone').checked = false;
+          document.getElementById('filter-website').checked = false;
+          _focusedRow = -1;
+          clearSelection();
+          loadLeads();
+          break;
+        case 'j': // Next row
+          e.preventDefault();
+          navigateRow(1);
+          break;
+        case 'k': // Prev row
+          e.preventDefault();
+          navigateRow(-1);
+          break;
+        case 'Enter': // Open detail
+          if (_focusedRow >= 0 && _currentLeads[_focusedRow]) {
+            showLeadDetail(_currentLeads[_focusedRow]);
+          }
+          break;
+        case 'x': // Toggle select
+          if (_focusedRow >= 0) {
+            const rows = document.querySelectorAll('#leads-body tr');
+            if (rows[_focusedRow]) {
+              const cb = rows[_focusedRow].querySelector('.lead-cb');
+              if (cb) {
+                cb.checked = !cb.checked;
+                cb.dispatchEvent(new Event('change'));
+              }
+            }
+          }
+          break;
+        case 'r': // Refresh
+          refreshAll();
+          break;
+        case 'e': // Export
+          window.location.href = '/api/leads/export';
+          break;
+      }
+    });
+
+    function navigateRow(delta) {
+      const rows = document.querySelectorAll('#leads-body tr');
+      if (rows.length === 0) return;
+
+      // Remove previous highlight
+      if (_focusedRow >= 0 && rows[_focusedRow]) {
+        rows[_focusedRow].style.outline = '';
+      }
+
+      _focusedRow = Math.max(0, Math.min(rows.length - 1, _focusedRow + delta));
+
+      if (rows[_focusedRow]) {
+        rows[_focusedRow].style.outline = '2px solid var(--indigo)';
+        rows[_focusedRow].style.outlineOffset = '-2px';
+        rows[_focusedRow].scrollIntoView({ block: 'nearest' });
+      }
+    }
 
     // --- Refresh All ---
     async function refreshAll() {

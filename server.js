@@ -1027,6 +1027,130 @@ app.post('/api/leads/delete', (req, res) => {
   }
 });
 
+// --- CSV Import ---
+app.post('/api/leads/import', upload.single('file'), (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+
+    const leadDb = require('./lib/lead-db');
+    const csvParse = require('csv-parser');
+    const fsImport = require('fs');
+
+    const results = [];
+    const stream = fsImport.createReadStream(req.file.path).pipe(csvParse());
+
+    stream.on('data', (row) => results.push(row));
+    stream.on('end', () => {
+      // Clean up uploaded file
+      try { fsImport.unlinkSync(req.file.path); } catch {}
+
+      if (results.length === 0) {
+        return res.json({ imported: 0, skipped: 0, error: 'Empty CSV file' });
+      }
+
+      // Auto-detect column mapping
+      const headers = Object.keys(results[0]);
+      const mapping = autoMapColumns(headers);
+
+      // Transform and import
+      let imported = 0, updated = 0, skipped = 0;
+      const source = req.body.source || 'csv-import';
+
+      for (const row of results) {
+        const lead = {};
+        for (const [field, csvCol] of Object.entries(mapping)) {
+          if (csvCol && row[csvCol]) {
+            lead[field] = row[csvCol].trim();
+          }
+        }
+
+        // Handle full_name split
+        if (mapping._full_name && row[mapping._full_name] && !lead.first_name && !lead.last_name) {
+          const parts = row[mapping._full_name].trim().split(/\s+/);
+          lead.first_name = parts[0] || '';
+          lead.last_name = parts.slice(1).join(' ') || '';
+        }
+
+        // Must have at least a name
+        if (!lead.first_name && !lead.last_name) {
+          skipped++;
+          continue;
+        }
+
+        lead.primary_source = source;
+        lead.source = source;
+        const result = leadDb.upsertLead(lead);
+        if (result.isNew) imported++;
+        else if (result.wasUpdated) updated++;
+        else skipped++;
+      }
+
+      // Post-import enrichment
+      if (imported > 0) {
+        leadDb.shareFirmData();
+        leadDb.deduceWebsitesFromEmail();
+      }
+
+      res.json({
+        total: results.length,
+        imported,
+        updated,
+        skipped,
+        columns: headers,
+        mapping,
+      });
+    });
+
+    stream.on('error', (err) => {
+      try { fsImport.unlinkSync(req.file.path); } catch {}
+      res.status(400).json({ error: 'Failed to parse CSV: ' + err.message });
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+function autoMapColumns(headers) {
+  const mapping = {};
+  const lowerHeaders = headers.map(h => h.toLowerCase().replace(/[^a-z0-9]/g, '_'));
+
+  const fieldMaps = {
+    first_name: ['first_name', 'firstname', 'first', 'given_name', 'fname'],
+    last_name: ['last_name', 'lastname', 'last', 'surname', 'family_name', 'lname'],
+    email: ['email', 'email_address', 'e_mail', 'emailaddress'],
+    phone: ['phone', 'phone_number', 'telephone', 'tel', 'mobile', 'cell', 'work_phone'],
+    firm_name: ['firm_name', 'firm', 'company', 'company_name', 'organization', 'org', 'employer'],
+    city: ['city', 'town', 'locality'],
+    state: ['state', 'state_code', 'province', 'region'],
+    country: ['country', 'country_code'],
+    website: ['website', 'url', 'web', 'site', 'homepage', 'website_url'],
+    bar_number: ['bar_number', 'bar_num', 'license_number', 'license', 'bar_id'],
+    bar_status: ['bar_status', 'status', 'license_status'],
+    practice_area: ['practice_area', 'practice', 'specialty', 'specialization', 'area_of_practice'],
+    title: ['title', 'job_title', 'position'],
+    linkedin_url: ['linkedin_url', 'linkedin', 'linkedin_profile'],
+  };
+
+  for (const [field, aliases] of Object.entries(fieldMaps)) {
+    for (let i = 0; i < lowerHeaders.length; i++) {
+      if (aliases.includes(lowerHeaders[i])) {
+        mapping[field] = headers[i];
+        break;
+      }
+    }
+  }
+
+  // Handle "name" or "full_name" → split into first/last
+  if (!mapping.first_name && !mapping.last_name) {
+    const nameIdx = lowerHeaders.findIndex(h => h === 'name' || h === 'full_name' || h === 'fullname');
+    if (nameIdx >= 0) {
+      mapping._full_name = headers[nameIdx];
+    }
+  }
+
+  return mapping;
+}
+
 // --- Get Lead Detail ---
 app.get('/api/leads/:id', (req, res) => {
   try {
