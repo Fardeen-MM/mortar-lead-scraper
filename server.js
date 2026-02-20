@@ -1151,6 +1151,54 @@ function autoMapColumns(headers) {
   return mapping;
 }
 
+// --- Growth/Trend Data for Charts ---
+app.get('/api/leads/growth', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const days = parseInt(req.query.days) || 30;
+    const growth = leadDb.getDailyGrowth(days);
+    res.json(growth);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Field Completeness for Data Quality Charts ---
+app.get('/api/leads/completeness', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const data = leadDb.getFieldCompleteness();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Find potential duplicates ---
+app.get('/api/leads/duplicates', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 50;
+    const dupes = leadDb.findPotentialDuplicates(limit);
+    res.json(dupes);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Merge a pair of duplicate leads ---
+app.post('/api/leads/merge', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { keepId, deleteId } = req.body;
+    if (!keepId || !deleteId) return res.status(400).json({ error: 'keepId and deleteId required' });
+    const result = leadDb.mergeLeadPair(keepId, deleteId);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // --- Get Lead Detail ---
 app.get('/api/leads/:id', (req, res) => {
   try {
@@ -1158,6 +1206,26 @@ app.get('/api/leads/:id', (req, res) => {
     const lead = leadDb.getLeadById(parseInt(req.params.id));
     if (!lead) return res.status(404).json({ error: 'Lead not found' });
     res.json(lead);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Update a single lead (inline editing) ---
+app.patch('/api/leads/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const id = parseInt(req.params.id);
+    const lead = leadDb.getLeadById(id);
+    if (!lead) return res.status(404).json({ error: 'Lead not found' });
+    const result = leadDb.updateLead(id, req.body);
+    if (result.updated) {
+      leadDb.computeLeadScore(id);
+      const updated = leadDb.getLeadById(id);
+      res.json(updated);
+    } else {
+      res.json({ message: 'No changes' });
+    }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
