@@ -207,6 +207,16 @@ app.post('/api/scrape/start', (req, res) => {
           leadsUpdated: dbStats.updated,
           emailsFound: data.leads.filter(l => l.email).length,
         });
+
+        // Auto-enrich: share firm data + deduce websites for new leads
+        if (dbStats.inserted > 0) {
+          const firmResult = leadDb.shareFirmData();
+          const deduceResult = leadDb.deduceWebsitesFromEmail();
+          if (firmResult.leadsUpdated > 0 || deduceResult.leadsUpdated > 0) {
+            console.log(`[job:${jobId}] Auto-enriched: ${firmResult.leadsUpdated} firm shares, ${deduceResult.leadsUpdated} websites deduced`);
+          }
+        }
+
         console.log(`[job:${jobId}] Saved to master DB: ${dbStats.inserted} new, ${dbStats.updated} updated, ${dbStats.unchanged} unchanged`);
       } catch (err) {
         console.error(`[job:${jobId}] Failed to save to master DB:`, err.message);
