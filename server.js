@@ -590,6 +590,48 @@ app.get('/api/leads/export/instantly', (req, res) => {
   }
 });
 
+// --- Freshness + Recommendations + Scoring ---
+
+// Get scrape freshness (when each state was last scraped)
+app.get('/api/leads/freshness', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getScrapeHistory());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get smart recommendations
+app.get('/api/leads/recommendations', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getRecommendations());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get lead score distribution
+app.get('/api/leads/scores', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getScoreDistribution());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Batch score all leads
+app.post('/api/leads/score', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.batchScoreLeads());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // --- Email Verification Endpoint ---
 
 // Verify emails for leads in the database (or a specific batch)
