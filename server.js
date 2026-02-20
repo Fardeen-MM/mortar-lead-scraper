@@ -487,6 +487,16 @@ app.get('/api/leads', (req, res) => {
   }
 });
 
+// Get per-state coverage analysis
+app.get('/api/leads/coverage', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getStateCoverage());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Merge duplicate leads
 app.post('/api/leads/merge-duplicates', (req, res) => {
   try {
@@ -518,6 +528,62 @@ app.get('/api/leads/export', (req, res) => {
     writeCSV(outputFile, leads).then(() => {
       const filename = path.basename(outputFile);
       res.download(outputFile, filename);
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Export leads in Instantly.ai format (email, first_name, last_name, company_name, personalization)
+app.get('/api/leads/export/instantly', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { createObjectCsvWriter } = require('csv-writer');
+    const { generateOutputPath } = require('./lib/csv-handler');
+    const { state, country } = req.query;
+
+    const leads = leadDb.exportLeads({
+      state, country,
+      hasEmail: true, // Instantly requires email
+    });
+
+    if (leads.length === 0) {
+      return res.status(404).json({ error: 'No leads with email found' });
+    }
+
+    // Map to Instantly format
+    const instantlyLeads = leads.map(l => ({
+      email: l.email,
+      first_name: l.first_name,
+      last_name: l.last_name,
+      company_name: l.firm_name || '',
+      phone: l.phone || '',
+      website: l.website || '',
+      city: l.city || '',
+      state: l.state || '',
+      personalization: l.practice_area
+        ? `I noticed you practice ${l.practice_area} in ${l.city || l.state}`
+        : `I came across your firm${l.firm_name ? ' ' + l.firm_name : ''} in ${l.city || l.state}`,
+    }));
+
+    const outputFile = generateOutputPath('INSTANTLY-EXPORT', '');
+    const writer = createObjectCsvWriter({
+      path: outputFile,
+      header: [
+        { id: 'email', title: 'email' },
+        { id: 'first_name', title: 'first_name' },
+        { id: 'last_name', title: 'last_name' },
+        { id: 'company_name', title: 'company_name' },
+        { id: 'phone', title: 'phone' },
+        { id: 'website', title: 'website' },
+        { id: 'city', title: 'city' },
+        { id: 'state', title: 'state' },
+        { id: 'personalization', title: 'personalization' },
+      ],
+    });
+
+    writer.writeRecords(instantlyLeads).then(() => {
+      res.download(outputFile, path.basename(outputFile));
     });
   } catch (err) {
     res.status(500).json({ error: err.message });

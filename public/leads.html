@@ -241,8 +241,24 @@
         <a href="/api/leads/export?hasEmail=true" class="btn btn-secondary" style="text-decoration:none;">Export (Email)</a>
         <a href="/api/leads/export?hasPhone=true" class="btn btn-secondary" style="text-decoration:none;">Export (Phone)</a>
         <a href="/api/leads/export" class="btn btn-secondary" style="text-decoration:none;">Export All</a>
+        <a href="/api/leads/export/instantly" class="btn btn-primary" style="text-decoration:none;">Export for Instantly</a>
       </div>
       <div id="bulk-status" style="margin-top:0.75rem;font-size:0.82rem;color:var(--text-muted);"></div>
+    </div>
+
+    <!-- Coverage Table -->
+    <div class="panel" style="display:block; margin-bottom: 1rem;">
+      <h2 style="margin-bottom: 0.5rem;">Coverage Analysis</h2>
+      <p class="hint" style="margin-bottom:0.75rem;">Data quality per jurisdiction — shows where enrichment would have the biggest impact.</p>
+      <div style="overflow-x:auto; max-height:300px; overflow-y:auto;">
+        <table class="leads-table" id="coverage-table">
+          <thead><tr>
+            <th>State</th><th>Country</th><th>Total</th>
+            <th>Email</th><th>Phone</th><th>Website</th>
+          </tr></thead>
+          <tbody id="coverage-body"></tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Actions -->
@@ -627,9 +643,34 @@
     document.getElementById('filter-state').addEventListener('change', () => loadLeads());
     document.getElementById('filter-email').addEventListener('change', () => loadLeads());
 
+    async function loadCoverage() {
+      try {
+        const res = await fetch('/api/leads/coverage');
+        const data = await res.json();
+        const tbody = document.getElementById('coverage-body');
+        tbody.innerHTML = data.map(s => {
+          const pctBar = (pct) => {
+            const color = pct >= 70 ? '#22c55e' : pct >= 30 ? '#f59e0b' : pct > 0 ? '#ef4444' : '#e5e7eb';
+            return `<div style="display:flex;align-items:center;gap:0.5rem;"><div style="width:50px;height:6px;background:#f3f4f6;border-radius:3px;"><div style="width:${pct}%;height:100%;background:${color};border-radius:3px;"></div></div><span style="font-size:0.75rem;min-width:35px;">${pct}%</span></div>`;
+          };
+          return `<tr>
+            <td><strong>${esc(s.state)}</strong></td>
+            <td>${esc(s.country)}</td>
+            <td>${fmt(s.total)}</td>
+            <td>${pctBar(s.email_pct)}</td>
+            <td>${pctBar(s.phone_pct)}</td>
+            <td>${pctBar(s.website_pct)}</td>
+          </tr>`;
+        }).join('');
+      } catch (err) {
+        console.error('Failed to load coverage:', err);
+      }
+    }
+
     // Initial load
     loadStats();
     loadLeads();
+    loadCoverage();
   </script>
 </body>
 </html>
