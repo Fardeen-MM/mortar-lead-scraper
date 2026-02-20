@@ -492,10 +492,11 @@ app.get('/api/leads/export', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
     const { writeCSV, generateOutputPath } = require('./lib/csv-handler');
-    const { state, country, hasEmail, verified } = req.query;
+    const { state, country, hasEmail, hasPhone, verified } = req.query;
     const leads = leadDb.exportLeads({
       state, country,
       hasEmail: hasEmail === 'true',
+      hasPhone: hasPhone === 'true',
       verified: verified === 'true',
     });
     if (leads.length === 0) {

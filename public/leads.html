@@ -192,9 +192,13 @@
     </div>
 
     <!-- Breakdowns -->
-    <div class="breakdown-section">
+    <div class="breakdown-section" style="grid-template-columns: 1fr 1fr 1fr;">
       <div class="breakdown-panel">
-        <h3>By State</h3>
+        <h3>By Country</h3>
+        <div id="by-country"></div>
+      </div>
+      <div class="breakdown-panel">
+        <h3>By State (Top 15)</h3>
         <div id="by-state"></div>
       </div>
       <div class="breakdown-panel">
@@ -212,7 +216,9 @@
         <button class="btn btn-secondary" id="bulk-test-btn" onclick="startBulkScrape(true)">Test Mode</button>
         <button class="btn btn-secondary" id="website-btn" onclick="startWebsiteFinder()">Find Missing Websites</button>
         <button class="btn btn-secondary" id="email-btn" onclick="startVerify()">Find Missing Emails (SMTP)</button>
-        <a href="/api/leads/export?hasEmail=true" class="btn btn-secondary" style="text-decoration:none;">Export CSV</a>
+        <a href="/api/leads/export?hasEmail=true" class="btn btn-secondary" style="text-decoration:none;">Export (Email)</a>
+        <a href="/api/leads/export?hasPhone=true" class="btn btn-secondary" style="text-decoration:none;">Export (Phone)</a>
+        <a href="/api/leads/export" class="btn btn-secondary" style="text-decoration:none;">Export All</a>
       </div>
       <div id="bulk-status" style="margin-top:0.75rem;font-size:0.82rem;color:var(--text-muted);"></div>
     </div>
@@ -299,6 +305,28 @@
         document.getElementById('email-bar').style.width = d.coverage.email + '%';
         document.getElementById('phone-bar').style.width = d.coverage.phone + '%';
         document.getElementById('website-bar').style.width = d.coverage.website + '%';
+
+        // By country — group states into countries
+        const countryMap = {};
+        const stateToCountry = (state) => {
+          if (!state) return 'Other';
+          if (state.startsWith('CA-')) return 'Canada';
+          if (state.startsWith('UK-')) return 'UK';
+          if (state.startsWith('AU-')) return 'Australia';
+          if (['FR', 'IE', 'IT', 'DE-BRAK'].includes(state)) return 'Europe';
+          if (['HK', 'NZ', 'SG'].includes(state)) return 'Asia-Pacific';
+          if (state.length === 2 && state === state.toUpperCase()) return 'US';
+          return 'Other';
+        };
+        (d.byState || []).forEach(s => {
+          const country = stateToCountry(s.state);
+          countryMap[country] = (countryMap[country] || 0) + s.count;
+        });
+        const countryEl = document.getElementById('by-country');
+        const countries = Object.entries(countryMap).sort((a, b) => b[1] - a[1]);
+        countryEl.innerHTML = countries.map(([country, count]) =>
+          `<div class="breakdown-row"><span class="breakdown-key">${esc(country)}</span><span class="breakdown-val">${fmt(count)}</span></div>`
+        ).join('');
 
         // By state
         const stateEl = document.getElementById('by-state');
