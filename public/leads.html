@@ -164,6 +164,16 @@
         <div class="tam-label">Total Leads</div>
       </div>
       <div class="tam-card">
+        <div class="tam-value" id="tam-contactable">-</div>
+        <div class="tam-label">Contactable</div>
+        <div class="tam-pct" id="tam-contactable-pct"></div>
+        <div class="coverage-bar"><div class="fill" id="contactable-bar" style="width:0%"></div></div>
+      </div>
+      <div class="tam-card" style="border-color: #f59e0b;">
+        <div class="tam-value" style="color:#f59e0b" id="tam-gold">-</div>
+        <div class="tam-label">Gold (email + phone)</div>
+      </div>
+      <div class="tam-card">
         <div class="tam-value" id="tam-email">-</div>
         <div class="tam-label">With Email</div>
         <div class="tam-pct" id="tam-email-pct"></div>
@@ -198,12 +208,22 @@
         <div id="by-country"></div>
       </div>
       <div class="breakdown-panel">
+        <h3>Top Cities</h3>
+        <div id="by-city"></div>
+      </div>
+      <div class="breakdown-panel">
         <h3>By State (Top 15)</h3>
         <div id="by-state"></div>
       </div>
+    </div>
+    <div class="breakdown-section" style="grid-template-columns: 1fr 1fr;">
       <div class="breakdown-panel">
         <h3>By Source</h3>
         <div id="by-source"></div>
+      </div>
+      <div class="breakdown-panel">
+        <h3>Email Sources</h3>
+        <div id="by-email-source"></div>
       </div>
     </div>
 
@@ -216,6 +236,7 @@
         <button class="btn btn-secondary" id="bulk-test-btn" onclick="startBulkScrape(true)">Test Mode</button>
         <button class="btn btn-secondary" id="website-btn" onclick="startWebsiteFinder()">Find Missing Websites</button>
         <button class="btn btn-secondary" id="email-btn" onclick="startVerify()">Find Missing Emails (SMTP)</button>
+        <a href="/api/leads/export?hasEmail=true&hasPhone=true" class="btn btn-secondary" style="text-decoration:none;border-color:#f59e0b;color:#f59e0b;">Export Gold</a>
         <a href="/api/leads/export?hasEmail=true" class="btn btn-secondary" style="text-decoration:none;">Export (Email)</a>
         <a href="/api/leads/export?hasPhone=true" class="btn btn-secondary" style="text-decoration:none;">Export (Phone)</a>
         <a href="/api/leads/export" class="btn btn-secondary" style="text-decoration:none;">Export All</a>
@@ -292,16 +313,20 @@
         const d = await res.json();
 
         document.getElementById('tam-total').textContent = fmt(d.total);
+        document.getElementById('tam-contactable').textContent = fmt(d.contactable || 0);
+        document.getElementById('tam-gold').textContent = fmt(d.goldLeads || 0);
         document.getElementById('tam-email').textContent = fmt(d.withEmail);
         document.getElementById('tam-phone').textContent = fmt(d.withPhone);
         document.getElementById('tam-website').textContent = fmt(d.withWebsite);
         document.getElementById('tam-firms').textContent = fmt(d.uniqueFirms);
         document.getElementById('tam-verified').textContent = fmt(d.verified);
 
+        document.getElementById('tam-contactable-pct').textContent = (d.coverage.contactable || 0) + '%';
         document.getElementById('tam-email-pct').textContent = d.coverage.email + '%';
         document.getElementById('tam-phone-pct').textContent = d.coverage.phone + '%';
         document.getElementById('tam-website-pct').textContent = d.coverage.website + '%';
 
+        document.getElementById('contactable-bar').style.width = (d.coverage.contactable || 0) + '%';
         document.getElementById('email-bar').style.width = d.coverage.email + '%';
         document.getElementById('phone-bar').style.width = d.coverage.phone + '%';
         document.getElementById('website-bar').style.width = d.coverage.website + '%';
@@ -339,6 +364,18 @@
         sourceEl.innerHTML = (d.bySource || []).slice(0, 15).map(s =>
           `<div class="breakdown-row"><span class="breakdown-key">${esc(s.source)}</span><span class="breakdown-val">${fmt(s.count)}</span></div>`
         ).join('');
+
+        // Top cities
+        const cityEl = document.getElementById('by-city');
+        cityEl.innerHTML = (d.topCities || []).slice(0, 15).map(c =>
+          `<div class="breakdown-row"><span class="breakdown-key">${esc(c.location)}</span><span class="breakdown-val">${fmt(c.count)}</span></div>`
+        ).join('');
+
+        // Email sources
+        const emailSourceEl = document.getElementById('by-email-source');
+        emailSourceEl.innerHTML = (d.emailSources || []).map(s =>
+          `<div class="breakdown-row"><span class="breakdown-key">${esc(s.email_source)}</span><span class="breakdown-val">${fmt(s.count)}</span></div>`
+        ).join('') || '<div class="breakdown-row"><span class="breakdown-key">No email sources yet</span></div>';
 
         // Populate state filter
         const stateSelect = document.getElementById('filter-state');
