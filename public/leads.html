@@ -203,14 +203,23 @@
       </div>
     </div>
 
+    <!-- Bulk Scrape Controls -->
+    <div class="panel" style="display:block; margin-bottom: 1rem;">
+      <h2 style="margin-bottom: 0.5rem;">Bulk Operations</h2>
+      <p class="hint" style="margin-bottom:0.75rem;">Scrape all 50 jurisdictions, find missing websites, and discover emails — all in one place.</p>
+      <div class="action-btns" style="flex-wrap:wrap;">
+        <button class="btn btn-primary" id="bulk-btn" onclick="startBulkScrape()">Scrape All (50 scrapers)</button>
+        <button class="btn btn-secondary" id="bulk-test-btn" onclick="startBulkScrape(true)">Test Mode</button>
+        <button class="btn btn-secondary" id="website-btn" onclick="startWebsiteFinder()">Find Missing Websites</button>
+        <button class="btn btn-secondary" id="email-btn" onclick="startVerify()">Find Missing Emails (SMTP)</button>
+        <a href="/api/leads/export?hasEmail=true" class="btn btn-secondary" style="text-decoration:none;">Export CSV</a>
+      </div>
+      <div id="bulk-status" style="margin-top:0.75rem;font-size:0.82rem;color:var(--text-muted);"></div>
+    </div>
+
     <!-- Actions -->
     <div class="panel" style="display:block; margin-bottom: 1rem;">
       <h2 style="margin-bottom: 0.5rem;">Lead Explorer</h2>
-      <div class="action-btns">
-        <button class="btn btn-primary" onclick="startVerify()">Find Missing Emails (SMTP)</button>
-        <span class="verify-status" id="verify-status"></span>
-        <a href="/api/leads/export?hasEmail=true" class="btn btn-secondary" style="text-decoration:none;">Export CSV (with email)</a>
-      </div>
     </div>
 
     <!-- Search/Filter -->
@@ -412,6 +421,109 @@
         } catch {
           clearInterval(interval);
           btn.textContent = 'Find Missing Emails (SMTP)';
+          btn.disabled = false;
+        }
+      }, 3000);
+    }
+
+    // --- Bulk Scrape ---
+    async function startBulkScrape(test = false) {
+      const btn = document.getElementById(test ? 'bulk-test-btn' : 'bulk-btn');
+      btn.disabled = true;
+      btn.textContent = 'Starting...';
+
+      try {
+        const res = await fetch('/api/scrape/bulk', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ test }),
+        });
+        const d = await res.json();
+
+        if (d.status === 'already_running') {
+          btn.textContent = 'Already running';
+        } else {
+          btn.textContent = 'Running...';
+        }
+        pollBulkStatus(btn, test);
+      } catch (err) {
+        btn.textContent = test ? 'Test Mode' : 'Scrape All (50 scrapers)';
+        btn.disabled = false;
+      }
+    }
+
+    function pollBulkStatus(btn, test) {
+      const statusEl = document.getElementById('bulk-status');
+      const interval = setInterval(async () => {
+        try {
+          const res = await fetch('/api/scrape/bulk/status');
+          const d = await res.json();
+
+          if (d.running) {
+            const pct = d.total > 0 ? Math.round((d.completed + d.failed + d.skipped) / d.total * 100) : 0;
+            statusEl.innerHTML = `<strong>${d.currentScraper}</strong> | ${d.completed + d.failed + d.skipped}/${d.total} scrapers (${pct}%) | ${fmt(d.totalLeads)} leads | ${fmt(d.totalEmails)} emails | ${fmt(d.totalNew)} new`;
+            btn.textContent = `Running ${d.currentScraper}... (${pct}%)`;
+          } else {
+            clearInterval(interval);
+            btn.textContent = test ? 'Test Mode' : 'Scrape All (50 scrapers)';
+            btn.disabled = false;
+            if (d.totalLeads > 0) {
+              statusEl.innerHTML = `<strong>Done!</strong> ${d.completed} scrapers, ${fmt(d.totalLeads)} leads, ${fmt(d.totalEmails)} emails, ${fmt(d.totalNew)} new in DB`;
+            }
+            loadStats();
+            loadLeads();
+          }
+        } catch {
+          clearInterval(interval);
+          btn.textContent = test ? 'Test Mode' : 'Scrape All (50 scrapers)';
+          btn.disabled = false;
+        }
+      }, 5000);
+    }
+
+    // --- Website Finder ---
+    async function startWebsiteFinder() {
+      const btn = document.getElementById('website-btn');
+      btn.disabled = true;
+      btn.textContent = 'Finding...';
+
+      try {
+        const res = await fetch('/api/leads/find-websites', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ limit: 500 }),
+        });
+        const d = await res.json();
+        if (d.status === 'already_running') {
+          btn.textContent = 'Already running';
+        }
+        pollWebsiteStatus(btn);
+      } catch {
+        btn.textContent = 'Find Missing Websites';
+        btn.disabled = false;
+      }
+    }
+
+    function pollWebsiteStatus(btn) {
+      const statusEl = document.getElementById('bulk-status');
+      const interval = setInterval(async () => {
+        try {
+          const res = await fetch('/api/leads/find-websites/status');
+          const d = await res.json();
+          const p = d.progress || {};
+          if (d.running) {
+            statusEl.textContent = `Finding websites: ${p.current || 0}/${p.total || 0} checked, ${p.found || 0} found`;
+          } else {
+            clearInterval(interval);
+            btn.textContent = 'Find Missing Websites';
+            btn.disabled = false;
+            statusEl.textContent = `Website finder done: ${p.found || 0} websites found`;
+            loadStats();
+            loadLeads();
+          }
+        } catch {
+          clearInterval(interval);
+          btn.textContent = 'Find Missing Websites';
           btn.disabled = false;
         }
       }, 3000);

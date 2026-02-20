@@ -366,6 +366,98 @@ app.get('/api/signals/scan-status', (req, res) => {
   });
 });
 
+// --- Bulk Scraper Endpoints ---
+
+let _bulkScraper = null;
+
+app.post('/api/scrape/bulk', (req, res) => {
+  const BulkScraper = require('./lib/bulk-scraper');
+  if (_bulkScraper && _bulkScraper.running) {
+    return res.json({ status: 'already_running', progress: _bulkScraper.getProgress() });
+  }
+
+  _bulkScraper = new BulkScraper();
+  const { test, countries, scrapers } = req.body || {};
+
+  res.json({ status: 'started', message: 'Bulk scrape started in background' });
+
+  _bulkScraper.run({ test: !!test, countries, scrapers })
+    .catch(err => console.error('[Bulk] Error:', err.message));
+});
+
+app.get('/api/scrape/bulk/status', (req, res) => {
+  if (!_bulkScraper) {
+    return res.json({ running: false, progress: null });
+  }
+  res.json(_bulkScraper.getProgress());
+});
+
+app.post('/api/scrape/bulk/cancel', (req, res) => {
+  if (_bulkScraper && _bulkScraper.running) {
+    _bulkScraper.cancel();
+    res.json({ ok: true });
+  } else {
+    res.json({ ok: false, message: 'No bulk scrape running' });
+  }
+});
+
+// --- Website Finder Endpoint ---
+
+let _websiteFinderRunning = false;
+let _websiteFinderProgress = null;
+
+app.post('/api/leads/find-websites', (req, res) => {
+  if (_websiteFinderRunning) {
+    return res.json({ status: 'already_running', progress: _websiteFinderProgress });
+  }
+
+  _websiteFinderRunning = true;
+  _websiteFinderProgress = { current: 0, total: 0, found: 0 };
+  res.json({ status: 'started', message: 'Website finder started in background' });
+
+  const { batchFindWebsites } = require('./lib/website-finder');
+  const leadDb = require('./lib/lead-db');
+
+  (async () => {
+    // Get leads without website from master DB
+    const db = leadDb.getDb();
+    const leadsNeedingWebsite = db.prepare(`
+      SELECT * FROM leads
+      WHERE (website = '' OR website IS NULL)
+        AND firm_name != '' AND firm_name IS NOT NULL
+      ORDER BY updated_at DESC
+      LIMIT ?
+    `).all(req.body.limit || 500);
+
+    _websiteFinderProgress.total = leadsNeedingWebsite.length;
+
+    const stats = await batchFindWebsites(leadsNeedingWebsite, {
+      onProgress: (current, total) => {
+        _websiteFinderProgress.current = current;
+        _websiteFinderProgress.total = total;
+      },
+      googleSearch: req.body.googleSearch !== false,
+    });
+
+    _websiteFinderProgress.found = stats.found;
+
+    // Save found websites back to DB
+    for (const lead of leadsNeedingWebsite) {
+      if (lead.website) {
+        leadDb.upsertLead(lead);
+      }
+    }
+
+    console.log(`[Website Finder] Done — found ${stats.found} websites out of ${leadsNeedingWebsite.length}`);
+  })()
+    .catch(err => console.error('[Website Finder] Error:', err.message))
+    .finally(() => { _websiteFinderRunning = false; });
+});
+
+app.get('/api/leads/find-websites/status', (req, res) => {
+  res.json({ running: _websiteFinderRunning, progress: _websiteFinderProgress });
+});
+
 // --- Lead Database Endpoints ---
 
 // Get TAM stats
@@ -552,7 +644,17 @@ const server = app.listen(PORT, () => {
         .then(count => console.log(`[Cron] Signal scan found ${count} new signals`))
         .catch(err => console.error(`[Cron] Signal scan failed: ${err.message}`));
     });
-    console.log('  📡 Signal Engine: job board scan scheduled every 6 hours\n');
+    console.log('  📡 Signal Engine: job board scan scheduled every 6 hours');
+
+    // Bulk Scraper — run all scrapers daily at 2 AM
+    cron.schedule('0 2 * * *', () => {
+      const BulkScraper = require('./lib/bulk-scraper');
+      const bulk = new BulkScraper();
+      bulk.run({ test: false, emailScrape: false })
+        .then(results => console.log(`[Cron] Bulk scrape: ${results.totalLeads} leads, ${results.totalNew} new`))
+        .catch(err => console.error(`[Cron] Bulk scrape failed: ${err.message}`));
+    });
+    console.log('  📊 Bulk Scraper: daily scrape scheduled at 2:00 AM\n');
   }
 });
 
