@@ -329,6 +329,7 @@
       <div class="action-btns">
         <button class="btn btn-primary" id="bulk-btn" onclick="startBulkScrape()">Scrape All</button>
         <button class="btn btn-secondary" id="bulk-test-btn" onclick="startBulkScrape(true)">Test Mode</button>
+        <button class="btn btn-secondary" id="prepop-btn" onclick="startPrepopulate()">Pre-populate DB</button>
         <button class="btn btn-secondary" id="website-btn" onclick="startWebsiteFinder()">Find Websites</button>
         <button class="btn btn-secondary" id="email-btn" onclick="startVerify()">Find Emails (SMTP)</button>
         <button class="btn btn-secondary" id="score-btn" onclick="scoreLeads()">Score All</button>
@@ -337,8 +338,9 @@
       <div class="action-btns">
         <a href="/api/leads/export?hasEmail=true&hasPhone=true" class="btn btn-secondary" style="text-decoration:none;border-color:#f59e0b;color:#f59e0b;">Export Gold</a>
         <a href="/api/leads/export/instantly" class="btn btn-primary" style="text-decoration:none;">Export Instantly</a>
+        <a href="/api/leads/export/smartlead" class="btn btn-secondary" style="text-decoration:none;">Export SmartLead</a>
+        <a href="/api/leads/export/by-score?minScore=55" class="btn btn-secondary" style="text-decoration:none;">Export Good+ (55+)</a>
         <a href="/api/leads/export?hasEmail=true" class="btn btn-secondary" style="text-decoration:none;">Export (Email)</a>
-        <a href="/api/leads/export?hasPhone=true" class="btn btn-secondary" style="text-decoration:none;">Export (Phone)</a>
         <a href="/api/leads/export" class="btn btn-secondary" style="text-decoration:none;">Export All</a>
       </div>
       <div id="bulk-status" style="margin-top:0.5rem;font-size:0.82rem;color:var(--text-muted);"></div>
@@ -367,12 +369,27 @@
 
     <!-- Search/Filter -->
     <div class="lead-controls">
-      <input type="text" class="search-input" id="search-input" placeholder="Search leads...">
+      <input type="text" class="search-input" id="search-input" placeholder="Search name, firm, city, email...">
+      <select id="filter-country">
+        <option value="">All Countries</option>
+        <option value="US">US</option>
+        <option value="CA">Canada</option>
+        <option value="UK">UK</option>
+        <option value="AU">Australia</option>
+        <option value="FR">France</option>
+        <option value="IE">Ireland</option>
+        <option value="HK">Hong Kong</option>
+        <option value="NZ">New Zealand</option>
+        <option value="SG">Singapore</option>
+      </select>
       <select id="filter-state">
         <option value="">All States</option>
       </select>
       <label style="font-size:0.82rem; display:flex; align-items:center; gap:0.3rem;">
-        <input type="checkbox" id="filter-email"> Has email
+        <input type="checkbox" id="filter-email"> Email
+      </label>
+      <label style="font-size:0.82rem; display:flex; align-items:center; gap:0.3rem;">
+        <input type="checkbox" id="filter-phone"> Phone
       </label>
       <span id="result-count" style="font-size:0.82rem; color:var(--text-muted);"></span>
     </div>
@@ -591,15 +608,19 @@
     // --- Leads ---
     async function loadLeads(append = false) {
       const q = document.getElementById('search-input').value.trim();
+      const country = document.getElementById('filter-country').value;
       const state = document.getElementById('filter-state').value;
       const hasEmail = document.getElementById('filter-email').checked;
+      const hasPhone = document.getElementById('filter-phone').checked;
 
       if (!append) currentOffset = 0;
 
       const params = new URLSearchParams({ limit: PAGE_SIZE, offset: currentOffset });
       if (q) params.set('q', q);
+      if (country) params.set('country', country);
       if (state) params.set('state', state);
       if (hasEmail) params.set('hasEmail', 'true');
+      if (hasPhone) params.set('hasPhone', 'true');
 
       try {
         const res = await fetch('/api/leads?' + params);
@@ -799,6 +820,57 @@
       }, 3000);
     }
 
+    // --- Pre-populate ---
+    async function startPrepopulate() {
+      const btn = document.getElementById('prepop-btn');
+      btn.disabled = true;
+      btn.textContent = 'Starting...';
+      try {
+        const res = await fetch('/api/leads/prepopulate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sources: ['AVVO', 'FINDLAW'], test: true }),
+        });
+        const d = await res.json();
+        if (d.status === 'already_running') {
+          btn.textContent = 'Already running';
+        } else {
+          btn.textContent = 'Running...';
+        }
+        pollPrepopStatus(btn);
+      } catch {
+        btn.textContent = 'Pre-populate DB';
+        btn.disabled = false;
+      }
+    }
+
+    function pollPrepopStatus(btn) {
+      const statusEl = document.getElementById('bulk-status');
+      const interval = setInterval(async () => {
+        try {
+          const res = await fetch('/api/leads/prepopulate/status');
+          const d = await res.json();
+          const p = d.progress || {};
+          if (d.running) {
+            statusEl.innerHTML = `Pre-populating <strong>${esc(p.currentSource)}</strong> (${p.current}/${p.total}) | ${fmt(p.totalLeads)} leads | ${fmt(p.totalNew)} new`;
+            btn.textContent = `${esc(p.currentSource)}... (${p.current}/${p.total})`;
+          } else {
+            clearInterval(interval);
+            btn.textContent = 'Pre-populate DB';
+            btn.disabled = false;
+            if (p.totalLeads > 0) {
+              statusEl.innerHTML = `Pre-population done: ${fmt(p.totalLeads)} leads, ${fmt(p.totalNew)} new in DB`;
+            }
+            refreshAll();
+          }
+        } catch {
+          clearInterval(interval);
+          btn.textContent = 'Pre-populate DB';
+          btn.disabled = false;
+        }
+      }, 5000);
+    }
+
     // --- Score Leads ---
     async function scoreLeads() {
       const btn = document.getElementById('score-btn');
@@ -822,8 +894,10 @@
       clearTimeout(searchTimeout);
       searchTimeout = setTimeout(() => loadLeads(), 300);
     });
+    document.getElementById('filter-country').addEventListener('change', () => loadLeads());
     document.getElementById('filter-state').addEventListener('change', () => loadLeads());
     document.getElementById('filter-email').addEventListener('change', () => loadLeads());
+    document.getElementById('filter-phone').addEventListener('change', () => loadLeads());
 
     // --- Refresh All ---
     async function refreshAll() {

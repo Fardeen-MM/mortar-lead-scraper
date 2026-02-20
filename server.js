@@ -474,10 +474,11 @@ app.get('/api/leads/stats', (req, res) => {
 app.get('/api/leads', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
-    const { q, state, country, hasEmail, limit, offset } = req.query;
+    const { q, state, country, hasEmail, hasPhone, limit, offset } = req.query;
     const leads = leadDb.searchLeads(q, {
       state, country,
       hasEmail: hasEmail === 'true',
+      hasPhone: hasPhone === 'true',
       limit: Math.min(parseInt(limit) || 100, 1000),
       offset: parseInt(offset) || 0,
     });
@@ -590,6 +591,92 @@ app.get('/api/leads/export/instantly', (req, res) => {
   }
 });
 
+// --- Pre-populate Master DB from Directories ---
+
+let _prepopRunning = false;
+let _prepopProgress = null;
+
+app.post('/api/leads/prepopulate', (req, res) => {
+  if (_prepopRunning) {
+    return res.json({ status: 'already_running', progress: _prepopProgress });
+  }
+
+  _prepopRunning = true;
+  _prepopProgress = { current: 0, total: 0, totalLeads: 0, totalNew: 0, currentSource: '', results: [] };
+  res.json({ status: 'started', message: 'Pre-population started in background' });
+
+  const leadDb = require('./lib/lead-db');
+  const { runPipeline } = require('./lib/pipeline');
+  const sources = req.body.sources || ['AVVO', 'FINDLAW'];
+  const test = req.body.test !== false; // Default test mode for safety
+
+  const scraperQueue = [];
+  for (const source of sources) {
+    scraperQueue.push({ state: source, test });
+  }
+
+  _prepopProgress.total = scraperQueue.length;
+
+  (async () => {
+    for (let i = 0; i < scraperQueue.length; i++) {
+      if (!_prepopRunning) break;
+      const { state, test: isTest } = scraperQueue[i];
+      _prepopProgress.current = i + 1;
+      _prepopProgress.currentSource = state;
+
+      try {
+        const result = await new Promise((resolve, reject) => {
+          const startTime = Date.now();
+          const emitter = runPipeline({
+            state,
+            test: isTest,
+            emailScrape: false,
+            waterfall: {
+              masterDbLookup: false,
+              fetchProfiles: false,
+              crossRefMartindale: false,
+              crossRefLawyersCom: false,
+              nameLookups: false,
+              emailCrawl: false,
+            },
+          });
+
+          let leads = [];
+          emitter.on('lead', d => leads.push(d.data));
+
+          emitter.on('complete', (data) => {
+            const time = Math.round((Date.now() - startTime) / 1000);
+            let dbStats = { inserted: 0, updated: 0 };
+            if (leads.length > 0) {
+              try { dbStats = leadDb.batchUpsert(leads, `prepop:${state}`); } catch {}
+            }
+            resolve({ state, leads: leads.length, newInDb: dbStats.inserted, updated: dbStats.updated, time });
+          });
+
+          emitter.on('error', (data) => reject(new Error(data.message)));
+          setTimeout(() => { emitter.emit('cancel'); reject(new Error('Timeout')); }, 10 * 60 * 1000);
+        });
+
+        _prepopProgress.totalLeads += result.leads;
+        _prepopProgress.totalNew += result.newInDb;
+        _prepopProgress.results.push(result);
+        console.log(`[Prepop] ${state}: ${result.leads} leads, ${result.newInDb} new (${result.time}s)`);
+      } catch (err) {
+        _prepopProgress.results.push({ state, error: err.message });
+        console.error(`[Prepop] ${state} failed: ${err.message}`);
+      }
+    }
+    _prepopProgress.currentSource = '';
+    console.log(`[Prepop] Done: ${_prepopProgress.totalLeads} leads, ${_prepopProgress.totalNew} new`);
+  })()
+    .catch(err => console.error('[Prepop] Error:', err.message))
+    .finally(() => { _prepopRunning = false; });
+});
+
+app.get('/api/leads/prepopulate/status', (req, res) => {
+  res.json({ running: _prepopRunning, progress: _prepopProgress });
+});
+
 // --- Freshness + Recommendations + Scoring ---
 
 // Get scrape freshness (when each state was last scraped)
@@ -627,6 +714,86 @@ app.post('/api/leads/score', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
     res.json(leadDb.batchScoreLeads());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- SmartLead Export ---
+
+app.get('/api/leads/export/smartlead', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { createObjectCsvWriter } = require('csv-writer');
+    const { generateOutputPath } = require('./lib/csv-handler');
+    const { state, country } = req.query;
+
+    const leads = leadDb.exportLeads({ state, country, hasEmail: true });
+    if (leads.length === 0) {
+      return res.status(404).json({ error: 'No leads with email found' });
+    }
+
+    // SmartLead format: email, first_name, last_name, company, phone, tags
+    const smartLeads = leads.map(l => ({
+      email: l.email,
+      first_name: l.first_name,
+      last_name: l.last_name,
+      company: l.firm_name || '',
+      phone: l.phone || '',
+      location: [l.city, l.state].filter(Boolean).join(', '),
+      tags: [l.practice_area, l.state, l.country].filter(Boolean).join(';'),
+    }));
+
+    const outputFile = generateOutputPath('SMARTLEAD-EXPORT', '');
+    const writer = createObjectCsvWriter({
+      path: outputFile,
+      header: [
+        { id: 'email', title: 'email' },
+        { id: 'first_name', title: 'first_name' },
+        { id: 'last_name', title: 'last_name' },
+        { id: 'company', title: 'company' },
+        { id: 'phone', title: 'phone' },
+        { id: 'location', title: 'location' },
+        { id: 'tags', title: 'tags' },
+      ],
+    });
+
+    writer.writeRecords(smartLeads).then(() => {
+      res.download(outputFile, path.basename(outputFile));
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Score-based Export ---
+
+app.get('/api/leads/export/by-score', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { writeCSV, generateOutputPath } = require('./lib/csv-handler');
+    const minScore = parseInt(req.query.minScore) || 55;
+    const { state, country } = req.query;
+
+    const db = leadDb.getDb();
+    let where = [`lead_score >= ?`];
+    let params = [minScore];
+
+    if (state) { where.push('state = ?'); params.push(state); }
+    if (country) { where.push('country = ?'); params.push(country); }
+
+    const leads = db.prepare(
+      `SELECT * FROM leads WHERE ${where.join(' AND ')} ORDER BY lead_score DESC, state, city`
+    ).all(...params);
+
+    if (leads.length === 0) {
+      return res.status(404).json({ error: `No leads with score >= ${minScore}` });
+    }
+
+    const outputFile = generateOutputPath(`SCORE-${minScore}`, '');
+    writeCSV(outputFile, leads).then(() => {
+      res.download(outputFile, path.basename(outputFile));
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
