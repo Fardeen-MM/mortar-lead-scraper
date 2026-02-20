@@ -487,6 +487,18 @@ app.get('/api/leads', (req, res) => {
   }
 });
 
+// Merge duplicate leads
+app.post('/api/leads/merge-duplicates', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const dryRun = req.body.dryRun === true;
+    const result = leadDb.mergeDuplicates({ dryRun });
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Export leads as CSV
 app.get('/api/leads/export', (req, res) => {
   try {

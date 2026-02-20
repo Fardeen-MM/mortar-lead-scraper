@@ -236,6 +236,7 @@
         <button class="btn btn-secondary" id="bulk-test-btn" onclick="startBulkScrape(true)">Test Mode</button>
         <button class="btn btn-secondary" id="website-btn" onclick="startWebsiteFinder()">Find Missing Websites</button>
         <button class="btn btn-secondary" id="email-btn" onclick="startVerify()">Find Missing Emails (SMTP)</button>
+        <button class="btn btn-secondary" id="dedup-btn" onclick="mergeDuplicates()">Merge Duplicates</button>
         <a href="/api/leads/export?hasEmail=true&hasPhone=true" class="btn btn-secondary" style="text-decoration:none;border-color:#f59e0b;color:#f59e0b;">Export Gold</a>
         <a href="/api/leads/export?hasEmail=true" class="btn btn-secondary" style="text-decoration:none;">Export (Email)</a>
         <a href="/api/leads/export?hasPhone=true" class="btn btn-secondary" style="text-decoration:none;">Export (Phone)</a>
@@ -544,6 +545,30 @@
           btn.disabled = false;
         }
       }, 5000);
+    }
+
+    // --- Merge Duplicates ---
+    async function mergeDuplicates() {
+      const btn = document.getElementById('dedup-btn');
+      btn.disabled = true;
+      btn.textContent = 'Merging...';
+      const statusEl = document.getElementById('bulk-status');
+
+      try {
+        const res = await fetch('/api/leads/merge-duplicates', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ dryRun: false }),
+        });
+        const d = await res.json();
+        statusEl.textContent = `Merged ${d.merged} duplicates (${d.duplicateGroups} groups, ${d.fieldsRecovered} fields recovered)`;
+        loadStats();
+        loadLeads();
+      } catch (err) {
+        statusEl.textContent = 'Merge failed: ' + err.message;
+      }
+      btn.textContent = 'Merge Duplicates';
+      btn.disabled = false;
     }
 
     // --- Website Finder ---
