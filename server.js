@@ -2153,6 +2153,96 @@ app.get('/api/leads/export/instantly/preview', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Lead Notes ===
+app.get('/api/leads/:id/notes', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getLeadNotes(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/:id/notes', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { content, author } = req.body;
+    if (!content) return res.status(400).json({ error: 'content required' });
+    res.json(leadDb.addNote(parseInt(req.params.id), content, author || 'user'));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/notes/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.deleteNote(parseInt(req.params.id));
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/notes/:id/pin', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.togglePinNote(parseInt(req.params.id));
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/notes/recent', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getRecentNotes(parseInt(req.query.limit) || 20));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Lead Timeline ===
+app.get('/api/leads/:id/timeline', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getLeadTimeline(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === A/B Variant Stats ===
+app.get('/api/sequences/:id/variants', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getSequenceVariantStats(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Smart Lists ===
+app.get('/api/smart-lists', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getSmartLists());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/smart-lists', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, description, filters } = req.body;
+    if (!name || !filters) return res.status(400).json({ error: 'name and filters required' });
+    const result = leadDb.createSmartList(name, description || '', filters);
+    res.json({ id: result.lastInsertRowid });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/smart-lists/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.deleteSmartList(parseInt(req.params.id));
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/smart-lists/:id/leads', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 100;
+    res.json(leadDb.getSmartListLeads(parseInt(req.params.id), limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {

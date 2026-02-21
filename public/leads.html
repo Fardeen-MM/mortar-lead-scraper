@@ -1312,6 +1312,24 @@
       <div id="instantly-preview" style="font-size:0.72rem;"></div>
     </div>
 
+    <!-- Smart Lists Panel -->
+    <div id="smart-lists-panel" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #fde047;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#a16207;">Smart Lists</span>
+        <button onclick="showCreateSmartListModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#a16207;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Smart List</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Dynamic lists that auto-update as new leads match criteria. Like Apollo's saved filters.</p>
+      <div id="smart-lists-list" style="display:flex;flex-wrap:wrap;gap:0.3rem;"></div>
+    </div>
+
+    <!-- Recent Notes Panel -->
+    <div id="notes-panel" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border:1px solid #94a3b8;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#475569;">Recent Notes</span>
+      </div>
+      <div id="recent-notes-list" style="max-height:150px;overflow-y:auto;"></div>
+    </div>
+
     <!-- Email Validation Panel -->
     <div id="email-validation-panel" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #86efac;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -7113,9 +7131,235 @@
       } catch {}
     })();
 
+    // === Lead Notes ===
+    async function showLeadNotes(leadId) {
+      try {
+        const notes = await fetch(`/api/leads/${leadId}/notes`).then(r => r.json());
+        const timeline = await fetch(`/api/leads/${leadId}/timeline`).then(r => r.json());
+
+        const modal = document.createElement('div');
+        modal.id = 'notes-modal';
+        modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
+        modal.innerHTML = `
+          <div style="background:#fff;border-radius:12px;padding:1.5rem;width:550px;max-width:90vw;max-height:80vh;overflow-y:auto;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+              <h3 style="margin:0;font-size:1rem;">Lead Notes & Timeline</h3>
+              <button onclick="document.getElementById('notes-modal').remove()" style="border:none;background:none;font-size:1.2rem;cursor:pointer;">&times;</button>
+            </div>
+
+            <div style="margin-bottom:1rem;">
+              <textarea id="new-note-content" rows="2" placeholder="Add a note..." style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.82rem;font-family:inherit;resize:vertical;"></textarea>
+              <button onclick="addLeadNote(${leadId})" style="margin-top:0.3rem;font-size:0.75rem;padding:0.25rem 0.6rem;background:#4f46e5;color:#fff;border:none;border-radius:4px;cursor:pointer;">Add Note</button>
+            </div>
+
+            <h4 style="font-size:0.85rem;margin:0 0 0.5rem;">Notes (${notes.length})</h4>
+            ${notes.map(n => `
+              <div style="padding:0.4rem;border-left:3px solid ${n.pinned ? '#f59e0b' : '#e5e7eb'};margin-bottom:0.3rem;background:#f9fafb;border-radius:0 4px 4px 0;">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-size:0.72rem;color:#6b7280;">${esc(n.author)} &bull; ${new Date(n.created_at).toLocaleDateString()}</span>
+                  <div>
+                    <button onclick="pinNote(${n.id}, ${leadId})" style="border:none;background:none;cursor:pointer;font-size:0.7rem;">${n.pinned ? '&#x1F4CC;' : '&#x1F4CE;'}</button>
+                    <button onclick="deleteNoteById(${n.id}, ${leadId})" style="border:none;background:none;cursor:pointer;font-size:0.7rem;color:#dc2626;">&times;</button>
+                  </div>
+                </div>
+                <div style="font-size:0.78rem;margin-top:0.2rem;white-space:pre-wrap;">${esc(n.content)}</div>
+              </div>
+            `).join('') || '<p style="font-size:0.72rem;color:#9ca3af;">No notes yet.</p>'}
+
+            <h4 style="font-size:0.85rem;margin:1rem 0 0.5rem;">Timeline (${timeline.length} events)</h4>
+            <div style="max-height:250px;overflow-y:auto;">
+              ${timeline.slice(0, 30).map(e => `
+                <div style="display:flex;gap:0.5rem;padding:0.25rem 0;border-bottom:1px solid #f3f4f6;font-size:0.72rem;">
+                  <span style="color:#9ca3af;min-width:60px;">${new Date(e.created_at).toLocaleDateString()}</span>
+                  <span style="font-weight:500;color:${getTimelineColor(e.type)};">${esc(e.event)}</span>
+                  ${e.details ? '<span style="color:#6b7280;">' + esc(e.details.substring(0, 80)) + '</span>' : ''}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    function getTimelineColor(type) {
+      return { activity: '#7c3aed', note: '#0369a1', system: '#6b7280', change: '#ea580c', sequence: '#be185d' }[type] || '#6b7280';
+    }
+
+    async function addLeadNote(leadId) {
+      const content = document.getElementById('new-note-content').value.trim();
+      if (!content) return;
+      await fetch(`/api/leads/${leadId}/notes`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content }),
+      });
+      document.getElementById('notes-modal').remove();
+      showLeadNotes(leadId);
+      loadRecentNotes();
+    }
+
+    async function deleteNoteById(noteId, leadId) {
+      await fetch('/api/notes/' + noteId, { method: 'DELETE' });
+      document.getElementById('notes-modal').remove();
+      showLeadNotes(leadId);
+      loadRecentNotes();
+    }
+
+    async function pinNote(noteId, leadId) {
+      await fetch('/api/notes/' + noteId + '/pin', { method: 'POST' });
+      document.getElementById('notes-modal').remove();
+      showLeadNotes(leadId);
+    }
+
+    async function loadRecentNotes() {
+      try {
+        const notes = await fetch('/api/notes/recent').then(r => r.json());
+        const list = document.getElementById('recent-notes-list');
+        if (notes.length === 0) {
+          list.innerHTML = '<span style="font-size:0.72rem;color:#94a3b8;">No notes yet. Click a lead to add notes.</span>';
+          return;
+        }
+        list.innerHTML = notes.slice(0, 10).map(n => `
+          <div style="display:flex;justify-content:space-between;padding:0.2rem 0;border-bottom:1px solid #e2e8f0;font-size:0.72rem;">
+            <div>
+              <span style="font-weight:500;">${esc(n.first_name)} ${esc(n.last_name)}</span>
+              <span style="color:#6b7280;margin-left:0.3rem;">${esc(n.content.substring(0, 60))}${n.content.length > 60 ? '...' : ''}</span>
+            </div>
+            <span style="color:#9ca3af;font-size:0.65rem;">${new Date(n.created_at).toLocaleDateString()}</span>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Notes error:', err); }
+    }
+
+    // === Smart Lists ===
+    async function loadSmartLists() {
+      try {
+        const lists = await fetch('/api/smart-lists').then(r => r.json());
+        const container = document.getElementById('smart-lists-list');
+        if (lists.length === 0) {
+          container.innerHTML = '<span style="font-size:0.72rem;color:#fde047;">No smart lists. Build dynamic lists with compound filters.</span>';
+          return;
+        }
+        container.innerHTML = lists.map(l => {
+          const filters = JSON.parse(l.filters);
+          return `
+            <span onclick="viewSmartList(${l.id})" style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.2rem 0.6rem;background:#fff;border:1px solid #fde047;border-radius:8px;font-size:0.72rem;cursor:pointer;">
+              <strong>${esc(l.name)}</strong>
+              <span style="color:#a16207;">${fmt(l.last_count)}</span>
+              <button onclick="event.stopPropagation();deleteSmartList(${l.id})" style="border:none;background:none;cursor:pointer;color:#dc2626;font-size:0.7rem;padding:0;">&times;</button>
+            </span>
+          `;
+        }).join('');
+      } catch (err) { console.error('Smart lists error:', err); }
+    }
+
+    function showCreateSmartListModal() {
+      const modal = document.createElement('div');
+      modal.id = 'smart-list-modal';
+      modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
+      modal.innerHTML = `
+        <div style="background:#fff;border-radius:12px;padding:1.5rem;width:500px;max-width:90vw;">
+          <h3 style="margin:0 0 1rem;font-size:1rem;color:#a16207;">Create Smart List</h3>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;">Name</label>
+            <input id="sl-name" type="text" placeholder="e.g., FL attorneys with email" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          </div>
+          <div style="margin-bottom:0.5rem;">
+            <label style="font-size:0.78rem;font-weight:600;">Logic</label>
+            <select id="sl-logic" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+              <option value="AND">Match ALL conditions (AND)</option>
+              <option value="OR">Match ANY condition (OR)</option>
+            </select>
+          </div>
+          <div id="sl-conditions">
+            <div class="sl-condition" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.3rem;margin-bottom:0.3rem;">
+              <select class="sl-field" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+                <option value="state">State</option><option value="city">City</option><option value="practice_area">Practice Area</option>
+                <option value="email">Email</option><option value="phone">Phone</option><option value="lead_score">Score</option>
+                <option value="pipeline_stage">Stage</option><option value="tags">Tags</option><option value="email_type">Email Type</option>
+              </select>
+              <select class="sl-op" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+                <option value="equals">Equals</option><option value="contains">Contains</option><option value="is_not_empty">Has Value</option>
+                <option value="is_empty">Is Empty</option><option value="greater_than">Greater Than</option><option value="less_than">Less Than</option>
+              </select>
+              <input class="sl-value" type="text" placeholder="Value" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+            </div>
+          </div>
+          <button onclick="addSmartListCondition()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fef9c3;color:#a16207;border:1px solid #fde047;border-radius:4px;cursor:pointer;margin-bottom:0.75rem;">+ Add Condition</button>
+          <div style="display:flex;justify-content:flex-end;gap:0.5rem;">
+            <button onclick="document.getElementById('smart-list-modal').remove()" style="padding:0.4rem 0.8rem;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;">Cancel</button>
+            <button onclick="createSmartListFromModal()" style="padding:0.4rem 0.8rem;border:none;border-radius:6px;background:#a16207;color:#fff;cursor:pointer;">Create</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+    }
+
+    function addSmartListCondition() {
+      const container = document.getElementById('sl-conditions');
+      const row = document.createElement('div');
+      row.className = 'sl-condition';
+      row.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.3rem;margin-bottom:0.3rem;';
+      row.innerHTML = `
+        <select class="sl-field" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+          <option value="state">State</option><option value="city">City</option><option value="practice_area">Practice Area</option>
+          <option value="email">Email</option><option value="phone">Phone</option><option value="lead_score">Score</option>
+          <option value="pipeline_stage">Stage</option><option value="tags">Tags</option><option value="email_type">Email Type</option>
+        </select>
+        <select class="sl-op" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+          <option value="equals">Equals</option><option value="contains">Contains</option><option value="is_not_empty">Has Value</option>
+          <option value="is_empty">Is Empty</option><option value="greater_than">Greater Than</option><option value="less_than">Less Than</option>
+        </select>
+        <input class="sl-value" type="text" placeholder="Value" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+      `;
+      container.appendChild(row);
+    }
+
+    async function createSmartListFromModal() {
+      const name = document.getElementById('sl-name').value.trim();
+      if (!name) { alert('Name required'); return; }
+      const logic = document.getElementById('sl-logic').value;
+      const rows = document.querySelectorAll('.sl-condition');
+      const conditions = [];
+      rows.forEach(row => {
+        conditions.push({
+          field: row.querySelector('.sl-field').value,
+          operator: row.querySelector('.sl-op').value,
+          value: row.querySelector('.sl-value').value.trim(),
+        });
+      });
+      await fetch('/api/smart-lists', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, description: '', filters: { logic, conditions } }),
+      });
+      document.getElementById('smart-list-modal').remove();
+      toast('Smart list "' + esc(name) + '" created', 'success');
+      loadSmartLists();
+    }
+
+    async function viewSmartList(id) {
+      try {
+        const leads = await fetch(`/api/smart-lists/${id}/leads?limit=20`).then(r => r.json());
+        const lists = await fetch('/api/smart-lists').then(r => r.json());
+        const list = lists.find(l => l.id === id);
+        toast(`"${list?.name}" — ${leads.length} leads matching`, 'info');
+        // Apply as filter
+        _currentLeads = leads;
+        renderLeadTable();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    async function deleteSmartList(id) {
+      await fetch('/api/smart-lists/' + id, { method: 'DELETE' });
+      toast('Smart list deleted', 'success');
+      loadSmartLists();
+    }
+
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
