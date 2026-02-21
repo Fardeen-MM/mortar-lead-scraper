@@ -2586,6 +2586,86 @@ app.get('/api/export-profiles/:id/run', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Contact Timeline (Batch 20) ===
+app.get('/api/leads/:id/contacts', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getContactTimeline(parseInt(req.params.id), parseInt(req.query.limit) || 50));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/:id/contacts', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { channel, direction, subject, notes, outcome } = req.body;
+    if (!channel) return res.status(400).json({ error: 'channel required' });
+    const result = leadDb.logContact(parseInt(req.params.id), channel, direction, subject, notes, outcome);
+    res.json({ id: result.lastInsertRowid });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/:id/contact-stats', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getContactStats(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/contacts/recent', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getRecentContacts(parseInt(req.query.limit) || 30));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Warm-Up Scoring (Batch 20) ===
+app.get('/api/leads/:id/warm-up', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.computeWarmUpScore(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/warm-up-batch', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.batchComputeWarmUp(parseInt(req.query.limit) || 50));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Multi-View (Batch 20) ===
+app.get('/api/leads/kanban', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getKanbanData(parseInt(req.query.limit) || 200));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/card-view', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getCardViewData({
+      state: req.query.state, sortBy: req.query.sort,
+      limit: parseInt(req.query.limit) || 50, offset: parseInt(req.query.offset) || 0,
+    }));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Search & Filters (Batch 20) ===
+app.get('/api/leads/typeahead', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.searchTypeahead(req.query.q, parseInt(req.query.limit) || 10));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/filter-facets', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getFilterFacets());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {

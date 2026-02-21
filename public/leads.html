@@ -1418,6 +1418,47 @@
       <div id="comparison-result" style="max-height:250px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Contact Timeline (Batch 20) -->
+    <div id="contacts-panel" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:1px solid #c4b5fd;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Recent Contacts</span>
+        <button onclick="loadRecentContacts()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ede9fe;color:#7c3aed;border:1px solid #c4b5fd;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Multi-channel contact tracking. Log emails, calls, LinkedIn messages, and meetings.</p>
+      <div id="contacts-list" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Warm-Up Scoring (Batch 20) -->
+    <div id="warmup-panel" style="background:linear-gradient(135deg,#fff1f2,#ffe4e6);border:1px solid #fda4af;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#e11d48;">Warm-Up Scores</span>
+        <button onclick="loadWarmUpScores()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ffe4e6;color:#e11d48;border:1px solid #fda4af;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Recency + frequency based engagement warmth. Cold leads need outreach.</p>
+      <div id="warmup-list" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Multi-View Toggle (Batch 20) -->
+    <div id="view-toggle" style="display:flex;gap:0.3rem;margin-bottom:0.5rem;">
+      <button onclick="switchView('table')" id="view-btn-table" style="font-size:0.72rem;padding:0.25rem 0.6rem;background:#4f46e5;color:#fff;border:none;border-radius:4px;cursor:pointer;">Table</button>
+      <button onclick="switchView('cards')" id="view-btn-cards" style="font-size:0.72rem;padding:0.25rem 0.6rem;background:#e5e7eb;color:#374151;border:none;border-radius:4px;cursor:pointer;">Cards</button>
+      <button onclick="switchView('kanban')" id="view-btn-kanban" style="font-size:0.72rem;padding:0.25rem 0.6rem;background:#e5e7eb;color:#374151;border:none;border-radius:4px;cursor:pointer;">Kanban</button>
+    </div>
+    <div id="card-view-container" style="display:none;"></div>
+    <div id="kanban-view-container" style="display:none;"></div>
+
+    <!-- Search Typeahead (Batch 20) -->
+    <div style="position:relative;margin-bottom:0.5rem;">
+      <input id="global-search" type="text" placeholder="Search leads by name, firm, email, city..." oninput="handleTypeahead(this.value)" style="width:100%;padding:0.5rem 0.8rem;border:1px solid #d1d5db;border-radius:8px;font-size:0.85rem;">
+      <div id="typeahead-dropdown" style="display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #d1d5db;border-radius:0 0 8px 8px;max-height:250px;overflow-y:auto;z-index:100;box-shadow:0 4px 6px rgba(0,0,0,0.1);"></div>
+    </div>
+
+    <!-- Filter Sidebar (Batch 20) -->
+    <details id="filter-sidebar" style="margin-bottom:0.5rem;">
+      <summary style="cursor:pointer;font-size:0.82rem;font-weight:600;color:#4f46e5;padding:0.3rem 0;">Filters &amp; Facets</summary>
+      <div id="filter-facets" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.5rem;padding:0.5rem 0;"></div>
+    </details>
+
     <!-- Leaderboard (Batch 19) -->
     <div id="leaderboard-panel" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #fbbf24;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -7736,6 +7777,237 @@
       } catch (err) { console.error('Cross-source error:', err); }
     }
 
+    // === Contact Timeline (Batch 20) ===
+    async function loadRecentContacts() {
+      try {
+        const contacts = await fetch('/api/contacts/recent?limit=15').then(r => r.json());
+        const el = document.getElementById('contacts-list');
+        if (contacts.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#7c3aed;">No contacts logged yet. Track outreach via the contact timeline.</span>';
+          return;
+        }
+        const channelIcons = { email: '&#x2709;', phone: '&#x260E;', linkedin: '&#x1F310;', meeting: '&#x1F4C5;', sms: '&#x1F4AC;', other: '&#x2022;' };
+        el.innerHTML = contacts.map(c => `
+          <div style="display:flex;align-items:center;gap:0.4rem;padding:0.2rem 0;border-bottom:1px solid #ede9fe;font-size:0.7rem;">
+            <span style="font-size:0.9rem;">${channelIcons[c.channel] || channelIcons.other}</span>
+            <strong>${esc(c.first_name || '')} ${esc(c.last_name || '')}</strong>
+            <span style="color:#6b7280;">${esc(c.channel)}</span>
+            <span style="color:#9ca3af;font-size:0.6rem;">${c.direction === 'inbound' ? '&larr;' : '&rarr;'}</span>
+            ${c.subject ? `<span style="flex:1;color:#4b5563;">${esc(c.subject)}</span>` : '<span style="flex:1;"></span>'}
+            ${c.outcome ? `<span style="font-size:0.6rem;padding:0.05rem 0.3rem;background:#ede9fe;color:#7c3aed;border-radius:3px;">${esc(c.outcome)}</span>` : ''}
+            <span style="color:#9ca3af;font-size:0.6rem;">${new Date(c.contact_at).toLocaleDateString()}</span>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Contacts error:', err); }
+    }
+
+    // === Warm-Up Scoring (Batch 20) ===
+    async function loadWarmUpScores() {
+      try {
+        const leads = await fetch('/api/leads/warm-up-batch?limit=15').then(r => r.json());
+        const el = document.getElementById('warmup-list');
+        if (leads.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#e11d48;">No warm-up data. Log contacts to see warm-up scores.</span>';
+          return;
+        }
+        el.innerHTML = leads.map(l => {
+          const s = l.warmUp;
+          const color = s.score >= 60 ? '#dc2626' : s.score >= 30 ? '#f59e0b' : '#3b82f6';
+          const label = s.score >= 60 ? 'Hot' : s.score >= 30 ? 'Warm' : 'Cold';
+          return `
+            <div style="display:flex;align-items:center;gap:0.4rem;padding:0.2rem 0;border-bottom:1px solid #ffe4e6;font-size:0.7rem;">
+              <span style="width:32px;text-align:center;font-weight:700;color:${color};">${s.score}</span>
+              <strong style="flex:1;">${esc(l.first_name || '')} ${esc(l.last_name || '')}</strong>
+              <span style="font-size:0.6rem;padding:0.05rem 0.3rem;background:${color}20;color:${color};border-radius:3px;font-weight:600;">${label}</span>
+              <span style="color:#6b7280;font-size:0.6rem;">${s.contactsLast30d} contacts/30d</span>
+            </div>
+          `;
+        }).join('');
+      } catch (err) { console.error('Warm-up error:', err); }
+    }
+
+    // === Multi-View (Batch 20) ===
+    let _currentView = 'table';
+
+    function switchView(view) {
+      _currentView = view;
+      ['table', 'cards', 'kanban'].forEach(v => {
+        const btn = document.getElementById('view-btn-' + v);
+        if (btn) { btn.style.background = v === view ? '#4f46e5' : '#e5e7eb'; btn.style.color = v === view ? '#fff' : '#374151'; }
+      });
+
+      // Toggle containers
+      const tableEl = document.querySelector('.leads-table-container') || document.querySelector('table');
+      if (tableEl) tableEl.style.display = view === 'table' ? '' : 'none';
+      document.getElementById('card-view-container').style.display = view === 'cards' ? 'grid' : 'none';
+      document.getElementById('kanban-view-container').style.display = view === 'kanban' ? 'flex' : 'none';
+
+      if (view === 'cards') loadCardView();
+      if (view === 'kanban') loadKanbanView();
+    }
+
+    async function loadCardView() {
+      try {
+        const leads = await fetch('/api/leads/card-view?limit=30').then(r => r.json());
+        const el = document.getElementById('card-view-container');
+        el.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.5rem;';
+        el.innerHTML = leads.map(l => `
+          <div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:0.6rem;font-size:0.72rem;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.3rem;">
+              <strong>${esc(l.first_name || '')} ${esc(l.last_name || '')}</strong>
+              <span style="font-size:0.65rem;padding:0.1rem 0.3rem;background:${l.lead_score >= 60 ? '#dcfce7' : '#fef3c7'};color:${l.lead_score >= 60 ? '#16a34a' : '#b45309'};border-radius:4px;font-weight:600;">${l.lead_score}</span>
+            </div>
+            ${l.firm_name ? `<div style="color:#6b7280;font-size:0.68rem;">${esc(l.firm_name)}</div>` : ''}
+            <div style="color:#9ca3af;font-size:0.65rem;">${esc(l.city || '')}${l.city && l.state ? ', ' : ''}${esc(l.state || '')}</div>
+            <div style="display:flex;gap:0.3rem;margin-top:0.3rem;flex-wrap:wrap;">
+              ${l.email ? '<span style="font-size:0.6rem;padding:0.05rem 0.2rem;background:#dbeafe;color:#2563eb;border-radius:3px;">email</span>' : ''}
+              ${l.phone ? '<span style="font-size:0.6rem;padding:0.05rem 0.2rem;background:#dcfce7;color:#16a34a;border-radius:3px;">phone</span>' : ''}
+              ${l.website ? '<span style="font-size:0.6rem;padding:0.05rem 0.2rem;background:#fef3c7;color:#b45309;border-radius:3px;">web</span>' : ''}
+              ${l.linkedin_url ? '<span style="font-size:0.6rem;padding:0.05rem 0.2rem;background:#e0e7ff;color:#4338ca;border-radius:3px;">LI</span>' : ''}
+            </div>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Card view error:', err); }
+    }
+
+    async function loadKanbanView() {
+      try {
+        const data = await fetch('/api/leads/kanban?limit=20').then(r => r.json());
+        const el = document.getElementById('kanban-view-container');
+        el.style.cssText = 'display:flex;gap:0.5rem;overflow-x:auto;padding:0.5rem 0;';
+        const stageColors = { new: '#3b82f6', contacted: '#f59e0b', qualified: '#22c55e', proposal: '#8b5cf6', negotiation: '#ec4899', won: '#059669', lost: '#6b7280' };
+
+        el.innerHTML = data.stages.map(stage => {
+          const leads = data.data[stage] || [];
+          const color = stageColors[stage] || '#6b7280';
+          return `
+            <div style="min-width:180px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:0.5rem;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem;">
+                <span style="font-weight:600;font-size:0.75rem;color:${color};text-transform:capitalize;">${stage}</span>
+                <span style="font-size:0.65rem;padding:0.1rem 0.3rem;background:${color}20;color:${color};border-radius:4px;">${leads.length}</span>
+              </div>
+              ${leads.slice(0, 10).map(l => `
+                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:4px;padding:0.3rem;margin-bottom:0.3rem;font-size:0.68rem;">
+                  <div style="font-weight:600;">${esc(l.first_name || '')} ${esc(l.last_name || '')}</div>
+                  <div style="color:#6b7280;font-size:0.6rem;">${esc(l.firm_name || '')}</div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }).join('');
+      } catch (err) { console.error('Kanban view error:', err); }
+    }
+
+    // === Search Typeahead (Batch 20) ===
+    let _typeaheadTimer = null;
+
+    function handleTypeahead(query) {
+      clearTimeout(_typeaheadTimer);
+      const dropdown = document.getElementById('typeahead-dropdown');
+      if (!query || query.length < 2) { dropdown.style.display = 'none'; return; }
+
+      _typeaheadTimer = setTimeout(async () => {
+        try {
+          const results = await fetch('/api/leads/typeahead?q=' + encodeURIComponent(query) + '&limit=8').then(r => r.json());
+          if (results.length === 0) { dropdown.style.display = 'none'; return; }
+
+          const matchColors = { name: '#4f46e5', firm: '#059669', email: '#dc2626', city: '#b45309' };
+          dropdown.innerHTML = results.map(r => `
+            <div onclick="selectTypeaheadResult(${r.id})" style="display:flex;align-items:center;gap:0.4rem;padding:0.4rem 0.8rem;cursor:pointer;border-bottom:1px solid #f3f4f6;font-size:0.78rem;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background=''">
+              <span style="font-size:0.6rem;padding:0.05rem 0.3rem;background:${matchColors[r.match_type]}20;color:${matchColors[r.match_type]};border-radius:3px;">${r.match_type}</span>
+              <strong>${esc(r.first_name || '')} ${esc(r.last_name || '')}</strong>
+              <span style="color:#6b7280;flex:1;">${esc(r.firm_name || '')}</span>
+              <span style="color:#9ca3af;font-size:0.68rem;">${esc(r.city || '')}${r.city && r.state ? ', ' : ''}${esc(r.state || '')}</span>
+              <span style="font-size:0.65rem;font-weight:600;color:${r.lead_score >= 60 ? '#16a34a' : '#f59e0b'};">${r.lead_score}</span>
+            </div>
+          `).join('');
+          dropdown.style.display = 'block';
+        } catch (err) { dropdown.style.display = 'none'; }
+      }, 250);
+    }
+
+    function selectTypeaheadResult(leadId) {
+      document.getElementById('typeahead-dropdown').style.display = 'none';
+      document.getElementById('global-search').value = '';
+      // Focus on this lead in the table
+      _currentLeads = _currentLeads || [];
+      const lead = _currentLeads.find(l => l.id === leadId);
+      if (lead) {
+        toast('Found: ' + (lead.first_name || '') + ' ' + (lead.last_name || ''), 'info');
+      } else {
+        fetch('/api/leads/' + leadId).then(r => r.json()).then(l => {
+          toast('Lead: ' + (l.first_name || '') + ' ' + (l.last_name || '') + ' (score: ' + l.lead_score + ')', 'info');
+        }).catch(() => {});
+      }
+    }
+
+    // Hide typeahead on click outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#global-search') && !e.target.closest('#typeahead-dropdown')) {
+        document.getElementById('typeahead-dropdown').style.display = 'none';
+      }
+    });
+
+    // === Filter Facets (Batch 20) ===
+    async function loadFilterFacets() {
+      try {
+        const facets = await fetch('/api/leads/filter-facets').then(r => r.json());
+        const el = document.getElementById('filter-facets');
+
+        let html = '';
+
+        // States
+        html += `<div><strong style="font-size:0.72rem;color:#4f46e5;">States</strong><div style="max-height:120px;overflow-y:auto;margin-top:0.2rem;">`;
+        html += facets.states.slice(0, 15).map(s => `
+          <div onclick="applyFacetFilter('state','${esc(s.state)}')" style="display:flex;justify-content:space-between;padding:0.15rem 0;cursor:pointer;font-size:0.68rem;" onmouseover="this.style.background='#eef2ff'" onmouseout="this.style.background=''">
+            <span>${esc(s.state)}</span><span style="color:#6b7280;">${fmt(s.count)}</span>
+          </div>
+        `).join('');
+        html += `</div></div>`;
+
+        // Practice Areas
+        html += `<div><strong style="font-size:0.72rem;color:#4f46e5;">Practice Areas</strong><div style="max-height:120px;overflow-y:auto;margin-top:0.2rem;">`;
+        html += facets.practiceAreas.slice(0, 10).map(p => `
+          <div onclick="applyFacetFilter('practice_area','${esc(p.practice_area)}')" style="display:flex;justify-content:space-between;padding:0.15rem 0;cursor:pointer;font-size:0.68rem;" onmouseover="this.style.background='#eef2ff'" onmouseout="this.style.background=''">
+            <span>${esc(p.practice_area).substring(0, 25)}</span><span style="color:#6b7280;">${fmt(p.count)}</span>
+          </div>
+        `).join('');
+        html += `</div></div>`;
+
+        // Score Ranges
+        html += `<div><strong style="font-size:0.72rem;color:#4f46e5;">Score Ranges</strong><div style="margin-top:0.2rem;">`;
+        html += facets.scoreRanges.map(r => `
+          <div onclick="applyFacetFilter('score','${r.min}-${r.max}')" style="display:flex;justify-content:space-between;padding:0.15rem 0;cursor:pointer;font-size:0.68rem;" onmouseover="this.style.background='#eef2ff'" onmouseout="this.style.background=''">
+            <span>${r.label}</span><span style="color:#6b7280;">${fmt(r.count)}</span>
+          </div>
+        `).join('');
+        html += `</div></div>`;
+
+        // Pipeline Stages
+        html += `<div><strong style="font-size:0.72rem;color:#4f46e5;">Pipeline Stages</strong><div style="margin-top:0.2rem;">`;
+        html += facets.stages.map(s => `
+          <div onclick="applyFacetFilter('pipeline_stage','${esc(s.stage)}')" style="display:flex;justify-content:space-between;padding:0.15rem 0;cursor:pointer;font-size:0.68rem;" onmouseover="this.style.background='#eef2ff'" onmouseout="this.style.background=''">
+            <span style="text-transform:capitalize;">${esc(s.stage)}</span><span style="color:#6b7280;">${fmt(s.count)}</span>
+          </div>
+        `).join('');
+        html += `</div></div>`;
+
+        el.innerHTML = html;
+      } catch (err) { console.error('Facets error:', err); }
+    }
+
+    function applyFacetFilter(field, value) {
+      toast('Filtering by ' + field + ': ' + value, 'info');
+      // Apply filter to lead table search
+      const searchInput = document.getElementById('global-search');
+      if (searchInput) searchInput.value = value;
+      // Reload with filter
+      fetch('/api/leads?limit=200&' + field + '=' + encodeURIComponent(value)).then(r => r.json()).then(d => {
+        _currentLeads = d.leads || d;
+        renderLeadTable();
+      }).catch(() => {});
+    }
+
     // === Leaderboard (Batch 19) ===
     async function loadLeaderboard() {
       try {
@@ -8159,7 +8431,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
