@@ -1798,6 +1798,135 @@ app.get('/api/signals/admission-stats', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Outreach Sequences ===
+app.get('/api/sequences', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getSequences());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/sequences', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, description } = req.body;
+    if (!name) return res.status(400).json({ error: 'name required' });
+    const result = leadDb.createSequence(name, description || '');
+    res.json({ id: result.lastInsertRowid, name });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/sequences/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.deleteSequence(parseInt(req.params.id));
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/sequences/:id/steps', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { stepNumber, channel, subject, body, delayDays, variant } = req.body;
+    const result = leadDb.addSequenceStep(parseInt(req.params.id), stepNumber || 1, channel || 'email', subject || '', body || '', delayDays || 0, variant || 'A');
+    res.json({ id: result.lastInsertRowid });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/sequences/:id/enroll', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds } = req.body;
+    if (!leadIds || !Array.isArray(leadIds)) return res.status(400).json({ error: 'leadIds array required' });
+    res.json(leadDb.enrollInSequence(parseInt(req.params.id), leadIds));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/sequences/:id/enrollments', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getSequenceEnrollments(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/sequences/render/:stepId/:leadId', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const result = leadDb.renderSequenceStep(parseInt(req.params.stepId), parseInt(req.params.leadId));
+    if (!result) return res.status(404).json({ error: 'Step or lead not found' });
+    res.json(result);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Lead Activity Tracking ===
+app.post('/api/leads/:id/activity', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { action, details } = req.body;
+    if (!action) return res.status(400).json({ error: 'action required' });
+    leadDb.trackActivity(parseInt(req.params.id), action, details || '');
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/:id/activities', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 50;
+    res.json(leadDb.getLeadActivities(parseInt(req.params.id), limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/:id/engagement', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json({ score: leadDb.getEngagementScore(parseInt(req.params.id)) });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/most-engaged', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 20;
+    res.json(leadDb.getMostEngagedLeads(limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Firm Enrichment ===
+app.post('/api/firms/enrich', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.enrichFirmData());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/firms/directory', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 50;
+    const minSize = parseInt(req.query.minSize) || 2;
+    res.json(leadDb.getFirmDirectory(limit, minSize));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Lookalike Finder ===
+app.get('/api/leads/:id/lookalikes', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 20;
+    res.json(leadDb.findLookalikes(parseInt(req.params.id), limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/batch-lookalikes', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds, limit } = req.body;
+    if (!leadIds || !Array.isArray(leadIds)) return res.status(400).json({ error: 'leadIds array required' });
+    res.json(leadDb.findBatchLookalikes(leadIds, limit || 50));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {

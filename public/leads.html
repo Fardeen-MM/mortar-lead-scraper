@@ -1169,6 +1169,36 @@
       <div id="admissions-list" style="display:flex;flex-wrap:wrap;gap:0.5rem;"></div>
     </div>
 
+    <!-- Outreach Sequences Panel -->
+    <div id="sequences-panel" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:1px solid #d8b4fe;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Outreach Sequences</span>
+        <button onclick="showCreateSequenceModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#7c3aed;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Sequence</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Multi-step email templates with personalization. Enroll leads and generate copy.</p>
+      <div id="sequences-list" style="display:flex;flex-direction:column;gap:0.4rem;"></div>
+    </div>
+
+    <!-- Firm Directory Panel -->
+    <div id="firm-directory-panel" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #7dd3fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#0369a1;">Firm Directory</span>
+        <button onclick="runFirmEnrichment()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#0369a1;color:#fff;border:none;border-radius:4px;cursor:pointer;">Enrich Firms</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Firms with 2+ attorneys in the database. Click to filter by firm.</p>
+      <div id="firm-directory-list" style="max-height:200px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Most Engaged Leads Panel -->
+    <div id="engagement-panel" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #fcd34d;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#b45309;">Most Engaged Leads</span>
+        <span id="engagement-count" style="font-size:0.7rem;color:#92400e;"></span>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Leads with the most activity (views, emails, calls). Higher engagement = warmer lead.</p>
+      <div id="engaged-leads-list" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
     <!-- Email Validation Panel -->
     <div id="email-validation-panel" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #86efac;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -1913,6 +1943,8 @@
     <button onclick="openBulkEditModal()">Bulk Edit</button>
     <button onclick="moveSelectedToStage()">Move Stage</button>
     <button onclick="compareSelected()">Compare</button>
+    <button onclick="enrollSelectedInSequence()">Enroll</button>
+    <button onclick="findLookalikesSelected()">Lookalikes</button>
     <button onclick="deleteSelected()">Delete</button>
     <button onclick="clearSelection()" style="background:transparent;border-color:rgba(255,255,255,0.4);">&times; Clear</button>
   </div>
@@ -6165,9 +6197,348 @@
       }
     }
 
+    // === Outreach Sequences ===
+    async function loadSequences() {
+      try {
+        const seqs = await fetch('/api/sequences').then(r => r.json());
+        const list = document.getElementById('sequences-list');
+        if (seqs.length === 0) {
+          list.innerHTML = '<span style="font-size:0.72rem;color:#a78bfa;">No sequences yet. Create one to start building outreach templates.</span>';
+          return;
+        }
+        list.innerHTML = seqs.map(s => `
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:0.4rem 0.6rem;background:#fff;border:1px solid #e9d5ff;border-radius:6px;">
+            <div>
+              <strong style="font-size:0.8rem;color:#7c3aed;">${esc(s.name)}</strong>
+              <span style="font-size:0.7rem;color:#6b7280;margin-left:0.4rem;">${s.steps?.length || 0} steps</span>
+              ${s.description ? '<br><span style="font-size:0.68rem;color:#9ca3af;">' + esc(s.description) + '</span>' : ''}
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+              <span style="font-size:0.68rem;color:#7c3aed;font-weight:600;">${fmt(s.enrolled)} enrolled / ${fmt(s.active)} active</span>
+              <button onclick="showSequenceDetail(${s.id})" style="font-size:0.65rem;padding:0.15rem 0.4rem;background:#ede9fe;color:#7c3aed;border:1px solid #d8b4fe;border-radius:4px;cursor:pointer;">View</button>
+              <button onclick="deleteSequence(${s.id})" style="font-size:0.65rem;padding:0.15rem 0.4rem;background:#fef2f2;color:#dc2626;border:1px solid #fecaca;border-radius:4px;cursor:pointer;">Del</button>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Sequences error:', err); }
+    }
+
+    function showCreateSequenceModal() {
+      const modal = document.createElement('div');
+      modal.id = 'sequence-modal';
+      modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
+      modal.innerHTML = `
+        <div style="background:#fff;border-radius:12px;padding:1.5rem;width:500px;max-width:90vw;max-height:80vh;overflow-y:auto;">
+          <h3 style="margin:0 0 1rem;font-size:1.1rem;color:#7c3aed;">Create Outreach Sequence</h3>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;display:block;margin-bottom:0.25rem;">Sequence Name</label>
+            <input id="seq-name" type="text" placeholder="e.g., Cold Outreach" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;display:block;margin-bottom:0.25rem;">Description</label>
+            <input id="seq-desc" type="text" placeholder="Optional description" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          </div>
+          <h4 style="font-size:0.85rem;margin:1rem 0 0.5rem;">Step 1: Initial Email</h4>
+          <div style="margin-bottom:0.5rem;">
+            <label style="font-size:0.72rem;font-weight:600;display:block;margin-bottom:0.2rem;">Subject Line</label>
+            <input id="seq-subject-1" type="text" placeholder="Hi {{first_name}}, quick question about {{firm_name}}" style="width:100%;padding:0.35rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.8rem;">
+          </div>
+          <div style="margin-bottom:0.5rem;">
+            <label style="font-size:0.72rem;font-weight:600;display:block;margin-bottom:0.2rem;">Body</label>
+            <textarea id="seq-body-1" rows="4" placeholder="Hi {{first_name}},\n\nI noticed you're a {{practice_area}} attorney in {{city}}..." style="width:100%;padding:0.35rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.8rem;font-family:inherit;resize:vertical;"></textarea>
+          </div>
+          <p style="font-size:0.68rem;color:#9ca3af;">Variables: {{first_name}}, {{last_name}}, {{firm_name}}, {{city}}, {{state}}, {{practice_area}}, {{title}}, {{email}}</p>
+          <div style="display:flex;justify-content:flex-end;gap:0.5rem;margin-top:1rem;">
+            <button onclick="document.getElementById('sequence-modal').remove()" style="padding:0.4rem 0.8rem;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:0.82rem;">Cancel</button>
+            <button onclick="createSequence()" style="padding:0.4rem 0.8rem;border:none;border-radius:6px;background:#7c3aed;color:#fff;cursor:pointer;font-size:0.82rem;">Create Sequence</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+    }
+
+    async function createSequence() {
+      const name = document.getElementById('seq-name').value.trim();
+      if (!name) { alert('Name required'); return; }
+      const desc = document.getElementById('seq-desc').value.trim();
+      const subject = document.getElementById('seq-subject-1').value.trim();
+      const body = document.getElementById('seq-body-1').value.trim();
+
+      try {
+        const result = await fetch('/api/sequences', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, description: desc }),
+        }).then(r => r.json());
+
+        if (result.id && (subject || body)) {
+          await fetch(`/api/sequences/${result.id}/steps`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ stepNumber: 1, channel: 'email', subject, body, delayDays: 0 }),
+          });
+        }
+
+        document.getElementById('sequence-modal').remove();
+        toast('Sequence "' + esc(name) + '" created', 'success');
+        loadSequences();
+      } catch (err) { toast('Error creating sequence: ' + err.message, 'error'); }
+    }
+
+    async function deleteSequence(id) {
+      if (!confirm('Delete this sequence and all its steps?')) return;
+      await fetch('/api/sequences/' + id, { method: 'DELETE' });
+      toast('Sequence deleted', 'success');
+      loadSequences();
+    }
+
+    async function showSequenceDetail(id) {
+      try {
+        const seqs = await fetch('/api/sequences').then(r => r.json());
+        const seq = seqs.find(s => s.id === id);
+        if (!seq) return;
+        const enrollments = await fetch(`/api/sequences/${id}/enrollments`).then(r => r.json());
+
+        const modal = document.createElement('div');
+        modal.id = 'sequence-detail-modal';
+        modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
+        modal.innerHTML = `
+          <div style="background:#fff;border-radius:12px;padding:1.5rem;width:600px;max-width:90vw;max-height:80vh;overflow-y:auto;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+              <h3 style="margin:0;font-size:1.1rem;color:#7c3aed;">${esc(seq.name)}</h3>
+              <button onclick="document.getElementById('sequence-detail-modal').remove()" style="border:none;background:none;font-size:1.2rem;cursor:pointer;">&times;</button>
+            </div>
+            ${seq.description ? '<p style="font-size:0.78rem;color:#6b7280;margin-bottom:0.75rem;">' + esc(seq.description) + '</p>' : ''}
+
+            <h4 style="font-size:0.85rem;margin:0 0 0.5rem;">Steps (${seq.steps?.length || 0})</h4>
+            ${(seq.steps || []).map(st => `
+              <div style="background:#f5f3ff;border:1px solid #e9d5ff;border-radius:6px;padding:0.5rem 0.6rem;margin-bottom:0.4rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-size:0.75rem;font-weight:600;color:#7c3aed;">Step ${st.step_number} (${st.channel}${st.variant !== 'A' ? ' - Variant ' + st.variant : ''})</span>
+                  <span style="font-size:0.68rem;color:#9ca3af;">Delay: ${st.delay_days}d</span>
+                </div>
+                <div style="font-size:0.78rem;font-weight:500;margin-top:0.25rem;">${esc(st.subject || '(no subject)')}</div>
+                <div style="font-size:0.72rem;color:#6b7280;margin-top:0.15rem;white-space:pre-wrap;max-height:80px;overflow-y:auto;">${esc(st.body || '(no body)')}</div>
+              </div>
+            `).join('') || '<p style="font-size:0.72rem;color:#9ca3af;">No steps yet.</p>'}
+
+            <div style="margin-top:0.75rem;">
+              <h4 style="font-size:0.85rem;margin:0 0 0.5rem;">Add Step</h4>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;margin-bottom:0.4rem;">
+                <input id="new-step-subject" type="text" placeholder="Subject line..." style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+                <select id="new-step-delay" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+                  <option value="0">No delay</option><option value="1">1 day</option><option value="2">2 days</option><option value="3">3 days</option><option value="5">5 days</option><option value="7">7 days</option>
+                </select>
+              </div>
+              <textarea id="new-step-body" rows="2" placeholder="Email body..." style="width:100%;padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;font-family:inherit;resize:vertical;margin-bottom:0.4rem;"></textarea>
+              <button onclick="addStepToSequence(${id})" style="font-size:0.72rem;padding:0.25rem 0.6rem;background:#7c3aed;color:#fff;border:none;border-radius:4px;cursor:pointer;">Add Step</button>
+            </div>
+
+            <h4 style="font-size:0.85rem;margin:1rem 0 0.5rem;">Enrolled (${enrollments.length})</h4>
+            ${enrollments.length > 0 ? `
+              <div style="max-height:150px;overflow-y:auto;">
+                ${enrollments.slice(0, 20).map(e => `
+                  <div style="display:flex;justify-content:space-between;padding:0.2rem 0;border-bottom:1px solid #f3f4f6;font-size:0.72rem;">
+                    <span>${esc(e.first_name)} ${esc(e.last_name)} ${e.email ? '<span style="color:#6b7280;">(' + esc(e.email) + ')</span>' : ''}</span>
+                    <span style="color:${e.status === 'active' ? '#15803d' : '#9ca3af'};font-weight:500;">${e.status}</span>
+                  </div>
+                `).join('')}
+                ${enrollments.length > 20 ? '<p style="font-size:0.68rem;color:#9ca3af;">...and ' + (enrollments.length - 20) + ' more</p>' : ''}
+              </div>
+            ` : '<p style="font-size:0.72rem;color:#9ca3af;">No leads enrolled. Select leads and enroll them.</p>'}
+          </div>
+        `;
+        document.body.appendChild(modal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    async function addStepToSequence(seqId) {
+      const subject = document.getElementById('new-step-subject').value.trim();
+      const body = document.getElementById('new-step-body').value.trim();
+      const delayDays = parseInt(document.getElementById('new-step-delay').value) || 0;
+      if (!subject && !body) { alert('Subject or body required'); return; }
+
+      const seqs = await fetch('/api/sequences').then(r => r.json());
+      const seq = seqs.find(s => s.id === seqId);
+      const nextStep = (seq?.steps?.length || 0) + 1;
+
+      await fetch(`/api/sequences/${seqId}/steps`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ stepNumber: nextStep, channel: 'email', subject, body, delayDays }),
+      });
+      toast('Step added', 'success');
+      document.getElementById('sequence-detail-modal').remove();
+      showSequenceDetail(seqId);
+    }
+
+    async function enrollSelectedInSequence() {
+      const selected = [..._selectedIds];
+      if (selected.length === 0) { toast('Select leads first', 'error'); return; }
+
+      const seqs = await fetch('/api/sequences').then(r => r.json());
+      if (seqs.length === 0) { toast('Create a sequence first', 'error'); return; }
+
+      const seqId = seqs.length === 1 ? seqs[0].id : parseInt(prompt('Enter sequence ID:\n' + seqs.map(s => s.id + ': ' + s.name).join('\n')));
+      if (!seqId) return;
+
+      const result = await fetch(`/api/sequences/${seqId}/enroll`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ leadIds: selected }),
+      }).then(r => r.json());
+      toast(`Enrolled ${result.enrolled} leads in sequence`, 'success');
+      loadSequences();
+    }
+
+    function findLookalikesSelected() {
+      const selected = [..._selectedIds];
+      if (selected.length === 0) { toast('Select a lead first', 'error'); return; }
+      findLookalikes(selected[0]);
+    }
+
+    // === Firm Directory ===
+    async function loadFirmDirectory() {
+      try {
+        const firms = await fetch('/api/firms/directory?limit=30').then(r => r.json());
+        const list = document.getElementById('firm-directory-list');
+        if (firms.length === 0) {
+          list.innerHTML = '<span style="font-size:0.72rem;color:#7dd3fc;">Run firm enrichment to populate this directory.</span>';
+          return;
+        }
+        list.innerHTML = `
+          <table style="width:100%;font-size:0.72rem;border-collapse:collapse;">
+            <thead><tr style="text-align:left;color:#6b7280;border-bottom:1px solid #e5e7eb;">
+              <th style="padding:0.2rem 0.4rem;">Firm</th><th style="padding:0.2rem 0.4rem;">Size</th><th style="padding:0.2rem 0.4rem;">Emails</th><th style="padding:0.2rem 0.4rem;">Phones</th><th style="padding:0.2rem 0.4rem;">Locations</th>
+            </tr></thead>
+            <tbody>${firms.map(f => `
+              <tr onclick="document.getElementById('search-input').value='firm:${esc(f.firm_name)}';loadLeads();" style="cursor:pointer;border-bottom:1px solid #f3f4f6;" onmouseover="this.style.background='#f0f9ff'" onmouseout="this.style.background=''">
+                <td style="padding:0.25rem 0.4rem;font-weight:500;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(f.firm_name)}</td>
+                <td style="padding:0.25rem 0.4rem;"><strong>${f.size}</strong></td>
+                <td style="padding:0.25rem 0.4rem;color:${f.emails > 0 ? '#15803d' : '#d1d5db'};">${f.emails}</td>
+                <td style="padding:0.25rem 0.4rem;color:${f.phones > 0 ? '#0369a1' : '#d1d5db'};">${f.phones}</td>
+                <td style="padding:0.25rem 0.4rem;font-size:0.68rem;color:#9ca3af;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(f.locations || '')}</td>
+              </tr>
+            `).join('')}</tbody>
+          </table>
+        `;
+      } catch (err) { console.error('Firm directory error:', err); }
+    }
+
+    async function runFirmEnrichment() {
+      try {
+        const result = await fetch('/api/firms/enrich', { method: 'POST' }).then(r => r.json());
+        toast(`Enriched ${result.firmsEnriched} firms`, 'success');
+        loadFirmDirectory();
+      } catch (err) { toast('Enrichment error: ' + err.message, 'error'); }
+    }
+
+    // === Most Engaged Leads ===
+    async function loadEngagementPanel() {
+      try {
+        const leads = await fetch('/api/leads/most-engaged?limit=10').then(r => r.json());
+        const list = document.getElementById('engaged-leads-list');
+        const countEl = document.getElementById('engagement-count');
+        if (leads.length === 0) {
+          list.innerHTML = '<span style="font-size:0.72rem;color:#fbbf24;">No activity tracked yet. View, email, or tag leads to build engagement.</span>';
+          countEl.textContent = '';
+          return;
+        }
+        countEl.textContent = leads.length + ' engaged leads';
+        list.innerHTML = leads.map((l, i) => `
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0;border-bottom:1px solid #fef3c7;font-size:0.72rem;">
+            <div>
+              <span style="font-weight:500;">${esc(l.first_name)} ${esc(l.last_name)}</span>
+              <span style="color:#6b7280;margin-left:0.3rem;">${esc(l.firm_name || '')}${l.city ? ', ' + esc(l.city) : ''}</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.4rem;">
+              <span style="font-size:0.65rem;color:#b45309;font-weight:600;">${l.activity_count} actions</span>
+              <button onclick="showLeadActivities(${l.id})" style="font-size:0.6rem;padding:0.1rem 0.3rem;background:#fef3c7;border:1px solid #fcd34d;border-radius:3px;cursor:pointer;">View</button>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Engagement error:', err); }
+    }
+
+    async function showLeadActivities(leadId) {
+      try {
+        const activities = await fetch(`/api/leads/${leadId}/activities`).then(r => r.json());
+        const engagement = await fetch(`/api/leads/${leadId}/engagement`).then(r => r.json());
+
+        const modal = document.createElement('div');
+        modal.id = 'activity-modal';
+        modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
+        modal.innerHTML = `
+          <div style="background:#fff;border-radius:12px;padding:1.5rem;width:450px;max-width:90vw;max-height:70vh;overflow-y:auto;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+              <h3 style="margin:0;font-size:1rem;">Lead Activity (Score: ${engagement.score}/100)</h3>
+              <button onclick="document.getElementById('activity-modal').remove()" style="border:none;background:none;font-size:1.2rem;cursor:pointer;">&times;</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem;">
+              <div style="flex:1;height:6px;background:#e5e7eb;border-radius:3px;overflow:hidden;">
+                <div style="height:100%;width:${engagement.score}%;background:${engagement.score > 50 ? '#22c55e' : engagement.score > 20 ? '#f59e0b' : '#d1d5db'};border-radius:3px;"></div>
+              </div>
+              <span style="font-size:0.75rem;font-weight:600;">${engagement.score}/100</span>
+            </div>
+            ${activities.length > 0 ? activities.map(a => `
+              <div style="display:flex;justify-content:space-between;padding:0.3rem 0;border-bottom:1px solid #f3f4f6;font-size:0.75rem;">
+                <div>
+                  <span style="font-weight:500;color:${getActivityColor(a.action)};">${esc(a.action)}</span>
+                  ${a.details ? '<span style="color:#6b7280;margin-left:0.3rem;">' + esc(a.details) + '</span>' : ''}
+                </div>
+                <span style="color:#9ca3af;font-size:0.68rem;">${new Date(a.created_at).toLocaleDateString()}</span>
+              </div>
+            `).join('') : '<p style="font-size:0.78rem;color:#9ca3af;">No activities recorded.</p>'}
+          </div>
+        `;
+        document.body.appendChild(modal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    function getActivityColor(action) {
+      const colors = { viewed: '#6b7280', emailed: '#7c3aed', called: '#15803d', exported: '#0369a1', tagged: '#b45309', enriched: '#059669', stage_changed: '#dc2626', note_added: '#6366f1' };
+      return colors[action] || '#6b7280';
+    }
+
+    // === Lookalike Finder ===
+    async function findLookalikes(leadId) {
+      try {
+        const results = await fetch(`/api/leads/${leadId}/lookalikes?limit=15`).then(r => r.json());
+        if (results.length === 0) { toast('No lookalikes found', 'info'); return; }
+
+        const modal = document.createElement('div');
+        modal.id = 'lookalike-modal';
+        modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
+        modal.innerHTML = `
+          <div style="background:#fff;border-radius:12px;padding:1.5rem;width:600px;max-width:90vw;max-height:80vh;overflow-y:auto;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+              <h3 style="margin:0;font-size:1rem;">Lookalike Leads (${results.length} found)</h3>
+              <button onclick="document.getElementById('lookalike-modal').remove()" style="border:none;background:none;font-size:1.2rem;cursor:pointer;">&times;</button>
+            </div>
+            <p style="font-size:0.72rem;color:#6b7280;margin-bottom:0.75rem;">Leads with similar practice area, city, state, and firm size.</p>
+            <table style="width:100%;font-size:0.72rem;border-collapse:collapse;">
+              <thead><tr style="text-align:left;color:#6b7280;border-bottom:2px solid #e5e7eb;">
+                <th style="padding:0.3rem;">Name</th><th style="padding:0.3rem;">Firm</th><th style="padding:0.3rem;">Location</th><th style="padding:0.3rem;">Email</th><th style="padding:0.3rem;">Match</th>
+              </tr></thead>
+              <tbody>${results.map(r => `
+                <tr style="border-bottom:1px solid #f3f4f6;">
+                  <td style="padding:0.3rem;font-weight:500;">${esc(r.first_name)} ${esc(r.last_name)}</td>
+                  <td style="padding:0.3rem;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(r.firm_name || '-')}</td>
+                  <td style="padding:0.3rem;">${esc(r.city || '')}${r.state ? ', ' + esc(r.state) : ''}</td>
+                  <td style="padding:0.3rem;color:${r.email ? '#15803d' : '#d1d5db'};">${r.email ? esc(r.email) : '-'}</td>
+                  <td style="padding:0.3rem;"><span style="display:inline-block;padding:0.1rem 0.4rem;border-radius:8px;font-weight:600;font-size:0.68rem;background:${r.similarity_score >= 40 ? '#dcfce7;color:#15803d' : r.similarity_score >= 25 ? '#fef3c7;color:#b45309' : '#f3f4f6;color:#6b7280'};">${r.similarity_score}pts</span></td>
+                </tr>
+              `).join('')}</tbody>
+            </table>
+          </div>
+        `;
+        document.body.appendChild(modal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+      } catch (err) { toast('Error finding lookalikes: ' + err.message, 'error'); }
+    }
+
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
