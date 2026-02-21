@@ -3669,6 +3669,38 @@ app.get('/api/pipeline-health', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Affinity Scoring (Batch 38) ===
+app.get('/api/affinity-scoring', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getAffinityScoring(parseInt(req.query.limit) || 40));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Scraper Gaps (Batch 38) ===
+app.get('/api/scraper-gaps', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getScraperGaps());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Freshness Index (Batch 38) ===
+app.get('/api/freshness-index', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getFreshnessIndex(parseInt(req.query.limit) || 40));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Firm Growth (Batch 38) ===
+app.get('/api/firm-growth', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getFirmGrowth());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
