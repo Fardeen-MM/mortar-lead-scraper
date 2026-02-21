@@ -1256,6 +1256,62 @@
       <p style="font-size:0.72rem;color:#78716c;">Leads without engagement in 30+ days lose 5 score points. Keeps your best leads on top.</p>
     </div>
 
+    <!-- Intent Signals Panel -->
+    <div id="intent-panel" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #f9a8d4;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#be185d;">Intent Signals</span>
+        <span id="intent-high-count" style="font-size:0.7rem;padding:0.15rem 0.5rem;border-radius:10px;background:#fff;color:#be185d;font-weight:600;"></span>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Leads with strongest buying signals: new admissions, firm changes, engagement, data completeness.</p>
+      <div id="intent-list" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Routing Rules Panel -->
+    <div id="routing-panel" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #6ee7b7;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#059669;">Lead Routing Rules</span>
+        <div style="display:flex;gap:0.4rem;">
+          <button onclick="showCreateRoutingModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#059669;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Rule</button>
+          <button onclick="executeRoutingRules()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#fff;color:#059669;border:1px solid #6ee7b7;border-radius:4px;cursor:pointer;">Run All</button>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Auto-tag, route, or pipeline leads based on conditions (state, practice area, score, etc.).</p>
+      <div id="routing-list" style="display:flex;flex-direction:column;gap:0.3rem;"></div>
+    </div>
+
+    <!-- Completeness Heatmap Panel -->
+    <div id="heatmap-panel" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #93c5fd;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#2563eb;">Data Completeness Heatmap</span>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Field completeness % by state. Red = gaps to fill. Green = well-enriched.</p>
+      <div id="heatmap-grid" style="overflow-x:auto;"></div>
+      <div id="enrichment-recs" style="margin-top:0.5rem;"></div>
+    </div>
+
+    <!-- Instantly Export Panel -->
+    <div id="instantly-panel" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:1px solid #c4b5fd;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Instantly Export</span>
+        <button onclick="downloadInstantlyExport()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#7c3aed;color:#fff;border:none;border-radius:4px;cursor:pointer;">Download CSV</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Export leads formatted for Instantly import: DNC-filtered, email-only, with personalization fields.</p>
+      <div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.4rem;">
+        <select id="instantly-state" style="font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #d1d5db;border-radius:4px;">
+          <option value="">All States</option>
+        </select>
+        <select id="instantly-min-score" style="font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #d1d5db;border-radius:4px;">
+          <option value="">Any Score</option>
+          <option value="20">20+</option>
+          <option value="40">40+</option>
+          <option value="60">60+</option>
+          <option value="80">80+</option>
+        </select>
+        <button onclick="previewInstantlyExport()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ede9fe;color:#7c3aed;border:1px solid #c4b5fd;border-radius:4px;cursor:pointer;">Preview</button>
+      </div>
+      <div id="instantly-preview" style="font-size:0.72rem;"></div>
+    </div>
+
     <!-- Email Validation Panel -->
     <div id="email-validation-panel" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #86efac;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -6846,9 +6902,220 @@
       } catch (err) { toast('Error: ' + err.message, 'error'); }
     }
 
+    // === Intent Signals ===
+    async function loadIntentSignals() {
+      try {
+        const signals = await fetch('/api/leads/intent-signals').then(r => r.json());
+        const list = document.getElementById('intent-list');
+        const highIntent = signals.filter(s => s.intentScore >= 30);
+        document.getElementById('intent-high-count').textContent = highIntent.length + ' high-intent';
+
+        if (signals.length === 0) {
+          list.innerHTML = '<span style="font-size:0.72rem;color:#f9a8d4;">No intent signals yet. Build engagement and scrape more data.</span>';
+          return;
+        }
+        list.innerHTML = signals.slice(0, 15).map(s => `
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:0.2rem 0;border-bottom:1px solid #fce7f3;font-size:0.72rem;">
+            <div>
+              <span style="font-weight:500;">${esc(s.first_name)} ${esc(s.last_name)}</span>
+              <span style="color:#6b7280;margin-left:0.3rem;">${esc(s.firm_name || '')}${s.city ? ', ' + esc(s.city) : ''}</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.3rem;">
+              ${s.new_admission_pts > 0 ? '<span style="font-size:0.6rem;padding:0.1rem 0.3rem;background:#fef3c7;border-radius:3px;color:#b45309;">New Admission</span>' : ''}
+              ${s.firm_change_pts > 0 ? '<span style="font-size:0.6rem;padding:0.1rem 0.3rem;background:#fee2e2;border-radius:3px;color:#dc2626;">Firm Changed</span>' : ''}
+              <span style="font-size:0.65rem;font-weight:600;color:${s.intentScore >= 50 ? '#be185d' : s.intentScore >= 30 ? '#ea580c' : '#6b7280'};">${s.intentScore}</span>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Intent signals error:', err); }
+    }
+
+    // === Routing Rules ===
+    async function loadRoutingRules() {
+      try {
+        const rules = await fetch('/api/routing-rules').then(r => r.json());
+        const list = document.getElementById('routing-list');
+        if (rules.length === 0) {
+          list.innerHTML = '<span style="font-size:0.72rem;color:#6ee7b7;">No routing rules. Create one to auto-process leads.</span>';
+          return;
+        }
+        list.innerHTML = rules.map(r => {
+          const conds = JSON.parse(r.conditions);
+          return `
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:0.3rem 0.5rem;background:#fff;border:1px solid #a7f3d0;border-radius:6px;">
+              <div>
+                <strong style="font-size:0.78rem;color:#059669;">${esc(r.name)}</strong>
+                <span style="font-size:0.68rem;color:#6b7280;margin-left:0.3rem;">
+                  IF ${conds.map(c => esc(c.field) + ' ' + esc(c.operator) + ' ' + esc(c.value || '')).join(' AND ')}
+                  THEN ${esc(r.action_type)}: ${esc(r.action_value)}
+                </span>
+              </div>
+              <button onclick="deleteRoutingRule(${r.id})" style="font-size:0.65rem;padding:0.15rem 0.4rem;background:#fef2f2;color:#dc2626;border:1px solid #fecaca;border-radius:4px;cursor:pointer;">Del</button>
+            </div>
+          `;
+        }).join('');
+      } catch (err) { console.error('Routing error:', err); }
+    }
+
+    function showCreateRoutingModal() {
+      const modal = document.createElement('div');
+      modal.id = 'routing-modal';
+      modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
+      modal.innerHTML = `
+        <div style="background:#fff;border-radius:12px;padding:1.5rem;width:500px;max-width:90vw;">
+          <h3 style="margin:0 0 1rem;font-size:1rem;color:#059669;">Create Routing Rule</h3>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;">Rule Name</label>
+            <input id="route-name" type="text" placeholder="e.g., Tag FL leads as Southeast" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;">Condition</label>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.3rem;">
+              <select id="route-field" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+                <option value="state">State</option><option value="city">City</option><option value="practice_area">Practice Area</option>
+                <option value="lead_score">Lead Score</option><option value="email">Email</option><option value="phone">Phone</option>
+                <option value="pipeline_stage">Pipeline Stage</option><option value="email_type">Email Type</option>
+              </select>
+              <select id="route-op" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+                <option value="equals">Equals</option><option value="contains">Contains</option><option value="starts_with">Starts With</option>
+                <option value="is_empty">Is Empty</option><option value="is_not_empty">Is Not Empty</option>
+                <option value="greater_than">Greater Than</option><option value="less_than">Less Than</option>
+              </select>
+              <input id="route-value" type="text" placeholder="Value" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+            </div>
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;">Action</label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.3rem;">
+              <select id="route-action-type" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+                <option value="tag">Add Tag</option><option value="pipeline">Move to Pipeline Stage</option>
+              </select>
+              <input id="route-action-value" type="text" placeholder="Tag name or stage" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+            </div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:0.5rem;">
+            <button onclick="document.getElementById('routing-modal').remove()" style="padding:0.4rem 0.8rem;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;">Cancel</button>
+            <button onclick="createRoutingRuleFromModal()" style="padding:0.4rem 0.8rem;border:none;border-radius:6px;background:#059669;color:#fff;cursor:pointer;">Create</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+    }
+
+    async function createRoutingRuleFromModal() {
+      const name = document.getElementById('route-name').value.trim();
+      if (!name) { alert('Name required'); return; }
+      await fetch('/api/routing-rules', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          conditions: [{ field: document.getElementById('route-field').value, operator: document.getElementById('route-op').value, value: document.getElementById('route-value').value.trim() }],
+          actionType: document.getElementById('route-action-type').value,
+          actionValue: document.getElementById('route-action-value').value.trim(),
+        }),
+      });
+      document.getElementById('routing-modal').remove();
+      toast('Routing rule created', 'success');
+      loadRoutingRules();
+    }
+
+    async function deleteRoutingRule(id) {
+      await fetch('/api/routing-rules/' + id, { method: 'DELETE' });
+      toast('Rule deleted', 'success');
+      loadRoutingRules();
+    }
+
+    async function executeRoutingRules() {
+      try {
+        const result = await fetch('/api/routing-rules/run', { method: 'POST' }).then(r => r.json());
+        toast(`Routing: ${result.rulesRun} rules run, ${result.leadsAffected} leads affected`, 'success');
+        refreshAll();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    // === Completeness Heatmap ===
+    async function loadCompletenessHeatmap() {
+      try {
+        const data = await fetch('/api/leads/completeness-heatmap').then(r => r.json());
+        const grid = document.getElementById('heatmap-grid');
+        if (data.length === 0) { grid.innerHTML = '<span style="font-size:0.72rem;color:#93c5fd;">No data yet.</span>'; return; }
+
+        const fields = ['email', 'phone', 'website', 'firm_name', 'practice_area', 'title'];
+        const heatColor = (pct) => pct >= 60 ? '#dcfce7' : pct >= 30 ? '#fef3c7' : pct >= 10 ? '#fee2e2' : '#fef2f2';
+        const textColor = (pct) => pct >= 60 ? '#15803d' : pct >= 30 ? '#b45309' : '#dc2626';
+
+        grid.innerHTML = `
+          <table style="width:100%;font-size:0.68rem;border-collapse:collapse;">
+            <thead><tr style="color:#6b7280;">
+              <th style="padding:0.2rem 0.3rem;text-align:left;">State</th><th style="padding:0.2rem;text-align:center;">Total</th>
+              ${fields.map(f => `<th style="padding:0.2rem;text-align:center;">${f.replace('_', ' ')}</th>`).join('')}
+            </tr></thead>
+            <tbody>${data.slice(0, 15).map(s => `
+              <tr style="border-bottom:1px solid #f3f4f6;">
+                <td style="padding:0.2rem 0.3rem;font-weight:600;">${esc(s.state)}</td>
+                <td style="padding:0.2rem;text-align:center;">${fmt(s.total)}</td>
+                ${fields.map(f => `<td style="padding:0.2rem;text-align:center;background:${heatColor(s.fields[f])};color:${textColor(s.fields[f])};font-weight:500;">${s.fields[f]}%</td>`).join('')}
+              </tr>
+            `).join('')}</tbody>
+          </table>
+        `;
+
+        // Enrichment recommendations
+        const recs = await fetch('/api/leads/enrichment-recommendations').then(r => r.json());
+        const recsDiv = document.getElementById('enrichment-recs');
+        recsDiv.innerHTML = `
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;font-size:0.7rem;">
+            <span style="padding:0.15rem 0.5rem;background:#dbeafe;border-radius:4px;color:#2563eb;">${fmt(recs.crawlCandidates)} leads with website, no email (crawl candidates)</span>
+            <span style="padding:0.15rem 0.5rem;background:#dcfce7;border-radius:4px;color:#15803d;">${fmt(recs.domainCandidates)} leads with email, no website (derive domain)</span>
+          </div>
+        `;
+      } catch (err) { console.error('Heatmap error:', err); }
+    }
+
+    // === Instantly Export ===
+    async function previewInstantlyExport() {
+      try {
+        const state = document.getElementById('instantly-state').value;
+        const minScore = document.getElementById('instantly-min-score').value;
+        const qs = new URLSearchParams();
+        if (state) qs.set('state', state);
+        if (minScore) qs.set('minScore', minScore);
+        const data = await fetch('/api/leads/export/instantly/preview?' + qs.toString()).then(r => r.json());
+        document.getElementById('instantly-preview').innerHTML = `
+          <strong>${fmt(data.count)}</strong> leads ready for Instantly export
+          ${data.sample.length > 0 ? '<br>Sample: ' + data.sample.slice(0, 3).map(s => esc(s.first_name) + ' ' + esc(s.last_name) + ' &lt;' + esc(s.email) + '&gt;').join(', ') : ''}
+        `;
+      } catch (err) { document.getElementById('instantly-preview').textContent = 'Error: ' + err.message; }
+    }
+
+    function downloadInstantlyExport() {
+      const state = document.getElementById('instantly-state').value;
+      const minScore = document.getElementById('instantly-min-score').value;
+      const qs = new URLSearchParams();
+      if (state) qs.set('state', state);
+      if (minScore) qs.set('minScore', minScore);
+      window.location.href = '/api/leads/export/instantly?' + qs.toString();
+    }
+
+    // Populate Instantly state dropdown
+    (async () => {
+      try {
+        const states = await fetch('/api/leads/coverage').then(r => r.json());
+        const sel = document.getElementById('instantly-state');
+        if (sel && states && Array.isArray(states)) {
+          for (const s of states.sort((a, b) => b.count - a.count)) {
+            const opt = document.createElement('option');
+            opt.value = s.state; opt.textContent = s.state + ' (' + s.count + ')';
+            sel.appendChild(opt);
+          }
+        }
+      } catch {}
+    })();
+
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();

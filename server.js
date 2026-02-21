@@ -2053,6 +2053,106 @@ app.get('/api/leads/:id/enrichment-info', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Intent Signals ===
+app.get('/api/leads/intent-signals', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getIntentSignals());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/practice-trends', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getPracticeAreaTrends());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Routing Rules ===
+app.get('/api/routing-rules', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getRoutingRules());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/routing-rules', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, conditions, actionType, actionValue, priority } = req.body;
+    if (!name || !conditions || !actionType || !actionValue) {
+      return res.status(400).json({ error: 'name, conditions, actionType, actionValue required' });
+    }
+    const result = leadDb.createRoutingRule(name, conditions, actionType, actionValue, priority || 0);
+    res.json({ id: result.lastInsertRowid });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/routing-rules/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.deleteRoutingRule(parseInt(req.params.id));
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/routing-rules/run', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.runRoutingRules());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Completeness Heatmap ===
+app.get('/api/leads/completeness-heatmap', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getCompletenessHeatmap());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/enrichment-recommendations', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getEnrichmentRecommendations());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Instantly-Optimized Export ===
+app.get('/api/leads/export/instantly', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const leads = leadDb.exportForInstantly({
+      state: req.query.state, practiceArea: req.query.practice,
+      minScore: req.query.minScore, pipelineStage: req.query.stage,
+      tags: req.query.tags,
+    });
+    if (leads.length === 0) return res.status(404).json({ error: 'No leads match filters' });
+
+    const { createObjectCsvWriter } = require('csv-writer');
+    const tmpPath = path.join(OUTPUT_DIR, `instantly-export-${Date.now()}.csv`);
+    const headers = Object.keys(leads[0]).map(k => ({ id: k, title: k }));
+    const writer = createObjectCsvWriter({ path: tmpPath, header: headers });
+    writer.writeRecords(leads).then(() => {
+      res.download(tmpPath, 'instantly-leads.csv', () => {
+        try { fs.unlinkSync(tmpPath); } catch {}
+      });
+    });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/export/instantly/preview', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const leads = leadDb.exportForInstantly({
+      state: req.query.state, practiceArea: req.query.practice,
+      minScore: req.query.minScore, pipelineStage: req.query.stage,
+      tags: req.query.tags,
+    });
+    res.json({ count: leads.length, sample: leads.slice(0, 5) });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
