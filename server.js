@@ -3427,6 +3427,40 @@ app.post('/api/export-schedules/:id/run', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Propensity Model (Batch 31) ===
+app.get('/api/propensity', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 50;
+    res.json(leadDb.getPropensityScores(limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Cohort Analysis (Batch 31) ===
+app.get('/api/cohorts', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getCohortAnalysis());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Channel Preferences (Batch 31) ===
+app.get('/api/channel-preferences', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 30;
+    res.json(leadDb.getChannelPreferences(limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Jurisdiction Benchmarks (Batch 31) ===
+app.get('/api/benchmarks', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getJurisdictionBenchmarks());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {

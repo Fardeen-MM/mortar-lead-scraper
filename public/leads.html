@@ -1692,6 +1692,50 @@
       <div id="bulk-enrichment-runs" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Propensity Model (Batch 31) -->
+    <div id="propensity-panel" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:1px solid #c084fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Propensity Model</span>
+        <button onclick="loadPropensity()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#f3e8ff;color:#7c3aed;border:1px solid #c084fc;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Conversion likelihood scoring based on data completeness, engagement, firm size, and recency. Like Salesforce Einstein propensity.</p>
+      <div id="propensity-dist" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="propensity-list" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Cohort Analysis (Batch 31) -->
+    <div id="cohort-panel" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #6ee7b7;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#059669;">Cohort Analysis</span>
+        <button onclick="loadCohorts()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#d1fae5;color:#059669;border:1px solid #6ee7b7;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Group leads by acquisition week. Track progression, email rates, and quality over time. Like Mixpanel cohort analysis.</p>
+      <div id="cohort-comparison" style="margin-bottom:0.3rem;"></div>
+      <div id="cohort-table" style="max-height:200px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Channel Preferences (Batch 31) -->
+    <div id="channel-pref-panel" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid #fdba74;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#c2410c;">Channel Preferences</span>
+        <button onclick="loadChannelPrefs()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ffedd5;color:#c2410c;border:1px solid #fdba74;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Track communication channel effectiveness. Score response rates by channel. Like Outreach's channel optimization.</p>
+      <div id="channel-stats" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="channel-recs" style=""></div>
+    </div>
+
+    <!-- Jurisdiction Benchmarks (Batch 31) -->
+    <div id="benchmark-panel" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #93c5fd;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#2563eb;">Jurisdiction Benchmarks</span>
+        <button onclick="loadBenchmarks()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#dbeafe;color:#2563eb;border:1px solid #93c5fd;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Compare data quality across states/countries. Identify best and worst performing jurisdictions. Executive dashboard benchmarks.</p>
+      <div id="benchmark-global" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="benchmark-table" style="max-height:200px;overflow-y:auto;"></div>
+    </div>
+
     <!-- Sequence Templates (Batch 30) -->
     <div id="seq-templates-panel" style="background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1px solid #a5b4fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -9179,6 +9223,109 @@
       } catch (err) { toast('Process error: ' + err.message, 'error'); }
     }
 
+    // === Propensity Model (Batch 31) ===
+    async function loadPropensity() {
+      try {
+        const data = await fetch('/api/propensity?limit=30').then(r => r.json());
+        const dEl = document.getElementById('propensity-dist');
+        const colors = { high: '#16a34a', medium: '#f59e0b', low: '#dc2626' };
+        dEl.innerHTML = `
+          <div style="text-align:center;"><div style="font-size:1.1rem;font-weight:700;color:#16a34a;">${data.distribution.high}</div><div style="font-size:0.65rem;">High Propensity</div></div>
+          <div style="text-align:center;"><div style="font-size:1.1rem;font-weight:700;color:#f59e0b;">${data.distribution.medium}</div><div style="font-size:0.65rem;">Medium</div></div>
+          <div style="text-align:center;"><div style="font-size:1.1rem;font-weight:700;color:#dc2626;">${data.distribution.low}</div><div style="font-size:0.65rem;">Low</div></div>
+          <div style="text-align:center;"><div style="font-size:1.1rem;font-weight:700;color:#7c3aed;">${data.avgPropensity}%</div><div style="font-size:0.65rem;">Avg Score</div></div>
+        `;
+        const lEl = document.getElementById('propensity-list');
+        lEl.innerHTML = data.leads.slice(0, 15).map(l => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.2rem 0;border-bottom:1px solid #f3e8ff;">
+          <span style="font-size:0.72rem;">${l.first_name} ${l.last_name} <span style="color:#78716c;">${l.city || ''}</span></span>
+          <div style="display:flex;gap:0.3rem;align-items:center;">
+            <div style="width:40px;background:#e5e7eb;border-radius:2px;height:8px;"><div style="width:${l.propensity}%;background:${colors[l.likelihood]};height:100%;border-radius:2px;"></div></div>
+            <span style="font-size:0.65rem;font-weight:600;color:${colors[l.likelihood]};">${l.propensity}%</span>
+          </div>
+        </div>`).join('');
+      } catch (err) { console.error('Propensity error:', err); }
+    }
+
+    // === Cohort Analysis (Batch 31) ===
+    async function loadCohorts() {
+      try {
+        const data = await fetch('/api/cohorts').then(r => r.json());
+        const cEl = document.getElementById('cohort-comparison');
+        if (data.comparison) {
+          const c = data.comparison;
+          cEl.innerHTML = `<div style="display:flex;gap:0.8rem;font-size:0.72rem;flex-wrap:wrap;">
+            <span>Score trend: <strong style="color:${c.scoreImprovement >= 0 ? '#16a34a' : '#dc2626'};">${c.scoreImprovement >= 0 ? '+' : ''}${c.scoreImprovement}</strong></span>
+            <span>Email rate: <strong style="color:${c.emailRateChange >= 0 ? '#16a34a' : '#dc2626'};">${c.emailRateChange >= 0 ? '+' : ''}${c.emailRateChange}%</strong></span>
+            <span>Volume: <strong style="color:${c.volumeChange >= 0 ? '#16a34a' : '#dc2626'};">${c.volumeChange >= 0 ? '+' : ''}${c.volumeChange}</strong></span>
+          </div>`;
+        }
+        const tEl = document.getElementById('cohort-table');
+        if (!data.cohorts.length) { tEl.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;">No cohort data.</div>'; return; }
+        let html = '<table style="width:100%;font-size:0.65rem;border-collapse:collapse;"><thead><tr>';
+        html += '<th style="text-align:left;padding:0.15rem;">Cohort</th><th>Leads</th><th>Email%</th><th>Active%</th><th>Avg Score</th></tr></thead><tbody>';
+        data.cohorts.forEach(c => {
+          html += `<tr><td style="padding:0.15rem;border-bottom:1px solid #d1fae5;">${c.cohort_week}</td>
+            <td style="text-align:center;border-bottom:1px solid #d1fae5;">${c.total}</td>
+            <td style="text-align:center;border-bottom:1px solid #d1fae5;">${c.emailRate}%</td>
+            <td style="text-align:center;border-bottom:1px solid #d1fae5;">${c.activeRate}%</td>
+            <td style="text-align:center;border-bottom:1px solid #d1fae5;">${c.avg_score}</td></tr>`;
+        });
+        html += '</tbody></table>';
+        tEl.innerHTML = html;
+      } catch (err) { console.error('Cohort error:', err); }
+    }
+
+    // === Channel Preferences (Batch 31) ===
+    async function loadChannelPrefs() {
+      try {
+        const data = await fetch('/api/channel-preferences').then(r => r.json());
+        const sEl = document.getElementById('channel-stats');
+        if (data.channels.length) {
+          sEl.innerHTML = data.channels.map(c => `<div style="text-align:center;padding:0.2rem 0.5rem;background:rgba(255,255,255,0.6);border-radius:4px;">
+            <div style="font-size:0.85rem;font-weight:700;color:#c2410c;">${c.channel}</div>
+            <div style="font-size:0.65rem;">${c.total_touches} touches | ${c.responseRate}% resp.</div>
+          </div>`).join('');
+        } else { sEl.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;">No contact data yet.</div>'; }
+        const rEl = document.getElementById('channel-recs');
+        const r = data.recommendations;
+        rEl.innerHTML = `<div style="font-size:0.68rem;display:flex;gap:0.6rem;flex-wrap:wrap;">
+          <span>Email only: <strong>${r.withEmailOnly}</strong></span>
+          <span>Phone only: <strong>${r.withPhoneOnly}</strong></span>
+          <span>Both: <strong style="color:#16a34a;">${r.withBoth}</strong></span>
+          <span>Neither: <strong style="color:#dc2626;">${r.withNeither}</strong></span>
+        </div>`;
+      } catch (err) { console.error('Channel prefs error:', err); }
+    }
+
+    // === Jurisdiction Benchmarks (Batch 31) ===
+    async function loadBenchmarks() {
+      try {
+        const data = await fetch('/api/benchmarks').then(r => r.json());
+        const gEl = document.getElementById('benchmark-global');
+        const g = data.globalAvg;
+        gEl.innerHTML = `
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#2563eb;">${g.emailRate}%</div><div style="font-size:0.65rem;">Global Email Rate</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#059669;">${g.phoneRate}%</div><div style="font-size:0.65rem;">Global Phone Rate</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#f59e0b;">${g.avgScore}</div><div style="font-size:0.65rem;">Global Avg Score</div></div>
+        `;
+        const tEl = document.getElementById('benchmark-table');
+        let html = '<table style="width:100%;font-size:0.62rem;border-collapse:collapse;"><thead><tr>';
+        html += '<th style="text-align:left;padding:0.15rem;">State</th><th>Leads</th><th>Email%</th><th>Phone%</th><th>Web%</th><th>Score</th><th>Quality</th></tr></thead><tbody>';
+        data.benchmarks.slice(0, 25).forEach(b => {
+          const qColor = b.dataQuality >= 40 ? '#16a34a' : b.dataQuality >= 20 ? '#f59e0b' : '#dc2626';
+          html += `<tr><td style="padding:0.15rem;border-bottom:1px solid #dbeafe;">${b.state}</td>
+            <td style="text-align:center;border-bottom:1px solid #dbeafe;">${b.total_leads}</td>
+            <td style="text-align:center;border-bottom:1px solid #dbeafe;">${b.emailRate}%</td>
+            <td style="text-align:center;border-bottom:1px solid #dbeafe;">${b.phoneRate}%</td>
+            <td style="text-align:center;border-bottom:1px solid #dbeafe;">${b.websiteRate}%</td>
+            <td style="text-align:center;border-bottom:1px solid #dbeafe;">${b.avg_score}</td>
+            <td style="text-align:center;border-bottom:1px solid #dbeafe;font-weight:600;color:${qColor};">${b.dataQuality}</td></tr>`;
+        });
+        html += '</tbody></table>';
+        tEl.innerHTML = html;
+      } catch (err) { console.error('Benchmarks error:', err); }
+    }
+
     // === Sequence Templates (Batch 30) ===
     async function loadSeqTemplates() {
       try {
@@ -10274,7 +10421,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler(), loadPropensity(), loadCohorts(), loadChannelPrefs(), loadBenchmarks()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
