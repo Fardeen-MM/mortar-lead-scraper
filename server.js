@@ -2666,6 +2666,120 @@ app.get('/api/leads/filter-facets', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Enrichment Queue (Batch 21) ===
+app.get('/api/enrichment-queue/status', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getEnrichmentQueueStatus());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/enrichment-queue/add', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds, source, fieldsRequested } = req.body;
+    if (!leadIds || !Array.isArray(leadIds)) return res.status(400).json({ error: 'leadIds (array) required' });
+    res.json(leadDb.addToEnrichmentQueue(leadIds, source, fieldsRequested));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/enrichment-queue/process', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.processEnrichmentQueue(parseInt(req.body.batchSize) || 10));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/enrichment-queue/clear', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.clearEnrichmentQueue(req.query.status || 'completed'));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Firm Intelligence (Batch 21) ===
+app.get('/api/firms', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getFirmIntelligence(parseInt(req.query.limit) || 50));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/firms/:name', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getFirmDetail(req.params.name));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Dedup Merge Queue (Batch 21) ===
+app.post('/api/dedup/scan', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.scanForDuplicates(parseInt(req.body.limit) || 200));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/dedup/queue', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getDedupQueue(parseInt(req.query.limit) || 50));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/dedup/resolve/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { resolution, keepId } = req.body;
+    if (!resolution) return res.status(400).json({ error: 'resolution required (merge|skip)' });
+    res.json(leadDb.resolveDedupItem(parseInt(req.params.id), resolution, keepId ? parseInt(keepId) : null));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/dedup/stats', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getDedupStats());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Audit Log (Batch 21) ===
+app.post('/api/audit/log', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { action, entityType, entityId, details, userName } = req.body;
+    if (!action) return res.status(400).json({ error: 'action required' });
+    res.json({ id: leadDb.logAuditEvent(action, entityType, entityId, details, userName) });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/audit/log', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getAuditLog({
+      action: req.query.action,
+      entityType: req.query.entityType,
+      userName: req.query.userName,
+      limit: parseInt(req.query.limit) || 50,
+      offset: parseInt(req.query.offset) || 0,
+    }));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/audit/stats', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getAuditStats());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/audit/export', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.exportAuditLog({ startDate: req.query.startDate, endDate: req.query.endDate }));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {

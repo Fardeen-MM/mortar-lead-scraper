@@ -1459,6 +1459,69 @@
       <div id="filter-facets" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.5rem;padding:0.5rem 0;"></div>
     </details>
 
+    <!-- Enrichment Queue (Batch 21) -->
+    <div id="enrichment-queue-panel" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #f472b6;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#db2777;">Enrichment Queue</span>
+        <div style="display:flex;gap:0.3rem;">
+          <button onclick="processEnrichQueue()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#db2777;color:#fff;border:none;border-radius:4px;cursor:pointer;">Process Batch</button>
+          <button onclick="clearEnrichQueue()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fce7f3;color:#db2777;border:1px solid #f472b6;border-radius:4px;cursor:pointer;">Clear Done</button>
+          <button onclick="loadEnrichQueue()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fce7f3;color:#db2777;border:1px solid #f472b6;border-radius:4px;cursor:pointer;">Refresh</button>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Priority-based enrichment queue. High-score leads are processed first. Like Clay's waterfall queue.</p>
+      <div id="enrich-queue-stats" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="enrich-queue-items" style="max-height:200px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Firm Intelligence (Batch 21) -->
+    <div id="firm-intel-panel" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #60a5fa;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#2563eb;">Firm Intelligence</span>
+        <button onclick="loadFirmIntelligence()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#dbeafe;color:#2563eb;border:1px solid #60a5fa;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Aggregate intelligence per firm — headcount, geographic spread, email coverage. Like ZoomInfo's company profiles.</p>
+      <div id="firm-intel-list" style="max-height:250px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Dedup Merge Queue (Batch 21) -->
+    <div id="dedup-queue-panel" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #facc15;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#a16207;">Dedup Merge Queue</span>
+        <div style="display:flex;gap:0.3rem;">
+          <button onclick="scanDuplicates()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#a16207;color:#fff;border:none;border-radius:4px;cursor:pointer;">Scan Now</button>
+          <button onclick="loadDedupQueue()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fef9c3;color:#a16207;border:1px solid #facc15;border-radius:4px;cursor:pointer;">Refresh</button>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Confidence-scored duplicate detection with one-click merge. Email=95%, Phone=90%, Name+City=75%.</p>
+      <div id="dedup-queue-stats" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="dedup-queue-items" style="max-height:250px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Audit Log (Batch 21) -->
+    <div id="audit-log-panel" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:1px solid #a78bfa;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Activity Audit Log</span>
+        <div style="display:flex;gap:0.3rem;">
+          <select id="audit-filter-action" onchange="loadAuditLog()" style="font-size:0.68rem;padding:0.15rem 0.3rem;border:1px solid #a78bfa;border-radius:4px;">
+            <option value="">All Actions</option>
+            <option value="create">Create</option>
+            <option value="update">Update</option>
+            <option value="delete">Delete</option>
+            <option value="merge">Merge</option>
+            <option value="enrich">Enrich</option>
+            <option value="export">Export</option>
+            <option value="import">Import</option>
+          </select>
+          <button onclick="exportAuditLog()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#7c3aed;color:#fff;border:none;border-radius:4px;cursor:pointer;">Export</button>
+          <button onclick="loadAuditLog()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ede9fe;color:#7c3aed;border:1px solid #a78bfa;border-radius:4px;cursor:pointer;">Refresh</button>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Full audit trail of all actions. Track who did what, when. Essential for compliance and team visibility.</p>
+      <div id="audit-stats" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="audit-log-list" style="max-height:250px;overflow-y:auto;"></div>
+    </div>
+
     <!-- Leaderboard (Batch 19) -->
     <div id="leaderboard-panel" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #fbbf24;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -8008,6 +8071,174 @@
       }).catch(() => {});
     }
 
+    // === Enrichment Queue (Batch 21) ===
+    async function loadEnrichQueue() {
+      try {
+        const data = await fetch('/api/enrichment-queue/status').then(r => r.json());
+        const statsEl = document.getElementById('enrich-queue-stats');
+        statsEl.innerHTML = `
+          <span style="font-size:0.72rem;"><strong style="color:#db2777;">${data.pending || 0}</strong> pending</span>
+          <span style="font-size:0.72rem;"><strong style="color:#f59e0b;">${data.processing || 0}</strong> processing</span>
+          <span style="font-size:0.72rem;"><strong style="color:#059669;">${data.completed || 0}</strong> completed</span>
+          <span style="font-size:0.72rem;"><strong style="color:#ef4444;">${data.failed || 0}</strong> failed</span>
+        `;
+        const itemsEl = document.getElementById('enrich-queue-items');
+        if (!data.recent || data.recent.length === 0) {
+          itemsEl.innerHTML = '<span style="font-size:0.72rem;color:#db2777;">Queue empty. Select leads and add them to the enrichment queue.</span>';
+        } else {
+          itemsEl.innerHTML = data.recent.map(item => `
+            <div style="display:flex;align-items:center;gap:0.4rem;padding:0.2rem 0;border-bottom:1px solid #fce7f3;font-size:0.72rem;">
+              <span style="width:50px;text-align:center;padding:0.1rem 0.3rem;border-radius:4px;font-size:0.6rem;font-weight:600;background:${item.status === 'pending' ? '#fce7f3;color:#db2777' : item.status === 'completed' ? '#ecfdf5;color:#059669' : '#fef3c7;color:#f59e0b'};">${item.status}</span>
+              <strong style="flex:1;">${esc(item.first_name || '')} ${esc(item.last_name || '')}</strong>
+              <span style="color:#6b7280;font-size:0.65rem;">${esc(item.source || '')}</span>
+              <span style="color:#db2777;font-size:0.65rem;">priority: ${item.priority || 0}</span>
+            </div>
+          `).join('');
+        }
+      } catch (err) { console.error('Enrich queue error:', err); }
+    }
+
+    async function processEnrichQueue() {
+      try {
+        const res = await fetch('/api/enrichment-queue/process', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ batchSize: 10 }) }).then(r => r.json());
+        toast('Processed ' + (res.processed || 0) + ' items', 'success');
+        loadEnrichQueue();
+      } catch (err) { toast('Process error: ' + err.message, 'error'); }
+    }
+
+    async function clearEnrichQueue() {
+      try {
+        const res = await fetch('/api/enrichment-queue/clear', { method: 'DELETE' }).then(r => r.json());
+        toast('Cleared ' + (res.deleted || 0) + ' completed items', 'success');
+        loadEnrichQueue();
+      } catch (err) { toast('Clear error: ' + err.message, 'error'); }
+    }
+
+    // === Firm Intelligence (Batch 21) ===
+    async function loadFirmIntelligence() {
+      try {
+        const firms = await fetch('/api/firms?limit=30').then(r => r.json());
+        const el = document.getElementById('firm-intel-list');
+        if (!firms || firms.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#2563eb;">No firm data yet.</span>';
+          return;
+        }
+        el.innerHTML = firms.map(f => `
+          <div onclick="showFirmDetail('${esc(f.firm_name)}')" style="display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid #dbeafe;font-size:0.72rem;cursor:pointer;" onmouseover="this.style.background='#eff6ff'" onmouseout="this.style.background=''">
+            <strong style="flex:1;color:#1e40af;">${esc(f.firm_name)}</strong>
+            <span style="color:#6b7280;">${f.headcount} attorneys</span>
+            <span style="color:#059669;font-size:0.65rem;">${f.email_rate || 0}% email</span>
+            <span style="color:#2563eb;font-size:0.65rem;">${f.states_count || 1} states</span>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Firm intel error:', err); }
+    }
+
+    async function showFirmDetail(firmName) {
+      try {
+        const d = await fetch('/api/firms/' + encodeURIComponent(firmName)).then(r => r.json());
+        let html = `<h4 style="margin:0 0 0.3rem;color:#1e40af;">${esc(d.firm_name || firmName)}</h4>`;
+        html += `<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.3rem;">`;
+        html += `<span style="font-size:0.72rem;"><strong>${d.headcount || 0}</strong> attorneys</span>`;
+        html += `<span style="font-size:0.72rem;"><strong>${d.email_count || 0}</strong> emails</span>`;
+        html += `<span style="font-size:0.72rem;"><strong>${d.phone_count || 0}</strong> phones</span>`;
+        html += `</div>`;
+        if (d.states && d.states.length > 0) {
+          html += `<div style="font-size:0.68rem;color:#6b7280;">States: ${d.states.map(s => esc(s)).join(', ')}</div>`;
+        }
+        if (d.practice_areas && d.practice_areas.length > 0) {
+          html += `<div style="font-size:0.68rem;color:#6b7280;margin-top:0.2rem;">Practice: ${d.practice_areas.slice(0,5).map(p => esc(p)).join(', ')}</div>`;
+        }
+        document.getElementById('firm-intel-list').innerHTML = html + '<br><button onclick="loadFirmIntelligence()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#dbeafe;color:#2563eb;border:1px solid #60a5fa;border-radius:4px;cursor:pointer;">Back to List</button>';
+      } catch (err) { toast('Firm detail error: ' + err.message, 'error'); }
+    }
+
+    // === Dedup Merge Queue (Batch 21) ===
+    async function loadDedupQueue() {
+      try {
+        const stats = await fetch('/api/dedup/stats').then(r => r.json());
+        const statsEl = document.getElementById('dedup-queue-stats');
+        statsEl.innerHTML = `
+          <span style="font-size:0.72rem;"><strong style="color:#a16207;">${stats.pending || 0}</strong> pending</span>
+          <span style="font-size:0.72rem;"><strong style="color:#059669;">${stats.resolved || 0}</strong> resolved</span>
+          ${stats.byType ? Object.entries(stats.byType).map(([k,v]) => `<span style="font-size:0.65rem;color:#6b7280;">${k}: ${v}</span>`).join('') : ''}
+        `;
+        const items = await fetch('/api/dedup/queue?limit=20').then(r => r.json());
+        const el = document.getElementById('dedup-queue-items');
+        if (!items || items.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#a16207;">No duplicates in queue. Click "Scan Now" to detect duplicates.</span>';
+          return;
+        }
+        el.innerHTML = items.map(item => `
+          <div style="display:flex;align-items:center;gap:0.4rem;padding:0.25rem 0;border-bottom:1px solid #fef9c3;font-size:0.72rem;">
+            <span style="padding:0.1rem 0.3rem;border-radius:4px;font-size:0.6rem;font-weight:600;background:#fef9c3;color:#a16207;">${item.confidence || 0}%</span>
+            <span style="color:#6b7280;font-size:0.6rem;">${esc(item.match_type || '')}</span>
+            <strong style="flex:1;">${esc(item.lead1_name || '')} &harr; ${esc(item.lead2_name || '')}</strong>
+            <button onclick="resolveDedupItem(${item.id},'merge',${item.lead1_id})" style="font-size:0.6rem;padding:0.1rem 0.3rem;background:#059669;color:#fff;border:none;border-radius:3px;cursor:pointer;">Merge</button>
+            <button onclick="resolveDedupItem(${item.id},'skip')" style="font-size:0.6rem;padding:0.1rem 0.3rem;background:#f9fafb;color:#6b7280;border:1px solid #d1d5db;border-radius:3px;cursor:pointer;">Skip</button>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Dedup queue error:', err); }
+    }
+
+    async function scanDuplicates() {
+      try {
+        const res = await fetch('/api/dedup/scan', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ limit: 200 }) }).then(r => r.json());
+        toast('Found ' + (res.found || 0) + ' potential duplicates', 'success');
+        loadDedupQueue();
+      } catch (err) { toast('Scan error: ' + err.message, 'error'); }
+    }
+
+    async function resolveDedupItem(id, resolution, keepId) {
+      try {
+        await fetch('/api/dedup/resolve/' + id, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ resolution, keepId }) }).then(r => r.json());
+        toast('Resolved: ' + resolution, 'success');
+        loadDedupQueue();
+      } catch (err) { toast('Resolve error: ' + err.message, 'error'); }
+    }
+
+    // === Audit Log (Batch 21) ===
+    async function loadAuditLog() {
+      try {
+        const filter = document.getElementById('audit-filter-action')?.value || '';
+        const [log, stats] = await Promise.all([
+          fetch('/api/audit/log?limit=30' + (filter ? '&action=' + filter : '')).then(r => r.json()),
+          fetch('/api/audit/stats').then(r => r.json()),
+        ]);
+        const statsEl = document.getElementById('audit-stats');
+        statsEl.innerHTML = `
+          <span style="font-size:0.72rem;"><strong style="color:#7c3aed;">${stats.total || 0}</strong> total</span>
+          <span style="font-size:0.72rem;"><strong style="color:#f59e0b;">${stats.today || 0}</strong> today</span>
+          ${stats.byAction ? Object.entries(stats.byAction).slice(0,4).map(([k,v]) => `<span style="font-size:0.65rem;color:#6b7280;">${k}: ${v}</span>`).join('') : ''}
+        `;
+        const el = document.getElementById('audit-log-list');
+        if (!log || log.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#7c3aed;">No audit events yet.</span>';
+          return;
+        }
+        el.innerHTML = log.map(e => `
+          <div style="display:flex;align-items:center;gap:0.4rem;padding:0.2rem 0;border-bottom:1px solid #ede9fe;font-size:0.72rem;">
+            <span style="padding:0.1rem 0.3rem;border-radius:4px;font-size:0.6rem;font-weight:600;background:#ede9fe;color:#7c3aed;">${esc(e.action || '')}</span>
+            <span style="color:#6b7280;font-size:0.6rem;">${esc(e.entity_type || '')}</span>
+            <strong style="flex:1;">${esc(e.details || '').substring(0, 60)}</strong>
+            <span style="color:#9ca3af;font-size:0.6rem;">${e.created_at ? new Date(e.created_at).toLocaleString() : ''}</span>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Audit log error:', err); }
+    }
+
+    async function exportAuditLog() {
+      try {
+        const data = await fetch('/api/audit/export').then(r => r.json());
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'audit-log-export.json'; a.click();
+        URL.revokeObjectURL(url);
+        toast('Exported audit log', 'success');
+      } catch (err) { toast('Export error: ' + err.message, 'error'); }
+    }
+
     // === Leaderboard (Batch 19) ===
     async function loadLeaderboard() {
       try {
@@ -8431,7 +8662,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
