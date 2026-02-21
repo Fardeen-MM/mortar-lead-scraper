@@ -13,15 +13,21 @@
  *
  * Technical notes:
  * - Uses puppeteer-extra with stealth plugin for anti-bot
+ * - Geo-grid splitting: subdivides cities into ~2km cells for comprehensive coverage
  * - Blocks image/tile requests for speed
  * - Extracts data from feed cards (name, rating, category, address)
  * - Clicks each result for phone/website, waits for panel to match
  * - Rate limited: 5-10s between page loads
+ * - Deduplicates by business name within a city
  */
 
 const BaseScraper = require('../base-scraper');
+const https = require('https');
 const { log } = require('../../lib/logger');
 const { RateLimiter, sleep } = require('../../lib/rate-limiter');
+
+// Nominatim bounding-box cache (avoids re-fetching during a session)
+const _boundsCache = new Map();
 
 // Major cities — same as google-places.js
 const DEFAULT_CITY_ENTRIES = [
@@ -122,13 +128,110 @@ class GoogleMapsScraper extends BaseScraper {
     }
   }
 
+  // ─── Geo-grid helpers ────────────────────────────────────────────
+
   /**
-   * Search Google Maps for businesses across cities.
+   * Fetch bounding box for a city from Nominatim (free, 1 req/s).
+   * Returns { south, north, west, east } or null.
+   */
+  async _getNominatimBounds(cityName, countryCode) {
+    const key = `${cityName}|${countryCode}`;
+    if (_boundsCache.has(key)) return _boundsCache.get(key);
+
+    // Map project country codes to ISO 3166-1 alpha-2 for Nominatim
+    const isoMap = { UK: 'GB' };
+    const isoCode = isoMap[countryCode] || countryCode;
+
+    const query = isoCode
+      ? `${cityName}, ${isoCode}`
+      : cityName;
+    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1`;
+
+    try {
+      const data = await new Promise((resolve, reject) => {
+        const req = https.get(url, {
+          headers: { 'User-Agent': 'MortarLeadScraper/1.0 (contact@mortarmetrics.com)' },
+          timeout: 10000,
+        }, (res) => {
+          let body = '';
+          res.on('data', c => body += c);
+          res.on('end', () => {
+            try { resolve(JSON.parse(body)); }
+            catch { reject(new Error('Invalid JSON from Nominatim')); }
+          });
+        });
+        req.on('error', reject);
+        req.on('timeout', () => { req.destroy(); reject(new Error('Nominatim timeout')); });
+      });
+
+      if (!data || !data[0] || !data[0].boundingbox) {
+        _boundsCache.set(key, null);
+        return null;
+      }
+
+      // Nominatim boundingbox = [south, north, west, east] as strings
+      const [south, north, west, east] = data[0].boundingbox.map(Number);
+      const bounds = { south, north, west, east };
+      _boundsCache.set(key, bounds);
+      return bounds;
+    } catch (err) {
+      log.warn(`[Google Maps] Nominatim lookup failed for "${cityName}": ${err.message}`);
+      // Don't cache errors — allow retry on next call
+      return null;
+    }
+  }
+
+  /**
+   * Subdivide a bounding box into grid cells of approximately cellSizeKm.
+   * Returns array of { lat, lng } center points.
+   */
+  _generateGridCells(bounds, cellSizeKm = 2) {
+    const { south, north, west, east } = bounds;
+
+    // 1 degree latitude ≈ 111 km
+    const latStep = cellSizeKm / 111;
+
+    // 1 degree longitude ≈ 111 * cos(midLat) km
+    const midLat = (south + north) / 2;
+    const lngStep = cellSizeKm / (111 * Math.cos(midLat * Math.PI / 180));
+
+    const cells = [];
+    for (let lat = south + latStep / 2; lat < north; lat += latStep) {
+      for (let lng = west + lngStep / 2; lng < east; lng += lngStep) {
+        cells.push({
+          lat: Math.round(lat * 1000000) / 1000000,
+          lng: Math.round(lng * 1000000) / 1000000,
+        });
+      }
+    }
+
+    return cells;
+  }
+
+  /**
+   * Evenly sample n items from an array (preserves spatial distribution).
+   */
+  _sampleEvenly(arr, n) {
+    if (n >= arr.length) return arr;
+    const step = arr.length / n;
+    const result = [];
+    for (let i = 0; i < n; i++) {
+      result.push(arr[Math.floor(i * step)]);
+    }
+    return result;
+  }
+
+  // ─── Main search ────────────────────────────────────────────────
+
+  /**
+   * Search Google Maps for businesses across cities using geo-grid splitting.
+   * Each city is subdivided into ~2km grid cells for comprehensive coverage.
    */
   async *search(practiceArea, options = {}) {
     const niche = (options.niche || 'lawyers').trim();
     const rateLimiter = new RateLimiter({ minDelay: 5000, maxDelay: 10000 });
     const maxCities = options.maxCities || null;
+    const isTestMode = !!(options.maxPages);
 
     // Filter cities
     let cities = [...this._cityEntries];
@@ -156,22 +259,73 @@ class GoogleMapsScraper extends BaseScraper {
         const cityEntry = cities[i];
         yield { _cityProgress: { current: i + 1, total: cities.length } };
 
-        const query = `${niche} in ${cityEntry.city}`;
-        log.info(`[Google Maps] Searching: "${query}"`);
+        // Dedup set for this city (prevents same business appearing from multiple grid cells)
+        const seenInCity = new Set();
 
-        await rateLimiter.wait();
+        // Get bounding box for geo-grid
+        const bounds = await this._getNominatimBounds(cityEntry.city, cityEntry.country);
+        await sleep(1100); // Nominatim rate limit: 1 req/s
 
-        try {
-          const results = await this._scrapeMapResults(query, options.maxPages);
+        if (bounds) {
+          const allCells = this._generateGridCells(bounds, 2);
+          // In test mode: 4 cells. Production: cap at 80 cells (evenly spaced sample for huge cities).
+          const maxGridCells = isTestMode ? Math.min(4, allCells.length) : Math.min(80, allCells.length);
+          const cells = allCells.length <= maxGridCells
+            ? allCells
+            : this._sampleEvenly(allCells, maxGridCells);
 
-          for (const result of results) {
-            const lead = this._parseMapResult(result, cityEntry, niche);
-            if (lead) yield lead;
+          log.info(`[Google Maps] City "${cityEntry.city}": ${allCells.length} grid cells (using ${cells.length})`);
+
+          for (let g = 0; g < cells.length; g++) {
+            const cell = cells[g];
+            const query = `${niche} in ${cityEntry.city}`;
+            const cellLabel = `cell ${g + 1}/${cells.length}`;
+
+            log.info(`[Google Maps] ${cellLabel}: @${cell.lat},${cell.lng}`);
+            await rateLimiter.wait();
+
+            try {
+              const results = await this._scrapeMapResults(query, options.maxPages, cell);
+              let newCount = 0;
+
+              for (const result of results) {
+                // Dedup by normalized business name within this city
+                const dedupKey = result.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+                if (seenInCity.has(dedupKey)) continue;
+                seenInCity.add(dedupKey);
+
+                const lead = this._parseMapResult(result, cityEntry, niche);
+                if (lead) {
+                  yield lead;
+                  newCount++;
+                }
+              }
+
+              log.info(`[Google Maps] ${cellLabel}: ${results.length} results, ${newCount} new (${seenInCity.size} total unique)`);
+            } catch (err) {
+              log.warn(`[Google Maps] ${cellLabel} failed: ${err.message}`);
+            }
           }
 
-          log.info(`[Google Maps] Found ${results.length} results for "${query}"`);
-        } catch (err) {
-          log.warn(`[Google Maps] Failed for "${query}": ${err.message}`);
+          log.info(`[Google Maps] City "${cityEntry.city}" complete: ${seenInCity.size} unique businesses`);
+        } else {
+          // Fallback: no bounds available, use simple city search (no grid)
+          const query = `${niche} in ${cityEntry.city}`;
+          log.info(`[Google Maps] Searching (no grid): "${query}"`);
+          await rateLimiter.wait();
+
+          try {
+            const results = await this._scrapeMapResults(query, options.maxPages);
+
+            for (const result of results) {
+              const lead = this._parseMapResult(result, cityEntry, niche);
+              if (lead) yield lead;
+            }
+
+            log.info(`[Google Maps] Found ${results.length} results for "${query}"`);
+          } catch (err) {
+            log.warn(`[Google Maps] Failed for "${query}": ${err.message}`);
+          }
         }
       }
     } finally {
@@ -183,9 +337,10 @@ class GoogleMapsScraper extends BaseScraper {
    * Scrape Google Maps search results page.
    * @param {string} query - Search query like "dentists in Miami"
    * @param {number} [maxScrolls] - Max scroll iterations (null = scroll until no more)
+   * @param {{ lat: number, lng: number }} [coords] - Optional center coordinates for geo-grid
    * @returns {object[]} Array of business data
    */
-  async _scrapeMapResults(query, maxScrolls) {
+  async _scrapeMapResults(query, maxScrolls, coords) {
     const page = await this._browser.newPage();
 
     try {
@@ -202,8 +357,12 @@ class GoogleMapsScraper extends BaseScraper {
 
       await page.setViewport({ width: 1280, height: 900 });
 
-      // Navigate to Google Maps search
-      const url = `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
+      // Navigate to Google Maps search — with optional geo-grid coordinates
+      // Zoom 15 ≈ ~3km visible, good for 2km grid cells
+      let url = `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
+      if (coords) {
+        url += `/@${coords.lat},${coords.lng},15z`;
+      }
       await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
 
       // Wait for results feed
