@@ -3050,6 +3050,38 @@ app.post('/api/compliance/consent', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Journey Timeline (Batch 25) ===
+app.get('/api/leads/:id/journey', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getLeadJourney(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Predictive Scoring (Batch 25) ===
+app.get('/api/predictive-scores', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getPredictiveScores(parseInt(req.query.limit) || 100));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Team Performance (Batch 25) ===
+app.get('/api/team/performance', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getTeamPerformance());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Email Deliverability (Batch 25) ===
+app.get('/api/email/deliverability', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getEmailDeliverability());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
