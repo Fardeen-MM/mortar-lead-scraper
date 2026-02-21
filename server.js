@@ -225,6 +225,7 @@ app.post('/api/scrape/start', (req, res) => {
 
     broadcast(jobId, { type: 'complete', stats: data.stats, jobId });
     broadcastAll({ type: 'db-update', event: 'scrape-complete', state: job.state, stats: data.stats });
+    fireWebhookEvent('scrape.complete', { state: job.state, stats: data.stats });
     scheduleJobCleanup();
   });
 
@@ -1281,6 +1282,97 @@ app.post('/api/segments/query/leads', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// --- Webhooks ---
+app.get('/api/webhooks', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getWebhooks());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/webhooks', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { url, events, secret } = req.body;
+    if (!url || !events) return res.status(400).json({ error: 'url and events required' });
+    res.json(leadDb.createWebhook(url, events, secret));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.patch('/api/webhooks/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.updateWebhook(parseInt(req.params.id), req.body));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/webhooks/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.deleteWebhook(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/webhooks/:id/deliveries', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getWebhookDeliveries(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/webhooks/test', (req, res) => {
+  try {
+    const { url } = req.body;
+    if (!url) return res.status(400).json({ error: 'url required' });
+    fireWebhook(url, 'test', { message: 'Webhook test from Mortar Lead Scraper', timestamp: new Date().toISOString() });
+    res.json({ sent: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// --- Lead Notes ---
+app.get('/api/leads/:id/notes', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getLeadNotes(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/:id/notes', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { content, author } = req.body;
+    if (!content) return res.status(400).json({ error: 'content required' });
+    res.json(leadDb.addNote(parseInt(req.params.id), content, author));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/notes/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.deleteNote(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/:id/timeline', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getLeadTimeline(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// --- Bulk Update ---
+app.post('/api/leads/bulk-update', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds, updates } = req.body;
+    if (!leadIds || !updates) return res.status(400).json({ error: 'leadIds and updates required' });
+    const result = leadDb.bulkUpdateLeads(leadIds, updates);
+    // Fire webhook
+    fireWebhookEvent('lead.bulk_updated', { count: result.updated, updates });
+    res.json(result);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 app.get('/api/leads/sources', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
@@ -1857,6 +1949,47 @@ function broadcastAll(data) {
       ws.send(payload);
     }
   }
+}
+
+// --- Webhook Firing ---
+function fireWebhook(url, event, payload) {
+  const data = JSON.stringify({ event, timestamp: new Date().toISOString(), data: payload });
+  const parsed = new URL(url);
+  const options = {
+    hostname: parsed.hostname, port: parsed.port, path: parsed.pathname + parsed.search,
+    method: 'POST', headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data), 'User-Agent': 'Mortar-Webhook/1.0' },
+    timeout: 10000,
+  };
+  const proto = parsed.protocol === 'https:' ? require('https') : require('http');
+  const req = proto.request(options, (res) => {
+    let body = '';
+    res.on('data', d => body += d);
+    res.on('end', () => {
+      try {
+        const leadDb = require('./lib/lead-db');
+        // Find webhook by URL for logging
+        const hooks = leadDb.getWebhooks().filter(w => w.url === url);
+        for (const h of hooks) {
+          leadDb.logWebhookDelivery(h.id, event, res.statusCode, body.slice(0, 500), res.statusCode >= 200 && res.statusCode < 300);
+        }
+      } catch (err) { /* ignore logging errors */ }
+    });
+  });
+  req.on('error', (err) => {
+    console.error(`[webhook] Error delivering to ${url}:`, err.message);
+  });
+  req.write(data);
+  req.end();
+}
+
+function fireWebhookEvent(event, payload) {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const hooks = leadDb.getWebhooksByEvent(event);
+    for (const hook of hooks) {
+      fireWebhook(hook.url, event, payload);
+    }
+  } catch (err) { /* ignore */ }
 }
 
 // --- Schedule Runner (checks every 5 minutes for due scrapes) ---

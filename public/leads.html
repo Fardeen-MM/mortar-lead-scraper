@@ -1216,6 +1216,16 @@
       <div id="export-history" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Webhooks Panel -->
+    <div class="panel" style="display:block; margin-bottom: 1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+        <h2 style="margin:0;">Webhooks</h2>
+        <button class="btn btn-secondary" style="font-size:0.72rem;padding:0.2rem 0.5rem;" onclick="openWebhookBuilder()">+ Add Webhook</button>
+      </div>
+      <p class="hint" style="margin-bottom:0.75rem;">Receive HTTP notifications when events happen (scrape complete, lead updated, stage changed).</p>
+      <div id="webhooks-list"></div>
+    </div>
+
     <!-- Lead Lists / Campaigns -->
     <div class="lists-panel" id="lists-panel">
       <div class="lists-header">
@@ -1258,13 +1268,26 @@
     <!-- CSV Import -->
     <div class="panel" style="display:block; margin-bottom: 1rem;">
       <h2 style="margin-bottom: 0.5rem;">Import Leads</h2>
-      <p class="hint" style="margin-bottom:0.75rem;">Drop a CSV file to merge external leads (Apify, Apollo, etc.) into your database.</p>
+      <p class="hint" style="margin-bottom:0.75rem;">Drop a CSV file to merge external leads (Apify, Apollo, etc.) into your database. Auto-detects columns from Apify, Apollo, ZoomInfo, and custom formats.</p>
       <div class="import-zone" id="import-zone" onclick="document.getElementById('import-file').click()">
         <input type="file" id="import-file" accept=".csv">
         <div class="iz-icon">&#x1F4C1;</div>
         <div class="iz-text">Click or drag a <strong>.csv file</strong> here to import</div>
       </div>
       <div id="import-result" class="import-result" style="display:none;"></div>
+    </div>
+
+    <!-- Enrichment Queue -->
+    <div class="panel" style="display:block; margin-bottom: 1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+        <h2 style="margin:0;">Enrichment Queue</h2>
+        <div style="display:flex;gap:0.3rem;">
+          <span id="eq-status" style="font-size:0.72rem;padding:0.15rem 0.5rem;border-radius:12px;background:#dcfce7;color:#166534;font-weight:600;">Idle</span>
+        </div>
+      </div>
+      <p class="hint" style="margin-bottom:0.75rem;">Track enrichment jobs and queue individual leads for processing.</p>
+      <div id="enrichment-queue" style="display:flex;flex-direction:column;gap:0.5rem;"></div>
+      <div id="eq-opportunities" style="margin-top:0.75rem;"></div>
     </div>
 
     <!-- Coverage + Freshness Table + Duplicates (tabbed) -->
@@ -1511,6 +1534,64 @@
     </div>
   </div>
 
+  <!-- Webhook Builder Modal -->
+  <div class="modal-overlay" id="webhook-modal" onclick="if(event.target===this)closeWebhookModal()" style="display:none;">
+    <div class="modal" style="max-width:500px;">
+      <h2>Add Webhook <button class="modal-close" onclick="closeWebhookModal()">&times;</button></h2>
+      <div style="display:flex;flex-direction:column;gap:0.75rem;">
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">URL</label>
+          <input type="url" id="wh-url" placeholder="https://example.com/webhook" style="width:100%;padding:0.5rem;border:1px solid #d1d5db;border-radius:6px;">
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Events</label>
+          <div style="display:flex;flex-wrap:wrap;gap:0.4rem;">
+            <label style="font-size:0.8rem;cursor:pointer;"><input type="checkbox" class="wh-event" value="scrape.complete"> Scrape Complete</label>
+            <label style="font-size:0.8rem;cursor:pointer;"><input type="checkbox" class="wh-event" value="lead.bulk_updated"> Bulk Update</label>
+            <label style="font-size:0.8rem;cursor:pointer;"><input type="checkbox" class="wh-event" value="pipeline.stage_changed"> Stage Changed</label>
+            <label style="font-size:0.8rem;cursor:pointer;"><input type="checkbox" class="wh-event" value="*"> All Events</label>
+          </div>
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Secret (optional)</label>
+          <input type="text" id="wh-secret" placeholder="Signing secret" style="width:100%;padding:0.5rem;border:1px solid #d1d5db;border-radius:6px;">
+        </div>
+        <button onclick="saveWebhook()" style="padding:0.5rem;background:#4f46e5;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;">Save Webhook</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bulk Edit Modal -->
+  <div class="modal-overlay" id="bulk-edit-modal" onclick="if(event.target===this)closeBulkEditModal()" style="display:none;">
+    <div class="modal" style="max-width:500px;">
+      <h2>Bulk Edit <span id="bulk-edit-count" style="font-size:0.8rem;color:#6b7280;"></span> <button class="modal-close" onclick="closeBulkEditModal()">&times;</button></h2>
+      <p class="hint" style="margin-bottom:0.75rem;">Set values for all selected leads. Leave blank to skip a field.</p>
+      <div style="display:flex;flex-direction:column;gap:0.75rem;">
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Pipeline Stage</label>
+          <select id="be-stage" style="width:100%;padding:0.5rem;border:1px solid #d1d5db;border-radius:6px;">
+            <option value="">— Don't change —</option>
+            <option value="new">New</option><option value="contacted">Contacted</option><option value="replied">Replied</option>
+            <option value="meeting">Meeting</option><option value="client">Client</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Tags</label>
+          <input type="text" id="be-tags" placeholder="tag1, tag2" style="width:100%;padding:0.5rem;border:1px solid #d1d5db;border-radius:6px;">
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Practice Area</label>
+          <input type="text" id="be-practice" placeholder="" style="width:100%;padding:0.5rem;border:1px solid #d1d5db;border-radius:6px;">
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Title</label>
+          <input type="text" id="be-title" placeholder="" style="width:100%;padding:0.5rem;border:1px solid #d1d5db;border-radius:6px;">
+        </div>
+        <button onclick="applyBulkEdit()" style="padding:0.5rem;background:#4f46e5;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;">Apply Changes</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Keyboard shortcut hint -->
   <div class="kbd-hint" id="kbd-hint">
     <div><kbd>&#x2318;K</kbd> Command palette &nbsp; <kbd>/</kbd> Search &nbsp; <kbd>Esc</kbd> Clear/Close &nbsp; <kbd>?</kbd> Toggle hints</div>
@@ -1540,6 +1621,7 @@
     <button onclick="addSelectedToList()">Add to List</button>
     <button onclick="generatePersonalization()">Personalize</button>
     <button onclick="tagSelected()">Tag</button>
+    <button onclick="openBulkEditModal()">Bulk Edit</button>
     <button onclick="moveSelectedToStage()">Move Stage</button>
     <button onclick="deleteSelected()">Delete</button>
     <button onclick="clearSelection()" style="background:transparent;border-color:rgba(255,255,255,0.4);">&times; Clear</button>
@@ -2933,9 +3015,9 @@
       document.getElementById('modal-name').textContent = `${lead.first_name} ${lead.last_name}`;
 
       // Completeness meter
-      const fields = ['email','phone','website','firm_name','city','bar_number','practice_area','title','linkedin_url','education'];
-      const filled = fields.filter(f => lead[f] && lead[f].trim()).length;
-      const pct = Math.round(100 * filled / fields.length);
+      const completenessFields = ['email','phone','website','firm_name','city','bar_number','practice_area','title','linkedin_url','education'];
+      const filled = completenessFields.filter(f => lead[f] && lead[f].trim()).length;
+      const pct = Math.round(100 * filled / completenessFields.length);
       const meterColor = pct >= 80 ? '#22c55e' : pct >= 50 ? '#3b82f6' : pct >= 30 ? '#f59e0b' : '#ef4444';
 
       const score = lead.lead_score || 0;
@@ -2972,7 +3054,7 @@
             <div style="flex:1;height:6px;background:var(--bg-primary,#f3f4f6);border-radius:3px;">
               <div style="width:${pct}%;height:100%;background:${meterColor};border-radius:3px;transition:width 0.3s;"></div>
             </div>
-            <span style="font-size:0.72rem;font-weight:600;color:${meterColor};">${filled}/${fields.length}</span>
+            <span style="font-size:0.72rem;font-weight:600;color:${meterColor};">${filled}/${completenessFields.length}</span>
           </div>
         </div>` +
         fields.map(([label, value]) =>
@@ -3025,7 +3107,17 @@
 
       document.getElementById('lead-modal').classList.add('active');
 
-      // Load changelog and similar leads async (non-blocking)
+      // Pipeline stage badge
+      const stageHtml = `<div style="margin-top:0.5rem;display:flex;align-items:center;gap:0.5rem;">
+        <span style="font-size:0.72rem;font-weight:600;color:var(--text-muted);">Stage:</span>
+        <select onchange="quickChangeStage(${lead.id}, this.value)" style="padding:0.2rem 0.5rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.75rem;">
+          ${['new','contacted','replied','meeting','client'].map(s => `<option value="${s}" ${lead.pipeline_stage === s ? 'selected' : ''}>${s.charAt(0).toUpperCase() + s.slice(1)}</option>`).join('')}
+        </select>
+        <button onclick="addNoteToLead(${lead.id})" style="font-size:0.72rem;padding:0.15rem 0.5rem;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:4px;cursor:pointer;">+ Note</button>
+      </div>`;
+      document.getElementById('modal-sources').insertAdjacentHTML('beforeend', stageHtml);
+
+      // Load changelog, similar leads, and timeline async
       Promise.all([
         loadLeadChangelog(lead.id),
         loadSimilarLeads(lead.id),
@@ -3033,6 +3125,9 @@
         const container = document.getElementById('modal-sources');
         if (changelogHtml) container.insertAdjacentHTML('beforeend', changelogHtml);
         if (similarHtml) container.insertAdjacentHTML('beforeend', similarHtml);
+        // Add timeline section
+        container.insertAdjacentHTML('beforeend', '<div style="margin-top:0.75rem;"><div style="font-size:0.82rem;font-weight:600;color:var(--text-muted);margin-bottom:0.4rem;">Activity Timeline</div><div id="lead-timeline" style="max-height:200px;overflow-y:auto;"></div></div>');
+        loadLeadTimeline(lead.id, document.getElementById('lead-timeline'));
       });
     }
 
@@ -4504,6 +4599,250 @@
       loadSegments();
     }
 
+    async function quickChangeStage(leadId, stage) {
+      try {
+        await fetch('/api/pipeline/move', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leadId, stage })
+        });
+        toast(`Stage changed to ${stage}`, 'success');
+        loadPipeline();
+      } catch (err) { toast('Failed to change stage', 'error'); }
+    }
+
+    // --- Webhooks ---
+    async function loadWebhooks() {
+      try {
+        const hooks = await fetch('/api/webhooks').then(r => r.json());
+        const container = document.getElementById('webhooks-list');
+        if (hooks.length === 0) {
+          container.innerHTML = '<span style="font-size:0.8rem;color:#9ca3af;">No webhooks configured.</span>';
+          return;
+        }
+        container.innerHTML = hooks.map(h => {
+          const evtBadges = h.events.map(e => `<span style="background:#ede9fe;color:#5b21b6;font-size:0.65rem;padding:0.1rem 0.3rem;border-radius:3px;">${esc(e)}</span>`).join(' ');
+          return `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid #f3f4f6;">
+            <div>
+              <div style="font-size:0.8rem;font-weight:600;word-break:break-all;">${esc(h.url)}</div>
+              <div style="display:flex;gap:0.3rem;margin-top:0.2rem;flex-wrap:wrap;">${evtBadges}</div>
+            </div>
+            <div style="display:flex;gap:0.4rem;align-items:center;">
+              <label style="cursor:pointer;"><input type="checkbox" ${h.enabled ? 'checked' : ''} onchange="toggleWebhook(${h.id}, this.checked)"></label>
+              <button onclick="testWebhookUI(${h.id}, '${esc(h.url)}')" style="background:none;border:1px solid #d1d5db;border-radius:4px;padding:0.15rem 0.4rem;font-size:0.7rem;cursor:pointer;">Test</button>
+              <button onclick="deleteWebhookUI(${h.id})" style="background:none;border:none;color:#ef4444;cursor:pointer;">&times;</button>
+            </div>
+          </div>`;
+        }).join('');
+      } catch (err) { console.error('Webhooks load error:', err); }
+    }
+
+    function openWebhookBuilder() {
+      document.getElementById('webhook-modal').style.display = 'flex';
+      document.getElementById('wh-url').value = '';
+      document.getElementById('wh-secret').value = '';
+      document.querySelectorAll('.wh-event').forEach(c => c.checked = false);
+    }
+    function closeWebhookModal() { document.getElementById('webhook-modal').style.display = 'none'; }
+
+    async function saveWebhook() {
+      const url = document.getElementById('wh-url').value.trim();
+      if (!url) return toast('URL required', 'error');
+      const events = Array.from(document.querySelectorAll('.wh-event:checked')).map(c => c.value);
+      if (events.length === 0) return toast('Select at least one event', 'error');
+      const secret = document.getElementById('wh-secret').value.trim();
+      try {
+        await fetch('/api/webhooks', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url, events, secret })
+        });
+        closeWebhookModal();
+        toast('Webhook created', 'success');
+        loadWebhooks();
+      } catch (err) { toast('Failed to create webhook', 'error'); }
+    }
+
+    async function toggleWebhook(id, enabled) {
+      await fetch('/api/webhooks/' + id, {
+        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enabled })
+      });
+    }
+
+    async function testWebhookUI(id, url) {
+      try {
+        await fetch('/api/webhooks/test', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url })
+        });
+        toast('Test webhook sent', 'success');
+      } catch (err) { toast('Test failed', 'error'); }
+    }
+
+    async function deleteWebhookUI(id) {
+      if (!confirm('Delete this webhook?')) return;
+      await fetch('/api/webhooks/' + id, { method: 'DELETE' });
+      toast('Webhook deleted', 'success');
+      loadWebhooks();
+    }
+
+    // --- Lead Notes & Timeline ---
+    async function loadLeadTimeline(leadId, container) {
+      try {
+        const timeline = await fetch('/api/leads/' + leadId + '/timeline').then(r => r.json());
+        if (timeline.length === 0) {
+          container.innerHTML = '<div style="color:#9ca3af;font-size:0.8rem;">No activity yet.</div>';
+          return;
+        }
+        container.innerHTML = timeline.map(item => {
+          const time = timeAgo(new Date(item.created_at));
+          if (item.type === 'note') {
+            return `<div style="padding:0.4rem 0;border-bottom:1px solid #f3f4f6;">
+              <div style="display:flex;justify-content:space-between;align-items:start;">
+                <div style="font-size:0.8rem;">&#x1F4DD; <strong>${esc(item.author)}</strong> added a note</div>
+                <span style="font-size:0.7rem;color:#9ca3af;">${time}</span>
+              </div>
+              <div style="font-size:0.8rem;color:#374151;margin-top:0.2rem;padding-left:1.2rem;">${esc(item.content)}</div>
+            </div>`;
+          } else {
+            const icons = { update: '&#x270F;', stage_change: '&#x1F4CB;', bulk_update: '&#x1F4E6;', note_added: '&#x1F4DD;', create: '&#x2795;' };
+            const icon = icons[item.action] || '&#x1F504;';
+            return `<div style="padding:0.3rem 0;border-bottom:1px solid #f9fafb;font-size:0.75rem;color:#6b7280;">
+              ${icon} <strong>${item.field || item.action}</strong> ${item.old_value ? esc(item.old_value) + ' → ' : ''}${item.new_value ? esc(item.new_value) : ''} <span style="color:#9ca3af;">${time}</span>
+            </div>`;
+          }
+        }).join('');
+      } catch (err) { container.innerHTML = '<div style="color:#ef4444;font-size:0.8rem;">Failed to load timeline</div>'; }
+    }
+
+    async function addNoteToLead(leadId) {
+      const content = prompt('Add a note:');
+      if (!content) return;
+      try {
+        await fetch('/api/leads/' + leadId + '/notes', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content })
+        });
+        toast('Note added', 'success');
+        // Reload timeline if modal is open
+        const timelineEl = document.getElementById('lead-timeline');
+        if (timelineEl) loadLeadTimeline(leadId, timelineEl);
+      } catch (err) { toast('Failed to add note', 'error'); }
+    }
+
+    // --- Bulk Edit ---
+    function openBulkEditModal() {
+      const count = _selectedLeads.size;
+      if (count === 0) return toast('No leads selected', 'info');
+      document.getElementById('bulk-edit-modal').style.display = 'flex';
+      document.getElementById('bulk-edit-count').textContent = `(${count} leads)`;
+      document.getElementById('be-stage').value = '';
+      document.getElementById('be-tags').value = '';
+      document.getElementById('be-practice').value = '';
+      document.getElementById('be-title').value = '';
+    }
+    function closeBulkEditModal() { document.getElementById('bulk-edit-modal').style.display = 'none'; }
+
+    async function applyBulkEdit() {
+      const ids = Array.from(_selectedLeads);
+      const updates = {};
+      const stage = document.getElementById('be-stage').value;
+      const tags = document.getElementById('be-tags').value.trim();
+      const practice = document.getElementById('be-practice').value.trim();
+      const title = document.getElementById('be-title').value.trim();
+      if (stage) updates.pipeline_stage = stage;
+      if (tags) updates.tags = tags;
+      if (practice) updates.practice_area = practice;
+      if (title) updates.title = title;
+      if (Object.keys(updates).length === 0) return toast('No changes to apply', 'info');
+      try {
+        const result = await fetch('/api/leads/bulk-update', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leadIds: ids, updates })
+        }).then(r => r.json());
+        closeBulkEditModal();
+        toast(`Updated ${result.updated} leads`, 'success');
+        clearSelection();
+        loadLeads();
+        loadPipeline();
+      } catch (err) { toast('Bulk edit failed', 'error'); }
+    }
+
+    // --- Enrichment Queue ---
+    async function loadEnrichmentQueue() {
+      try {
+        const [stats, wsStatus, emailStatus, enrichStatus] = await Promise.all([
+          fetch('/api/leads/enrichment-stats').then(r => r.json()),
+          fetch('/api/leads/find-websites/status').then(r => r.json()).catch(() => null),
+          fetch('/api/leads/verify-status').then(r => r.json()).catch(() => null),
+          fetch('/api/leads/enrich-all/status').then(r => r.json()).catch(() => null),
+        ]);
+        const container = document.getElementById('enrichment-queue');
+        const jobs = [];
+
+        if (wsStatus && wsStatus.status === 'running') {
+          jobs.push({ name: 'Find Websites', status: 'running', progress: wsStatus.processed || 0, total: wsStatus.total || 0 });
+        }
+        if (emailStatus && emailStatus.status === 'running') {
+          jobs.push({ name: 'Find Emails', status: 'running', progress: emailStatus.processed || 0, total: emailStatus.total || 0 });
+        }
+        if (enrichStatus && enrichStatus.status === 'running') {
+          jobs.push({ name: 'Enrich All', status: 'running', progress: enrichStatus.processed || 0, total: enrichStatus.total || 0 });
+        }
+
+        if (jobs.length === 0) {
+          container.innerHTML = '<span style="font-size:0.8rem;color:#9ca3af;">No enrichment jobs running.</span>';
+          document.getElementById('eq-status').textContent = 'Idle';
+          document.getElementById('eq-status').style.background = '#dcfce7';
+          document.getElementById('eq-status').style.color = '#166534';
+        } else {
+          document.getElementById('eq-status').textContent = `${jobs.length} Running`;
+          document.getElementById('eq-status').style.background = '#dbeafe';
+          document.getElementById('eq-status').style.color = '#1e40af';
+          container.innerHTML = jobs.map(j => {
+            const pct = j.total > 0 ? Math.round(100 * j.progress / j.total) : 0;
+            return `<div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:0.5rem 0.75rem;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.3rem;">
+                <span style="font-weight:600;font-size:0.82rem;">${j.name}</span>
+                <span style="font-size:0.75rem;color:#6b7280;">${j.progress}/${j.total} (${pct}%)</span>
+              </div>
+              <div style="height:4px;background:#e5e7eb;border-radius:2px;overflow:hidden;">
+                <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#6366f1,#8b5cf6);border-radius:2px;transition:width 0.5s;"></div>
+              </div>
+            </div>`;
+          }).join('');
+        }
+
+        // Enrichment opportunities
+        const opps = [];
+        if (stats.opportunities) {
+          if (stats.opportunities.needsEmail > 0) opps.push({ action: 'Find Emails', count: stats.opportunities.needsEmail, btn: 'verifyEmails()' });
+          if (stats.opportunities.needsPhone > 0) opps.push({ action: 'Find Phones', count: stats.opportunities.needsPhone, btn: null });
+          if (stats.opportunities.hasWebsiteNoEmail > 0) opps.push({ action: 'Crawl Websites', count: stats.opportunities.hasWebsiteNoEmail, btn: 'startEmailVerify()' });
+        }
+        const oppContainer = document.getElementById('eq-opportunities');
+        if (opps.length > 0) {
+          oppContainer.innerHTML = '<div style="font-size:0.8rem;font-weight:600;margin-bottom:0.3rem;color:#4338ca;">Opportunities</div>' +
+            opps.map(o => `<div style="display:flex;justify-content:space-between;align-items:center;padding:0.3rem 0;border-bottom:1px solid #f3f4f6;">
+              <span style="font-size:0.8rem;">${o.action}: <strong>${o.count}</strong> leads</span>
+              ${o.btn ? `<button onclick="${o.btn}" style="font-size:0.7rem;padding:0.15rem 0.5rem;background:#4f46e5;color:#fff;border:none;border-radius:4px;cursor:pointer;">Run</button>` : ''}
+            </div>`).join('');
+        } else {
+          oppContainer.innerHTML = '';
+        }
+      } catch (err) { console.error('Enrichment queue error:', err); }
+    }
+
+    function startEmailVerify() {
+      fetch('/api/leads/verify-emails', { method: 'POST' });
+      toast('Email verification started', 'info');
+      setTimeout(loadEnrichmentQueue, 2000);
+    }
+    function verifyEmails() {
+      fetch('/api/leads/verify-emails', { method: 'POST' });
+      toast('Finding emails from firm websites...', 'info');
+      setTimeout(loadEnrichmentQueue, 2000);
+    }
+
     // --- Scheduled Scrapes ---
     async function loadSchedules() {
       try {
@@ -4588,7 +4927,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
