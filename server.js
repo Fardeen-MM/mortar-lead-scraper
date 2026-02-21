@@ -2780,6 +2780,114 @@ app.get('/api/audit/export', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Lifecycle Tracking (Batch 22) ===
+app.post('/api/leads/:id/stage-transition', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { fromStage, toStage, triggeredBy } = req.body;
+    if (!toStage) return res.status(400).json({ error: 'toStage required' });
+    res.json(leadDb.recordStageTransition(parseInt(req.params.id), fromStage, toStage, triggeredBy));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/lifecycle/analytics', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getLifecycleAnalytics());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/:id/lifecycle', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getLeadLifecycle(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Sequence Analytics (Batch 22) ===
+app.post('/api/sequences/:id/event', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { stepNumber, leadId, eventType, variant, metadata } = req.body;
+    if (!leadId || !eventType) return res.status(400).json({ error: 'leadId and eventType required' });
+    res.json(leadDb.recordSequenceEvent(parseInt(req.params.id), stepNumber || 1, parseInt(leadId), eventType, variant, metadata));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/sequences/:id/analytics', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getSequenceAnalytics(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/sequences/performance', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getAllSequencePerformance());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Activity Scoring (Batch 22) ===
+app.get('/api/leads/:id/activity-score', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.computeActivityScore(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/activity-scores/batch', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.batchActivityScores(parseInt(req.query.limit) || 100));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/activity-scores/config', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getActivityScoreConfig());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.put('/api/activity-scores/config', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.updateActivityScoreConfig(req.body));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Bulk Enrichment (Batch 22) ===
+app.post('/api/bulk-enrichment/run', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds, sourceFilter } = req.body;
+    if (!leadIds || !Array.isArray(leadIds)) return res.status(400).json({ error: 'leadIds (array) required' });
+    res.json(leadDb.createBulkEnrichmentRun(leadIds, sourceFilter));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/bulk-enrichment/runs', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getBulkEnrichmentRuns(parseInt(req.query.limit) || 20));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/bulk-enrichment/process/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.processBulkEnrichmentBatch(parseInt(req.params.id), parseInt(req.body.batchSize) || 20));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/bulk-enrichment/diff/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getBulkEnrichmentDiff(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {

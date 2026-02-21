@@ -1522,6 +1522,51 @@
       <div id="audit-log-list" style="max-height:250px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Lifecycle Tracking (Batch 22) -->
+    <div id="lifecycle-panel" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #4ade80;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#16a34a;">Lifecycle Analytics</span>
+        <button onclick="loadLifecycleAnalytics()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#dcfce7;color:#16a34a;border:1px solid #4ade80;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Track pipeline velocity — how fast leads move through stages. Like Apollo's deal velocity metrics.</p>
+      <div id="lifecycle-velocity" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="lifecycle-bottlenecks" style="margin-bottom:0.4rem;"></div>
+      <div id="lifecycle-recent" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Sequence Analytics (Batch 22) -->
+    <div id="sequence-analytics-panel" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:1px solid #c084fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#9333ea;">Sequence Performance</span>
+        <button onclick="loadSequencePerformance()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#f3e8ff;color:#9333ea;border:1px solid #c084fc;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Email sequence analytics — open rates, reply rates, bounce rates per step. Like Instantly's campaign dashboard.</p>
+      <div id="sequence-performance-list" style="max-height:200px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Activity Scoring (Batch 22) -->
+    <div id="activity-scoring-panel" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid #fb923c;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#ea580c;">Activity Scoring</span>
+        <button onclick="loadActivityScores()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ffedd5;color:#ea580c;border:1px solid #fb923c;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Recency-weighted engagement scoring. Recent interactions score higher. Like HubSpot's engagement scoring.</p>
+      <div id="activity-scores-list" style="max-height:200px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Bulk Enrichment (Batch 22) -->
+    <div id="bulk-enrichment-panel" style="background:linear-gradient(135deg,#ecfeff,#cffafe);border:1px solid #22d3ee;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#0891b2;">Bulk Enrichment</span>
+        <div style="display:flex;gap:0.3rem;">
+          <button onclick="startBulkEnrichment()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#0891b2;color:#fff;border:none;border-radius:4px;cursor:pointer;">Enrich Selected</button>
+          <button onclick="loadBulkEnrichmentRuns()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#cffafe;color:#0891b2;border:1px solid #22d3ee;border-radius:4px;cursor:pointer;">Refresh</button>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Run waterfall enrichment on lead batches. Derives websites from emails, shares firm data. Like Clay's bulk enrichment.</p>
+      <div id="bulk-enrichment-runs" style="max-height:200px;overflow-y:auto;"></div>
+    </div>
+
     <!-- Leaderboard (Batch 19) -->
     <div id="leaderboard-panel" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #fbbf24;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -8239,6 +8284,157 @@
       } catch (err) { toast('Export error: ' + err.message, 'error'); }
     }
 
+    // === Lifecycle Analytics (Batch 22) ===
+    async function loadLifecycleAnalytics() {
+      try {
+        const data = await fetch('/api/lifecycle/analytics').then(r => r.json());
+        const velEl = document.getElementById('lifecycle-velocity');
+        velEl.innerHTML = `
+          <span style="font-size:0.72rem;"><strong style="color:#16a34a;">${data.velocity?.avg_total_hours || 0}h</strong> avg velocity</span>
+          <span style="font-size:0.72rem;"><strong style="color:#6b7280;">${data.velocity?.leads_completed || 0}</strong> leads completed</span>
+        `;
+        const bottEl = document.getElementById('lifecycle-bottlenecks');
+        if (data.bottlenecks && data.bottlenecks.length > 0) {
+          bottEl.innerHTML = '<span style="font-size:0.68rem;font-weight:600;color:#16a34a;">Bottlenecks:</span> ' +
+            data.bottlenecks.map(b => `<span style="display:inline-block;padding:0.1rem 0.3rem;background:#dcfce7;border-radius:4px;font-size:0.65rem;margin:0.1rem;">${esc(b.stage)} <strong>${b.avg_hours}h</strong> avg (${b.transitions} moves)</span>`).join('');
+        } else {
+          bottEl.innerHTML = '<span style="font-size:0.68rem;color:#16a34a;">No stage bottlenecks detected yet.</span>';
+        }
+        const recEl = document.getElementById('lifecycle-recent');
+        if (data.recent && data.recent.length > 0) {
+          recEl.innerHTML = data.recent.map(t => `
+            <div style="display:flex;align-items:center;gap:0.4rem;padding:0.2rem 0;border-bottom:1px solid #dcfce7;font-size:0.72rem;">
+              <span style="color:#16a34a;font-size:0.6rem;">${esc(t.from_stage || 'new')}</span>
+              <span style="color:#9ca3af;">&#x2192;</span>
+              <span style="font-weight:600;color:#16a34a;font-size:0.6rem;">${esc(t.to_stage)}</span>
+              <strong style="flex:1;">${esc(t.first_name || '')} ${esc(t.last_name || '')}</strong>
+              <span style="color:#6b7280;font-size:0.6rem;">${t.duration_hours > 0 ? t.duration_hours + 'h' : 'instant'}</span>
+            </div>
+          `).join('');
+        } else {
+          recEl.innerHTML = '<span style="font-size:0.72rem;color:#16a34a;">No stage transitions recorded yet.</span>';
+        }
+      } catch (err) { console.error('Lifecycle error:', err); }
+    }
+
+    // === Sequence Performance (Batch 22) ===
+    async function loadSequencePerformance() {
+      try {
+        const seqs = await fetch('/api/sequences/performance').then(r => r.json());
+        const el = document.getElementById('sequence-performance-list');
+        if (!seqs || seqs.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#9333ea;">No sequences with events yet.</span>';
+          return;
+        }
+        el.innerHTML = seqs.map(s => `
+          <div style="display:flex;align-items:center;gap:0.5rem;padding:0.25rem 0;border-bottom:1px solid #f3e8ff;font-size:0.72rem;">
+            <strong style="flex:1;color:#7c3aed;">${esc(s.name || 'Seq #' + s.id)}</strong>
+            <span style="color:#6b7280;">${s.leads || 0} leads</span>
+            <span style="color:#059669;">${s.sent || 0} sent</span>
+            <span style="color:#2563eb;">${s.reply_rate || 0}% reply</span>
+            <span style="color:#ef4444;font-size:0.65rem;">${s.bounced || 0} bounced</span>
+            <button onclick="showSequenceDetail(${s.id})" style="font-size:0.6rem;padding:0.1rem 0.3rem;background:#f3e8ff;color:#9333ea;border:1px solid #c084fc;border-radius:3px;cursor:pointer;">Detail</button>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Sequence perf error:', err); }
+    }
+
+    async function showSequenceDetail(seqId) {
+      try {
+        const data = await fetch('/api/sequences/' + seqId + '/analytics').then(r => r.json());
+        const el = document.getElementById('sequence-performance-list');
+        let html = `<h4 style="margin:0 0 0.3rem;color:#7c3aed;">Sequence #${seqId} Analytics</h4>`;
+        if (data.totals) {
+          html += `<div style="display:flex;gap:0.8rem;margin-bottom:0.3rem;font-size:0.72rem;">
+            <span><strong>${data.totals.total_sent || 0}</strong> sent</span>
+            <span><strong>${data.totals.total_opened || 0}</strong> opened</span>
+            <span><strong>${data.totals.total_replied || 0}</strong> replied</span>
+            <span><strong>${data.totals.total_bounced || 0}</strong> bounced</span>
+          </div>`;
+        }
+        if (data.steps && data.steps.length > 0) {
+          html += data.steps.map(s => `
+            <div style="display:flex;align-items:center;gap:0.4rem;padding:0.15rem 0;border-bottom:1px solid #f3e8ff;font-size:0.68rem;">
+              <span style="font-weight:600;width:60px;">Step ${s.step_number}</span>
+              <span style="color:#059669;">${s.open_rate}% open</span>
+              <span style="color:#2563eb;">${s.reply_rate}% reply</span>
+              <span style="color:#ef4444;">${s.bounce_rate}% bounce</span>
+              <span style="color:#6b7280;">${s.sent} sent</span>
+            </div>
+          `).join('');
+        }
+        html += '<br><button onclick="loadSequencePerformance()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#f3e8ff;color:#9333ea;border:1px solid #c084fc;border-radius:4px;cursor:pointer;">Back</button>';
+        el.innerHTML = html;
+      } catch (err) { toast('Sequence detail error: ' + err.message, 'error'); }
+    }
+
+    // === Activity Scoring (Batch 22) ===
+    async function loadActivityScores() {
+      try {
+        const scores = await fetch('/api/activity-scores/batch?limit=20').then(r => r.json());
+        const el = document.getElementById('activity-scores-list');
+        if (!scores || scores.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#ea580c;">No activity data yet. Log contacts and interactions to see scores.</span>';
+          return;
+        }
+        el.innerHTML = scores.map(s => `
+          <div style="display:flex;align-items:center;gap:0.4rem;padding:0.2rem 0;border-bottom:1px solid #ffedd5;font-size:0.72rem;">
+            <span style="padding:0.1rem 0.3rem;border-radius:4px;font-size:0.65rem;font-weight:600;background:${s.score > 50 ? '#dcfce7;color:#16a34a' : s.score > 20 ? '#ffedd5;color:#ea580c' : '#fef2f2;color:#ef4444'};">${s.score}</span>
+            <strong style="flex:1;">${esc(s.first_name || '')} ${esc(s.last_name || '')}</strong>
+            <span style="color:#6b7280;font-size:0.65rem;">${s.totalActivities} activities</span>
+            <span style="color:#059669;font-size:0.65rem;">${s.recentActivities} recent</span>
+            <span style="color:#9ca3af;font-size:0.6rem;">${Object.entries(s.breakdown || {}).map(([k,v]) => k + ':' + v).join(', ')}</span>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Activity scores error:', err); }
+    }
+
+    // === Bulk Enrichment (Batch 22) ===
+    async function loadBulkEnrichmentRuns() {
+      try {
+        const runs = await fetch('/api/bulk-enrichment/runs?limit=10').then(r => r.json());
+        const el = document.getElementById('bulk-enrichment-runs');
+        if (!runs || runs.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#0891b2;">No enrichment runs yet. Select leads and click "Enrich Selected" to start.</span>';
+          return;
+        }
+        el.innerHTML = runs.map(r => {
+          const fields = JSON.parse(r.fields_filled || '{}');
+          const fieldStr = Object.entries(fields).map(([k,v]) => k + ':' + v).join(', ');
+          return `
+            <div style="display:flex;align-items:center;gap:0.4rem;padding:0.25rem 0;border-bottom:1px solid #cffafe;font-size:0.72rem;">
+              <span style="padding:0.1rem 0.3rem;border-radius:4px;font-size:0.6rem;font-weight:600;background:${r.status === 'completed' ? '#dcfce7;color:#16a34a' : r.status === 'processing' ? '#cffafe;color:#0891b2' : '#fef3c7;color:#f59e0b'};">${r.status}</span>
+              <strong style="flex:1;">${r.total_leads} leads</strong>
+              <span style="color:#059669;font-size:0.65rem;">${r.enriched}/${r.processed} enriched</span>
+              <span style="color:#6b7280;font-size:0.6rem;">${fieldStr || 'none yet'}</span>
+              ${r.status === 'processing' ? `<button onclick="processEnrichRun(${r.id})" style="font-size:0.6rem;padding:0.1rem 0.3rem;background:#0891b2;color:#fff;border:none;border-radius:3px;cursor:pointer;">Process</button>` : ''}
+            </div>
+          `;
+        }).join('');
+      } catch (err) { console.error('Bulk enrichment error:', err); }
+    }
+
+    async function startBulkEnrichment() {
+      const ids = [..._selectedIds];
+      if (ids.length === 0) { toast('Select leads first using checkboxes', 'warn'); return; }
+      try {
+        const res = await fetch('/api/bulk-enrichment/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ leadIds: ids }) }).then(r => r.json());
+        toast('Created enrichment run #' + res.runId + ' (' + res.queued + ' queued)', 'success');
+        // Auto-process first batch
+        await fetch('/api/bulk-enrichment/process/' + res.runId, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ batchSize: 20 }) });
+        loadBulkEnrichmentRuns();
+        refreshAll();
+      } catch (err) { toast('Enrichment error: ' + err.message, 'error'); }
+    }
+
+    async function processEnrichRun(runId) {
+      try {
+        const res = await fetch('/api/bulk-enrichment/process/' + runId, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ batchSize: 20 }) }).then(r => r.json());
+        toast('Processed ' + res.processed + ' leads (' + res.enriched + ' enriched)', 'success');
+        loadBulkEnrichmentRuns();
+      } catch (err) { toast('Process error: ' + err.message, 'error'); }
+    }
+
     // === Leaderboard (Batch 19) ===
     async function loadLeaderboard() {
       try {
@@ -8662,7 +8858,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
