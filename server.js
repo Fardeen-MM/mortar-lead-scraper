@@ -3573,6 +3573,38 @@ app.get('/api/pipeline-velocity', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Relationship Graph (Batch 35) ===
+app.get('/api/relationship-graph', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getRelationshipGraph(parseInt(req.query.limit) || 30));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Enrichment ROI (Batch 35) ===
+app.get('/api/enrichment-roi', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getEnrichmentROI());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Engagement Prediction (Batch 35) ===
+app.get('/api/engagement-prediction', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getEngagementPrediction(parseInt(req.query.limit) || 40));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Campaign Performance (Batch 35) ===
+app.get('/api/campaign-performance', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getCampaignPerformance());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {

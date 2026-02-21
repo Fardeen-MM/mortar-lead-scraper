@@ -1692,6 +1692,36 @@
       <div id="bulk-enrichment-runs" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Relationship Graph (Batch 35) -->
+    <div id="relationship-panel" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe);border:1px solid #60a5fa;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#1e40af;margin-bottom:0.5rem;">Relationship Graph</div>
+      <div id="rel-firm-bridges" style="font-size:0.78rem;color:#1d4ed8;"></div>
+      <div id="rel-practice-groups" style="font-size:0.78rem;color:#1d4ed8;margin-top:0.3rem;"></div>
+      <div id="rel-city-pairs" style="max-height:150px;overflow-y:auto;font-size:0.75rem;color:#1d4ed8;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Enrichment ROI (Batch 35) -->
+    <div id="enrichment-roi-panel" style="background:linear-gradient(135deg,#fefce8,#fef08a);border:1px solid #eab308;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#854d0e;margin-bottom:0.5rem;">Enrichment ROI</div>
+      <div id="eroi-overall" style="font-size:0.78rem;color:#713f12;"></div>
+      <div id="eroi-efficiency" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#713f12;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Engagement Prediction (Batch 35) -->
+    <div id="engagement-pred-panel" style="background:linear-gradient(135deg,#fdf4ff,#f5d0fe);border:1px solid #d946ef;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#86198f;margin-bottom:0.5rem;">Engagement Prediction</div>
+      <div id="engagement-dist" style="font-size:0.78rem;color:#a21caf;"></div>
+      <div id="engagement-top" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#a21caf;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Campaign Performance (Batch 35) -->
+    <div id="campaign-perf-panel" style="background:linear-gradient(135deg,#f0fdf4,#bbf7d0);border:1px solid #4ade80;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#166534;margin-bottom:0.5rem;">Campaign Performance</div>
+      <div id="camp-perf-practice" style="font-size:0.78rem;color:#15803d;"></div>
+      <div id="camp-perf-cities" style="font-size:0.78rem;color:#15803d;margin-top:0.3rem;"></div>
+      <div id="camp-perf-sources" style="max-height:150px;overflow-y:auto;font-size:0.75rem;color:#15803d;margin-top:0.3rem;"></div>
+    </div>
+
     <!-- Merge Candidates (Batch 34) -->
     <div id="merge-panel" style="background:linear-gradient(135deg,#fef9c3,#fef08a);border:1px solid #facc15;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="font-size:0.82rem;font-weight:700;color:#854d0e;margin-bottom:0.5rem;">Merge Candidates</div>
@@ -9330,6 +9360,62 @@
       } catch (err) { toast('Process error: ' + err.message, 'error'); }
     }
 
+    // === Relationship Graph (Batch 35) ===
+    async function loadRelationshipGraph() {
+      try {
+        const r = await fetch('/api/relationship-graph');
+        const d = await r.json();
+        document.getElementById('rel-firm-bridges').innerHTML = '<strong>Firm Bridges:</strong> ' +
+          (d.firmBridges||[]).slice(0,8).map(b => `${b.firm_name}: ${b.city1}↔${b.city2}`).join(' · ');
+        document.getElementById('rel-practice-groups').innerHTML = '<strong>Practice Clusters:</strong> ' +
+          (d.practiceGroups||[]).slice(0,8).map(p => `${p.practice_area}: ${p.count} (${p.cities} cities)`).join(' · ');
+        document.getElementById('rel-city-pairs').innerHTML = '<strong>Connected Cities:</strong><br>' +
+          (d.cityPairs||[]).map(c => `${c.city1} ↔ ${c.city2}: ${c.shared_firms} shared firms`).join('<br>');
+      } catch(e) { console.warn('relationship graph:', e); }
+    }
+
+    // === Enrichment ROI (Batch 35) ===
+    async function loadEnrichmentROI() {
+      try {
+        const r = await fetch('/api/enrichment-roi');
+        const d = await r.json();
+        const o = d.overall||{};
+        document.getElementById('eroi-overall').innerHTML = '<strong>Overall:</strong> ' +
+          `${o.total||0} leads · ${o.emails||0} emails · ${o.phones||0} phones · ${o.websites||0} websites · avg score ${o.avg_score||0}`;
+        document.getElementById('eroi-efficiency').innerHTML = (d.efficiency||[]).map(e =>
+          `<div style="padding:2px 0;border-bottom:1px solid #e5e7eb;">${e.source}: ${e.fieldsPerLead} fields/lead · ${e.emailRate}% email · ${e.phoneRate}% phone (n=${e.total})</div>`
+        ).join('');
+      } catch(e) { console.warn('enrichment roi:', e); }
+    }
+
+    // === Engagement Prediction (Batch 35) ===
+    async function loadEngagementPrediction() {
+      try {
+        const r = await fetch('/api/engagement-prediction');
+        const d = await r.json();
+        const dist = d.distribution||{};
+        document.getElementById('engagement-dist').innerHTML = '<strong>Prediction:</strong> ' +
+          `High: ${dist.high||0} · Medium: ${dist.medium||0} · Low: ${dist.low||0}`;
+        document.getElementById('engagement-top').innerHTML = (d.leads||[]).slice(0,15).map(l =>
+          `<div style="padding:2px 0;border-bottom:1px solid #e5e7eb;">${l.first_name} ${l.last_name} (${l.city||''}) — <strong>${l.engagement_prob}%</strong> T${l.city_tier} ${l.email?'✉':''}${l.phone?'📞':''}</div>`
+        ).join('');
+      } catch(e) { console.warn('engagement prediction:', e); }
+    }
+
+    // === Campaign Performance (Batch 35) ===
+    async function loadCampaignPerformance2() {
+      try {
+        const r = await fetch('/api/campaign-performance');
+        const d = await r.json();
+        document.getElementById('camp-perf-practice').innerHTML = '<strong>Top Practice Areas:</strong> ' +
+          (d.byPractice||[]).slice(0,8).map(p => `${p.practice_area}: ${p.total} (avg ${p.avg_score})`).join(' · ');
+        document.getElementById('camp-perf-cities').innerHTML = '<strong>Top Cities:</strong> ' +
+          (d.byCityPerf||[]).slice(0,8).map(c => `${c.city}: ${c.total} (avg ${c.avg_score})`).join(' · ');
+        document.getElementById('camp-perf-sources').innerHTML = '<strong>Source Performance:</strong><br>' +
+          (d.bySourcePerf||[]).map(s => `${s.primary_source}: ${s.total} leads, ${s.emails} emails, avg ${s.avg_score}`).join('<br>');
+      } catch(e) { console.warn('campaign performance:', e); }
+    }
+
     // === Merge Candidates (Batch 34) ===
     async function loadMergeCandidates() {
       try {
@@ -10733,7 +10819,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler(), loadPropensity(), loadCohorts(), loadChannelPrefs(), loadBenchmarks(), loadDealEstimates(), loadOutreachCal(), loadRiskScores(), loadNetworkMap(), loadJourneyMapping(), loadScoringAudit(), loadGeoExpansion(), loadFreshnessAlerts2(), loadMergeCandidates(), loadOutreachAnalytics(), loadIcpScoring(), loadPipelineVelocity()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler(), loadPropensity(), loadCohorts(), loadChannelPrefs(), loadBenchmarks(), loadDealEstimates(), loadOutreachCal(), loadRiskScores(), loadNetworkMap(), loadJourneyMapping(), loadScoringAudit(), loadGeoExpansion(), loadFreshnessAlerts2(), loadMergeCandidates(), loadOutreachAnalytics(), loadIcpScoring(), loadPipelineVelocity(), loadRelationshipGraph(), loadEnrichmentROI(), loadEngagementPrediction(), loadCampaignPerformance2()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
