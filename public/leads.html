@@ -1021,6 +1021,47 @@
       </div>
     </div>
 
+    <!-- Quick Actions -->
+    <div id="quick-actions" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:0.5rem;margin-bottom:1rem;">
+      <button onclick="quickScrape('FL')" class="qa-btn" style="padding:0.6rem;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.8rem;text-align:left;">
+        &#x26A1; Quick Scrape<br><span style="font-weight:400;font-size:0.7rem;opacity:0.8;">Pick a state to scrape now</span>
+      </button>
+      <button onclick="startBulkOp('find-websites')" class="qa-btn" style="padding:0.6rem;background:linear-gradient(135deg,#059669,#10b981);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.8rem;text-align:left;">
+        &#x1F310; Find Websites<br><span style="font-weight:400;font-size:0.7rem;opacity:0.8;">Crawl for missing websites</span>
+      </button>
+      <button onclick="startBulkOp('find-emails')" class="qa-btn" style="padding:0.6rem;background:linear-gradient(135deg,#0ea5e9,#38bdf8);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.8rem;text-align:left;">
+        &#x2709; Find Emails<br><span style="font-weight:400;font-size:0.7rem;opacity:0.8;">Crawl firm websites for emails</span>
+      </button>
+      <button onclick="exportGold()" class="qa-btn" style="padding:0.6rem;background:linear-gradient(135deg,#d97706,#f59e0b);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.8rem;text-align:left;">
+        &#x1F4E5; Export Gold<br><span style="font-weight:400;font-size:0.7rem;opacity:0.8;">Download leads with email+phone</span>
+      </button>
+      <button onclick="runQualityCheck()" class="qa-btn" style="padding:0.6rem;background:linear-gradient(135deg,#7c3aed,#8b5cf6);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.8rem;text-align:left;">
+        &#x1F50D; Quality Check<br><span style="font-weight:400;font-size:0.7rem;opacity:0.8;">Scan for data issues</span>
+      </button>
+      <button onclick="startBulkOp('enrich')" class="qa-btn" style="padding:0.6rem;background:linear-gradient(135deg,#ec4899,#f472b6);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.8rem;text-align:left;">
+        &#x2728; Enrich All<br><span style="font-weight:400;font-size:0.7rem;opacity:0.8;">Merge, share, deduce, score</span>
+      </button>
+    </div>
+
+    <!-- Email Verification Stats -->
+    <div id="verification-panel" style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1px solid #bbf7d0;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;display:none;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#166534;">Email Verification</span>
+        <button onclick="document.getElementById('verify-import-file').click()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#fff;border:1px solid #86efac;border-radius:4px;cursor:pointer;">Import Results</button>
+        <input type="file" id="verify-import-file" accept=".csv" style="display:none;" onchange="importVerificationCSV(this.files[0])">
+      </div>
+      <div id="verification-bars" style="display:flex;gap:1rem;flex-wrap:wrap;"></div>
+    </div>
+
+    <!-- Scoring Rules (collapsible) -->
+    <div id="scoring-panel" style="margin-bottom:1rem;">
+      <div onclick="toggleScoringPanel()" style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;padding:0.4rem 0;">
+        <span style="font-size:0.85rem;font-weight:600;">Scoring Rules</span>
+        <span id="scoring-toggle" style="font-size:0.7rem;color:#6b7280;">&#x25B6;</span>
+      </div>
+      <div id="scoring-rules-body" style="display:none;background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:0.75rem;"></div>
+    </div>
+
     <!-- Score Distribution Donut + Field Completeness -->
     <div class="donut-section">
       <div class="donut-container">
@@ -1314,7 +1355,10 @@
         <div class="health-grid" id="health-grid"></div>
       </div>
       <div class="tab-content" id="tab-duplicates">
-        <p class="hint" style="margin-bottom:0.75rem;">Potential duplicate leads found by matching email, phone, or name+city.</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+          <p class="hint" style="margin:0;">Potential duplicate leads found by matching email, phone, or name+city.</p>
+          <button onclick="autoMergeAll()" style="font-size:0.72rem;padding:0.25rem 0.6rem;background:#4f46e5;color:#fff;border:none;border-radius:4px;cursor:pointer;">Auto-merge All</button>
+        </div>
         <div id="dupe-list"></div>
         <div id="dupe-empty" style="text-align:center;padding:1.5rem;color:var(--text-muted);font-size:0.85rem;">No duplicates found</div>
       </div>
@@ -2372,7 +2416,7 @@
             <td>${esc(lead.city)}</td>
             <td>${esc(lead.state)}</td>
             <td><span style="display:inline-block;padding:0.1rem 0.4rem;border-radius:4px;font-size:0.72rem;font-weight:600;background:${scoreBg};color:${scoreColor};">${score}</span></td>
-            <td class="${lead.email ? 'has-data' : 'no-data'}">${lead.email ? esc(lead.email) : '-'}</td>
+            <td class="${lead.email ? 'has-data' : 'no-data'}">${lead.email ? esc(lead.email) + (lead.email_verified === 1 ? ' <span title="Verified" style="color:#16a34a;">&#x2713;</span>' : lead.email_verified === -1 ? ' <span title="Invalid" style="color:#dc2626;">&#x2717;</span>' : '') : '-'}</td>
             <td class="${lead.phone ? 'has-data' : 'no-data'}">${lead.phone ? esc(lead.phone) : '-'}</td>
             <td class="${lead.website ? 'has-data' : 'no-data'}">${lead.website ? '<a href="' + (lead.website.startsWith('http') ? '' : 'https://') + esc(lead.website) + '" target="_blank" rel="noopener">' + esc(lead.website).substring(0, 30) + '</a>' : '-'}</td>
             <td>${esc(lead.primary_source)}</td>
@@ -2793,6 +2837,18 @@
     }
 
     // --- Merge Duplicates ---
+    async function autoMergeAll() {
+      if (!confirm('Auto-merge all high-confidence duplicates (90%+ match)? This cannot be undone.')) return;
+      try {
+        const result = await fetch('/api/leads/auto-merge', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ confidenceThreshold: 90 })
+        }).then(r => r.json());
+        toast(`Auto-merged ${result.merged} duplicates (${result.fieldsRecovered} fields recovered)`, 'success');
+        refreshAll();
+      } catch (err) { toast('Auto-merge failed', 'error'); }
+    }
+
     async function mergeDuplicates() {
       const btn = document.getElementById('dedup-btn');
       btn.disabled = true;
@@ -4599,6 +4655,132 @@
       loadSegments();
     }
 
+    // --- Quick Actions ---
+    function quickScrape() {
+      const state = prompt('Enter state code to scrape (e.g., FL, CA, NY):');
+      if (!state) return;
+      fetch('/api/scrape/quick', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ state: state.toUpperCase(), testMode: false })
+      }).then(r => r.json()).then(d => {
+        if (d.error) return toast(d.error, 'error');
+        toast(`Scraping ${state.toUpperCase()}...`, 'info');
+      }).catch(() => toast('Failed to start scrape', 'error'));
+    }
+
+    function startBulkOp(op) {
+      const endpoints = {
+        'find-websites': '/api/leads/find-websites',
+        'find-emails': '/api/leads/verify-emails',
+        'enrich': '/api/leads/enrich-all',
+      };
+      const url = endpoints[op];
+      if (!url) return;
+      fetch(url, { method: 'POST' }).then(r => r.json()).then(d => {
+        toast(`${op} started`, 'info');
+        setTimeout(loadEnrichmentQueue, 2000);
+      }).catch(() => toast('Failed to start', 'error'));
+    }
+
+    function exportGold() {
+      window.location.href = '/api/leads/export?hasEmail=true&hasPhone=true';
+      toast('Downloading gold leads (email + phone)', 'success');
+    }
+
+    // --- Email Verification ---
+    async function loadVerificationStats() {
+      try {
+        const stats = await fetch('/api/leads/verification-stats').then(r => r.json());
+        const panel = document.getElementById('verification-panel');
+        if (stats.total === 0) { panel.style.display = 'none'; return; }
+        panel.style.display = '';
+        const bars = document.getElementById('verification-bars');
+        const verPct = (stats.verified / stats.total * 100).toFixed(0);
+        const invPct = (stats.invalid / stats.total * 100).toFixed(0);
+        const caPct = (stats.catchAll / stats.total * 100).toFixed(0);
+        const unvPct = (stats.unverified / stats.total * 100).toFixed(0);
+        bars.innerHTML = `
+          <div style="text-align:center;"><div style="font-weight:700;font-size:1rem;color:#16a34a;">${stats.verified}</div><div style="font-size:0.7rem;color:#6b7280;">Verified (${verPct}%)</div></div>
+          <div style="text-align:center;"><div style="font-weight:700;font-size:1rem;color:#dc2626;">${stats.invalid}</div><div style="font-size:0.7rem;color:#6b7280;">Invalid (${invPct}%)</div></div>
+          <div style="text-align:center;"><div style="font-weight:700;font-size:1rem;color:#f59e0b;">${stats.catchAll}</div><div style="font-size:0.7rem;color:#6b7280;">Catch-All (${caPct}%)</div></div>
+          <div style="text-align:center;"><div style="font-weight:700;font-size:1rem;color:#6b7280;">${stats.unverified}</div><div style="font-size:0.7rem;color:#6b7280;">Unverified (${unvPct}%)</div></div>
+        `;
+      } catch (err) { /* hide panel on error */ }
+    }
+
+    async function importVerificationCSV(file) {
+      if (!file) return;
+      const formData = new FormData();
+      formData.append('file', file);
+      try {
+        const result = await fetch('/api/leads/import-verification', { method: 'POST', body: formData }).then(r => r.json());
+        toast(`Updated ${result.updated} of ${result.total} emails`, 'success');
+        loadVerificationStats();
+      } catch (err) { toast('Import failed', 'error'); }
+    }
+
+    // --- Scoring Rules ---
+    let _scoringVisible = false;
+
+    function toggleScoringPanel() {
+      _scoringVisible = !_scoringVisible;
+      document.getElementById('scoring-rules-body').style.display = _scoringVisible ? '' : 'none';
+      document.getElementById('scoring-toggle').innerHTML = _scoringVisible ? '&#x25BC;' : '&#x25B6;';
+      if (_scoringVisible) loadScoringRules();
+    }
+
+    async function loadScoringRules() {
+      try {
+        const rules = await fetch('/api/scoring/rules').then(r => r.json());
+        const container = document.getElementById('scoring-rules-body');
+        container.innerHTML = rules.map(r => `
+          <div style="display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid #f3f4f6;">
+            <label style="cursor:pointer;"><input type="checkbox" ${r.enabled ? 'checked' : ''} onchange="toggleScoringRule(${r.id}, this.checked)"></label>
+            <span style="font-size:0.8rem;font-weight:600;min-width:100px;">${r.field}</span>
+            <span style="font-size:0.75rem;color:#6b7280;">${r.condition}</span>
+            <input type="number" value="${r.points}" onchange="updateScoringPoints(${r.id}, this.value)" style="width:50px;padding:0.2rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.8rem;text-align:center;" min="0" max="100">
+            <span style="font-size:0.7rem;color:#9ca3af;">pts</span>
+            <button onclick="deleteScoringRuleUI(${r.id})" style="background:none;border:none;color:#ef4444;cursor:pointer;margin-left:auto;">&times;</button>
+          </div>
+        `).join('') +
+        `<div style="margin-top:0.5rem;display:flex;gap:0.5rem;">
+          <button onclick="addScoringRuleUI()" style="font-size:0.72rem;padding:0.25rem 0.6rem;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:4px;cursor:pointer;">+ Add Rule</button>
+          <button onclick="rescoreAll()" style="font-size:0.72rem;padding:0.25rem 0.6rem;background:#4f46e5;color:#fff;border:none;border-radius:4px;cursor:pointer;">Re-score All</button>
+        </div>`;
+      } catch (err) { console.error('Scoring rules load error:', err); }
+    }
+
+    async function toggleScoringRule(id, enabled) {
+      await fetch('/api/scoring/rules/' + id, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ enabled }) });
+    }
+
+    async function updateScoringPoints(id, points) {
+      await fetch('/api/scoring/rules/' + id, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ points: parseInt(points) }) });
+    }
+
+    async function deleteScoringRuleUI(id) {
+      await fetch('/api/scoring/rules/' + id, { method: 'DELETE' });
+      loadScoringRules();
+    }
+
+    async function addScoringRuleUI() {
+      const field = prompt('Field name (e.g., linkedin_url, title, bio):');
+      if (!field) return;
+      const points = parseInt(prompt('Points (0-100):', '10'));
+      if (isNaN(points)) return;
+      await fetch('/api/scoring/rules', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ field, points, condition: 'is_not_empty' }) });
+      loadScoringRules();
+    }
+
+    async function rescoreAll() {
+      try {
+        const result = await fetch('/api/leads/score', { method: 'POST' }).then(r => r.json());
+        toast(`Scored ${result.scored} leads (avg: ${result.avgScore})`, 'success');
+        loadScores();
+        loadLeads();
+      } catch (err) { toast('Scoring failed', 'error'); }
+    }
+
     async function quickChangeStage(leadId, stage) {
       try {
         await fetch('/api/pipeline/move', {
@@ -4927,7 +5109,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();

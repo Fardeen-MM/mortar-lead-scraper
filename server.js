@@ -526,6 +526,27 @@ app.post('/api/leads/merge-duplicates', (req, res) => {
   }
 });
 
+app.get('/api/leads/merge-preview', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { keepId, deleteId } = req.query;
+    if (!keepId || !deleteId) return res.status(400).json({ error: 'keepId and deleteId required' });
+    const preview = leadDb.getMergePreview(parseInt(keepId), parseInt(deleteId));
+    if (!preview) return res.status(404).json({ error: 'Lead not found' });
+    res.json(preview);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/auto-merge', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const threshold = req.body.confidenceThreshold || 90;
+    const result = leadDb.autoMergeDuplicates(threshold);
+    fireWebhookEvent('lead.merged', { merged: result.merged });
+    res.json(result);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // Export leads as CSV
 app.get('/api/leads/export', (req, res) => {
   try {
@@ -1279,6 +1300,73 @@ app.post('/api/segments/query/leads', (req, res) => {
     const { filters, limit = 100, offset = 0 } = req.body;
     if (!filters) return res.status(400).json({ error: 'filters required' });
     res.json(leadDb.querySegmentLeads(filters, limit, offset));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// --- Scoring Rules ---
+app.get('/api/scoring/rules', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getScoringRules());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/scoring/rules', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { field, points, condition } = req.body;
+    if (!field || points === undefined) return res.status(400).json({ error: 'field and points required' });
+    res.json(leadDb.addScoringRule(field, points, condition));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.patch('/api/scoring/rules/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.updateScoringRule(parseInt(req.params.id), req.body));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/scoring/rules/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.deleteScoringRule(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/:id/score-breakdown', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const lead = leadDb.getLeadById(parseInt(req.params.id));
+    if (!lead) return res.status(404).json({ error: 'Lead not found' });
+    res.json(leadDb.getScoreBreakdown(lead));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// --- Email Verification ---
+app.get('/api/leads/verification-stats', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getVerificationStats());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/import-verification', upload.single('file'), (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+    const leadDb = require('./lib/lead-db');
+    const csv = require('./lib/csv-handler');
+    const rows = csv.readCSV(req.file.path);
+    const verifications = rows.map(r => ({
+      email: r.email || r.Email || r.EMAIL,
+      valid: (r.valid || r.status || r.result || '').toString().toLowerCase() === 'valid' ||
+             (r.valid || r.status || r.result || '').toString().toLowerCase() === 'true' ||
+             (r.valid || r.status || r.result || '').toString() === '1',
+      catchAll: (r.catch_all || r.catchAll || r.catch_all_domain || '').toString().toLowerCase() === 'true' ||
+                (r.catch_all || r.catchAll || '').toString() === '1',
+    })).filter(v => v.email);
+    const result = leadDb.bulkImportVerification(verifications);
+    res.json(result);
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
