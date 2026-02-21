@@ -1031,6 +1031,74 @@
 
     .tab-hidden { display: none !important; }
 
+    /* === Leads Header === */
+    .leads-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .leads-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .leads-header-left .logo { margin-bottom: 0; }
+    .leads-header-subtitle {
+      color: #94a3b8;
+      font-size: 0.8rem;
+      font-weight: 400;
+    }
+    .leads-header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .leads-nav-link {
+      font-size: 0.8rem;
+      color: #6366f1;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .leads-nav-link:hover { text-decoration: underline; }
+    .dark-toggle { font-size: 0.72rem; }
+
+    /* === Power Bar === */
+    .power-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 1rem;
+      background: linear-gradient(135deg, #1e1b4b, #312e81);
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      color: white;
+      font-size: 0.75rem;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 8px rgba(49, 46, 129, 0.25);
+    }
+    .pb-stat { display: flex; align-items: center; gap: 0.3rem; }
+    .pb-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse 2s infinite;
+    }
+    .pb-total { font-size: 0.85rem; }
+    .pb-sep { opacity: 0.4; }
+    .pb-emails { color: #86efac; }
+    .pb-phones { color: #93c5fd; }
+    .pb-websites { color: #c4b5fd; }
+    .pb-health { font-weight: 700; }
+    .pb-updated { margin-left: auto; opacity: 0.6; }
+
+    /* === Small Tab Buttons === */
+    .btn-xs {
+      font-size: 0.65rem;
+      padding: 0.1rem 0.4rem;
+    }
+
     /* === Section Headers within tabs === */
     .section-header {
       display: flex;
@@ -1108,14 +1176,39 @@
       border-radius: 10px !important;
     }
 
+    /* Batch panel base class — shared structure for all gradient panels */
+    .bp {
+      border: 1px solid;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+    }
+    .bp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .bp-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+    .bp-hint {
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+    .bp-content {
+      font-size: 0.82rem;
+    }
+
     /* Dark mode for batch gradient panels */
-    body.dark [id$="-panel"][style*="background:linear-gradient"] {
+    body.dark .bp {
       filter: brightness(0.35) saturate(0.8);
     }
-    body.dark [id$="-panel"][style*="background:linear-gradient"] * {
+    body.dark .bp * {
       color: #e2e8f0 !important;
     }
-    body.dark [id$="-panel"][style*="background:linear-gradient"] button {
+    body.dark .bp button {
       opacity: 0.9;
     }
 
@@ -1147,40 +1240,40 @@
 </head>
 <body>
   <div class="container">
-    <header class="header" style="display:flex;align-items:center;justify-content:space-between;padding-bottom:0.5rem;">
-      <div style="display:flex;align-items:center;gap:0.75rem;">
-        <div class="logo" style="margin-bottom:0;">
+    <header class="leads-header">
+      <div class="leads-header-left">
+        <div class="logo">
           <span class="logo-icon">&#x1F9F1;</span>
           <span class="logo-text">Mortar</span>
         </div>
-        <span style="color:#94a3b8;font-size:0.8rem;font-weight:400;">Lead Database</span>
+        <span class="leads-header-subtitle">Lead Database</span>
       </div>
-      <div style="display:flex;align-items:center;gap:1rem;">
-        <a href="/" style="font-size:0.8rem;color:#6366f1;text-decoration:none;font-weight:500;">Scraper</a>
-        <a href="/signals.html" style="font-size:0.8rem;color:#6366f1;text-decoration:none;font-weight:500;">Signals</a>
-        <button class="dark-toggle" id="dark-toggle" onclick="toggleDarkMode()" style="font-size:0.72rem;">Dark</button>
+      <div class="leads-header-right">
+        <a href="/" class="leads-nav-link">Scraper</a>
+        <a href="/signals.html" class="leads-nav-link">Signals</a>
+        <button class="dark-toggle" id="dark-toggle" onclick="toggleDarkMode()">Dark</button>
       </div>
     </header>
 
     <!-- Power Bar -->
-    <div id="power-bar" style="display:flex;align-items:center;gap:0.75rem;padding:0.5rem 1rem;background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:10px;margin-bottom:1rem;color:white;font-size:0.75rem;flex-wrap:wrap;box-shadow:0 2px 8px rgba(49,46,129,0.25);">
-      <span style="display:flex;align-items:center;gap:0.3rem;">
-        <span style="width:8px;height:8px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite;"></span>
-        <strong id="pb-total" style="font-size:0.85rem;">-</strong> leads
+    <div id="power-bar" class="power-bar">
+      <span class="pb-stat">
+        <span class="pb-dot"></span>
+        <strong id="pb-total" class="pb-total">-</strong> leads
       </span>
-      <span style="opacity:0.4;">|</span>
+      <span class="pb-sep">|</span>
       <span id="pb-states">- states</span>
-      <span style="opacity:0.4;">|</span>
+      <span class="pb-sep">|</span>
       <span id="pb-countries">- countries</span>
-      <span style="opacity:0.4;">|</span>
-      <span style="color:#86efac;" id="pb-emails">- emails</span>
-      <span style="opacity:0.4;">|</span>
-      <span style="color:#93c5fd;" id="pb-phones">- phones</span>
-      <span style="opacity:0.4;">|</span>
-      <span style="color:#c4b5fd;" id="pb-websites">- websites</span>
-      <span style="opacity:0.4;">|</span>
-      <span id="pb-health" style="font-weight:700;"></span>
-      <span style="margin-left:auto;opacity:0.6;" id="pb-updated"></span>
+      <span class="pb-sep">|</span>
+      <span class="pb-emails" id="pb-emails">- emails</span>
+      <span class="pb-sep">|</span>
+      <span class="pb-phones" id="pb-phones">- phones</span>
+      <span class="pb-sep">|</span>
+      <span class="pb-websites" id="pb-websites">- websites</span>
+      <span class="pb-sep">|</span>
+      <span id="pb-health" class="pb-health"></span>
+      <span class="pb-updated" id="pb-updated"></span>
     </div>
 
     <!-- nav moved to header -->
@@ -1262,7 +1355,7 @@
     </div>
 
     <!-- Email Verification Stats -->
-    <div id="verification-panel" style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1px solid #bbf7d0;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;display:none;">
+    <div id="verification-panel" class="bp" style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border-color:#bbf7d0;display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#166534;">Email Verification</span>
         <button onclick="document.getElementById('verify-import-file').click()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#fff;border:1px solid #86efac;border-radius:4px;cursor:pointer;">Import Results</button>
@@ -1281,7 +1374,7 @@
     </div>
 
     <!-- Email Classification (Apollo-style) -->
-    <div id="email-class-panel" style="background:linear-gradient(135deg,#eff6ff,#f0f4ff);border:1px solid #bfdbfe;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;display:none;">
+    <div id="email-class-panel" class="bp" style="background:linear-gradient(135deg,#eff6ff,#f0f4ff);border-color:#bfdbfe;display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#1e40af;">Email Classification</span>
         <button onclick="classifyEmails()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#fff;border:1px solid #93c5fd;border-radius:4px;cursor:pointer;">Re-classify</button>
@@ -1290,7 +1383,7 @@
     </div>
 
     <!-- Confidence Score Distribution -->
-    <div id="confidence-panel" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #fde68a;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;display:none;">
+    <div id="confidence-panel" class="bp" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border-color:#fde68a;display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#854d0e;">Data Confidence</span>
         <button onclick="recomputeConfidence()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#fff;border:1px solid #fde68a;border-radius:4px;cursor:pointer;">Recalculate</button>
@@ -1300,7 +1393,7 @@
     </div>
 
     <!-- Data Staleness (ZoomInfo-style) -->
-    <div id="staleness-panel" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #fbcfe8;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;display:none;">
+    <div id="staleness-panel" class="bp" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border-color:#fbcfe8;display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#9d174d;">Data Freshness</span>
       </div>
@@ -1321,7 +1414,7 @@
     </div>
 
     <!-- ICP Scoring (Apollo-style) -->
-    <div id="icp-panel" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:1px solid #e9d5ff;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="icp-panel" class="bp" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border-color:#e9d5ff">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Ideal Customer Profile (ICP)</span>
         <div style="display:flex;gap:0.3rem;">
@@ -1344,7 +1437,7 @@
     </div>
 
     <!-- Buying Signals: Recent Admissions -->
-    <div id="admissions-panel" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid #fed7aa;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;display:none;">
+    <div id="admissions-panel" class="bp" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border-color:#fed7aa;display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#c2410c;">Buying Signals: New Admissions</span>
         <span id="admissions-count" style="font-size:0.7rem;padding:0.15rem 0.5rem;border-radius:10px;background:#fff;color:#c2410c;font-weight:600;"></span>
@@ -1354,7 +1447,7 @@
     </div>
 
     <!-- Outreach Sequences Panel -->
-    <div id="sequences-panel" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:1px solid #d8b4fe;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="sequences-panel" class="bp" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border-color:#d8b4fe">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Outreach Sequences</span>
         <button onclick="showCreateSequenceModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#7c3aed;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Sequence</button>
@@ -1364,7 +1457,7 @@
     </div>
 
     <!-- Firm Directory Panel -->
-    <div id="firm-directory-panel" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #7dd3fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="firm-directory-panel" class="bp" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border-color:#7dd3fc">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#0369a1;">Firm Directory</span>
         <button onclick="runFirmEnrichment()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#0369a1;color:#fff;border:none;border-radius:4px;cursor:pointer;">Enrich Firms</button>
@@ -1374,7 +1467,7 @@
     </div>
 
     <!-- Most Engaged Leads Panel -->
-    <div id="engagement-panel" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #fcd34d;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="engagement-panel" class="bp" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border-color:#fcd34d">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#b45309;">Most Engaged Leads</span>
         <span id="engagement-count" style="font-size:0.7rem;color:#92400e;"></span>
@@ -1384,7 +1477,7 @@
     </div>
 
     <!-- Do Not Contact Panel -->
-    <div id="dnc-panel" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border:1px solid #fca5a5;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="dnc-panel" class="bp" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border-color:#fca5a5">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#dc2626;">Do Not Contact</span>
         <div style="display:flex;gap:0.4rem;">
@@ -1397,7 +1490,7 @@
     </div>
 
     <!-- Smart Duplicates Panel -->
-    <div id="duplicates-panel" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid #fdba74;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="duplicates-panel" class="bp" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border-color:#fdba74">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#ea580c;">Duplicate Detection</span>
         <div style="display:flex;gap:0.4rem;">
@@ -1410,7 +1503,7 @@
     </div>
 
     <!-- Territory Management Panel -->
-    <div id="territory-panel" style="background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border:1px solid #5eead4;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="territory-panel" class="bp" style="background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border-color:#5eead4">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#0d9488;">Territory Management</span>
         <button onclick="showCreateTerritoryModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#0d9488;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Territory</button>
@@ -1420,7 +1513,7 @@
     </div>
 
     <!-- Source Attribution Panel -->
-    <div id="source-attribution-panel" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border:1px solid #d946ef;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="source-attribution-panel" class="bp" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border-color:#d946ef">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#a21caf;">Source Attribution</span>
       </div>
@@ -1429,7 +1522,7 @@
     </div>
 
     <!-- Score Decay Panel -->
-    <div id="decay-panel" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border:1px solid #cbd5e1;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="decay-panel" class="bp" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border-color:#cbd5e1">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#475569;">Score Decay</span>
         <div style="display:flex;gap:0.4rem;">
@@ -1441,7 +1534,7 @@
     </div>
 
     <!-- Intent Signals Panel -->
-    <div id="intent-panel" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #f9a8d4;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="intent-panel" class="bp" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border-color:#f9a8d4">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#be185d;">Intent Signals</span>
         <span id="intent-high-count" style="font-size:0.7rem;padding:0.15rem 0.5rem;border-radius:10px;background:#fff;color:#be185d;font-weight:600;"></span>
@@ -1451,7 +1544,7 @@
     </div>
 
     <!-- Routing Rules Panel -->
-    <div id="routing-panel" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #6ee7b7;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="routing-panel" class="bp" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-color:#6ee7b7">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#059669;">Lead Routing Rules</span>
         <div style="display:flex;gap:0.4rem;">
@@ -1464,7 +1557,7 @@
     </div>
 
     <!-- Completeness Heatmap Panel -->
-    <div id="heatmap-panel" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #93c5fd;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="heatmap-panel" class="bp" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-color:#93c5fd">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#2563eb;">Data Completeness Heatmap</span>
       </div>
@@ -1474,7 +1567,7 @@
     </div>
 
     <!-- Instantly Export Panel -->
-    <div id="instantly-panel" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:1px solid #c4b5fd;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="instantly-panel" class="bp" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);border-color:#c4b5fd">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Instantly Export</span>
         <button onclick="downloadInstantlyExport()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#7c3aed;color:#fff;border:none;border-radius:4px;cursor:pointer;">Download CSV</button>
@@ -1497,7 +1590,7 @@
     </div>
 
     <!-- Smart Lists Panel -->
-    <div id="smart-lists-panel" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #fde047;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="smart-lists-panel" class="bp" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border-color:#fde047">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#a16207;">Smart Lists</span>
         <button onclick="showCreateSmartListModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#a16207;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Smart List</button>
@@ -1507,7 +1600,7 @@
     </div>
 
     <!-- KPI Dashboard (Batch 17) -->
-    <div id="kpi-panel" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #6ee7b7;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="kpi-panel" class="bp" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-color:#6ee7b7">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#059669;">KPI Dashboard</span>
         <button onclick="loadKpiMetrics()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#d1fae5;color:#059669;border:1px solid #6ee7b7;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1516,7 +1609,7 @@
     </div>
 
     <!-- Scoring Models (Batch 17) -->
-    <div id="scoring-models-panel" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid #fdba74;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="scoring-models-panel" class="bp" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border-color:#fdba74">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#c2410c;">Scoring Models</span>
         <button onclick="showCreateScoringModelModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#c2410c;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Model</button>
@@ -1526,7 +1619,7 @@
     </div>
 
     <!-- Campaign Management (Batch 17) -->
-    <div id="campaigns-panel" style="background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1px solid #a5b4fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="campaigns-panel" class="bp" style="background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-color:#a5b4fc">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#4338ca;">Campaigns</span>
         <button onclick="showCreateCampaignModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#4338ca;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Campaign</button>
@@ -1536,7 +1629,7 @@
     </div>
 
     <!-- Cross-Source Duplicates (Batch 17) -->
-    <div id="cross-source-panel" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border:1px solid #d946ef;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="cross-source-panel" class="bp" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border-color:#d946ef">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#a21caf;">Cross-Source Duplicates</span>
         <button onclick="loadCrossSourceDuplicates()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fae8ff;color:#a21caf;border:1px solid #d946ef;border-radius:4px;cursor:pointer;">Scan</button>
@@ -1546,7 +1639,7 @@
     </div>
 
     <!-- Recent Notes Panel -->
-    <div id="notes-panel" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border:1px solid #94a3b8;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="notes-panel" class="bp" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border-color:#94a3b8">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#475569;">Recent Notes</span>
       </div>
@@ -1554,7 +1647,7 @@
     </div>
 
     <!-- Lead Import (Batch 18) -->
-    <div id="import-panel" style="background:linear-gradient(135deg,#fef7cd,#fefce8);border:1px solid #facc15;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="import-panel" class="bp" style="background:linear-gradient(135deg,#fef7cd,#fefce8);border-color:#facc15">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#a16207;">Import Leads</span>
       </div>
@@ -1573,7 +1666,7 @@
     </div>
 
     <!-- Engagement Heatmap (Batch 18) -->
-    <div id="engagement-heatmap-panel" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #f9a8d4;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="engagement-heatmap-panel" class="bp" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border-color:#f9a8d4">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#be185d;">Engagement Heatmap</span>
         <button onclick="loadEngagementHeatmap()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fce7f3;color:#be185d;border:1px solid #f9a8d4;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1584,7 +1677,7 @@
     </div>
 
     <!-- Owners / Assignment (Batch 18) -->
-    <div id="owners-panel" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #7dd3fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="owners-panel" class="bp" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border-color:#7dd3fc">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#0369a1;">Lead Owners</span>
       </div>
@@ -1593,7 +1686,7 @@
     </div>
 
     <!-- Lead Comparison (Batch 18) -->
-    <div id="comparison-panel" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:1px solid #c084fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="comparison-panel" class="bp" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border-color:#c084fc">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Lead Comparison</span>
         <button onclick="compareSelectedLeads()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#7c3aed;color:#fff;border:none;border-radius:4px;cursor:pointer;">Compare Selected</button>
@@ -1603,7 +1696,7 @@
     </div>
 
     <!-- Contact Timeline (Batch 20) -->
-    <div id="contacts-panel" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:1px solid #c4b5fd;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="contacts-panel" class="bp" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);border-color:#c4b5fd">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Recent Contacts</span>
         <button onclick="loadRecentContacts()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ede9fe;color:#7c3aed;border:1px solid #c4b5fd;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1613,7 +1706,7 @@
     </div>
 
     <!-- Warm-Up Scoring (Batch 20) -->
-    <div id="warmup-panel" style="background:linear-gradient(135deg,#fff1f2,#ffe4e6);border:1px solid #fda4af;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="warmup-panel" class="bp" style="background:linear-gradient(135deg,#fff1f2,#ffe4e6);border-color:#fda4af">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#e11d48;">Warm-Up Scores</span>
         <button onclick="loadWarmUpScores()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ffe4e6;color:#e11d48;border:1px solid #fda4af;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1644,7 +1737,7 @@
     </details>
 
     <!-- Enrichment Queue (Batch 21) -->
-    <div id="enrichment-queue-panel" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #f472b6;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="enrichment-queue-panel" class="bp" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border-color:#f472b6">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#db2777;">Enrichment Queue</span>
         <div style="display:flex;gap:0.3rem;">
@@ -1659,7 +1752,7 @@
     </div>
 
     <!-- Firm Intelligence (Batch 21) -->
-    <div id="firm-intel-panel" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #60a5fa;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="firm-intel-panel" class="bp" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-color:#60a5fa">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#2563eb;">Firm Intelligence</span>
         <button onclick="loadFirmIntelligence()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#dbeafe;color:#2563eb;border:1px solid #60a5fa;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1669,7 +1762,7 @@
     </div>
 
     <!-- Dedup Merge Queue (Batch 21) -->
-    <div id="dedup-queue-panel" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #facc15;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="dedup-queue-panel" class="bp" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border-color:#facc15">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#a16207;">Dedup Merge Queue</span>
         <div style="display:flex;gap:0.3rem;">
@@ -1683,7 +1776,7 @@
     </div>
 
     <!-- Audit Log (Batch 21) -->
-    <div id="audit-log-panel" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:1px solid #a78bfa;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="audit-log-panel" class="bp" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);border-color:#a78bfa">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Activity Audit Log</span>
         <div style="display:flex;gap:0.3rem;">
@@ -1707,7 +1800,7 @@
     </div>
 
     <!-- Predictive Scoring (Batch 25) -->
-    <div id="predictive-panel" style="background:linear-gradient(135deg,#faf5ff,#ede9fe);border:1px solid #8b5cf6;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="predictive-panel" class="bp" style="background:linear-gradient(135deg,#faf5ff,#ede9fe);border-color:#8b5cf6">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Predictive Scoring</span>
         <button onclick="loadPredictiveScores()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ede9fe;color:#7c3aed;border:1px solid #8b5cf6;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1719,7 +1812,7 @@
     </div>
 
     <!-- Team Performance (Batch 25) -->
-    <div id="team-perf-panel" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #38bdf8;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="team-perf-panel" class="bp" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border-color:#38bdf8">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#0284c7;">Team Performance</span>
         <button onclick="loadTeamPerformance()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#e0f2fe;color:#0284c7;border:1px solid #38bdf8;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1730,7 +1823,7 @@
     </div>
 
     <!-- Email Deliverability (Batch 25) -->
-    <div id="deliverability-panel" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #10b981;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="deliverability-panel" class="bp" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-color:#10b981">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#059669;">Email Intelligence</span>
         <button onclick="loadEmailDeliverability()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#d1fae5;color:#059669;border:1px solid #10b981;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1741,7 +1834,7 @@
     </div>
 
     <!-- Priority Inbox (Batch 24) -->
-    <div id="priority-inbox-panel" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border:1px solid #f87171;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="priority-inbox-panel" class="bp" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border-color:#f87171">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#dc2626;">Priority Inbox</span>
         <button onclick="loadPriorityInbox()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fee2e2;color:#dc2626;border:1px solid #f87171;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1752,7 +1845,7 @@
     </div>
 
     <!-- Practice Area Analytics (Batch 24) -->
-    <div id="practice-analytics-panel" style="background:linear-gradient(135deg,#f0fdf4,#d1fae5);border:1px solid #34d399;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="practice-analytics-panel" class="bp" style="background:linear-gradient(135deg,#f0fdf4,#d1fae5);border-color:#34d399">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#059669;">Practice Area Intelligence</span>
         <button onclick="loadPracticeAnalytics()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#d1fae5;color:#059669;border:1px solid #34d399;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1763,7 +1856,7 @@
     </div>
 
     <!-- Source ROI (Batch 24) -->
-    <div id="source-roi-panel" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #eab308;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="source-roi-panel" class="bp" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border-color:#eab308">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#ca8a04;">Source ROI</span>
         <button onclick="loadSourceROI()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fef9c3;color:#ca8a04;border:1px solid #eab308;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1773,7 +1866,7 @@
     </div>
 
     <!-- Compliance Dashboard (Batch 24) -->
-    <div id="compliance-panel" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border:1px solid #94a3b8;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="compliance-panel" class="bp" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border-color:#94a3b8">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#475569;">Compliance Center</span>
         <div style="display:flex;gap:0.3rem;">
@@ -1788,7 +1881,7 @@
     </div>
 
     <!-- Relationship Graph (Batch 23) -->
-    <div id="relationship-graph-panel" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border:1px solid #d946ef;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="relationship-graph-panel" class="bp" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border-color:#d946ef">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#a21caf;">Firm Network</span>
         <button onclick="loadFirmNetwork()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fae8ff;color:#a21caf;border:1px solid #d946ef;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1798,7 +1891,7 @@
     </div>
 
     <!-- Data Freshness (Batch 23) -->
-    <div id="freshness-monitor-panel" style="background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border:1px solid #2dd4bf;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="freshness-monitor-panel" class="bp" style="background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border-color:#2dd4bf">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#0d9488;">Data Freshness</span>
         <button onclick="loadFreshnessMonitor()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ccfbf1;color:#0d9488;border:1px solid #2dd4bf;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1810,7 +1903,7 @@
     </div>
 
     <!-- Scoring Comparison (Batch 23) -->
-    <div id="scoring-compare-panel" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #f59e0b;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="scoring-compare-panel" class="bp" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border-color:#f59e0b">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#d97706;">Scoring Model Rankings</span>
         <button onclick="loadScoringRankings()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fef3c7;color:#d97706;border:1px solid #f59e0b;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1820,7 +1913,7 @@
     </div>
 
     <!-- Geographic Clustering (Batch 23) -->
-    <div id="geo-cluster-panel" style="background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1px solid #818cf8;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="geo-cluster-panel" class="bp" style="background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-color:#818cf8">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#4f46e5;">Market Penetration</span>
         <button onclick="loadGeoClusters()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#e0e7ff;color:#4f46e5;border:1px solid #818cf8;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1832,7 +1925,7 @@
     </div>
 
     <!-- Lifecycle Tracking (Batch 22) -->
-    <div id="lifecycle-panel" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #4ade80;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="lifecycle-panel" class="bp" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#4ade80">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#16a34a;">Lifecycle Analytics</span>
         <button onclick="loadLifecycleAnalytics()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#dcfce7;color:#16a34a;border:1px solid #4ade80;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1844,7 +1937,7 @@
     </div>
 
     <!-- Sequence Analytics (Batch 22) -->
-    <div id="sequence-analytics-panel" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:1px solid #c084fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="sequence-analytics-panel" class="bp" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border-color:#c084fc">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#9333ea;">Sequence Performance</span>
         <button onclick="loadSequencePerformance()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#f3e8ff;color:#9333ea;border:1px solid #c084fc;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1854,7 +1947,7 @@
     </div>
 
     <!-- Activity Scoring (Batch 22) -->
-    <div id="activity-scoring-panel" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid #fb923c;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="activity-scoring-panel" class="bp" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border-color:#fb923c">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#ea580c;">Activity Scoring</span>
         <button onclick="loadActivityScores()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ffedd5;color:#ea580c;border:1px solid #fb923c;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -1864,7 +1957,7 @@
     </div>
 
     <!-- Bulk Enrichment (Batch 22) -->
-    <div id="bulk-enrichment-panel" style="background:linear-gradient(135deg,#ecfeff,#cffafe);border:1px solid #22d3ee;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="bulk-enrichment-panel" class="bp" style="background:linear-gradient(135deg,#ecfeff,#cffafe);border-color:#22d3ee">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#0891b2;">Bulk Enrichment</span>
         <div style="display:flex;gap:0.3rem;">
@@ -1877,14 +1970,14 @@
     </div>
 
     <!-- Dedup Intelligence (Batch 40) -->
-    <div id="dedup-intel-panel" style="background:linear-gradient(135deg,#fef9c3,#fef08a);border:1px solid #facc15;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="dedup-intel-panel" class="bp" style="background:linear-gradient(135deg,#fef9c3,#fef08a);border-color:#facc15">
       <div style="font-size:0.82rem;font-weight:700;color:#854d0e;margin-bottom:0.5rem;">Dedup Intelligence</div>
       <div id="dedup-intel-stats" style="font-size:0.78rem;color:#a16207;"></div>
       <div id="dedup-intel-list" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#a16207;margin-top:0.3rem;"></div>
     </div>
 
     <!-- Outbound Readiness (Batch 40) -->
-    <div id="outbound-ready-panel" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #34d399;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="outbound-ready-panel" class="bp" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-color:#34d399">
       <div style="font-size:0.82rem;font-weight:700;color:#065f46;margin-bottom:0.5rem;">Outbound Readiness</div>
       <div id="outbound-score" style="font-size:0.78rem;color:#047857;"></div>
       <div id="outbound-channels" style="font-size:0.78rem;color:#047857;margin-top:0.3rem;"></div>
@@ -1892,14 +1985,14 @@
     </div>
 
     <!-- Aging Report (Batch 40) -->
-    <div id="aging-report-panel" style="background:linear-gradient(135deg,#fff7ed,#fed7aa);border:1px solid #fb923c;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="aging-report-panel" class="bp" style="background:linear-gradient(135deg,#fff7ed,#fed7aa);border-color:#fb923c">
       <div style="font-size:0.82rem;font-weight:700;color:#9a3412;margin-bottom:0.5rem;">Aging Report</div>
       <div id="aging-categories" style="font-size:0.78rem;color:#c2410c;"></div>
       <div id="aging-suggestions" style="font-size:0.75rem;color:#c2410c;margin-top:0.3rem;"></div>
     </div>
 
     <!-- Growth Analytics (Batch 40) -->
-    <div id="growth-analytics-panel" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe);border:1px solid #3b82f6;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="growth-analytics-panel" class="bp" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe);border-color:#3b82f6">
       <div style="font-size:0.82rem;font-weight:700;color:#1e40af;margin-bottom:0.5rem;">Growth Analytics</div>
       <div id="growth-projections" style="font-size:0.78rem;color:#1d4ed8;"></div>
       <div id="growth-weekly" style="font-size:0.78rem;color:#1d4ed8;margin-top:0.3rem;"></div>
@@ -1907,62 +2000,62 @@
     </div>
 
     <!-- Revenue Attribution (Batch 39) -->
-    <div id="revenue-attr-panel" style="background:linear-gradient(135deg,#ecfdf5,#a7f3d0);border:1px solid #10b981;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="revenue-attr-panel" class="bp" style="background:linear-gradient(135deg,#ecfdf5,#a7f3d0);border-color:#10b981">
       <div style="font-size:0.82rem;font-weight:700;color:#065f46;margin-bottom:0.5rem;">Revenue Attribution</div>
       <div id="revenue-segments" style="font-size:0.78rem;color:#047857;"></div>
       <div id="revenue-sources" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#047857;margin-top:0.3rem;"></div>
     </div>
 
     <!-- Saturation Heatmap (Batch 39) -->
-    <div id="saturation-heat-panel" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border:1px solid #f59e0b;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="saturation-heat-panel" class="bp" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border-color:#f59e0b">
       <div style="font-size:0.82rem;font-weight:700;color:#92400e;margin-bottom:0.5rem;">Saturation Heatmap</div>
       <div id="saturation-cities" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#b45309;"></div>
     </div>
 
     <!-- Smart List Builder (Batch 39) -->
-    <div id="smart-list-panel" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe);border:1px solid #3b82f6;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="smart-list-panel" class="bp" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe);border-color:#3b82f6">
       <div style="font-size:0.82rem;font-weight:700;color:#1e40af;margin-bottom:0.5rem;">Smart List Builder</div>
       <div id="smart-list-templates" style="font-size:0.78rem;color:#1d4ed8;"></div>
       <div id="smart-list-filters" style="font-size:0.75rem;color:#1d4ed8;margin-top:0.3rem;"></div>
     </div>
 
     <!-- Quality Scorecard (Batch 39) -->
-    <div id="quality-scorecard-panel" style="background:linear-gradient(135deg,#faf5ff,#e9d5ff);border:1px solid #a855f7;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="quality-scorecard-panel" class="bp" style="background:linear-gradient(135deg,#faf5ff,#e9d5ff);border-color:#a855f7">
       <div style="font-size:0.82rem;font-weight:700;color:#7e22ce;margin-bottom:0.5rem;">Quality Scorecard</div>
       <div id="quality-overall" style="font-size:0.78rem;color:#7c3aed;"></div>
       <div id="quality-sources" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#7c3aed;margin-top:0.3rem;"></div>
     </div>
 
     <!-- Affinity Scoring (Batch 38) -->
-    <div id="affinity-panel" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border:1px solid #f59e0b;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="affinity-panel" class="bp" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border-color:#f59e0b">
       <div style="font-size:0.82rem;font-weight:700;color:#92400e;margin-bottom:0.5rem;">Affinity Scoring</div>
       <div id="affinity-combos" style="font-size:0.78rem;color:#b45309;"></div>
       <div id="affinity-leads" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#b45309;margin-top:0.3rem;"></div>
     </div>
 
     <!-- Scraper Gaps (Batch 38) -->
-    <div id="scraper-gaps-panel" style="background:linear-gradient(135deg,#fff1f2,#ffe4e6);border:1px solid #fb7185;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="scraper-gaps-panel" class="bp" style="background:linear-gradient(135deg,#fff1f2,#ffe4e6);border-color:#fb7185">
       <div style="font-size:0.82rem;font-weight:700;color:#9f1239;margin-bottom:0.5rem;">Scraper Gap Analysis</div>
       <div id="scraper-gaps-recs" style="font-size:0.78rem;color:#be123c;"></div>
       <div id="scraper-gaps-quality" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#be123c;margin-top:0.3rem;"></div>
     </div>
 
     <!-- Freshness Index (Batch 38) -->
-    <div id="freshness-index-panel" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);border:1px solid #0ea5e9;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="freshness-index-panel" class="bp" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);border-color:#0ea5e9">
       <div style="font-size:0.82rem;font-weight:700;color:#0c4a6e;margin-bottom:0.5rem;">Freshness Index</div>
       <div id="freshness-idx-sources" style="font-size:0.78rem;color:#0369a1;"></div>
       <div id="freshness-idx-rescrape" style="max-height:150px;overflow-y:auto;font-size:0.75rem;color:#0369a1;margin-top:0.3rem;"></div>
     </div>
 
     <!-- Firm Growth (Batch 38) -->
-    <div id="firm-growth-panel" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #22c55e;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="firm-growth-panel" class="bp" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#22c55e">
       <div style="font-size:0.82rem;font-weight:700;color:#166534;margin-bottom:0.5rem;">Firm Growth</div>
       <div id="firm-growth-dist" style="font-size:0.78rem;color:#15803d;"></div>
       <div id="firm-growth-list" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#15803d;margin-top:0.3rem;"></div>
     </div>
 
     <!-- Cadence Optimizer (Batch 37) -->
-    <div id="cadence-opt-panel" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #ec4899;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="cadence-opt-panel" class="bp" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border-color:#ec4899">
       <div style="font-size:0.82rem;font-weight:700;color:#9d174d;margin-bottom:0.5rem;">Cadence Optimizer</div>
       <div id="cadence-needs" style="font-size:0.78rem;color:#be185d;"></div>
       <div id="cadence-day-perf" style="font-size:0.78rem;color:#be185d;margin-top:0.3rem;"></div>
@@ -1970,7 +2063,7 @@
     </div>
 
     <!-- Scoring Calibration (Batch 37) -->
-    <div id="scoring-cal-panel" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:1px solid #8b5cf6;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="scoring-cal-panel" class="bp" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);border-color:#8b5cf6">
       <div style="font-size:0.82rem;font-weight:700;color:#6d28d9;margin-bottom:0.5rem;">Scoring Calibration</div>
       <div id="scoring-cal-stats" style="font-size:0.78rem;color:#7c3aed;"></div>
       <div id="scoring-cal-dist" style="font-size:0.78rem;color:#7c3aed;margin-top:0.3rem;"></div>
@@ -1978,14 +2071,14 @@
     </div>
 
     <!-- Practice Market Size (Batch 37) -->
-    <div id="practice-market-panel" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #eab308;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="practice-market-panel" class="bp" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border-color:#eab308">
       <div style="font-size:0.82rem;font-weight:700;color:#854d0e;margin-bottom:0.5rem;">Practice Market Size</div>
       <div id="practice-market-overview" style="font-size:0.78rem;color:#a16207;"></div>
       <div id="practice-market-list" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#a16207;margin-top:0.3rem;"></div>
     </div>
 
     <!-- Pipeline Health (Batch 37) -->
-    <div id="pipeline-health-panel" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #10b981;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="pipeline-health-panel" class="bp" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-color:#10b981">
       <div style="font-size:0.82rem;font-weight:700;color:#065f46;margin-bottom:0.5rem;">Pipeline Health</div>
       <div id="pipeline-health-quality" style="font-size:0.78rem;color:#047857;"></div>
       <div id="pipeline-health-degrading" style="font-size:0.78rem;color:#047857;margin-top:0.3rem;"></div>
@@ -1993,21 +2086,21 @@
     </div>
 
     <!-- Prioritization Matrix (Batch 36) -->
-    <div id="priority-matrix-panel" style="background:linear-gradient(135deg,#faf5ff,#e9d5ff);border:1px solid #a855f7;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="priority-matrix-panel" class="bp" style="background:linear-gradient(135deg,#faf5ff,#e9d5ff);border-color:#a855f7">
       <div style="font-size:0.82rem;font-weight:700;color:#7e22ce;margin-bottom:0.5rem;">Prioritization Matrix</div>
       <div id="priority-quadrants" style="font-size:0.78rem;color:#7c3aed;"></div>
       <div id="priority-leads" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#7c3aed;margin-top:0.3rem;"></div>
     </div>
 
     <!-- Firm Aggregation (Batch 36) -->
-    <div id="firm-agg-panel" style="background:linear-gradient(135deg,#ecfdf5,#a7f3d0);border:1px solid #34d399;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="firm-agg-panel" class="bp" style="background:linear-gradient(135deg,#ecfdf5,#a7f3d0);border-color:#34d399">
       <div style="font-size:0.82rem;font-weight:700;color:#065f46;margin-bottom:0.5rem;">Firm Aggregation</div>
       <div id="firm-agg-totals" style="font-size:0.78rem;color:#047857;"></div>
       <div id="firm-agg-list" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#047857;margin-top:0.3rem;"></div>
     </div>
 
     <!-- Improvement Recommendations (Batch 36) -->
-    <div id="improvement-panel" style="background:linear-gradient(135deg,#fff7ed,#fed7aa);border:1px solid #f97316;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="improvement-panel" class="bp" style="background:linear-gradient(135deg,#fff7ed,#fed7aa);border-color:#f97316">
       <div style="font-size:0.82rem;font-weight:700;color:#9a3412;margin-bottom:0.5rem;">Improvement Recommendations</div>
       <div id="improve-gaps" style="font-size:0.78rem;color:#c2410c;"></div>
       <div id="improve-actions" style="font-size:0.78rem;color:#c2410c;margin-top:0.3rem;"></div>
@@ -2015,7 +2108,7 @@
     </div>
 
     <!-- Lifecycle Funnel (Batch 36) -->
-    <div id="lifecycle-funnel-panel" style="background:linear-gradient(135deg,#f0f9ff,#bae6fd);border:1px solid #38bdf8;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="lifecycle-funnel-panel" class="bp" style="background:linear-gradient(135deg,#f0f9ff,#bae6fd);border-color:#38bdf8">
       <div style="font-size:0.82rem;font-weight:700;color:#0c4a6e;margin-bottom:0.5rem;">Lifecycle Funnel</div>
       <div id="funnel-stages" style="font-size:0.78rem;color:#075985;"></div>
       <div id="funnel-rates" style="font-size:0.78rem;color:#075985;margin-top:0.3rem;"></div>
@@ -2023,7 +2116,7 @@
     </div>
 
     <!-- Relationship Graph (Batch 35) -->
-    <div id="relationship-panel" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe);border:1px solid #60a5fa;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="relationship-panel" class="bp" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe);border-color:#60a5fa">
       <div style="font-size:0.82rem;font-weight:700;color:#1e40af;margin-bottom:0.5rem;">Relationship Graph</div>
       <div id="rel-firm-bridges" style="font-size:0.78rem;color:#1d4ed8;"></div>
       <div id="rel-practice-groups" style="font-size:0.78rem;color:#1d4ed8;margin-top:0.3rem;"></div>
@@ -2031,21 +2124,21 @@
     </div>
 
     <!-- Enrichment ROI (Batch 35) -->
-    <div id="enrichment-roi-panel" style="background:linear-gradient(135deg,#fefce8,#fef08a);border:1px solid #eab308;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="enrichment-roi-panel" class="bp" style="background:linear-gradient(135deg,#fefce8,#fef08a);border-color:#eab308">
       <div style="font-size:0.82rem;font-weight:700;color:#854d0e;margin-bottom:0.5rem;">Enrichment ROI</div>
       <div id="eroi-overall" style="font-size:0.78rem;color:#713f12;"></div>
       <div id="eroi-efficiency" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#713f12;margin-top:0.3rem;"></div>
     </div>
 
     <!-- Engagement Prediction (Batch 35) -->
-    <div id="engagement-pred-panel" style="background:linear-gradient(135deg,#fdf4ff,#f5d0fe);border:1px solid #d946ef;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="engagement-pred-panel" class="bp" style="background:linear-gradient(135deg,#fdf4ff,#f5d0fe);border-color:#d946ef">
       <div style="font-size:0.82rem;font-weight:700;color:#86198f;margin-bottom:0.5rem;">Engagement Prediction</div>
       <div id="engagement-dist" style="font-size:0.78rem;color:#a21caf;"></div>
       <div id="engagement-top" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#a21caf;margin-top:0.3rem;"></div>
     </div>
 
     <!-- Campaign Performance (Batch 35) -->
-    <div id="campaign-perf-panel" style="background:linear-gradient(135deg,#f0fdf4,#bbf7d0);border:1px solid #4ade80;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="campaign-perf-panel" class="bp" style="background:linear-gradient(135deg,#f0fdf4,#bbf7d0);border-color:#4ade80">
       <div style="font-size:0.82rem;font-weight:700;color:#166534;margin-bottom:0.5rem;">Campaign Performance</div>
       <div id="camp-perf-practice" style="font-size:0.78rem;color:#15803d;"></div>
       <div id="camp-perf-cities" style="font-size:0.78rem;color:#15803d;margin-top:0.3rem;"></div>
@@ -2053,7 +2146,7 @@
     </div>
 
     <!-- Merge Candidates (Batch 34) -->
-    <div id="merge-panel" style="background:linear-gradient(135deg,#fef9c3,#fef08a);border:1px solid #facc15;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="merge-panel" class="bp" style="background:linear-gradient(135deg,#fef9c3,#fef08a);border-color:#facc15">
       <div style="font-size:0.82rem;font-weight:700;color:#854d0e;margin-bottom:0.5rem;">Merge Candidates</div>
       <div id="merge-name-dupes" style="font-size:0.78rem;color:#713f12;"></div>
       <div id="merge-email-dupes" style="font-size:0.78rem;color:#713f12;margin-top:0.3rem;"></div>
@@ -2061,7 +2154,7 @@
     </div>
 
     <!-- Outreach Analytics (Batch 34) -->
-    <div id="outreach-analytics-panel" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);border:1px solid #38bdf8;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="outreach-analytics-panel" class="bp" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);border-color:#38bdf8">
       <div style="font-size:0.82rem;font-weight:700;color:#0c4a6e;margin-bottom:0.5rem;">Outreach Analytics</div>
       <div id="outreach-contact-stats" style="font-size:0.78rem;color:#075985;"></div>
       <div id="outreach-by-day" style="font-size:0.78rem;color:#075985;margin-top:0.3rem;"></div>
@@ -2069,14 +2162,14 @@
     </div>
 
     <!-- ICP Scoring (Batch 34) -->
-    <div id="icp-scoring-panel" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);border:1px solid #f472b6;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="icp-scoring-panel" class="bp" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);border-color:#f472b6">
       <div style="font-size:0.82rem;font-weight:700;color:#9d174d;margin-bottom:0.5rem;">ICP Scoring</div>
       <div id="icp-scoring-distribution" style="font-size:0.78rem;color:#be185d;"></div>
       <div id="icp-top-leads" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#be185d;margin-top:0.3rem;"></div>
     </div>
 
     <!-- Pipeline Velocity (Batch 34) -->
-    <div id="pipeline-velocity-panel" style="background:linear-gradient(135deg,#f0fdf4,#bbf7d0);border:1px solid #4ade80;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="pipeline-velocity-panel" class="bp" style="background:linear-gradient(135deg,#f0fdf4,#bbf7d0);border-color:#4ade80">
       <div style="font-size:0.82rem;font-weight:700;color:#166534;margin-bottom:0.5rem;">Pipeline Velocity</div>
       <div id="velocity-stages" style="font-size:0.78rem;color:#15803d;"></div>
       <div id="velocity-bottlenecks" style="font-size:0.78rem;color:#15803d;margin-top:0.3rem;"></div>
@@ -2084,7 +2177,7 @@
     </div>
 
     <!-- Journey Mapping (Batch 33) -->
-    <div id="journey-panel" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border:1px solid #fbbf24;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="journey-panel" class="bp" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border-color:#fbbf24">
       <div style="font-size:0.82rem;font-weight:700;color:#92400e;margin-bottom:0.5rem;">Journey Mapping</div>
       <div id="journey-stages" style="font-size:0.78rem;color:#78350f;"></div>
       <div id="journey-touchpoints" style="font-size:0.78rem;color:#78350f;margin-top:0.3rem;"></div>
@@ -2092,7 +2185,7 @@
     </div>
 
     <!-- Scoring Audit (Batch 33) -->
-    <div id="scoring-audit-panel" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border:1px solid #a78bfa;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="scoring-audit-panel" class="bp" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border-color:#a78bfa">
       <div style="font-size:0.82rem;font-weight:700;color:#5b21b6;margin-bottom:0.5rem;">Scoring Audit</div>
       <div id="scoring-histogram" style="font-size:0.78rem;color:#6d28d9;"></div>
       <div id="scoring-factors" style="font-size:0.78rem;color:#6d28d9;margin-top:0.3rem;"></div>
@@ -2100,7 +2193,7 @@
     </div>
 
     <!-- Geographic Expansion (Batch 33) -->
-    <div id="geo-expansion-panel" style="background:linear-gradient(135deg,#ecfdf5,#a7f3d0);border:1px solid #34d399;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="geo-expansion-panel" class="bp" style="background:linear-gradient(135deg,#ecfdf5,#a7f3d0);border-color:#34d399">
       <div style="font-size:0.82rem;font-weight:700;color:#065f46;margin-bottom:0.5rem;">Geographic Expansion</div>
       <div id="geo-state-coverage" style="font-size:0.78rem;color:#047857;"></div>
       <div id="geo-underserved" style="font-size:0.78rem;color:#047857;margin-top:0.3rem;"></div>
@@ -2108,7 +2201,7 @@
     </div>
 
     <!-- Freshness Alerts (Batch 33) -->
-    <div id="freshness-alerts-panel" style="background:linear-gradient(135deg,#fff1f2,#fecdd3);border:1px solid #fda4af;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="freshness-alerts-panel" class="bp" style="background:linear-gradient(135deg,#fff1f2,#fecdd3);border-color:#fda4af">
       <div style="font-size:0.82rem;font-weight:700;color:#9f1239;margin-bottom:0.5rem;">Freshness Alerts</div>
       <div id="freshness-staleness" style="font-size:0.78rem;color:#be123c;"></div>
       <div id="freshness-source-age" style="font-size:0.78rem;color:#be123c;margin-top:0.3rem;"></div>
@@ -2116,7 +2209,7 @@
     </div>
 
     <!-- Deal Estimation (Batch 32) -->
-    <div id="deal-panel" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #6ee7b7;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="deal-panel" class="bp" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-color:#6ee7b7">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#059669;">Deal Estimation</span>
         <button onclick="loadDealEstimates()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#d1fae5;color:#059669;border:1px solid #6ee7b7;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2127,7 +2220,7 @@
     </div>
 
     <!-- Outreach Calendar (Batch 32) -->
-    <div id="outreach-cal-panel" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #7dd3fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="outreach-cal-panel" class="bp" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border-color:#7dd3fc">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#0284c7;">Outreach Calendar</span>
         <button onclick="loadOutreachCal()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#e0f2fe;color:#0284c7;border:1px solid #7dd3fc;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2138,7 +2231,7 @@
     </div>
 
     <!-- Risk Scoring (Batch 32) -->
-    <div id="risk-panel" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border:1px solid #fca5a5;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="risk-panel" class="bp" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border-color:#fca5a5">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#dc2626;">Risk Scoring</span>
         <button onclick="loadRiskScores()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2149,7 +2242,7 @@
     </div>
 
     <!-- Network Map (Batch 32) -->
-    <div id="network-panel" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border:1px solid #d946ef;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="network-panel" class="bp" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border-color:#d946ef">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#a21caf;">Network Map</span>
         <button onclick="loadNetworkMap()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fae8ff;color:#a21caf;border:1px solid #d946ef;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2160,7 +2253,7 @@
     </div>
 
     <!-- Propensity Model (Batch 31) -->
-    <div id="propensity-panel" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:1px solid #c084fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="propensity-panel" class="bp" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border-color:#c084fc">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Propensity Model</span>
         <button onclick="loadPropensity()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#f3e8ff;color:#7c3aed;border:1px solid #c084fc;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2171,7 +2264,7 @@
     </div>
 
     <!-- Cohort Analysis (Batch 31) -->
-    <div id="cohort-panel" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #6ee7b7;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="cohort-panel" class="bp" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-color:#6ee7b7">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#059669;">Cohort Analysis</span>
         <button onclick="loadCohorts()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#d1fae5;color:#059669;border:1px solid #6ee7b7;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2182,7 +2275,7 @@
     </div>
 
     <!-- Channel Preferences (Batch 31) -->
-    <div id="channel-pref-panel" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid #fdba74;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="channel-pref-panel" class="bp" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border-color:#fdba74">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#c2410c;">Channel Preferences</span>
         <button onclick="loadChannelPrefs()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ffedd5;color:#c2410c;border:1px solid #fdba74;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2193,7 +2286,7 @@
     </div>
 
     <!-- Jurisdiction Benchmarks (Batch 31) -->
-    <div id="benchmark-panel" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #93c5fd;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="benchmark-panel" class="bp" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-color:#93c5fd">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#2563eb;">Jurisdiction Benchmarks</span>
         <button onclick="loadBenchmarks()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#dbeafe;color:#2563eb;border:1px solid #93c5fd;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2204,7 +2297,7 @@
     </div>
 
     <!-- Sequence Templates (Batch 30) -->
-    <div id="seq-templates-panel" style="background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1px solid #a5b4fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="seq-templates-panel" class="bp" style="background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-color:#a5b4fc">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#4338ca;">Sequence Builder</span>
         <button onclick="loadSeqTemplates()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#e0e7ff;color:#4338ca;border:1px solid #a5b4fc;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2219,7 +2312,7 @@
     </div>
 
     <!-- Data Quality Rules (Batch 30) -->
-    <div id="quality-rules-panel" style="background:linear-gradient(135deg,#fefce8,#fef3c7);border:1px solid #fde047;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="quality-rules-panel" class="bp" style="background:linear-gradient(135deg,#fefce8,#fef3c7);border-color:#fde047">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#a16207;">Data Quality Rules</span>
         <div style="display:flex;gap:0.3rem;">
@@ -2245,7 +2338,7 @@
     </div>
 
     <!-- Unified Timeline (Batch 30) -->
-    <div id="timeline-panel" style="background:linear-gradient(135deg,#f8fafc,#e2e8f0);border:1px solid #94a3b8;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="timeline-panel" class="bp" style="background:linear-gradient(135deg,#f8fafc,#e2e8f0);border-color:#94a3b8">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#475569;">Lead Timeline</span>
         <button onclick="loadTimelinePanel()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#e2e8f0;color:#475569;border:1px solid #94a3b8;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2259,7 +2352,7 @@
     </div>
 
     <!-- Export Scheduler (Batch 30) -->
-    <div id="export-sched-panel" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #86efac;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="export-sched-panel" class="bp" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#86efac">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#15803d;">Export Scheduler</span>
         <button onclick="loadExportScheduler()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#dcfce7;color:#15803d;border:1px solid #86efac;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2276,7 +2369,7 @@
     </div>
 
     <!-- Response Time SLA (Batch 29) -->
-    <div id="sla-panel" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border:1px solid #fca5a5;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="sla-panel" class="bp" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border-color:#fca5a5">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#dc2626;">Response Time SLA</span>
         <button onclick="loadSLATracker()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2287,7 +2380,7 @@
     </div>
 
     <!-- Market Saturation (Batch 29) -->
-    <div id="saturation-panel" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:1px solid #c4b5fd;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="saturation-panel" class="bp" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);border-color:#c4b5fd">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Market Saturation</span>
         <button onclick="loadSaturation()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ede9fe;color:#7c3aed;border:1px solid #c4b5fd;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2298,7 +2391,7 @@
     </div>
 
     <!-- Enrichment Waterfall (Batch 29) -->
-    <div id="enrich-waterfall-panel" style="background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border:1px solid #5eead4;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="enrich-waterfall-panel" class="bp" style="background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border-color:#5eead4">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#0d9488;">Enrichment Waterfall</span>
         <button onclick="loadEnrichWaterfall()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ccfbf1;color:#0d9488;border:1px solid #5eead4;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2309,7 +2402,7 @@
     </div>
 
     <!-- Competitive Intelligence (Batch 29) -->
-    <div id="competitive-panel" style="background:linear-gradient(135deg,#fff7ed,#fed7aa);border:1px solid #fb923c;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="competitive-panel" class="bp" style="background:linear-gradient(135deg,#fff7ed,#fed7aa);border-color:#fb923c">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#c2410c;">Competitive Intelligence</span>
         <button onclick="loadCompetitiveIntel()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fed7aa;color:#c2410c;border:1px solid #fb923c;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2320,7 +2413,7 @@
     </div>
 
     <!-- Lead Clustering (Batch 28) -->
-    <div id="cluster-panel" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #facc15;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="cluster-panel" class="bp" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border-color:#facc15">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#a16207;">Lead Clustering</span>
         <button onclick="loadLeadClusters()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fef9c3;color:#a16207;border:1px solid #facc15;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2331,7 +2424,7 @@
     </div>
 
     <!-- A/B Test Framework (Batch 28) -->
-    <div id="ab-test-panel" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #7dd3fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="ab-test-panel" class="bp" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border-color:#7dd3fc">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#0284c7;">A/B Test Framework</span>
         <button onclick="loadAbTests()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#e0f2fe;color:#0284c7;border:1px solid #7dd3fc;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2347,7 +2440,7 @@
     </div>
 
     <!-- Re-engagement Scoring (Batch 28) -->
-    <div id="reengage-panel" style="background:linear-gradient(135deg,#fff1f2,#ffe4e6);border:1px solid #fda4af;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="reengage-panel" class="bp" style="background:linear-gradient(135deg,#fff1f2,#ffe4e6);border-color:#fda4af">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#e11d48;">Re-engagement Scoring</span>
         <button onclick="loadReengagement()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ffe4e6;color:#e11d48;border:1px solid #fda4af;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2358,7 +2451,7 @@
     </div>
 
     <!-- Attribution Model (Batch 28) -->
-    <div id="attribution-panel" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #6ee7b7;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="attribution-panel" class="bp" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-color:#6ee7b7">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#059669;">Attribution Model</span>
         <button onclick="loadAttribution()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#d1fae5;color:#059669;border:1px solid #6ee7b7;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2369,7 +2462,7 @@
     </div>
 
     <!-- Lookalike Finder (Batch 27) -->
-    <div id="lookalike-panel" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #93c5fd;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="lookalike-panel" class="bp" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-color:#93c5fd">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#2563eb;">Lookalike Finder</span>
         <button onclick="loadLookalikes()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#dbeafe;color:#2563eb;border:1px solid #93c5fd;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2383,7 +2476,7 @@
     </div>
 
     <!-- Conversion Funnel (Batch 27) -->
-    <div id="funnel-panel" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #86efac;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="funnel-panel" class="bp" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#86efac">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#16a34a;">Conversion Funnel</span>
         <button onclick="loadConversionFunnel()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#dcfce7;color:#16a34a;border:1px solid #86efac;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2394,7 +2487,7 @@
     </div>
 
     <!-- Lead Velocity (Batch 27) -->
-    <div id="velocity-panel" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border:1px solid #d946ef;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="velocity-panel" class="bp" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border-color:#d946ef">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#a21caf;">Lead Velocity</span>
         <button onclick="loadLeadVelocity()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fae8ff;color:#a21caf;border:1px solid #d946ef;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2405,7 +2498,7 @@
     </div>
 
     <!-- Completeness Matrix (Batch 27) -->
-    <div id="completeness-matrix-panel" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid #fdba74;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="completeness-matrix-panel" class="bp" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border-color:#fdba74">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#c2410c;">Completeness Matrix</span>
         <button onclick="loadCompletenessMatrix()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ffedd5;color:#c2410c;border:1px solid #fdba74;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2416,7 +2509,7 @@
     </div>
 
     <!-- Tagging Rules Engine (Batch 26) -->
-    <div id="tag-rules-panel" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #f9a8d4;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="tag-rules-panel" class="bp" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border-color:#f9a8d4">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#be185d;">Tagging Rules Engine</span>
         <div style="display:flex;gap:0.3rem;">
@@ -2446,7 +2539,7 @@
     </div>
 
     <!-- Nurture Cadence (Batch 26) -->
-    <div id="nurture-cadence-panel" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:1px solid #c084fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="nurture-cadence-panel" class="bp" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border-color:#c084fc">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Nurture Cadence</span>
         <button onclick="loadNurtureCadence()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#f3e8ff;color:#7c3aed;border:1px solid #c084fc;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2457,7 +2550,7 @@
     </div>
 
     <!-- Custom Fields (Batch 26) -->
-    <div id="custom-fields-panel" style="background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border:1px solid #5eead4;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="custom-fields-panel" class="bp" style="background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border-color:#5eead4">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#0d9488;">Custom Fields</span>
         <button onclick="loadCustomFields()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ccfbf1;color:#0d9488;border:1px solid #5eead4;border-radius:4px;cursor:pointer;">Refresh</button>
@@ -2478,7 +2571,7 @@
     </div>
 
     <!-- Score Decay Config (Batch 26) -->
-    <div id="score-decay-panel" style="background:linear-gradient(135deg,#fffbeb,#fef9c3);border:1px solid #fbbf24;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="score-decay-panel" class="bp" style="background:linear-gradient(135deg,#fffbeb,#fef9c3);border-color:#fbbf24">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#b45309;">Score Decay Manager</span>
         <div style="display:flex;gap:0.3rem;">
@@ -2492,7 +2585,7 @@
     </div>
 
     <!-- Leaderboard (Batch 19) -->
-    <div id="leaderboard-panel" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #fbbf24;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="leaderboard-panel" class="bp" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border-color:#fbbf24">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#b45309;">Leaderboard</span>
         <div style="display:flex;gap:0.3rem;">
@@ -2508,7 +2601,7 @@
     </div>
 
     <!-- Automation Rules (Batch 19) -->
-    <div id="automation-panel" style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1px solid #34d399;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="automation-panel" class="bp" style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border-color:#34d399">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#059669;">Automation Rules</span>
         <button onclick="showCreateAutomationModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#059669;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Rule</button>
@@ -2518,7 +2611,7 @@
     </div>
 
     <!-- Data Quality (Batch 19) -->
-    <div id="quality-panel" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border:1px solid #fca5a5;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="quality-panel" class="bp" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border-color:#fca5a5">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#dc2626;">Data Quality</span>
         <button onclick="loadDataQuality()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:4px;cursor:pointer;">Scan</button>
@@ -2528,7 +2621,7 @@
     </div>
 
     <!-- Export Profiles (Batch 19) -->
-    <div id="export-profiles-panel" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #93c5fd;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="export-profiles-panel" class="bp" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-color:#93c5fd">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#2563eb;">Export Profiles</span>
         <button onclick="showCreateExportProfileModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#2563eb;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Profile</button>
@@ -2538,7 +2631,7 @@
     </div>
 
     <!-- Email Validation Panel -->
-    <div id="email-validation-panel" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #86efac;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="email-validation-panel" class="bp" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#86efac">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#15803d;">Email Validation</span>
         <button id="validate-btn" onclick="startEmailValidation()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#15803d;color:#fff;border:none;border-radius:4px;cursor:pointer;">Validate All Emails</button>
@@ -2667,9 +2760,9 @@
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
         <h2 style="margin:0;">Geographic View</h2>
         <div style="display:flex;gap:0.3rem;">
-          <button class="btn btn-secondary geo-tab active" style="font-size:0.65rem;padding:0.1rem 0.4rem;" onclick="switchGeoTab('map', this)">US Map</button>
-          <button class="btn btn-secondary geo-tab" style="font-size:0.65rem;padding:0.1rem 0.4rem;" onclick="switchGeoTab('world', this)">World</button>
-          <button class="btn btn-secondary geo-tab" style="font-size:0.65rem;padding:0.1rem 0.4rem;" onclick="switchGeoTab('grid', this)">Grid</button>
+          <button class="btn btn-secondary btn-xs geo-tab active" onclick="switchGeoTab('map', this)">US Map</button>
+          <button class="btn btn-secondary btn-xs geo-tab" onclick="switchGeoTab('world', this)">World</button>
+          <button class="btn btn-secondary btn-xs geo-tab" onclick="switchGeoTab('grid', this)">Grid</button>
         </div>
       </div>
       <div id="geo-map-view">
@@ -2687,9 +2780,9 @@
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
         <h2 style="margin:0;">Lead Growth</h2>
         <div style="display:flex;gap:0.3rem;">
-          <button class="btn btn-secondary growth-range-btn active" style="font-size:0.65rem;padding:0.1rem 0.4rem;" onclick="loadGrowthChart(7, this)">7d</button>
-          <button class="btn btn-secondary growth-range-btn" style="font-size:0.65rem;padding:0.1rem 0.4rem;" onclick="loadGrowthChart(30, this)">30d</button>
-          <button class="btn btn-secondary growth-range-btn" style="font-size:0.65rem;padding:0.1rem 0.4rem;" onclick="loadGrowthChart(90, this)">90d</button>
+          <button class="btn btn-secondary btn-xs growth-range-btn active" onclick="loadGrowthChart(7, this)">7d</button>
+          <button class="btn btn-secondary btn-xs growth-range-btn" onclick="loadGrowthChart(30, this)">30d</button>
+          <button class="btn btn-secondary btn-xs growth-range-btn" onclick="loadGrowthChart(90, this)">90d</button>
         </div>
       </div>
       <div id="growth-chart" style="width:100%;height:180px;"></div>

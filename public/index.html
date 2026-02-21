@@ -21,10 +21,10 @@
         <span class="logo-text">Mortar</span>
       </div>
       <p class="subtitle">Lead Scraper</p>
-      <div style="display:flex;gap:1rem;margin-top:0.5rem;">
-        <a href="/leads.html" style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.85rem;font-weight:500;color:#4f46e5;text-decoration:none;">Lead Database &rarr;</a>
-        <a href="/signals.html" style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.85rem;font-weight:500;color:#4f46e5;text-decoration:none;">Signals &rarr;</a>
-      </div>
+      <nav class="header-nav">
+        <a href="/leads.html" class="nav-pill">Lead Database &rarr;</a>
+        <a href="/signals.html" class="nav-pill">Signals &rarr;</a>
+      </nav>
     </header>
 
     <!-- Step Indicator -->
@@ -98,13 +98,13 @@
       </div>
 
       <!-- DB Stats Banner -->
-      <div id="db-stats-banner" class="db-stats-banner" style="display:none;background:linear-gradient(135deg,#f0f4ff,#fef3c7);border:1px solid #c7d2fe;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
-        <div style="display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;">
-          <div style="font-size:0.82rem;font-weight:600;color:#4338ca;">Master DB</div>
-          <div style="font-size:0.82rem;"><strong id="db-total">-</strong> leads</div>
-          <div style="font-size:0.82rem;"><strong id="db-email">-</strong> emails</div>
-          <div style="font-size:0.82rem;"><strong id="db-phone">-</strong> phones</div>
-          <div style="font-size:0.82rem;color:#6b7280;" id="db-state-info"></div>
+      <div id="db-stats-banner" class="db-stats-banner" style="display:none;">
+        <div class="db-stats-row">
+          <div class="db-stats-label">Master DB</div>
+          <div class="db-stats-item"><strong id="db-total">-</strong> leads</div>
+          <div class="db-stats-item"><strong id="db-email">-</strong> emails</div>
+          <div class="db-stats-item"><strong id="db-phone">-</strong> phones</div>
+          <div class="db-stats-item db-stats-muted" id="db-state-info"></div>
         </div>
       </div>
 

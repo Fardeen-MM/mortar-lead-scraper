@@ -117,6 +117,13 @@ app.post('/api/scrape/start', (req, res) => {
     return res.status(400).json({ error: 'State is required' });
   }
 
+  // Validate state against registered scrapers
+  const { getRegistry } = require('./lib/registry');
+  const registry = getRegistry();
+  if (!registry[state]) {
+    return res.status(400).json({ error: `Unknown scraper: ${state}` });
+  }
+
   const jobId = `job-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
 
   // Get existing leads from upload if provided
@@ -495,8 +502,8 @@ app.get('/api/leads', (req, res) => {
       minScore: minScore ? Number(minScore) : undefined,
       maxScore: maxScore ? Number(maxScore) : undefined,
       sort, order,
-      limit: Math.min(parseInt(limit) || 100, 1000),
-      offset: parseInt(offset) || 0,
+      limit: Math.max(1, Math.min(parseInt(limit) || 100, 1000)),
+      offset: Math.max(0, parseInt(offset) || 0),
     });
     res.json({ leads: result.leads, count: result.leads.length, total: result.total });
   } catch (err) {
@@ -1211,7 +1218,10 @@ app.post('/api/pipeline/move', (req, res) => {
     const { leadId, stage } = req.body;
     if (!leadId || !stage) return res.status(400).json({ error: 'leadId and stage required' });
     res.json(leadDb.moveLeadToStage(leadId, stage));
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) {
+    const status = err.message.includes('not found') ? 404 : err.message.includes('Invalid') ? 400 : 500;
+    res.status(status).json({ error: err.message });
+  }
 });
 
 app.post('/api/pipeline/bulk-move', (req, res) => {

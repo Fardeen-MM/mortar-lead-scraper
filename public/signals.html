@@ -154,6 +154,10 @@
     .country-flag {
       font-size: 0.85rem;
     }
+
+    .signal-filter {
+      min-width: 100px;
+    }
   </style>
 </head>
 <body>
@@ -190,7 +194,7 @@
     </div>
 
     <!-- Controls -->
-    <div class="panel" style="display:block; margin-bottom: 1rem;">
+    <div class="panel active">
       <div class="signals-header">
         <h2>Hiring Signals</h2>
         <button class="btn btn-primary scan-btn" id="scan-btn" onclick="runScan()">Scan Now</button>
@@ -201,14 +205,14 @@
     <!-- Search + Filter -->
     <div class="signal-controls">
       <input type="text" class="search-input" id="search-input" placeholder="Search firms, titles, cities...">
-      <select id="filter-country" style="min-width:100px;">
+      <select id="filter-country" class="signal-filter">
         <option value="">All Countries</option>
         <option value="US">US</option>
         <option value="UK">UK</option>
         <option value="CA">Canada</option>
         <option value="AU">Australia</option>
       </select>
-      <select id="filter-state" style="min-width:100px;">
+      <select id="filter-state" class="signal-filter">
         <option value="">All States</option>
       </select>
       <span class="result-count" id="result-count"></span>

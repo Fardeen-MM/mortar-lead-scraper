@@ -64,6 +64,32 @@ body {
   margin-top: 0.25rem;
 }
 
+/* Header Navigation Pills */
+.header-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.nav-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--indigo);
+  text-decoration: none;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  transition: background 0.15s;
+}
+
+.nav-pill:hover {
+  background: var(--indigo-50);
+  text-decoration: none;
+}
+
 /* Step Indicator */
 .steps {
   display: flex;
@@ -419,6 +445,36 @@ select:focus, input[type="text"]:focus {
 .log-scrape { color: #67e8f9; }
 .log-progress { color: #a5b4fc; }
 .log-enrich { color: #c4b5fd; }
+
+/* DB Stats Banner */
+.db-stats-banner {
+  background: linear-gradient(135deg, #f0f4ff, #fef3c7);
+  border: 1px solid #c7d2fe;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.db-stats-row {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.db-stats-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--indigo-dark);
+}
+
+.db-stats-item {
+  font-size: 0.82rem;
+}
+
+.db-stats-muted {
+  color: var(--text-muted);
+}
 
 /* Enrichment Section (Step 2) */
 .enrichment-section {
