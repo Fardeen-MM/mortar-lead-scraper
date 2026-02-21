@@ -1369,6 +1369,55 @@
       <div id="recent-notes-list" style="max-height:150px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Lead Import (Batch 18) -->
+    <div id="import-panel" style="background:linear-gradient(135deg,#fef7cd,#fefce8);border:1px solid #facc15;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#a16207;">Import Leads</span>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Import leads from external CSVs. Auto-maps fields, deduplicates, and merges missing data.</p>
+      <div style="display:flex;gap:0.4rem;align-items:center;margin-bottom:0.4rem;">
+        <input type="file" id="import-file" accept=".csv" style="font-size:0.72rem;">
+        <label style="font-size:0.7rem;display:flex;align-items:center;gap:0.2rem;">
+          <input type="checkbox" id="import-dedup" checked> Dedup
+        </label>
+        <label style="font-size:0.7rem;display:flex;align-items:center;gap:0.2rem;">
+          <input type="checkbox" id="import-fill" checked> Fill empty fields
+        </label>
+        <button onclick="runImport()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#a16207;color:#fff;border:none;border-radius:4px;cursor:pointer;">Import</button>
+      </div>
+      <div id="import-result" style="font-size:0.72rem;"></div>
+    </div>
+
+    <!-- Engagement Heatmap (Batch 18) -->
+    <div id="heatmap-panel" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #f9a8d4;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#be185d;">Engagement Heatmap</span>
+        <button onclick="loadEngagementHeatmap()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fce7f3;color:#be185d;border:1px solid #f9a8d4;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Activity patterns over the last 30 days — when are leads most engaged?</p>
+      <div id="heatmap-grid" style="overflow-x:auto;"></div>
+      <div id="heatmap-actions" style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Owners / Assignment (Batch 18) -->
+    <div id="owners-panel" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #7dd3fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#0369a1;">Lead Owners</span>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Assign leads to team members. Track ownership and workload distribution.</p>
+      <div id="owners-list" style="display:flex;flex-wrap:wrap;gap:0.3rem;"></div>
+    </div>
+
+    <!-- Lead Comparison (Batch 18) -->
+    <div id="comparison-panel" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:1px solid #c084fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Lead Comparison</span>
+        <button onclick="compareSelectedLeads()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#7c3aed;color:#fff;border:none;border-radius:4px;cursor:pointer;">Compare Selected</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Select 2+ leads to compare side-by-side and merge the best data from each.</p>
+      <div id="comparison-result" style="max-height:250px;overflow-y:auto;"></div>
+    </div>
+
     <!-- Email Validation Panel -->
     <div id="email-validation-panel" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #86efac;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -7641,9 +7690,183 @@
       } catch (err) { console.error('Cross-source error:', err); }
     }
 
+    // === Lead Import (Batch 18) ===
+    async function runImport() {
+      const fileInput = document.getElementById('import-file');
+      const resultEl = document.getElementById('import-result');
+      if (!fileInput.files.length) { toast('Select a CSV file first', 'warn'); return; }
+
+      resultEl.innerHTML = '<span style="color:#a16207;">Parsing CSV...</span>';
+      const file = fileInput.files[0];
+      const text = await file.text();
+      const lines = text.split('\n').filter(l => l.trim());
+      if (lines.length < 2) { resultEl.innerHTML = '<span style="color:#dc2626;">CSV is empty or has no data rows.</span>'; return; }
+
+      const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+      const leads = [];
+      for (let i = 1; i < lines.length; i++) {
+        const vals = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''));
+        const lead = {};
+        headers.forEach((h, idx) => { lead[h] = vals[idx] || ''; });
+        leads.push(lead);
+      }
+
+      resultEl.innerHTML = `<span style="color:#a16207;">Importing ${leads.length} leads...</span>`;
+      const options = {
+        dedup: document.getElementById('import-dedup').checked,
+        overwriteEmpty: document.getElementById('import-fill').checked,
+        source: 'csv-import',
+      };
+
+      try {
+        const res = await fetch('/api/leads/import', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leads, options }),
+        }).then(r => r.json());
+
+        resultEl.innerHTML = `
+          <span style="color:#16a34a;font-weight:600;">${fmt(res.added)} added</span>,
+          <span style="color:#2563eb;">${fmt(res.updated)} updated</span>,
+          <span style="color:#6b7280;">${fmt(res.skipped)} skipped</span>
+          ${res.errors?.length ? `<span style="color:#dc2626;"> (${res.errors.length} errors)</span>` : ''}
+        `;
+        if (res.added > 0 || res.updated > 0) refreshAll();
+      } catch (err) {
+        resultEl.innerHTML = '<span style="color:#dc2626;">Import failed: ' + esc(err.message) + '</span>';
+      }
+    }
+
+    // === Engagement Heatmap (Batch 18) ===
+    async function loadEngagementHeatmap() {
+      try {
+        const data = await fetch('/api/leads/engagement-heatmap').then(r => r.json());
+        const gridEl = document.getElementById('heatmap-grid');
+        const actionsEl = document.getElementById('heatmap-actions');
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+        if (!data.grid || data.grid.every(row => row.every(v => v === 0))) {
+          gridEl.innerHTML = '<span style="font-size:0.72rem;color:#be185d;">No engagement data yet. Track activities to see the heatmap.</span>';
+          actionsEl.innerHTML = '';
+          return;
+        }
+
+        const maxVal = Math.max(...data.grid.flat(), 1);
+        let html = '<table style="border-collapse:collapse;font-size:0.6rem;"><tr><td></td>';
+        for (let h = 0; h < 24; h++) html += `<td style="text-align:center;color:#9ca3af;padding:0 1px;">${h}</td>`;
+        html += '</tr>';
+        for (let d = 0; d < 7; d++) {
+          html += `<tr><td style="color:#9ca3af;padding:0 4px 0 0;text-align:right;">${days[d]}</td>`;
+          for (let h = 0; h < 24; h++) {
+            const val = data.grid[d][h];
+            const intensity = val / maxVal;
+            const bg = val === 0 ? '#fce7f3' : `rgba(190, 24, 93, ${0.15 + intensity * 0.85})`;
+            const color = intensity > 0.5 ? '#fff' : '#be185d';
+            html += `<td style="width:14px;height:14px;background:${bg};color:${color};text-align:center;border:1px solid #fdf2f8;border-radius:2px;font-size:0.55rem;">${val || ''}</td>`;
+          }
+          html += '</tr>';
+        }
+        html += '</table>';
+        gridEl.innerHTML = html;
+
+        actionsEl.innerHTML = data.topActions.map(a => `
+          <span style="font-size:0.65rem;padding:0.1rem 0.4rem;background:#fff;border:1px solid #f9a8d4;border-radius:4px;">${esc(a.action)}: <strong>${fmt(a.count)}</strong></span>
+        `).join('');
+      } catch (err) { console.error('Heatmap error:', err); }
+    }
+
+    // === Owners (Batch 18) ===
+    async function loadOwners() {
+      try {
+        const owners = await fetch('/api/owners').then(r => r.json());
+        const el = document.getElementById('owners-list');
+        if (owners.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#0369a1;">No owners assigned. Use bulk actions to assign leads to team members.</span>';
+          return;
+        }
+        el.innerHTML = owners.map(o => `
+          <span onclick="viewOwnerLeads('${esc(o.owner)}')" style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.2rem 0.6rem;background:#fff;border:1px solid #7dd3fc;border-radius:8px;font-size:0.72rem;cursor:pointer;">
+            <strong>${esc(o.owner)}</strong>
+            <span style="color:#0369a1;">${fmt(o.lead_count)} leads</span>
+            <span style="color:#6b7280;font-size:0.65rem;">avg ${o.avg_score}</span>
+          </span>
+        `).join('');
+      } catch (err) { console.error('Owners error:', err); }
+    }
+
+    async function viewOwnerLeads(owner) {
+      try {
+        const leads = await fetch('/api/owners/' + encodeURIComponent(owner) + '/leads?limit=50').then(r => r.json());
+        toast(owner + ' has ' + leads.length + ' leads', 'info');
+        _currentLeads = leads;
+        renderLeadTable();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    // === Lead Comparison (Batch 18) ===
+    async function compareSelectedLeads() {
+      const ids = [..._selectedIds];
+      if (ids.length < 2) { toast('Select at least 2 leads to compare', 'warn'); return; }
+      if (ids.length > 5) { toast('Maximum 5 leads for comparison', 'warn'); return; }
+
+      try {
+        const data = await fetch('/api/leads/compare', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leadIds: ids }),
+        }).then(r => r.json());
+
+        const el = document.getElementById('comparison-result');
+        if (!data.leads || data.leads.length === 0) {
+          el.innerHTML = '<span style="color:#dc2626;">No leads found.</span>';
+          return;
+        }
+
+        let html = '<table style="width:100%;border-collapse:collapse;font-size:0.7rem;">';
+        html += '<tr style="border-bottom:1px solid #e9d5ff;"><th style="text-align:left;padding:2px 4px;color:#7c3aed;">Field</th>';
+        for (const lead of data.leads) {
+          html += `<th style="text-align:left;padding:2px 4px;color:#7c3aed;">ID ${lead.id}: ${esc(lead.first_name || '')} ${esc(lead.last_name || '')}</th>`;
+        }
+        html += '</tr>';
+
+        for (const field of data.fields) {
+          if (!field.hasData) continue;
+          const bgColor = field.hasDifference ? '#faf5ff' : '#fff';
+          html += `<tr style="background:${bgColor};border-bottom:1px solid #f3e8ff;">`;
+          html += `<td style="padding:2px 4px;font-weight:600;color:#6b21a8;">${esc(field.name)}</td>`;
+          for (const v of field.values) {
+            const val = v.value || '<em style="color:#d1d5db;">empty</em>';
+            html += `<td style="padding:2px 4px;">${typeof val === 'string' && val.startsWith('<') ? val : esc(String(val))}</td>`;
+          }
+          html += '</tr>';
+        }
+        html += '</table>';
+
+        // Merge button
+        html += `<div style="margin-top:0.5rem;display:flex;gap:0.3rem;">`;
+        for (const lead of data.leads) {
+          html += `<button onclick="mergeIntoLead(${lead.id}, [${ids.filter(i => i !== lead.id).join(',')}])" style="font-size:0.68rem;padding:0.2rem 0.5rem;background:#7c3aed;color:#fff;border:none;border-radius:4px;cursor:pointer;">Merge into ID ${lead.id}</button>`;
+        }
+        html += `</div>`;
+
+        el.innerHTML = html;
+      } catch (err) { toast('Error comparing leads: ' + err.message, 'error'); }
+    }
+
+    async function mergeIntoLead(targetId, sourceIds) {
+      if (!confirm('Merge leads ' + sourceIds.join(', ') + ' into lead ' + targetId + '? Source leads will be deleted.')) return;
+      try {
+        const res = await fetch('/api/leads/merge-with-picks', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ targetId, sourceIds, fieldPicks: {} }),
+        }).then(r => r.json());
+        toast('Merged ' + res.merged + ' leads into ID ' + targetId, 'success');
+        document.getElementById('comparison-result').innerHTML = '';
+        refreshAll();
+      } catch (err) { toast('Merge error: ' + err.message, 'error'); }
+    }
+
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();

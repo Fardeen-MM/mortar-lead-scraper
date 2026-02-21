@@ -2354,6 +2354,128 @@ app.get('/api/leads/kpi-metrics', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Lead Import (Batch 18) ===
+app.post('/api/leads/import', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leads, options } = req.body;
+    if (!leads || !Array.isArray(leads)) return res.status(400).json({ error: 'leads (array) required' });
+    res.json(leadDb.importLeads(leads, options || {}));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/import/map-fields', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { headers } = req.body;
+    if (!headers || !Array.isArray(headers)) return res.status(400).json({ error: 'headers (array) required' });
+    res.json(leadDb.getImportFieldMapping(headers));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Engagement Heatmap (Batch 18) ===
+app.get('/api/leads/engagement-heatmap', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getEngagementHeatmap());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/:id/engagement-sparkline', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getLeadEngagementSparkline(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/engagement-timeline', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const days = parseInt(req.query.days) || 30;
+    res.json(leadDb.getEngagementTimeline(days));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Bulk Actions (Batch 18) ===
+app.post('/api/leads/bulk/tag', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds, tag } = req.body;
+    if (!leadIds || !tag) return res.status(400).json({ error: 'leadIds and tag required' });
+    res.json(leadDb.bulkTagLeads(leadIds, tag));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/bulk/remove-tag', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds, tag } = req.body;
+    if (!leadIds || !tag) return res.status(400).json({ error: 'leadIds and tag required' });
+    res.json(leadDb.bulkRemoveTag(leadIds, tag));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/bulk/assign-owner', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds, owner } = req.body;
+    if (!leadIds || !owner) return res.status(400).json({ error: 'leadIds and owner required' });
+    res.json(leadDb.bulkAssignOwner(leadIds, owner));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/bulk/enroll-campaign', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds, campaignId } = req.body;
+    if (!leadIds || !campaignId) return res.status(400).json({ error: 'leadIds and campaignId required' });
+    res.json(leadDb.bulkEnrollInCampaign(leadIds, campaignId));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/bulk/enroll-sequence', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds, sequenceId } = req.body;
+    if (!leadIds || !sequenceId) return res.status(400).json({ error: 'leadIds and sequenceId required' });
+    res.json(leadDb.bulkEnrollInSequence(leadIds, sequenceId));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/owners', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getOwners());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/owners/:name/leads', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 100;
+    res.json(leadDb.getLeadsByOwner(req.params.name, limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Lead Comparison & Merge (Batch 18) ===
+app.post('/api/leads/compare', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds } = req.body;
+    if (!leadIds || !Array.isArray(leadIds) || leadIds.length < 2) return res.status(400).json({ error: 'leadIds (array of 2+) required' });
+    res.json(leadDb.getLeadComparisonData(leadIds));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/merge-with-picks', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { targetId, sourceIds, fieldPicks } = req.body;
+    if (!targetId || !sourceIds) return res.status(400).json({ error: 'targetId and sourceIds required' });
+    res.json(leadDb.mergeLeadsWithPicks(targetId, sourceIds, fieldPicks || {}));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
