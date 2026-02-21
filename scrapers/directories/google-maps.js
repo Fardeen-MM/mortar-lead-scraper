@@ -250,7 +250,8 @@ class GoogleMapsScraper extends BaseScraper {
         try {
           const detail = await this._extractDetail(page, i);
           if (detail) {
-            detail.name = detail.name || results[i].name;
+            // Prefer feed name (aria-label) — detail h1 can pick up "Results" heading
+            detail.name = results[i].name || detail.name;
             detail.mapsUrl = results[i].href || '';
             detail.rating = detail.rating || results[i].rating;
             detailedResults.push(detail);
