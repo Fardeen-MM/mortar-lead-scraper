@@ -1692,6 +1692,50 @@
       <div id="bulk-enrichment-runs" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Deal Estimation (Batch 32) -->
+    <div id="deal-panel" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #6ee7b7;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#059669;">Deal Estimation</span>
+        <button onclick="loadDealEstimates()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#d1fae5;color:#059669;border:1px solid #6ee7b7;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Estimate deal size per lead based on firm, practice area, city tier, and score. Revenue pipeline forecasting. Like Salesforce forecasting.</p>
+      <div id="deal-summary" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="deal-list" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Outreach Calendar (Batch 32) -->
+    <div id="outreach-cal-panel" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #7dd3fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#0284c7;">Outreach Calendar</span>
+        <button onclick="loadOutreachCal()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#e0f2fe;color:#0284c7;border:1px solid #7dd3fc;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Daily outreach capacity planning. Shows backlog, suggested daily volumes, and 7-day plan. Like Outreach's daily planner.</p>
+      <div id="outreach-backlog" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="outreach-plan" style=""></div>
+    </div>
+
+    <!-- Risk Scoring (Batch 32) -->
+    <div id="risk-panel" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border:1px solid #fca5a5;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#dc2626;">Risk Scoring</span>
+        <button onclick="loadRiskScores()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Identify leads at risk of going cold. Score based on engagement decay, response patterns, and time since contact. Like Gainsight churn prediction.</p>
+      <div id="risk-dist" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="risk-list" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Network Map (Batch 32) -->
+    <div id="network-panel" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border:1px solid #d946ef;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#a21caf;">Network Map</span>
+        <button onclick="loadNetworkMap()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fae8ff;color:#a21caf;border:1px solid #d946ef;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Map firm connections, city clusters, and practice area networks. Identify key connector nodes. Like LinkedIn's relationship intelligence.</p>
+      <div id="network-connectors" style="margin-bottom:0.4rem;"></div>
+      <div id="network-clusters" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
     <!-- Propensity Model (Batch 31) -->
     <div id="propensity-panel" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:1px solid #c084fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -9223,6 +9267,94 @@
       } catch (err) { toast('Process error: ' + err.message, 'error'); }
     }
 
+    // === Deal Estimation (Batch 32) ===
+    async function loadDealEstimates() {
+      try {
+        const data = await fetch('/api/deals?limit=20').then(r => r.json());
+        const sEl = document.getElementById('deal-summary');
+        sEl.innerHTML = `
+          <div style="text-align:center;"><div style="font-size:1.1rem;font-weight:700;color:#059669;">$${(data.totalPipeline / 1000).toFixed(0)}k</div><div style="font-size:0.65rem;">Total Pipeline</div></div>
+          <div style="text-align:center;"><div style="font-size:1.1rem;font-weight:700;color:#f59e0b;">$${(data.weightedPipeline / 1000).toFixed(0)}k</div><div style="font-size:0.65rem;">Weighted</div></div>
+          <div style="text-align:center;"><div style="font-size:1.1rem;font-weight:700;color:#2563eb;">$${data.avgDeal}</div><div style="font-size:0.65rem;">Avg Deal</div></div>
+          <div style="text-align:center;"><div style="font-size:1.1rem;font-weight:700;color:#6b7280;">${data.count}</div><div style="font-size:0.65rem;">Deals</div></div>
+        `;
+        const lEl = document.getElementById('deal-list');
+        lEl.innerHTML = data.leads.slice(0, 15).map(l => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.2rem 0;border-bottom:1px solid #d1fae5;">
+          <span style="font-size:0.72rem;">${l.first_name} ${l.last_name} <span style="color:#78716c;">${l.city || ''}</span></span>
+          <div style="display:flex;gap:0.4rem;font-size:0.65rem;">
+            <span style="color:#059669;font-weight:600;">$${l.dealEstimate}</span>
+            <span style="color:#f59e0b;">wt: $${l.weightedValue}</span>
+          </div>
+        </div>`).join('');
+      } catch (err) { console.error('Deal error:', err); }
+    }
+
+    // === Outreach Calendar (Batch 32) ===
+    async function loadOutreachCal() {
+      try {
+        const data = await fetch('/api/outreach-calendar').then(r => r.json());
+        const bEl = document.getElementById('outreach-backlog');
+        bEl.innerHTML = `
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#0284c7;">${data.backlog.emailReady}</div><div style="font-size:0.65rem;">Email Ready</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#059669;">${data.backlog.phoneReady}</div><div style="font-size:0.65rem;">Call Ready</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#f59e0b;">${data.backlog.emailDays}d</div><div style="font-size:0.65rem;">Email Backlog</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#dc2626;">${data.backlog.callDays}d</div><div style="font-size:0.65rem;">Call Backlog</div></div>
+        `;
+        const pEl = document.getElementById('outreach-plan');
+        pEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#0284c7;margin-bottom:0.2rem;">7-Day Plan</div>' +
+          data.plan.map(d => `<div style="display:flex;align-items:center;gap:0.3rem;padding:0.1rem 0;${d.isWeekend ? 'opacity:0.5;' : ''}">
+            <span style="font-size:0.68rem;width:60px;">${d.dayName} ${d.date.slice(5)}</span>
+            <span style="font-size:0.62rem;color:#0284c7;">${d.emails} emails</span>
+            <span style="font-size:0.62rem;color:#059669;">${d.calls} calls</span>
+          </div>`).join('');
+      } catch (err) { console.error('Outreach cal error:', err); }
+    }
+
+    // === Risk Scoring (Batch 32) ===
+    async function loadRiskScores() {
+      try {
+        const data = await fetch('/api/risk-scores?limit=20').then(r => r.json());
+        const dEl = document.getElementById('risk-dist');
+        dEl.innerHTML = `
+          <div style="text-align:center;"><div style="font-size:1.1rem;font-weight:700;color:#dc2626;">${data.distribution.high}</div><div style="font-size:0.65rem;">High Risk</div></div>
+          <div style="text-align:center;"><div style="font-size:1.1rem;font-weight:700;color:#f59e0b;">${data.distribution.medium}</div><div style="font-size:0.65rem;">Medium</div></div>
+          <div style="text-align:center;"><div style="font-size:1.1rem;font-weight:700;color:#16a34a;">${data.distribution.low}</div><div style="font-size:0.65rem;">Low Risk</div></div>
+        `;
+        const lEl = document.getElementById('risk-list');
+        if (!data.leads.length) { lEl.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;">No at-risk leads in active pipeline.</div>'; return; }
+        const colors = { high: '#dc2626', medium: '#f59e0b', low: '#16a34a' };
+        lEl.innerHTML = data.leads.map(l => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.2rem 0;border-bottom:1px solid #fee2e2;">
+          <span style="font-size:0.72rem;">${l.first_name} ${l.last_name} <span style="color:#78716c;">${l.pipeline_stage}</span></span>
+          <div style="display:flex;gap:0.3rem;align-items:center;">
+            <span style="font-size:0.65rem;font-weight:600;color:${colors[l.riskLevel]};">${l.riskScore}% risk</span>
+            <span style="font-size:0.6rem;color:#78716c;">${l.daysSinceContact}d ago</span>
+          </div>
+        </div>`).join('');
+      } catch (err) { console.error('Risk error:', err); }
+    }
+
+    // === Network Map (Batch 32) ===
+    async function loadNetworkMap() {
+      try {
+        const data = await fetch('/api/network-map?limit=20').then(r => r.json());
+        const cEl = document.getElementById('network-connectors');
+        if (data.connectors && data.connectors.length) {
+          cEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#a21caf;margin-bottom:0.2rem;">Key Connectors (Multi-City Firms)</div>' +
+            data.connectors.slice(0, 10).map(c => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.15rem 0;border-bottom:1px solid #fae8ff;">
+              <span style="font-size:0.72rem;">${c.first_name} ${c.last_name} <span style="color:#78716c;">${c.firm_name}</span></span>
+              <span style="font-size:0.62rem;color:#a21caf;">${c.firm_cities} cities, ${c.firm_size} attorneys</span>
+            </div>`).join('');
+        }
+        const fEl = document.getElementById('network-clusters');
+        if (data.firmClusters.length) {
+          fEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#a21caf;margin-bottom:0.2rem;">Firm Clusters</div>' +
+            data.firmClusters.slice(0, 12).map(f => `<div style="font-size:0.68rem;padding:0.1rem 0;border-bottom:1px solid #fae8ff;">
+              <strong>${f.firm_name}</strong>: ${f.members} members, ${f.cities} | Avg: ${f.avg_score}
+            </div>`).join('');
+        }
+      } catch (err) { console.error('Network error:', err); }
+    }
+
     // === Propensity Model (Batch 31) ===
     async function loadPropensity() {
       try {
@@ -10421,7 +10553,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler(), loadPropensity(), loadCohorts(), loadChannelPrefs(), loadBenchmarks()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler(), loadPropensity(), loadCohorts(), loadChannelPrefs(), loadBenchmarks(), loadDealEstimates(), loadOutreachCal(), loadRiskScores(), loadNetworkMap()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();

@@ -3461,6 +3461,41 @@ app.get('/api/benchmarks', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Deal Estimation (Batch 32) ===
+app.get('/api/deals', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 40;
+    res.json(leadDb.getDealEstimates(limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Outreach Calendar (Batch 32) ===
+app.get('/api/outreach-calendar', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getOutreachCalendar());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Risk Scoring (Batch 32) ===
+app.get('/api/risk-scores', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 30;
+    res.json(leadDb.getRiskScores(limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Network Mapping (Batch 32) ===
+app.get('/api/network-map', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 30;
+    res.json(leadDb.getNetworkMap(limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
