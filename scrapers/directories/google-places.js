@@ -1,11 +1,12 @@
 /**
- * Google Places Law Firm Scraper
+ * Google Places Scraper (Niche-Agnostic)
  *
  * Source: Google Places API (Text Search)
  * Method: REST API with API key
  * Data:   Business name, address, phone, website, rating, Google Maps URL
  *
- * Searches for "lawyers" and "law firm" across major cities worldwide.
+ * Searches for any business niche across major cities worldwide.
+ * Pass options.niche = "dentists", "plumbers", etc. Defaults to "lawyers".
  * Uses Google Places API (New) Text Search endpoint.
  *
  * Requirements:
@@ -22,6 +23,46 @@ const https = require('https');
 const { log } = require('../../lib/logger');
 const { RateLimiter } = require('../../lib/rate-limiter');
 const { titleCase } = require('../../lib/normalizer');
+
+// Map common niches to Google Places types (for includedType parameter)
+// See: https://developers.google.com/maps/documentation/places/web-service/place-types
+const NICHE_TO_PLACE_TYPE = {
+  lawyers: 'lawyer',
+  lawyer: 'lawyer',
+  'law firm': 'lawyer',
+  'law firms': 'lawyer',
+  attorney: 'lawyer',
+  attorneys: 'lawyer',
+  dentist: 'dentist',
+  dentists: 'dentist',
+  'dental office': 'dentist',
+  doctor: 'doctor',
+  doctors: 'doctor',
+  physician: 'doctor',
+  physicians: 'doctor',
+  plumber: 'plumber',
+  plumbers: 'plumber',
+  electrician: 'electrician',
+  electricians: 'electrician',
+  accountant: 'accounting',
+  accountants: 'accounting',
+  'real estate agent': 'real_estate_agency',
+  'real estate agents': 'real_estate_agency',
+  realtor: 'real_estate_agency',
+  realtors: 'real_estate_agency',
+  restaurant: 'restaurant',
+  restaurants: 'restaurant',
+  gym: 'gym',
+  gyms: 'gym',
+  veterinarian: 'veterinary_care',
+  vet: 'veterinary_care',
+  pharmacy: 'pharmacy',
+  pharmacies: 'pharmacy',
+  insurance: 'insurance_agency',
+  'insurance agent': 'insurance_agency',
+  'car dealer': 'car_dealer',
+  'car dealers': 'car_dealer',
+};
 
 // Major cities across all covered countries
 // Each entry: { city, stateCode, country, region }
@@ -123,7 +164,13 @@ class GooglePlacesScraper extends BaseScraper {
   }
 
   /**
-   * Search Google Places for law firms across cities.
+   * Search Google Places for businesses across cities.
+   * @param {string} practiceArea - Practice area (ignored for non-lawyer niches)
+   * @param {object} options
+   * @param {string} [options.niche] - Business niche, e.g. "dentists", "plumbers". Defaults to "lawyers".
+   * @param {string} [options.city] - City filter
+   * @param {number} [options.maxPages] - Max pages per query (Google max is 3)
+   * @param {number} [options.maxCities] - Max cities to search
    */
   async *search(practiceArea, options = {}) {
     if (!this._apiKey) {
@@ -131,6 +178,9 @@ class GooglePlacesScraper extends BaseScraper {
       yield { _captcha: true, city: 'all', reason: 'Missing GOOGLE_PLACES_API_KEY' };
       return;
     }
+
+    const niche = (options.niche || 'lawyers').trim();
+    const isLawyer = /^(lawyers?|law\s*firms?|attorneys?)$/i.test(niche);
 
     const rateLimiter = new RateLimiter({ minDelay: 1000, maxDelay: 3000 });
     const maxCities = options.maxCities || (options.maxPages ? options.maxPages : null);
@@ -142,14 +192,18 @@ class GooglePlacesScraper extends BaseScraper {
         c.city.toLowerCase().includes(options.city.toLowerCase())
       );
       if (cities.length === 0) {
-        // Try as a custom city with US default
+        // Custom city not in built-in list — create entry
         cities = [{ city: options.city, stateCode: '', country: 'US' }];
       }
     }
 
     if (maxCities) cities = cities.slice(0, maxCities);
 
-    const searchQueries = ['lawyers', 'law firm'];
+    // Build search queries from the niche
+    const searchQueries = isLawyer ? ['lawyers', 'law firm'] : [niche];
+
+    // Resolve Google Places type for the niche
+    const placeType = NICHE_TO_PLACE_TYPE[niche.toLowerCase()] || null;
 
     for (let i = 0; i < cities.length; i++) {
       const cityEntry = cities[i];
@@ -167,11 +221,11 @@ class GooglePlacesScraper extends BaseScraper {
           await rateLimiter.wait();
 
           try {
-            const results = await this._textSearch(textQuery, pageToken);
+            const results = await this._textSearch(textQuery, pageToken, placeType);
             if (!results || !results.places || results.places.length === 0) break;
 
             for (const place of results.places) {
-              const lead = this._parsePlaceResult(place, cityEntry);
+              const lead = this._parsePlaceResult(place, cityEntry, niche);
               if (lead) yield lead;
             }
 
@@ -188,13 +242,20 @@ class GooglePlacesScraper extends BaseScraper {
 
   /**
    * Call Google Places Text Search API (New).
+   * @param {string} textQuery - Search query
+   * @param {string|null} pageToken - Pagination token
+   * @param {string|null} placeType - Google Places type filter (null = no filter)
    */
-  async _textSearch(textQuery, pageToken) {
+  async _textSearch(textQuery, pageToken, placeType) {
     const body = {
       textQuery,
-      includedType: 'lawyer',
       languageCode: 'en',
     };
+
+    // Only add includedType if we have a known mapping
+    if (placeType) {
+      body.includedType = placeType;
+    }
 
     if (pageToken) {
       body.pageToken = pageToken;
@@ -245,8 +306,11 @@ class GooglePlacesScraper extends BaseScraper {
 
   /**
    * Parse a Google Places result into a lead object.
+   * @param {object} place - Google Places API result
+   * @param {object} cityEntry - City entry with stateCode/country
+   * @param {string} [niche] - Business niche for source tracking
    */
-  _parsePlaceResult(place, cityEntry) {
+  _parsePlaceResult(place, cityEntry, niche) {
     if (!place || !place.displayName) return null;
 
     const name = place.displayName.text || place.displayName || '';
@@ -266,6 +330,9 @@ class GooglePlacesScraper extends BaseScraper {
     // Get website
     const website = place.websiteUri || '';
 
+    // Track the niche in the source for downstream processing
+    const nicheTag = niche && !/^lawyers?$/i.test(niche) ? `_${niche.replace(/\s+/g, '_')}` : '';
+
     return this.transformResult({
       first_name: firstName,
       last_name: lastName,
@@ -278,7 +345,7 @@ class GooglePlacesScraper extends BaseScraper {
       bar_number: '',
       bar_status: '',
       admission_date: '',
-      source: 'google_places',
+      source: `google_places${nicheTag}`,
       profile_url: place.googleMapsUri || '',
       _rating: place.rating || '',
       _googlePlaceId: place.id || '',

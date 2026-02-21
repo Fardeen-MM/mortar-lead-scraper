@@ -111,7 +111,7 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
 
 // Start a scrape job
 app.post('/api/scrape/start', (req, res) => {
-  const { state, practice, city, test, uploadId, enrich, enrichOptions, waterfall } = req.body;
+  const { state, practice, city, test, uploadId, enrich, enrichOptions, waterfall, niche, personExtract } = req.body;
 
   if (!state) {
     return res.status(400).json({ error: 'State is required' });
@@ -146,6 +146,8 @@ app.post('/api/scrape/start', (req, res) => {
     enrich: !!enrich,
     enrichOptions: enrichOptions || {},
     waterfall: waterfall || {},
+    niche: niche || undefined,
+    personExtract: !!personExtract,
   });
 
   // Store job
@@ -185,6 +187,10 @@ app.post('/api/scrape/start', (req, res) => {
 
   emitter.on('waterfall-progress', (data) => {
     broadcast(jobId, { type: 'waterfall-progress', ...data });
+  });
+
+  emitter.on('person-extract-progress', (data) => {
+    broadcast(jobId, { type: 'person-extract-progress', ...data });
   });
 
   // Schedule job cleanup after terminal state (30 min TTL)

@@ -88,11 +88,25 @@
           </select>
         </div>
 
+        <div class="form-group" id="niche-group" style="display:none;">
+          <label for="input-niche">Business Niche</label>
+          <input type="text" id="input-niche" class="text-input" placeholder="e.g. dentists, plumbers, real estate agents..." autocomplete="off">
+          <span class="hint-inline">Leave blank to search for lawyers</span>
+        </div>
+
         <div class="form-group">
           <label class="toggle-label">
             <input type="checkbox" id="toggle-test">
             <span class="toggle-switch"></span>
             Test Mode <span class="hint-inline">— scrapes ~50 leads per city instead of full directory</span>
+          </label>
+        </div>
+
+        <div class="form-group" id="person-extract-group" style="display:none;">
+          <label class="toggle-label">
+            <input type="checkbox" id="toggle-person-extract" checked>
+            <span class="toggle-switch"></span>
+            Extract people from websites <span class="hint-inline">— find individual contacts from business team pages</span>
           </label>
         </div>
       </div>
@@ -265,6 +279,17 @@
         </div>
         <div class="progress-bar-container">
           <div class="progress-bar progress-bar-enrich" id="waterfall-progress-bar"></div>
+        </div>
+      </div>
+
+      <!-- Person Extraction Progress (hidden until extraction starts) -->
+      <div id="person-extract-section" class="enrichment-progress hidden">
+        <h3>Extracting People from Websites</h3>
+        <div class="enrichment-status">
+          <span id="person-extract-status-text">Waiting...</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar progress-bar-enrich" id="person-extract-progress-bar"></div>
         </div>
       </div>
 

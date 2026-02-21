@@ -99,6 +99,20 @@ const app = {
     // Listen for state change to update practice areas and cities
     stateSelect.addEventListener('change', () => { this.onStateChange(); this.updateStateInfo(); });
 
+    // Listen for niche input changes to update waterfall visibility
+    const nicheInput = document.getElementById('input-niche');
+    if (nicheInput) {
+      nicheInput.addEventListener('input', () => {
+        const code = document.getElementById('select-state').value;
+        const isGoogleScraper = code === 'GOOGLE-PLACES' || code === 'GOOGLE-MAPS';
+        if (isGoogleScraper) {
+          const nicheVal = nicheInput.value.trim().toLowerCase();
+          const isNonLawyer = nicheVal && !/^(lawyers?|law\s*firms?|attorneys?)$/.test(nicheVal);
+          this._updateWaterfallVisibility(isNonLawyer);
+        }
+      });
+    }
+
     // Initialize with first state
     this.onStateChange();
   },
@@ -107,6 +121,22 @@ const app = {
     const code = document.getElementById('select-state').value;
     const stateMeta = this.config.states[code];
     if (!stateMeta) return;
+
+    // Detect if this is a Google scraper (supports niche input)
+    const isGoogleScraper = code === 'GOOGLE-PLACES' || code === 'GOOGLE-MAPS';
+
+    // Show/hide niche input
+    const nicheGroup = document.getElementById('niche-group');
+    if (nicheGroup) nicheGroup.style.display = isGoogleScraper ? '' : 'none';
+
+    // Show/hide person extraction toggle
+    const personExtractGroup = document.getElementById('person-extract-group');
+    if (personExtractGroup) personExtractGroup.style.display = isGoogleScraper ? '' : 'none';
+
+    // Show/hide lawyer-specific waterfall options
+    const nicheVal = (document.getElementById('input-niche')?.value || '').trim().toLowerCase();
+    const isNonLawyer = isGoogleScraper && nicheVal && !/^(lawyers?|law\s*firms?|attorneys?)$/.test(nicheVal);
+    this._updateWaterfallVisibility(isNonLawyer);
 
     // Update practice areas
     const practiceSelect = document.getElementById('select-practice');
@@ -123,7 +153,7 @@ const app = {
       practiceSelect.appendChild(opt);
     }
 
-    // Update cities
+    // Update cities — for Google scrapers, also allow free-text city via the select
     const citySelect = document.getElementById('select-city');
     citySelect.innerHTML = '<option value="">All major cities</option>';
     for (const city of stateMeta.defaultCities) {
@@ -131,6 +161,27 @@ const app = {
       opt.value = city;
       opt.textContent = city;
       citySelect.appendChild(opt);
+    }
+  },
+
+  _updateWaterfallVisibility(isNonLawyer) {
+    // Lawyer-specific waterfall toggles
+    const lawyerToggles = [
+      'toggle-fetch-profiles',
+      'toggle-crossref-martindale',
+      'toggle-crossref-lawyerscom',
+      'toggle-name-lookups',
+    ];
+    for (const id of lawyerToggles) {
+      const el = document.getElementById(id);
+      if (el) {
+        const group = el.closest('.form-group');
+        if (group) {
+          group.style.display = isNonLawyer ? 'none' : '';
+          // Uncheck if hidden (so they're not sent)
+          if (isNonLawyer) el.checked = false;
+        }
+      }
     }
   },
 
@@ -355,6 +406,9 @@ const app = {
     const practice = document.getElementById('select-practice').value;
     const city = document.getElementById('select-city').value;
     const test = document.getElementById('toggle-test').checked;
+    const isGoogleScraper = state === 'GOOGLE-PLACES' || state === 'GOOGLE-MAPS';
+    const niche = isGoogleScraper ? (document.getElementById('input-niche')?.value || '').trim() : '';
+    const personExtract = isGoogleScraper && (document.getElementById('toggle-person-extract')?.checked || false);
 
     if (!state) {
       this.showNotification('Please select a state', 'error');
@@ -373,7 +427,10 @@ const app = {
     }
 
     // Reset heading
-    document.getElementById('scrape-heading').textContent = 'Scraping...';
+    const headingText = niche && !/^lawyers?$/i.test(niche)
+      ? `Scraping ${niche}...`
+      : 'Scraping...';
+    document.getElementById('scrape-heading').textContent = headingText;
 
     // Gather waterfall options
     const waterfall = {
@@ -410,6 +467,8 @@ const app = {
     document.getElementById('btn-stop-scrape').textContent = 'Stop Scrape';
     document.getElementById('waterfall-section').classList.add('hidden');
     document.getElementById('waterfall-progress-bar').style.width = '0%';
+    document.getElementById('person-extract-section').classList.add('hidden');
+    document.getElementById('person-extract-progress-bar').style.width = '0%';
     document.getElementById('enrichment-section').classList.add('hidden');
     document.getElementById('enrich-progress-bar').style.width = '0%';
 
@@ -418,7 +477,7 @@ const app = {
       const res = await fetch('/api/scrape/start', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ state, practice, city, test, uploadId: this.uploadId, enrich, enrichOptions, waterfall, emailScrape: waterfall.emailCrawl }),
+        body: JSON.stringify({ state, practice, city, test, uploadId: this.uploadId, enrich, enrichOptions, waterfall, emailScrape: waterfall.emailCrawl, niche: niche || undefined, personExtract }),
       });
       const data = await res.json();
 
@@ -642,6 +701,18 @@ const app = {
         break;
       }
 
+      case 'person-extract-progress': {
+        const peSection = document.getElementById('person-extract-section');
+        if (peSection) {
+          peSection.classList.remove('hidden');
+          const pePct = msg.total > 0 ? Math.round((msg.current / msg.total) * 100) : 0;
+          document.getElementById('person-extract-progress-bar').style.width = pePct + '%';
+          document.getElementById('person-extract-status-text').textContent =
+            `Extracting: ${msg.current}/${msg.total} — ${msg.detail || ''}`;
+        }
+        break;
+      }
+
       case 'enrichment-progress': {
         const section = document.getElementById('enrichment-section');
         section.classList.remove('hidden');
@@ -666,6 +737,15 @@ const app = {
           if (wfSection) {
             document.getElementById('waterfall-progress-bar').style.width = '100%';
             document.getElementById('waterfall-status-text').textContent = 'Waterfall enrichment complete';
+          }
+        }
+        // Mark person extraction as done if it was running
+        if (msg.stats.personExtract) {
+          const peSection = document.getElementById('person-extract-section');
+          if (peSection) {
+            document.getElementById('person-extract-progress-bar').style.width = '100%';
+            document.getElementById('person-extract-status-text').textContent =
+              `Complete — ${msg.stats.personExtract.peopleFound} people from ${msg.stats.personExtract.websitesVisited} websites`;
           }
         }
         // Mark enrichment as done if it was running
@@ -895,6 +975,12 @@ const app = {
       if (w.nameLookupsRun) rows.push(['Name Lookups', w.nameLookupsRun]);
       if (w.emailsCrawled) rows.push(['Emails from Websites', w.emailsCrawled]);
       if (w.totalFieldsFilled) rows.push(['Fields Filled (Waterfall)', w.totalFieldsFilled]);
+    }
+
+    // Person extraction stats
+    if (stats.personExtract) {
+      rows.push(['People Extracted', stats.personExtract.peopleFound || 0]);
+      rows.push(['Websites Visited', stats.personExtract.websitesVisited || 0]);
     }
 
     // Enrichment stats
