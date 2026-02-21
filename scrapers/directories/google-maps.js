@@ -14,7 +14,8 @@
  * Technical notes:
  * - Uses puppeteer-extra with stealth plugin for anti-bot
  * - Blocks image/tile requests for speed
- * - Uses aria-label and data-tooltip attributes (stable selectors)
+ * - Extracts data from feed cards (name, rating, category, address)
+ * - Clicks each result for phone/website, waits for panel to match
  * - Rate limited: 5-10s between page loads
  */
 
@@ -24,7 +25,7 @@ const { RateLimiter, sleep } = require('../../lib/rate-limiter');
 
 // Major cities — same as google-places.js
 const DEFAULT_CITY_ENTRIES = [
-  // US (top 30)
+  // US (top 20)
   { city: 'New York', stateCode: 'NY', country: 'US' },
   { city: 'Los Angeles', stateCode: 'CA', country: 'US' },
   { city: 'Chicago', stateCode: 'IL', country: 'US' },
@@ -85,7 +86,11 @@ class GoogleMapsScraper extends BaseScraper {
     try {
       const puppeteerExtra = require('puppeteer-extra');
       const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-      puppeteerExtra.use(StealthPlugin());
+      // Only register stealth once on the singleton
+      if (!puppeteerExtra._stealthRegistered) {
+        puppeteerExtra.use(StealthPlugin());
+        puppeteerExtra._stealthRegistered = true;
+      }
       puppeteer = puppeteerExtra;
     } catch {
       puppeteer = require('puppeteer');
@@ -211,63 +216,37 @@ class GoogleMapsScraper extends BaseScraper {
       const scrollLimit = maxScrolls ? Math.min(maxScrolls, 6) : 6;
       await this._scrollFeed(page, scrollLimit);
 
-      // Extract results from the feed
-      const results = await page.evaluate(() => {
-        const items = [];
-        const feed = document.querySelector('div[role="feed"]');
-        if (!feed) return items;
+      // Extract basic info from feed cards (name, rating, category, address snippet)
+      const feedResults = await this._extractFeedCards(page);
 
-        // Each result is an <a> element with an aria-label inside the feed
-        const links = feed.querySelectorAll('a[aria-label]');
-
-        for (const link of links) {
-          const name = link.getAttribute('aria-label') || '';
-          if (!name) continue;
-
-          const href = link.getAttribute('href') || '';
-
-          // Try to find rating
-          let rating = '';
-          const ratingEl = link.closest('[data-value]') ||
-            link.querySelector('span[role="img"]');
-          if (ratingEl) {
-            const ariaLabel = ratingEl.getAttribute('aria-label') || '';
-            const match = ariaLabel.match(/([\d.]+)\s*star/i);
-            if (match) rating = match[1];
-          }
-
-          items.push({ name, href, rating });
-        }
-
-        return items;
-      });
-
-      // For each result, click and extract detail info
+      // For each result, click to get phone + website from detail panel
       const detailedResults = [];
-      const maxDetails = Math.min(results.length, 60); // Cap at 60 per query
+      const maxDetails = Math.min(feedResults.length, 60); // Cap at 60 per query
 
       for (let i = 0; i < maxDetails; i++) {
+        const feedItem = feedResults[i];
         try {
-          const detail = await this._extractDetail(page, i);
-          if (detail) {
-            // Prefer feed name (aria-label) — detail h1 can pick up "Results" heading
-            detail.name = results[i].name || detail.name;
-            detail.mapsUrl = results[i].href || '';
-            detail.rating = detail.rating || results[i].rating;
-            detailedResults.push(detail);
-          }
+          const detail = await this._extractDetailByClick(page, i, feedItem.name);
+          detailedResults.push({
+            name: feedItem.name,
+            mapsUrl: feedItem.href || '',
+            rating: feedItem.rating || '',
+            category: feedItem.category || '',
+            address: detail.address || feedItem.addressSnippet || '',
+            phone: detail.phone || '',
+            website: detail.website || '',
+          });
         } catch {
-          // If detail extraction fails, still capture basic info
-          if (results[i].name) {
-            detailedResults.push({
-              name: results[i].name,
-              mapsUrl: results[i].href || '',
-              rating: results[i].rating,
-              phone: '',
-              website: '',
-              address: '',
-            });
-          }
+          // If detail extraction fails, still capture basic info from feed
+          detailedResults.push({
+            name: feedItem.name,
+            mapsUrl: feedItem.href || '',
+            rating: feedItem.rating || '',
+            category: feedItem.category || '',
+            address: feedItem.addressSnippet || '',
+            phone: '',
+            website: '',
+          });
         }
       }
 
@@ -278,16 +257,220 @@ class GoogleMapsScraper extends BaseScraper {
   }
 
   /**
+   * Extract business data from feed cards WITHOUT clicking.
+   * Each card in the feed has name, rating, category, and address snippet.
+   */
+  async _extractFeedCards(page) {
+    return page.evaluate(() => {
+      const items = [];
+      const feed = document.querySelector('div[role="feed"]');
+      if (!feed) return items;
+
+      // Each result card is an <a> with aria-label inside the feed
+      const links = feed.querySelectorAll('a[aria-label]');
+
+      for (const link of links) {
+        const ariaLabel = (link.getAttribute('aria-label') || '').trim();
+        if (!ariaLabel) continue;
+
+        // Filter out navigation/action links that aren't business names
+        // These typically start with "Visit", "Directions to", "Search nearby", etc.
+        if (/^(Visit |Directions |Search |Share |Save |Suggest |Send |Identify |Claim )/i.test(ariaLabel)) {
+          continue;
+        }
+        // Skip very long aria-labels (likely descriptions, not names)
+        if (ariaLabel.length > 100) continue;
+        // Skip single-word names (likely UI elements)
+        if (!/\s/.test(ariaLabel) && ariaLabel.length < 20) continue;
+
+        const href = link.getAttribute('href') || '';
+
+        // Extract rating from within the card
+        let rating = '';
+        const container = link.closest('div') || link;
+        const ratingEl = container.querySelector('span[role="img"]');
+        if (ratingEl) {
+          const ratingLabel = ratingEl.getAttribute('aria-label') || '';
+          const match = ratingLabel.match(/([\d.]+)\s*star/i);
+          if (match) rating = match[1];
+        }
+
+        // Extract text content from the card for category and address
+        let category = '';
+        let addressSnippet = '';
+        const cardParent = link.closest('div');
+        if (cardParent) {
+          const textNodes = cardParent.querySelectorAll('span, div');
+          const texts = [];
+          for (const node of textNodes) {
+            const t = node.textContent.trim();
+            if (t && t !== ariaLabel && t.length < 100 && t.length > 2) {
+              texts.push(t);
+            }
+          }
+          // Usually: category is first short text, address has numbers/commas
+          for (const t of texts) {
+            if (!category && !t.match(/[\d,]/) && t.length < 40) {
+              category = t;
+            }
+            if (!addressSnippet && /\d/.test(t) && (t.includes(',') || t.includes(' '))) {
+              addressSnippet = t;
+            }
+          }
+        }
+
+        items.push({ name: ariaLabel, href, rating, category, addressSnippet });
+      }
+
+      return items;
+    });
+  }
+
+  /**
+   * Click a specific result in the feed and extract phone/website/address
+   * from the detail panel. Waits for the panel header to match the expected name.
+   */
+  async _extractDetailByClick(page, index, expectedName) {
+    // Click the result
+    const clicked = await page.evaluate((idx) => {
+      const feed = document.querySelector('div[role="feed"]');
+      if (!feed) return false;
+
+      // Get only business-name links (filter same as _extractFeedCards)
+      const allLinks = feed.querySelectorAll('a[aria-label]');
+      const businessLinks = [];
+      for (const link of allLinks) {
+        const label = (link.getAttribute('aria-label') || '').trim();
+        if (!label) continue;
+        if (/^(Visit |Directions |Search |Share |Save |Suggest |Send |Identify |Claim )/i.test(label)) continue;
+        if (label.length > 100) continue;
+        if (!/\s/.test(label) && label.length < 20) continue;
+        businessLinks.push(link);
+      }
+
+      if (idx >= businessLinks.length) return false;
+      businessLinks[idx].click();
+      return true;
+    }, index);
+
+    if (!clicked) return { phone: '', website: '', address: '' };
+
+    // Wait for the detail panel to load with the correct business
+    // Instead of a fixed sleep, poll for the h1 to contain the expected name
+    const maxWait = 4000;
+    const pollInterval = 300;
+    let waited = 0;
+
+    while (waited < maxWait) {
+      await sleep(pollInterval);
+      waited += pollInterval;
+
+      const h1Text = await page.evaluate(() => {
+        const h1 = document.querySelector('h1');
+        return h1 ? h1.textContent.trim() : '';
+      });
+
+      // The panel has loaded with the right business
+      if (h1Text && expectedName && this._namesMatch(h1Text, expectedName)) {
+        break;
+      }
+
+      // If h1 is present and non-empty but doesn't match after 2s, accept it
+      // (Google may truncate/abbreviate the name)
+      if (h1Text && waited >= 2000) break;
+    }
+
+    // Extract detail data — scoped to the visible detail panel
+    const detail = await page.evaluate(() => {
+      const result = { phone: '', website: '', address: '' };
+
+      // Phone: look for tel: links or phone button with aria-label
+      // The detail panel has buttons with data-tooltip or aria-label containing the phone
+      const allButtons = document.querySelectorAll('button[aria-label], a[aria-label]');
+      for (const btn of allButtons) {
+        const label = (btn.getAttribute('aria-label') || '').toLowerCase();
+        const dataTooltip = (btn.getAttribute('data-tooltip') || '').toLowerCase();
+
+        // Phone button
+        if (label.includes('phone:') || dataTooltip === 'copy phone number') {
+          // aria-label format: "Phone: (305) 555-1234"
+          const phoneMatch = (btn.getAttribute('aria-label') || '').match(/phone:\s*([\d()+\- .]+)/i);
+          if (phoneMatch) {
+            result.phone = phoneMatch[1].trim();
+          } else {
+            // Try extracting from button's visible text
+            const text = btn.textContent || '';
+            const pm = text.match(/[\d()+\- .]{7,}/);
+            if (pm) result.phone = pm[0].trim();
+          }
+        }
+
+        // Website button
+        if (label.includes('website:') || dataTooltip === 'open website') {
+          // aria-label format: "Website: www.example.com"
+          const urlMatch = (btn.getAttribute('aria-label') || '').match(/website:\s*(.+)/i);
+          if (urlMatch) {
+            let url = urlMatch[1].trim();
+            if (url && !/^https?:\/\//i.test(url)) url = 'https://' + url;
+            result.website = url;
+          } else if (btn.href && !btn.href.includes('google.com')) {
+            result.website = btn.href;
+          }
+        }
+
+        // Address button
+        if (label.includes('address:') || dataTooltip === 'copy address') {
+          const addrMatch = (btn.getAttribute('aria-label') || '').match(/address:\s*(.+)/i);
+          if (addrMatch) {
+            result.address = addrMatch[1].trim();
+          }
+        }
+      }
+
+      // Fallback: tel: links
+      if (!result.phone) {
+        const telLinks = document.querySelectorAll('a[href^="tel:"]');
+        if (telLinks.length > 0) {
+          result.phone = telLinks[0].href.replace('tel:', '').replace(/%20/g, '');
+        }
+      }
+
+      // Fallback: external website links (not google/social media)
+      if (!result.website) {
+        const extLinks = document.querySelectorAll('a[data-tooltip="Open website"]');
+        if (extLinks.length > 0 && extLinks[0].href) {
+          result.website = extLinks[0].href;
+        }
+      }
+
+      return result;
+    });
+
+    return detail;
+  }
+
+  /**
+   * Check if two business names match (allows for truncation/abbreviation).
+   */
+  _namesMatch(name1, name2) {
+    const normalize = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const n1 = normalize(name1);
+    const n2 = normalize(name2);
+    // Exact match or one starts with the other
+    return n1 === n2 || n1.startsWith(n2) || n2.startsWith(n1) ||
+      // First 10 chars match (handles truncation)
+      (n1.length >= 10 && n2.length >= 10 && n1.slice(0, 10) === n2.slice(0, 10));
+  }
+
+  /**
    * Dismiss Google consent/cookie dialog if present.
    */
   async _dismissConsent(page) {
     try {
-      // Google consent form button selectors
       const consentSelectors = [
         'button[aria-label="Accept all"]',
         'button[aria-label="Reject all"]',
         'form[action*="consent"] button',
-        'button:has-text("Accept")',
       ];
 
       for (const sel of consentSelectors) {
@@ -337,112 +520,6 @@ class GoogleMapsScraper extends BaseScraper {
 
       if (endReached || newCount === previousCount) break;
     }
-  }
-
-  /**
-   * Click on a result and extract detail information.
-   */
-  async _extractDetail(page, index) {
-    // Click the result
-    const clicked = await page.evaluate((idx) => {
-      const feed = document.querySelector('div[role="feed"]');
-      if (!feed) return false;
-      const links = feed.querySelectorAll('a[aria-label]');
-      if (idx >= links.length) return false;
-      links[idx].click();
-      return true;
-    }, index);
-
-    if (!clicked) return null;
-
-    // Wait for detail panel to load
-    await sleep(1500);
-
-    // Extract detail data
-    const detail = await page.evaluate(() => {
-      const result = { name: '', phone: '', website: '', address: '', rating: '' };
-
-      // Business name from header
-      const heading = document.querySelector('h1');
-      if (heading) result.name = heading.textContent.trim();
-
-      // Phone — look for tel: links or copy phone button
-      const phoneBtn = document.querySelector('button[data-tooltip="Copy phone number"]') ||
-                        document.querySelector('a[href^="tel:"]');
-      if (phoneBtn) {
-        if (phoneBtn.href && phoneBtn.href.startsWith('tel:')) {
-          result.phone = phoneBtn.href.replace('tel:', '');
-        } else {
-          // Extract from aria-label or nearby text
-          const label = phoneBtn.getAttribute('aria-label') || '';
-          const phoneMatch = label.match(/[\d()+\- .]{7,}/);
-          if (phoneMatch) result.phone = phoneMatch[0].trim();
-          // Fallback: look at button's parent text
-          if (!result.phone) {
-            const parent = phoneBtn.closest('[data-tooltip]')?.parentElement;
-            if (parent) {
-              const text = parent.textContent || '';
-              const pm = text.match(/[\d()+\- .]{7,}/);
-              if (pm) result.phone = pm[0].trim();
-            }
-          }
-        }
-      }
-
-      // Fallback: look for any tel: link on the page detail panel
-      if (!result.phone) {
-        const telLinks = document.querySelectorAll('a[href^="tel:"]');
-        for (const tl of telLinks) {
-          result.phone = tl.href.replace('tel:', '');
-          break;
-        }
-      }
-
-      // Website
-      const websiteLink = document.querySelector('a[data-tooltip="Open website"]') ||
-                          document.querySelector('a[aria-label*="website" i]');
-      if (websiteLink) {
-        result.website = websiteLink.href || '';
-      }
-
-      // Fallback: look for external links that aren't social media
-      if (!result.website) {
-        const allLinks = document.querySelectorAll('a[href^="http"]');
-        for (const link of allLinks) {
-          const href = link.href || '';
-          if (href.includes('google.com') || href.includes('facebook.com') ||
-              href.includes('yelp.com') || href.includes('instagram.com') ||
-              href.includes('twitter.com') || href.includes('youtube.com')) continue;
-          // Check if it looks like a business website
-          if (!href.includes('/maps/') && !href.includes('/search')) {
-            result.website = href;
-            break;
-          }
-        }
-      }
-
-      // Address
-      const addressBtn = document.querySelector('button[data-tooltip="Copy address"]');
-      if (addressBtn) {
-        const label = addressBtn.getAttribute('aria-label') || '';
-        result.address = label.replace(/^Address:\s*/i, '').trim();
-        if (!result.address) {
-          const parent = addressBtn.closest('[data-tooltip]')?.parentElement;
-          if (parent) result.address = parent.textContent.trim();
-        }
-      }
-
-      // Rating
-      const ratingEl = document.querySelector('span[role="img"][aria-label*="star" i]');
-      if (ratingEl) {
-        const ratingMatch = (ratingEl.getAttribute('aria-label') || '').match(/([\d.]+)/);
-        if (ratingMatch) result.rating = ratingMatch[1];
-      }
-
-      return result;
-    });
-
-    return detail;
   }
 
   /**

@@ -178,8 +178,12 @@ const app = {
         const group = el.closest('.form-group');
         if (group) {
           group.style.display = isNonLawyer ? 'none' : '';
-          // Uncheck if hidden (so they're not sent)
-          if (isNonLawyer) el.checked = false;
+          if (isNonLawyer) {
+            el.checked = false;
+          } else {
+            // Re-check when showing (restore defaults)
+            el.checked = true;
+          }
         }
       }
     }
