@@ -1692,6 +1692,50 @@
       <div id="bulk-enrichment-runs" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Response Time SLA (Batch 29) -->
+    <div id="sla-panel" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border:1px solid #fca5a5;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#dc2626;">Response Time SLA</span>
+        <button onclick="loadSLATracker()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Track outbound response times with SLA thresholds. Flag overdue leads needing follow-up. Like Salesforce SLA tracking.</p>
+      <div id="sla-summary" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="sla-list" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Market Saturation (Batch 29) -->
+    <div id="saturation-panel" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:1px solid #c4b5fd;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Market Saturation</span>
+        <button onclick="loadSaturation()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ede9fe;color:#7c3aed;border:1px solid #c4b5fd;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Analyze market penetration by city. Identify under-served markets with high growth potential. Like ZoomInfo's TAM analysis.</p>
+      <div id="saturation-underserved" style="margin-bottom:0.4rem;"></div>
+      <div id="saturation-cities" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Enrichment Waterfall (Batch 29) -->
+    <div id="enrich-waterfall-panel" style="background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border:1px solid #5eead4;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#0d9488;">Enrichment Waterfall</span>
+        <button onclick="loadEnrichWaterfall()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ccfbf1;color:#0d9488;border:1px solid #5eead4;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Visualize data added at each enrichment pipeline stage. Shows which steps provide the most value. Like Clay's enrichment waterfall.</p>
+      <div id="enrich-waterfall-coverage" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="enrich-waterfall-steps" style=""></div>
+    </div>
+
+    <!-- Competitive Intelligence (Batch 29) -->
+    <div id="competitive-panel" style="background:linear-gradient(135deg,#fff7ed,#fed7aa);border:1px solid #fb923c;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#c2410c;">Competitive Intelligence</span>
+        <button onclick="loadCompetitiveIntel()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fed7aa;color:#c2410c;border:1px solid #fb923c;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Multi-state firm tracking and practice area landscape. Identify firms with cross-jurisdiction presence. Like Apollo's company intelligence.</p>
+      <div id="competitive-firms" style="max-height:180px;overflow-y:auto;"></div>
+      <div id="competitive-practices" style="margin-top:0.4rem;max-height:120px;overflow-y:auto;"></div>
+    </div>
+
     <!-- Lead Clustering (Batch 28) -->
     <div id="cluster-panel" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #facc15;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -9063,6 +9107,116 @@
       } catch (err) { toast('Process error: ' + err.message, 'error'); }
     }
 
+    // === Response Time SLA (Batch 29) ===
+    async function loadSLATracker() {
+      try {
+        const data = await fetch('/api/sla').then(r => r.json());
+        const sEl = document.getElementById('sla-summary');
+        const s = data.summary;
+        sEl.innerHTML = `
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#6b7280;">${s.total}</div><div style="font-size:0.65rem;color:#78716c;">Contacted</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#16a34a;">${s.withinSla}</div><div style="font-size:0.65rem;color:#78716c;">Within SLA</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#dc2626;">${s.overdue}</div><div style="font-size:0.65rem;color:#78716c;">Overdue</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#f59e0b;">${s.slaThreshold}h</div><div style="font-size:0.65rem;color:#78716c;">SLA Threshold</div></div>
+        `;
+        const lEl = document.getElementById('sla-list');
+        if (!data.leads.length) { lEl.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">No contacted leads to track.</div>'; return; }
+        lEl.innerHTML = data.leads.slice(0, 15).map(l => {
+          const statusColor = l.slaStatus === 'overdue' ? '#dc2626' : l.slaStatus === 'within_sla' ? '#16a34a' : '#6b7280';
+          return `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.2rem 0;border-bottom:1px solid #fee2e2;">
+            <span style="font-size:0.72rem;">${l.first_name} ${l.last_name} <span style="color:#78716c;">${l.city || ''}</span></span>
+            <div style="display:flex;gap:0.3rem;align-items:center;">
+              <span style="font-size:0.62rem;color:${statusColor};font-weight:600;">${l.slaStatus.replace('_', ' ')}</span>
+              ${l.hoursSinceOutbound != null ? '<span style="font-size:0.6rem;color:#78716c;">' + l.hoursSinceOutbound + 'h ago</span>' : ''}
+            </div>
+          </div>`;
+        }).join('');
+      } catch (err) { console.error('SLA error:', err); }
+    }
+
+    // === Market Saturation (Batch 29) ===
+    async function loadSaturation() {
+      try {
+        const data = await fetch('/api/saturation').then(r => r.json());
+        const uEl = document.getElementById('saturation-underserved');
+        if (data.underServed && data.underServed.length) {
+          uEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#7c3aed;margin-bottom:0.2rem;">Under-Served Markets (Growth Opportunity)</div>' +
+            data.underServed.map(c => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.15rem 0;border-bottom:1px solid #ede9fe;">
+              <span style="font-size:0.72rem;">${c.city}, ${c.state}</span>
+              <div style="display:flex;gap:0.3rem;align-items:center;">
+                <span style="font-size:0.65rem;color:#78716c;">${c.our_leads} leads</span>
+                <span style="font-size:0.65rem;color:#7c3aed;font-weight:600;">${c.penetration}% penetration</span>
+              </div>
+            </div>`).join('');
+        }
+        const cEl = document.getElementById('saturation-cities');
+        cEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#7c3aed;margin-bottom:0.2rem;">Top Markets by Volume</div>' +
+          data.cities.slice(0, 20).map(c => {
+            const barWidth = Math.max(5, c.penetration);
+            return `<div style="display:flex;align-items:center;gap:0.3rem;padding:0.1rem 0;">
+              <span style="font-size:0.68rem;width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.city}</span>
+              <div style="flex:1;background:#e5e7eb;border-radius:2px;height:10px;"><div style="width:${barWidth}%;background:#8b5cf6;height:100%;border-radius:2px;"></div></div>
+              <span style="font-size:0.62rem;width:60px;text-align:right;">${c.our_leads} (${c.penetration}%)</span>
+            </div>`;
+          }).join('');
+      } catch (err) { console.error('Saturation error:', err); }
+    }
+
+    // === Enrichment Waterfall (Batch 29) ===
+    async function loadEnrichWaterfall() {
+      try {
+        const data = await fetch('/api/enrichment-waterfall').then(r => r.json());
+        const cEl = document.getElementById('enrich-waterfall-coverage');
+        cEl.innerHTML = `
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#0d9488;">${data.total}</div><div style="font-size:0.65rem;">Total Leads</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#059669;">${data.coverage.email}</div><div style="font-size:0.65rem;">Emails (${data.total > 0 ? Math.round(data.coverage.email / data.total * 100) : 0}%)</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#2563eb;">${data.coverage.phone}</div><div style="font-size:0.65rem;">Phones (${data.total > 0 ? Math.round(data.coverage.phone / data.total * 100) : 0}%)</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#f59e0b;">${data.coverage.website}</div><div style="font-size:0.65rem;">Websites (${data.total > 0 ? Math.round(data.coverage.website / data.total * 100) : 0}%)</div></div>
+        `;
+        const sEl = document.getElementById('enrich-waterfall-steps');
+        const stepColors = ['#3b82f6', '#8b5cf6', '#f59e0b', '#22c55e'];
+        sEl.innerHTML = data.steps.map((s, i) => {
+          const totalFilled = s.fills.email + s.fills.phone + s.fills.website;
+          return `<div style="display:flex;align-items:center;gap:0.4rem;padding:0.2rem 0;border-bottom:1px solid #ccfbf1;">
+            <span style="width:5px;height:20px;background:${stepColors[i]};border-radius:2px;"></span>
+            <div style="flex:1;">
+              <div style="font-size:0.72rem;font-weight:500;">${s.step}</div>
+              <div style="font-size:0.62rem;color:#78716c;">${s.description}</div>
+            </div>
+            <div style="display:flex;gap:0.4rem;font-size:0.65rem;">
+              <span style="color:#059669;">${s.fills.email} email</span>
+              <span style="color:#2563eb;">${s.fills.phone} phone</span>
+              <span style="color:#f59e0b;">${s.fills.website} web</span>
+            </div>
+          </div>`;
+        }).join('');
+      } catch (err) { console.error('Enrichment waterfall error:', err); }
+    }
+
+    // === Competitive Intelligence (Batch 29) ===
+    async function loadCompetitiveIntel() {
+      try {
+        const data = await fetch('/api/competitive').then(r => r.json());
+        const fEl = document.getElementById('competitive-firms');
+        if (data.multiStateFirms.length) {
+          fEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#c2410c;margin-bottom:0.2rem;">Multi-Jurisdiction Firms</div>' +
+            data.multiStateFirms.slice(0, 15).map(f => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.2rem 0;border-bottom:1px solid #fed7aa;">
+              <div style="flex:1;">
+                <span style="font-size:0.72rem;font-weight:500;">${f.firm_name}</span>
+                <span style="font-size:0.62rem;color:#78716c;margin-left:0.2rem;">${f.attorneys} attorneys</span>
+              </div>
+              <span style="font-size:0.62rem;color:#c2410c;">${f.states} states: ${f.state_list}</span>
+            </div>`).join('');
+        } else { fEl.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;">No multi-state firms found.</div>'; }
+        const pEl = document.getElementById('competitive-practices');
+        const practices = Object.entries(data.practiceLeaders).slice(0, 8);
+        if (practices.length) {
+          pEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#c2410c;margin-bottom:0.2rem;">Practice Area Leaders</div>' +
+            practices.map(([practice, firms]) => `<div style="font-size:0.68rem;padding:0.1rem 0;"><strong>${practice}:</strong> ${firms.map(f => f.firm + ' (' + f.attorneys + ')').join(', ')}</div>`).join('');
+        }
+      } catch (err) { console.error('Competitive intel error:', err); }
+    }
+
     // === Lead Clustering (Batch 28) ===
     async function loadLeadClusters() {
       try {
@@ -9904,7 +10058,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();

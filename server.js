@@ -3294,6 +3294,38 @@ app.get('/api/attribution', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Response Time SLA (Batch 29) ===
+app.get('/api/sla', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getResponseTimeSLA());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Market Saturation (Batch 29) ===
+app.get('/api/saturation', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getMarketSaturation());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Enrichment Waterfall (Batch 29) ===
+app.get('/api/enrichment-waterfall', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getEnrichmentWaterfall());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Competitive Intelligence (Batch 29) ===
+app.get('/api/competitive', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getCompetitiveIntelligence());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
