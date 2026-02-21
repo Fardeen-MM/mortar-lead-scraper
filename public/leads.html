@@ -1107,6 +1107,42 @@
     .panel {
       border-radius: 10px !important;
     }
+
+    /* Dark mode for batch gradient panels */
+    body.dark [id$="-panel"][style*="background:linear-gradient"] {
+      filter: brightness(0.35) saturate(0.8);
+    }
+    body.dark [id$="-panel"][style*="background:linear-gradient"] * {
+      color: #e2e8f0 !important;
+    }
+    body.dark [id$="-panel"][style*="background:linear-gradient"] button {
+      opacity: 0.9;
+    }
+
+    /* Empty state styling */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+    }
+    .empty-state-icon { font-size: 2.5rem; margin-bottom: 0.75rem; opacity: 0.5; }
+    .empty-state-title { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.25rem; }
+    .empty-state-desc { font-size: 0.82rem; max-width: 360px; margin: 0 auto; }
+
+    /* Scrollbar styling for panel content */
+    [style*="overflow-y:auto"]::-webkit-scrollbar { width: 4px; }
+    [style*="overflow-y:auto"]::-webkit-scrollbar-track { background: transparent; }
+    [style*="overflow-y:auto"]::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 2px; }
+    [style*="overflow-y:auto"]::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+    body.dark [style*="overflow-y:auto"]::-webkit-scrollbar-thumb { background: #475569; }
+
+    /* Responsive fixes */
+    @media (max-width: 640px) {
+      .tab-nav { gap: 0.15rem; padding: 0.2rem; }
+      .tab-btn { padding: 0.4rem 0.6rem; font-size: 0.72rem; }
+      .tam-grid { grid-template-columns: repeat(2, 1fr); }
+      #quick-actions { grid-template-columns: 1fr 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -1205,22 +1241,22 @@
 
     <!-- Quick Actions -->
     <div id="quick-actions" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:0.5rem;margin-bottom:1rem;">
-      <button onclick="quickScrape('FL')" class="qa-btn" style="padding:0.6rem;background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.8rem;text-align:left;">
+      <button onclick="quickScrape('FL')" class="qa-btn" style="background:linear-gradient(135deg,#4f46e5,#6366f1);">
         &#x26A1; Quick Scrape<br><span style="font-weight:400;font-size:0.7rem;opacity:0.8;">Pick a state to scrape now</span>
       </button>
-      <button onclick="startBulkOp('find-websites')" class="qa-btn" style="padding:0.6rem;background:linear-gradient(135deg,#059669,#10b981);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.8rem;text-align:left;">
+      <button onclick="startBulkOp('find-websites')" class="qa-btn" style="background:linear-gradient(135deg,#059669,#10b981);">
         &#x1F310; Find Websites<br><span style="font-weight:400;font-size:0.7rem;opacity:0.8;">Crawl for missing websites</span>
       </button>
-      <button onclick="startBulkOp('find-emails')" class="qa-btn" style="padding:0.6rem;background:linear-gradient(135deg,#0ea5e9,#38bdf8);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.8rem;text-align:left;">
+      <button onclick="startBulkOp('find-emails')" class="qa-btn" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8);">
         &#x2709; Find Emails<br><span style="font-weight:400;font-size:0.7rem;opacity:0.8;">Crawl firm websites for emails</span>
       </button>
-      <button onclick="exportGold()" class="qa-btn" style="padding:0.6rem;background:linear-gradient(135deg,#d97706,#f59e0b);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.8rem;text-align:left;">
+      <button onclick="exportGold()" class="qa-btn" style="background:linear-gradient(135deg,#d97706,#f59e0b);">
         &#x1F4E5; Export Gold<br><span style="font-weight:400;font-size:0.7rem;opacity:0.8;">Download leads with email+phone</span>
       </button>
-      <button onclick="runQualityCheck()" class="qa-btn" style="padding:0.6rem;background:linear-gradient(135deg,#7c3aed,#8b5cf6);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.8rem;text-align:left;">
+      <button onclick="runQualityCheck()" class="qa-btn" style="background:linear-gradient(135deg,#7c3aed,#8b5cf6);">
         &#x1F50D; Quality Check<br><span style="font-weight:400;font-size:0.7rem;opacity:0.8;">Scan for data issues</span>
       </button>
-      <button onclick="startBulkOp('enrich')" class="qa-btn" style="padding:0.6rem;background:linear-gradient(135deg,#ec4899,#f472b6);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.8rem;text-align:left;">
+      <button onclick="startBulkOp('enrich')" class="qa-btn" style="background:linear-gradient(135deg,#ec4899,#f472b6);">
         &#x2728; Enrich All<br><span style="font-weight:400;font-size:0.7rem;opacity:0.8;">Merge, share, deduce, score</span>
       </button>
     </div>
@@ -1480,7 +1516,7 @@
     </div>
 
     <!-- Scoring Models (Batch 17) -->
-    <div id="scoring-panel" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid #fdba74;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="scoring-models-panel" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid #fdba74;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#c2410c;">Scoring Models</span>
         <button onclick="showCreateScoringModelModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#c2410c;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Model</button>
@@ -1537,13 +1573,13 @@
     </div>
 
     <!-- Engagement Heatmap (Batch 18) -->
-    <div id="heatmap-panel" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #f9a8d4;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+    <div id="engagement-heatmap-panel" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #f9a8d4;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#be185d;">Engagement Heatmap</span>
         <button onclick="loadEngagementHeatmap()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fce7f3;color:#be185d;border:1px solid #f9a8d4;border-radius:4px;cursor:pointer;">Refresh</button>
       </div>
       <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Activity patterns over the last 30 days — when are leads most engaged?</p>
-      <div id="heatmap-grid" style="overflow-x:auto;"></div>
+      <div id="engagement-heatmap-grid" style="overflow-x:auto;"></div>
       <div id="heatmap-actions" style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.3rem;"></div>
     </div>
 
@@ -2035,7 +2071,7 @@
     <!-- ICP Scoring (Batch 34) -->
     <div id="icp-scoring-panel" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);border:1px solid #f472b6;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="font-size:0.82rem;font-weight:700;color:#9d174d;margin-bottom:0.5rem;">ICP Scoring</div>
-      <div id="icp-distribution" style="font-size:0.78rem;color:#be185d;"></div>
+      <div id="icp-scoring-distribution" style="font-size:0.78rem;color:#be185d;"></div>
       <div id="icp-top-leads" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#be185d;margin-top:0.3rem;"></div>
     </div>
 
@@ -2076,7 +2112,7 @@
       <div style="font-size:0.82rem;font-weight:700;color:#9f1239;margin-bottom:0.5rem;">Freshness Alerts</div>
       <div id="freshness-staleness" style="font-size:0.78rem;color:#be123c;"></div>
       <div id="freshness-source-age" style="font-size:0.78rem;color:#be123c;margin-top:0.3rem;"></div>
-      <div id="freshness-rescrape" style="max-height:150px;overflow-y:auto;font-size:0.75rem;color:#be123c;margin-top:0.3rem;"></div>
+      <div id="freshness-alerts-rescrape" style="max-height:150px;overflow-y:auto;font-size:0.75rem;color:#be123c;margin-top:0.3rem;"></div>
     </div>
 
     <!-- Deal Estimation (Batch 32) -->
@@ -2258,7 +2294,7 @@
       </div>
       <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Analyze market penetration by city. Identify under-served markets with high growth potential. Like ZoomInfo's TAM analysis.</p>
       <div id="saturation-underserved" style="margin-bottom:0.4rem;"></div>
-      <div id="saturation-cities" style="max-height:180px;overflow-y:auto;"></div>
+      <div id="market-saturation-cities" style="max-height:180px;overflow-y:auto;"></div>
     </div>
 
     <!-- Enrichment Waterfall (Batch 29) -->
@@ -2353,8 +2389,8 @@
         <button onclick="loadConversionFunnel()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#dcfce7;color:#16a34a;border:1px solid #86efac;border-radius:4px;cursor:pointer;">Refresh</button>
       </div>
       <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Pipeline stage progression with drop-off rates between stages. Like HubSpot's deal pipeline funnel view.</p>
-      <div id="funnel-stages" style="margin-bottom:0.4rem;"></div>
-      <div id="funnel-sources" style="max-height:150px;overflow-y:auto;"></div>
+      <div id="conversion-funnel-stages" style="margin-bottom:0.4rem;"></div>
+      <div id="conversion-funnel-sources" style="max-height:150px;overflow-y:auto;"></div>
     </div>
 
     <!-- Lead Velocity (Batch 27) -->
@@ -2799,12 +2835,12 @@
     <div id="csv-import-panel" class="panel" style="display:block; margin-bottom: 1rem;">
       <h2 style="margin-bottom: 0.5rem;">Import Leads</h2>
       <p class="hint" style="margin-bottom:0.75rem;">Drop a CSV file to merge external leads (Apify, Apollo, etc.) into your database. Auto-detects columns from Apify, Apollo, ZoomInfo, and custom formats.</p>
-      <div class="import-zone" id="import-zone" onclick="document.getElementById('import-file').click()">
-        <input type="file" id="import-file" accept=".csv">
+      <div class="import-zone" id="import-zone" onclick="document.getElementById('csv-import-file').click()">
+        <input type="file" id="csv-import-file" accept=".csv">
         <div class="iz-icon">&#x1F4C1;</div>
         <div class="iz-text">Click or drag a <strong>.csv file</strong> here to import</div>
       </div>
-      <div id="import-result" class="import-result" style="display:none;"></div>
+      <div id="csv-import-result" class="import-result" style="display:none;"></div>
     </div>
 
     <!-- Enrichment Queue -->
@@ -2965,9 +3001,9 @@
     </div>
 
     <div id="empty-state" class="empty-state" style="display:none;">
-      <span class="empty-state-icon">&#x1F4CA;</span>
-      <h3>No leads yet</h3>
-      <p>Run some scrapes from the Lead Scraper to populate the database.</p>
+      <div class="empty-state-icon">&#x1F4CA;</div>
+      <div class="empty-state-title">No leads yet</div>
+      <div class="empty-state-desc">Run some scrapes from the <a href="/" style="color:var(--indigo);font-weight:500;">Lead Scraper</a> to populate the database.</div>
     </div>
     </div><!-- /lead-explorer-wrapper -->
   </div>
@@ -3164,7 +3200,7 @@
         <div>
           <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Auto-Tag Rule <span style="font-weight:400;color:#9ca3af;">(optional)</span></label>
           <div style="display:flex;gap:0.3rem;">
-            <select id="tag-rule-field" style="flex:1;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.8rem;">
+            <select id="tag-def-field" style="flex:1;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.8rem;">
               <option value="">No auto-rule</option>
               <option value="email">Email</option>
               <option value="phone">Phone</option>
@@ -3175,7 +3211,7 @@
               <option value="title">Title</option>
               <option value="bar_status">Bar Status</option>
             </select>
-            <select id="tag-rule-op" style="flex:1;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.8rem;">
+            <select id="tag-def-op" style="flex:1;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.8rem;">
               <option value="is_not_empty">is not empty</option>
               <option value="is_empty">is empty</option>
               <option value="contains">contains</option>
@@ -3298,6 +3334,7 @@
         'cadence-opt-panel', 'improvement-panel',
         'smart-list-panel', 'saturation-heatmap-panel',
         'revenue-attr-panel', 'smart-list-builder-panel',
+        'engagement-heatmap-panel',
       ],
       quality: [
         'verification-panel', 'email-class-panel', 'confidence-panel',
@@ -5132,7 +5169,7 @@
 
     // --- CSV Import ---
     const importZone = document.getElementById('import-zone');
-    const importFile = document.getElementById('import-file');
+    const importFile = document.getElementById('csv-import-file');
 
     importZone.addEventListener('dragover', (e) => {
       e.preventDefault();
@@ -7358,10 +7395,10 @@
       if (!name) { toast('Tag name required', 'error'); return; }
       const color = _tagColor;
       const description = document.getElementById('tag-desc').value.trim();
-      const ruleField = document.getElementById('tag-rule-field').value;
+      const ruleField = document.getElementById('tag-def-field').value;
       const autoRule = ruleField ? {
         field: ruleField,
-        operator: document.getElementById('tag-rule-op').value,
+        operator: document.getElementById('tag-def-op').value,
         value: document.getElementById('tag-rule-val').value || '1',
       } : undefined;
       try {
@@ -7594,7 +7631,7 @@
 
     async function executeImport() {
       if (!_importFile) return;
-      const resultEl = document.getElementById('import-result');
+      const resultEl = document.getElementById('csv-import-result');
       resultEl.style.display = '';
       resultEl.innerHTML = 'Importing...';
       closeImportModal();
@@ -7653,7 +7690,7 @@
           <h3 style="margin:0 0 1rem;font-size:1.1rem;color:#7c3aed;">Create Outreach Sequence</h3>
           <div style="margin-bottom:0.75rem;">
             <label style="font-size:0.78rem;font-weight:600;display:block;margin-bottom:0.25rem;">Sequence Name</label>
-            <input id="seq-name" type="text" placeholder="e.g., Cold Outreach" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+            <input id="modal-seq-name" type="text" placeholder="e.g., Cold Outreach" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
           </div>
           <div style="margin-bottom:0.75rem;">
             <label style="font-size:0.78rem;font-weight:600;display:block;margin-bottom:0.25rem;">Description</label>
@@ -7680,7 +7717,7 @@
     }
 
     async function createSequence() {
-      const name = document.getElementById('seq-name').value.trim();
+      const name = document.getElementById('modal-seq-name').value.trim();
       if (!name) { alert('Name required'); return; }
       const desc = document.getElementById('seq-desc').value.trim();
       const subject = document.getElementById('seq-subject-1').value.trim();
@@ -10145,7 +10182,7 @@
         const r = await fetch('/api/icp-scoring');
         const d = await r.json();
         const dist = d.distribution||{};
-        document.getElementById('icp-distribution').innerHTML = '<strong>ICP Fit:</strong> ' +
+        document.getElementById('icp-scoring-distribution').innerHTML = '<strong>ICP Fit:</strong> ' +
           `Excellent: ${dist.excellent||0} · Good: ${dist.good||0} · Fair: ${dist.fair||0} · Poor: ${dist.poor||0} (${d.total||0} total)`;
         document.getElementById('icp-top-leads').innerHTML = (d.leads||[]).slice(0,15).map(l =>
           `<div style="padding:2px 0;border-bottom:1px solid #e5e7eb;">${l.first_name} ${l.last_name} (${l.city||''}) — ICP <strong>${l.icp_score}</strong> | T${l.city_tier} ${l.email?'✉':''}${l.phone?'📞':''}${l.website?'🌐':''}</div>`
@@ -10222,7 +10259,7 @@
           (d.staleness||[]).map(s => `${s.freshness}: ${s.count}`).join(' · ');
         document.getElementById('freshness-source-age').innerHTML = '<strong>Source Age:</strong> ' +
           (d.sourceAge||[]).slice(0,8).map(s => `${s.primary_source}: ${s.days_ago}d ago (${s.total})`).join(' · ');
-        document.getElementById('freshness-rescrape').innerHTML = '<strong>Re-scrape Priority:</strong><br>' +
+        document.getElementById('freshness-alerts-rescrape').innerHTML = '<strong>Re-scrape Priority:</strong><br>' +
           (d.rescrapePriority||[]).slice(0,10).map(r => `${r.state}: avg ${r.avg_age_days}d old (${r.total} leads)`).join('<br>');
       } catch(e) { console.warn('freshness alerts:', e); }
     }
@@ -10604,7 +10641,7 @@
               </div>
             </div>`).join('');
         }
-        const cEl = document.getElementById('saturation-cities');
+        const cEl = document.getElementById('market-saturation-cities');
         cEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#7c3aed;margin-bottom:0.2rem;">Top Markets by Volume</div>' +
           data.cities.slice(0, 20).map(c => {
             const barWidth = Math.max(5, c.penetration);
@@ -10840,7 +10877,7 @@
     async function loadConversionFunnel() {
       try {
         const data = await fetch('/api/funnel').then(r => r.json());
-        const el = document.getElementById('funnel-stages');
+        const el = document.getElementById('conversion-funnel-stages');
         const maxCount = Math.max(...data.funnel.map(f => f.count), 1);
         el.innerHTML = data.funnel.map(f => {
           const width = Math.max(5, Math.round((f.count / maxCount) * 100));
@@ -10858,7 +10895,7 @@
           </div>`;
         }).join('');
         // Source breakdown
-        const sEl = document.getElementById('funnel-sources');
+        const sEl = document.getElementById('conversion-funnel-sources');
         const srcEntries = Object.entries(data.bySource).slice(0, 10);
         if (srcEntries.length) {
           sEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#16a34a;margin-bottom:0.2rem;">Top Sources by Stage</div>' +
@@ -11387,7 +11424,7 @@
     async function loadEngagementHeatmap() {
       try {
         const data = await fetch('/api/leads/engagement-heatmap').then(r => r.json());
-        const gridEl = document.getElementById('heatmap-grid');
+        const gridEl = document.getElementById('engagement-heatmap-grid');
         const actionsEl = document.getElementById('heatmap-actions');
         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
