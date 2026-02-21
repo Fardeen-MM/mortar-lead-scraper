@@ -110,6 +110,8 @@ class GoogleMapsScraper extends BaseScraper {
         '--disable-dev-shm-usage',
         '--disable-gpu',
         '--disable-web-security',
+        '--disable-blink-features=AutomationControlled',
+        '--window-size=1280,900',
       ],
     };
 
@@ -119,6 +121,42 @@ class GoogleMapsScraper extends BaseScraper {
     }
 
     this._browser = await puppeteer.launch(launchOpts);
+  }
+
+  /**
+   * Apply anti-detection patches to a new page.
+   * Defense-in-depth on top of stealth plugin.
+   */
+  async _applyAntiDetection(page) {
+    await page.evaluateOnNewDocument(() => {
+      // Hide webdriver flag
+      Object.defineProperty(navigator, 'webdriver', { get: () => false });
+
+      // Fake plugins array (headless Chrome has 0 plugins)
+      Object.defineProperty(navigator, 'plugins', {
+        get: () => [
+          { name: 'Chrome PDF Plugin', filename: 'internal-pdf-viewer' },
+          { name: 'Chrome PDF Viewer', filename: 'mhjfbmdgcfjbbpaeojofohoefgiehjai' },
+          { name: 'Native Client', filename: 'internal-nacl-plugin' },
+        ],
+      });
+
+      // Fake languages (headless may lack this)
+      Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });
+
+      // Fake WebGL vendor/renderer (headless gives "Google SwiftShader")
+      const getParameter = WebGLRenderingContext.prototype.getParameter;
+      WebGLRenderingContext.prototype.getParameter = function (param) {
+        if (param === 37445) return 'Intel Inc.';      // UNMASKED_VENDOR_WEBGL
+        if (param === 37446) return 'Intel Iris OpenGL Engine'; // UNMASKED_RENDERER_WEBGL
+        return getParameter.call(this, param);
+      };
+    });
+
+    // Set a realistic user agent
+    await page.setUserAgent(
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+    );
   }
 
   async _closeBrowser() {
@@ -344,6 +382,9 @@ class GoogleMapsScraper extends BaseScraper {
     const page = await this._browser.newPage();
 
     try {
+      // Anti-detection patches (before any navigation)
+      await this._applyAntiDetection(page);
+
       // Block images and tiles for speed
       await page.setRequestInterception(true);
       page.on('request', (req) => {
