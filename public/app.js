@@ -667,12 +667,13 @@ const app = {
         this.$statNew.textContent = msg.netNew.toLocaleString();
         this.$statEmails.textContent = msg.emails.toLocaleString();
 
-        // Progress bar: use city progress if available, else asymptotic
-        if (msg.totalCities > 0 && msg.cityIndex > 0) {
+        // Progress bar: use city progress if multiple cities, else asymptotic
+        if (msg.totalCities > 1 && msg.cityIndex > 0) {
           const pct = Math.min(95, Math.round((msg.cityIndex / msg.totalCities) * 95));
           this.$progressBar.style.width = pct + '%';
         } else if (msg.totalScraped > 0) {
           // Asymptotic: approaches 90% but never reaches it
+          // Works well for single-city geo-grid scrapes where we don't know total count
           const pct = Math.min(90, Math.round(90 * (1 - Math.exp(-msg.totalScraped / 200))));
           this.$progressBar.style.width = pct + '%';
         }
