@@ -1681,6 +1681,138 @@ app.post('/api/leads/import-preview', upload.single('file'), (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Email Validation ===
+app.post('/api/leads/validate-emails', async (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const result = await leadDb.batchValidateEmails((progress) => {
+      broadcastAll({ type: 'validation-progress', ...progress });
+    });
+    broadcastAll({ type: 'validation-complete', ...result });
+    res.json(result);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/validate-email/:email', async (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const syntax = leadDb.validateEmailSyntax(req.params.email);
+    if (!syntax.valid) return res.json(syntax);
+    const mx = await leadDb.validateEmailMX(req.params.email);
+    res.json(mx);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === ICP Scoring ===
+app.get('/api/icp/criteria', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getIcpCriteria());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/icp/criteria', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { field, operator, value, weight, label } = req.body;
+    if (!field || !operator) return res.status(400).json({ error: 'field and operator required' });
+    const result = leadDb.addIcpCriterion(field, operator, value || '', weight || 10, label || '');
+    res.json({ id: result.lastInsertRowid });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.patch('/api/icp/criteria/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.updateIcpCriterion(parseInt(req.params.id), req.body));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/icp/criteria/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.deleteIcpCriterion(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/icp/distribution', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getIcpDistribution());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/icp/score-all', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.batchComputeIcpScores());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Saved Searches & Alerts ===
+app.get('/api/saved-searches', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getSavedSearches());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/saved-searches', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, filters, alertEnabled } = req.body;
+    if (!name || !filters) return res.status(400).json({ error: 'name and filters required' });
+    const result = leadDb.createSavedSearch(name, filters, alertEnabled);
+    res.json({ id: result.lastInsertRowid });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/saved-searches/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.deleteSavedSearch(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/saved-searches/alerts', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.checkSavedSearchAlerts());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Signals: Recent Admissions ===
+app.get('/api/signals/admissions', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const months = parseInt(req.query.months) || 6;
+    const limit = parseInt(req.query.limit) || 50;
+    res.json(leadDb.getRecentAdmissions(months, limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/signals/admission-stats', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getAdmissionSignals());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Table Configuration ===
+app.get('/api/table-config', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getTableConfig() || { columns: null });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/table-config', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.saveTableConfig(req.body));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 app.get('/api/leads/sources', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
