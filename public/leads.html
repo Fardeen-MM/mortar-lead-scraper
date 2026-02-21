@@ -1418,6 +1418,52 @@
       <div id="comparison-result" style="max-height:250px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Leaderboard (Batch 19) -->
+    <div id="leaderboard-panel" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #fbbf24;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#b45309;">Leaderboard</span>
+        <div style="display:flex;gap:0.3rem;">
+          <select id="leaderboard-metric" onchange="loadLeaderboard()" style="font-size:0.68rem;padding:0.15rem 0.3rem;border:1px solid #fbbf24;border-radius:4px;">
+            <option value="lead_score">Score</option>
+            <option value="completeness">Completeness</option>
+          </select>
+          <button onclick="loadLeaderboard()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fef3c7;color:#b45309;border:1px solid #fbbf24;border-radius:4px;cursor:pointer;">Refresh</button>
+        </div>
+      </div>
+      <div id="leaderboard-list" style="max-height:200px;overflow-y:auto;"></div>
+      <div id="leaderboard-states" style="display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:0.4rem;"></div>
+    </div>
+
+    <!-- Automation Rules (Batch 19) -->
+    <div id="automation-panel" style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1px solid #34d399;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#059669;">Automation Rules</span>
+        <button onclick="showCreateAutomationModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#059669;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Rule</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Automated actions triggered by lead events. Like ZoomInfo's workflow automation.</p>
+      <div id="automation-rules-list" style="display:flex;flex-direction:column;gap:0.3rem;"></div>
+    </div>
+
+    <!-- Data Quality (Batch 19) -->
+    <div id="quality-panel" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border:1px solid #fca5a5;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#dc2626;">Data Quality</span>
+        <button onclick="loadDataQuality()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:4px;cursor:pointer;">Scan</button>
+      </div>
+      <div id="quality-summary" style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="quality-leads" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Export Profiles (Batch 19) -->
+    <div id="export-profiles-panel" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #93c5fd;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#2563eb;">Export Profiles</span>
+        <button onclick="showCreateExportProfileModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#2563eb;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Profile</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Saved export presets with filters and column selections. Like Apollo's export templates.</p>
+      <div id="export-profiles-list" style="display:flex;flex-wrap:wrap;gap:0.3rem;"></div>
+    </div>
+
     <!-- Email Validation Panel -->
     <div id="email-validation-panel" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #86efac;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -7690,6 +7736,253 @@
       } catch (err) { console.error('Cross-source error:', err); }
     }
 
+    // === Leaderboard (Batch 19) ===
+    async function loadLeaderboard() {
+      try {
+        const metric = document.getElementById('leaderboard-metric')?.value || 'lead_score';
+        const leads = await fetch('/api/leads/leaderboard?limit=15&metric=' + metric).then(r => r.json());
+        const el = document.getElementById('leaderboard-list');
+
+        if (leads.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#b45309;">No leads to rank.</span>';
+        } else {
+          el.innerHTML = leads.map((l, i) => {
+            const medal = i === 0 ? '&#x1F947;' : i === 1 ? '&#x1F948;' : i === 2 ? '&#x1F949;' : `<span style="color:#9ca3af;font-size:0.65rem;">#${i+1}</span>`;
+            return `
+              <div style="display:flex;align-items:center;gap:0.4rem;padding:0.2rem 0;border-bottom:1px solid #fef3c7;font-size:0.72rem;">
+                <span style="width:24px;text-align:center;">${medal}</span>
+                <strong style="flex:1;">${esc(l.first_name || '')} ${esc(l.last_name || '')}</strong>
+                <span style="color:#6b7280;font-size:0.65rem;">${esc(l.city || '')}, ${esc(l.state || '')}</span>
+                <span style="background:#fef3c7;color:#b45309;padding:0.1rem 0.3rem;border-radius:4px;font-size:0.65rem;font-weight:600;">${l.lead_score}</span>
+                <span style="color:#059669;font-size:0.6rem;">${l.completeness}%</span>
+              </div>
+            `;
+          }).join('');
+        }
+
+        // State leaderboard
+        const states = await fetch('/api/leads/leaderboard-by-state?limit=8').then(r => r.json());
+        document.getElementById('leaderboard-states').innerHTML = states.map(s => `
+          <span style="display:inline-flex;align-items:center;gap:0.2rem;padding:0.15rem 0.4rem;background:#fff;border:1px solid #fbbf24;border-radius:6px;font-size:0.65rem;">
+            <strong>${esc(s.state)}</strong>
+            <span style="color:#b45309;">avg ${s.avg_score}</span>
+            <span style="color:#6b7280;">${fmt(s.total)}</span>
+          </span>
+        `).join('');
+      } catch (err) { console.error('Leaderboard error:', err); }
+    }
+
+    // === Automation Rules (Batch 19) ===
+    async function loadAutomationRules() {
+      try {
+        const rules = await fetch('/api/automation-rules').then(r => r.json());
+        const el = document.getElementById('automation-rules-list');
+        if (rules.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#059669;">No automation rules. Create rules to automate lead management.</span>';
+          return;
+        }
+        el.innerHTML = rules.map(r => `
+          <div style="display:flex;align-items:center;gap:0.4rem;padding:0.25rem 0.6rem;background:#fff;border:1px solid ${r.enabled ? '#34d399' : '#d1d5db'};border-radius:6px;font-size:0.72rem;">
+            <span style="width:8px;height:8px;border-radius:50%;background:${r.enabled ? '#22c55e' : '#9ca3af'};flex-shrink:0;"></span>
+            <strong style="flex:1;">${esc(r.name)}</strong>
+            <span style="font-size:0.65rem;color:#6b7280;">on ${esc(r.trigger_event)}</span>
+            <span style="font-size:0.65rem;color:#059669;">${r.action_type}: ${esc(r.action_value)}</span>
+            <span style="font-size:0.6rem;color:#9ca3af;">${fmt(r.run_count)} runs</span>
+            <button onclick="toggleAutomation(${r.id})" style="border:none;background:none;cursor:pointer;color:#059669;font-size:0.65rem;padding:0;">[${r.enabled ? 'disable' : 'enable'}]</button>
+            <button onclick="deleteAutomation(${r.id})" style="border:none;background:none;cursor:pointer;color:#dc2626;font-size:0.7rem;padding:0;">&times;</button>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Automation error:', err); }
+    }
+
+    function showCreateAutomationModal() {
+      const modal = document.createElement('div');
+      modal.id = 'automation-modal';
+      modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
+      modal.innerHTML = `
+        <div style="background:#fff;border-radius:12px;padding:1.5rem;width:440px;max-width:90vw;">
+          <h3 style="margin:0 0 1rem;font-size:1rem;color:#059669;">Create Automation Rule</h3>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;">Rule Name</label>
+            <input id="auto-name" type="text" placeholder="e.g., Tag high-score FL leads" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.75rem;">
+            <div>
+              <label style="font-size:0.78rem;font-weight:600;">Trigger Event</label>
+              <select id="auto-trigger" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.78rem;">
+                <option value="lead_added">Lead Added</option>
+                <option value="lead_updated">Lead Updated</option>
+                <option value="score_changed">Score Changed</option>
+                <option value="email_found">Email Found</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:0.78rem;font-weight:600;">Action</label>
+              <select id="auto-action" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.78rem;">
+                <option value="tag">Add Tag</option>
+                <option value="move_stage">Move to Stage</option>
+                <option value="assign_owner">Assign Owner</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;">Action Value</label>
+            <input id="auto-value" type="text" placeholder="e.g., priority, qualified, John" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:0.5rem;">
+            <button onclick="document.getElementById('automation-modal').remove()" style="padding:0.4rem 0.8rem;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;">Cancel</button>
+            <button onclick="createAutomationFromModal()" style="padding:0.4rem 0.8rem;border:none;border-radius:6px;background:#059669;color:#fff;cursor:pointer;">Create</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+    }
+
+    async function createAutomationFromModal() {
+      const name = document.getElementById('auto-name').value.trim();
+      if (!name) { alert('Name required'); return; }
+      await fetch('/api/automation-rules', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          triggerEvent: document.getElementById('auto-trigger').value,
+          actionType: document.getElementById('auto-action').value,
+          actionValue: document.getElementById('auto-value').value.trim(),
+          conditions: {},
+        }),
+      });
+      document.getElementById('automation-modal').remove();
+      toast('Automation rule created', 'success');
+      loadAutomationRules();
+    }
+
+    async function toggleAutomation(id) {
+      await fetch('/api/automation-rules/' + id + '/toggle', { method: 'POST' });
+      loadAutomationRules();
+    }
+
+    async function deleteAutomation(id) {
+      await fetch('/api/automation-rules/' + id, { method: 'DELETE' });
+      toast('Rule deleted', 'success');
+      loadAutomationRules();
+    }
+
+    // === Data Quality (Batch 19) ===
+    async function loadDataQuality() {
+      try {
+        const [summary, leads] = await Promise.all([
+          fetch('/api/leads/data-quality-summary').then(r => r.json()),
+          fetch('/api/leads/data-quality?limit=15').then(r => r.json()),
+        ]);
+
+        const sumEl = document.getElementById('quality-summary');
+        sumEl.innerHTML = [
+          { label: 'Complete', val: summary.completeRate + '%', color: summary.completeRate >= 50 ? '#16a34a' : '#dc2626' },
+          { label: 'Missing Email', val: fmt(summary.missingEmail), color: '#dc2626' },
+          { label: 'Missing Phone', val: fmt(summary.missingPhone), color: '#f59e0b' },
+          { label: 'Missing Website', val: fmt(summary.missingWebsite), color: '#6b7280' },
+        ].map(c => `
+          <span style="font-size:0.72rem;padding:0.15rem 0.5rem;background:#fff;border:1px solid #fca5a5;border-radius:6px;">
+            <span style="color:${c.color};font-weight:700;">${c.val}</span> ${c.label}
+          </span>
+        `).join('');
+
+        const leadsEl = document.getElementById('quality-leads');
+        leadsEl.innerHTML = leads.map(l => `
+          <div style="display:flex;align-items:center;gap:0.4rem;padding:0.2rem 0;border-bottom:1px solid #fee2e2;font-size:0.7rem;">
+            <span style="width:32px;text-align:center;font-weight:700;color:${l.qualityScore >= 70 ? '#16a34a' : l.qualityScore >= 40 ? '#f59e0b' : '#dc2626'};">${l.qualityScore}%</span>
+            <strong style="flex:1;">${esc(l.name)}</strong>
+            <span style="color:#6b7280;font-size:0.65rem;">${esc(l.state || '')}</span>
+            ${l.missing.slice(0, 3).map(m => `<span style="font-size:0.6rem;padding:0.05rem 0.3rem;background:#fee2e2;color:#dc2626;border-radius:3px;">${m}</span>`).join('')}
+            ${l.suggestions.length ? `<span style="font-size:0.6rem;color:#059669;" title="${esc(l.suggestions[0].action)}">💡</span>` : ''}
+          </div>
+        `).join('');
+      } catch (err) { console.error('Quality error:', err); }
+    }
+
+    // === Export Profiles (Batch 19) ===
+    async function loadExportProfiles() {
+      try {
+        const profiles = await fetch('/api/export-profiles').then(r => r.json());
+        const el = document.getElementById('export-profiles-list');
+        if (profiles.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#2563eb;">No export profiles. Save filter+column presets for quick exports.</span>';
+          return;
+        }
+        el.innerHTML = profiles.map(p => `
+          <span style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.2rem 0.6rem;background:#fff;border:1px solid #93c5fd;border-radius:8px;font-size:0.72rem;">
+            <strong>${esc(p.name)}</strong>
+            <span style="color:#6b7280;font-size:0.65rem;">${fmt(p.export_count)} exports</span>
+            <button onclick="runProfile(${p.id})" style="border:none;background:none;cursor:pointer;color:#2563eb;font-size:0.65rem;padding:0;">[run]</button>
+            <button onclick="deleteProfile(${p.id})" style="border:none;background:none;cursor:pointer;color:#dc2626;font-size:0.7rem;padding:0;">&times;</button>
+          </span>
+        `).join('');
+      } catch (err) { console.error('Export profiles error:', err); }
+    }
+
+    function showCreateExportProfileModal() {
+      const modal = document.createElement('div');
+      modal.id = 'export-profile-modal';
+      modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
+      modal.innerHTML = `
+        <div style="background:#fff;border-radius:12px;padding:1.5rem;width:440px;max-width:90vw;">
+          <h3 style="margin:0 0 1rem;font-size:1rem;color:#2563eb;">Create Export Profile</h3>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;">Profile Name</label>
+            <input id="ep-name" type="text" placeholder="e.g., FL Immigration w/ Email" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.75rem;">
+            <div><label style="font-size:0.72rem;">State</label><input id="ep-state" type="text" placeholder="FL" style="width:100%;padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;"></div>
+            <div><label style="font-size:0.72rem;">Min Score</label><input id="ep-score" type="number" placeholder="0" style="width:100%;padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;"></div>
+            <div><label style="font-size:0.72rem;">Practice Area</label><input id="ep-practice" type="text" placeholder="" style="width:100%;padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;"></div>
+            <div><label style="font-size:0.72rem;display:flex;align-items:center;gap:0.3rem;margin-top:1rem;"><input type="checkbox" id="ep-email-only"> Email only</label></div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:0.5rem;">
+            <button onclick="document.getElementById('export-profile-modal').remove()" style="padding:0.4rem 0.8rem;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;">Cancel</button>
+            <button onclick="createProfileFromModal()" style="padding:0.4rem 0.8rem;border:none;border-radius:6px;background:#2563eb;color:#fff;cursor:pointer;">Create</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+    }
+
+    async function createProfileFromModal() {
+      const name = document.getElementById('ep-name').value.trim();
+      if (!name) { alert('Name required'); return; }
+      const filters = {};
+      const state = document.getElementById('ep-state').value.trim();
+      if (state) filters.state = state;
+      const score = document.getElementById('ep-score').value;
+      if (score) filters.minScore = parseInt(score);
+      const practice = document.getElementById('ep-practice').value.trim();
+      if (practice) filters.practiceArea = practice;
+      if (document.getElementById('ep-email-only').checked) filters.hasEmail = true;
+
+      await fetch('/api/export-profiles', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, filters }),
+      });
+      document.getElementById('export-profile-modal').remove();
+      toast('Export profile created', 'success');
+      loadExportProfiles();
+    }
+
+    async function runProfile(id) {
+      try {
+        const res = await fetch('/api/export-profiles/' + id + '/run').then(r => r.json());
+        toast('Export profile: ' + fmt(res.count) + ' leads matching', 'info');
+        if (res.leads) { _currentLeads = res.leads; renderLeadTable(); }
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    async function deleteProfile(id) {
+      await fetch('/api/export-profiles/' + id, { method: 'DELETE' });
+      toast('Export profile deleted', 'success');
+      loadExportProfiles();
+    }
+
     // === Lead Import (Batch 18) ===
     async function runImport() {
       const fileInput = document.getElementById('import-file');
@@ -7866,7 +8159,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();

@@ -2476,6 +2476,116 @@ app.post('/api/leads/merge-with-picks', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Leaderboard (Batch 19) ===
+app.get('/api/leads/leaderboard', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getLeaderboard({
+      state: req.query.state, practiceArea: req.query.practice,
+      metric: req.query.metric, limit: parseInt(req.query.limit) || 50,
+    }));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/leaderboard-by-state', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getLeaderboardByState(parseInt(req.query.limit) || 10));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Automation Rules (Batch 19) ===
+app.get('/api/automation-rules', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getAutomationRules());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/automation-rules', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, triggerEvent, conditions, actionType, actionValue } = req.body;
+    if (!name || !triggerEvent || !actionType) return res.status(400).json({ error: 'name, triggerEvent, and actionType required' });
+    const result = leadDb.createAutomationRule(name, triggerEvent, conditions || {}, actionType, actionValue || '');
+    res.json({ id: result.lastInsertRowid });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/automation-rules/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.deleteAutomationRule(parseInt(req.params.id));
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/automation-rules/:id/toggle', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.toggleAutomationRule(parseInt(req.params.id));
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/automation-rules/run', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { event, leadIds } = req.body;
+    const leads = leadIds ? leadIds.map(id => leadDb.getLeadById(id)).filter(Boolean) : [];
+    res.json(leadDb.runAutomationRules(event || 'lead_added', leads));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Data Quality (Batch 19) ===
+app.get('/api/leads/data-quality', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getDataQualityReport(parseInt(req.query.limit) || 50));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/data-quality-summary', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getDataQualitySummary());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Export Profiles (Batch 19) ===
+app.get('/api/export-profiles', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getExportProfiles());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/export-profiles', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, description, filters, columns } = req.body;
+    if (!name) return res.status(400).json({ error: 'name required' });
+    const result = leadDb.createExportProfile(name, description, filters, columns);
+    res.json({ id: result.lastInsertRowid });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/export-profiles/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.deleteExportProfile(parseInt(req.params.id));
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/export-profiles/:id/run', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const leads = leadDb.runExportProfile(parseInt(req.params.id));
+    res.json({ count: leads.length, leads: leads.slice(0, 20) });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
