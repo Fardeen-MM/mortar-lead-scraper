@@ -3326,6 +3326,107 @@ app.get('/api/competitive', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Sequence Templates (Batch 30) ===
+app.get('/api/sequence-templates', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getSequenceTemplates());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post('/api/sequence-templates', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, description, steps } = req.body;
+    res.json(leadDb.createSequenceTemplate(name, description, steps));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.put('/api/sequence-templates/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.updateSequenceTemplate(parseInt(req.params.id), req.body));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.delete('/api/sequence-templates/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.deleteSequenceTemplate(parseInt(req.params.id));
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.get('/api/sequence-templates/:id/render/:leadId', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const result = leadDb.renderSequenceTemplate(parseInt(req.params.id), parseInt(req.params.leadId));
+    res.json(result || { error: 'Template or lead not found' });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Data Quality Rules (Batch 30) ===
+app.get('/api/quality-rules', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getQualityRules());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post('/api/quality-rules', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, field, checkType, checkValue, severity, flagTag } = req.body;
+    res.json(leadDb.createQualityRule(name, field, checkType, checkValue, severity, flagTag));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.delete('/api/quality-rules/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.deleteQualityRule(parseInt(req.params.id));
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post('/api/quality-rules/run', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.runQualityRules());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Unified Timeline (Batch 30) ===
+app.get('/api/leads/:id/timeline', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 50;
+    res.json(leadDb.getLeadTimeline(parseInt(req.params.id), limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Export Scheduler (Batch 30) ===
+app.get('/api/export-schedules', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getExportSchedules());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post('/api/export-schedules', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, filters, columns, frequency } = req.body;
+    res.json(leadDb.createExportSchedule(name, filters, columns, frequency));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.delete('/api/export-schedules/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.deleteExportSchedule(parseInt(req.params.id));
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post('/api/export-schedules/:id/run', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const result = leadDb.runExportSchedule(parseInt(req.params.id));
+    res.json(result || { error: 'Schedule not found' });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {

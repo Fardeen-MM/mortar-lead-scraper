@@ -1692,6 +1692,78 @@
       <div id="bulk-enrichment-runs" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Sequence Templates (Batch 30) -->
+    <div id="seq-templates-panel" style="background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1px solid #a5b4fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#4338ca;">Sequence Builder</span>
+        <button onclick="loadSeqTemplates()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#e0e7ff;color:#4338ca;border:1px solid #a5b4fc;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Build multi-step email sequences with template variables. Preview rendered with real lead data. Like Apollo/Salesloft sequence builder.</p>
+      <div style="display:flex;gap:0.3rem;margin-bottom:0.4rem;flex-wrap:wrap;">
+        <input id="seq-name" placeholder="Sequence name" style="flex:1;min-width:100px;font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #a5b4fc;border-radius:4px;">
+        <button onclick="createSeqTemplateFromUI()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#4338ca;color:#fff;border:none;border-radius:4px;cursor:pointer;">Create</button>
+      </div>
+      <div style="font-size:0.62rem;color:#6b7280;margin-bottom:0.3rem;">Variables: {first_name} {last_name} {firm_name} {city} {state} {practice_area} {email}</div>
+      <div id="seq-templates-list" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Data Quality Rules (Batch 30) -->
+    <div id="quality-rules-panel" style="background:linear-gradient(135deg,#fefce8,#fef3c7);border:1px solid #fde047;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#a16207;">Data Quality Rules</span>
+        <div style="display:flex;gap:0.3rem;">
+          <button onclick="runAllQualityRules()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fef3c7;color:#a16207;border:1px solid #fde047;border-radius:4px;cursor:pointer;">Run All</button>
+          <button onclick="loadQualityRulesPanel()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fef3c7;color:#a16207;border:1px solid #fde047;border-radius:4px;cursor:pointer;">Refresh</button>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Auto-flag leads with data issues. Define rules like "email contains gmail" → flag as personal email. Like Salesforce data validation.</p>
+      <div style="display:flex;gap:0.3rem;margin-bottom:0.4rem;flex-wrap:wrap;">
+        <input id="qr-name" placeholder="Rule name" style="flex:1;min-width:80px;font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #fde047;border-radius:4px;">
+        <select id="qr-field" style="font-size:0.72rem;padding:0.2rem;border:1px solid #fde047;border-radius:4px;">
+          <option value="email">email</option><option value="phone">phone</option><option value="firm_name">firm_name</option>
+          <option value="city">city</option><option value="website">website</option>
+        </select>
+        <select id="qr-check" style="font-size:0.72rem;padding:0.2rem;border:1px solid #fde047;border-radius:4px;">
+          <option value="contains">contains</option><option value="equals">equals</option><option value="starts_with">starts with</option><option value="empty">empty</option>
+        </select>
+        <input id="qr-value" placeholder="Value" style="width:60px;font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #fde047;border-radius:4px;">
+        <input id="qr-tag" placeholder="Flag tag" style="width:60px;font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #fde047;border-radius:4px;">
+        <button onclick="createQualityRuleFromUI()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#a16207;color:#fff;border:none;border-radius:4px;cursor:pointer;">Add</button>
+      </div>
+      <div id="quality-rules-list" style="max-height:160px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Unified Timeline (Batch 30) -->
+    <div id="timeline-panel" style="background:linear-gradient(135deg,#f8fafc,#e2e8f0);border:1px solid #94a3b8;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#475569;">Lead Timeline</span>
+        <button onclick="loadTimelinePanel()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#e2e8f0;color:#475569;border:1px solid #94a3b8;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Unified activity history for any lead. Shows creation, contacts, stage changes, notes, audit events. Like HubSpot's contact timeline.</p>
+      <div style="display:flex;gap:0.3rem;margin-bottom:0.4rem;">
+        <input id="timeline-lead-id" type="number" placeholder="Lead ID" style="width:70px;font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #94a3b8;border-radius:4px;">
+        <button onclick="showLeadTimeline()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#475569;color:#fff;border:none;border-radius:4px;cursor:pointer;">Show Timeline</button>
+      </div>
+      <div id="timeline-events" style="max-height:200px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Export Scheduler (Batch 30) -->
+    <div id="export-sched-panel" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #86efac;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#15803d;">Export Scheduler</span>
+        <button onclick="loadExportScheduler()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#dcfce7;color:#15803d;border:1px solid #86efac;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Schedule recurring CSV exports with filters. Auto-export new leads weekly/monthly. Like HubSpot's scheduled reports.</p>
+      <div style="display:flex;gap:0.3rem;margin-bottom:0.4rem;flex-wrap:wrap;">
+        <input id="es-name" placeholder="Schedule name" style="flex:1;min-width:80px;font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #86efac;border-radius:4px;">
+        <select id="es-freq" style="font-size:0.72rem;padding:0.2rem;border:1px solid #86efac;border-radius:4px;">
+          <option value="weekly">Weekly</option><option value="daily">Daily</option><option value="biweekly">Biweekly</option><option value="monthly">Monthly</option>
+        </select>
+        <button onclick="createExportSchedFromUI()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#15803d;color:#fff;border:none;border-radius:4px;cursor:pointer;">Create</button>
+      </div>
+      <div id="export-sched-list" style="max-height:160px;overflow-y:auto;"></div>
+    </div>
+
     <!-- Response Time SLA (Batch 29) -->
     <div id="sla-panel" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border:1px solid #fca5a5;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -9107,6 +9179,150 @@
       } catch (err) { toast('Process error: ' + err.message, 'error'); }
     }
 
+    // === Sequence Templates (Batch 30) ===
+    async function loadSeqTemplates() {
+      try {
+        const templates = await fetch('/api/sequence-templates').then(r => r.json());
+        const el = document.getElementById('seq-templates-list');
+        if (!templates.length) { el.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">No sequences. Create one above.</div>'; return; }
+        el.innerHTML = templates.map(t => `<div style="padding:0.3rem 0;border-bottom:1px solid #e0e7ff;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:0.75rem;font-weight:500;">${t.name}</span>
+            <div style="display:flex;gap:0.2rem;align-items:center;">
+              <span style="font-size:0.6rem;background:#e0e7ff;padding:0.05rem 0.2rem;border-radius:3px;">${t.steps.length} steps</span>
+              <span style="font-size:0.6rem;color:#6b7280;">${t.status}</span>
+              <button onclick="deleteSeqTemplateItem(${t.id})" style="font-size:0.6rem;padding:0.05rem 0.2rem;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:3px;cursor:pointer;">x</button>
+            </div>
+          </div>
+          ${t.description ? '<div style="font-size:0.65rem;color:#78716c;">' + t.description + '</div>' : ''}
+        </div>`).join('');
+      } catch (err) { console.error('Seq templates error:', err); }
+    }
+    async function createSeqTemplateFromUI() {
+      const name = document.getElementById('seq-name').value.trim();
+      if (!name) { toast('Enter sequence name', 'error'); return; }
+      const steps = [
+        { step: 1, delay: 0, subject: 'Hi {first_name} — quick question about {firm_name}', body: 'Hi {first_name},\n\nI noticed you practice in {city}, {state}...' },
+        { step: 2, delay: 3, subject: 'Following up — {first_name}', body: 'Hi {first_name},\n\nJust wanted to follow up on my previous email...' },
+        { step: 3, delay: 7, subject: 'Last try — {first_name} at {firm_name}', body: 'Hi {first_name},\n\nI know you are busy...' }
+      ];
+      try {
+        await fetch('/api/sequence-templates', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, steps }) });
+        document.getElementById('seq-name').value = '';
+        toast('Sequence created with 3 default steps', 'success');
+        loadSeqTemplates();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+    async function deleteSeqTemplateItem(id) {
+      try { await fetch('/api/sequence-templates/' + id, { method: 'DELETE' }); toast('Deleted', 'success'); loadSeqTemplates(); } catch (err) { toast('Error', 'error'); }
+    }
+
+    // === Data Quality Rules (Batch 30) ===
+    async function loadQualityRulesPanel() {
+      try {
+        const rules = await fetch('/api/quality-rules').then(r => r.json());
+        const el = document.getElementById('quality-rules-list');
+        if (!rules.length) { el.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">No quality rules. Create one above.</div>'; return; }
+        el.innerHTML = rules.map(r => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0;border-bottom:1px solid #fef3c7;">
+          <div>
+            <span style="font-size:0.72rem;font-weight:500;">${r.name}</span>
+            <span style="font-size:0.62rem;color:#78716c;margin-left:0.2rem;">${r.field} ${r.check_type} ${r.check_value || ''}</span>
+            ${r.flag_tag ? '<span style="background:#a16207;color:#fff;padding:0.02rem 0.2rem;border-radius:2px;font-size:0.58rem;margin-left:0.2rem;">' + r.flag_tag + '</span>' : ''}
+          </div>
+          <button onclick="deleteQualityRuleItem(${r.id})" style="font-size:0.6rem;padding:0.05rem 0.2rem;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:3px;cursor:pointer;">x</button>
+        </div>`).join('');
+      } catch (err) { console.error('Quality rules error:', err); }
+    }
+    async function createQualityRuleFromUI() {
+      const name = document.getElementById('qr-name').value.trim();
+      const field = document.getElementById('qr-field').value;
+      const checkType = document.getElementById('qr-check').value;
+      const checkValue = document.getElementById('qr-value').value.trim();
+      const flagTag = document.getElementById('qr-tag').value.trim();
+      if (!name) { toast('Rule name required', 'error'); return; }
+      try {
+        await fetch('/api/quality-rules', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, field, checkType, checkValue, flagTag }) });
+        document.getElementById('qr-name').value = ''; document.getElementById('qr-value').value = ''; document.getElementById('qr-tag').value = '';
+        toast('Quality rule created', 'success');
+        loadQualityRulesPanel();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+    async function deleteQualityRuleItem(id) {
+      try { await fetch('/api/quality-rules/' + id, { method: 'DELETE' }); toast('Deleted', 'success'); loadQualityRulesPanel(); } catch (err) { toast('Error', 'error'); }
+    }
+    async function runAllQualityRules() {
+      try {
+        const res = await fetch('/api/quality-rules/run', { method: 'POST' }).then(r => r.json());
+        toast('Flagged ' + res.totalFlagged + ' leads across ' + res.rulesRun + ' rules', 'success');
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    // === Unified Timeline (Batch 30) ===
+    async function loadTimelinePanel() {
+      const el = document.getElementById('timeline-events');
+      el.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">Enter a lead ID to view their timeline.</div>';
+    }
+    async function showLeadTimeline() {
+      const leadId = document.getElementById('timeline-lead-id').value;
+      if (!leadId) { toast('Enter a lead ID', 'error'); return; }
+      try {
+        const events = await fetch('/api/leads/' + leadId + '/timeline').then(r => r.json());
+        const el = document.getElementById('timeline-events');
+        if (!events.length) { el.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;">No events for this lead.</div>'; return; }
+        const typeIcons = { created: '●', contact: '✉', stage_change: '→', audit: '✎', note: '📝' };
+        const typeColors = { created: '#16a34a', contact: '#2563eb', stage_change: '#f59e0b', audit: '#6b7280', note: '#8b5cf6' };
+        el.innerHTML = events.map(e => `<div style="display:flex;gap:0.4rem;padding:0.2rem 0;border-bottom:1px solid #e2e8f0;">
+          <span style="color:${typeColors[e.type] || '#6b7280'};font-size:0.8rem;min-width:16px;">${typeIcons[e.type] || '·'}</span>
+          <div style="flex:1;">
+            <div style="font-size:0.72rem;">${e.details}</div>
+            <div style="font-size:0.6rem;color:#9ca3af;">${e.timestamp || ''} ${e.author ? '— ' + e.author : ''}</div>
+          </div>
+        </div>`).join('');
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    // === Export Scheduler (Batch 30) ===
+    async function loadExportScheduler() {
+      try {
+        const schedules = await fetch('/api/export-schedules').then(r => r.json());
+        const el = document.getElementById('export-sched-list');
+        if (!schedules.length) { el.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">No export schedules. Create one above.</div>'; return; }
+        el.innerHTML = schedules.map(s => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0;border-bottom:1px solid #dcfce7;">
+          <div>
+            <span style="font-size:0.72rem;font-weight:500;">${s.name}</span>
+            <span style="font-size:0.62rem;color:#78716c;margin-left:0.2rem;">${s.frequency}</span>
+            <span style="font-size:0.62rem;color:#15803d;margin-left:0.2rem;">${s.export_count} exports</span>
+            ${s.next_export ? '<span style="font-size:0.6rem;color:#9ca3af;margin-left:0.2rem;">Next: ' + s.next_export.slice(0, 10) + '</span>' : ''}
+          </div>
+          <div style="display:flex;gap:0.2rem;">
+            <button onclick="runExportSchedItem(${s.id})" style="font-size:0.6rem;padding:0.05rem 0.2rem;background:#dcfce7;color:#15803d;border:1px solid #86efac;border-radius:3px;cursor:pointer;">Run</button>
+            <button onclick="deleteExportSchedItem(${s.id})" style="font-size:0.6rem;padding:0.05rem 0.2rem;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:3px;cursor:pointer;">x</button>
+          </div>
+        </div>`).join('');
+      } catch (err) { console.error('Export scheduler error:', err); }
+    }
+    async function createExportSchedFromUI() {
+      const name = document.getElementById('es-name').value.trim();
+      const frequency = document.getElementById('es-freq').value;
+      if (!name) { toast('Name required', 'error'); return; }
+      try {
+        await fetch('/api/export-schedules', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, frequency, filters: { hasEmail: true } }) });
+        document.getElementById('es-name').value = '';
+        toast('Export schedule created', 'success');
+        loadExportScheduler();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+    async function deleteExportSchedItem(id) {
+      try { await fetch('/api/export-schedules/' + id, { method: 'DELETE' }); toast('Deleted', 'success'); loadExportScheduler(); } catch (err) { toast('Error', 'error'); }
+    }
+    async function runExportSchedItem(id) {
+      try {
+        const res = await fetch('/api/export-schedules/' + id + '/run', { method: 'POST' }).then(r => r.json());
+        toast('Exported ' + res.leadsExported + ' leads', 'success');
+        loadExportScheduler();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
     // === Response Time SLA (Batch 29) ===
     async function loadSLATracker() {
       try {
@@ -10058,7 +10274,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
