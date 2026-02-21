@@ -413,15 +413,18 @@ class GoogleMapsScraper extends BaseScraper {
       await this._dismissConsent(page);
 
       // Scroll the results feed to load more results
-      const scrollLimit = maxScrolls ? Math.min(maxScrolls, 6) : 6;
+      // Geo-grid cells need fewer scrolls (smaller area = fewer results)
+      const defaultScrolls = coords ? 3 : 6;
+      const scrollLimit = maxScrolls ? Math.min(maxScrolls, defaultScrolls) : defaultScrolls;
       await this._scrollFeed(page, scrollLimit);
 
       // Extract basic info from feed cards (name, rating, category, address snippet)
       const feedResults = await this._extractFeedCards(page);
 
       // For each result, click to get phone + website from detail panel
+      // Cap per-cell at 30 for grid (speed), or 60 for single query
       const detailedResults = [];
-      const maxDetails = Math.min(feedResults.length, 60); // Cap at 60 per query
+      const maxDetails = Math.min(feedResults.length, coords ? 30 : 60);
 
       for (let i = 0; i < maxDetails; i++) {
         const feedItem = feedResults[i];
@@ -556,9 +559,9 @@ class GoogleMapsScraper extends BaseScraper {
     if (!clicked) return { phone: '', website: '', address: '' };
 
     // Wait for the detail panel to load with the correct business
-    // Instead of a fixed sleep, poll for the h1 to contain the expected name
-    const maxWait = 4000;
-    const pollInterval = 300;
+    // Poll for the h1 to match expected name (most load in 1-2s)
+    const maxWait = 3000;
+    const pollInterval = 250;
     let waited = 0;
 
     while (waited < maxWait) {
@@ -575,9 +578,9 @@ class GoogleMapsScraper extends BaseScraper {
         break;
       }
 
-      // If h1 is present and non-empty but doesn't match after 2s, accept it
+      // If h1 is present and non-empty but doesn't match after 1.5s, accept it
       // (Google may truncate/abbreviate the name)
-      if (h1Text && waited >= 2000) break;
+      if (h1Text && waited >= 1500) break;
     }
 
     // Extract detail data — scoped to the visible detail panel
