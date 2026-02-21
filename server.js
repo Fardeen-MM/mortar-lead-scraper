@@ -1533,6 +1533,154 @@ app.post('/api/leads/bulk-update', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Email Classification ===
+app.get('/api/leads/email-classification', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getEmailClassification());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/classify-emails', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.classifyAllEmails());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Confidence Scoring ===
+app.get('/api/leads/confidence', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getConfidenceDistribution());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/compute-confidence', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.batchComputeConfidence());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Change Detection / Signals ===
+app.get('/api/leads/changes', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 50;
+    res.json(leadDb.getRecentChanges2(limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/firm-changes', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 50;
+    res.json(leadDb.getFirmChanges(limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/:id/change-history', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getLeadChangeHistory(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Tag Definitions ===
+app.get('/api/tag-definitions', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getTagDefinitions());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/tag-definitions', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, color, description, autoRule } = req.body;
+    if (!name) return res.status(400).json({ error: 'name required' });
+    const result = leadDb.createTagDefinition(name, color, description, autoRule ? JSON.stringify(autoRule) : '');
+    res.json({ id: result.lastInsertRowid });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.patch('/api/tag-definitions/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.updateTagDefinition(parseInt(req.params.id), req.body));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/tag-definitions/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.deleteTagDefinition(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/auto-tag', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.runAutoTagging());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Lead Comparison & Merge ===
+app.get('/api/leads/compare', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const id1 = parseInt(req.query.id1);
+    const id2 = parseInt(req.query.id2);
+    if (!id1 || !id2) return res.status(400).json({ error: 'id1 and id2 required' });
+    const result = leadDb.compareLeads(id1, id2);
+    if (!result) return res.status(404).json({ error: 'Lead not found' });
+    res.json(result);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/merge-with-choices', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { keepId, mergeId, fieldChoices } = req.body;
+    if (!keepId || !mergeId) return res.status(400).json({ error: 'keepId and mergeId required' });
+    const result = leadDb.mergeLeadsWithChoices(keepId, mergeId, fieldChoices || {});
+    fireWebhookEvent('lead.merged', { keepId, mergeId });
+    res.json(result);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Data Staleness ===
+app.get('/api/leads/staleness', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getStalenessReport());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Import Preview ===
+app.post('/api/leads/import-preview', upload.single('file'), (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+    const leadDb = require('./lib/lead-db');
+    const csvParse = require('csv-parser');
+    const fsImport = require('fs');
+    const rows = [];
+    const stream = fsImport.createReadStream(req.file.path).pipe(csvParse());
+    stream.on('data', (row) => { if (rows.length < 10) rows.push(row); });
+    stream.on('end', () => {
+      try { fsImport.unlinkSync(req.file.path); } catch {}
+      if (rows.length === 0) return res.json({ error: 'Empty CSV' });
+      const headers = Object.keys(rows[0]);
+      res.json(leadDb.previewImportMapping(headers, rows));
+    });
+    stream.on('error', (err) => {
+      try { fsImport.unlinkSync(req.file.path); } catch {}
+      res.status(400).json({ error: 'Failed to parse CSV: ' + err.message });
+    });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 app.get('/api/leads/sources', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');

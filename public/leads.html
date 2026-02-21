@@ -877,6 +877,40 @@
     body.dark .panel-tab { color: var(--text-muted); border-bottom-color: transparent; }
     body.dark .panel-tab.active { color: var(--indigo); border-bottom-color: var(--indigo); }
 
+    /* Tag color picker */
+    .tag-color-opt {
+      display: inline-block;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.15s;
+    }
+    .tag-color-opt:hover { opacity: 0.8; }
+    .tag-color-opt.selected { border-color: #1f2937; box-shadow: 0 0 0 2px #fff inset; }
+
+    /* Tag chip in panels */
+    .tag-chip {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.2rem 0.5rem; border-radius: 12px;
+      font-size: 0.72rem; font-weight: 600;
+      cursor: pointer; transition: opacity 0.15s;
+    }
+    .tag-chip:hover { opacity: 0.8; }
+    .tag-chip .tag-count { opacity: 0.7; font-weight: 400; }
+    .tag-chip .tag-delete { opacity: 0.5; font-size: 0.8rem; margin-left: 0.2rem; }
+    .tag-chip .tag-delete:hover { opacity: 1; }
+
+    /* Comparison table */
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .compare-table th, .compare-table td { padding: 0.4rem 0.6rem; border-bottom: 1px solid #e5e7eb; text-align: left; }
+    .compare-table th { font-weight: 600; color: #6b7280; width: 120px; }
+    .compare-table .match { background: #f0fdf4; }
+    .compare-table .conflict { background: #fef2f2; }
+    .compare-table .only-one { background: #fffbeb; }
+    .compare-table .pick-btn { padding: 0.15rem 0.4rem; font-size: 0.7rem; border: 1px solid #d1d5db; border-radius: 4px; cursor: pointer; background: #fff; }
+    .compare-table .pick-btn.picked { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+
     /* Toast Notifications */
     .toast-container {
       position: fixed;
@@ -1060,6 +1094,55 @@
         <span id="scoring-toggle" style="font-size:0.7rem;color:#6b7280;">&#x25B6;</span>
       </div>
       <div id="scoring-rules-body" style="display:none;background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:0.75rem;"></div>
+    </div>
+
+    <!-- Email Classification (Apollo-style) -->
+    <div id="email-class-panel" style="background:linear-gradient(135deg,#eff6ff,#f0f4ff);border:1px solid #bfdbfe;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;display:none;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#1e40af;">Email Classification</span>
+        <button onclick="classifyEmails()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#fff;border:1px solid #93c5fd;border-radius:4px;cursor:pointer;">Re-classify</button>
+      </div>
+      <div id="email-class-bars" style="display:flex;gap:1rem;flex-wrap:wrap;"></div>
+    </div>
+
+    <!-- Confidence Score Distribution -->
+    <div id="confidence-panel" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #fde68a;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;display:none;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#854d0e;">Data Confidence</span>
+        <button onclick="recomputeConfidence()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#fff;border:1px solid #fde68a;border-radius:4px;cursor:pointer;">Recalculate</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.5rem;">Based on source count, field completeness, email quality, verification status, and data freshness.</p>
+      <div id="confidence-bars" style="display:flex;gap:1rem;flex-wrap:wrap;"></div>
+    </div>
+
+    <!-- Data Staleness (ZoomInfo-style) -->
+    <div id="staleness-panel" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #fbcfe8;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;display:none;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#9d174d;">Data Freshness</span>
+      </div>
+      <div id="staleness-bars" style="display:flex;gap:1rem;flex-wrap:wrap;"></div>
+      <div id="staleness-states" style="margin-top:0.5rem;font-size:0.72rem;color:#78716c;"></div>
+    </div>
+
+    <!-- Tag Management (Clay-style) -->
+    <div id="tags-panel" style="margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+        <span style="font-weight:600;font-size:0.85rem;">Tags</span>
+        <div style="display:flex;gap:0.3rem;">
+          <button onclick="runAutoTagging()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:4px;cursor:pointer;">Auto-Tag</button>
+          <button onclick="openTagBuilder()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#4f46e5;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Tag</button>
+        </div>
+      </div>
+      <div id="tags-list" style="display:flex;flex-wrap:wrap;gap:0.4rem;"></div>
+    </div>
+
+    <!-- Change Detection / Signals (ZoomInfo-style) -->
+    <div id="changes-panel" style="margin-bottom:1rem;display:none;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+        <span style="font-weight:600;font-size:0.85rem;">Change Signals</span>
+        <span id="changes-badge" style="font-size:0.7rem;padding:0.15rem 0.4rem;border-radius:10px;background:#fef3c7;color:#92400e;font-weight:600;"></span>
+      </div>
+      <div id="changes-list" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
     <!-- Score Distribution Donut + Field Completeness -->
@@ -1664,11 +1747,95 @@
     </div>
   </div>
 
-  <!-- Keyboard shortcut hint -->
+  <!-- Tag Builder Modal -->
+  <div class="modal-overlay" id="tag-modal" onclick="if(event.target===this)closeTagModal()" style="display:none;">
+    <div class="modal-content" style="max-width:450px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+        <h3 style="margin:0;">Create Tag</h3>
+        <button onclick="closeTagModal()" style="background:none;border:none;font-size:1.2rem;cursor:pointer;">&times;</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.75rem;">
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Tag Name</label>
+          <input type="text" id="tag-name" placeholder="e.g., Hot Lead, VIP, BigLaw" style="width:100%;padding:0.5rem;border:1px solid #d1d5db;border-radius:6px;">
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Color</label>
+          <div style="display:flex;gap:0.4rem;flex-wrap:wrap;" id="tag-color-picker">
+            <span class="tag-color-opt" style="background:#ef4444;" data-color="#ef4444" onclick="pickTagColor(this)"></span>
+            <span class="tag-color-opt" style="background:#f97316;" data-color="#f97316" onclick="pickTagColor(this)"></span>
+            <span class="tag-color-opt" style="background:#eab308;" data-color="#eab308" onclick="pickTagColor(this)"></span>
+            <span class="tag-color-opt" style="background:#22c55e;" data-color="#22c55e" onclick="pickTagColor(this)"></span>
+            <span class="tag-color-opt" style="background:#06b6d4;" data-color="#06b6d4" onclick="pickTagColor(this)"></span>
+            <span class="tag-color-opt" style="background:#3b82f6;" data-color="#3b82f6" onclick="pickTagColor(this)"></span>
+            <span class="tag-color-opt" style="background:#8b5cf6;" data-color="#8b5cf6" onclick="pickTagColor(this)"></span>
+            <span class="tag-color-opt" style="background:#ec4899;" data-color="#ec4899" onclick="pickTagColor(this)"></span>
+            <span class="tag-color-opt selected" style="background:#6366f1;" data-color="#6366f1" onclick="pickTagColor(this)"></span>
+          </div>
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Description</label>
+          <input type="text" id="tag-desc" placeholder="Optional description" style="width:100%;padding:0.5rem;border:1px solid #d1d5db;border-radius:6px;">
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.25rem;">Auto-Tag Rule <span style="font-weight:400;color:#9ca3af;">(optional)</span></label>
+          <div style="display:flex;gap:0.3rem;">
+            <select id="tag-rule-field" style="flex:1;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.8rem;">
+              <option value="">No auto-rule</option>
+              <option value="email">Email</option>
+              <option value="phone">Phone</option>
+              <option value="website">Website</option>
+              <option value="firm_name">Firm</option>
+              <option value="practice_area">Practice Area</option>
+              <option value="state">State</option>
+              <option value="title">Title</option>
+              <option value="bar_status">Bar Status</option>
+            </select>
+            <select id="tag-rule-op" style="flex:1;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.8rem;">
+              <option value="is_not_empty">is not empty</option>
+              <option value="is_empty">is empty</option>
+              <option value="contains">contains</option>
+              <option value="equals">equals</option>
+            </select>
+            <input type="text" id="tag-rule-val" placeholder="value" style="flex:1;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.8rem;">
+          </div>
+        </div>
+        <button onclick="saveTag()" style="padding:0.5rem;background:#4f46e5;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;">Create Tag</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lead Comparison Modal -->
+  <div class="modal-overlay" id="compare-modal" onclick="if(event.target===this)closeCompareModal()" style="display:none;">
+    <div class="modal-content" style="max-width:800px;max-height:90vh;overflow-y:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+        <h3 style="margin:0;">Compare & Merge Leads</h3>
+        <button onclick="closeCompareModal()" style="background:none;border:none;font-size:1.2rem;cursor:pointer;">&times;</button>
+      </div>
+      <div id="compare-content"></div>
+    </div>
+  </div>
+
+  <!-- Import Preview Modal -->
+  <div class="modal-overlay" id="import-modal" onclick="if(event.target===this)closeImportModal()" style="display:none;">
+    <div class="modal-content" style="max-width:700px;max-height:90vh;overflow-y:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+        <h3 style="margin:0;">Import Preview</h3>
+        <button onclick="closeImportModal()" style="background:none;border:none;font-size:1.2rem;cursor:pointer;">&times;</button>
+      </div>
+      <div id="import-preview-content"></div>
+    </div>
+  </div>
+
+  <!-- Keyboard shortcut hint (enhanced) -->
   <div class="kbd-hint" id="kbd-hint">
+    <div style="font-weight:600;margin-bottom:0.3rem;">Navigation</div>
     <div><kbd>&#x2318;K</kbd> Command palette &nbsp; <kbd>/</kbd> Search &nbsp; <kbd>Esc</kbd> Clear/Close &nbsp; <kbd>?</kbd> Toggle hints</div>
-    <div><kbd>j</kbd>/<kbd>k</kbd> Navigate rows &nbsp; <kbd>Enter</kbd> Open detail &nbsp; <kbd>x</kbd> Toggle select</div>
+    <div><kbd>j</kbd>/<kbd>k</kbd> Navigate rows &nbsp; <kbd>Enter</kbd> Open detail &nbsp; <kbd>x</kbd> Toggle select &nbsp; <kbd>a</kbd> Select all</div>
+    <div style="font-weight:600;margin-top:0.3rem;">Actions</div>
     <div><kbd>r</kbd> Refresh &nbsp; <kbd>e</kbd> Export &nbsp; <kbd>c</kbd> Copy emails &nbsp; <kbd>d</kbd> Dark mode</div>
+    <div><kbd>t</kbd> Tag selected &nbsp; <kbd>s</kbd> Star/favorite &nbsp; <kbd>m</kbd> Move stage &nbsp; <kbd>p</kbd> Pipeline view</div>
+    <div><kbd>1</kbd>-<kbd>5</kbd> Jump to pipeline stage &nbsp; <kbd>f</kbd> Toggle filters &nbsp; <kbd>n</kbd> New scrape</div>
   </div>
 
   <!-- Toast Container -->
@@ -1695,6 +1862,7 @@
     <button onclick="tagSelected()">Tag</button>
     <button onclick="openBulkEditModal()">Bulk Edit</button>
     <button onclick="moveSelectedToStage()">Move Stage</button>
+    <button onclick="compareSelected()">Compare</button>
     <button onclick="deleteSelected()">Delete</button>
     <button onclick="clearSelection()" style="background:transparent;border-color:rgba(255,255,255,0.4);">&times; Clear</button>
   </div>
@@ -2670,6 +2838,15 @@
       document.getElementById('state-modal').classList.add('active');
     }
 
+    function compareSelected() {
+      if (_selectedIds.size !== 2) {
+        toast('Select exactly 2 leads to compare & merge', 'info');
+        return;
+      }
+      const ids = [..._selectedIds];
+      openCompareModal(ids[0], ids[1]);
+    }
+
     function exportSelected() {
       if (_selectedIds.size === 0) return;
       // Build CSV from selected leads in current page
@@ -3465,45 +3642,15 @@
       e.preventDefault();
       importZone.classList.remove('dragover');
       if (e.dataTransfer.files.length > 0) {
-        handleImportFile(e.dataTransfer.files[0]);
+        handleImportWithPreview(e.dataTransfer.files[0]);
       }
     });
     importFile.addEventListener('change', () => {
       if (importFile.files.length > 0) {
-        handleImportFile(importFile.files[0]);
+        handleImportWithPreview(importFile.files[0]);
         importFile.value = '';
       }
     });
-
-    async function handleImportFile(file) {
-      if (!file.name.endsWith('.csv')) {
-        alert('Please select a CSV file');
-        return;
-      }
-
-      const resultEl = document.getElementById('import-result');
-      resultEl.style.display = '';
-      resultEl.innerHTML = `Importing <strong>${esc(file.name)}</strong>...`;
-
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('source', 'csv-import');
-
-      try {
-        const res = await fetch('/api/leads/import', { method: 'POST', body: formData });
-        const d = await res.json();
-        if (d.error) {
-          resultEl.innerHTML = `<span style="color:#dc2626;">Import failed: ${esc(d.error)}</span>`;
-          return;
-        }
-        resultEl.innerHTML = `<strong>Import complete</strong> | ${fmt(d.total)} rows processed | ${fmt(d.imported)} new | ${fmt(d.updated)} updated | ${fmt(d.skipped)} skipped` +
-          (d.mapping ? `<br><span style="color:var(--text-muted);">Mapped: ${Object.entries(d.mapping).filter(([k,v]) => v && !k.startsWith('_')).map(([k,v]) => `${k}=${v}`).join(', ')}</span>` : '');
-        toast(`Imported ${fmt(d.imported)} new leads, ${fmt(d.updated)} updated`);
-        refreshAll();
-      } catch (err) {
-        resultEl.innerHTML = `<span style="color:#dc2626;">Import error: ${esc(err.message)}</span>`;
-      }
-    }
 
     // --- Keyboard Shortcuts ---
     let _focusedRow = -1;
@@ -3596,6 +3743,43 @@
         case 'd': // Toggle dark mode
           toggleDarkMode();
           break;
+        case 'a': // Select all visible
+          e.preventDefault();
+          document.querySelectorAll('.lead-cb').forEach(cb => {
+            if (!cb.checked) { cb.checked = true; cb.dispatchEvent(new Event('change')); }
+          });
+          break;
+        case 't': // Tag selected
+          if (_selectedIds.size > 0) tagSelected();
+          break;
+        case 'm': // Move stage
+          if (_selectedIds.size > 0) moveSelectedToStage();
+          break;
+        case 'n': // New scrape
+          window.location.href = '/';
+          break;
+        case 'f': // Toggle filter panel
+          e.preventDefault();
+          { const fp = document.querySelector('.filter-panel');
+            if (fp) fp.style.display = fp.style.display === 'none' ? '' : 'none'; }
+          break;
+        case 'p': // Scroll to pipeline
+          document.getElementById('pipeline-board').scrollIntoView({ behavior: 'smooth' });
+          break;
+        case 'g': // Scroll to geographic map
+          document.querySelector('.panel h2')?.closest('.panel')?.scrollIntoView({ behavior: 'smooth' });
+          break;
+        case '1': case '2': case '3': case '4': case '5': {
+          // Jump to pipeline stage
+          const stages = ['new', 'contacted', 'replied', 'meeting', 'client'];
+          const idx = parseInt(e.key) - 1;
+          if (stages[idx]) {
+            document.getElementById('search-input').value = 'stage:' + stages[idx];
+            loadLeads();
+            toast('Filtered to ' + stages[idx] + ' stage', 'info');
+          }
+          break;
+        }
       }
     });
 
@@ -5266,9 +5450,393 @@
       loadSchedules();
     }
 
+    // === Email Classification (Apollo-style) ===
+    async function loadEmailClassification() {
+      try {
+        const data = await fetch('/api/leads/email-classification').then(r => r.json());
+        const panel = document.getElementById('email-class-panel');
+        if (!data.breakdown || data.total === 0) { panel.style.display = 'none'; return; }
+        panel.style.display = '';
+        const colors = { professional: '#22c55e', personal: '#f59e0b', role_based: '#ef4444', generic: '#6b7280', '': '#d1d5db' };
+        const labels = { professional: 'Professional', personal: 'Personal', role_based: 'Role-Based', generic: 'Generic', '': 'Unclassified' };
+        document.getElementById('email-class-bars').innerHTML = data.breakdown.map(b => {
+          const pct = ((b.count / data.total) * 100).toFixed(1);
+          const color = colors[b.email_type] || '#6b7280';
+          return `<div style="flex:1;min-width:80px;text-align:center;">
+            <div style="font-size:1.1rem;font-weight:700;color:${color};">${fmt(b.count)}</div>
+            <div style="font-size:0.68rem;color:#6b7280;">${labels[b.email_type] || b.email_type}</div>
+            <div style="font-size:0.65rem;color:#9ca3af;">${pct}%</div>
+          </div>`;
+        }).join('');
+      } catch (err) { console.error('Email classification error:', err); }
+    }
+
+    async function classifyEmails() {
+      toast('Classifying emails...', 'info');
+      await fetch('/api/leads/classify-emails', { method: 'POST' });
+      toast('Emails classified!', 'success');
+      loadEmailClassification();
+    }
+
+    // === Confidence Scoring ===
+    async function loadConfidencePanel() {
+      try {
+        const data = await fetch('/api/leads/confidence').then(r => r.json());
+        const panel = document.getElementById('confidence-panel');
+        if (data.total === 0) { panel.style.display = 'none'; return; }
+        panel.style.display = '';
+        const segments = [
+          { label: 'High (80+)', count: data.high, color: '#22c55e' },
+          { label: 'Medium (50-79)', count: data.medium, color: '#3b82f6' },
+          { label: 'Low (20-49)', count: data.low, color: '#f59e0b' },
+          { label: 'Very Low (<20)', count: data.veryLow, color: '#ef4444' },
+        ];
+        document.getElementById('confidence-bars').innerHTML = segments.map(s => {
+          const pct = ((s.count / data.total) * 100).toFixed(1);
+          return `<div style="flex:1;min-width:80px;">
+            <div style="font-size:1.1rem;font-weight:700;color:${s.color};">${fmt(s.count)}</div>
+            <div style="font-size:0.68rem;color:#6b7280;">${s.label}</div>
+            <div style="height:4px;background:#e5e7eb;border-radius:2px;margin-top:0.3rem;"><div style="height:100%;background:${s.color};border-radius:2px;width:${pct}%;"></div></div>
+          </div>`;
+        }).join('');
+      } catch (err) { console.error('Confidence error:', err); }
+    }
+
+    async function recomputeConfidence() {
+      toast('Computing confidence scores...', 'info');
+      await fetch('/api/leads/compute-confidence', { method: 'POST' });
+      toast('Confidence scores updated!', 'success');
+      loadConfidencePanel();
+    }
+
+    // === Data Staleness (ZoomInfo-style) ===
+    async function loadStalenessPanel() {
+      try {
+        const data = await fetch('/api/leads/staleness').then(r => r.json());
+        const panel = document.getElementById('staleness-panel');
+        if (data.total === 0) { panel.style.display = 'none'; return; }
+        panel.style.display = '';
+        const segments = [
+          { label: 'Fresh (<7d)', count: data.fresh, color: '#22c55e' },
+          { label: 'Recent (7-30d)', count: data.recent, color: '#3b82f6' },
+          { label: 'Aging (30-90d)', count: data.aging, color: '#f59e0b' },
+          { label: 'Stale (90d+)', count: data.stale, color: '#ef4444' },
+        ];
+        document.getElementById('staleness-bars').innerHTML = segments.map(s => {
+          const pct = data.total > 0 ? ((s.count / data.total) * 100).toFixed(1) : 0;
+          return `<div style="flex:1;min-width:80px;">
+            <div style="font-size:1.1rem;font-weight:700;color:${s.color};">${fmt(s.count)}</div>
+            <div style="font-size:0.68rem;color:#6b7280;">${s.label}</div>
+            <div style="height:4px;background:#e5e7eb;border-radius:2px;margin-top:0.3rem;"><div style="height:100%;background:${s.color};border-radius:2px;width:${pct}%;"></div></div>
+          </div>`;
+        }).join('');
+        // Stale states
+        if (data.staleByState.length > 0) {
+          document.getElementById('staleness-states').innerHTML = 'Stalest: ' + data.staleByState.slice(0, 5).map(s => `${s.state} (${fmt(s.cnt)})`).join(', ');
+        }
+      } catch (err) { console.error('Staleness error:', err); }
+    }
+
+    // === Tag Management (Clay-style) ===
+    let _tagColor = '#6366f1';
+
+    async function loadTagDefinitions() {
+      try {
+        const tags = await fetch('/api/tag-definitions').then(r => r.json());
+        const container = document.getElementById('tags-list');
+        if (tags.length === 0) {
+          container.innerHTML = '<span style="font-size:0.78rem;color:#9ca3af;">No tags defined yet. Create tags to organize leads.</span>';
+          return;
+        }
+        container.innerHTML = tags.map(t => `
+          <span class="tag-chip" style="background:${t.color}20;color:${t.color};border:1px solid ${t.color}40;" onclick="filterByTag('${esc(t.name)}')">
+            ${esc(t.name)} <span class="tag-count">${fmt(t.lead_count)}</span>
+            <span class="tag-delete" onclick="event.stopPropagation();deleteTagDef(${t.id},'${esc(t.name)}')">&times;</span>
+          </span>
+        `).join('');
+      } catch (err) { console.error('Tag defs error:', err); }
+    }
+
+    function openTagBuilder() {
+      document.getElementById('tag-modal').style.display = 'flex';
+      document.getElementById('tag-name').focus();
+    }
+    function closeTagModal() { document.getElementById('tag-modal').style.display = 'none'; }
+
+    function pickTagColor(el) {
+      document.querySelectorAll('.tag-color-opt').forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+      _tagColor = el.dataset.color;
+    }
+
+    async function saveTag() {
+      const name = document.getElementById('tag-name').value.trim();
+      if (!name) { toast('Tag name required', 'error'); return; }
+      const color = _tagColor;
+      const description = document.getElementById('tag-desc').value.trim();
+      const ruleField = document.getElementById('tag-rule-field').value;
+      const autoRule = ruleField ? {
+        field: ruleField,
+        operator: document.getElementById('tag-rule-op').value,
+        value: document.getElementById('tag-rule-val').value || '1',
+      } : undefined;
+      try {
+        await fetch('/api/tag-definitions', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, color, description, autoRule }),
+        });
+        closeTagModal();
+        toast('Tag created: ' + name, 'success');
+        document.getElementById('tag-name').value = '';
+        document.getElementById('tag-desc').value = '';
+        loadTagDefinitions();
+      } catch (err) { toast('Failed to create tag', 'error'); }
+    }
+
+    async function deleteTagDef(id, name) {
+      if (!confirm('Delete tag "' + name + '"?')) return;
+      await fetch('/api/tag-definitions/' + id, { method: 'DELETE' });
+      toast('Tag deleted', 'success');
+      loadTagDefinitions();
+    }
+
+    function filterByTag(tag) {
+      document.getElementById('search-input').value = 'tag:' + tag;
+      loadLeads();
+    }
+
+    async function runAutoTagging() {
+      toast('Running auto-tagging rules...', 'info');
+      const result = await fetch('/api/leads/auto-tag', { method: 'POST' }).then(r => r.json());
+      toast('Auto-tagged ' + fmt(result.tagged) + ' leads across ' + result.rules + ' rules', 'success');
+      loadTagDefinitions();
+    }
+
+    // === Change Detection / Signals ===
+    async function loadChangeSignals() {
+      try {
+        const [changes, firmChanges] = await Promise.all([
+          fetch('/api/leads/changes?limit=20').then(r => r.json()),
+          fetch('/api/leads/firm-changes?limit=10').then(r => r.json()),
+        ]);
+        const panel = document.getElementById('changes-panel');
+        const allChanges = [...firmChanges.map(f => ({ ...f, _type: 'firm' })), ...changes.map(c => ({ ...c, _type: 'field' }))];
+        if (allChanges.length === 0) { panel.style.display = 'none'; return; }
+        panel.style.display = '';
+        document.getElementById('changes-badge').textContent = allChanges.length + ' changes';
+        const html = allChanges.slice(0, 15).map(c => {
+          if (c._type === 'firm') {
+            return `<div style="padding:0.4rem 0;border-bottom:1px solid #f3f4f6;font-size:0.78rem;">
+              <span style="color:#dc2626;font-weight:600;">Firm Change</span>
+              <strong>${esc(c.first_name)} ${esc(c.last_name)}</strong> (${esc(c.state)})
+              moved from <em>${esc(c.previous_firm)}</em> to <em>${esc(c.firm_name)}</em>
+            </div>`;
+          }
+          return `<div style="padding:0.4rem 0;border-bottom:1px solid #f3f4f6;font-size:0.78rem;">
+            <span style="color:#f59e0b;font-weight:600;">${esc(c.field_name)}</span>
+            <strong>${esc(c.first_name)} ${esc(c.last_name)}</strong> (${esc(c.state)}):
+            <span style="text-decoration:line-through;color:#9ca3af;">${esc(c.old_value || '')}</span> &rarr; ${esc(c.new_value || '')}
+          </div>`;
+        }).join('');
+        document.getElementById('changes-list').innerHTML = html;
+      } catch (err) { console.error('Changes error:', err); }
+    }
+
+    // === Lead Comparison & Merge Tool ===
+    let _compareChoices = {};
+
+    async function openCompareModal(id1, id2) {
+      _compareChoices = {};
+      document.getElementById('compare-modal').style.display = 'flex';
+      const content = document.getElementById('compare-content');
+      content.innerHTML = '<p style="color:#6b7280;">Loading comparison...</p>';
+      try {
+        const data = await fetch('/api/leads/compare?id1=' + id1 + '&id2=' + id2).then(r => r.json());
+        if (data.error) { content.innerHTML = '<p style="color:#ef4444;">' + esc(data.error) + '</p>'; return; }
+
+        let html = `
+          <div style="display:flex;gap:1rem;margin-bottom:1rem;">
+            <div style="flex:1;text-align:center;padding:0.5rem;background:#f0fdf4;border-radius:8px;">
+              <div style="font-weight:700;">${esc(data.lead1.name)}</div>
+              <div style="font-size:0.75rem;color:#6b7280;">ID: ${data.lead1.id} | Score: ${data.lead1.score}</div>
+              <div style="font-size:0.7rem;color:#9ca3af;">Sources: ${data.lead1.sources.join(', ') || 'none'}</div>
+            </div>
+            <div style="display:flex;align-items:center;font-size:0.9rem;font-weight:600;color:#6b7280;">vs</div>
+            <div style="flex:1;text-align:center;padding:0.5rem;background:#eff6ff;border-radius:8px;">
+              <div style="font-weight:700;">${esc(data.lead2.name)}</div>
+              <div style="font-size:0.75rem;color:#6b7280;">ID: ${data.lead2.id} | Score: ${data.lead2.score}</div>
+              <div style="font-size:0.7rem;color:#9ca3af;">Sources: ${data.lead2.sources.join(', ') || 'none'}</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:0.5rem;margin-bottom:0.75rem;font-size:0.78rem;">
+            <span style="padding:0.2rem 0.5rem;background:#f0fdf4;border:1px solid #86efac;border-radius:4px;">${data.matchPercentage}% match</span>
+            <span style="padding:0.2rem 0.5rem;background:#fef2f2;border:1px solid #fca5a5;border-radius:4px;">${data.conflicts} conflicts</span>
+            <span style="padding:0.2rem 0.5rem;background:#fffbeb;border:1px solid #fde68a;border-radius:4px;">${data.complementary} complementary</span>
+          </div>
+          <table class="compare-table">
+            <thead><tr><th>Field</th><th>Lead A</th><th></th><th>Lead B</th></tr></thead>
+            <tbody>
+        `;
+
+        for (const row of data.comparison) {
+          const cls = row.match ? 'match' : row.conflict ? 'conflict' : (row.onlyIn1 || row.onlyIn2) ? 'only-one' : '';
+          html += `<tr class="${cls}">
+            <th>${esc(row.field)}</th>
+            <td>
+              ${row.value1 ? esc(row.value1) : '<span style="color:#d1d5db;">—</span>'}
+              ${row.conflict ? '<button class="pick-btn" onclick="pickMergeField(\'' + row.field + '\',1,this)">Use A</button>' : ''}
+            </td>
+            <td style="text-align:center;">
+              ${row.match ? '<span style="color:#22c55e;">&#x2714;</span>' : row.conflict ? '<span style="color:#ef4444;">&#x2716;</span>' : ''}
+            </td>
+            <td>
+              ${row.value2 ? esc(row.value2) : '<span style="color:#d1d5db;">—</span>'}
+              ${row.conflict ? '<button class="pick-btn" onclick="pickMergeField(\'' + row.field + '\',2,this)">Use B</button>' : ''}
+            </td>
+          </tr>`;
+        }
+
+        html += `</tbody></table>
+          <div style="display:flex;gap:0.5rem;margin-top:1rem;">
+            <button onclick="executeMerge(${data.lead1.id},${data.lead2.id})" style="flex:1;padding:0.5rem;background:#22c55e;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;">Merge (Keep A, merge B into A)</button>
+            <button onclick="executeMerge(${data.lead2.id},${data.lead1.id})" style="flex:1;padding:0.5rem;background:#3b82f6;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;">Merge (Keep B, merge A into B)</button>
+          </div>`;
+
+        content.innerHTML = html;
+      } catch (err) { content.innerHTML = '<p style="color:#ef4444;">Error: ' + esc(err.message) + '</p>'; }
+    }
+
+    function closeCompareModal() { document.getElementById('compare-modal').style.display = 'none'; }
+
+    function pickMergeField(field, choice, btn) {
+      _compareChoices[field] = choice;
+      // Visual feedback
+      const row = btn.closest('tr');
+      row.querySelectorAll('.pick-btn').forEach(b => b.classList.remove('picked'));
+      btn.classList.add('picked');
+    }
+
+    async function executeMerge(keepId, mergeId) {
+      if (!confirm('Merge lead #' + mergeId + ' into #' + keepId + '? The merged lead will be deleted.')) return;
+      try {
+        const result = await fetch('/api/leads/merge-with-choices', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ keepId, mergeId, fieldChoices: _compareChoices }),
+        }).then(r => r.json());
+        if (result.success) {
+          toast('Leads merged successfully!', 'success');
+          closeCompareModal();
+          refreshAll();
+        } else {
+          toast('Merge failed: ' + (result.error || 'Unknown error'), 'error');
+        }
+      } catch (err) { toast('Merge error: ' + err.message, 'error'); }
+    }
+
+    // === Enhanced Import with Preview ===
+    let _importFile = null;
+    let _importMapping = {};
+
+    async function handleImportWithPreview(file) {
+      if (!file.name.endsWith('.csv')) { alert('Please select a CSV file'); return; }
+      _importFile = file;
+
+      // Get preview
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const preview = await fetch('/api/leads/import-preview', { method: 'POST', body: formData }).then(r => r.json());
+        if (preview.error) { toast('Preview failed: ' + preview.error, 'error'); return; }
+
+        _importMapping = { ...preview.mapping };
+        const modal = document.getElementById('import-modal');
+        modal.style.display = 'flex';
+
+        const availFields = preview.availableFields;
+        let html = `
+          <div style="margin-bottom:1rem;">
+            <div style="font-size:0.85rem;font-weight:600;margin-bottom:0.3rem;">File: ${esc(file.name)}</div>
+            <div style="font-size:0.78rem;color:#6b7280;">${preview.totalHeaders} columns detected, ${preview.mappedCount} auto-mapped</div>
+          </div>
+          <div style="font-size:0.82rem;font-weight:600;margin-bottom:0.5rem;">Column Mapping</div>
+          <div style="display:flex;flex-direction:column;gap:0.3rem;margin-bottom:1rem;">
+        `;
+
+        for (const header of preview.headers) {
+          const mappedTo = Object.entries(preview.mapping).find(([k, v]) => v === header);
+          const currentField = mappedTo ? mappedTo[0] : '';
+          html += `<div style="display:flex;align-items:center;gap:0.5rem;">
+            <span style="flex:1;font-size:0.78rem;font-weight:500;padding:0.3rem 0.5rem;background:#f3f4f6;border-radius:4px;">${esc(header)}</span>
+            <span style="font-size:0.75rem;color:#9ca3af;">&rarr;</span>
+            <select class="import-map-sel" data-header="${esc(header)}" onchange="updateImportMapping(this)" style="flex:1;padding:0.3rem;font-size:0.78rem;border:1px solid #d1d5db;border-radius:4px;">
+              <option value="">-- Skip --</option>
+              ${availFields.map(f => `<option value="${f}" ${currentField === f ? 'selected' : ''}>${f}</option>`).join('')}
+              <option value="_full_name" ${currentField === '_full_name' ? 'selected' : ''}>Full Name (split)</option>
+            </select>
+          </div>`;
+        }
+
+        html += `</div>`;
+
+        // Preview table
+        if (preview.sampleRows.length > 0) {
+          html += `<div style="font-size:0.82rem;font-weight:600;margin-bottom:0.3rem;">Preview (first ${preview.sampleRows.length} rows)</div>`;
+          html += `<div style="overflow-x:auto;margin-bottom:1rem;"><table style="width:100%;font-size:0.72rem;border-collapse:collapse;">`;
+          html += '<thead><tr>' + preview.headers.map(h => `<th style="padding:0.3rem;border:1px solid #e5e7eb;background:#f9fafb;white-space:nowrap;">${esc(h)}</th>`).join('') + '</tr></thead><tbody>';
+          for (const row of preview.sampleRows) {
+            html += '<tr>' + preview.headers.map(h => `<td style="padding:0.3rem;border:1px solid #e5e7eb;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(row[h] || '')}</td>`).join('') + '</tr>';
+          }
+          html += '</tbody></table></div>';
+        }
+
+        html += `<button onclick="executeImport()" style="width:100%;padding:0.5rem;background:#4f46e5;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;">Import ${esc(file.name)}</button>`;
+
+        document.getElementById('import-preview-content').innerHTML = html;
+      } catch (err) { toast('Preview error: ' + err.message, 'error'); }
+    }
+
+    function closeImportModal() { document.getElementById('import-modal').style.display = 'none'; }
+
+    function updateImportMapping(sel) {
+      const header = sel.dataset.header;
+      const field = sel.value;
+      // Remove this header from any existing mapping
+      for (const [k, v] of Object.entries(_importMapping)) {
+        if (v === header) delete _importMapping[k];
+      }
+      if (field) _importMapping[field] = header;
+    }
+
+    async function executeImport() {
+      if (!_importFile) return;
+      const resultEl = document.getElementById('import-result');
+      resultEl.style.display = '';
+      resultEl.innerHTML = 'Importing...';
+      closeImportModal();
+
+      const formData = new FormData();
+      formData.append('file', _importFile);
+      formData.append('source', 'csv-import');
+
+      try {
+        const res = await fetch('/api/leads/import', { method: 'POST', body: formData });
+        const d = await res.json();
+        if (d.error) {
+          resultEl.innerHTML = '<span style="color:#dc2626;">Import failed: ' + esc(d.error) + '</span>';
+          return;
+        }
+        resultEl.innerHTML = '<strong>Import complete</strong> | ' + fmt(d.total) + ' rows processed | ' + fmt(d.imported) + ' new | ' + fmt(d.updated) + ' updated | ' + fmt(d.skipped) + ' skipped';
+        toast('Imported ' + fmt(d.imported) + ' new leads', 'success');
+        refreshAll();
+      } catch (err) {
+        resultEl.innerHTML = '<span style="color:#dc2626;">Import error: ' + esc(err.message) + '</span>';
+      }
+    }
+
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
