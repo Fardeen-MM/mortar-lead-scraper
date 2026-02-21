@@ -3528,6 +3528,51 @@ app.get('/api/freshness-alerts', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Merge Candidates (Batch 34) ===
+app.get('/api/merge-candidates', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getMergeCandidates(parseInt(req.query.limit) || 30));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.get('/api/merge-preview/:id1/:id2', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getMergePreview(parseInt(req.params.id1), parseInt(req.params.id2)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post('/api/merge-execute', express.json(), (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { keepId, mergeId } = req.body;
+    res.json(leadDb.executeMerge(keepId, mergeId));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Outreach Analytics (Batch 34) ===
+app.get('/api/outreach-analytics', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getOutreachAnalytics());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === ICP Scoring (Batch 34) ===
+app.get('/api/icp-scoring', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getIcpScoring(parseInt(req.query.limit) || 40));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Pipeline Velocity (Batch 34) ===
+app.get('/api/pipeline-velocity', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getPipelineVelocity());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
