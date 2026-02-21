@@ -1692,6 +1692,36 @@
       <div id="bulk-enrichment-runs" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Dedup Intelligence (Batch 40) -->
+    <div id="dedup-intel-panel" style="background:linear-gradient(135deg,#fef9c3,#fef08a);border:1px solid #facc15;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#854d0e;margin-bottom:0.5rem;">Dedup Intelligence</div>
+      <div id="dedup-intel-stats" style="font-size:0.78rem;color:#a16207;"></div>
+      <div id="dedup-intel-list" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#a16207;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Outbound Readiness (Batch 40) -->
+    <div id="outbound-ready-panel" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #34d399;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#065f46;margin-bottom:0.5rem;">Outbound Readiness</div>
+      <div id="outbound-score" style="font-size:0.78rem;color:#047857;"></div>
+      <div id="outbound-channels" style="font-size:0.78rem;color:#047857;margin-top:0.3rem;"></div>
+      <div id="outbound-actions" style="font-size:0.75rem;color:#047857;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Aging Report (Batch 40) -->
+    <div id="aging-report-panel" style="background:linear-gradient(135deg,#fff7ed,#fed7aa);border:1px solid #fb923c;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#9a3412;margin-bottom:0.5rem;">Aging Report</div>
+      <div id="aging-categories" style="font-size:0.78rem;color:#c2410c;"></div>
+      <div id="aging-suggestions" style="font-size:0.75rem;color:#c2410c;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Growth Analytics (Batch 40) -->
+    <div id="growth-analytics-panel" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe);border:1px solid #3b82f6;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#1e40af;margin-bottom:0.5rem;">Growth Analytics</div>
+      <div id="growth-projections" style="font-size:0.78rem;color:#1d4ed8;"></div>
+      <div id="growth-weekly" style="font-size:0.78rem;color:#1d4ed8;margin-top:0.3rem;"></div>
+      <div id="growth-quality" style="font-size:0.75rem;color:#1d4ed8;margin-top:0.3rem;"></div>
+    </div>
+
     <!-- Revenue Attribution (Batch 39) -->
     <div id="revenue-attr-panel" style="background:linear-gradient(135deg,#ecfdf5,#a7f3d0);border:1px solid #10b981;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="font-size:0.82rem;font-weight:700;color:#065f46;margin-bottom:0.5rem;">Revenue Attribution</div>
@@ -9476,6 +9506,66 @@
       } catch (err) { toast('Process error: ' + err.message, 'error'); }
     }
 
+    // === Dedup Intelligence (Batch 40) ===
+    async function loadDedupIntelligence() {
+      try {
+        const r = await fetch('/api/dedup-intelligence');
+        const d = await r.json();
+        const s = d.stats||{};
+        document.getElementById('dedup-intel-stats').innerHTML = '<strong>Duplicates:</strong> ' +
+          `${s.exactDupeGroups||0} name groups (${s.totalDupeLeads||0} leads) · ${s.phoneDupeGroups||0} phone dupes · ~${s.estimatedSavings||0} leads to merge`;
+        const items = (d.exactDupes||[]).slice(0,10).map(dup =>
+          `<div style="padding:2px 0;border-bottom:1px solid #e5e7eb;">${dup.first_name} ${dup.last_name} (${dup.city}): ${dup.count}x [IDs: ${dup.ids}]</div>`
+        );
+        document.getElementById('dedup-intel-list').innerHTML = items.join('') || '<em>No duplicates found</em>';
+      } catch(e) { console.warn('dedup intelligence:', e); }
+    }
+
+    // === Outbound Readiness (Batch 40) ===
+    async function loadOutboundReadiness() {
+      try {
+        const r = await fetch('/api/outbound-readiness');
+        const d = await r.json();
+        const rd = d.readiness||{};
+        document.getElementById('outbound-score').innerHTML = '<strong>Readiness Score:</strong> ' +
+          `${d.score||0}% · ${rd.total||0} total leads`;
+        document.getElementById('outbound-channels').innerHTML = '<strong>Channels:</strong> ' +
+          `Email ready: ${rd.email_ready||0} · Phone ready: ${rd.phone_ready||0} · Multi-channel: ${rd.multi_channel||0} · No contact: ${rd.no_contact_info||0}`;
+        document.getElementById('outbound-actions').innerHTML = '<strong>Actions:</strong> ' +
+          (d.actions||[]).map(a => `${a.action}: ~${a.potential} leads (${a.channel})`).join(' · ');
+      } catch(e) { console.warn('outbound readiness:', e); }
+    }
+
+    // === Aging Report (Batch 40) ===
+    async function loadAgingReport() {
+      try {
+        const r = await fetch('/api/aging-report');
+        const d = await r.json();
+        document.getElementById('aging-categories').innerHTML = '<strong>Data Age:</strong> ' +
+          (d.categories||[]).map(c => `${c.age_category}: ${c.count} (avg ${c.avg_score})`).join(' · ');
+        document.getElementById('aging-suggestions').innerHTML = '<strong>Re-engagement:</strong> ' +
+          (d.suggestions||[]).map(s => `[${s.priority}] ${s.action}: ${s.count} leads`).join(' · ');
+      } catch(e) { console.warn('aging report:', e); }
+    }
+
+    // === Growth Analytics (Batch 40) ===
+    async function loadGrowthAnalytics2() {
+      try {
+        const r = await fetch('/api/growth-analytics');
+        const d = await r.json();
+        const p = d.projections||{};
+        document.getElementById('growth-projections').innerHTML = '<strong>Projections:</strong> ' +
+          `${p.current||0} leads · ${p.dailyRate||0}/day` +
+          (p.to20k ? ` · 20K in ${p.to20k}d` : '') +
+          (p.to50k ? ` · 50K in ${p.to50k}d` : '') +
+          (p.to100k ? ` · 100K in ${p.to100k}d` : '');
+        document.getElementById('growth-weekly').innerHTML = '<strong>Weekly:</strong> ' +
+          (d.weeklyGrowth||[]).slice(0,6).map(w => `${w.week}: +${w.new_leads} (${w.with_email} w/email)`).join(' · ');
+        document.getElementById('growth-quality').innerHTML = '<strong>Quality Trend:</strong> ' +
+          (d.qualityTrend||[]).slice(0,6).map(q => `${q.week}: ${q.email_pct}% email, avg ${q.avg_score}`).join(' · ');
+      } catch(e) { console.warn('growth analytics:', e); }
+    }
+
     // === Revenue Attribution (Batch 39) ===
     async function loadRevenueAttribution() {
       try {
@@ -11156,7 +11246,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler(), loadPropensity(), loadCohorts(), loadChannelPrefs(), loadBenchmarks(), loadDealEstimates(), loadOutreachCal(), loadRiskScores(), loadNetworkMap(), loadJourneyMapping(), loadScoringAudit(), loadGeoExpansion(), loadFreshnessAlerts2(), loadMergeCandidates(), loadOutreachAnalytics(), loadIcpScoring(), loadPipelineVelocity(), loadRelationshipGraph(), loadEnrichmentROI(), loadEngagementPrediction(), loadCampaignPerformance2(), loadPrioritizationMatrix(), loadFirmAggregation(), loadImprovementRecs(), loadLifecycleFunnel(), loadCadenceOptimizer(), loadScoringCalibration(), loadPracticeMarketSize(), loadPipelineHealthPanel(), loadAffinityScoring(), loadScraperGaps(), loadFreshnessIndex(), loadFirmGrowthPanel(), loadRevenueAttribution(), loadSaturationHeatmap2(), loadSmartListBuilder(), loadQualityScorecard()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler(), loadPropensity(), loadCohorts(), loadChannelPrefs(), loadBenchmarks(), loadDealEstimates(), loadOutreachCal(), loadRiskScores(), loadNetworkMap(), loadJourneyMapping(), loadScoringAudit(), loadGeoExpansion(), loadFreshnessAlerts2(), loadMergeCandidates(), loadOutreachAnalytics(), loadIcpScoring(), loadPipelineVelocity(), loadRelationshipGraph(), loadEnrichmentROI(), loadEngagementPrediction(), loadCampaignPerformance2(), loadPrioritizationMatrix(), loadFirmAggregation(), loadImprovementRecs(), loadLifecycleFunnel(), loadCadenceOptimizer(), loadScoringCalibration(), loadPracticeMarketSize(), loadPipelineHealthPanel(), loadAffinityScoring(), loadScraperGaps(), loadFreshnessIndex(), loadFirmGrowthPanel(), loadRevenueAttribution(), loadSaturationHeatmap2(), loadSmartListBuilder(), loadQualityScorecard(), loadDedupIntelligence(), loadOutboundReadiness(), loadAgingReport(), loadGrowthAnalytics2()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();

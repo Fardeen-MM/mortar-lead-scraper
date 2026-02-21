@@ -3733,6 +3733,38 @@ app.get('/api/quality-scorecard', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Dedup Intelligence (Batch 40) ===
+app.get('/api/dedup-intelligence', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getDedupIntelligence(parseInt(req.query.limit) || 25));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Outbound Readiness (Batch 40) ===
+app.get('/api/outbound-readiness', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getOutboundReadiness());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Aging Report (Batch 40) ===
+app.get('/api/aging-report', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getAgingReport());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Growth Analytics (Batch 40) ===
+app.get('/api/growth-analytics', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getGrowthAnalytics());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
