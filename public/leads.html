@@ -1692,6 +1692,53 @@
       <div id="bulk-enrichment-runs" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Lookalike Finder (Batch 27) -->
+    <div id="lookalike-panel" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #93c5fd;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#2563eb;">Lookalike Finder</span>
+        <button onclick="loadLookalikes()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#dbeafe;color:#2563eb;border:1px solid #93c5fd;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Find similar leads based on matching city, practice area, firm, and score. Like Apollo's "Find Similar Contacts".</p>
+      <div style="display:flex;gap:0.3rem;margin-bottom:0.4rem;">
+        <input id="lookalike-lead-id" type="number" placeholder="Lead ID" style="width:70px;font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #93c5fd;border-radius:4px;">
+        <button onclick="searchLookalikes()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#2563eb;color:#fff;border:none;border-radius:4px;cursor:pointer;">Find Lookalikes</button>
+      </div>
+      <div id="lookalike-results" style="max-height:200px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Conversion Funnel (Batch 27) -->
+    <div id="funnel-panel" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #86efac;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#16a34a;">Conversion Funnel</span>
+        <button onclick="loadConversionFunnel()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#dcfce7;color:#16a34a;border:1px solid #86efac;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Pipeline stage progression with drop-off rates between stages. Like HubSpot's deal pipeline funnel view.</p>
+      <div id="funnel-stages" style="margin-bottom:0.4rem;"></div>
+      <div id="funnel-sources" style="max-height:150px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Lead Velocity (Batch 27) -->
+    <div id="velocity-panel" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border:1px solid #d946ef;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#a21caf;">Lead Velocity</span>
+        <button onclick="loadLeadVelocity()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fae8ff;color:#a21caf;border:1px solid #d946ef;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Daily/weekly lead acquisition rates with trend analysis. Like Salesforce's pipeline velocity metrics.</p>
+      <div id="velocity-stats" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="velocity-chart" style="max-height:150px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Completeness Matrix (Batch 27) -->
+    <div id="completeness-matrix-panel" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid #fdba74;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#c2410c;">Completeness Matrix</span>
+        <button onclick="loadCompletenessMatrix()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ffedd5;color:#c2410c;border:1px solid #fdba74;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Source × field data coverage grid. Shows which sources provide the best data. Like Clay's data coverage view.</p>
+      <div id="matrix-gaps" style="margin-bottom:0.4rem;"></div>
+      <div id="matrix-grid" style="max-height:250px;overflow-x:auto;overflow-y:auto;"></div>
+    </div>
+
     <!-- Tagging Rules Engine (Batch 26) -->
     <div id="tag-rules-panel" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #f9a8d4;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -8967,6 +9014,139 @@
       } catch (err) { toast('Process error: ' + err.message, 'error'); }
     }
 
+    // === Lookalike Finder (Batch 27) ===
+    async function loadLookalikes() {
+      // Default: show top-scored lead's lookalikes
+      try {
+        const stats = await fetch('/api/stats').then(r => r.json());
+        if (stats.total > 0) {
+          const leads = await fetch('/api/leads?limit=1&sort=lead_score&order=desc').then(r => r.json());
+          if (leads.leads && leads.leads.length > 0) {
+            document.getElementById('lookalike-lead-id').value = leads.leads[0].id;
+            searchLookalikes();
+          }
+        }
+      } catch (err) { console.error('Lookalike load error:', err); }
+    }
+    async function searchLookalikes() {
+      const leadId = document.getElementById('lookalike-lead-id').value;
+      if (!leadId) { toast('Enter a lead ID', 'error'); return; }
+      try {
+        const data = await fetch('/api/leads/' + leadId + '/lookalikes?limit=15').then(r => r.json());
+        const el = document.getElementById('lookalike-results');
+        if (!data.target) { el.innerHTML = '<div style="font-size:0.72rem;color:#dc2626;">Lead not found.</div>'; return; }
+        const t = data.target;
+        let html = `<div style="background:rgba(255,255,255,0.6);padding:0.3rem 0.5rem;border-radius:4px;margin-bottom:0.3rem;font-size:0.72rem;">
+          <strong>Target:</strong> ${t.first_name} ${t.last_name} | ${t.city || '?'}, ${t.state || '?'} | ${t.practice_area || 'N/A'} | Score: ${t.lead_score || 0}
+        </div>`;
+        if (!data.matches.length) { html += '<div style="font-size:0.72rem;color:#9ca3af;">No similar leads found.</div>'; }
+        else {
+          html += data.matches.map(m => {
+            const simColor = m.similarity >= 60 ? '#16a34a' : m.similarity >= 40 ? '#f59e0b' : '#6b7280';
+            return `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.2rem 0;border-bottom:1px solid #dbeafe;">
+              <span style="font-size:0.72rem;">${m.first_name} ${m.last_name} <span style="color:#78716c;">${m.city || ''}, ${m.state || ''}</span></span>
+              <span style="font-size:0.65rem;font-weight:600;color:${simColor};">${m.similarity}% match</span>
+            </div>`;
+          }).join('');
+        }
+        el.innerHTML = html;
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    // === Conversion Funnel (Batch 27) ===
+    async function loadConversionFunnel() {
+      try {
+        const data = await fetch('/api/funnel').then(r => r.json());
+        const el = document.getElementById('funnel-stages');
+        const maxCount = Math.max(...data.funnel.map(f => f.count), 1);
+        el.innerHTML = data.funnel.map(f => {
+          const width = Math.max(5, Math.round((f.count / maxCount) * 100));
+          const stageColors = { new: '#3b82f6', contacted: '#8b5cf6', qualified: '#f59e0b', proposal: '#ec4899', won: '#22c55e', lost: '#ef4444' };
+          const color = stageColors[f.stage] || '#6b7280';
+          return `<div style="margin-bottom:0.2rem;">
+            <div style="display:flex;align-items:center;gap:0.4rem;">
+              <span style="font-size:0.7rem;width:60px;text-align:right;color:#374151;">${f.stage}</span>
+              <div style="flex:1;background:#e5e7eb;border-radius:3px;height:16px;position:relative;">
+                <div style="width:${width}%;background:${color};border-radius:3px;height:100%;"></div>
+              </div>
+              <span style="font-size:0.68rem;color:#374151;width:45px;">${f.count}</span>
+              ${f.dropOff > 0 ? '<span style="font-size:0.6rem;color:#dc2626;">-' + f.dropOff + '%</span>' : ''}
+            </div>
+          </div>`;
+        }).join('');
+        // Source breakdown
+        const sEl = document.getElementById('funnel-sources');
+        const srcEntries = Object.entries(data.bySource).slice(0, 10);
+        if (srcEntries.length) {
+          sEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#16a34a;margin-bottom:0.2rem;">Top Sources by Stage</div>' +
+            srcEntries.map(([src, stages]) => {
+              const total = Object.values(stages).reduce((a, b) => a + b, 0);
+              return `<div style="font-size:0.68rem;padding:0.15rem 0;border-bottom:1px solid #dcfce7;">${src}: ${total} leads (${Object.entries(stages).map(([s, c]) => s + ':' + c).join(', ')})</div>`;
+            }).join('');
+        }
+      } catch (err) { console.error('Funnel error:', err); }
+    }
+
+    // === Lead Velocity (Batch 27) ===
+    async function loadLeadVelocity() {
+      try {
+        const data = await fetch('/api/velocity?days=30').then(r => r.json());
+        const sEl = document.getElementById('velocity-stats');
+        const trendColor = data.trend > 0 ? '#16a34a' : data.trend < 0 ? '#dc2626' : '#6b7280';
+        const trendIcon = data.trend > 0 ? '&uarr;' : data.trend < 0 ? '&darr;' : '&rarr;';
+        sEl.innerHTML = `
+          <div style="text-align:center;"><div style="font-size:1.1rem;font-weight:700;color:#a21caf;">${data.totalNew}</div><div style="font-size:0.65rem;color:#78716c;">New (${data.days}d)</div></div>
+          <div style="text-align:center;"><div style="font-size:1.1rem;font-weight:700;color:#a21caf;">${data.avgDaily}</div><div style="font-size:0.65rem;color:#78716c;">Avg/Day</div></div>
+          <div style="text-align:center;"><div style="font-size:1.1rem;font-weight:700;color:${trendColor};">${trendIcon} ${Math.abs(data.trend)}%</div><div style="font-size:0.65rem;color:#78716c;">Trend</div></div>
+        `;
+        const cEl = document.getElementById('velocity-chart');
+        if (data.weekly.length) {
+          const maxW = Math.max(...data.weekly.map(w => w.count), 1);
+          cEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#a21caf;margin-bottom:0.2rem;">Weekly Acquisition</div>' +
+            data.weekly.map(w => `<div style="display:flex;align-items:center;gap:0.3rem;margin-bottom:0.1rem;">
+              <span style="font-size:0.65rem;width:60px;color:#78716c;">${w.week}</span>
+              <div style="flex:1;background:#f3e8ff;border-radius:2px;height:12px;"><div style="width:${Math.round((w.count / maxW) * 100)}%;background:#d946ef;height:100%;border-radius:2px;"></div></div>
+              <span style="font-size:0.65rem;width:30px;text-align:right;">${w.count}</span>
+            </div>`).join('');
+        } else {
+          cEl.innerHTML = data.bySource.slice(0, 8).map(s => `<div style="font-size:0.68rem;padding:0.1rem 0;">${s.source}: <strong>${s.count}</strong></div>`).join('');
+        }
+      } catch (err) { console.error('Velocity error:', err); }
+    }
+
+    // === Completeness Matrix (Batch 27) ===
+    async function loadCompletenessMatrix() {
+      try {
+        const data = await fetch('/api/completeness-matrix').then(r => r.json());
+        // Gaps
+        const gEl = document.getElementById('matrix-gaps');
+        if (data.gaps.length) {
+          gEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#c2410c;margin-bottom:0.2rem;">Data Gaps</div>' +
+            data.gaps.map(g => `<div style="font-size:0.68rem;padding:0.1rem 0;border-bottom:1px solid #ffedd5;">
+              <strong>${g.field}</strong>: ${g.fillRate}% filled (${g.totalMissing} missing) — ${g.recommendation}
+            </div>`).join('');
+        } else { gEl.innerHTML = '<div style="font-size:0.72rem;color:#16a34a;">All fields above 50% fill rate!</div>'; }
+        // Matrix grid
+        const mEl = document.getElementById('matrix-grid');
+        if (!data.matrix.length) { mEl.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;">No source data.</div>'; return; }
+        const shortFields = data.fields.map(f => f.replace('practice_area', 'practice').replace('admission_date', 'admit').replace('bar_number', 'bar#').replace('bar_status', 'status').replace('firm_name', 'firm'));
+        let tableHtml = '<table style="width:100%;font-size:0.62rem;border-collapse:collapse;"><thead><tr><th style="text-align:left;padding:0.15rem;border-bottom:2px solid #fdba74;">Source</th>';
+        shortFields.forEach(f => { tableHtml += `<th style="padding:0.15rem;border-bottom:2px solid #fdba74;text-align:center;">${f}</th>`; });
+        tableHtml += '<th style="padding:0.15rem;border-bottom:2px solid #fdba74;">Total</th></tr></thead><tbody>';
+        data.matrix.slice(0, 20).forEach(row => {
+          tableHtml += `<tr><td style="padding:0.15rem;border-bottom:1px solid #ffedd5;white-space:nowrap;">${row.source}</td>`;
+          data.fields.forEach(f => {
+            const r = row.fields[f];
+            const bg = r.rate >= 80 ? '#dcfce7' : r.rate >= 50 ? '#fef9c3' : r.rate >= 20 ? '#ffedd5' : '#fee2e2';
+            tableHtml += `<td style="text-align:center;padding:0.15rem;border-bottom:1px solid #ffedd5;background:${bg};">${r.rate}%</td>`;
+          });
+          tableHtml += `<td style="text-align:center;padding:0.15rem;border-bottom:1px solid #ffedd5;font-weight:600;">${row.total}</td></tr>`;
+        });
+        tableHtml += '</tbody></table>';
+        mEl.innerHTML = tableHtml;
+      } catch (err) { console.error('Completeness matrix error:', err); }
+    }
+
     // === Tagging Rules Engine (Batch 26) ===
     async function loadTagRulesEngine() {
       try {
@@ -9550,7 +9730,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();

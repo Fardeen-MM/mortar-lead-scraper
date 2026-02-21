@@ -3199,6 +3199,40 @@ app.get('/api/score-decay/preview', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Lookalike Finder (Batch 27) ===
+app.get('/api/leads/:id/lookalikes', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 20;
+    res.json(leadDb.findLookalikes(parseInt(req.params.id), limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Conversion Funnel (Batch 27) ===
+app.get('/api/funnel', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getConversionFunnel());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Lead Velocity (Batch 27) ===
+app.get('/api/velocity', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const days = parseInt(req.query.days) || 30;
+    res.json(leadDb.getLeadVelocity(days));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Completeness Matrix (Batch 27) ===
+app.get('/api/completeness-matrix', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getCompletenessMatrix());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
