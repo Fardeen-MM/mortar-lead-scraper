@@ -1522,6 +1522,53 @@
       <div id="audit-log-list" style="max-height:250px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Priority Inbox (Batch 24) -->
+    <div id="priority-inbox-panel" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border:1px solid #f87171;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#dc2626;">Priority Inbox</span>
+        <button onclick="loadPriorityInbox()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fee2e2;color:#dc2626;border:1px solid #f87171;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Best leads to contact right now — scored by completeness, activity, and follow-up status. Like Apollo's suggested actions.</p>
+      <div id="smart-recs" style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="priority-inbox-list" style="max-height:220px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Practice Area Analytics (Batch 24) -->
+    <div id="practice-analytics-panel" style="background:linear-gradient(135deg,#f0fdf4,#d1fae5);border:1px solid #34d399;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#059669;">Practice Area Intelligence</span>
+        <button onclick="loadPracticeAnalytics()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#d1fae5;color:#059669;border:1px solid #34d399;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Practice area distribution, firm specialization patterns, cross-sell opportunities. Like ZoomInfo's industry intelligence.</p>
+      <div id="practice-areas-list" style="max-height:150px;overflow-y:auto;margin-bottom:0.3rem;"></div>
+      <div id="practice-crosssell" style="max-height:120px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Source ROI (Batch 24) -->
+    <div id="source-roi-panel" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #eab308;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#ca8a04;">Source ROI</span>
+        <button onclick="loadSourceROI()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fef9c3;color:#ca8a04;border:1px solid #eab308;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Track effectiveness of each data source — email rate, phone rate, conversion. Like Apollo's data provider metrics.</p>
+      <div id="source-roi-list" style="max-height:200px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Compliance Dashboard (Batch 24) -->
+    <div id="compliance-panel" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border:1px solid #94a3b8;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#475569;">Compliance Center</span>
+        <div style="display:flex;gap:0.3rem;">
+          <button onclick="showOptOutForm()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#475569;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ Opt-Out</button>
+          <button onclick="loadComplianceDashboard()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#f1f5f9;color:#475569;border:1px solid #94a3b8;border-radius:4px;cursor:pointer;">Refresh</button>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Opt-out management, DNC enforcement, data retention tracking. Like HubSpot's privacy center.</p>
+      <div id="compliance-score" style="margin-bottom:0.3rem;"></div>
+      <div id="compliance-stats" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.3rem;"></div>
+      <div id="compliance-optouts" style="max-height:150px;overflow-y:auto;"></div>
+    </div>
+
     <!-- Relationship Graph (Batch 23) -->
     <div id="relationship-graph-panel" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border:1px solid #d946ef;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -8328,6 +8375,136 @@
       } catch (err) { toast('Export error: ' + err.message, 'error'); }
     }
 
+    // === Priority Inbox (Batch 24) ===
+    async function loadPriorityInbox() {
+      try {
+        const [leads, recs] = await Promise.all([
+          fetch('/api/priority-inbox?limit=15').then(r => r.json()),
+          fetch('/api/smart-recommendations').then(r => r.json()),
+        ]);
+        const recEl = document.getElementById('smart-recs');
+        recEl.innerHTML = recs.map(r => `
+          <span style="display:inline-block;padding:0.15rem 0.4rem;border-radius:6px;font-size:0.65rem;background:${r.priority === 'high' ? '#fef2f2;color:#dc2626;border:1px solid #f87171' : r.priority === 'medium' ? '#fef9c3;color:#ca8a04;border:1px solid #eab308' : '#f0f9ff;color:#0369a1;border:1px solid #38bdf8'};">
+            ${esc(r.message)}
+          </span>
+        `).join('');
+        const el = document.getElementById('priority-inbox-list');
+        if (!leads || leads.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#dc2626;">No priority leads found. Scrape some leads with email first.</span>';
+          return;
+        }
+        el.innerHTML = leads.map((l, i) => `
+          <div style="display:flex;align-items:center;gap:0.4rem;padding:0.25rem 0;border-bottom:1px solid #fee2e2;font-size:0.72rem;">
+            <span style="width:20px;text-align:center;font-weight:600;color:#dc2626;font-size:0.65rem;">#${i+1}</span>
+            <strong style="flex:1;">${esc(l.first_name || '')} ${esc(l.last_name || '')}</strong>
+            <span style="color:#6b7280;font-size:0.65rem;">${esc(l.firm_name || '').substring(0, 20)}</span>
+            <span style="color:#0d9488;font-size:0.6rem;">${esc(l.city || '')}</span>
+            <span style="padding:0.1rem 0.3rem;background:#fee2e2;border-radius:4px;font-size:0.6rem;font-weight:600;color:#dc2626;">${l.priority}</span>
+            <span style="color:#6b7280;font-size:0.6rem;">${esc(l.reason || '')}</span>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Priority inbox error:', err); }
+    }
+
+    // === Practice Area Analytics (Batch 24) ===
+    async function loadPracticeAnalytics() {
+      try {
+        const data = await fetch('/api/practice-areas/analytics?limit=20').then(r => r.json());
+        const el = document.getElementById('practice-areas-list');
+        if (data.areas && data.areas.length > 0) {
+          el.innerHTML = data.areas.slice(0, 12).map(a => `
+            <div style="display:flex;align-items:center;gap:0.4rem;padding:0.15rem 0;border-bottom:1px solid #d1fae5;font-size:0.68rem;">
+              <strong style="flex:1;color:#059669;">${esc(a.practice_area).substring(0, 35)}</strong>
+              <span style="color:#6b7280;">${a.lead_count} leads</span>
+              <span style="color:#2563eb;font-size:0.6rem;">${a.with_email} email</span>
+              <span style="color:#0d9488;font-size:0.6rem;">${a.states} states</span>
+              <span style="color:#d97706;font-size:0.6rem;">avg ${a.avg_score}</span>
+            </div>
+          `).join('');
+        } else {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#059669;">No practice area data yet.</span>';
+        }
+        const csEl = document.getElementById('practice-crosssell');
+        if (data.crossSell && data.crossSell.length > 0) {
+          csEl.innerHTML = '<span style="font-size:0.68rem;font-weight:600;color:#059669;display:block;margin-bottom:0.2rem;">Cross-Sell Opportunities</span>' +
+            data.crossSell.slice(0, 8).map(c => `
+              <div style="font-size:0.65rem;padding:0.1rem 0;color:#6b7280;">
+                ${esc(c.area_a).substring(0, 20)} &harr; ${esc(c.area_b).substring(0, 20)} <strong style="color:#059669;">(${c.shared_firms} firms)</strong>
+              </div>
+            `).join('');
+        }
+      } catch (err) { console.error('Practice analytics error:', err); }
+    }
+
+    // === Source ROI (Batch 24) ===
+    async function loadSourceROI() {
+      try {
+        const sources = await fetch('/api/source-roi').then(r => r.json());
+        const el = document.getElementById('source-roi-list');
+        if (!sources || sources.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#ca8a04;">No source data yet.</span>';
+          return;
+        }
+        el.innerHTML = sources.map(s => `
+          <div style="display:flex;align-items:center;gap:0.4rem;padding:0.2rem 0;border-bottom:1px solid #fef9c3;font-size:0.72rem;">
+            <strong style="flex:1;color:#a16207;">${esc(s.primary_source)}</strong>
+            <span style="color:#6b7280;">${fmt(s.total_leads)} leads</span>
+            <span style="color:#059669;font-size:0.65rem;">${s.email_rate}% email</span>
+            <span style="color:#2563eb;font-size:0.65rem;">${s.phone_rate}% phone</span>
+            <span style="color:#d97706;font-size:0.65rem;">avg ${s.avg_score}</span>
+            <span style="padding:0.1rem 0.3rem;background:${s.completeness > 50 ? '#dcfce7' : s.completeness > 20 ? '#fef9c3' : '#fef2f2'};border-radius:4px;font-size:0.6rem;font-weight:600;">${s.completeness}% complete</span>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Source ROI error:', err); }
+    }
+
+    // === Compliance Dashboard (Batch 24) ===
+    async function loadComplianceDashboard() {
+      try {
+        const data = await fetch('/api/compliance/dashboard').then(r => r.json());
+        document.getElementById('compliance-score').innerHTML = `
+          <div style="display:inline-flex;align-items:center;gap:0.4rem;">
+            <span style="font-size:1.2rem;font-weight:700;color:${data.complianceScore > 80 ? '#16a34a' : data.complianceScore > 50 ? '#ca8a04' : '#dc2626'};">${data.complianceScore}</span>
+            <span style="font-size:0.72rem;color:#6b7280;">/ 100 compliance score</span>
+          </div>
+        `;
+        document.getElementById('compliance-stats').innerHTML = `
+          <span style="font-size:0.72rem;"><strong style="color:#475569;">${data.optOuts?.total || 0}</strong> opt-outs</span>
+          <span style="font-size:0.72rem;"><strong style="color:#ef4444;">${data.optOuts?.blocked || 0}</strong> blocked leads</span>
+          <span style="font-size:0.72rem;"><strong style="color:#6b7280;">${data.dnc?.total || 0}</strong> DNC entries</span>
+          <span style="font-size:0.72rem;"><strong style="color:#ca8a04;">${data.retention?.older_1yr || 0}</strong> older than 1yr</span>
+        `;
+        const el = document.getElementById('compliance-optouts');
+        if (data.optOuts?.recent && data.optOuts.recent.length > 0) {
+          el.innerHTML = data.optOuts.recent.map(o => `
+            <div style="display:flex;align-items:center;gap:0.4rem;padding:0.15rem 0;border-bottom:1px solid #f1f5f9;font-size:0.68rem;">
+              <strong>${esc(o.email)}</strong>
+              <span style="flex:1;color:#6b7280;">${esc(o.reason || 'No reason')}</span>
+              <span style="color:#9ca3af;font-size:0.6rem;">${o.opted_out_at ? new Date(o.opted_out_at).toLocaleDateString() : ''}</span>
+              <button onclick="removeOptOutEmail('${esc(o.email)}')" style="font-size:0.6rem;padding:0.1rem 0.2rem;background:#f1f5f9;color:#475569;border:1px solid #94a3b8;border-radius:3px;cursor:pointer;">Remove</button>
+            </div>
+          `).join('');
+        } else {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#059669;">No opt-outs recorded. All clear.</span>';
+        }
+      } catch (err) { console.error('Compliance error:', err); }
+    }
+
+    function showOptOutForm() {
+      const email = prompt('Enter email to opt-out:');
+      if (!email) return;
+      const reason = prompt('Reason (optional):') || '';
+      fetch('/api/compliance/opt-out', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, reason }) })
+        .then(r => r.json()).then(() => { toast('Opt-out recorded', 'success'); loadComplianceDashboard(); })
+        .catch(err => toast('Error: ' + err.message, 'error'));
+    }
+
+    function removeOptOutEmail(email) {
+      fetch('/api/compliance/opt-out', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) })
+        .then(r => r.json()).then(() => { toast('Opt-out removed', 'success'); loadComplianceDashboard(); })
+        .catch(err => toast('Error: ' + err.message, 'error'));
+    }
+
     // === Firm Network (Batch 23) ===
     async function loadFirmNetwork() {
       try {
@@ -9022,7 +9199,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();

@@ -2968,6 +2968,88 @@ app.get('/api/geographic/penetration/:state', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Priority Inbox (Batch 24) ===
+app.get('/api/priority-inbox', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getPriorityInbox(parseInt(req.query.limit) || 25));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/smart-recommendations', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getSmartRecommendations());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Practice Area Analytics (Batch 24) ===
+app.get('/api/practice-areas/analytics', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getPracticeAreaAnalytics(parseInt(req.query.limit) || 30));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Source ROI (Batch 24) ===
+app.get('/api/source-roi', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getSourceROI());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/source-roi/compare', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { sourceA, sourceB } = req.query;
+    if (!sourceA || !sourceB) return res.status(400).json({ error: 'sourceA and sourceB required' });
+    res.json(leadDb.getSourceComparison(sourceA, sourceB));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Compliance Dashboard (Batch 24) ===
+app.get('/api/compliance/dashboard', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getComplianceDashboard());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/compliance/opt-out', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { email, reason, source } = req.body;
+    if (!email) return res.status(400).json({ error: 'email required' });
+    res.json(leadDb.addOptOut(email, reason, source));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/compliance/opt-out', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ error: 'email required' });
+    res.json(leadDb.removeOptOut(email));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/compliance/check/:email', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.checkEmailCompliance(req.params.email));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/compliance/consent', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadId, consentType, status, source, notes } = req.body;
+    if (!leadId || !consentType) return res.status(400).json({ error: 'leadId and consentType required' });
+    res.json(leadDb.recordConsent(parseInt(leadId), consentType, status, source, notes));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
