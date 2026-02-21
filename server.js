@@ -3637,6 +3637,38 @@ app.get('/api/lifecycle-funnel', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Cadence Optimizer (Batch 37) ===
+app.get('/api/cadence-optimizer', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getCadenceOptimizer());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Scoring Calibration (Batch 37) ===
+app.get('/api/scoring-calibration', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getScoringCalibration());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Practice Market Size (Batch 37) ===
+app.get('/api/practice-market-size', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getPracticeMarketSize());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Pipeline Health (Batch 37) ===
+app.get('/api/pipeline-health', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getPipelineHealth());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {

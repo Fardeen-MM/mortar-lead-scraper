@@ -1692,6 +1692,37 @@
       <div id="bulk-enrichment-runs" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Cadence Optimizer (Batch 37) -->
+    <div id="cadence-opt-panel" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #ec4899;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#9d174d;margin-bottom:0.5rem;">Cadence Optimizer</div>
+      <div id="cadence-needs" style="font-size:0.78rem;color:#be185d;"></div>
+      <div id="cadence-day-perf" style="font-size:0.78rem;color:#be185d;margin-top:0.3rem;"></div>
+      <div id="cadence-recs" style="font-size:0.75rem;color:#be185d;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Scoring Calibration (Batch 37) -->
+    <div id="scoring-cal-panel" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:1px solid #8b5cf6;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#6d28d9;margin-bottom:0.5rem;">Scoring Calibration</div>
+      <div id="scoring-cal-stats" style="font-size:0.78rem;color:#7c3aed;"></div>
+      <div id="scoring-cal-dist" style="font-size:0.78rem;color:#7c3aed;margin-top:0.3rem;"></div>
+      <div id="scoring-cal-outcome" style="font-size:0.75rem;color:#7c3aed;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Practice Market Size (Batch 37) -->
+    <div id="practice-market-panel" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #eab308;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#854d0e;margin-bottom:0.5rem;">Practice Market Size</div>
+      <div id="practice-market-overview" style="font-size:0.78rem;color:#a16207;"></div>
+      <div id="practice-market-list" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#a16207;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Pipeline Health (Batch 37) -->
+    <div id="pipeline-health-panel" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #10b981;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#065f46;margin-bottom:0.5rem;">Pipeline Health</div>
+      <div id="pipeline-health-quality" style="font-size:0.78rem;color:#047857;"></div>
+      <div id="pipeline-health-degrading" style="font-size:0.78rem;color:#047857;margin-top:0.3rem;"></div>
+      <div id="pipeline-health-sources" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#047857;margin-top:0.3rem;"></div>
+    </div>
+
     <!-- Prioritization Matrix (Batch 36) -->
     <div id="priority-matrix-panel" style="background:linear-gradient(135deg,#faf5ff,#e9d5ff);border:1px solid #a855f7;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="font-size:0.82rem;font-weight:700;color:#7e22ce;margin-bottom:0.5rem;">Prioritization Matrix</div>
@@ -9390,6 +9421,66 @@
       } catch (err) { toast('Process error: ' + err.message, 'error'); }
     }
 
+    // === Cadence Optimizer (Batch 37) ===
+    async function loadCadenceOptimizer() {
+      try {
+        const r = await fetch('/api/cadence-optimizer');
+        const d = await r.json();
+        const nc = d.needsContact||{};
+        document.getElementById('cadence-needs').innerHTML = '<strong>Contact Status:</strong> ' +
+          `Never contacted: ${nc.never_contacted||0} · Needs follow-up: ${nc.needs_followup||0} · Over-contacted: ${nc.over_contacted||0}`;
+        document.getElementById('cadence-day-perf').innerHTML = '<strong>Day Performance:</strong> ' +
+          (d.dayPerformance||[]).map(dp => `${dp.day_name}: ${dp.contacts} contacts, ${dp.responses} responses`).join(' · ');
+        document.getElementById('cadence-recs').innerHTML = '<strong>Recommendations:</strong> ' +
+          (d.recommendations||[]).map(r => `[${r.priority}] ${r.rule}`).join(' · ');
+      } catch(e) { console.warn('cadence optimizer:', e); }
+    }
+
+    // === Scoring Calibration (Batch 37) ===
+    async function loadScoringCalibration() {
+      try {
+        const r = await fetch('/api/scoring-calibration');
+        const d = await r.json();
+        const s = d.stats||{};
+        document.getElementById('scoring-cal-stats').innerHTML = '<strong>Score Stats:</strong> ' +
+          `Mean: ${s.mean||0} · Median: ${s.median||0} · Min: ${s.min_score||0} · Max: ${s.max_score||0} · Calibration: ${d.calibration||'?'} (${d.lowScorePercent||0}% below 30)`;
+        document.getElementById('scoring-cal-dist').innerHTML = '<strong>Distribution:</strong> ' +
+          (d.distribution||[]).map(b => `${b.bucket}: ${b.count}`).join(' · ');
+        document.getElementById('scoring-cal-outcome').innerHTML = '<strong>Score→Outcome:</strong> ' +
+          (d.scoreOutcome||[]).map(o => `${o.score_group}: ${o.total} leads, ${o.with_email} email, ${o.progressed} progressed`).join(' · ');
+      } catch(e) { console.warn('scoring calibration:', e); }
+    }
+
+    // === Practice Market Size (Batch 37) ===
+    async function loadPracticeMarketSize() {
+      try {
+        const r = await fetch('/api/practice-market-size');
+        const d = await r.json();
+        const o = d.overall||{};
+        document.getElementById('practice-market-overview').innerHTML = '<strong>Market:</strong> ' +
+          `${o.unique_practices||0} practice areas · ${o.unique_cities||0} cities · ${o.total||0} leads with practice data`;
+        document.getElementById('practice-market-list').innerHTML = (d.practiceAreas||[]).map(p =>
+          `<div style="padding:2px 0;border-bottom:1px solid #e5e7eb;">${p.practice_area}: ${p.total} leads in ${p.cities} cities, ${p.with_email} emails, avg ${p.avg_score}</div>`
+        ).join('');
+      } catch(e) { console.warn('practice market size:', e); }
+    }
+
+    // === Pipeline Health (Batch 37) ===
+    async function loadPipelineHealthPanel() {
+      try {
+        const r = await fetch('/api/pipeline-health');
+        const d = await r.json();
+        const q = d.quality||{};
+        document.getElementById('pipeline-health-quality').innerHTML = '<strong>Data Quality:</strong> ' +
+          `Email: ${q.email_rate||0}% · Phone: ${q.phone_rate||0}% · Website: ${q.website_rate||0}% · Firm: ${q.firm_rate||0}%`;
+        document.getElementById('pipeline-health-degrading').innerHTML = '<strong>Degrading Sources:</strong> ' +
+          ((d.degrading||[]).length ? d.degrading.map(s => `${s.source}: ${s.fields_per_lead} fields/lead`).join(' · ') : 'None detected');
+        document.getElementById('pipeline-health-sources').innerHTML = (d.sourceHealth||[]).map(s =>
+          `<div style="padding:2px 0;border-bottom:1px solid #e5e7eb;">${s.primary_source}: ${s.total} leads, ${s.avg_fields_per_lead} fields/lead, avg ${s.avg_score}</div>`
+        ).join('');
+      } catch(e) { console.warn('pipeline health:', e); }
+    }
+
     // === Prioritization Matrix (Batch 36) ===
     async function loadPrioritizationMatrix() {
       try {
@@ -10908,7 +10999,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler(), loadPropensity(), loadCohorts(), loadChannelPrefs(), loadBenchmarks(), loadDealEstimates(), loadOutreachCal(), loadRiskScores(), loadNetworkMap(), loadJourneyMapping(), loadScoringAudit(), loadGeoExpansion(), loadFreshnessAlerts2(), loadMergeCandidates(), loadOutreachAnalytics(), loadIcpScoring(), loadPipelineVelocity(), loadRelationshipGraph(), loadEnrichmentROI(), loadEngagementPrediction(), loadCampaignPerformance2(), loadPrioritizationMatrix(), loadFirmAggregation(), loadImprovementRecs(), loadLifecycleFunnel()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler(), loadPropensity(), loadCohorts(), loadChannelPrefs(), loadBenchmarks(), loadDealEstimates(), loadOutreachCal(), loadRiskScores(), loadNetworkMap(), loadJourneyMapping(), loadScoringAudit(), loadGeoExpansion(), loadFreshnessAlerts2(), loadMergeCandidates(), loadOutreachAnalytics(), loadIcpScoring(), loadPipelineVelocity(), loadRelationshipGraph(), loadEnrichmentROI(), loadEngagementPrediction(), loadCampaignPerformance2(), loadPrioritizationMatrix(), loadFirmAggregation(), loadImprovementRecs(), loadLifecycleFunnel(), loadCadenceOptimizer(), loadScoringCalibration(), loadPracticeMarketSize(), loadPipelineHealthPanel()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
