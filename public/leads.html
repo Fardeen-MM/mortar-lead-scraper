@@ -1692,6 +1692,55 @@
       <div id="bulk-enrichment-runs" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Lead Clustering (Batch 28) -->
+    <div id="cluster-panel" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border:1px solid #facc15;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#a16207;">Lead Clustering</span>
+        <button onclick="loadLeadClusters()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fef9c3;color:#a16207;border:1px solid #facc15;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Cluster leads by firm size tier with revenue potential scoring. Like ZoomInfo's firmographic segmentation.</p>
+      <div id="cluster-tiers" style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="cluster-opportunities" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- A/B Test Framework (Batch 28) -->
+    <div id="ab-test-panel" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #7dd3fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#0284c7;">A/B Test Framework</span>
+        <button onclick="loadAbTests()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#e0f2fe;color:#0284c7;border:1px solid #7dd3fc;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Split-test outreach strategies. Assign leads randomly, track response rates, find winning variants. Like Apollo's A/B testing.</p>
+      <div style="display:flex;gap:0.3rem;margin-bottom:0.4rem;flex-wrap:wrap;">
+        <input id="ab-name" placeholder="Test name" style="flex:1;min-width:80px;font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #7dd3fc;border-radius:4px;">
+        <input id="ab-variant-a" placeholder="Variant A" style="width:80px;font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #7dd3fc;border-radius:4px;">
+        <input id="ab-variant-b" placeholder="Variant B" style="width:80px;font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #7dd3fc;border-radius:4px;">
+        <button onclick="createAbTestFromUI()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#0284c7;color:#fff;border:none;border-radius:4px;cursor:pointer;">Create Test</button>
+      </div>
+      <div id="ab-tests-list" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Re-engagement Scoring (Batch 28) -->
+    <div id="reengage-panel" style="background:linear-gradient(135deg,#fff1f2,#ffe4e6);border:1px solid #fda4af;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#e11d48;">Re-engagement Scoring</span>
+        <button onclick="loadReengagement()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ffe4e6;color:#e11d48;border:1px solid #fda4af;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Identify dormant high-value leads for win-back campaigns. Scores re-engagement probability and suggests strategy. Like Salesloft's win-back.</p>
+      <div id="reengage-summary" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="reengage-list" style="max-height:200px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Attribution Model (Batch 28) -->
+    <div id="attribution-panel" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #6ee7b7;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#059669;">Attribution Model</span>
+        <button onclick="loadAttribution()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#d1fae5;color:#059669;border:1px solid #6ee7b7;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Multi-channel attribution with source quality scoring. Shows which sources drive the best leads. Like HubSpot's attribution reports.</p>
+      <div id="attribution-quality" style="max-height:200px;overflow-y:auto;"></div>
+      <div id="attribution-enrichment" style="margin-top:0.4rem;"></div>
+    </div>
+
     <!-- Lookalike Finder (Batch 27) -->
     <div id="lookalike-panel" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #93c5fd;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -9014,6 +9063,131 @@
       } catch (err) { toast('Process error: ' + err.message, 'error'); }
     }
 
+    // === Lead Clustering (Batch 28) ===
+    async function loadLeadClusters() {
+      try {
+        const data = await fetch('/api/clusters').then(r => r.json());
+        const tEl = document.getElementById('cluster-tiers');
+        const tierColors = { solo: '#6b7280', small: '#3b82f6', mid: '#f59e0b', large: '#16a34a' };
+        tEl.innerHTML = Object.entries(data.clusters).map(([tier, info]) => `<div style="text-align:center;padding:0.3rem 0.6rem;background:rgba(255,255,255,0.6);border-radius:6px;">
+          <div style="font-size:1rem;font-weight:700;color:${tierColors[tier] || '#6b7280'};">${info.leads || info.count || 0}</div>
+          <div style="font-size:0.65rem;color:#78716c;">${info.label || tier}</div>
+          <div style="font-size:0.6rem;color:#9ca3af;">${info.count || 0} firms</div>
+        </div>`).join('');
+        const oEl = document.getElementById('cluster-opportunities');
+        if (data.topOpportunities && data.topOpportunities.length) {
+          oEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#a16207;margin-bottom:0.2rem;">Top Revenue Opportunities</div>' +
+            data.topOpportunities.map(o => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.2rem 0;border-bottom:1px solid #fef9c3;">
+              <span style="font-size:0.72rem;">${o.firm} <span style="color:#78716c;">(${o.headcount} attorneys)</span></span>
+              <span style="font-size:0.65rem;color:#16a34a;font-weight:600;">$${(o.revenueEstimate / 1000).toFixed(1)}k est.</span>
+            </div>`).join('');
+        }
+      } catch (err) { console.error('Clusters error:', err); }
+    }
+
+    // === A/B Test Framework (Batch 28) ===
+    async function loadAbTests() {
+      try {
+        const tests = await fetch('/api/ab-tests').then(r => r.json());
+        const el = document.getElementById('ab-tests-list');
+        if (!tests.length) { el.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">No A/B tests. Create one above.</div>'; return; }
+        el.innerHTML = tests.map(t => {
+          const winnerBadge = t.winner === 'A' ? '<span style="background:#16a34a;color:#fff;padding:0.05rem 0.3rem;border-radius:3px;font-size:0.6rem;">A wins</span>' :
+            t.winner === 'B' ? '<span style="background:#2563eb;color:#fff;padding:0.05rem 0.3rem;border-radius:3px;font-size:0.6rem;">B wins</span>' :
+            t.winner === 'tie' ? '<span style="background:#6b7280;color:#fff;padding:0.05rem 0.3rem;border-radius:3px;font-size:0.6rem;">Tie</span>' : '';
+          return `<div style="padding:0.3rem 0;border-bottom:1px solid #e0f2fe;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-size:0.75rem;font-weight:500;">${t.name}</span>
+              <div style="display:flex;gap:0.2rem;align-items:center;">
+                <span style="font-size:0.6rem;background:#e0f2fe;padding:0.05rem 0.2rem;border-radius:3px;">${t.status}</span>
+                ${winnerBadge}
+                <button onclick="deleteAbTestItem(${t.id})" style="font-size:0.6rem;padding:0.05rem 0.2rem;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:3px;cursor:pointer;">x</button>
+              </div>
+            </div>
+            <div style="font-size:0.68rem;color:#78716c;margin-top:0.1rem;">
+              A: "${t.variant_a}" (${t.variantA.count} leads, ${t.variantA.rate}% resp.) |
+              B: "${t.variant_b}" (${t.variantB.count} leads, ${t.variantB.rate}% resp.)
+            </div>
+          </div>`;
+        }).join('');
+      } catch (err) { console.error('AB tests error:', err); }
+    }
+    async function createAbTestFromUI() {
+      const name = document.getElementById('ab-name').value.trim();
+      const variantA = document.getElementById('ab-variant-a').value.trim();
+      const variantB = document.getElementById('ab-variant-b').value.trim();
+      if (!name || !variantA || !variantB) { toast('Fill in all fields', 'error'); return; }
+      try {
+        await fetch('/api/ab-tests', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, variantA, variantB }) });
+        document.getElementById('ab-name').value = ''; document.getElementById('ab-variant-a').value = ''; document.getElementById('ab-variant-b').value = '';
+        toast('A/B test created', 'success');
+        loadAbTests();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+    async function deleteAbTestItem(id) {
+      try {
+        await fetch('/api/ab-tests/' + id, { method: 'DELETE' });
+        toast('Test deleted', 'success');
+        loadAbTests();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    // === Re-engagement Scoring (Batch 28) ===
+    async function loadReengagement() {
+      try {
+        const data = await fetch('/api/reengagement?limit=20').then(r => r.json());
+        const sEl = document.getElementById('reengage-summary');
+        const s = data.summary;
+        sEl.innerHTML = `
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#e11d48;">${s.totalDormant}</div><div style="font-size:0.65rem;color:#78716c;">Dormant</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#f59e0b;">${s.neverContacted}</div><div style="font-size:0.65rem;color:#78716c;">Never Contacted</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#6b7280;">${s.avgScore}</div><div style="font-size:0.65rem;color:#78716c;">Avg Score</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#3b82f6;">${s.avgDaysDormant}d</div><div style="font-size:0.65rem;color:#78716c;">Avg Dormant</div></div>
+        `;
+        const lEl = document.getElementById('reengage-list');
+        if (!data.leads.length) { lEl.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;">No leads need re-engagement.</div>'; return; }
+        lEl.innerHTML = data.leads.map(l => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0;border-bottom:1px solid #ffe4e6;">
+          <div style="flex:1;">
+            <span style="font-size:0.72rem;font-weight:500;">${l.first_name} ${l.last_name}</span>
+            <span style="font-size:0.62rem;color:#78716c;margin-left:0.2rem;">Score: ${l.lead_score}</span>
+          </div>
+          <span style="font-size:0.62rem;color:#e11d48;max-width:40%;text-align:right;">${l.strategy}</span>
+        </div>`).join('');
+      } catch (err) { console.error('Reengagement error:', err); }
+    }
+
+    // === Attribution Model (Batch 28) ===
+    async function loadAttribution() {
+      try {
+        const data = await fetch('/api/attribution').then(r => r.json());
+        const qEl = document.getElementById('attribution-quality');
+        if (data.sourceQuality && data.sourceQuality.length) {
+          qEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#059669;margin-bottom:0.2rem;">Source Quality Ranking</div>' +
+            data.sourceQuality.slice(0, 15).map((s, i) => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.2rem 0;border-bottom:1px solid #d1fae5;">
+              <span style="font-size:0.72rem;"><span style="color:#9ca3af;">#${i + 1}</span> ${s.source}</span>
+              <div style="display:flex;gap:0.4rem;font-size:0.65rem;">
+                <span>${s.leads} leads</span>
+                <span style="color:#059669;">${s.emailRate}% email</span>
+                <span style="color:#2563eb;">score ${s.avgScore}</span>
+                <span style="font-weight:600;color:#b45309;">Q: ${s.quality}</span>
+              </div>
+            </div>`).join('');
+        }
+        const eEl = document.getElementById('attribution-enrichment');
+        if (data.enrichAttribution) {
+          const ea = data.enrichAttribution;
+          let html = '<div style="font-size:0.68rem;font-weight:600;color:#059669;margin-bottom:0.2rem;">Enrichment Attribution</div><div style="display:flex;gap:1rem;flex-wrap:wrap;">';
+          for (const [field, sources] of Object.entries(ea)) {
+            if (sources.length) {
+              html += `<div><span style="font-size:0.65rem;font-weight:600;">${field}:</span> ${sources.slice(0, 3).map(s => `<span style="font-size:0.62rem;">${s.source} (${s.count})</span>`).join(', ')}</div>`;
+            }
+          }
+          html += '</div>';
+          eEl.innerHTML = html;
+        }
+      } catch (err) { console.error('Attribution error:', err); }
+    }
+
     // === Lookalike Finder (Batch 27) ===
     async function loadLookalikes() {
       // Default: show top-scored lead's lookalikes
@@ -9730,7 +9904,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();

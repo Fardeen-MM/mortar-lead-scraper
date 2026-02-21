@@ -3233,6 +3233,67 @@ app.get('/api/completeness-matrix', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Lead Clustering (Batch 28) ===
+app.get('/api/clusters', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getLeadClusters());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === A/B Test Framework (Batch 28) ===
+app.get('/api/ab-tests', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getAbTests());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post('/api/ab-tests', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, description, variantA, variantB, metric } = req.body;
+    res.json(leadDb.createAbTest(name, description, variantA, variantB, metric));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post('/api/ab-tests/:id/assign', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds } = req.body;
+    res.json(leadDb.assignLeadsToAbTest(parseInt(req.params.id), leadIds || []));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post('/api/ab-tests/:id/outcome', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadId, responded } = req.body;
+    res.json(leadDb.recordAbTestOutcome(parseInt(req.params.id), leadId, responded));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.delete('/api/ab-tests/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.deleteAbTest(parseInt(req.params.id));
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Re-engagement Scoring (Batch 28) ===
+app.get('/api/reengagement', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 30;
+    res.json(leadDb.getReengagementLeads(limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Attribution Model (Batch 28) ===
+app.get('/api/attribution', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getAttributionModel());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
