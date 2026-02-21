@@ -1322,6 +1322,45 @@
       <div id="smart-lists-list" style="display:flex;flex-wrap:wrap;gap:0.3rem;"></div>
     </div>
 
+    <!-- KPI Dashboard (Batch 17) -->
+    <div id="kpi-panel" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #6ee7b7;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#059669;">KPI Dashboard</span>
+        <button onclick="loadKpiMetrics()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#d1fae5;color:#059669;border:1px solid #6ee7b7;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <div id="kpi-cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:0.4rem;"></div>
+    </div>
+
+    <!-- Scoring Models (Batch 17) -->
+    <div id="scoring-panel" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid #fdba74;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#c2410c;">Scoring Models</span>
+        <button onclick="showCreateScoringModelModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#c2410c;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Model</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Custom scoring weights — prioritize leads by what matters most to your outreach.</p>
+      <div id="scoring-models-list" style="display:flex;flex-wrap:wrap;gap:0.3rem;"></div>
+    </div>
+
+    <!-- Campaign Management (Batch 17) -->
+    <div id="campaigns-panel" style="background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1px solid #a5b4fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#4338ca;">Campaigns</span>
+        <button onclick="showCreateCampaignModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#4338ca;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Campaign</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Track outreach campaigns. Enroll leads and monitor status across campaigns.</p>
+      <div id="campaigns-list" style="display:flex;flex-direction:column;gap:0.3rem;"></div>
+    </div>
+
+    <!-- Cross-Source Duplicates (Batch 17) -->
+    <div id="cross-source-panel" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border:1px solid #d946ef;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#a21caf;">Cross-Source Duplicates</span>
+        <button onclick="loadCrossSourceDuplicates()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fae8ff;color:#a21caf;border:1px solid #d946ef;border-radius:4px;cursor:pointer;">Scan</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Leads appearing in multiple bar directories — combine data for richer profiles.</p>
+      <div id="cross-source-list" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
     <!-- Recent Notes Panel -->
     <div id="notes-panel" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border:1px solid #94a3b8;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -7357,9 +7396,254 @@
       loadSmartLists();
     }
 
+    // === KPI Dashboard (Batch 17) ===
+    async function loadKpiMetrics() {
+      try {
+        const m = await fetch('/api/leads/kpi-metrics').then(r => r.json());
+        const el = document.getElementById('kpi-cards');
+        const cards = [
+          { label: 'Total Leads', value: fmt(m.total), color: '#059669' },
+          { label: 'Email Rate', value: m.emailRate + '%', color: m.emailRate >= 50 ? '#16a34a' : '#dc2626' },
+          { label: 'Phone Rate', value: m.phoneRate + '%', color: m.phoneRate >= 30 ? '#16a34a' : '#f59e0b' },
+          { label: 'Avg Score', value: m.avgScore, color: m.avgScore >= 50 ? '#16a34a' : '#f59e0b' },
+          { label: 'Added (7d)', value: fmt(m.addedThisWeek), color: '#2563eb' },
+          { label: 'Campaign Ready', value: fmt(m.campaignReady), color: '#7c3aed' },
+          { label: 'DNC Blocked', value: fmt(m.dncBlocked), color: '#dc2626' },
+          { label: 'Active Campaigns', value: fmt(m.activeCampaigns), color: '#4338ca' },
+          { label: 'Unique Firms', value: fmt(m.uniqueFirms), color: '#0891b2' },
+          { label: 'States Covered', value: fmt(m.statesCovered), color: '#059669' },
+        ];
+        el.innerHTML = cards.map(c => `
+          <div style="background:#fff;border-radius:6px;padding:0.4rem 0.6rem;text-align:center;border:1px solid #e5e7eb;">
+            <div style="font-size:1.1rem;font-weight:700;color:${c.color};">${c.value}</div>
+            <div style="font-size:0.65rem;color:#6b7280;">${c.label}</div>
+          </div>
+        `).join('');
+      } catch (err) { console.error('KPI error:', err); }
+    }
+
+    // === Scoring Models (Batch 17) ===
+    async function loadScoringModels() {
+      try {
+        const models = await fetch('/api/scoring-models').then(r => r.json());
+        const el = document.getElementById('scoring-models-list');
+        if (models.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#9a3412;">No custom models. Using default scoring.</span>';
+          return;
+        }
+        el.innerHTML = models.map(m => {
+          const weights = JSON.parse(m.weights);
+          const fields = Object.entries(weights).map(([k, v]) => `${k}:${v}`).join(', ');
+          return `
+            <div style="display:flex;align-items:center;gap:0.3rem;padding:0.2rem 0.6rem;background:#fff;border:1px solid ${m.is_active ? '#f97316' : '#fed7aa'};border-radius:8px;font-size:0.72rem;">
+              ${m.is_active ? '<span style="color:#f97316;font-weight:700;">&#x2713;</span>' : ''}
+              <strong>${esc(m.name)}</strong>
+              <span style="color:#9a3412;font-size:0.65rem;">${fields}</span>
+              ${!m.is_active ? `<button onclick="activateScoringModel(${m.id})" style="border:none;background:none;cursor:pointer;color:#c2410c;font-size:0.65rem;padding:0;">[activate]</button>` : ''}
+              <button onclick="deleteScoringModel(${m.id})" style="border:none;background:none;cursor:pointer;color:#dc2626;font-size:0.7rem;padding:0;">&times;</button>
+            </div>
+          `;
+        }).join('');
+      } catch (err) { console.error('Scoring models error:', err); }
+    }
+
+    function showCreateScoringModelModal() {
+      const modal = document.createElement('div');
+      modal.id = 'scoring-model-modal';
+      modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
+      modal.innerHTML = `
+        <div style="background:#fff;border-radius:12px;padding:1.5rem;width:420px;max-width:90vw;">
+          <h3 style="margin:0 0 1rem;font-size:1rem;color:#c2410c;">Create Scoring Model</h3>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;">Model Name</label>
+            <input id="sm-name" type="text" placeholder="e.g., Email-First, Phone-Priority" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          </div>
+          <p style="font-size:0.72rem;color:#6b7280;margin-bottom:0.5rem;">Set weights for each field (higher = more important):</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;margin-bottom:0.75rem;">
+            <label style="font-size:0.75rem;">Email <input id="sm-email" type="number" value="20" min="0" max="50" style="width:50px;padding:0.2rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;margin-left:0.3rem;"></label>
+            <label style="font-size:0.75rem;">Phone <input id="sm-phone" type="number" value="15" min="0" max="50" style="width:50px;padding:0.2rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;margin-left:0.3rem;"></label>
+            <label style="font-size:0.75rem;">Website <input id="sm-website" type="number" value="10" min="0" max="50" style="width:50px;padding:0.2rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;margin-left:0.3rem;"></label>
+            <label style="font-size:0.75rem;">Firm <input id="sm-firm" type="number" value="10" min="0" max="50" style="width:50px;padding:0.2rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;margin-left:0.3rem;"></label>
+            <label style="font-size:0.75rem;">LinkedIn <input id="sm-linkedin" type="number" value="10" min="0" max="50" style="width:50px;padding:0.2rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;margin-left:0.3rem;"></label>
+            <label style="font-size:0.75rem;">Practice <input id="sm-practice" type="number" value="5" min="0" max="50" style="width:50px;padding:0.2rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;margin-left:0.3rem;"></label>
+            <label style="font-size:0.75rem;">Bar Status <input id="sm-bar-status" type="number" value="5" min="0" max="50" style="width:50px;padding:0.2rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;margin-left:0.3rem;"></label>
+            <label style="font-size:0.75rem;">City <input id="sm-city" type="number" value="5" min="0" max="50" style="width:50px;padding:0.2rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;margin-left:0.3rem;"></label>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:0.5rem;">
+            <button onclick="document.getElementById('scoring-model-modal').remove()" style="padding:0.4rem 0.8rem;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;">Cancel</button>
+            <button onclick="createScoringModelFromModal()" style="padding:0.4rem 0.8rem;border:none;border-radius:6px;background:#c2410c;color:#fff;cursor:pointer;">Create</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+    }
+
+    async function createScoringModelFromModal() {
+      const name = document.getElementById('sm-name').value.trim();
+      if (!name) { alert('Name required'); return; }
+      const weights = {
+        email: parseInt(document.getElementById('sm-email').value) || 0,
+        phone: parseInt(document.getElementById('sm-phone').value) || 0,
+        website: parseInt(document.getElementById('sm-website').value) || 0,
+        firm_name: parseInt(document.getElementById('sm-firm').value) || 0,
+        linkedin_url: parseInt(document.getElementById('sm-linkedin').value) || 0,
+        practice_area: parseInt(document.getElementById('sm-practice').value) || 0,
+        bar_status: parseInt(document.getElementById('sm-bar-status').value) || 0,
+        city: parseInt(document.getElementById('sm-city').value) || 0,
+      };
+      await fetch('/api/scoring-models', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, weights }),
+      });
+      document.getElementById('scoring-model-modal').remove();
+      toast('Scoring model "' + esc(name) + '" created', 'success');
+      loadScoringModels();
+    }
+
+    async function activateScoringModel(id) {
+      await fetch('/api/scoring-models/' + id + '/activate', { method: 'POST' });
+      toast('Scoring model activated', 'success');
+      loadScoringModels();
+    }
+
+    async function applyScoringModel() {
+      const res = await fetch('/api/scoring-models/apply', { method: 'POST' }).then(r => r.json());
+      toast('Rescored ' + fmt(res.updated) + ' leads', 'success');
+      refreshAll();
+    }
+
+    async function deleteScoringModel(id) {
+      await fetch('/api/scoring-models/' + id, { method: 'DELETE' });
+      toast('Scoring model deleted', 'success');
+      loadScoringModels();
+    }
+
+    // === Campaign Management (Batch 17) ===
+    async function loadCampaigns() {
+      try {
+        const campaigns = await fetch('/api/campaigns').then(r => r.json());
+        const el = document.getElementById('campaigns-list');
+        if (campaigns.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#6366f1;">No campaigns yet. Create one to start tracking outreach.</span>';
+          return;
+        }
+        el.innerHTML = campaigns.map(c => {
+          const statusColors = { draft: '#6b7280', active: '#16a34a', paused: '#f59e0b', completed: '#7c3aed', archived: '#94a3b8' };
+          const color = statusColors[c.status] || '#6b7280';
+          return `
+            <div style="display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0.6rem;background:#fff;border:1px solid #c7d2fe;border-radius:6px;font-size:0.72rem;">
+              <span style="width:8px;height:8px;border-radius:50%;background:${color};flex-shrink:0;"></span>
+              <strong style="flex:1;">${esc(c.name)}</strong>
+              <span style="color:#6b7280;">${fmt(c.lead_count || 0)} leads</span>
+              <span style="font-size:0.65rem;color:${color};font-weight:600;">${c.status}</span>
+              <select onchange="updateCampaignStatus(${c.id}, this.value)" style="font-size:0.65rem;padding:0.1rem;border:1px solid #d1d5db;border-radius:3px;">
+                ${['draft','active','paused','completed','archived'].map(s => `<option value="${s}" ${s === c.status ? 'selected' : ''}>${s}</option>`).join('')}
+              </select>
+              <button onclick="viewCampaignLeads(${c.id})" style="border:none;background:none;cursor:pointer;color:#4338ca;font-size:0.65rem;padding:0;">[view]</button>
+              <button onclick="deleteCampaign(${c.id})" style="border:none;background:none;cursor:pointer;color:#dc2626;font-size:0.7rem;padding:0;">&times;</button>
+            </div>
+          `;
+        }).join('');
+      } catch (err) { console.error('Campaigns error:', err); }
+    }
+
+    function showCreateCampaignModal() {
+      const modal = document.createElement('div');
+      modal.id = 'campaign-modal';
+      modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
+      modal.innerHTML = `
+        <div style="background:#fff;border-radius:12px;padding:1.5rem;width:400px;max-width:90vw;">
+          <h3 style="margin:0 0 1rem;font-size:1rem;color:#4338ca;">Create Campaign</h3>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;">Campaign Name</label>
+            <input id="camp-name" type="text" placeholder="e.g., FL Immigration Q1 2026" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;">Description</label>
+            <textarea id="camp-desc" placeholder="Campaign goals and notes..." style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;height:60px;resize:vertical;"></textarea>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:0.5rem;">
+            <button onclick="document.getElementById('campaign-modal').remove()" style="padding:0.4rem 0.8rem;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;">Cancel</button>
+            <button onclick="createCampaignFromModal()" style="padding:0.4rem 0.8rem;border:none;border-radius:6px;background:#4338ca;color:#fff;cursor:pointer;">Create</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+    }
+
+    async function createCampaignFromModal() {
+      const name = document.getElementById('camp-name').value.trim();
+      if (!name) { alert('Name required'); return; }
+      const description = document.getElementById('camp-desc').value.trim();
+      await fetch('/api/campaigns', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, description }),
+      });
+      document.getElementById('campaign-modal').remove();
+      toast('Campaign "' + esc(name) + '" created', 'success');
+      loadCampaigns();
+    }
+
+    async function updateCampaignStatus(id, status) {
+      await fetch('/api/campaigns/' + id + '/status', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status }),
+      });
+      toast('Campaign status updated to ' + status, 'success');
+      loadCampaigns();
+    }
+
+    async function viewCampaignLeads(id) {
+      try {
+        const leads = await fetch('/api/campaigns/' + id + '/leads?limit=50').then(r => r.json());
+        toast('Campaign has ' + leads.length + ' leads', 'info');
+        _currentLeads = leads;
+        renderLeadTable();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    async function enrollSelectedInCampaign(campaignId) {
+      const ids = [..._selectedIds];
+      if (ids.length === 0) { toast('Select leads first', 'warn'); return; }
+      await fetch('/api/campaigns/' + campaignId + '/leads', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ leadIds: ids }),
+      });
+      toast('Enrolled ' + ids.length + ' leads', 'success');
+      loadCampaigns();
+    }
+
+    async function deleteCampaign(id) {
+      await fetch('/api/campaigns/' + id, { method: 'DELETE' });
+      toast('Campaign deleted', 'success');
+      loadCampaigns();
+    }
+
+    // === Cross-Source Duplicates (Batch 17) ===
+    async function loadCrossSourceDuplicates() {
+      try {
+        const dupes = await fetch('/api/leads/cross-source-duplicates?limit=20').then(r => r.json());
+        const el = document.getElementById('cross-source-list');
+        if (dupes.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#a21caf;">No cross-source duplicates found.</span>';
+          return;
+        }
+        el.innerHTML = dupes.map(d => `
+          <div style="display:flex;align-items:center;gap:0.5rem;padding:0.25rem 0;border-bottom:1px solid #f3e8ff;font-size:0.72rem;">
+            <strong style="flex:1;">${esc(d.name)}</strong>
+            <span style="color:#6b7280;">${esc(d.city || '')}, ${esc(d.state || '')}</span>
+            <span style="background:#fae8ff;color:#a21caf;padding:0.1rem 0.4rem;border-radius:4px;font-size:0.65rem;font-weight:600;">${d.source_count} sources</span>
+            <span style="color:#9333ea;font-size:0.65rem;">${esc(d.sources || '')}</span>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Cross-source error:', err); }
+    }
+
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();

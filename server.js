@@ -2243,6 +2243,117 @@ app.get('/api/smart-lists/:id/leads', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Custom Scoring Models ===
+app.get('/api/scoring-models', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getScoringModels());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/scoring-models', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, weights } = req.body;
+    if (!name || !weights) return res.status(400).json({ error: 'name and weights required' });
+    const result = leadDb.createScoringModel(name, weights);
+    res.json({ id: result.lastInsertRowid });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/scoring-models/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.deleteScoringModel(parseInt(req.params.id));
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/scoring-models/:id/activate', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.activateScoringModel(parseInt(req.params.id));
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/scoring-models/apply', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.applyCustomScoring());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Campaign Management ===
+app.get('/api/campaigns', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getCampaigns());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/campaigns', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, description } = req.body;
+    if (!name) return res.status(400).json({ error: 'name required' });
+    const result = leadDb.createCampaign(name, description || '');
+    res.json({ id: result.lastInsertRowid });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/campaigns/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.deleteCampaign(parseInt(req.params.id));
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/campaigns/:id/leads', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds } = req.body;
+    if (!leadIds || !Array.isArray(leadIds)) return res.status(400).json({ error: 'leadIds (array) required' });
+    res.json(leadDb.addLeadsToCampaign(parseInt(req.params.id), leadIds));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/campaigns/:id/leads', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 100;
+    res.json(leadDb.getCampaignLeads(parseInt(req.params.id), limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/campaigns/:id/status', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { status } = req.body;
+    if (!status) return res.status(400).json({ error: 'status required' });
+    leadDb.updateCampaignStatus(parseInt(req.params.id), status);
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Cross-Source Dedup ===
+app.get('/api/leads/cross-source-duplicates', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 50;
+    res.json(leadDb.getCrossSourceDuplicates(limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === KPI Dashboard ===
+app.get('/api/leads/kpi-metrics', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getKpiMetrics());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
