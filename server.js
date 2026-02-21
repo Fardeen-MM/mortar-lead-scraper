@@ -1303,6 +1303,78 @@ app.post('/api/segments/query/leads', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// --- Export Templates ---
+app.get('/api/export-templates', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getExportTemplates());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/export-templates', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, columns, columnRenames, filters } = req.body;
+    if (!name || !columns) return res.status(400).json({ error: 'name and columns required' });
+    res.json(leadDb.createExportTemplate(name, columns, columnRenames, filters));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/export-templates/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.deleteExportTemplate(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/export-templates/:id/export', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { writeCSV, generateOutputPath } = require('./lib/csv-handler');
+    const templates = leadDb.getExportTemplates();
+    const template = templates.find(t => t.id === parseInt(req.params.id));
+    if (!template) return res.status(404).json({ error: 'Template not found' });
+    const leads = leadDb.exportLeads(template.filters || {});
+    // Apply column selection and renames
+    const mapped = leads.map(lead => {
+      const row = {};
+      for (const col of template.columns) {
+        const renamed = template.columnRenames[col] || col;
+        row[renamed] = lead[col] || '';
+      }
+      return row;
+    });
+    const outPath = generateOutputPath(`export-${template.name.toLowerCase().replace(/\s+/g, '-')}`);
+    writeCSV(mapped, outPath);
+    leadDb.recordExport(template.name, mapped.length, JSON.stringify(template.filters), require('path').basename(outPath));
+    res.download(outPath);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// --- Pipeline Analytics ---
+app.get('/api/analytics/funnel', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getPipelineFunnel());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/analytics/source-effectiveness', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getSourceEffectiveness());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// --- Search Suggestions ---
+app.get('/api/leads/suggest', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { q } = req.query;
+    res.json(leadDb.getSearchSuggestions(q));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // --- Scoring Rules ---
 app.get('/api/scoring/rules', (req, res) => {
   try {

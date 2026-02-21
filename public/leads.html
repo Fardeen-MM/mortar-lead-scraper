@@ -1257,6 +1257,31 @@
       <div id="export-history" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Export Templates -->
+    <div class="panel" style="display:block; margin-bottom: 1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+        <h2 style="margin:0;">Export Templates</h2>
+        <button onclick="openTemplateBuilder()" class="btn btn-secondary" style="font-size:0.72rem;padding:0.2rem 0.5rem;">+ Custom Template</button>
+      </div>
+      <p class="hint" style="margin-bottom:0.75rem;">Pre-configured export formats for different platforms.</p>
+      <div id="export-templates-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.5rem;"></div>
+    </div>
+
+    <!-- Analytics: Conversion Funnel + Source Effectiveness -->
+    <div class="panel" style="display:block; margin-bottom: 1rem;">
+      <h2 style="margin-bottom: 0.75rem;">Analytics</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div>
+          <h3 style="font-size:0.85rem;margin-bottom:0.5rem;">Pipeline Funnel</h3>
+          <div id="funnel-chart"></div>
+        </div>
+        <div>
+          <h3 style="font-size:0.85rem;margin-bottom:0.5rem;">Source Effectiveness</h3>
+          <div id="source-effectiveness" style="max-height:250px;overflow-y:auto;"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- Webhooks Panel -->
     <div class="panel" style="display:block; margin-bottom: 1rem;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
@@ -1392,7 +1417,10 @@
 
     <!-- Search/Filter Row 1 -->
     <div class="lead-controls">
-      <input type="text" class="search-input" id="search-input" placeholder="Search name, firm, city, email...">
+      <div style="position:relative;flex:1;">
+        <input type="text" class="search-input" id="search-input" placeholder="Search name, firm, city, email..." autocomplete="off" style="width:100%;">
+        <div id="search-suggestions" style="display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px;max-height:200px;overflow-y:auto;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
+      </div>
       <select id="filter-country">
         <option value="">All Countries</option>
         <option value="US">US</option>
@@ -4655,6 +4683,137 @@
       loadSegments();
     }
 
+    // --- Export Templates ---
+    async function loadExportTemplates() {
+      try {
+        const templates = await fetch('/api/export-templates').then(r => r.json());
+        const container = document.getElementById('export-templates-list');
+        const colors = ['#4f46e5', '#059669', '#0ea5e9', '#d97706', '#7c3aed', '#ec4899'];
+        container.innerHTML = templates.map((t, i) => `
+          <div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:0.6rem;border-left:3px solid ${colors[i % colors.length]};">
+            <div style="font-weight:600;font-size:0.82rem;margin-bottom:0.3rem;">${esc(t.name)}</div>
+            <div style="font-size:0.7rem;color:#6b7280;margin-bottom:0.4rem;">${t.columns.length} columns</div>
+            <div style="display:flex;gap:0.3rem;">
+              <button onclick="exportWithTemplate(${t.id})" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:${colors[i % colors.length]};color:#fff;border:none;border-radius:3px;cursor:pointer;">Export</button>
+              <button onclick="deleteTemplateUI(${t.id})" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:3px;cursor:pointer;">&times;</button>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Templates load error:', err); }
+    }
+
+    function exportWithTemplate(templateId) {
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '/api/export-templates/' + templateId + '/export';
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
+      toast('Downloading...', 'success');
+    }
+
+    async function deleteTemplateUI(id) {
+      if (!confirm('Delete this template?')) return;
+      await fetch('/api/export-templates/' + id, { method: 'DELETE' });
+      toast('Template deleted', 'success');
+      loadExportTemplates();
+    }
+
+    function openTemplateBuilder() {
+      const name = prompt('Template name:');
+      if (!name) return;
+      const allCols = ['email','first_name','last_name','firm_name','phone','website','city','state','country','practice_area','title','bar_number','bar_status','lead_score','pipeline_stage','tags','primary_source','linkedin_url','bio','education'];
+      const cols = prompt('Columns (comma-separated):\\n\\nAvailable: ' + allCols.join(', '), 'email,first_name,last_name,firm_name,phone,city,state');
+      if (!cols) return;
+      const columns = cols.split(',').map(c => c.trim()).filter(Boolean);
+      fetch('/api/export-templates', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, columns })
+      }).then(() => { toast('Template created', 'success'); loadExportTemplates(); })
+        .catch(() => toast('Failed', 'error'));
+    }
+
+    // --- Pipeline Funnel & Source Analytics ---
+    async function loadAnalytics() {
+      try {
+        const [funnel, sources] = await Promise.all([
+          fetch('/api/analytics/funnel').then(r => r.json()),
+          fetch('/api/analytics/source-effectiveness').then(r => r.json()),
+        ]);
+
+        // Funnel chart
+        const funnelEl = document.getElementById('funnel-chart');
+        const maxCount = Math.max(...funnel.map(f => f.count), 1);
+        funnelEl.innerHTML = funnel.map(f => {
+          const w = (f.count / maxCount * 100).toFixed(0);
+          const stageColors = { new: '#6366f1', contacted: '#0ea5e9', replied: '#f59e0b', meeting: '#8b5cf6', client: '#10b981' };
+          return `<div style="margin-bottom:0.4rem;">
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.15rem;">
+              <span style="font-weight:600;">${f.stage.charAt(0).toUpperCase() + f.stage.slice(1)}</span>
+              <span>${f.count} ${f.dropoff !== null ? '<span style="color:#ef4444;font-size:0.65rem;">(-' + f.dropoff + '%)</span>' : ''}</span>
+            </div>
+            <div style="height:16px;background:#f3f4f6;border-radius:3px;overflow:hidden;">
+              <div style="height:100%;width:${w}%;background:${stageColors[f.stage] || '#6b7280'};border-radius:3px;transition:width 0.5s;"></div>
+            </div>
+          </div>`;
+        }).join('');
+
+        // Source effectiveness
+        const srcEl = document.getElementById('source-effectiveness');
+        srcEl.innerHTML = sources.map(s => {
+          const emailPct = s.total > 0 ? (s.with_email / s.total * 100).toFixed(0) : 0;
+          const engagedPct = s.total > 0 ? (s.engaged / s.total * 100).toFixed(0) : 0;
+          return `<div style="display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0;border-bottom:1px solid #f3f4f6;font-size:0.75rem;">
+            <span style="font-weight:600;min-width:100px;">${esc(s.source)}</span>
+            <span style="color:#6b7280;">${s.total} leads</span>
+            <span style="color:#059669;">${emailPct}% email</span>
+            <span style="color:#4f46e5;">${engagedPct}% engaged</span>
+            <span style="margin-left:auto;font-weight:600;color:#374151;">${Math.round(s.avg_score)} avg</span>
+          </div>`;
+        }).join('');
+      } catch (err) { console.error('Analytics error:', err); }
+    }
+
+    // --- Search Autocomplete ---
+    let _suggestTimer = null;
+    const searchInput = document.getElementById('search-input');
+    const suggestBox = document.getElementById('search-suggestions');
+
+    searchInput.addEventListener('input', function() {
+      clearTimeout(_suggestTimer);
+      const q = this.value.trim();
+      if (q.length < 2) { suggestBox.style.display = 'none'; return; }
+      _suggestTimer = setTimeout(async () => {
+        try {
+          const suggestions = await fetch('/api/leads/suggest?q=' + encodeURIComponent(q)).then(r => r.json());
+          if (suggestions.length === 0) { suggestBox.style.display = 'none'; return; }
+          const icons = { name: '&#x1F464;', firm: '&#x1F3E2;', city: '&#x1F4CD;' };
+          suggestBox.innerHTML = suggestions.map(s => `
+            <div onclick="applySuggestion('${esc(s.label)}', '${s.type}')" style="padding:0.4rem 0.75rem;cursor:pointer;font-size:0.8rem;border-bottom:1px solid #f9fafb;display:flex;align-items:center;gap:0.4rem;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background=''">
+              <span>${icons[s.type] || ''}</span>
+              <span>${esc(s.label)}</span>
+              <span style="font-size:0.65rem;color:#9ca3af;margin-left:auto;">${s.type}</span>
+            </div>
+          `).join('');
+          suggestBox.style.display = '';
+        } catch (err) { suggestBox.style.display = 'none'; }
+      }, 200);
+    });
+
+    searchInput.addEventListener('blur', () => {
+      setTimeout(() => { suggestBox.style.display = 'none'; }, 200);
+    });
+
+    function applySuggestion(label, type) {
+      searchInput.value = label;
+      suggestBox.style.display = 'none';
+      loadLeads();
+      // Save to recent searches
+      const recent = JSON.parse(localStorage.getItem('mortar-recent-searches') || '[]');
+      recent.unshift({ label, type, time: Date.now() });
+      localStorage.setItem('mortar-recent-searches', JSON.stringify(recent.slice(0, 10)));
+    }
+
     // --- Quick Actions ---
     function quickScrape() {
       const state = prompt('Enter state code to scrape (e.g., FL, CA, NY):');
@@ -5109,7 +5268,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
