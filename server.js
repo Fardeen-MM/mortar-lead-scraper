@@ -2888,6 +2888,86 @@ app.get('/api/bulk-enrichment/diff/:id', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Relationship Graph (Batch 23) ===
+app.get('/api/leads/:id/relationships', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.buildRelationshipGraph(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/relationships', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIdA, leadIdB, type, strength } = req.body;
+    if (!leadIdA || !leadIdB || !type) return res.status(400).json({ error: 'leadIdA, leadIdB, type required' });
+    res.json(leadDb.addRelationship(parseInt(leadIdA), parseInt(leadIdB), type, strength || 0.5));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/firm-network', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getFirmNetwork(parseInt(req.query.limit) || 30));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Data Freshness (Batch 23) ===
+app.get('/api/freshness/report', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getFreshnessReport({ staleDays: parseInt(req.query.staleDays) || 90, limit: parseInt(req.query.limit) || 100 }));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/leads/:id/freshness', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getLeadFreshness(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/freshness/verify', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadId, fieldName, source } = req.body;
+    if (!leadId || !fieldName) return res.status(400).json({ error: 'leadId and fieldName required' });
+    res.json(leadDb.recordFieldVerification(parseInt(leadId), fieldName, source));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Scoring Model Comparison (Batch 23) ===
+app.get('/api/scoring-models/compare', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { modelA, modelB } = req.query;
+    if (!modelA || !modelB) return res.status(400).json({ error: 'modelA and modelB query params required' });
+    res.json(leadDb.compareScoringModels(parseInt(modelA), parseInt(modelB)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/scoring-models/rankings', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getScoringModelRankings());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Geographic Clustering (Batch 23) ===
+app.get('/api/geographic/clusters', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getGeographicClusters({ minClusterSize: parseInt(req.query.minSize) || 5, limit: parseInt(req.query.limit) || 50 }));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/geographic/penetration/:state', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getMarketPenetration(req.params.state));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {

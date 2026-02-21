@@ -1522,6 +1522,50 @@
       <div id="audit-log-list" style="max-height:250px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Relationship Graph (Batch 23) -->
+    <div id="relationship-graph-panel" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border:1px solid #d946ef;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#a21caf;">Firm Network</span>
+        <button onclick="loadFirmNetwork()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fae8ff;color:#a21caf;border:1px solid #d946ef;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Lead relationship map — firms with multiple attorneys, cross-city connections. Like LinkedIn's network graph.</p>
+      <div id="firm-network-list" style="max-height:200px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Data Freshness (Batch 23) -->
+    <div id="freshness-monitor-panel" style="background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border:1px solid #2dd4bf;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#0d9488;">Data Freshness</span>
+        <button onclick="loadFreshnessMonitor()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ccfbf1;color:#0d9488;border:1px solid #2dd4bf;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Monitor data staleness — when leads were last verified. Auto-detect stale data (>90 days). Like ZoomInfo's accuracy monitoring.</p>
+      <div id="freshness-summary" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="freshness-rescrape" style="margin-bottom:0.3rem;"></div>
+      <div id="freshness-states" style="max-height:150px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Scoring Comparison (Batch 23) -->
+    <div id="scoring-compare-panel" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #f59e0b;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#d97706;">Scoring Model Rankings</span>
+        <button onclick="loadScoringRankings()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fef3c7;color:#d97706;border:1px solid #f59e0b;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Compare scoring models — field coverage, max possible score, A/B comparison. Like Salesforce Einstein scoring.</p>
+      <div id="scoring-rankings-list" style="max-height:200px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Geographic Clustering (Batch 23) -->
+    <div id="geo-cluster-panel" style="background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1px solid #818cf8;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#4f46e5;">Market Penetration</span>
+        <button onclick="loadGeoClusters()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#e0e7ff;color:#4f46e5;border:1px solid #818cf8;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Geographic lead density — top markets, under-penetrated cities, market coverage. Like Apollo's market mapping.</p>
+      <div id="geo-summary" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="geo-clusters-list" style="max-height:150px;overflow-y:auto;margin-bottom:0.3rem;"></div>
+      <div id="geo-underpen" style="max-height:120px;overflow-y:auto;"></div>
+    </div>
+
     <!-- Lifecycle Tracking (Batch 22) -->
     <div id="lifecycle-panel" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #4ade80;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -8284,6 +8328,126 @@
       } catch (err) { toast('Export error: ' + err.message, 'error'); }
     }
 
+    // === Firm Network (Batch 23) ===
+    async function loadFirmNetwork() {
+      try {
+        const firms = await fetch('/api/firm-network?limit=20').then(r => r.json());
+        const el = document.getElementById('firm-network-list');
+        if (!firms || firms.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#a21caf;">No multi-attorney firms found yet.</span>';
+          return;
+        }
+        el.innerHTML = firms.map(f => `
+          <div style="display:flex;align-items:center;gap:0.4rem;padding:0.2rem 0;border-bottom:1px solid #fae8ff;font-size:0.72rem;">
+            <strong style="flex:1;color:#7c3aed;">${esc(f.firm_name)}</strong>
+            <span style="color:#6b7280;">${f.headcount} attorneys</span>
+            <span style="color:#0d9488;font-size:0.65rem;">${f.cities} cities</span>
+            <span style="color:#2563eb;font-size:0.65rem;">${f.states} states</span>
+            <span style="color:#059669;font-size:0.65rem;">${f.with_email} emails</span>
+            <span style="padding:0.1rem 0.3rem;background:#fae8ff;border-radius:4px;font-size:0.6rem;color:#a21caf;">avg ${f.avg_score}</span>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Firm network error:', err); }
+    }
+
+    // === Data Freshness Monitor (Batch 23) ===
+    async function loadFreshnessMonitor() {
+      try {
+        const data = await fetch('/api/freshness/report?staleDays=90&limit=50').then(r => r.json());
+        const sumEl = document.getElementById('freshness-summary');
+        const o = data.overall || {};
+        sumEl.innerHTML = `
+          <span style="font-size:0.72rem;"><strong style="color:#0d9488;">${o.total || 0}</strong> total leads</span>
+          <span style="font-size:0.72rem;"><strong style="color:#059669;">${o.fresh_30d || 0}</strong> fresh (30d)</span>
+          <span style="font-size:0.72rem;"><strong style="color:#ef4444;">${o.stale_90d || 0}</strong> stale (90d+)</span>
+          <span style="font-size:0.72rem;"><strong style="color:#6b7280;">${o.avg_age_days || 0}</strong> avg age (days)</span>
+        `;
+        const resEl = document.getElementById('freshness-rescrape');
+        if (data.rescrape && data.rescrape.length > 0) {
+          resEl.innerHTML = '<span style="font-size:0.68rem;font-weight:600;color:#ef4444;">Re-scrape needed:</span> ' +
+            data.rescrape.map(r => `<span style="display:inline-block;padding:0.1rem 0.3rem;background:#fef2f2;border:1px solid #fca5a5;border-radius:4px;font-size:0.65rem;margin:0.1rem;">${esc(r.state)} (${r.stalePct}% stale, ${r.staleCount}/${r.totalCount})</span>`).join('');
+        } else {
+          resEl.innerHTML = '<span style="font-size:0.68rem;color:#059669;">All states have fresh data.</span>';
+        }
+        const stEl = document.getElementById('freshness-states');
+        if (data.byState && data.byState.length > 0) {
+          stEl.innerHTML = data.byState.slice(0, 15).map(s => `
+            <div style="display:flex;align-items:center;gap:0.4rem;padding:0.15rem 0;border-bottom:1px solid #ccfbf1;font-size:0.68rem;">
+              <strong style="width:50px;">${esc(s.state)}</strong>
+              <span style="flex:1;">${s.total} total</span>
+              <span style="color:#059669;">${s.fresh_30d} fresh</span>
+              <span style="color:#ef4444;">${s.stale_90d} stale</span>
+              <span style="color:#6b7280;">${s.avg_age_days}d avg</span>
+            </div>
+          `).join('');
+        }
+      } catch (err) { console.error('Freshness error:', err); }
+    }
+
+    // === Scoring Model Rankings (Batch 23) ===
+    async function loadScoringRankings() {
+      try {
+        const models = await fetch('/api/scoring-models/rankings').then(r => r.json());
+        const el = document.getElementById('scoring-rankings-list');
+        if (!models || models.length === 0) {
+          el.innerHTML = '<span style="font-size:0.72rem;color:#d97706;">No scoring models created yet. Create one in the Scoring Models panel.</span>';
+          return;
+        }
+        el.innerHTML = models.map(m => `
+          <div style="display:flex;align-items:center;gap:0.4rem;padding:0.2rem 0;border-bottom:1px solid #fef3c7;font-size:0.72rem;">
+            <span style="padding:0.1rem 0.3rem;border-radius:4px;font-size:0.6rem;font-weight:600;background:${m.is_active ? '#dcfce7;color:#16a34a' : '#f3f4f6;color:#6b7280'};">${m.is_active ? 'active' : 'draft'}</span>
+            <strong style="flex:1;color:#b45309;">${esc(m.name)}</strong>
+            <span style="color:#6b7280;font-size:0.65rem;">${m.fieldCount} fields</span>
+            <span style="color:#d97706;font-size:0.65rem;">max: ${m.maxPossible}</span>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Scoring rankings error:', err); }
+    }
+
+    // === Geographic Clustering (Batch 23) ===
+    async function loadGeoClusters() {
+      try {
+        const data = await fetch('/api/geographic/clusters?minSize=3&limit=30').then(r => r.json());
+        const sumEl = document.getElementById('geo-summary');
+        const s = data.summary || {};
+        sumEl.innerHTML = `
+          <span style="font-size:0.72rem;"><strong style="color:#4f46e5;">${fmt(s.totalLeads || 0)}</strong> leads</span>
+          <span style="font-size:0.72rem;"><strong style="color:#6b7280;">${s.totalCities || 0}</strong> cities</span>
+          <span style="font-size:0.72rem;"><strong style="color:#0d9488;">${s.totalStates || 0}</strong> states</span>
+          <span style="font-size:0.72rem;"><strong style="color:#d97706;">${s.avgPerCity || 0}</strong> avg/city</span>
+        `;
+        const clEl = document.getElementById('geo-clusters-list');
+        if (data.cityClusters && data.cityClusters.length > 0) {
+          clEl.innerHTML = '<span style="font-size:0.68rem;font-weight:600;color:#4f46e5;margin-bottom:0.2rem;display:block;">Top Markets</span>' +
+            data.cityClusters.slice(0, 15).map(c => `
+              <div onclick="showMarketDetail('${esc(c.state)}')" style="display:flex;align-items:center;gap:0.4rem;padding:0.15rem 0;border-bottom:1px solid #e0e7ff;font-size:0.68rem;cursor:pointer;" onmouseover="this.style.background='#eef2ff'" onmouseout="this.style.background=''">
+                <strong style="flex:1;">${esc(c.city)}, ${esc(c.state)}</strong>
+                <span style="color:#4f46e5;">${c.lead_count} leads</span>
+                <span style="color:#059669;font-size:0.6rem;">${c.with_email} email</span>
+                <span style="color:#6b7280;font-size:0.6rem;">${c.unique_firms} firms</span>
+              </div>
+            `).join('');
+        }
+        const upEl = document.getElementById('geo-underpen');
+        if (data.underPenetrated && data.underPenetrated.length > 0) {
+          upEl.innerHTML = '<span style="font-size:0.68rem;font-weight:600;color:#ef4444;margin-bottom:0.2rem;display:block;">Under-Penetrated</span>' +
+            data.underPenetrated.slice(0, 10).map(u => `
+              <div style="display:flex;align-items:center;gap:0.4rem;padding:0.15rem 0;border-bottom:1px solid #fef2f2;font-size:0.68rem;">
+                <strong style="flex:1;">${esc(u.city)}, ${esc(u.state)}</strong>
+                <span style="color:#ef4444;">${u.lead_count} leads (${u.pct_of_state}% of state)</span>
+              </div>
+            `).join('');
+        }
+      } catch (err) { console.error('Geo clusters error:', err); }
+    }
+
+    async function showMarketDetail(state) {
+      try {
+        const data = await fetch('/api/geographic/penetration/' + encodeURIComponent(state)).then(r => r.json());
+        toast(state + ': ' + data.totalLeads + ' leads across ' + (data.cities?.length || 0) + ' cities', 'info');
+      } catch (err) { toast('Market error: ' + err.message, 'error'); }
+    }
+
     // === Lifecycle Analytics (Batch 22) ===
     async function loadLifecycleAnalytics() {
       try {
@@ -8858,7 +9022,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
