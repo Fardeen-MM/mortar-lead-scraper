@@ -3082,6 +3082,123 @@ app.get('/api/email/deliverability', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Tagging Rules Engine (Batch 26) ===
+app.get('/api/tag-rules', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getTagRules());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post('/api/tag-rules', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, tag, conditions, logic } = req.body;
+    res.json(leadDb.createTagRule(name, tag, conditions, logic));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.delete('/api/tag-rules/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.deleteTagRule(req.params.id);
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post('/api/tag-rules/:id/toggle', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.toggleTagRule(req.params.id));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post('/api/tag-rules/run', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.runTagRules());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Nurture Cadence (Batch 26) ===
+app.get('/api/nurture/cadence', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 50;
+    res.json(leadDb.getNurtureCadence(limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.get('/api/nurture/analytics', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getCadenceAnalytics());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Custom Fields (Batch 26) ===
+app.get('/api/custom-fields', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getCustomFieldDefs());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post('/api/custom-fields', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { fieldName, fieldType, options, required, defaultValue } = req.body;
+    res.json(leadDb.createCustomField(fieldName, fieldType, options, required, defaultValue));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.delete('/api/custom-fields/:name', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.deleteCustomField(req.params.name);
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.get('/api/custom-fields/stats', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getCustomFieldStats());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.get('/api/leads/:id/custom-fields', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getCustomFieldValues(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.put('/api/leads/:id/custom-fields', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { fieldName, value } = req.body;
+    res.json(leadDb.setCustomFieldValue(parseInt(req.params.id), fieldName, value));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Score Decay (Batch 26) ===
+app.get('/api/score-decay/config', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getDecayConfig());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.put('/api/score-decay/config', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.updateDecayConfig(req.body));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post('/api/score-decay/run', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.runScoreDecay());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.get('/api/score-decay/preview', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 20;
+    res.json(leadDb.getDecayPreview2(limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {

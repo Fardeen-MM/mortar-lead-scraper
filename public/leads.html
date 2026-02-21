@@ -1692,6 +1692,82 @@
       <div id="bulk-enrichment-runs" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Tagging Rules Engine (Batch 26) -->
+    <div id="tag-rules-panel" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #f9a8d4;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#be185d;">Tagging Rules Engine</span>
+        <div style="display:flex;gap:0.3rem;">
+          <button onclick="runAllTagRules()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fce7f3;color:#be185d;border:1px solid #f9a8d4;border-radius:4px;cursor:pointer;">Run All</button>
+          <button onclick="loadTagRulesEngine()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fce7f3;color:#be185d;border:1px solid #f9a8d4;border-radius:4px;cursor:pointer;">Refresh</button>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Auto-classify leads with rule-based tagging. Define conditions (field equals/contains/empty) and auto-apply tags. Like HubSpot's workflow automation.</p>
+      <div style="margin-bottom:0.5rem;padding:0.4rem;background:rgba(255,255,255,0.6);border-radius:6px;">
+        <div style="display:flex;gap:0.3rem;flex-wrap:wrap;margin-bottom:0.3rem;">
+          <input id="tag-rule-name" placeholder="Rule name" style="flex:1;min-width:100px;font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #f9a8d4;border-radius:4px;">
+          <input id="tag-rule-tag" placeholder="Tag to apply" style="width:80px;font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #f9a8d4;border-radius:4px;">
+          <select id="tag-rule-field" style="font-size:0.72rem;padding:0.2rem;border:1px solid #f9a8d4;border-radius:4px;">
+            <option value="email">email</option><option value="phone">phone</option><option value="website">website</option>
+            <option value="city">city</option><option value="state">state</option><option value="firm_name">firm_name</option>
+            <option value="practice_area">practice_area</option><option value="score">score</option>
+          </select>
+          <select id="tag-rule-op" style="font-size:0.72rem;padding:0.2rem;border:1px solid #f9a8d4;border-radius:4px;">
+            <option value="not_empty">not empty</option><option value="empty">empty</option><option value="contains">contains</option>
+            <option value="eq">equals</option><option value="gt">greater than</option><option value="lt">less than</option>
+          </select>
+          <input id="tag-rule-value" placeholder="Value" style="width:70px;font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #f9a8d4;border-radius:4px;">
+          <button onclick="createTagRuleFromUI()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#be185d;color:#fff;border:none;border-radius:4px;cursor:pointer;">Add Rule</button>
+        </div>
+      </div>
+      <div id="tag-rules-list" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Nurture Cadence (Batch 26) -->
+    <div id="nurture-cadence-panel" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:1px solid #c084fc;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Nurture Cadence</span>
+        <button onclick="loadNurtureCadence()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#f3e8ff;color:#7c3aed;border:1px solid #c084fc;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Track touchpoint gaps and nurture timing. Shows which leads need follow-up, cooling off, or are going dormant. Like Salesloft's cadence tracking.</p>
+      <div id="cadence-analytics" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="nurture-cadence-list" style="max-height:200px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Custom Fields (Batch 26) -->
+    <div id="custom-fields-panel" style="background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border:1px solid #5eead4;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#0d9488;">Custom Fields</span>
+        <button onclick="loadCustomFields()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ccfbf1;color:#0d9488;border:1px solid #5eead4;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Define custom fields with type validation. Extend lead data with your own fields. Like Salesforce custom objects.</p>
+      <div style="margin-bottom:0.5rem;padding:0.4rem;background:rgba(255,255,255,0.6);border-radius:6px;">
+        <div style="display:flex;gap:0.3rem;flex-wrap:wrap;">
+          <input id="cf-name" placeholder="Field name" style="flex:1;min-width:80px;font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #5eead4;border-radius:4px;">
+          <select id="cf-type" style="font-size:0.72rem;padding:0.2rem;border:1px solid #5eead4;border-radius:4px;">
+            <option value="text">Text</option><option value="number">Number</option><option value="boolean">Boolean</option>
+            <option value="date">Date</option><option value="select">Select</option>
+          </select>
+          <input id="cf-default" placeholder="Default" style="width:60px;font-size:0.72rem;padding:0.2rem 0.4rem;border:1px solid #5eead4;border-radius:4px;">
+          <button onclick="createCustomFieldFromUI()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#0d9488;color:#fff;border:none;border-radius:4px;cursor:pointer;">Add Field</button>
+        </div>
+      </div>
+      <div id="custom-fields-list" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Score Decay Config (Batch 26) -->
+    <div id="score-decay-panel" style="background:linear-gradient(135deg,#fffbeb,#fef9c3);border:1px solid #fbbf24;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#b45309;">Score Decay Manager</span>
+        <div style="display:flex;gap:0.3rem;">
+          <button onclick="runScoreDecayNow()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fef9c3;color:#b45309;border:1px solid #fbbf24;border-radius:4px;cursor:pointer;">Run Decay</button>
+          <button onclick="loadScoreDecayConfig()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fef9c3;color:#b45309;border:1px solid #fbbf24;border-radius:4px;cursor:pointer;">Refresh</button>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Time-based score depreciation. Inactive leads gradually lose score points. Configure decay rate, interval, and exempt stages. Like Marketo's score degradation.</p>
+      <div id="decay-config-display" style="margin-bottom:0.4rem;"></div>
+      <div id="decay-preview-list" style="max-height:180px;overflow-y:auto;"></div>
+    </div>
+
     <!-- Leaderboard (Batch 19) -->
     <div id="leaderboard-panel" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #fbbf24;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -8891,6 +8967,166 @@
       } catch (err) { toast('Process error: ' + err.message, 'error'); }
     }
 
+    // === Tagging Rules Engine (Batch 26) ===
+    async function loadTagRulesEngine() {
+      try {
+        const rules = await fetch('/api/tag-rules').then(r => r.json());
+        const el = document.getElementById('tag-rules-list');
+        if (!rules.length) { el.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">No tagging rules defined. Create one above.</div>'; return; }
+        el.innerHTML = rules.map(r => {
+          const conds = JSON.parse(r.conditions || '[]');
+          const condStr = conds.map(c => `<span style="background:#fce7f3;padding:0.1rem 0.3rem;border-radius:3px;font-size:0.65rem;">${c.field} ${c.operator} ${c.value || ''}</span>`).join(` <span style="font-size:0.6rem;color:#9ca3af;">${r.logic || 'AND'}</span> `);
+          return `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.3rem 0;border-bottom:1px solid #fce7f3;">
+            <div style="flex:1;">
+              <span style="font-size:0.75rem;font-weight:500;">${r.name}</span>
+              <span style="background:#be185d;color:#fff;padding:0.05rem 0.3rem;border-radius:3px;font-size:0.6rem;margin-left:0.3rem;">${r.tag}</span>
+              ${r.enabled ? '<span style="color:#16a34a;font-size:0.6rem;margin-left:0.2rem;">active</span>' : '<span style="color:#9ca3af;font-size:0.6rem;margin-left:0.2rem;">disabled</span>'}
+              <div style="margin-top:0.15rem;">${condStr}</div>
+            </div>
+            <div style="display:flex;gap:0.2rem;">
+              <button onclick="toggleTagRuleItem(${r.id})" style="font-size:0.62rem;padding:0.1rem 0.3rem;background:#fce7f3;border:1px solid #f9a8d4;border-radius:3px;cursor:pointer;">${r.enabled ? 'Disable' : 'Enable'}</button>
+              <button onclick="deleteTagRuleItem(${r.id})" style="font-size:0.62rem;padding:0.1rem 0.3rem;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:3px;cursor:pointer;">Del</button>
+            </div>
+          </div>`;
+        }).join('');
+      } catch (err) { console.error('Tag rules error:', err); }
+    }
+    async function createTagRuleFromUI() {
+      const name = document.getElementById('tag-rule-name').value.trim();
+      const tag = document.getElementById('tag-rule-tag').value.trim();
+      const field = document.getElementById('tag-rule-field').value;
+      const operator = document.getElementById('tag-rule-op').value;
+      const value = document.getElementById('tag-rule-value').value.trim();
+      if (!name || !tag) { toast('Rule name and tag required', 'error'); return; }
+      try {
+        await fetch('/api/tag-rules', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, tag, conditions: [{ field, operator, value }], logic: 'AND' }) });
+        document.getElementById('tag-rule-name').value = '';
+        document.getElementById('tag-rule-tag').value = '';
+        document.getElementById('tag-rule-value').value = '';
+        toast('Tag rule created', 'success');
+        loadTagRulesEngine();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+    async function toggleTagRuleItem(id) {
+      try {
+        await fetch('/api/tag-rules/' + id + '/toggle', { method: 'POST' });
+        loadTagRulesEngine();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+    async function deleteTagRuleItem(id) {
+      try {
+        await fetch('/api/tag-rules/' + id, { method: 'DELETE' });
+        toast('Rule deleted', 'success');
+        loadTagRulesEngine();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+    async function runAllTagRules() {
+      try {
+        const res = await fetch('/api/tag-rules/run', { method: 'POST' }).then(r => r.json());
+        toast('Applied ' + res.totalApplied + ' tags across ' + res.results.length + ' rules', 'success');
+        loadTagRulesEngine();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    // === Nurture Cadence (Batch 26) ===
+    async function loadNurtureCadence() {
+      try {
+        const [leads, analytics] = await Promise.all([
+          fetch('/api/nurture/cadence?limit=30').then(r => r.json()),
+          fetch('/api/nurture/analytics').then(r => r.json())
+        ]);
+        const aEl = document.getElementById('cadence-analytics');
+        const statusColors = { never: '#dc2626', dormant: '#9ca3af', cold: '#3b82f6', cooling: '#f59e0b', warm: '#22c55e', active: '#16a34a' };
+        if (analytics.gapAnalysis) {
+          aEl.innerHTML = analytics.gapAnalysis.map(g => `<div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:${statusColors[g.cadenceStatus] || '#6b7280'};">${g.count}</div><div style="font-size:0.65rem;color:#78716c;">${g.cadenceStatus}</div></div>`).join('');
+        }
+        const el = document.getElementById('nurture-cadence-list');
+        if (!leads.length) { el.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">No leads to nurture.</div>'; return; }
+        el.innerHTML = leads.slice(0, 20).map(l => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0;border-bottom:1px solid #f3e8ff;">
+          <div style="flex:1;"><span style="font-size:0.75rem;font-weight:500;">${l.first_name} ${l.last_name}</span> <span style="font-size:0.65rem;color:#78716c;">${l.city || ''}</span></div>
+          <span style="background:${statusColors[l.cadenceStatus] || '#9ca3af'};color:#fff;padding:0.05rem 0.3rem;border-radius:3px;font-size:0.6rem;">${l.cadenceStatus}</span>
+          <span style="font-size:0.65rem;color:#78716c;margin-left:0.3rem;">${l.daysSinceContact != null ? l.daysSinceContact + 'd ago' : 'never'}</span>
+        </div>`).join('');
+      } catch (err) { console.error('Nurture cadence error:', err); }
+    }
+
+    // === Custom Fields (Batch 26) ===
+    async function loadCustomFields() {
+      try {
+        const stats = await fetch('/api/custom-fields/stats').then(r => r.json());
+        const el = document.getElementById('custom-fields-list');
+        if (!stats.length) { el.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">No custom fields defined. Create one above.</div>'; return; }
+        el.innerHTML = stats.map(f => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.3rem 0;border-bottom:1px solid #ccfbf1;">
+          <div>
+            <span style="font-size:0.75rem;font-weight:500;">${f.field_name}</span>
+            <span style="background:#ccfbf1;padding:0.05rem 0.3rem;border-radius:3px;font-size:0.6rem;margin-left:0.3rem;">${f.field_type}</span>
+            ${f.required ? '<span style="color:#dc2626;font-size:0.6rem;margin-left:0.2rem;">required</span>' : ''}
+            ${f.default_value ? '<span style="font-size:0.6rem;color:#78716c;margin-left:0.2rem;">default: ' + f.default_value + '</span>' : ''}
+          </div>
+          <div style="display:flex;align-items:center;gap:0.3rem;">
+            <span style="font-size:0.65rem;color:#0d9488;font-weight:500;">${f.filledCount || 0} filled</span>
+            <button onclick="deleteCustomFieldItem('${f.field_name}')" style="font-size:0.62rem;padding:0.1rem 0.3rem;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:3px;cursor:pointer;">Del</button>
+          </div>
+        </div>`).join('');
+      } catch (err) { console.error('Custom fields error:', err); }
+    }
+    async function createCustomFieldFromUI() {
+      const fieldName = document.getElementById('cf-name').value.trim();
+      const fieldType = document.getElementById('cf-type').value;
+      const defaultValue = document.getElementById('cf-default').value.trim() || null;
+      if (!fieldName) { toast('Field name required', 'error'); return; }
+      try {
+        await fetch('/api/custom-fields', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fieldName, fieldType, defaultValue }) });
+        document.getElementById('cf-name').value = '';
+        document.getElementById('cf-default').value = '';
+        toast('Custom field created', 'success');
+        loadCustomFields();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+    async function deleteCustomFieldItem(name) {
+      try {
+        await fetch('/api/custom-fields/' + encodeURIComponent(name), { method: 'DELETE' });
+        toast('Field deleted', 'success');
+        loadCustomFields();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    // === Score Decay Config (Batch 26) ===
+    async function loadScoreDecayConfig() {
+      try {
+        const [config, preview] = await Promise.all([
+          fetch('/api/score-decay/config').then(r => r.json()),
+          fetch('/api/score-decay/preview?limit=10').then(r => r.json())
+        ]);
+        const cEl = document.getElementById('decay-config-display');
+        cEl.innerHTML = `<div style="display:flex;gap:1rem;flex-wrap:wrap;font-size:0.72rem;">
+          <div><strong>Status:</strong> <span style="color:${config.enabled ? '#16a34a' : '#dc2626'};">${config.enabled ? 'Enabled' : 'Disabled'}</span></div>
+          <div><strong>Type:</strong> ${config.decayType || 'linear'}</div>
+          <div><strong>Rate:</strong> ${config.decayRate || 0}${config.decayType === 'exponential' ? '%' : ' pts'}</div>
+          <div><strong>Interval:</strong> ${config.decayIntervalDays || 30} days</div>
+          <div><strong>Min Score:</strong> ${config.minScore || 0}</div>
+          ${config.exemptStages ? '<div><strong>Exempt:</strong> ' + config.exemptStages + '</div>' : ''}
+        </div>`;
+        const pEl = document.getElementById('decay-preview-list');
+        if (!preview.length) { pEl.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">No leads eligible for decay.</div>'; return; }
+        pEl.innerHTML = preview.map(p => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0;border-bottom:1px solid #fef9c3;">
+          <span style="font-size:0.75rem;">${p.first_name} ${p.last_name}</span>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <span style="font-size:0.7rem;color:#78716c;">Score: ${p.currentScore}</span>
+            <span style="font-size:0.7rem;color:#b45309;">→ ${p.projectedScore}</span>
+            <span style="font-size:0.6rem;color:#9ca3af;">${p.daysSinceUpdate || '?'}d idle</span>
+          </div>
+        </div>`).join('');
+      } catch (err) { console.error('Score decay error:', err); }
+    }
+    async function runScoreDecayNow() {
+      try {
+        const res = await fetch('/api/score-decay/run', { method: 'POST' }).then(r => r.json());
+        toast('Decayed ' + res.affected + ' leads', 'success');
+        loadScoreDecayConfig();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
     // === Leaderboard (Batch 19) ===
     async function loadLeaderboard() {
       try {
@@ -9314,7 +9550,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
