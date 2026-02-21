@@ -1692,6 +1692,33 @@
       <div id="bulk-enrichment-runs" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Revenue Attribution (Batch 39) -->
+    <div id="revenue-attr-panel" style="background:linear-gradient(135deg,#ecfdf5,#a7f3d0);border:1px solid #10b981;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#065f46;margin-bottom:0.5rem;">Revenue Attribution</div>
+      <div id="revenue-segments" style="font-size:0.78rem;color:#047857;"></div>
+      <div id="revenue-sources" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#047857;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Saturation Heatmap (Batch 39) -->
+    <div id="saturation-heat-panel" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border:1px solid #f59e0b;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#92400e;margin-bottom:0.5rem;">Saturation Heatmap</div>
+      <div id="saturation-cities" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#b45309;"></div>
+    </div>
+
+    <!-- Smart List Builder (Batch 39) -->
+    <div id="smart-list-panel" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe);border:1px solid #3b82f6;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#1e40af;margin-bottom:0.5rem;">Smart List Builder</div>
+      <div id="smart-list-templates" style="font-size:0.78rem;color:#1d4ed8;"></div>
+      <div id="smart-list-filters" style="font-size:0.75rem;color:#1d4ed8;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Quality Scorecard (Batch 39) -->
+    <div id="quality-scorecard-panel" style="background:linear-gradient(135deg,#faf5ff,#e9d5ff);border:1px solid #a855f7;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#7e22ce;margin-bottom:0.5rem;">Quality Scorecard</div>
+      <div id="quality-overall" style="font-size:0.78rem;color:#7c3aed;"></div>
+      <div id="quality-sources" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#7c3aed;margin-top:0.3rem;"></div>
+    </div>
+
     <!-- Affinity Scoring (Batch 38) -->
     <div id="affinity-panel" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border:1px solid #f59e0b;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="font-size:0.82rem;font-weight:700;color:#92400e;margin-bottom:0.5rem;">Affinity Scoring</div>
@@ -9449,6 +9476,57 @@
       } catch (err) { toast('Process error: ' + err.message, 'error'); }
     }
 
+    // === Revenue Attribution (Batch 39) ===
+    async function loadRevenueAttribution() {
+      try {
+        const r = await fetch('/api/revenue-attribution');
+        const d = await r.json();
+        document.getElementById('revenue-segments').innerHTML = '<strong>High-Value Segments:</strong> ' +
+          (d.segments||[]).slice(0,6).map(s => `${s.practice_area}: $${(s.total_value||0).toLocaleString()} (${s.contactable} contacts)`).join(' · ');
+        document.getElementById('revenue-sources').innerHTML = (d.sourceROI||[]).map(s =>
+          `<div style="padding:2px 0;border-bottom:1px solid #e5e7eb;">${s.primary_source}: ${s.leads} leads, ${s.contactable} contactable, ROI score ${s.roi_score}</div>`
+        ).join('');
+      } catch(e) { console.warn('revenue attribution:', e); }
+    }
+
+    // === Saturation Heatmap (Batch 39) ===
+    async function loadSaturationHeatmap2() {
+      try {
+        const r = await fetch('/api/saturation-heatmap');
+        const d = await r.json();
+        document.getElementById('saturation-cities').innerHTML = (d.heatmap||[]).map(c =>
+          `<div style="padding:2px 0;border-bottom:1px solid #e5e7eb;">${c.city}, ${c.state}: ${c.our_leads}/${c.estimated_market} (${c.penetration}%) [${c.saturation}]</div>`
+        ).join('');
+      } catch(e) { console.warn('saturation heatmap:', e); }
+    }
+
+    // === Smart List Builder (Batch 39) ===
+    async function loadSmartListBuilder() {
+      try {
+        const r = await fetch('/api/smart-list-builder');
+        const d = await r.json();
+        document.getElementById('smart-list-templates').innerHTML = '<strong>Lists:</strong> ' +
+          (d.templates||[]).map(t => `${t.name}: ${t.count} leads`).join(' · ');
+        const fc = d.filterCounts||{};
+        document.getElementById('smart-list-filters').innerHTML = '<strong>Filters:</strong> ' +
+          `Email: ${fc.withEmail||0} · Phone: ${fc.withPhone||0} · Website: ${fc.withWebsite||0} · LinkedIn: ${fc.withLinkedin||0} · Total: ${fc.total||0}`;
+      } catch(e) { console.warn('smart list builder:', e); }
+    }
+
+    // === Quality Scorecard (Batch 39) ===
+    async function loadQualityScorecard() {
+      try {
+        const r = await fetch('/api/quality-scorecard');
+        const d = await r.json();
+        const o = d.overall||{};
+        document.getElementById('quality-overall').innerHTML = '<strong>Database Grade:</strong> ' +
+          `${o.grade||'?'} (${o.quality_score||0}/100) · ${o.total||0} leads · ${o.email_pct||0}% email · ${o.phone_pct||0}% phone`;
+        document.getElementById('quality-sources').innerHTML = (d.sources||[]).map(s =>
+          `<div style="padding:2px 0;border-bottom:1px solid #e5e7eb;">[${s.grade}] ${s.primary_source}: ${s.quality_score}/100 · ${s.email_pct}% email · ${s.phone_pct}% phone · ${s.total} leads</div>`
+        ).join('');
+      } catch(e) { console.warn('quality scorecard:', e); }
+    }
+
     // === Affinity Scoring (Batch 38) ===
     async function loadAffinityScoring() {
       try {
@@ -11078,7 +11156,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler(), loadPropensity(), loadCohorts(), loadChannelPrefs(), loadBenchmarks(), loadDealEstimates(), loadOutreachCal(), loadRiskScores(), loadNetworkMap(), loadJourneyMapping(), loadScoringAudit(), loadGeoExpansion(), loadFreshnessAlerts2(), loadMergeCandidates(), loadOutreachAnalytics(), loadIcpScoring(), loadPipelineVelocity(), loadRelationshipGraph(), loadEnrichmentROI(), loadEngagementPrediction(), loadCampaignPerformance2(), loadPrioritizationMatrix(), loadFirmAggregation(), loadImprovementRecs(), loadLifecycleFunnel(), loadCadenceOptimizer(), loadScoringCalibration(), loadPracticeMarketSize(), loadPipelineHealthPanel(), loadAffinityScoring(), loadScraperGaps(), loadFreshnessIndex(), loadFirmGrowthPanel()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler(), loadPropensity(), loadCohorts(), loadChannelPrefs(), loadBenchmarks(), loadDealEstimates(), loadOutreachCal(), loadRiskScores(), loadNetworkMap(), loadJourneyMapping(), loadScoringAudit(), loadGeoExpansion(), loadFreshnessAlerts2(), loadMergeCandidates(), loadOutreachAnalytics(), loadIcpScoring(), loadPipelineVelocity(), loadRelationshipGraph(), loadEnrichmentROI(), loadEngagementPrediction(), loadCampaignPerformance2(), loadPrioritizationMatrix(), loadFirmAggregation(), loadImprovementRecs(), loadLifecycleFunnel(), loadCadenceOptimizer(), loadScoringCalibration(), loadPracticeMarketSize(), loadPipelineHealthPanel(), loadAffinityScoring(), loadScraperGaps(), loadFreshnessIndex(), loadFirmGrowthPanel(), loadRevenueAttribution(), loadSaturationHeatmap2(), loadSmartListBuilder(), loadQualityScorecard()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();

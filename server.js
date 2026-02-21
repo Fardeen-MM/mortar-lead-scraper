@@ -3701,6 +3701,38 @@ app.get('/api/firm-growth', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Revenue Attribution (Batch 39) ===
+app.get('/api/revenue-attribution', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getRevenueAttribution());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Saturation Heatmap (Batch 39) ===
+app.get('/api/saturation-heatmap', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getSaturationHeatmap());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Smart List Builder (Batch 39) ===
+app.get('/api/smart-list-builder', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getSmartListBuilder());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Quality Scorecard (Batch 39) ===
+app.get('/api/quality-scorecard', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getQualityScorecard());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
