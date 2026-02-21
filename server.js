@@ -3496,6 +3496,38 @@ app.get('/api/network-map', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Journey Mapping (Batch 33) ===
+app.get('/api/journey-mapping', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getJourneyMapping(parseInt(req.query.limit) || 50));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Scoring Audit (Batch 33) ===
+app.get('/api/scoring-audit', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getScoringAudit(parseInt(req.query.limit) || 40));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Geographic Expansion (Batch 33) ===
+app.get('/api/geo-expansion', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getGeoExpansion());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Freshness Alerts (Batch 33) ===
+app.get('/api/freshness-alerts', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getFreshnessAlerts());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {

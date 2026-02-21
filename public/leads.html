@@ -1692,6 +1692,38 @@
       <div id="bulk-enrichment-runs" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Journey Mapping (Batch 33) -->
+    <div id="journey-panel" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border:1px solid #fbbf24;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#92400e;margin-bottom:0.5rem;">Journey Mapping</div>
+      <div id="journey-stages" style="font-size:0.78rem;color:#78350f;"></div>
+      <div id="journey-touchpoints" style="font-size:0.78rem;color:#78350f;margin-top:0.3rem;"></div>
+      <div id="journey-by-source" style="max-height:150px;overflow-y:auto;font-size:0.75rem;color:#78350f;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Scoring Audit (Batch 33) -->
+    <div id="scoring-audit-panel" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border:1px solid #a78bfa;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#5b21b6;margin-bottom:0.5rem;">Scoring Audit</div>
+      <div id="scoring-histogram" style="font-size:0.78rem;color:#6d28d9;"></div>
+      <div id="scoring-factors" style="font-size:0.78rem;color:#6d28d9;margin-top:0.3rem;"></div>
+      <div id="scoring-leads" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#6d28d9;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Geographic Expansion (Batch 33) -->
+    <div id="geo-expansion-panel" style="background:linear-gradient(135deg,#ecfdf5,#a7f3d0);border:1px solid #34d399;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#065f46;margin-bottom:0.5rem;">Geographic Expansion</div>
+      <div id="geo-state-coverage" style="font-size:0.78rem;color:#047857;"></div>
+      <div id="geo-underserved" style="font-size:0.78rem;color:#047857;margin-top:0.3rem;"></div>
+      <div id="geo-success" style="max-height:150px;overflow-y:auto;font-size:0.75rem;color:#047857;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Freshness Alerts (Batch 33) -->
+    <div id="freshness-alerts-panel" style="background:linear-gradient(135deg,#fff1f2,#fecdd3);border:1px solid #fda4af;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#9f1239;margin-bottom:0.5rem;">Freshness Alerts</div>
+      <div id="freshness-staleness" style="font-size:0.78rem;color:#be123c;"></div>
+      <div id="freshness-source-age" style="font-size:0.78rem;color:#be123c;margin-top:0.3rem;"></div>
+      <div id="freshness-rescrape" style="max-height:150px;overflow-y:auto;font-size:0.75rem;color:#be123c;margin-top:0.3rem;"></div>
+    </div>
+
     <!-- Deal Estimation (Batch 32) -->
     <div id="deal-panel" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #6ee7b7;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -9267,6 +9299,66 @@
       } catch (err) { toast('Process error: ' + err.message, 'error'); }
     }
 
+    // === Journey Mapping (Batch 33) ===
+    async function loadJourneyMapping() {
+      try {
+        const r = await fetch('/api/journey-mapping');
+        const d = await r.json();
+        document.getElementById('journey-stages').innerHTML = '<strong>Stages:</strong> ' +
+          (d.stages||[]).map(s => `${s.pipeline_stage||'unknown'}: ${s.count} (avg ${s.avg_score})`).join(' · ');
+        document.getElementById('journey-touchpoints').innerHTML = '<strong>Enrichment:</strong> ' +
+          (d.touchpoints||[]).map(t => `${t.enrichment_stage}: ${t.count}`).join(' · ');
+        const src = {};
+        (d.bySource||[]).forEach(s => { if(!src[s.primary_source]) src[s.primary_source]=[]; src[s.primary_source].push(`${s.pipeline_stage}:${s.count}`); });
+        document.getElementById('journey-by-source').innerHTML = '<strong>By Source:</strong><br>' +
+          Object.entries(src).map(([k,v]) => `${k}: ${v.join(', ')}`).join('<br>');
+      } catch(e) { console.warn('journey mapping:', e); }
+    }
+
+    // === Scoring Audit (Batch 33) ===
+    async function loadScoringAudit() {
+      try {
+        const r = await fetch('/api/scoring-audit');
+        const d = await r.json();
+        document.getElementById('scoring-histogram').innerHTML = '<strong>Distribution:</strong> ' +
+          (d.histogram||[]).map(h => `${h.bucket}: ${h.count}`).join(' · ');
+        const f = d.factors||{};
+        document.getElementById('scoring-factors').innerHTML = '<strong>Coverage:</strong> ' +
+          `Email ${f.have_email||0}/${f.total||0} · Phone ${f.have_phone||0}/${f.total||0} · Website ${f.have_website||0}/${f.total||0} · LinkedIn ${f.have_linkedin||0}/${f.total||0}`;
+        document.getElementById('scoring-leads').innerHTML = (d.leads||[]).slice(0,15).map(l =>
+          `<div style="padding:2px 0;border-bottom:1px solid #e5e7eb;">${l.first_name} ${l.last_name} — <strong>${l.lead_score}</strong> pts (email:${l.email_pts} phone:${l.phone_pts} web:${l.website_pts} firm:${l.firm_pts})</div>`
+        ).join('');
+      } catch(e) { console.warn('scoring audit:', e); }
+    }
+
+    // === Geographic Expansion (Batch 33) ===
+    async function loadGeoExpansion() {
+      try {
+        const r = await fetch('/api/geo-expansion');
+        const d = await r.json();
+        document.getElementById('geo-state-coverage').innerHTML = '<strong>Coverage:</strong> ' +
+          (d.stateCoverage||[]).slice(0,10).map(s => `${s.state}: ${s.total} (${s.cities_covered} cities)`).join(' · ');
+        document.getElementById('geo-underserved').innerHTML = '<strong>Underserved:</strong> ' +
+          (d.underserved||[]).map(u => `${u.state}: only ${u.total} leads`).join(' · ');
+        document.getElementById('geo-success').innerHTML = '<strong>Best Email Rates:</strong><br>' +
+          (d.successPatterns||[]).slice(0,10).map(s => `${s.state}: ${s.email_rate}% email, ${s.phone_rate}% phone (n=${s.total})`).join('<br>');
+      } catch(e) { console.warn('geo expansion:', e); }
+    }
+
+    // === Freshness Alerts (Batch 33) ===
+    async function loadFreshnessAlerts2() {
+      try {
+        const r = await fetch('/api/freshness-alerts');
+        const d = await r.json();
+        document.getElementById('freshness-staleness').innerHTML = '<strong>Data Age:</strong> ' +
+          (d.staleness||[]).map(s => `${s.freshness}: ${s.count}`).join(' · ');
+        document.getElementById('freshness-source-age').innerHTML = '<strong>Source Age:</strong> ' +
+          (d.sourceAge||[]).slice(0,8).map(s => `${s.primary_source}: ${s.days_ago}d ago (${s.total})`).join(' · ');
+        document.getElementById('freshness-rescrape').innerHTML = '<strong>Re-scrape Priority:</strong><br>' +
+          (d.rescrapePriority||[]).slice(0,10).map(r => `${r.state}: avg ${r.avg_age_days}d old (${r.total} leads)`).join('<br>');
+      } catch(e) { console.warn('freshness alerts:', e); }
+    }
+
     // === Deal Estimation (Batch 32) ===
     async function loadDealEstimates() {
       try {
@@ -10553,7 +10645,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler(), loadPropensity(), loadCohorts(), loadChannelPrefs(), loadBenchmarks(), loadDealEstimates(), loadOutreachCal(), loadRiskScores(), loadNetworkMap()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler(), loadPropensity(), loadCohorts(), loadChannelPrefs(), loadBenchmarks(), loadDealEstimates(), loadOutreachCal(), loadRiskScores(), loadNetworkMap(), loadJourneyMapping(), loadScoringAudit(), loadGeoExpansion(), loadFreshnessAlerts2()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
