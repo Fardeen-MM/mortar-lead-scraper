@@ -3605,6 +3605,38 @@ app.get('/api/campaign-performance', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Prioritization Matrix (Batch 36) ===
+app.get('/api/prioritization-matrix', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getPrioritizationMatrix(parseInt(req.query.limit) || 50));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Firm Aggregation (Batch 36) ===
+app.get('/api/firm-aggregation', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getFirmAggregation(parseInt(req.query.limit) || 30));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Improvement Recommendations (Batch 36) ===
+app.get('/api/improvement-recs', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getImprovementRecs());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Lifecycle Funnel (Batch 36) ===
+app.get('/api/lifecycle-funnel', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getLifecycleFunnel());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {

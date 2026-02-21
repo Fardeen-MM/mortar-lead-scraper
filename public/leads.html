@@ -1692,6 +1692,36 @@
       <div id="bulk-enrichment-runs" style="max-height:200px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Prioritization Matrix (Batch 36) -->
+    <div id="priority-matrix-panel" style="background:linear-gradient(135deg,#faf5ff,#e9d5ff);border:1px solid #a855f7;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#7e22ce;margin-bottom:0.5rem;">Prioritization Matrix</div>
+      <div id="priority-quadrants" style="font-size:0.78rem;color:#7c3aed;"></div>
+      <div id="priority-leads" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#7c3aed;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Firm Aggregation (Batch 36) -->
+    <div id="firm-agg-panel" style="background:linear-gradient(135deg,#ecfdf5,#a7f3d0);border:1px solid #34d399;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#065f46;margin-bottom:0.5rem;">Firm Aggregation</div>
+      <div id="firm-agg-totals" style="font-size:0.78rem;color:#047857;"></div>
+      <div id="firm-agg-list" style="max-height:200px;overflow-y:auto;font-size:0.75rem;color:#047857;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Improvement Recommendations (Batch 36) -->
+    <div id="improvement-panel" style="background:linear-gradient(135deg,#fff7ed,#fed7aa);border:1px solid #f97316;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#9a3412;margin-bottom:0.5rem;">Improvement Recommendations</div>
+      <div id="improve-gaps" style="font-size:0.78rem;color:#c2410c;"></div>
+      <div id="improve-actions" style="font-size:0.78rem;color:#c2410c;margin-top:0.3rem;"></div>
+      <div id="improve-quickwins" style="max-height:150px;overflow-y:auto;font-size:0.75rem;color:#c2410c;margin-top:0.3rem;"></div>
+    </div>
+
+    <!-- Lifecycle Funnel (Batch 36) -->
+    <div id="lifecycle-funnel-panel" style="background:linear-gradient(135deg,#f0f9ff,#bae6fd);border:1px solid #38bdf8;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="font-size:0.82rem;font-weight:700;color:#0c4a6e;margin-bottom:0.5rem;">Lifecycle Funnel</div>
+      <div id="funnel-stages" style="font-size:0.78rem;color:#075985;"></div>
+      <div id="funnel-rates" style="font-size:0.78rem;color:#075985;margin-top:0.3rem;"></div>
+      <div id="funnel-sources" style="max-height:150px;overflow-y:auto;font-size:0.75rem;color:#075985;margin-top:0.3rem;"></div>
+    </div>
+
     <!-- Relationship Graph (Batch 35) -->
     <div id="relationship-panel" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe);border:1px solid #60a5fa;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="font-size:0.82rem;font-weight:700;color:#1e40af;margin-bottom:0.5rem;">Relationship Graph</div>
@@ -9360,6 +9390,65 @@
       } catch (err) { toast('Process error: ' + err.message, 'error'); }
     }
 
+    // === Prioritization Matrix (Batch 36) ===
+    async function loadPrioritizationMatrix() {
+      try {
+        const r = await fetch('/api/prioritization-matrix');
+        const d = await r.json();
+        const q = d.quadrants||{};
+        document.getElementById('priority-quadrants').innerHTML = '<strong>Quadrants:</strong> ' +
+          `Stars: ${q.star||0} · Nurture: ${q.nurture||0} · Enrich: ${q.enrich||0} · Deprioritize: ${q.deprioritize||0}`;
+        document.getElementById('priority-leads').innerHTML = (d.leads||[]).slice(0,15).map(l =>
+          `<div style="padding:2px 0;border-bottom:1px solid #e5e7eb;">${l.first_name} ${l.last_name} (${l.city||''}) — <strong>${l.priority_score}</strong> pts [${l.quadrant}] R${l.recency} C${l.completeness} M${l.marketValue} E${l.engagement}</div>`
+        ).join('');
+      } catch(e) { console.warn('prioritization matrix:', e); }
+    }
+
+    // === Firm Aggregation (Batch 36) ===
+    async function loadFirmAggregation() {
+      try {
+        const r = await fetch('/api/firm-aggregation');
+        const d = await r.json();
+        const t = d.totals||{};
+        document.getElementById('firm-agg-totals').innerHTML = '<strong>Firms:</strong> ' +
+          `${t.unique_firms||0} unique · ${t.total_leads||0} total leads · ${t.no_firm||0} without firm`;
+        document.getElementById('firm-agg-list').innerHTML = (d.firms||[]).slice(0,15).map(f =>
+          `<div style="padding:2px 0;border-bottom:1px solid #e5e7eb;">${f.firm_name}: ${f.headcount} people, ${f.offices} offices, avg ${f.avg_score} · ${f.with_email}✉ ${f.with_phone}📞</div>`
+        ).join('');
+      } catch(e) { console.warn('firm aggregation:', e); }
+    }
+
+    // === Improvement Recommendations (Batch 36) ===
+    async function loadImprovementRecs() {
+      try {
+        const r = await fetch('/api/improvement-recs');
+        const d = await r.json();
+        const g = d.gaps||{};
+        document.getElementById('improve-gaps').innerHTML = '<strong>Missing Fields:</strong> ' +
+          `Email: ${g.missing_email||0} · Phone: ${g.missing_phone||0} · Website: ${g.missing_website||0} · Firm: ${g.missing_firm||0} · LinkedIn: ${g.missing_linkedin||0} (of ${g.total||0})`;
+        document.getElementById('improve-actions').innerHTML = '<strong>Actions:</strong> ' +
+          (d.actions||[]).map(a => `${a.action}: could fill ~${a.potential} ${a.field}s`).join(' · ');
+        document.getElementById('improve-quickwins').innerHTML = '<strong>Quick Wins (need 1 field):</strong><br>' +
+          (d.quickWins||[]).map(q => `${q.first_name} ${q.last_name} (${q.city}) score ${q.lead_score} — needs ${q.missing_field}`).join('<br>');
+      } catch(e) { console.warn('improvement recs:', e); }
+    }
+
+    // === Lifecycle Funnel (Batch 36) ===
+    async function loadLifecycleFunnel() {
+      try {
+        const r = await fetch('/api/lifecycle-funnel');
+        const d = await r.json();
+        const f = d.funnel||{};
+        document.getElementById('funnel-stages').innerHTML = '<strong>Funnel:</strong> ' +
+          `Raw: ${f.total||0} → Enriched: ${f.enriched||0} → Contacted: ${f.contacted||0} → Responded: ${f.responded||0} → Qualified: ${f.qualified||0} → Converted: ${f.converted||0}`;
+        const rt = d.rates||{};
+        document.getElementById('funnel-rates').innerHTML = '<strong>Conversion Rates:</strong> ' +
+          `Raw→Enriched: ${rt.raw_to_enriched}% · Enriched→Contacted: ${rt.enriched_to_contacted}% · Contacted→Responded: ${rt.contacted_to_responded}%`;
+        document.getElementById('funnel-sources').innerHTML = '<strong>By Source:</strong><br>' +
+          (d.bySource||[]).slice(0,10).map(s => `${s.primary_source}: ${s.total} total, ${s.enriched} enriched, ${s.progressed} progressed`).join('<br>');
+      } catch(e) { console.warn('lifecycle funnel:', e); }
+    }
+
     // === Relationship Graph (Batch 35) ===
     async function loadRelationshipGraph() {
       try {
@@ -10819,7 +10908,7 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler(), loadPropensity(), loadCohorts(), loadChannelPrefs(), loadBenchmarks(), loadDealEstimates(), loadOutreachCal(), loadRiskScores(), loadNetworkMap(), loadJourneyMapping(), loadScoringAudit(), loadGeoExpansion(), loadFreshnessAlerts2(), loadMergeCandidates(), loadOutreachAnalytics(), loadIcpScoring(), loadPipelineVelocity(), loadRelationshipGraph(), loadEnrichmentROI(), loadEngagementPrediction(), loadCampaignPerformance2()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview(), loadIntentSignals(), loadRoutingRules(), loadCompletenessHeatmap(), loadRecentNotes(), loadSmartLists(), loadKpiMetrics(), loadScoringModels(), loadCampaigns(), loadCrossSourceDuplicates(), loadEngagementHeatmap(), loadOwners(), loadLeaderboard(), loadAutomationRules(), loadDataQuality(), loadExportProfiles(), loadRecentContacts(), loadWarmUpScores(), loadFilterFacets(), loadEnrichQueue(), loadFirmIntelligence(), loadDedupQueue(), loadAuditLog(), loadLifecycleAnalytics(), loadSequencePerformance(), loadActivityScores(), loadBulkEnrichmentRuns(), loadFirmNetwork(), loadFreshnessMonitor(), loadScoringRankings(), loadGeoClusters(), loadPriorityInbox(), loadPracticeAnalytics(), loadSourceROI(), loadComplianceDashboard(), loadPredictiveScores(), loadTeamPerformance(), loadEmailDeliverability(), loadTagRulesEngine(), loadNurtureCadence(), loadCustomFields(), loadScoreDecayConfig(), loadLookalikes(), loadConversionFunnel(), loadLeadVelocity(), loadCompletenessMatrix(), loadLeadClusters(), loadAbTests(), loadReengagement(), loadAttribution(), loadSLATracker(), loadSaturation(), loadEnrichWaterfall(), loadCompetitiveIntel(), loadSeqTemplates(), loadQualityRulesPanel(), loadTimelinePanel(), loadExportScheduler(), loadPropensity(), loadCohorts(), loadChannelPrefs(), loadBenchmarks(), loadDealEstimates(), loadOutreachCal(), loadRiskScores(), loadNetworkMap(), loadJourneyMapping(), loadScoringAudit(), loadGeoExpansion(), loadFreshnessAlerts2(), loadMergeCandidates(), loadOutreachAnalytics(), loadIcpScoring(), loadPipelineVelocity(), loadRelationshipGraph(), loadEnrichmentROI(), loadEngagementPrediction(), loadCampaignPerformance2(), loadPrioritizationMatrix(), loadFirmAggregation(), loadImprovementRecs(), loadLifecycleFunnel()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
