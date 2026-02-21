@@ -1199,6 +1199,63 @@
       <div id="engaged-leads-list" style="max-height:180px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Do Not Contact Panel -->
+    <div id="dnc-panel" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border:1px solid #fca5a5;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#dc2626;">Do Not Contact</span>
+        <div style="display:flex;gap:0.4rem;">
+          <span id="dnc-blocked-count" style="font-size:0.7rem;padding:0.15rem 0.5rem;border-radius:10px;background:#fff;color:#dc2626;font-weight:600;"></span>
+          <button onclick="showAddDncModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#dc2626;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ Add</button>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Block specific emails, domains, or phone numbers from being contacted.</p>
+      <div id="dnc-list" style="display:flex;flex-wrap:wrap;gap:0.3rem;max-height:100px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Smart Duplicates Panel -->
+    <div id="duplicates-panel" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid #fdba74;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#ea580c;">Duplicate Detection</span>
+        <div style="display:flex;gap:0.4rem;">
+          <button onclick="loadSmartDuplicates()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#ea580c;color:#fff;border:none;border-radius:4px;cursor:pointer;">Scan</button>
+          <button onclick="runAutoMerge(false)" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#fff;color:#ea580c;border:1px solid #fdba74;border-radius:4px;cursor:pointer;">Auto-Merge</button>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Find leads with matching email, name+city, or phone.</p>
+      <div id="duplicates-list" style="max-height:150px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Territory Management Panel -->
+    <div id="territory-panel" style="background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border:1px solid #5eead4;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#0d9488;">Territory Management</span>
+        <button onclick="showCreateTerritoryModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#0d9488;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Territory</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Organize leads by geography. Assign territories to reps.</p>
+      <div id="territory-list" style="display:flex;flex-direction:column;gap:0.3rem;"></div>
+    </div>
+
+    <!-- Source Attribution Panel -->
+    <div id="source-attribution-panel" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);border:1px solid #d946ef;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#a21caf;">Source Attribution</span>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Which scraper sources produce the highest quality leads?</p>
+      <div id="source-attribution-list" style="max-height:200px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Score Decay Panel -->
+    <div id="decay-panel" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border:1px solid #cbd5e1;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#475569;">Score Decay</span>
+        <div style="display:flex;gap:0.4rem;">
+          <span id="decay-preview-count" style="font-size:0.7rem;padding:0.15rem 0.5rem;border-radius:10px;background:#fff;color:#475569;font-weight:600;"></span>
+          <button onclick="runScoreDecay()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#475569;color:#fff;border:none;border-radius:4px;cursor:pointer;">Apply Decay</button>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;">Leads without engagement in 30+ days lose 5 score points. Keeps your best leads on top.</p>
+    </div>
+
     <!-- Email Validation Panel -->
     <div id="email-validation-panel" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #86efac;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -6536,9 +6593,262 @@
       } catch (err) { toast('Error finding lookalikes: ' + err.message, 'error'); }
     }
 
+    // === Do Not Contact ===
+    async function loadDncPanel() {
+      try {
+        const entries = await fetch('/api/dnc').then(r => r.json());
+        const check = await fetch('/api/dnc/check').then(r => r.json());
+        const countEl = document.getElementById('dnc-blocked-count');
+        countEl.textContent = check.blocked > 0 ? check.blocked + ' blocked' : entries.length + ' rules';
+
+        const list = document.getElementById('dnc-list');
+        if (entries.length === 0) {
+          list.innerHTML = '<span style="font-size:0.72rem;color:#fca5a5;">No DNC entries. Add emails, domains, or phones to block.</span>';
+          return;
+        }
+        list.innerHTML = entries.slice(0, 30).map(e => `
+          <span style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.15rem 0.5rem;background:#fff;border:1px solid #fca5a5;border-radius:8px;font-size:0.68rem;">
+            <span style="color:#dc2626;font-weight:600;">${esc(e.type)}</span>
+            <span>${esc(e.value)}</span>
+            <button onclick="removeDnc(${e.id})" style="border:none;background:none;cursor:pointer;color:#dc2626;font-size:0.7rem;padding:0;">&times;</button>
+          </span>
+        `).join('');
+      } catch (err) { console.error('DNC error:', err); }
+    }
+
+    function showAddDncModal() {
+      const modal = document.createElement('div');
+      modal.id = 'dnc-modal';
+      modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
+      modal.innerHTML = `
+        <div style="background:#fff;border-radius:12px;padding:1.5rem;width:400px;max-width:90vw;">
+          <h3 style="margin:0 0 1rem;font-size:1rem;color:#dc2626;">Add to Do Not Contact</h3>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;display:block;margin-bottom:0.25rem;">Type</label>
+            <select id="dnc-type" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+              <option value="email">Email Address</option>
+              <option value="domain">Email Domain</option>
+              <option value="phone">Phone Number</option>
+            </select>
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;display:block;margin-bottom:0.25rem;">Value</label>
+            <input id="dnc-value" type="text" placeholder="e.g., spam@example.com or example.com" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;display:block;margin-bottom:0.25rem;">Reason (optional)</label>
+            <input id="dnc-reason" type="text" placeholder="e.g., Unsubscribed, Bounced" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:0.5rem;">
+            <button onclick="document.getElementById('dnc-modal').remove()" style="padding:0.4rem 0.8rem;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;">Cancel</button>
+            <button onclick="addDncEntry()" style="padding:0.4rem 0.8rem;border:none;border-radius:6px;background:#dc2626;color:#fff;cursor:pointer;">Block</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+    }
+
+    async function addDncEntry() {
+      const type = document.getElementById('dnc-type').value;
+      const value = document.getElementById('dnc-value').value.trim();
+      const reason = document.getElementById('dnc-reason').value.trim();
+      if (!value) { alert('Value required'); return; }
+      await fetch('/api/dnc', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type, value, reason }),
+      });
+      document.getElementById('dnc-modal').remove();
+      toast('Added to DNC list', 'success');
+      loadDncPanel();
+    }
+
+    async function removeDnc(id) {
+      await fetch('/api/dnc/' + id, { method: 'DELETE' });
+      toast('Removed from DNC', 'success');
+      loadDncPanel();
+    }
+
+    // === Smart Duplicates ===
+    async function loadSmartDuplicates() {
+      try {
+        const data = await fetch('/api/leads/smart-duplicates').then(r => r.json());
+        const list = document.getElementById('duplicates-list');
+        if (data.total === 0) {
+          list.innerHTML = '<span style="font-size:0.72rem;color:#fdba74;">No duplicates found. Your data is clean!</span>';
+          return;
+        }
+        list.innerHTML = `
+          <div style="font-size:0.72rem;color:#ea580c;font-weight:600;margin-bottom:0.3rem;">${data.total} duplicate groups found</div>
+          ${data.groups.slice(0, 20).map(g => `
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0.4rem;background:#fff;border:1px solid #fed7aa;border-radius:4px;margin-bottom:0.2rem;font-size:0.72rem;">
+              <div>
+                <span style="font-weight:600;color:#ea580c;">${esc(g.type)}</span>
+                <span style="color:#6b7280;margin-left:0.3rem;">${esc(g.matchValue)}</span>
+              </div>
+              <span style="font-size:0.68rem;color:#9ca3af;">${g.count} records</span>
+            </div>
+          `).join('')}
+        `;
+      } catch (err) { console.error('Duplicates error:', err); }
+    }
+
+    async function runAutoMerge(dryRun = true) {
+      if (!dryRun && !confirm('Auto-merge duplicates? This will permanently combine duplicate records.')) return;
+      try {
+        const result = await fetch('/api/leads/auto-merge', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ dryRun }),
+        }).then(r => r.json());
+        if (dryRun) {
+          toast(`Found ${result.candidates} merge candidates. Click "Auto-Merge" again to execute.`, 'info');
+          // Re-call with dryRun=false after confirmation
+        } else {
+          toast(`Merged ${result.merged} duplicate pairs`, 'success');
+          refreshAll();
+        }
+        loadSmartDuplicates();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    // === Territory Management ===
+    async function loadTerritories() {
+      try {
+        const territories = await fetch('/api/territories').then(r => r.json());
+        const list = document.getElementById('territory-list');
+        if (territories.length === 0) {
+          list.innerHTML = '<span style="font-size:0.72rem;color:#5eead4;">No territories yet. Create one to organize leads by geography.</span>';
+          return;
+        }
+        list.innerHTML = territories.map(t => `
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:0.3rem 0.5rem;background:#fff;border:1px solid #99f6e4;border-radius:6px;">
+            <div>
+              <strong style="font-size:0.8rem;color:#0d9488;">${esc(t.name)}</strong>
+              ${t.owner ? '<span style="font-size:0.68rem;color:#6b7280;margin-left:0.4rem;">(' + esc(t.owner) + ')</span>' : ''}
+              <br><span style="font-size:0.68rem;color:#9ca3af;">${esc(t.states || '')}${t.cities ? ' | ' + esc(t.cities) : ''}</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.4rem;">
+              <span style="font-size:0.7rem;font-weight:600;color:#0d9488;">${fmt(t.leadCount)} leads</span>
+              <button onclick="assignTerritory(${t.id})" style="font-size:0.65rem;padding:0.15rem 0.4rem;background:#ccfbf1;color:#0d9488;border:1px solid #5eead4;border-radius:4px;cursor:pointer;">Assign</button>
+              <button onclick="deleteTerritory(${t.id})" style="font-size:0.65rem;padding:0.15rem 0.4rem;background:#fef2f2;color:#dc2626;border:1px solid #fecaca;border-radius:4px;cursor:pointer;">Del</button>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) { console.error('Territories error:', err); }
+    }
+
+    function showCreateTerritoryModal() {
+      const modal = document.createElement('div');
+      modal.id = 'territory-modal';
+      modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
+      modal.innerHTML = `
+        <div style="background:#fff;border-radius:12px;padding:1.5rem;width:450px;max-width:90vw;">
+          <h3 style="margin:0 0 1rem;font-size:1rem;color:#0d9488;">Create Territory</h3>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;display:block;margin-bottom:0.25rem;">Name</label>
+            <input id="terr-name" type="text" placeholder="e.g., Southeast US" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;display:block;margin-bottom:0.25rem;">States (comma-separated)</label>
+            <input id="terr-states" type="text" placeholder="e.g., FL, GA, NC, SC" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;display:block;margin-bottom:0.25rem;">Cities (optional, comma-separated)</label>
+            <input id="terr-cities" type="text" placeholder="e.g., Miami, Atlanta, Charlotte" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem;font-weight:600;display:block;margin-bottom:0.25rem;">Owner / Rep</label>
+            <input id="terr-owner" type="text" placeholder="e.g., John" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:0.5rem;">
+            <button onclick="document.getElementById('territory-modal').remove()" style="padding:0.4rem 0.8rem;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;">Cancel</button>
+            <button onclick="createTerritory()" style="padding:0.4rem 0.8rem;border:none;border-radius:6px;background:#0d9488;color:#fff;cursor:pointer;">Create</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+    }
+
+    async function createTerritory() {
+      const name = document.getElementById('terr-name').value.trim();
+      if (!name) { alert('Name required'); return; }
+      await fetch('/api/territories', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          states: document.getElementById('terr-states').value.trim(),
+          cities: document.getElementById('terr-cities').value.trim(),
+          owner: document.getElementById('terr-owner').value.trim(),
+        }),
+      });
+      document.getElementById('territory-modal').remove();
+      toast('Territory "' + esc(name) + '" created', 'success');
+      loadTerritories();
+    }
+
+    async function assignTerritory(id) {
+      const result = await fetch('/api/territories/' + id + '/assign', { method: 'POST' }).then(r => r.json());
+      toast(`Assigned ${result.assigned} leads to territory`, 'success');
+      loadTerritories();
+    }
+
+    async function deleteTerritory(id) {
+      if (!confirm('Delete this territory?')) return;
+      await fetch('/api/territories/' + id, { method: 'DELETE' });
+      toast('Territory deleted', 'success');
+      loadTerritories();
+    }
+
+    // === Source Attribution ===
+    async function loadSourceAttribution() {
+      try {
+        const sources = await fetch('/api/leads/source-attribution').then(r => r.json());
+        const list = document.getElementById('source-attribution-list');
+        if (sources.length === 0) { list.innerHTML = '<span style="font-size:0.72rem;color:#d946ef;">No source data yet.</span>'; return; }
+        list.innerHTML = `
+          <table style="width:100%;font-size:0.72rem;border-collapse:collapse;">
+            <thead><tr style="text-align:left;color:#6b7280;border-bottom:1px solid #e5e7eb;">
+              <th style="padding:0.2rem 0.3rem;">Source</th><th style="padding:0.2rem 0.3rem;">Leads</th><th style="padding:0.2rem 0.3rem;">Email%</th><th style="padding:0.2rem 0.3rem;">Phone%</th><th style="padding:0.2rem 0.3rem;">Avg Score</th>
+            </tr></thead>
+            <tbody>${sources.slice(0, 20).map(s => `
+              <tr style="border-bottom:1px solid #f3f4f6;" onclick="document.getElementById('search-input').value='source:${esc(s.source)}';loadLeads();" onmouseover="this.style.background='#fdf4ff'" onmouseout="this.style.background=''">
+                <td style="padding:0.25rem 0.3rem;font-weight:500;">${esc(s.source)}</td>
+                <td style="padding:0.25rem 0.3rem;">${fmt(s.total)}</td>
+                <td style="padding:0.25rem 0.3rem;"><span style="color:${s.emailRate > 50 ? '#15803d' : s.emailRate > 20 ? '#b45309' : '#dc2626'};">${s.emailRate}%</span></td>
+                <td style="padding:0.25rem 0.3rem;"><span style="color:${s.phoneRate > 50 ? '#15803d' : s.phoneRate > 20 ? '#b45309' : '#dc2626'};">${s.phoneRate}%</span></td>
+                <td style="padding:0.25rem 0.3rem;">${s.avg_score}</td>
+              </tr>
+            `).join('')}</tbody>
+          </table>
+        `;
+      } catch (err) { console.error('Source attribution error:', err); }
+    }
+
+    // === Score Decay ===
+    async function loadDecayPreview() {
+      try {
+        const data = await fetch('/api/leads/decay-preview').then(r => r.json());
+        document.getElementById('decay-preview-count').textContent = fmt(data.wouldDecay) + ' inactive';
+      } catch (err) { console.error('Decay error:', err); }
+    }
+
+    async function runScoreDecay() {
+      if (!confirm('Apply score decay? Leads inactive for 30+ days will lose 5 points.')) return;
+      try {
+        const result = await fetch('/api/leads/apply-decay', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ decayPercent: 5, inactiveDays: 30 }),
+        }).then(r => r.json());
+        toast(`Decay applied to ${result.decayed} leads (-${result.decayPercent} pts)`, 'success');
+        loadDecayPreview();
+        loadScores();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
     // --- Refresh All ---
     async function refreshAll() {
-      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel()]);
+      await Promise.all([loadStats(), loadScores(), loadRecommendations(), loadFreshness(), loadActivity(), loadPracticeAreas(), loadCompleteness(), loadLists(), loadEnrichmentDashboard(), loadActivityFeed(), loadQualityAlerts(), loadExportHistory(), loadGrowthChart(), loadFirmIntel(), loadHealthScore(), loadPipeline(), loadSegments(), loadSchedules(), loadWebhooks(), loadEnrichmentQueue(), loadVerificationStats(), loadExportTemplates(), loadAnalytics(), loadEmailClassification(), loadConfidencePanel(), loadStalenessPanel(), loadTagDefinitions(), loadChangeSignals(), loadIcpPanel(), loadSavedSearches(), loadAdmissionSignals(), loadSequences(), loadFirmDirectory(), loadEngagementPanel(), loadDncPanel(), loadSmartDuplicates(), loadTerritories(), loadSourceAttribution(), loadDecayPreview()]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();

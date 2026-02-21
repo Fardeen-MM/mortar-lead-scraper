@@ -1927,6 +1927,132 @@ app.post('/api/leads/batch-lookalikes', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// === Score Decay ===
+app.get('/api/leads/decay-preview', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const days = parseInt(req.query.days) || 30;
+    res.json(leadDb.getDecayPreview(days));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/apply-decay', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { decayPercent, inactiveDays } = req.body;
+    res.json(leadDb.applyScoreDecay(decayPercent || 5, inactiveDays || 30));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Do Not Contact List ===
+app.get('/api/dnc', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getDncList(req.query.type || null));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/dnc', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { type, value, reason } = req.body;
+    if (!type || !value) return res.status(400).json({ error: 'type and value required' });
+    leadDb.addToDnc(type, value, reason || '');
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/dnc/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.removeFromDnc(parseInt(req.params.id));
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/dnc/check', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.batchCheckDnc());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Smart Duplicate Detection ===
+app.get('/api/leads/smart-duplicates', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 100;
+    res.json(leadDb.findSmartDuplicates(limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/leads/auto-merge', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const dryRun = req.body.dryRun !== false;
+    res.json(leadDb.autoMergeDuplicates(dryRun));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Territory Management ===
+app.get('/api/territories', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getTerritories());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/territories', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { name, description, states, cities, owner } = req.body;
+    if (!name) return res.status(400).json({ error: 'name required' });
+    const result = leadDb.createTerritory(name, description || '', states || '', cities || '', owner || '');
+    res.json({ id: result.lastInsertRowid, name });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/territories/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.deleteTerritory(parseInt(req.params.id));
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/territories/:id/assign', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.assignLeadsToTerritory(parseInt(req.params.id)));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/territories/:id/leads', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = parseInt(req.query.limit) || 50;
+    res.json(leadDb.getTerritoryLeads(parseInt(req.params.id), limit));
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Source Attribution ===
+app.get('/api/leads/source-attribution', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getSourceAttribution());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// === Single Lead Enrichment Info ===
+app.get('/api/leads/:id/enrichment-info', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const result = leadDb.getLeadForEnrichment(parseInt(req.params.id));
+    if (!result) return res.status(404).json({ error: 'Lead not found' });
+    res.json(result);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
