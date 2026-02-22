@@ -1077,8 +1077,11 @@ app.post('/api/leads/generate-personalization', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
     const { leadIds, template } = req.body;
-    if (!leadIds || !Array.isArray(leadIds)) {
+    if (!leadIds || !Array.isArray(leadIds) || leadIds.length === 0) {
       return res.status(400).json({ error: 'leadIds array required' });
+    }
+    if (leadIds.length > 1000) {
+      return res.status(400).json({ error: 'Maximum 1000 leadIds per request' });
     }
 
     const db = leadDb.getDb();
@@ -1125,7 +1128,7 @@ app.post('/api/leads/generate-personalization', (req, res) => {
 app.get('/api/leads/top-firms', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
-    const limit = parseInt(req.query.limit) || 20;
+    const limit = Math.min(parseInt(req.query.limit) || 20, 500);
     res.json(leadDb.getTopFirms(limit));
   } catch (err) {
     res.status(500).json({ error: err.message });
