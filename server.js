@@ -848,6 +848,7 @@ app.get('/api/leads/enrich-all/status', (req, res) => {
 // === Batch Waterfall Enrichment (profile fetch + cross-ref + email crawl on existing DB leads) ===
 let _waterfallRunning = false;
 let _waterfallProgress = null;
+let _waterfallStartTime = null;
 
 app.post('/api/leads/waterfall', (req, res) => {
   if (_waterfallRunning) {
@@ -855,6 +856,7 @@ app.post('/api/leads/waterfall', (req, res) => {
   }
 
   _waterfallRunning = true;
+  _waterfallStartTime = Date.now();
   _waterfallProgress = { step: 'Loading leads...', current: 0, total: 0, stats: null };
   res.json({ status: 'started', message: 'Waterfall enrichment started in background' });
 
@@ -923,17 +925,20 @@ app.post('/api/leads/waterfall', (req, res) => {
 
     // Save enriched data back to DB
     let saved = 0;
+    const origMap = new Map(dbLeads.map(d => [d.id, d]));
     for (const lead of leads) {
+      const orig = origMap.get(lead.id) || {};
       const updates = {};
-      if (lead.email && (!dbLeads.find(d => d.id === lead.id)?.email)) updates.email = lead.email;
-      if (lead.phone && (!dbLeads.find(d => d.id === lead.id)?.phone)) updates.phone = lead.phone;
-      if (lead.website && (!dbLeads.find(d => d.id === lead.id)?.website)) updates.website = lead.website;
-      if (lead.email_source) updates.email_source = lead.email_source;
-      if (lead.phone_source) updates.phone_source = lead.phone_source;
-      if (lead.website_source) updates.website_source = lead.website_source;
-      if (lead.bar_number && (!dbLeads.find(d => d.id === lead.id)?.bar_number)) updates.bar_number = lead.bar_number;
-      if (lead.admission_date && (!dbLeads.find(d => d.id === lead.id)?.admission_date)) updates.admission_date = lead.admission_date;
-      if (lead.firm_name && (!dbLeads.find(d => d.id === lead.id)?.firm_name)) updates.firm_name = lead.firm_name;
+      // Only fill fields that were empty before
+      const fillable = ['email', 'phone', 'website', 'bar_number', 'admission_date',
+        'firm_name', 'title', 'education', 'city', 'state'];
+      for (const f of fillable) {
+        if (lead[f] && !orig[f]) updates[f] = lead[f];
+      }
+      // Source tracking fields (always update if present)
+      for (const f of ['email_source', 'phone_source', 'website_source']) {
+        if (lead[f]) updates[f] = lead[f];
+      }
 
       if (Object.keys(updates).length > 0) {
         try {
@@ -951,6 +956,22 @@ app.post('/api/leads/waterfall', (req, res) => {
     _waterfallProgress.step = `Done — ${stats.totalFieldsFilled} fields filled, ${saved} leads updated`;
     _waterfallProgress.saved = saved;
     console.log(`[Waterfall] Done: ${stats.totalFieldsFilled} fields filled, ${saved} leads saved to DB`);
+
+    // Record waterfall run history
+    try {
+      leadDb.recordWaterfallRun({
+        stateFilter: state || 'all',
+        leadsProcessed: dbLeads.length,
+        leadsEnriched: saved,
+        fieldsFilled: stats.totalFieldsFilled,
+        profilesFetched: stats.profilesFetched || 0,
+        websitesFound: stats.websitesFound || 0,
+        emailsFound: stats.emailsCrawled || 0,
+        trigger: 'manual',
+        stats,
+        durationSecs: Math.round((Date.now() - _waterfallStartTime) / 1000),
+      });
+    } catch {}
   })()
     .catch(err => {
       _waterfallProgress.step = `Error: ${err.message}`;
@@ -969,6 +990,26 @@ app.post('/api/leads/waterfall/cancel', (req, res) => {
     res.json({ cancelled: true });
   } else {
     res.json({ cancelled: false, message: 'Not running' });
+  }
+});
+
+// Waterfall run history
+app.get('/api/leads/waterfall/history', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const limit = Math.min(parseInt(req.query.limit) || 20, 100);
+    res.json(leadDb.getWaterfallRuns(limit));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/leads/waterfall/summary', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getWaterfallSummary());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -4381,7 +4422,101 @@ const server = app.listen(PORT, () => {
         .then(results => console.log(`[Cron] Bulk scrape: ${results.totalLeads} leads, ${results.totalNew} new`))
         .catch(err => console.error(`[Cron] Bulk scrape failed: ${err.message}`));
     });
-    console.log('  📊 Bulk Scraper: daily scrape scheduled at 2:00 AM\n');
+    console.log('  📊 Bulk Scraper: daily scrape scheduled at 2:00 AM');
+
+    // Auto-Enrichment — waterfall enrich unenriched DB leads every 12 hours
+    cron.schedule('0 8,20 * * *', async () => {
+      if (_waterfallRunning) {
+        console.log('[Cron] Skipping auto-enrich — waterfall already running');
+        return;
+      }
+      console.log('[Cron] Starting auto-enrichment waterfall...');
+      _waterfallRunning = true;
+      _waterfallProgress = { step: 'Auto-enrichment starting...', current: 0, total: 0, stats: null };
+
+      try {
+        const leadDb = require('./lib/lead-db');
+        const { runWaterfall } = require('./lib/waterfall');
+        const db = leadDb.getDb();
+
+        // Get 200 leads with profile_url that are missing phone/email/website
+        const dbLeads = db.prepare(`
+          SELECT * FROM leads WHERE profile_url != '' AND profile_url IS NOT NULL
+          AND (email = '' OR email IS NULL OR phone = '' OR phone IS NULL OR website = '' OR website IS NULL)
+          ORDER BY lead_score ASC LIMIT 200
+        `).all();
+
+        if (dbLeads.length === 0) {
+          console.log('[Cron] No leads need enrichment');
+          _waterfallRunning = false;
+          return;
+        }
+
+        _waterfallProgress.total = dbLeads.length;
+        const EventEmitter = require('events');
+        const emitter = new EventEmitter();
+        emitter.on('waterfall-progress', (p) => {
+          _waterfallProgress.step = p.step;
+          _waterfallProgress.current = p.current;
+          _waterfallProgress.total = p.total;
+          _waterfallProgress.detail = p.detail;
+        });
+
+        const leads = dbLeads.map(row => ({ ...row, source: row.primary_source || '' }));
+        const stats = await runWaterfall(leads, {
+          fetchProfiles: true,
+          crossRefMartindale: false, // skip slow cross-ref for auto-enrich
+          crossRefLawyersCom: false,
+          nameLookups: false,
+          emailCrawl: false,
+          masterDbLookup: false,
+          emitter,
+          isCancelled: () => !_waterfallRunning,
+          maxProfileFetches: 200,
+        });
+
+        // Save enriched data back
+        const origMap = new Map(dbLeads.map(d => [d.id, d]));
+        let saved = 0;
+        for (const lead of leads) {
+          const orig = origMap.get(lead.id) || {};
+          const updates = {};
+          for (const f of ['email', 'phone', 'website', 'bar_number', 'admission_date', 'firm_name', 'title', 'education', 'city', 'state']) {
+            if (lead[f] && !orig[f]) updates[f] = lead[f];
+          }
+          for (const f of ['email_source', 'phone_source', 'website_source']) {
+            if (lead[f]) updates[f] = lead[f];
+          }
+          if (Object.keys(updates).length > 0) {
+            try { leadDb.updateLead(lead.id, updates); saved++; } catch {}
+          }
+        }
+        leadDb.batchScoreLeads();
+
+        // Record the run
+        try {
+          leadDb.recordWaterfallRun({
+            stateFilter: 'all',
+            leadsProcessed: dbLeads.length,
+            leadsEnriched: saved,
+            fieldsFilled: stats.totalFieldsFilled,
+            profilesFetched: stats.profilesFetched || 0,
+            websitesFound: stats.websitesFound || 0,
+            emailsFound: stats.emailsCrawled || 0,
+            trigger: 'auto-cron',
+            stats,
+            durationSecs: 0, // Don't track timing for cron
+          });
+        } catch {}
+
+        console.log(`[Cron] Auto-enrich done: ${stats.totalFieldsFilled} fields filled, ${saved} leads saved`);
+      } catch (err) {
+        console.error(`[Cron] Auto-enrich failed: ${err.message}`);
+      } finally {
+        _waterfallRunning = false;
+      }
+    });
+    console.log('  🔄 Auto-Enrichment: waterfall scheduled at 8 AM and 8 PM\n');
   }
 });
 
