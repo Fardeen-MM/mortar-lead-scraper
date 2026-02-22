@@ -4855,6 +4855,14 @@
     let _currentModalLead = null;
     let _editMode = false;
 
+    async function openLeadById(id) {
+      try {
+        const lead = await fetch('/api/leads/' + id).then(r => r.json());
+        if (lead && lead.id) showLeadDetail(lead);
+        else toast('Lead not found', 'error');
+      } catch (err) { toast('Failed to load lead: ' + err.message, 'error'); }
+    }
+
     function showLeadDetail(lead) {
       _currentModalLead = lead;
       _editMode = false;
@@ -6226,7 +6234,7 @@
           container.innerHTML = leads.map(l => `
             <div draggable="true" data-lead-id="${l.id}" ondragstart="event.dataTransfer.setData('text/plain','${l.id}')"
               style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:0.4rem 0.5rem;cursor:grab;font-size:0.75rem;"
-              onclick="openLeadDetail(${l.id})">
+              onclick="openLeadById(${l.id})">
               <div style="font-weight:600;">${esc(l.first_name)} ${esc(l.last_name)}</div>
               <div style="color:#6b7280;">${esc(l.firm_name || '')} &middot; ${esc(l.city || '')}</div>
               ${l.email ? '<div style="color:#059669;">&#x2709; has email</div>' : ''}
@@ -6580,7 +6588,7 @@
     }
 
     // --- Quick Actions ---
-    function startBulkOp(op) {
+    function startBulkOp(op, btnEl) {
       const endpoints = {
         'find-websites': '/api/leads/find-websites',
         'find-emails': '/api/leads/verify-emails',
@@ -6588,10 +6596,15 @@
       };
       const url = endpoints[op];
       if (!url) return;
+      // Find the clicked button via event or passed element
+      const btn = btnEl || event.target.closest('button');
+      const origText = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Starting...'; }
       fetch(url, { method: 'POST' }).then(r => r.json()).then(d => {
         toast(`${op} started`, 'info');
         setTimeout(loadEnrichmentQueue, 2000);
-      }).catch(() => toast('Failed to start', 'error'));
+      }).catch(() => toast('Failed to start ' + op, 'error'))
+        .finally(() => { if (btn) { btn.disabled = false; btn.textContent = origText; } });
     }
 
     function exportGold() {
@@ -6927,14 +6940,16 @@
     }
 
     function startEmailVerify() {
-      fetch('/api/leads/verify-emails', { method: 'POST' });
-      toast('Email verification started', 'info');
-      setTimeout(loadEnrichmentQueue, 2000);
+      fetch('/api/leads/verify-emails', { method: 'POST' })
+        .then(r => { if (!r.ok) throw new Error('Server error'); return r.json(); })
+        .then(() => { toast('Email verification started', 'info'); setTimeout(loadEnrichmentQueue, 2000); })
+        .catch(err => toast('Email verification failed: ' + err.message, 'error'));
     }
     function verifyEmails() {
-      fetch('/api/leads/verify-emails', { method: 'POST' });
-      toast('Finding emails from firm websites...', 'info');
-      setTimeout(loadEnrichmentQueue, 2000);
+      fetch('/api/leads/verify-emails', { method: 'POST' })
+        .then(r => { if (!r.ok) throw new Error('Server error'); return r.json(); })
+        .then(() => { toast('Finding emails from firm websites...', 'info'); setTimeout(loadEnrichmentQueue, 2000); })
+        .catch(err => toast('Email finding failed: ' + err.message, 'error'));
     }
 
     // --- Scheduled Scrapes ---
@@ -7322,10 +7337,16 @@
     }
 
     async function classifyEmails() {
-      toast('Classifying emails...', 'info');
-      await fetch('/api/leads/classify-emails', { method: 'POST' });
-      toast('Emails classified!', 'success');
-      loadEmailClassification();
+      const btn = event ? event.target.closest('button') : null;
+      if (btn) { btn.disabled = true; btn.textContent = 'Classifying...'; }
+      try {
+        toast('Classifying emails...', 'info');
+        const res = await fetch('/api/leads/classify-emails', { method: 'POST' });
+        if (!res.ok) throw new Error('Server error');
+        toast('Emails classified!', 'success');
+        loadEmailClassification();
+      } catch (err) { toast('Classification failed: ' + err.message, 'error'); }
+      finally { if (btn) { btn.disabled = false; btn.textContent = 'Classify'; } }
     }
 
     // === Confidence Scoring ===
@@ -7353,10 +7374,16 @@
     }
 
     async function recomputeConfidence() {
-      toast('Computing confidence scores...', 'info');
-      await fetch('/api/leads/compute-confidence', { method: 'POST' });
-      toast('Confidence scores updated!', 'success');
-      loadConfidencePanel();
+      const btn = event ? event.target.closest('button') : null;
+      if (btn) { btn.disabled = true; btn.textContent = 'Computing...'; }
+      try {
+        toast('Computing confidence scores...', 'info');
+        const res = await fetch('/api/leads/compute-confidence', { method: 'POST' });
+        if (!res.ok) throw new Error('Server error');
+        toast('Confidence scores updated!', 'success');
+        loadConfidencePanel();
+      } catch (err) { toast('Confidence scoring failed: ' + err.message, 'error'); }
+      finally { if (btn) { btn.disabled = false; btn.textContent = 'Recompute'; } }
     }
 
     // === Data Staleness (ZoomInfo-style) ===
@@ -9222,11 +9249,14 @@
     }
 
     async function processEnrichQueue() {
+      const btn = event ? event.target.closest('button') : null;
+      if (btn) { btn.disabled = true; btn.textContent = 'Processing...'; }
       try {
         const res = await fetch('/api/enrichment-queue/process', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ batchSize: 10 }) }).then(r => r.json());
         toast('Processed ' + (res.processed || 0) + ' items', 'success');
         loadEnrichQueue();
       } catch (err) { toast('Process error: ' + err.message, 'error'); }
+      finally { if (btn) { btn.disabled = false; btn.textContent = 'Process Batch'; } }
     }
 
     async function clearEnrichQueue() {
