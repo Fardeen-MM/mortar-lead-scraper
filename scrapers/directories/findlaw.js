@@ -146,8 +146,13 @@ class FindLawScraper extends BaseScraper {
       return { first_name: parts[0], last_name: parts[2], is_firm: false };
     }
 
-    // Single word or complex name — treat as firm
-    return { first_name: '', last_name: cleaned, is_firm: parts.length > 3, firm_name: firmName.replace(/&amp;/g, '&') };
+    // 4+ words or single word — treat as firm (don't put firm name in last_name)
+    if (parts.length > 3 || parts.length === 1) {
+      return { first_name: '', last_name: '', is_firm: true, firm_name: firmName.replace(/&amp;/g, '&') };
+    }
+
+    // Shouldn't reach here, but fallback to firm
+    return { first_name: '', last_name: '', is_firm: true, firm_name: firmName.replace(/&amp;/g, '&') };
   }
 
   /**
