@@ -3499,6 +3499,9 @@
       }, 4000);
     }
 
+    // Safe JSON response parser — throws on HTTP errors instead of silently failing
+    function safeJSON(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }
+
     let currentOffset = 0;
     const PAGE_SIZE = 100;
     let searchTimeout = null;
@@ -4504,7 +4507,7 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ leadIds: [..._selectedIds], tag: tag.trim() }),
       })
-        .then(r => r.json())
+        .then(safeJSON)
         .then(d => {
           document.getElementById('bulk-status').textContent = `Tagged ${d.updated} leads with "${tag.trim()}"`;
           toast(`Tagged ${d.updated} leads with "${tag.trim()}"`);
@@ -4524,7 +4527,7 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ leadIds: [..._selectedIds] }),
       })
-        .then(r => r.json())
+        .then(safeJSON)
         .then(d => {
           document.getElementById('bulk-status').textContent = `Deleted ${d.deleted} leads`;
           toast(`Deleted ${d.deleted} leads`);
@@ -4636,7 +4639,7 @@
         const result = await fetch('/api/leads/auto-merge', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ confidenceThreshold: 90 })
-        }).then(r => r.json());
+        }).then(safeJSON);
         toast(`Auto-merged ${result.merged} duplicates (${result.fieldsRecovered} fields recovered)`, 'success');
         refreshAll();
       } catch (err) { toast('Auto-merge failed', 'error'); }
@@ -6091,7 +6094,7 @@
 
     async function loadGeoMap() {
       try {
-        const coverage = await fetch('/api/leads/coverage').then(r => r.json());
+        const coverage = await fetch('/api/leads/coverage').then(safeJSON);
         const byState = {};
         let maxCount = 0;
         for (const row of coverage) {
@@ -6148,7 +6151,7 @@
 
     async function loadWorldView() {
       try {
-        const coverage = await fetch('/api/leads/coverage').then(r => r.json());
+        const coverage = await fetch('/api/leads/coverage').then(safeJSON);
         // Group by country
         const countries = {};
         for (const row of coverage) {
@@ -6202,7 +6205,7 @@
 
     async function loadPipeline() {
       try {
-        const data = await fetch('/api/pipeline/stats').then(r => r.json());
+        const data = await fetch('/api/pipeline/stats').then(safeJSON);
         const container = document.getElementById('pipeline-columns');
         document.getElementById('pipeline-total').textContent = `${data.total} leads in pipeline`;
         let html = '';
@@ -6230,7 +6233,7 @@
     async function loadPipelineCards() {
       for (const stage of Object.keys(STAGE_META)) {
         try {
-          const leads = await fetch(`/api/pipeline/stage/${stage}?limit=10`).then(r => r.json());
+          const leads = await fetch(`/api/pipeline/stage/${stage}?limit=10`).then(safeJSON);
           const container = document.getElementById('pipeline-cards-' + stage);
           if (!container) continue;
           container.innerHTML = leads.map(l => `
@@ -6294,7 +6297,7 @@
 
     async function loadSegments() {
       try {
-        _segments = await fetch('/api/segments').then(r => r.json());
+        _segments = await fetch('/api/segments').then(safeJSON);
         const container = document.getElementById('segments-list');
         if (_segments.length === 0) {
           container.innerHTML = '<span style="font-size:0.8rem;color:#9ca3af;">No segments yet. Create one to save filter combinations.</span>';
@@ -6407,7 +6410,7 @@
         const data = await fetch('/api/segments/query', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ filters })
-        }).then(r => r.json());
+        }).then(safeJSON);
         document.getElementById('seg-preview-count').textContent = `${data.count} leads match`;
       } catch (err) { toast('Preview failed', 'error'); }
     }
@@ -6443,7 +6446,7 @@
         const leads = await fetch('/api/segments/query/leads', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ filters: seg.filters, limit: 200 })
-        }).then(r => r.json());
+        }).then(safeJSON);
         _allLeads = leads;
         _currentPage = 1;
         renderLeadsTable();
@@ -6461,7 +6464,7 @@
     // --- Export Templates ---
     async function loadExportTemplates() {
       try {
-        const templates = await fetch('/api/export-templates').then(r => r.json());
+        const templates = await fetch('/api/export-templates').then(safeJSON);
         const container = document.getElementById('export-templates-list');
         const colors = ['#4f46e5', '#059669', '#0ea5e9', '#d97706', '#7c3aed', '#ec4899'];
         container.innerHTML = templates.map((t, i) => `
@@ -6512,8 +6515,8 @@
     async function loadAnalytics() {
       try {
         const [funnel, sources] = await Promise.all([
-          fetch('/api/analytics/funnel').then(r => r.json()),
-          fetch('/api/analytics/source-effectiveness').then(r => r.json()),
+          fetch('/api/analytics/funnel').then(safeJSON),
+          fetch('/api/analytics/source-effectiveness').then(safeJSON),
         ]);
 
         // Funnel chart
@@ -6560,7 +6563,7 @@
       if (q.length < 2) { suggestBox.style.display = 'none'; return; }
       _suggestTimer = setTimeout(async () => {
         try {
-          const suggestions = await fetch('/api/leads/suggest?q=' + encodeURIComponent(q)).then(r => r.json());
+          const suggestions = await fetch('/api/leads/suggest?q=' + encodeURIComponent(q)).then(safeJSON);
           if (suggestions.length === 0) { suggestBox.style.display = 'none'; return; }
           const icons = { name: '&#x1F464;', firm: '&#x1F3E2;', city: '&#x1F4CD;' };
           suggestBox.innerHTML = suggestions.map(s => `
@@ -6602,7 +6605,7 @@
       const btn = btnEl || event.target.closest('button');
       const origText = btn ? btn.textContent : '';
       if (btn) { btn.disabled = true; btn.textContent = 'Starting...'; }
-      fetch(url, { method: 'POST' }).then(r => r.json()).then(d => {
+      fetch(url, { method: 'POST' }).then(safeJSON).then(d => {
         toast(`${op} started`, 'info');
         setTimeout(loadEnrichmentQueue, 2000);
       }).catch(() => toast('Failed to start ' + op, 'error'))
@@ -6617,7 +6620,7 @@
     // --- Email Verification ---
     async function loadVerificationStats() {
       try {
-        const stats = await fetch('/api/leads/verification-stats').then(r => r.json());
+        const stats = await fetch('/api/leads/verification-stats').then(safeJSON);
         const panel = document.getElementById('verification-panel');
         if (stats.total === 0) { panel.style.display = 'none'; return; }
         panel.style.display = '';
@@ -6640,7 +6643,7 @@
       const formData = new FormData();
       formData.append('file', file);
       try {
-        const result = await fetch('/api/leads/import-verification', { method: 'POST', body: formData }).then(r => r.json());
+        const result = await fetch('/api/leads/import-verification', { method: 'POST', body: formData }).then(safeJSON);
         toast(`Updated ${result.updated} of ${result.total} emails`, 'success');
         loadVerificationStats();
       } catch (err) { toast('Import failed', 'error'); }
@@ -6658,7 +6661,7 @@
 
     async function loadScoringRules() {
       try {
-        const rules = await fetch('/api/scoring/rules').then(r => r.json());
+        const rules = await fetch('/api/scoring/rules').then(safeJSON);
         const container = document.getElementById('scoring-rules-body');
         container.innerHTML = rules.map(r => `
           <div style="display:flex;align-items:center;gap:0.5rem;padding:0.3rem 0;border-bottom:1px solid #f3f4f6;">
@@ -6701,7 +6704,7 @@
 
     async function rescoreAll() {
       try {
-        const result = await fetch('/api/leads/score', { method: 'POST' }).then(r => r.json());
+        const result = await fetch('/api/leads/score', { method: 'POST' }).then(safeJSON);
         toast(`Scored ${result.scored} leads (avg: ${result.avgScore})`, 'success');
         loadScores();
         loadLeads();
@@ -6722,7 +6725,7 @@
     // --- Webhooks ---
     async function loadWebhooks() {
       try {
-        const hooks = await fetch('/api/webhooks').then(r => r.json());
+        const hooks = await fetch('/api/webhooks').then(safeJSON);
         const container = document.getElementById('webhooks-list');
         if (hooks.length === 0) {
           container.innerHTML = '<span style="font-size:0.8rem;color:#9ca3af;">No webhooks configured.</span>';
@@ -6797,7 +6800,7 @@
     // --- Lead Notes & Timeline ---
     async function loadLeadTimeline(leadId, container) {
       try {
-        const timeline = await fetch('/api/leads/' + leadId + '/timeline').then(r => r.json());
+        const timeline = await fetch('/api/leads/' + leadId + '/timeline').then(safeJSON);
         if (timeline.length === 0) {
           container.innerHTML = '<div style="color:#9ca3af;font-size:0.8rem;">No activity yet.</div>';
           return;
@@ -6867,7 +6870,7 @@
         const result = await fetch('/api/leads/bulk-update', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ leadIds: ids, updates })
-        }).then(r => r.json());
+        }).then(safeJSON);
         closeBulkEditModal();
         toast(`Updated ${result.updated} leads`, 'success');
         clearSelection();
@@ -6880,10 +6883,10 @@
     async function loadEnrichmentQueue() {
       try {
         const [stats, wsStatus, emailStatus, enrichStatus] = await Promise.all([
-          fetch('/api/leads/enrichment-stats').then(r => r.json()),
-          fetch('/api/leads/find-websites/status').then(r => r.json()).catch(() => null),
-          fetch('/api/leads/verify-status').then(r => r.json()).catch(() => null),
-          fetch('/api/leads/enrich-all/status').then(r => r.json()).catch(() => null),
+          fetch('/api/leads/enrichment-stats').then(safeJSON),
+          fetch('/api/leads/find-websites/status').then(safeJSON).catch(() => null),
+          fetch('/api/leads/verify-status').then(safeJSON).catch(() => null),
+          fetch('/api/leads/enrich-all/status').then(safeJSON).catch(() => null),
         ]);
         const container = document.getElementById('enrichment-queue');
         const jobs = [];
@@ -6957,7 +6960,7 @@
     // --- Scheduled Scrapes ---
     async function loadSchedules() {
       try {
-        const schedules = await fetch('/api/schedules').then(r => r.json());
+        const schedules = await fetch('/api/schedules').then(safeJSON);
         const container = document.getElementById('schedules-list');
         if (schedules.length === 0) {
           container.innerHTML = '<span style="font-size:0.8rem;color:#9ca3af;">No scheduled scrapes. Add one to auto-refresh lead data.</span>';
@@ -6995,7 +6998,7 @@
       // Populate state dropdown from existing config
       const sel = document.getElementById('sched-state');
       if (sel.options.length <= 1) {
-        fetch('/api/config').then(r => r.json()).then(data => {
+        fetch('/api/config').then(safeJSON).then(data => {
           sel.innerHTML = data.scrapers.filter(s => s.working).map(s => `<option value="${s.stateCode}">${s.stateCode} — ${s.name}</option>`).join('');
         }).catch(err => console.warn('schedule config:', err.message));
       }
@@ -7044,7 +7047,7 @@
       document.getElementById('validation-progress').style.display = '';
 
       try {
-        const result = await fetch('/api/leads/validate-emails', { method: 'POST' }).then(r => r.json());
+        const result = await fetch('/api/leads/validate-emails', { method: 'POST' }).then(safeJSON);
         document.getElementById('validation-bar').style.width = '100%';
         document.getElementById('validation-status').textContent = 'Complete!';
         document.getElementById('validation-results').innerHTML = `
@@ -7069,8 +7072,8 @@
     async function loadIcpPanel() {
       try {
         const [criteria, dist] = await Promise.all([
-          fetch('/api/icp/criteria').then(r => r.json()),
-          fetch('/api/icp/distribution').then(r => r.json()),
+          fetch('/api/icp/criteria').then(safeJSON),
+          fetch('/api/icp/distribution').then(safeJSON),
         ]);
 
         // Render criteria
@@ -7133,7 +7136,7 @@
 
     async function scoreAllIcp() {
       toast('Computing ICP scores...', 'info');
-      const result = await fetch('/api/icp/score-all', { method: 'POST' }).then(r => r.json());
+      const result = await fetch('/api/icp/score-all', { method: 'POST' }).then(safeJSON);
       toast('Scored ' + fmt(result.updated) + ' leads!', 'success');
       loadIcpPanel();
     }
@@ -7141,7 +7144,7 @@
     // === Saved Searches (Apollo-style) ===
     async function loadSavedSearches() {
       try {
-        const searches = await fetch('/api/saved-searches').then(r => r.json());
+        const searches = await fetch('/api/saved-searches').then(safeJSON);
         const container = document.getElementById('saved-searches-list');
         if (searches.length === 0) {
           container.innerHTML = '<span style="font-size:0.78rem;color:#9ca3af;">No saved searches yet. Apply filters and click Save Current.</span>';
@@ -7160,7 +7163,7 @@
         }).join('');
 
         // Check for alerts
-        const alerts = await fetch('/api/saved-searches/alerts').then(r => r.json());
+        const alerts = await fetch('/api/saved-searches/alerts').then(safeJSON);
         const alertDiv = document.getElementById('search-alerts');
         if (alerts.length > 0) {
           alertDiv.innerHTML = alerts.map(a => `
@@ -7223,7 +7226,7 @@
     // === Buying Signals: Recent Admissions ===
     async function loadAdmissionSignals() {
       try {
-        const stats = await fetch('/api/signals/admission-stats').then(r => r.json());
+        const stats = await fetch('/api/signals/admission-stats').then(safeJSON);
         const panel = document.getElementById('admissions-panel');
         if (stats.recent6m === 0) { panel.style.display = 'none'; return; }
         panel.style.display = '';
@@ -7270,7 +7273,7 @@
     // Load saved column config
     (async () => {
       try {
-        const config = await fetch('/api/table-config').then(r => r.json());
+        const config = await fetch('/api/table-config').then(safeJSON);
         if (config && config.columns) _visibleColumns = config.columns;
       } catch (err) { console.warn('table-config:', err.message); }
     })();
@@ -7320,7 +7323,7 @@
     // === Email Classification (Apollo-style) ===
     async function loadEmailClassification() {
       try {
-        const data = await fetch('/api/leads/email-classification').then(r => r.json());
+        const data = await fetch('/api/leads/email-classification').then(safeJSON);
         const panel = document.getElementById('email-class-panel');
         if (!data.breakdown || data.total === 0) { panel.style.display = 'none'; return; }
         panel.style.display = '';
@@ -7354,7 +7357,7 @@
     // === Confidence Scoring ===
     async function loadConfidencePanel() {
       try {
-        const data = await fetch('/api/leads/confidence').then(r => r.json());
+        const data = await fetch('/api/leads/confidence').then(safeJSON);
         const panel = document.getElementById('confidence-panel');
         if (data.total === 0) { panel.style.display = 'none'; return; }
         panel.style.display = '';
@@ -7391,7 +7394,7 @@
     // === Data Staleness (ZoomInfo-style) ===
     async function loadStalenessPanel() {
       try {
-        const data = await fetch('/api/leads/staleness').then(r => r.json());
+        const data = await fetch('/api/leads/staleness').then(safeJSON);
         const panel = document.getElementById('staleness-panel');
         if (data.total === 0) { panel.style.display = 'none'; return; }
         panel.style.display = '';
@@ -7421,7 +7424,7 @@
 
     async function loadTagDefinitions() {
       try {
-        const tags = await fetch('/api/tag-definitions').then(r => r.json());
+        const tags = await fetch('/api/tag-definitions').then(safeJSON);
         const container = document.getElementById('tags-list');
         if (tags.length === 0) {
           container.innerHTML = '<span style="font-size:0.78rem;color:#9ca3af;">No tags defined yet. Create tags to organize leads.</span>';
@@ -7486,7 +7489,7 @@
 
     async function runAutoTagging() {
       toast('Running auto-tagging rules...', 'info');
-      const result = await fetch('/api/leads/auto-tag', { method: 'POST' }).then(r => r.json());
+      const result = await fetch('/api/leads/auto-tag', { method: 'POST' }).then(safeJSON);
       toast('Auto-tagged ' + fmt(result.tagged) + ' leads across ' + result.rules + ' rules', 'success');
       loadTagDefinitions();
     }
@@ -7495,8 +7498,8 @@
     async function loadChangeSignals() {
       try {
         const [changes, firmChanges] = await Promise.all([
-          fetch('/api/leads/changes?limit=20').then(r => r.json()),
-          fetch('/api/leads/firm-changes?limit=10').then(r => r.json()),
+          fetch('/api/leads/changes?limit=20').then(safeJSON),
+          fetch('/api/leads/firm-changes?limit=10').then(safeJSON),
         ]);
         const panel = document.getElementById('changes-panel');
         const allChanges = [...firmChanges.map(f => ({ ...f, _type: 'firm' })), ...changes.map(c => ({ ...c, _type: 'field' }))];
@@ -7530,7 +7533,7 @@
       const content = document.getElementById('compare-content');
       content.innerHTML = '<p style="color:#6b7280;">Loading comparison...</p>';
       try {
-        const data = await fetch('/api/leads/compare?id1=' + id1 + '&id2=' + id2).then(r => r.json());
+        const data = await fetch('/api/leads/compare?id1=' + id1 + '&id2=' + id2).then(safeJSON);
         if (data.error) { content.innerHTML = '<p style="color:#ef4444;">' + esc(data.error) + '</p>'; return; }
 
         let html = `
@@ -7601,7 +7604,7 @@
         const result = await fetch('/api/leads/merge-with-choices', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ keepId, mergeId, fieldChoices: _compareChoices }),
-        }).then(r => r.json());
+        }).then(safeJSON);
         if (result.success) {
           toast('Leads merged successfully!', 'success');
           closeCompareModal();
@@ -7625,7 +7628,7 @@
       formData.append('file', file);
 
       try {
-        const preview = await fetch('/api/leads/import-preview', { method: 'POST', body: formData }).then(r => r.json());
+        const preview = await fetch('/api/leads/import-preview', { method: 'POST', body: formData }).then(safeJSON);
         if (preview.error) { toast('Preview failed: ' + preview.error, 'error'); return; }
 
         _importMapping = { ...preview.mapping };
@@ -7716,7 +7719,7 @@
     // === Outreach Sequences ===
     async function loadSequences() {
       try {
-        const seqs = await fetch('/api/sequences').then(r => r.json());
+        const seqs = await fetch('/api/sequences').then(safeJSON);
         const list = document.getElementById('sequences-list');
         if (seqs.length === 0) {
           list.innerHTML = '<span style="font-size:0.72rem;color:#a78bfa;">No sequences yet. Create one to start building outreach templates.</span>';
@@ -7785,7 +7788,7 @@
         const result = await fetch('/api/sequences', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, description: desc }),
-        }).then(r => r.json());
+        }).then(safeJSON);
 
         if (result.id && (subject || body)) {
           await fetch(`/api/sequences/${result.id}/steps`, {
@@ -7809,10 +7812,10 @@
 
     async function showSequenceDetail(id) {
       try {
-        const seqs = await fetch('/api/sequences').then(r => r.json());
+        const seqs = await fetch('/api/sequences').then(safeJSON);
         const seq = seqs.find(s => s.id === id);
         if (!seq) return;
-        const enrollments = await fetch(`/api/sequences/${id}/enrollments`).then(r => r.json());
+        const enrollments = await fetch(`/api/sequences/${id}/enrollments`).then(safeJSON);
 
         const modal = document.createElement('div');
         modal.id = 'sequence-detail-modal';
@@ -7874,7 +7877,7 @@
       const delayDays = parseInt(document.getElementById('new-step-delay').value) || 0;
       if (!subject && !body) { alert('Subject or body required'); return; }
 
-      const seqs = await fetch('/api/sequences').then(r => r.json());
+      const seqs = await fetch('/api/sequences').then(safeJSON);
       const seq = seqs.find(s => s.id === seqId);
       const nextStep = (seq?.steps?.length || 0) + 1;
 
@@ -7891,7 +7894,7 @@
       const selected = [..._selectedIds];
       if (selected.length === 0) { toast('Select leads first', 'error'); return; }
 
-      const seqs = await fetch('/api/sequences').then(r => r.json());
+      const seqs = await fetch('/api/sequences').then(safeJSON);
       if (seqs.length === 0) { toast('Create a sequence first', 'error'); return; }
 
       const seqId = seqs.length === 1 ? seqs[0].id : parseInt(prompt('Enter sequence ID:\n' + seqs.map(s => s.id + ': ' + s.name).join('\n')));
@@ -7903,7 +7906,7 @@
         const result = await fetch(`/api/sequences/${seqId}/enroll`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ leadIds: selected }),
-        }).then(r => r.json());
+        }).then(safeJSON);
         toast(`Enrolled ${result.enrolled} leads in sequence`, 'success');
         loadSequences();
       } catch (err) { toast('Failed to enroll: ' + err.message, 'error'); }
@@ -7919,7 +7922,7 @@
     // === Firm Directory ===
     async function loadFirmDirectory() {
       try {
-        const firms = await fetch('/api/firms/directory?limit=30').then(r => r.json());
+        const firms = await fetch('/api/firms/directory?limit=30').then(safeJSON);
         const list = document.getElementById('firm-directory-list');
         if (firms.length === 0) {
           list.innerHTML = '<span style="font-size:0.72rem;color:#7dd3fc;">Run firm enrichment to populate this directory.</span>';
@@ -7946,7 +7949,7 @@
 
     async function runFirmEnrichment() {
       try {
-        const result = await fetch('/api/firms/enrich', { method: 'POST' }).then(r => r.json());
+        const result = await fetch('/api/firms/enrich', { method: 'POST' }).then(safeJSON);
         toast(`Enriched ${result.firmsEnriched} firms`, 'success');
         loadFirmDirectory();
       } catch (err) { toast('Enrichment error: ' + err.message, 'error'); }
@@ -7955,7 +7958,7 @@
     // === Most Engaged Leads ===
     async function loadEngagementPanel() {
       try {
-        const leads = await fetch('/api/leads/most-engaged?limit=10').then(r => r.json());
+        const leads = await fetch('/api/leads/most-engaged?limit=10').then(safeJSON);
         const list = document.getElementById('engaged-leads-list');
         const countEl = document.getElementById('engagement-count');
         if (leads.length === 0) {
@@ -7981,8 +7984,8 @@
 
     async function showLeadActivities(leadId) {
       try {
-        const activities = await fetch(`/api/leads/${leadId}/activities`).then(r => r.json());
-        const engagement = await fetch(`/api/leads/${leadId}/engagement`).then(r => r.json());
+        const activities = await fetch(`/api/leads/${leadId}/activities`).then(safeJSON);
+        const engagement = await fetch(`/api/leads/${leadId}/engagement`).then(safeJSON);
 
         const modal = document.createElement('div');
         modal.id = 'activity-modal';
@@ -8023,7 +8026,7 @@
     // === Lookalike Finder ===
     async function findLookalikes(leadId) {
       try {
-        const results = await fetch(`/api/leads/${leadId}/lookalikes?limit=15`).then(r => r.json());
+        const results = await fetch(`/api/leads/${leadId}/lookalikes?limit=15`).then(safeJSON);
         if (results.length === 0) { toast('No lookalikes found', 'info'); return; }
 
         const modal = document.createElement('div');
@@ -8060,8 +8063,8 @@
     // === Do Not Contact ===
     async function loadDncPanel() {
       try {
-        const entries = await fetch('/api/dnc').then(r => r.json());
-        const check = await fetch('/api/dnc/check').then(r => r.json());
+        const entries = await fetch('/api/dnc').then(safeJSON);
+        const check = await fetch('/api/dnc/check').then(safeJSON);
         const countEl = document.getElementById('dnc-blocked-count');
         countEl.textContent = check.blocked > 0 ? check.blocked + ' blocked' : entries.length + ' rules';
 
@@ -8136,7 +8139,7 @@
     // === Smart Duplicates ===
     async function loadSmartDuplicates() {
       try {
-        const data = await fetch('/api/leads/smart-duplicates').then(r => r.json());
+        const data = await fetch('/api/leads/smart-duplicates').then(safeJSON);
         const list = document.getElementById('duplicates-list');
         if (data.total === 0) {
           list.innerHTML = '<span style="font-size:0.72rem;color:#fdba74;">No duplicates found. Your data is clean!</span>';
@@ -8163,7 +8166,7 @@
         const result = await fetch('/api/leads/auto-merge', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ dryRun }),
-        }).then(r => r.json());
+        }).then(safeJSON);
         if (dryRun) {
           toast(`Found ${result.candidates} merge candidates. Click "Auto-Merge" again to execute.`, 'info');
           // Re-call with dryRun=false after confirmation
@@ -8178,7 +8181,7 @@
     // === Territory Management ===
     async function loadTerritories() {
       try {
-        const territories = await fetch('/api/territories').then(r => r.json());
+        const territories = await fetch('/api/territories').then(safeJSON);
         const list = document.getElementById('territory-list');
         if (territories.length === 0) {
           list.innerHTML = '<span style="font-size:0.72rem;color:#5eead4;">No territories yet. Create one to organize leads by geography.</span>';
@@ -8252,7 +8255,7 @@
     }
 
     async function assignTerritory(id) {
-      const result = await fetch('/api/territories/' + id + '/assign', { method: 'POST' }).then(r => r.json());
+      const result = await fetch('/api/territories/' + id + '/assign', { method: 'POST' }).then(safeJSON);
       toast(`Assigned ${result.assigned} leads to territory`, 'success');
       loadTerritories();
     }
@@ -8267,7 +8270,7 @@
     // === Source Attribution ===
     async function loadSourceAttribution() {
       try {
-        const sources = await fetch('/api/leads/source-attribution').then(r => r.json());
+        const sources = await fetch('/api/leads/source-attribution').then(safeJSON);
         const list = document.getElementById('source-attribution-list');
         if (sources.length === 0) { list.innerHTML = '<span style="font-size:0.72rem;color:#d946ef;">No source data yet.</span>'; return; }
         list.innerHTML = `
@@ -8292,7 +8295,7 @@
     // === Score Decay ===
     async function loadDecayPreview() {
       try {
-        const data = await fetch('/api/leads/decay-preview').then(r => r.json());
+        const data = await fetch('/api/leads/decay-preview').then(safeJSON);
         document.getElementById('decay-preview-count').textContent = fmt(data.wouldDecay) + ' inactive';
       } catch (err) { console.error('Decay error:', err); }
     }
@@ -8303,7 +8306,7 @@
         const result = await fetch('/api/leads/apply-decay', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ decayPercent: 5, inactiveDays: 30 }),
-        }).then(r => r.json());
+        }).then(safeJSON);
         toast(`Decay applied to ${result.decayed} leads (-${result.decayPercent} pts)`, 'success');
         loadDecayPreview();
         loadScores();
@@ -8313,7 +8316,7 @@
     // === Intent Signals ===
     async function loadIntentSignals() {
       try {
-        const signals = await fetch('/api/leads/intent-signals').then(r => r.json());
+        const signals = await fetch('/api/leads/intent-signals').then(safeJSON);
         const list = document.getElementById('intent-list');
         const highIntent = signals.filter(s => s.intentScore >= 30);
         document.getElementById('intent-high-count').textContent = highIntent.length + ' high-intent';
@@ -8341,7 +8344,7 @@
     // === Routing Rules ===
     async function loadRoutingRules() {
       try {
-        const rules = await fetch('/api/routing-rules').then(r => r.json());
+        const rules = await fetch('/api/routing-rules').then(safeJSON);
         const list = document.getElementById('routing-list');
         if (rules.length === 0) {
           list.innerHTML = '<span style="font-size:0.72rem;color:#6ee7b7;">No routing rules. Create one to auto-process leads.</span>';
@@ -8436,7 +8439,7 @@
 
     async function executeRoutingRules() {
       try {
-        const result = await fetch('/api/routing-rules/run', { method: 'POST' }).then(r => r.json());
+        const result = await fetch('/api/routing-rules/run', { method: 'POST' }).then(safeJSON);
         toast(`Routing: ${result.rulesRun} rules run, ${result.leadsAffected} leads affected`, 'success');
         refreshAll();
       } catch (err) { toast('Error: ' + err.message, 'error'); }
@@ -8445,7 +8448,7 @@
     // === Completeness Heatmap ===
     async function loadCompletenessHeatmap() {
       try {
-        const data = await fetch('/api/leads/completeness-heatmap').then(r => r.json());
+        const data = await fetch('/api/leads/completeness-heatmap').then(safeJSON);
         const grid = document.getElementById('heatmap-grid');
         if (data.length === 0) { grid.innerHTML = '<span style="font-size:0.72rem;color:#93c5fd;">No data yet.</span>'; return; }
 
@@ -8470,7 +8473,7 @@
         `;
 
         // Enrichment recommendations
-        const recs = await fetch('/api/leads/enrichment-recommendations').then(r => r.json());
+        const recs = await fetch('/api/leads/enrichment-recommendations').then(safeJSON);
         const recsDiv = document.getElementById('enrichment-recs');
         recsDiv.innerHTML = `
           <div style="display:flex;gap:0.5rem;flex-wrap:wrap;font-size:0.7rem;">
@@ -8489,7 +8492,7 @@
         const qs = new URLSearchParams();
         if (state) qs.set('state', state);
         if (minScore) qs.set('minScore', minScore);
-        const data = await fetch('/api/leads/export/instantly/preview?' + qs.toString()).then(r => r.json());
+        const data = await fetch('/api/leads/export/instantly/preview?' + qs.toString()).then(safeJSON);
         document.getElementById('instantly-preview').innerHTML = `
           <strong>${fmt(data.count)}</strong> leads ready for Instantly export
           ${data.sample.length > 0 ? '<br>Sample: ' + data.sample.slice(0, 3).map(s => esc(s.first_name) + ' ' + esc(s.last_name) + ' &lt;' + esc(s.email) + '&gt;').join(', ') : ''}
@@ -8509,7 +8512,7 @@
     // Populate Instantly state dropdown
     (async () => {
       try {
-        const states = await fetch('/api/leads/coverage').then(r => r.json());
+        const states = await fetch('/api/leads/coverage').then(safeJSON);
         const sel = document.getElementById('instantly-state');
         if (sel && states && Array.isArray(states)) {
           for (const s of states.sort((a, b) => b.count - a.count)) {
@@ -8524,8 +8527,8 @@
     // === Lead Notes ===
     async function showLeadNotes(leadId) {
       try {
-        const notes = await fetch(`/api/leads/${leadId}/notes`).then(r => r.json());
-        const timeline = await fetch(`/api/leads/${leadId}/timeline`).then(r => r.json());
+        const notes = await fetch(`/api/leads/${leadId}/notes`).then(safeJSON);
+        const timeline = await fetch(`/api/leads/${leadId}/timeline`).then(safeJSON);
 
         const modal = document.createElement('div');
         modal.id = 'notes-modal';
@@ -8604,7 +8607,7 @@
 
     async function loadRecentNotes() {
       try {
-        const notes = await fetch('/api/notes/recent').then(r => r.json());
+        const notes = await fetch('/api/notes/recent').then(safeJSON);
         const list = document.getElementById('recent-notes-list');
         if (notes.length === 0) {
           list.innerHTML = '<span style="font-size:0.72rem;color:#94a3b8;">No notes yet. Click a lead to add notes.</span>';
@@ -8625,7 +8628,7 @@
     // === Smart Lists ===
     async function loadSmartLists() {
       try {
-        const lists = await fetch('/api/smart-lists').then(r => r.json());
+        const lists = await fetch('/api/smart-lists').then(safeJSON);
         const container = document.getElementById('smart-lists-list');
         if (lists.length === 0) {
           container.innerHTML = '<span style="font-size:0.72rem;color:#fde047;">No smart lists. Build dynamic lists with compound filters.</span>';
@@ -8731,8 +8734,8 @@
 
     async function viewSmartList(id) {
       try {
-        const leads = await fetch(`/api/smart-lists/${id}/leads?limit=20`).then(r => r.json());
-        const lists = await fetch('/api/smart-lists').then(r => r.json());
+        const leads = await fetch(`/api/smart-lists/${id}/leads?limit=20`).then(safeJSON);
+        const lists = await fetch('/api/smart-lists').then(safeJSON);
         const list = lists.find(l => l.id === id);
         toast(`"${list?.name}" — ${leads.length} leads matching`, 'info');
         // Apply as filter
@@ -8750,7 +8753,7 @@
     // === KPI Dashboard (Batch 17) ===
     async function loadKpiMetrics() {
       try {
-        const m = await fetch('/api/leads/kpi-metrics').then(r => r.json());
+        const m = await fetch('/api/leads/kpi-metrics').then(safeJSON);
         const el = document.getElementById('kpi-cards');
         const cards = [
           { label: 'Total Leads', value: fmt(m.total), color: '#059669' },
@@ -8776,7 +8779,7 @@
     // === Scoring Models (Batch 17) ===
     async function loadScoringModels() {
       try {
-        const models = await fetch('/api/scoring-models').then(r => r.json());
+        const models = await fetch('/api/scoring-models').then(safeJSON);
         const el = document.getElementById('scoring-models-list');
         if (models.length === 0) {
           el.innerHTML = '<span style="font-size:0.72rem;color:#9a3412;">No custom models. Using default scoring.</span>';
@@ -8859,7 +8862,7 @@
     }
 
     async function applyScoringModel() {
-      const res = await fetch('/api/scoring-models/apply', { method: 'POST' }).then(r => r.json());
+      const res = await fetch('/api/scoring-models/apply', { method: 'POST' }).then(safeJSON);
       toast('Rescored ' + fmt(res.updated) + ' leads', 'success');
       refreshAll();
     }
@@ -8873,7 +8876,7 @@
     // === Campaign Management (Batch 17) ===
     async function loadCampaigns() {
       try {
-        const campaigns = await fetch('/api/campaigns').then(r => r.json());
+        const campaigns = await fetch('/api/campaigns').then(safeJSON);
         const el = document.getElementById('campaigns-list');
         if (campaigns.length === 0) {
           el.innerHTML = '<span style="font-size:0.72rem;color:#6366f1;">No campaigns yet. Create one to start tracking outreach.</span>';
@@ -8948,7 +8951,7 @@
 
     async function viewCampaignLeads(id) {
       try {
-        const leads = await fetch('/api/campaigns/' + id + '/leads?limit=50').then(r => r.json());
+        const leads = await fetch('/api/campaigns/' + id + '/leads?limit=50').then(safeJSON);
         toast('Campaign has ' + leads.length + ' leads', 'info');
         _currentLeads = leads;
         renderLeadTable();
@@ -8975,7 +8978,7 @@
     // === Cross-Source Duplicates (Batch 17) ===
     async function loadCrossSourceDuplicates() {
       try {
-        const dupes = await fetch('/api/leads/cross-source-duplicates?limit=20').then(r => r.json());
+        const dupes = await fetch('/api/leads/cross-source-duplicates?limit=20').then(safeJSON);
         const el = document.getElementById('cross-source-list');
         if (dupes.length === 0) {
           el.innerHTML = '<span style="font-size:0.72rem;color:#a21caf;">No cross-source duplicates found.</span>';
@@ -8995,7 +8998,7 @@
     // === Contact Timeline (Batch 20) ===
     async function loadRecentContacts() {
       try {
-        const contacts = await fetch('/api/contacts/recent?limit=15').then(r => r.json());
+        const contacts = await fetch('/api/contacts/recent?limit=15').then(safeJSON);
         const el = document.getElementById('contacts-list');
         if (contacts.length === 0) {
           el.innerHTML = '<span style="font-size:0.72rem;color:#7c3aed;">No contacts logged yet. Track outreach via the contact timeline.</span>';
@@ -9019,7 +9022,7 @@
     // === Warm-Up Scoring (Batch 20) ===
     async function loadWarmUpScores() {
       try {
-        const leads = await fetch('/api/leads/warm-up-batch?limit=15').then(r => r.json());
+        const leads = await fetch('/api/leads/warm-up-batch?limit=15').then(safeJSON);
         const el = document.getElementById('warmup-list');
         if (leads.length === 0) {
           el.innerHTML = '<span style="font-size:0.72rem;color:#e11d48;">No warm-up data. Log contacts to see warm-up scores.</span>';
@@ -9063,7 +9066,7 @@
 
     async function loadCardView() {
       try {
-        const leads = await fetch('/api/leads/card-view?limit=30').then(r => r.json());
+        const leads = await fetch('/api/leads/card-view?limit=30').then(safeJSON);
         const el = document.getElementById('card-view-container');
         el.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.5rem;';
         el.innerHTML = leads.map(l => `
@@ -9087,7 +9090,7 @@
 
     async function loadKanbanView() {
       try {
-        const data = await fetch('/api/leads/kanban?limit=20').then(r => r.json());
+        const data = await fetch('/api/leads/kanban?limit=20').then(safeJSON);
         const el = document.getElementById('kanban-view-container');
         el.style.cssText = 'display:flex;gap:0.5rem;overflow-x:auto;padding:0.5rem 0;';
         const stageColors = { new: '#3b82f6', contacted: '#f59e0b', qualified: '#22c55e', proposal: '#8b5cf6', negotiation: '#ec4899', won: '#059669', lost: '#6b7280' };
@@ -9123,7 +9126,7 @@
 
       _typeaheadTimer = setTimeout(async () => {
         try {
-          const results = await fetch('/api/leads/typeahead?q=' + encodeURIComponent(query) + '&limit=8').then(r => r.json());
+          const results = await fetch('/api/leads/typeahead?q=' + encodeURIComponent(query) + '&limit=8').then(safeJSON);
           if (results.length === 0) { dropdown.style.display = 'none'; return; }
 
           const matchColors = { name: '#4f46e5', firm: '#059669', email: '#dc2626', city: '#b45309' };
@@ -9150,7 +9153,7 @@
       if (lead) {
         toast('Found: ' + (lead.first_name || '') + ' ' + (lead.last_name || ''), 'info');
       } else {
-        fetch('/api/leads/' + leadId).then(r => r.json()).then(l => {
+        fetch('/api/leads/' + leadId).then(safeJSON).then(l => {
           toast('Lead: ' + (l.first_name || '') + ' ' + (l.last_name || '') + ' (score: ' + l.lead_score + ')', 'info');
         }).catch(err => console.warn('typeahead lookup:', err.message));
       }
@@ -9166,7 +9169,7 @@
     // === Filter Facets (Batch 20) ===
     async function loadFilterFacets() {
       try {
-        const facets = await fetch('/api/leads/filter-facets').then(r => r.json());
+        const facets = await fetch('/api/leads/filter-facets').then(safeJSON);
         const el = document.getElementById('filter-facets');
 
         let html = '';
@@ -9217,7 +9220,7 @@
       const searchInput = document.getElementById('global-search');
       if (searchInput) searchInput.value = value;
       // Reload with filter
-      fetch('/api/leads?limit=200&' + field + '=' + encodeURIComponent(value)).then(r => r.json()).then(d => {
+      fetch('/api/leads?limit=200&' + field + '=' + encodeURIComponent(value)).then(safeJSON).then(d => {
         _currentLeads = d.leads || d;
         renderLeadTable();
       }).catch(err => toast('Filter failed: ' + err.message, 'error'));
@@ -9226,7 +9229,7 @@
     // === Enrichment Queue (Batch 21) ===
     async function loadEnrichQueue() {
       try {
-        const data = await fetch('/api/enrichment-queue/status').then(r => r.json());
+        const data = await fetch('/api/enrichment-queue/status').then(safeJSON);
         const statsEl = document.getElementById('enrich-queue-stats');
         statsEl.innerHTML = `
           <span style="font-size:0.72rem;"><strong style="color:#db2777;">${data.pending || 0}</strong> pending</span>
@@ -9254,7 +9257,7 @@
       const btn = event ? event.target.closest('button') : null;
       if (btn) { btn.disabled = true; btn.textContent = 'Processing...'; }
       try {
-        const res = await fetch('/api/enrichment-queue/process', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ batchSize: 10 }) }).then(r => r.json());
+        const res = await fetch('/api/enrichment-queue/process', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ batchSize: 10 }) }).then(safeJSON);
         toast('Processed ' + (res.processed || 0) + ' items', 'success');
         loadEnrichQueue();
       } catch (err) { toast('Process error: ' + err.message, 'error'); }
@@ -9263,7 +9266,7 @@
 
     async function clearEnrichQueue() {
       try {
-        const res = await fetch('/api/enrichment-queue/clear', { method: 'DELETE' }).then(r => r.json());
+        const res = await fetch('/api/enrichment-queue/clear', { method: 'DELETE' }).then(safeJSON);
         toast('Cleared ' + (res.deleted || 0) + ' completed items', 'success');
         loadEnrichQueue();
       } catch (err) { toast('Clear error: ' + err.message, 'error'); }
@@ -9272,7 +9275,7 @@
     // === Firm Intelligence (Batch 21) ===
     async function loadFirmIntelligence() {
       try {
-        const firms = await fetch('/api/firms?limit=30').then(r => r.json());
+        const firms = await fetch('/api/firms?limit=30').then(safeJSON);
         const el = document.getElementById('firm-intel-list');
         if (!firms || firms.length === 0) {
           el.innerHTML = '<span style="font-size:0.72rem;color:#2563eb;">No firm data yet.</span>';
@@ -9291,7 +9294,7 @@
 
     async function showFirmDetail(firmName) {
       try {
-        const d = await fetch('/api/firms/' + encodeURIComponent(firmName)).then(r => r.json());
+        const d = await fetch('/api/firms/' + encodeURIComponent(firmName)).then(safeJSON);
         let html = `<h4 style="margin:0 0 0.3rem;color:#1e40af;">${esc(d.firm_name || firmName)}</h4>`;
         html += `<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.3rem;">`;
         html += `<span style="font-size:0.72rem;"><strong>${d.headcount || 0}</strong> attorneys</span>`;
@@ -9311,14 +9314,14 @@
     // === Dedup Merge Queue (Batch 21) ===
     async function loadDedupQueue() {
       try {
-        const stats = await fetch('/api/dedup/stats').then(r => r.json());
+        const stats = await fetch('/api/dedup/stats').then(safeJSON);
         const statsEl = document.getElementById('dedup-queue-stats');
         statsEl.innerHTML = `
           <span style="font-size:0.72rem;"><strong style="color:#a16207;">${stats.pending || 0}</strong> pending</span>
           <span style="font-size:0.72rem;"><strong style="color:#059669;">${stats.resolved || 0}</strong> resolved</span>
           ${stats.byType ? Object.entries(stats.byType).map(([k,v]) => `<span style="font-size:0.65rem;color:#6b7280;">${k}: ${v}</span>`).join('') : ''}
         `;
-        const items = await fetch('/api/dedup/queue?limit=20').then(r => r.json());
+        const items = await fetch('/api/dedup/queue?limit=20').then(safeJSON);
         const el = document.getElementById('dedup-queue-items');
         if (!items || items.length === 0) {
           el.innerHTML = '<span style="font-size:0.72rem;color:#a16207;">No duplicates in queue. Click "Scan Now" to detect duplicates.</span>';
@@ -9338,7 +9341,7 @@
 
     async function scanDuplicates() {
       try {
-        const res = await fetch('/api/dedup/scan', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ limit: 200 }) }).then(r => r.json());
+        const res = await fetch('/api/dedup/scan', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ limit: 200 }) }).then(safeJSON);
         toast('Found ' + (res.found || 0) + ' potential duplicates', 'success');
         loadDedupQueue();
       } catch (err) { toast('Scan error: ' + err.message, 'error'); }
@@ -9346,7 +9349,7 @@
 
     async function resolveDedupItem(id, resolution, keepId) {
       try {
-        await fetch('/api/dedup/resolve/' + id, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ resolution, keepId }) }).then(r => r.json());
+        await fetch('/api/dedup/resolve/' + id, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ resolution, keepId }) }).then(safeJSON);
         toast('Resolved: ' + resolution, 'success');
         loadDedupQueue();
       } catch (err) { toast('Resolve error: ' + err.message, 'error'); }
@@ -9357,8 +9360,8 @@
       try {
         const filter = document.getElementById('audit-filter-action')?.value || '';
         const [log, stats] = await Promise.all([
-          fetch('/api/audit/log?limit=30' + (filter ? '&action=' + filter : '')).then(r => r.json()),
-          fetch('/api/audit/stats').then(r => r.json()),
+          fetch('/api/audit/log?limit=30' + (filter ? '&action=' + filter : '')).then(safeJSON),
+          fetch('/api/audit/stats').then(safeJSON),
         ]);
         const statsEl = document.getElementById('audit-stats');
         statsEl.innerHTML = `
@@ -9384,7 +9387,7 @@
 
     async function exportAuditLog() {
       try {
-        const data = await fetch('/api/audit/export').then(r => r.json());
+        const data = await fetch('/api/audit/export').then(safeJSON);
         const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -9397,7 +9400,7 @@
     // === Predictive Scoring (Batch 25) ===
     async function loadPredictiveScores() {
       try {
-        const data = await fetch('/api/predictive-scores?limit=20').then(r => r.json());
+        const data = await fetch('/api/predictive-scores?limit=20').then(safeJSON);
         const msEl = document.getElementById('predictive-model-stats');
         const ms = data.modelStats || {};
         msEl.innerHTML = `
@@ -9428,7 +9431,7 @@
     // === Team Performance (Batch 25) ===
     async function loadTeamPerformance() {
       try {
-        const data = await fetch('/api/team/performance').then(r => r.json());
+        const data = await fetch('/api/team/performance').then(safeJSON);
         document.getElementById('team-perf-summary').innerHTML = `
           <span style="font-size:0.72rem;"><strong style="color:#0284c7;">${data.teamSize || 0}</strong> team members</span>
           <span style="font-size:0.72rem;"><strong style="color:#6b7280;">${fmt(data.totalAssigned || 0)}</strong> leads assigned</span>
@@ -9454,7 +9457,7 @@
     // === Email Deliverability (Batch 25) ===
     async function loadEmailDeliverability() {
       try {
-        const data = await fetch('/api/email/deliverability').then(r => r.json());
+        const data = await fetch('/api/email/deliverability').then(safeJSON);
         const s = data.summary || {};
         document.getElementById('email-intel-summary').innerHTML = `
           <span style="font-size:0.72rem;"><strong style="color:#059669;">${fmt(s.totalEmails || 0)}</strong> emails</span>
@@ -9479,8 +9482,8 @@
     async function loadPriorityInbox() {
       try {
         const [leads, recs] = await Promise.all([
-          fetch('/api/priority-inbox?limit=15').then(r => r.json()),
-          fetch('/api/smart-recommendations').then(r => r.json()),
+          fetch('/api/priority-inbox?limit=15').then(safeJSON),
+          fetch('/api/smart-recommendations').then(safeJSON),
         ]);
         const recEl = document.getElementById('smart-recs');
         recEl.innerHTML = recs.map(r => `
@@ -9509,7 +9512,7 @@
     // === Practice Area Analytics (Batch 24) ===
     async function loadPracticeAnalytics() {
       try {
-        const data = await fetch('/api/practice-areas/analytics?limit=20').then(r => r.json());
+        const data = await fetch('/api/practice-areas/analytics?limit=20').then(safeJSON);
         const el = document.getElementById('practice-areas-list');
         if (data.areas && data.areas.length > 0) {
           el.innerHTML = data.areas.slice(0, 12).map(a => `
@@ -9539,7 +9542,7 @@
     // === Source ROI (Batch 24) ===
     async function loadSourceROI() {
       try {
-        const sources = await fetch('/api/source-roi').then(r => r.json());
+        const sources = await fetch('/api/source-roi').then(safeJSON);
         const el = document.getElementById('source-roi-list');
         if (!sources || sources.length === 0) {
           el.innerHTML = '<span style="font-size:0.72rem;color:#ca8a04;">No source data yet.</span>';
@@ -9561,7 +9564,7 @@
     // === Compliance Dashboard (Batch 24) ===
     async function loadComplianceDashboard() {
       try {
-        const data = await fetch('/api/compliance/dashboard').then(r => r.json());
+        const data = await fetch('/api/compliance/dashboard').then(safeJSON);
         document.getElementById('compliance-score').innerHTML = `
           <div style="display:inline-flex;align-items:center;gap:0.4rem;">
             <span style="font-size:1.2rem;font-weight:700;color:${data.complianceScore > 80 ? '#16a34a' : data.complianceScore > 50 ? '#ca8a04' : '#dc2626'};">${data.complianceScore}</span>
@@ -9595,20 +9598,20 @@
       if (!email) return;
       const reason = prompt('Reason (optional):') || '';
       fetch('/api/compliance/opt-out', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, reason }) })
-        .then(r => r.json()).then(() => { toast('Opt-out recorded', 'success'); loadComplianceDashboard(); })
+        .then(safeJSON).then(() => { toast('Opt-out recorded', 'success'); loadComplianceDashboard(); })
         .catch(err => toast('Error: ' + err.message, 'error'));
     }
 
     function removeOptOutEmail(email) {
       fetch('/api/compliance/opt-out', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) })
-        .then(r => r.json()).then(() => { toast('Opt-out removed', 'success'); loadComplianceDashboard(); })
+        .then(safeJSON).then(() => { toast('Opt-out removed', 'success'); loadComplianceDashboard(); })
         .catch(err => toast('Error: ' + err.message, 'error'));
     }
 
     // === Firm Network (Batch 23) ===
     async function loadFirmNetwork() {
       try {
-        const firms = await fetch('/api/firm-network?limit=20').then(r => r.json());
+        const firms = await fetch('/api/firm-network?limit=20').then(safeJSON);
         const el = document.getElementById('firm-network-list');
         if (!firms || firms.length === 0) {
           el.innerHTML = '<span style="font-size:0.72rem;color:#a21caf;">No multi-attorney firms found yet.</span>';
@@ -9630,7 +9633,7 @@
     // === Data Freshness Monitor (Batch 23) ===
     async function loadFreshnessMonitor() {
       try {
-        const data = await fetch('/api/freshness/report?staleDays=90&limit=50').then(r => r.json());
+        const data = await fetch('/api/freshness/report?staleDays=90&limit=50').then(safeJSON);
         const sumEl = document.getElementById('freshness-summary');
         const o = data.overall || {};
         sumEl.innerHTML = `
@@ -9664,7 +9667,7 @@
     // === Scoring Model Rankings (Batch 23) ===
     async function loadScoringRankings() {
       try {
-        const models = await fetch('/api/scoring-models/rankings').then(r => r.json());
+        const models = await fetch('/api/scoring-models/rankings').then(safeJSON);
         const el = document.getElementById('scoring-rankings-list');
         if (!models || models.length === 0) {
           el.innerHTML = '<span style="font-size:0.72rem;color:#d97706;">No scoring models created yet. Create one in the Scoring Models panel.</span>';
@@ -9684,7 +9687,7 @@
     // === Geographic Clustering (Batch 23) ===
     async function loadGeoClusters() {
       try {
-        const data = await fetch('/api/geographic/clusters?minSize=3&limit=30').then(r => r.json());
+        const data = await fetch('/api/geographic/clusters?minSize=3&limit=30').then(safeJSON);
         const sumEl = document.getElementById('geo-summary');
         const s = data.summary || {};
         sumEl.innerHTML = `
@@ -9720,7 +9723,7 @@
 
     async function showMarketDetail(state) {
       try {
-        const data = await fetch('/api/geographic/penetration/' + encodeURIComponent(state)).then(r => r.json());
+        const data = await fetch('/api/geographic/penetration/' + encodeURIComponent(state)).then(safeJSON);
         toast(state + ': ' + data.totalLeads + ' leads across ' + (data.cities?.length || 0) + ' cities', 'info');
       } catch (err) { toast('Market error: ' + err.message, 'error'); }
     }
@@ -9728,7 +9731,7 @@
     // === Lifecycle Analytics (Batch 22) ===
     async function loadLifecycleAnalytics() {
       try {
-        const data = await fetch('/api/lifecycle/analytics').then(r => r.json());
+        const data = await fetch('/api/lifecycle/analytics').then(safeJSON);
         const velEl = document.getElementById('lifecycle-velocity');
         velEl.innerHTML = `
           <span style="font-size:0.72rem;"><strong style="color:#16a34a;">${data.velocity?.avg_total_hours || 0}h</strong> avg velocity</span>
@@ -9761,7 +9764,7 @@
     // === Sequence Performance (Batch 22) ===
     async function loadSequencePerformance() {
       try {
-        const seqs = await fetch('/api/sequences/performance').then(r => r.json());
+        const seqs = await fetch('/api/sequences/performance').then(safeJSON);
         const el = document.getElementById('sequence-performance-list');
         if (!seqs || seqs.length === 0) {
           el.innerHTML = '<span style="font-size:0.72rem;color:#9333ea;">No sequences with events yet.</span>';
@@ -9782,7 +9785,7 @@
 
     async function showSequenceAnalytics(seqId) {
       try {
-        const data = await fetch('/api/sequences/' + seqId + '/analytics').then(r => r.json());
+        const data = await fetch('/api/sequences/' + seqId + '/analytics').then(safeJSON);
         const el = document.getElementById('sequence-performance-list');
         let html = `<h4 style="margin:0 0 0.3rem;color:#7c3aed;">Sequence #${seqId} Analytics</h4>`;
         if (data.totals) {
@@ -9812,7 +9815,7 @@
     // === Activity Scoring (Batch 22) ===
     async function loadActivityScores() {
       try {
-        const scores = await fetch('/api/activity-scores/batch?limit=20').then(r => r.json());
+        const scores = await fetch('/api/activity-scores/batch?limit=20').then(safeJSON);
         const el = document.getElementById('activity-scores-list');
         if (!scores || scores.length === 0) {
           el.innerHTML = '<span style="font-size:0.72rem;color:#ea580c;">No activity data yet. Log contacts and interactions to see scores.</span>';
@@ -9833,7 +9836,7 @@
     // === Bulk Enrichment (Batch 22) ===
     async function loadBulkEnrichmentRuns() {
       try {
-        const runs = await fetch('/api/bulk-enrichment/runs?limit=10').then(r => r.json());
+        const runs = await fetch('/api/bulk-enrichment/runs?limit=10').then(safeJSON);
         const el = document.getElementById('bulk-enrichment-runs');
         if (!runs || runs.length === 0) {
           el.innerHTML = '<span style="font-size:0.72rem;color:#0891b2;">No enrichment runs yet. Select leads and click "Enrich Selected" to start.</span>';
@@ -9859,7 +9862,7 @@
       const ids = [..._selectedIds];
       if (ids.length === 0) { toast('Select leads first using checkboxes', 'warn'); return; }
       try {
-        const res = await fetch('/api/bulk-enrichment/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ leadIds: ids }) }).then(r => r.json());
+        const res = await fetch('/api/bulk-enrichment/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ leadIds: ids }) }).then(safeJSON);
         toast('Created enrichment run #' + res.runId + ' (' + res.queued + ' queued)', 'success');
         // Auto-process first batch
         await fetch('/api/bulk-enrichment/process/' + res.runId, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ batchSize: 20 }) });
@@ -9870,7 +9873,7 @@
 
     async function processEnrichRun(runId) {
       try {
-        const res = await fetch('/api/bulk-enrichment/process/' + runId, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ batchSize: 20 }) }).then(r => r.json());
+        const res = await fetch('/api/bulk-enrichment/process/' + runId, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ batchSize: 20 }) }).then(safeJSON);
         toast('Processed ' + res.processed + ' leads (' + res.enriched + ' enriched)', 'success');
         loadBulkEnrichmentRuns();
       } catch (err) { toast('Process error: ' + err.message, 'error'); }
@@ -10333,7 +10336,7 @@
     // === Deal Estimation (Batch 32) ===
     async function loadDealEstimates() {
       try {
-        const data = await fetch('/api/deals?limit=20').then(r => r.json());
+        const data = await fetch('/api/deals?limit=20').then(safeJSON);
         const sEl = document.getElementById('deal-summary');
         sEl.innerHTML = `
           <div style="text-align:center;"><div style="font-size:1.1rem;font-weight:700;color:#059669;">$${(data.totalPipeline / 1000).toFixed(0)}k</div><div style="font-size:0.65rem;">Total Pipeline</div></div>
@@ -10355,7 +10358,7 @@
     // === Outreach Calendar (Batch 32) ===
     async function loadOutreachCal() {
       try {
-        const data = await fetch('/api/outreach-calendar').then(r => r.json());
+        const data = await fetch('/api/outreach-calendar').then(safeJSON);
         const bEl = document.getElementById('outreach-backlog');
         bEl.innerHTML = `
           <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#0284c7;">${data.backlog.emailReady}</div><div style="font-size:0.65rem;">Email Ready</div></div>
@@ -10376,7 +10379,7 @@
     // === Risk Scoring (Batch 32) ===
     async function loadRiskScores() {
       try {
-        const data = await fetch('/api/risk-scores?limit=20').then(r => r.json());
+        const data = await fetch('/api/risk-scores?limit=20').then(safeJSON);
         const dEl = document.getElementById('risk-dist');
         dEl.innerHTML = `
           <div style="text-align:center;"><div style="font-size:1.1rem;font-weight:700;color:#dc2626;">${data.distribution.high}</div><div style="font-size:0.65rem;">High Risk</div></div>
@@ -10399,7 +10402,7 @@
     // === Network Map (Batch 32) ===
     async function loadNetworkMap() {
       try {
-        const data = await fetch('/api/network-map?limit=20').then(r => r.json());
+        const data = await fetch('/api/network-map?limit=20').then(safeJSON);
         const cEl = document.getElementById('network-connectors');
         if (data.connectors && data.connectors.length) {
           cEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#a21caf;margin-bottom:0.2rem;">Key Connectors (Multi-City Firms)</div>' +
@@ -10421,7 +10424,7 @@
     // === Propensity Model (Batch 31) ===
     async function loadPropensity() {
       try {
-        const data = await fetch('/api/propensity?limit=30').then(r => r.json());
+        const data = await fetch('/api/propensity?limit=30').then(safeJSON);
         const dEl = document.getElementById('propensity-dist');
         const colors = { high: '#16a34a', medium: '#f59e0b', low: '#dc2626' };
         dEl.innerHTML = `
@@ -10444,7 +10447,7 @@
     // === Cohort Analysis (Batch 31) ===
     async function loadCohorts() {
       try {
-        const data = await fetch('/api/cohorts').then(r => r.json());
+        const data = await fetch('/api/cohorts').then(safeJSON);
         const cEl = document.getElementById('cohort-comparison');
         if (data.comparison) {
           const c = data.comparison;
@@ -10473,7 +10476,7 @@
     // === Channel Preferences (Batch 31) ===
     async function loadChannelPrefs() {
       try {
-        const data = await fetch('/api/channel-preferences').then(r => r.json());
+        const data = await fetch('/api/channel-preferences').then(safeJSON);
         const sEl = document.getElementById('channel-stats');
         if (data.channels.length) {
           sEl.innerHTML = data.channels.map(c => `<div style="text-align:center;padding:0.2rem 0.5rem;background:rgba(255,255,255,0.6);border-radius:4px;">
@@ -10495,7 +10498,7 @@
     // === Jurisdiction Benchmarks (Batch 31) ===
     async function loadBenchmarks() {
       try {
-        const data = await fetch('/api/benchmarks').then(r => r.json());
+        const data = await fetch('/api/benchmarks').then(safeJSON);
         const gEl = document.getElementById('benchmark-global');
         const g = data.globalAvg;
         gEl.innerHTML = `
@@ -10524,7 +10527,7 @@
     // === Sequence Templates (Batch 30) ===
     async function loadSeqTemplates() {
       try {
-        const templates = await fetch('/api/sequence-templates').then(r => r.json());
+        const templates = await fetch('/api/sequence-templates').then(safeJSON);
         const el = document.getElementById('seq-templates-list');
         if (!templates.length) { el.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">No sequences. Create one above.</div>'; return; }
         el.innerHTML = templates.map(t => `<div style="padding:0.3rem 0;border-bottom:1px solid #e0e7ff;">
@@ -10562,7 +10565,7 @@
     // === Data Quality Rules (Batch 30) ===
     async function loadQualityRulesPanel() {
       try {
-        const rules = await fetch('/api/quality-rules').then(r => r.json());
+        const rules = await fetch('/api/quality-rules').then(safeJSON);
         const el = document.getElementById('quality-rules-list');
         if (!rules.length) { el.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">No quality rules. Create one above.</div>'; return; }
         el.innerHTML = rules.map(r => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0;border-bottom:1px solid #fef3c7;">
@@ -10594,7 +10597,7 @@
     }
     async function runAllQualityRules() {
       try {
-        const res = await fetch('/api/quality-rules/run', { method: 'POST' }).then(r => r.json());
+        const res = await fetch('/api/quality-rules/run', { method: 'POST' }).then(safeJSON);
         toast('Flagged ' + res.totalFlagged + ' leads across ' + res.rulesRun + ' rules', 'success');
       } catch (err) { toast('Error: ' + err.message, 'error'); }
     }
@@ -10608,7 +10611,7 @@
       const leadId = document.getElementById('timeline-lead-id').value;
       if (!leadId) { toast('Enter a lead ID', 'error'); return; }
       try {
-        const events = await fetch('/api/leads/' + leadId + '/timeline').then(r => r.json());
+        const events = await fetch('/api/leads/' + leadId + '/timeline').then(safeJSON);
         const el = document.getElementById('timeline-events');
         if (!events.length) { el.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;">No events for this lead.</div>'; return; }
         const typeIcons = { created: '●', contact: '✉', stage_change: '→', audit: '✎', note: '📝' };
@@ -10626,7 +10629,7 @@
     // === Export Scheduler (Batch 30) ===
     async function loadExportScheduler() {
       try {
-        const schedules = await fetch('/api/export-schedules').then(r => r.json());
+        const schedules = await fetch('/api/export-schedules').then(safeJSON);
         const el = document.getElementById('export-sched-list');
         if (!schedules.length) { el.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">No export schedules. Create one above.</div>'; return; }
         el.innerHTML = schedules.map(s => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0;border-bottom:1px solid #dcfce7;">
@@ -10659,7 +10662,7 @@
     }
     async function runExportSchedItem(id) {
       try {
-        const res = await fetch('/api/export-schedules/' + id + '/run', { method: 'POST' }).then(r => r.json());
+        const res = await fetch('/api/export-schedules/' + id + '/run', { method: 'POST' }).then(safeJSON);
         toast('Exported ' + res.leadsExported + ' leads', 'success');
         loadExportScheduler();
       } catch (err) { toast('Error: ' + err.message, 'error'); }
@@ -10668,7 +10671,7 @@
     // === Response Time SLA (Batch 29) ===
     async function loadSLATracker() {
       try {
-        const data = await fetch('/api/sla').then(r => r.json());
+        const data = await fetch('/api/sla').then(safeJSON);
         const sEl = document.getElementById('sla-summary');
         const s = data.summary;
         sEl.innerHTML = `
@@ -10695,7 +10698,7 @@
     // === Market Saturation (Batch 29) ===
     async function loadSaturation() {
       try {
-        const data = await fetch('/api/saturation').then(r => r.json());
+        const data = await fetch('/api/saturation').then(safeJSON);
         const uEl = document.getElementById('saturation-underserved');
         if (data.underServed && data.underServed.length) {
           uEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#7c3aed;margin-bottom:0.2rem;">Under-Served Markets (Growth Opportunity)</div>' +
@@ -10723,7 +10726,7 @@
     // === Enrichment Waterfall (Batch 29) ===
     async function loadEnrichWaterfall() {
       try {
-        const data = await fetch('/api/enrichment-waterfall').then(r => r.json());
+        const data = await fetch('/api/enrichment-waterfall').then(safeJSON);
         const cEl = document.getElementById('enrich-waterfall-coverage');
         cEl.innerHTML = `
           <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#0d9488;">${data.total}</div><div style="font-size:0.65rem;">Total Leads</div></div>
@@ -10754,7 +10757,7 @@
     // === Competitive Intelligence (Batch 29) ===
     async function loadCompetitiveIntel() {
       try {
-        const data = await fetch('/api/competitive').then(r => r.json());
+        const data = await fetch('/api/competitive').then(safeJSON);
         const fEl = document.getElementById('competitive-firms');
         if (data.multiStateFirms.length) {
           fEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#c2410c;margin-bottom:0.2rem;">Multi-Jurisdiction Firms</div>' +
@@ -10778,7 +10781,7 @@
     // === Lead Clustering (Batch 28) ===
     async function loadLeadClusters() {
       try {
-        const data = await fetch('/api/clusters').then(r => r.json());
+        const data = await fetch('/api/clusters').then(safeJSON);
         const tEl = document.getElementById('cluster-tiers');
         const tierColors = { solo: '#6b7280', small: '#3b82f6', mid: '#f59e0b', large: '#16a34a' };
         tEl.innerHTML = Object.entries(data.clusters).map(([tier, info]) => `<div style="text-align:center;padding:0.3rem 0.6rem;background:rgba(255,255,255,0.6);border-radius:6px;">
@@ -10800,7 +10803,7 @@
     // === A/B Test Framework (Batch 28) ===
     async function loadAbTests() {
       try {
-        const tests = await fetch('/api/ab-tests').then(r => r.json());
+        const tests = await fetch('/api/ab-tests').then(safeJSON);
         const el = document.getElementById('ab-tests-list');
         if (!tests.length) { el.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">No A/B tests. Create one above.</div>'; return; }
         el.innerHTML = tests.map(t => {
@@ -10847,7 +10850,7 @@
     // === Re-engagement Scoring (Batch 28) ===
     async function loadReengagement() {
       try {
-        const data = await fetch('/api/reengagement?limit=20').then(r => r.json());
+        const data = await fetch('/api/reengagement?limit=20').then(safeJSON);
         const sEl = document.getElementById('reengage-summary');
         const s = data.summary;
         sEl.innerHTML = `
@@ -10871,7 +10874,7 @@
     // === Attribution Model (Batch 28) ===
     async function loadAttribution() {
       try {
-        const data = await fetch('/api/attribution').then(r => r.json());
+        const data = await fetch('/api/attribution').then(safeJSON);
         const qEl = document.getElementById('attribution-quality');
         if (data.sourceQuality && data.sourceQuality.length) {
           qEl.innerHTML = '<div style="font-size:0.68rem;font-weight:600;color:#059669;margin-bottom:0.2rem;">Source Quality Ranking</div>' +
@@ -10904,9 +10907,9 @@
     async function loadLookalikes() {
       // Default: show top-scored lead's lookalikes
       try {
-        const stats = await fetch('/api/leads/stats').then(r => r.json());
+        const stats = await fetch('/api/leads/stats').then(safeJSON);
         if (stats.total > 0) {
-          const leads = await fetch('/api/leads?limit=1&sort=lead_score&order=desc').then(r => r.json());
+          const leads = await fetch('/api/leads?limit=1&sort=lead_score&order=desc').then(safeJSON);
           if (leads.leads && leads.leads.length > 0) {
             document.getElementById('lookalike-lead-id').value = leads.leads[0].id;
             searchLookalikes();
@@ -10918,7 +10921,7 @@
       const leadId = document.getElementById('lookalike-lead-id').value;
       if (!leadId) { toast('Enter a lead ID', 'error'); return; }
       try {
-        const data = await fetch('/api/leads/' + leadId + '/lookalikes?limit=15').then(r => r.json());
+        const data = await fetch('/api/leads/' + leadId + '/lookalikes?limit=15').then(safeJSON);
         const el = document.getElementById('lookalike-results');
         if (!data.target) { el.innerHTML = '<div style="font-size:0.72rem;color:#dc2626;">Lead not found.</div>'; return; }
         const t = data.target;
@@ -10942,7 +10945,7 @@
     // === Conversion Funnel (Batch 27) ===
     async function loadConversionFunnel() {
       try {
-        const data = await fetch('/api/funnel').then(r => r.json());
+        const data = await fetch('/api/funnel').then(safeJSON);
         const el = document.getElementById('conversion-funnel-stages');
         const maxCount = Math.max(...data.funnel.map(f => f.count), 1);
         el.innerHTML = data.funnel.map(f => {
@@ -10976,7 +10979,7 @@
     // === Lead Velocity (Batch 27) ===
     async function loadLeadVelocity() {
       try {
-        const data = await fetch('/api/velocity?days=30').then(r => r.json());
+        const data = await fetch('/api/velocity?days=30').then(safeJSON);
         const sEl = document.getElementById('velocity-stats');
         const trendColor = data.trend > 0 ? '#16a34a' : data.trend < 0 ? '#dc2626' : '#6b7280';
         const trendIcon = data.trend > 0 ? '&uarr;' : data.trend < 0 ? '&darr;' : '&rarr;';
@@ -11003,7 +11006,7 @@
     // === Completeness Matrix (Batch 27) ===
     async function loadCompletenessMatrix() {
       try {
-        const data = await fetch('/api/completeness-matrix').then(r => r.json());
+        const data = await fetch('/api/completeness-matrix').then(safeJSON);
         // Gaps
         const gEl = document.getElementById('matrix-gaps');
         if (data.gaps.length) {
@@ -11036,7 +11039,7 @@
     // === Tagging Rules Engine (Batch 26) ===
     async function loadTagRulesEngine() {
       try {
-        const rules = await fetch('/api/tag-rules').then(r => r.json());
+        const rules = await fetch('/api/tag-rules').then(safeJSON);
         const el = document.getElementById('tag-rules-list');
         if (!rules.length) { el.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">No tagging rules defined. Create one above.</div>'; return; }
         el.innerHTML = rules.map(r => {
@@ -11088,7 +11091,7 @@
     }
     async function runAllTagRules() {
       try {
-        const res = await fetch('/api/tag-rules/run', { method: 'POST' }).then(r => r.json());
+        const res = await fetch('/api/tag-rules/run', { method: 'POST' }).then(safeJSON);
         toast('Applied ' + res.totalApplied + ' tags across ' + res.results.length + ' rules', 'success');
         loadTagRulesEngine();
       } catch (err) { toast('Error: ' + err.message, 'error'); }
@@ -11098,8 +11101,8 @@
     async function loadNurtureCadence() {
       try {
         const [leads, analytics] = await Promise.all([
-          fetch('/api/nurture/cadence?limit=30').then(r => r.json()),
-          fetch('/api/nurture/analytics').then(r => r.json())
+          fetch('/api/nurture/cadence?limit=30').then(safeJSON),
+          fetch('/api/nurture/analytics').then(safeJSON)
         ]);
         const aEl = document.getElementById('cadence-analytics');
         const statusColors = { never: '#dc2626', dormant: '#9ca3af', cold: '#3b82f6', cooling: '#f59e0b', warm: '#22c55e', active: '#16a34a' };
@@ -11119,7 +11122,7 @@
     // === Custom Fields (Batch 26) ===
     async function loadCustomFields() {
       try {
-        const stats = await fetch('/api/custom-fields/stats').then(r => r.json());
+        const stats = await fetch('/api/custom-fields/stats').then(safeJSON);
         const el = document.getElementById('custom-fields-list');
         if (!stats.length) { el.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">No custom fields defined. Create one above.</div>'; return; }
         el.innerHTML = stats.map(f => `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.3rem 0;border-bottom:1px solid #ccfbf1;">
@@ -11161,8 +11164,8 @@
     async function loadScoreDecayConfig() {
       try {
         const [config, preview] = await Promise.all([
-          fetch('/api/score-decay/config').then(r => r.json()),
-          fetch('/api/score-decay/preview?limit=10').then(r => r.json())
+          fetch('/api/score-decay/config').then(safeJSON),
+          fetch('/api/score-decay/preview?limit=10').then(safeJSON)
         ]);
         const cEl = document.getElementById('decay-config-display');
         cEl.innerHTML = `<div style="display:flex;gap:1rem;flex-wrap:wrap;font-size:0.72rem;">
@@ -11187,7 +11190,7 @@
     }
     async function runScoreDecayNow() {
       try {
-        const res = await fetch('/api/score-decay/run', { method: 'POST' }).then(r => r.json());
+        const res = await fetch('/api/score-decay/run', { method: 'POST' }).then(safeJSON);
         toast('Decayed ' + res.affected + ' leads', 'success');
         loadScoreDecayConfig();
       } catch (err) { toast('Error: ' + err.message, 'error'); }
@@ -11197,7 +11200,7 @@
     async function loadLeaderboard() {
       try {
         const metric = document.getElementById('leaderboard-metric')?.value || 'lead_score';
-        const leads = await fetch('/api/leads/leaderboard?limit=15&metric=' + metric).then(r => r.json());
+        const leads = await fetch('/api/leads/leaderboard?limit=15&metric=' + metric).then(safeJSON);
         const el = document.getElementById('leaderboard-list');
 
         if (leads.length === 0) {
@@ -11218,7 +11221,7 @@
         }
 
         // State leaderboard
-        const states = await fetch('/api/leads/leaderboard-by-state?limit=8').then(r => r.json());
+        const states = await fetch('/api/leads/leaderboard-by-state?limit=8').then(safeJSON);
         document.getElementById('leaderboard-states').innerHTML = states.map(s => `
           <span style="display:inline-flex;align-items:center;gap:0.2rem;padding:0.15rem 0.4rem;background:#fff;border:1px solid #fbbf24;border-radius:6px;font-size:0.65rem;">
             <strong>${esc(s.state)}</strong>
@@ -11232,7 +11235,7 @@
     // === Automation Rules (Batch 19) ===
     async function loadAutomationRules() {
       try {
-        const rules = await fetch('/api/automation-rules').then(r => r.json());
+        const rules = await fetch('/api/automation-rules').then(safeJSON);
         const el = document.getElementById('automation-rules-list');
         if (rules.length === 0) {
           el.innerHTML = '<span style="font-size:0.72rem;color:#059669;">No automation rules. Create rules to automate lead management.</span>';
@@ -11329,8 +11332,8 @@
     async function loadDataQuality() {
       try {
         const [summary, leads] = await Promise.all([
-          fetch('/api/leads/data-quality-summary').then(r => r.json()),
-          fetch('/api/leads/data-quality?limit=15').then(r => r.json()),
+          fetch('/api/leads/data-quality-summary').then(safeJSON),
+          fetch('/api/leads/data-quality?limit=15').then(safeJSON),
         ]);
 
         const sumEl = document.getElementById('quality-summary');
@@ -11361,7 +11364,7 @@
     // === Export Profiles (Batch 19) ===
     async function loadExportProfiles() {
       try {
-        const profiles = await fetch('/api/export-profiles').then(r => r.json());
+        const profiles = await fetch('/api/export-profiles').then(safeJSON);
         const el = document.getElementById('export-profiles-list');
         if (profiles.length === 0) {
           el.innerHTML = '<span style="font-size:0.72rem;color:#2563eb;">No export profiles. Save filter+column presets for quick exports.</span>';
@@ -11428,7 +11431,7 @@
 
     async function runProfile(id) {
       try {
-        const res = await fetch('/api/export-profiles/' + id + '/run').then(r => r.json());
+        const res = await fetch('/api/export-profiles/' + id + '/run').then(safeJSON);
         toast('Export profile: ' + fmt(res.count) + ' leads matching', 'info');
         if (res.leads) { _currentLeads = res.leads; renderLeadTable(); }
       } catch (err) { toast('Error: ' + err.message, 'error'); }
@@ -11472,7 +11475,7 @@
         const res = await fetch('/api/leads/import', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ leads, options }),
-        }).then(r => r.json());
+        }).then(safeJSON);
 
         resultEl.innerHTML = `
           <span style="color:#16a34a;font-weight:600;">${fmt(res.added)} added</span>,
@@ -11489,7 +11492,7 @@
     // === Engagement Heatmap (Batch 18) ===
     async function loadEngagementHeatmap() {
       try {
-        const data = await fetch('/api/leads/engagement-heatmap').then(r => r.json());
+        const data = await fetch('/api/leads/engagement-heatmap').then(safeJSON);
         const gridEl = document.getElementById('engagement-heatmap-grid');
         const actionsEl = document.getElementById('heatmap-actions');
         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -11527,7 +11530,7 @@
     // === Owners (Batch 18) ===
     async function loadOwners() {
       try {
-        const owners = await fetch('/api/owners').then(r => r.json());
+        const owners = await fetch('/api/owners').then(safeJSON);
         const el = document.getElementById('owners-list');
         if (owners.length === 0) {
           el.innerHTML = '<span style="font-size:0.72rem;color:#0369a1;">No owners assigned. Use bulk actions to assign leads to team members.</span>';
@@ -11545,7 +11548,7 @@
 
     async function viewOwnerLeads(owner) {
       try {
-        const leads = await fetch('/api/owners/' + encodeURIComponent(owner) + '/leads?limit=50').then(r => r.json());
+        const leads = await fetch('/api/owners/' + encodeURIComponent(owner) + '/leads?limit=50').then(safeJSON);
         toast(owner + ' has ' + leads.length + ' leads', 'info');
         _currentLeads = leads;
         renderLeadTable();
@@ -11562,7 +11565,7 @@
         const data = await fetch('/api/leads/compare', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ leadIds: ids }),
-        }).then(r => r.json());
+        }).then(safeJSON);
 
         const el = document.getElementById('comparison-result');
         if (!data.leads || data.leads.length === 0) {
@@ -11607,7 +11610,7 @@
         const res = await fetch('/api/leads/merge-with-picks', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ targetId, sourceIds, fieldPicks: {} }),
-        }).then(r => r.json());
+        }).then(safeJSON);
         toast('Merged ' + res.merged + ' leads into ID ' + targetId, 'success');
         document.getElementById('comparison-result').innerHTML = '';
         refreshAll();
