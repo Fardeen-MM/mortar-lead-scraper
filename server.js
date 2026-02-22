@@ -575,14 +575,15 @@ app.get('/api/leads/export', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
     const { writeCSV, generateOutputPath } = require('./lib/csv-handler');
-    const { state, country, hasEmail, hasPhone, hasWebsite, verified, enrichedAfter } = req.query;
+    const { state, country, hasEmail, hasPhone, hasWebsite, verified, enrichedAfter, practiceArea, tags, minScore } = req.query;
     const leads = leadDb.exportLeads({
       state, country,
       hasEmail: hasEmail === 'true',
       hasPhone: hasPhone === 'true',
       hasWebsite: hasWebsite === 'true',
       verified: verified === 'true',
-      enrichedAfter,
+      enrichedAfter, practiceArea, tags,
+      minScore: minScore ? Number(minScore) : undefined,
     });
     if (leads.length === 0) {
       return res.status(404).json({ error: 'No leads match filters' });
@@ -593,6 +594,36 @@ app.get('/api/leads/export', (req, res) => {
       leadDb.recordExport('csv', leads.length, req.query, filename);
       res.download(outputFile, filename);
     }).catch(err => res.status(500).json({ error: 'CSV write failed: ' + err.message }));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Export leads as JSON
+app.get('/api/leads/export/json', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { state, country, hasEmail, hasPhone, hasWebsite, practiceArea, minScore, limit } = req.query;
+    const leads = leadDb.exportLeads({
+      state, country,
+      hasEmail: hasEmail === 'true',
+      hasPhone: hasPhone === 'true',
+      hasWebsite: hasWebsite === 'true',
+      practiceArea,
+      minScore: minScore ? Number(minScore) : undefined,
+    });
+    const maxLeads = Math.min(parseInt(limit) || leads.length, leads.length);
+    const exportData = leads.slice(0, maxLeads).map(l => ({
+      id: l.id, first_name: l.first_name, last_name: l.last_name,
+      email: l.email, phone: l.phone, firm_name: l.firm_name,
+      title: l.title, city: l.city, state: l.state, country: l.country,
+      website: l.website, linkedin_url: l.linkedin_url,
+      practice_area: l.practice_area, bar_number: l.bar_number,
+      bar_status: l.bar_status, admission_date: l.admission_date,
+      lead_score: l.lead_score, tags: l.tags,
+    }));
+    res.setHeader('Content-Disposition', 'attachment; filename=leads-export.json');
+    res.json(exportData);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

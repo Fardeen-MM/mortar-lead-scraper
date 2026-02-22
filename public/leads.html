@@ -1321,6 +1321,14 @@
         <div class="tam-value" id="tam-enriched-24h" style="color:#059669;">-</div>
         <div class="tam-label">Enriched 24h</div>
       </div>
+      <div class="tam-card" style="border-left:3px solid #8b5cf6;">
+        <div class="tam-value" id="tam-linkedin" style="color:#8b5cf6;">-</div>
+        <div class="tam-label">LinkedIn</div>
+      </div>
+      <div class="tam-card" style="border-left:3px solid #6366f1;">
+        <div class="tam-value" id="tam-title" style="color:#6366f1;">-</div>
+        <div class="tam-label">Has Title</div>
+      </div>
     </div>
 
     <!-- Tab Navigation -->
@@ -2815,6 +2823,10 @@
         <h3>Email Sources</h3>
         <div id="by-email-source"></div>
       </div>
+      <div class="breakdown-panel">
+        <h3>Practice Areas (Top 15)</h3>
+        <div id="by-practice-area"></div>
+      </div>
     </div>
 
     <!-- State Coverage Grid Map -->
@@ -2984,6 +2996,7 @@
         <a href="/api/leads/export/by-score?minScore=55" class="btn btn-secondary" style="text-decoration:none;">Export Good+ (55+)</a>
         <a href="/api/leads/export?hasEmail=true" class="btn btn-secondary" style="text-decoration:none;">Export (Email)</a>
         <a href="/api/leads/export" class="btn btn-secondary" style="text-decoration:none;">Export All</a>
+        <a href="/api/leads/export/json?hasEmail=true" class="btn btn-secondary" style="text-decoration:none;border-color:#6366f1;color:#6366f1;">Export JSON</a>
       </div>
       <div id="bulk-status" style="margin-top:0.5rem;font-size:0.82rem;color:var(--text-muted);"></div>
       <span id="verify-status" style="font-size:0.82rem;color:var(--text-muted);"></span>
@@ -3649,6 +3662,8 @@
         document.getElementById('tam-firms').textContent = fmt(d.uniqueFirms);
         document.getElementById('tam-enriched').textContent = fmt(d.enriched || 0);
         document.getElementById('tam-enriched-24h').textContent = fmt(d.enrichedLast24h || 0);
+        document.getElementById('tam-linkedin').textContent = fmt(d.withLinkedin || 0);
+        document.getElementById('tam-title').textContent = fmt(d.withTitle || 0);
 
         document.getElementById('tam-contactable-pct').textContent = (d.coverage.contactable || 0) + '%';
         document.getElementById('tam-email-pct').textContent = d.coverage.email + '%';
@@ -3684,6 +3699,11 @@
         document.getElementById('by-email-source').innerHTML = (d.emailSources || []).map(s =>
           `<div class="breakdown-row"><span class="breakdown-key">${esc(s.email_source)}</span><span class="breakdown-val">${fmt(s.count)}</span></div>`
         ).join('') || '<div class="breakdown-row"><span class="breakdown-key">No email sources yet</span></div>';
+
+        // Practice areas
+        document.getElementById('by-practice-area').innerHTML = (d.byPracticeArea || []).slice(0, 15).map(p =>
+          `<div class="breakdown-row"><span class="breakdown-key">${esc(p.practice_area)}</span><span class="breakdown-val">${fmt(p.count)}</span></div>`
+        ).join('') || '<div class="breakdown-row"><span class="breakdown-key">No practice areas yet</span></div>';
 
         // Populate state filter
         const stateSelect = document.getElementById('filter-state');
@@ -4330,7 +4350,7 @@
           tr.innerHTML = `
             <td><input type="checkbox" class="lead-cb" data-id="${lead.id}" ${isSelected ? 'checked' : ''}></td>
             <td style="cursor:pointer;"><strong>${esc(lead.first_name)} ${esc(lead.last_name)}</strong></td>
-            <td>${esc(lead.firm_name)}</td>
+            <td>${lead.firm_name ? '<span onclick="event.stopPropagation();openFirmDetail(\'' + esc(lead.firm_name).replace(/'/g, "\\'") + '\')" style="cursor:pointer;color:#2563eb;text-decoration:underline dotted;" title="View firm details">' + esc(lead.firm_name) + '</span>' : ''}</td>
             <td>${esc(lead.city)}</td>
             <td>${esc(lead.state)}</td>
             <td><span style="display:inline-block;padding:0.1rem 0.4rem;border-radius:4px;font-size:0.72rem;font-weight:600;background:${scoreBg};color:${scoreColor};">${score}</span></td>

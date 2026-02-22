@@ -42,6 +42,7 @@ const GET_ENDPOINTS = [
   '/api/leads/coverage',
   '/api/leads/merge-preview',
   '/api/leads/export',
+  '/api/leads/export/json',
   '/api/leads/export/instantly',
   '/api/leads/prepopulate/status',
   '/api/leads/freshness',
