@@ -5140,6 +5140,10 @@
         });
         sourcesHtml += '</div>';
       }
+      if (lead.last_enriched_at) {
+        const enrichDate = new Date(lead.last_enriched_at + (lead.last_enriched_at.endsWith('Z') ? '' : 'Z'));
+        sourcesHtml += `<div style="font-size:0.68rem;color:var(--text-muted,#9ca3af);margin-top:0.3rem;">Last enriched: ${enrichDate.toLocaleDateString()} ${enrichDate.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>`;
+      }
 
       document.getElementById('modal-sources').innerHTML = sourcesHtml;
 
@@ -11087,7 +11091,7 @@
     }
 
     async function startStateWaterfall(state) {
-      if (!confirm('Start waterfall enrichment for ' + state + '?')) return;
+      if (!confirm('Start waterfall enrichment for ' + state + ' (up to 500 leads)?')) return;
       try {
         const res = await fetch('/api/leads/waterfall', {
           method: 'POST',
@@ -11096,7 +11100,8 @@
         });
         const d = await safeJSON(res);
         if (d.error) { alert('Error: ' + d.error); return; }
-        alert('Waterfall started for ' + state + '. Check status in the Waterfall panel.');
+        // Start live progress polling
+        pollWaterfallStatus();
       } catch (err) { alert('Failed: ' + err.message); }
     }
 

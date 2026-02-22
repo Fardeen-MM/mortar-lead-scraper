@@ -960,16 +960,18 @@ app.post('/api/leads/waterfall', (req, res) => {
       }
 
       if (Object.keys(updates).length > 0) {
-        // Track enrichment timestamp and steps
+        // Track enrichment timestamp and steps (merge with existing)
         updates.last_enriched_at = new Date().toISOString();
-        const stepNames = [];
-        if (steps.fetchProfiles) stepNames.push('profile');
-        if (steps.crossRefMartindale) stepNames.push('martindale');
-        if (steps.crossRefLawyersCom) stepNames.push('lawyerscom');
-        if (steps.nameLookups) stepNames.push('name-lookup');
-        if (steps.emailCrawl) stepNames.push('email-crawl');
-        if (steps.smtpPatterns) stepNames.push('smtp');
-        updates.enrichment_steps = stepNames.join(',');
+        const newSteps = [];
+        if (steps.fetchProfiles) newSteps.push('profile');
+        if (steps.crossRefMartindale) newSteps.push('martindale');
+        if (steps.crossRefLawyersCom) newSteps.push('lawyerscom');
+        if (steps.nameLookups) newSteps.push('name-lookup');
+        if (steps.emailCrawl) newSteps.push('email-crawl');
+        if (steps.smtpPatterns) newSteps.push('smtp');
+        const existingSteps = (orig.enrichment_steps || '').split(',').filter(Boolean);
+        const allSteps = [...new Set([...existingSteps, ...newSteps])];
+        updates.enrichment_steps = allSteps.join(',');
         try {
           leadDb.updateLead(lead.id, updates);
           saved++;
@@ -4710,11 +4712,11 @@ const server = app.listen(PORT, () => {
         const { runWaterfall } = require('./lib/waterfall');
         const db = leadDb.getDb();
 
-        // Get 200 leads with profile_url that are missing phone/email/website
+        // Get 200 leads with profile_url that are missing phone — prioritize never-enriched
         const dbLeads = db.prepare(`
           SELECT * FROM leads WHERE profile_url != '' AND profile_url IS NOT NULL
-          AND (email = '' OR email IS NULL OR phone = '' OR phone IS NULL OR website = '' OR website IS NULL)
-          ORDER BY lead_score ASC LIMIT 200
+          AND (phone = '' OR phone IS NULL)
+          ORDER BY last_enriched_at IS NOT NULL, lead_score ASC LIMIT 200
         `).all();
 
         if (dbLeads.length === 0) {

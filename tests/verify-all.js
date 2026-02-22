@@ -302,6 +302,11 @@ try {
   assertTruthy('getStats returns object with total', typeof stats.total === 'number');
   assertTruthy('getStats returns withEmail', typeof stats.withEmail === 'number');
   assertTruthy('getStats returns withPhone', typeof stats.withPhone === 'number');
+  assertTruthy('getStats returns enriched count', typeof stats.enriched === 'number');
+  assertTruthy('getStats returns enrichedLast24h', typeof stats.enrichedLast24h === 'number');
+  assertTruthy('getStats returns withProfileUrl', typeof stats.withProfileUrl === 'number');
+  assertTruthy('getStats returns coverage object', typeof stats.coverage === 'object');
+  assertTruthy('getStats returns byState array', Array.isArray(stats.byState));
 
   // Test searchLeads with enrichedAfter param
   const result = leadDb.searchLeads('', { limit: 1, enrichedAfter: '2020-01-01' });
