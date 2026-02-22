@@ -171,6 +171,7 @@ const app = {
 
     // Update practice areas
     const practiceSelect = document.getElementById('select-practice');
+    if (!practiceSelect) return;
     practiceSelect.innerHTML = '<option value="">All practice areas</option>';
 
     // Deduplicate practice areas (some states have aliases like 'family' and 'family law')
@@ -233,7 +234,7 @@ const app = {
       document.getElementById('db-total').textContent = (d.total || 0).toLocaleString();
       document.getElementById('db-email').textContent = (d.withEmail || 0).toLocaleString();
       document.getElementById('db-phone').textContent = (d.withPhone || 0).toLocaleString();
-    } catch {}
+    } catch (err) { console.warn('loadDbStats:', err.message); }
   },
 
   async updateStateInfo() {
@@ -250,7 +251,7 @@ const app = {
       } else {
         infoEl.textContent = `${code}: 0 leads in DB`;
       }
-    } catch {}
+    } catch (err) { console.warn('updateStateInfo:', err.message); }
   },
 
   // --- Health Status ---
@@ -656,9 +657,11 @@ const app = {
   reconnectWebSocket() {
     if (this.wsReconnectAttempts >= 5) {
       this.showConnectionStatus('disconnected');
-      this.addLog('error', 'Lost connection to server.');
+      this.addLog('error', 'Lost connection to server. Falling back to HTTP polling...');
       const btn = document.getElementById('btn-reconnect');
       if (btn) btn.classList.remove('hidden');
+      // Start HTTP polling fallback so user still sees progress
+      this.startHttpPolling();
       return;
     }
 
@@ -670,6 +673,32 @@ const app = {
       this.addLog('info', `Reconnecting... (attempt ${this.wsReconnectAttempts}/5)`);
       this.connectWebSocket();
     }, delay);
+  },
+
+  // HTTP polling fallback when WebSocket dies mid-scrape
+  startHttpPolling() {
+    if (this._httpPollTimer) return;
+    this._httpPollTimer = setInterval(async () => {
+      if (!this.jobId) { clearInterval(this._httpPollTimer); this._httpPollTimer = null; return; }
+      try {
+        const res = await fetch(`/api/scrape/${this.jobId}/status`);
+        if (!res.ok) return;
+        const data = await res.json();
+        this.leads = data.leads || this.leads;
+        this.$statNew.textContent = this.leads.length.toLocaleString();
+        if (data.status === 'complete' || data.status === 'cancelled') {
+          clearInterval(this._httpPollTimer);
+          this._httpPollTimer = null;
+          this.stats = data.stats || {};
+          this.addLog('success', `Scrape complete! ${this.leads.length} new leads found.`);
+          document.getElementById('btn-view-results').disabled = false;
+          document.getElementById('btn-stop-scrape').hidden = true;
+          this.$progressBar.style.width = '100%';
+          document.getElementById('scrape-heading').textContent = 'Scrape Complete';
+          this.showConnectionStatus(null);
+        }
+      } catch {}
+    }, 5000);
   },
 
   showConnectionStatus(status) {
@@ -754,6 +783,7 @@ const app = {
 
       case 'enrichment-progress': {
         const section = document.getElementById('enrichment-section');
+        if (!section) break;
         section.classList.remove('hidden');
         const pct = msg.total > 0 ? Math.round((msg.current / msg.total) * 100) : 0;
         document.getElementById('enrich-progress-bar').style.width = pct + '%';

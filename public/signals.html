@@ -233,7 +233,9 @@
 
     // Format date as relative time or date
     function formatDate(dateStr) {
-      const d = new Date(dateStr + 'Z'); // SQLite stores UTC
+      if (!dateStr) return '';
+      const d = new Date(dateStr + (String(dateStr).includes('Z') ? '' : 'Z'));
+      if (isNaN(d.getTime())) return '';
       const now = new Date();
       const diffMs = now - d;
       const diffMins = Math.floor(diffMs / 60000);
@@ -271,14 +273,15 @@
       const flag = COUNTRY_FLAGS[signal.country] || '';
       const desc = signal.description ? signal.description.trim() : '';
 
+      const url = safeUrl(signal.job_url);
       card.innerHTML = `
         <div class="signal-top">
           <div class="signal-firm">${flag ? `<span class="country-flag">${flag}</span> ` : ''}${esc(signal.firm_name)}${isNew ? '<span class="new-badge">new</span>' : ''}</div>
           <div class="signal-date">${formatDate(signal.detected_at)}</div>
         </div>
         <div class="signal-title">
-          ${signal.job_url
-            ? `<a href="${esc(signal.job_url)}" target="_blank" rel="noopener">${esc(signal.job_title)} &rarr;</a>`
+          ${url
+            ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(signal.job_title)} &rarr;</a>`
             : esc(signal.job_title)}
         </div>
         <div class="signal-meta">
@@ -296,6 +299,12 @@
       const div = document.createElement('div');
       div.textContent = str;
       return div.innerHTML;
+    }
+
+    function safeUrl(url) {
+      if (!url) return '';
+      try { const u = new URL(url); return (u.protocol === 'http:' || u.protocol === 'https:') ? url : ''; }
+      catch { return ''; }
     }
 
     function getFilteredSignals() {
@@ -382,15 +391,31 @@
         opt.textContent = st;
         select.appendChild(opt);
       });
-      // Restore selection if still valid, otherwise reset
-      if (states.includes(current)) {
-        select.value = current;
+      // Restore selection if still valid, otherwise reset to "All"
+      select.value = states.includes(current) ? current : '';
+    }
+
+    function showToast(msg, type) {
+      let toast = document.getElementById('signal-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'signal-toast';
+        toast.style.cssText = 'position:fixed;bottom:1.5rem;right:1.5rem;padding:0.6rem 1.2rem;border-radius:8px;font-size:0.85rem;z-index:999;opacity:0;transition:opacity 0.3s;max-width:360px;';
+        document.body.appendChild(toast);
       }
+      toast.style.background = type === 'error' ? '#fef2f2' : '#ecfdf5';
+      toast.style.color = type === 'error' ? '#dc2626' : '#059669';
+      toast.style.border = `1px solid ${type === 'error' ? '#fecaca' : '#a7f3d0'}`;
+      toast.textContent = msg;
+      toast.style.opacity = '1';
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(() => { toast.style.opacity = '0'; }, 4000);
     }
 
     async function loadSignals() {
       try {
         const res = await fetch('/api/signals?limit=1000');
+        if (!res.ok) throw new Error(`Server error (${res.status})`);
         const data = await res.json();
         allSignals = data.signals || [];
         updateStats();
@@ -398,37 +423,58 @@
         renderFeed();
       } catch (err) {
         console.error('Failed to load signals:', err);
+        showToast('Failed to load signals: ' + err.message, 'error');
       }
     }
 
+    let _scanRunning = false;
+
     async function runScan() {
+      if (_scanRunning) return;
+      _scanRunning = true;
       const btn = document.getElementById('scan-btn');
       btn.classList.add('scanning');
       btn.textContent = 'Scanning...';
 
       try {
         const res = await fetch('/api/signals/scan', { method: 'POST' });
+        if (!res.ok) throw new Error(`Server error (${res.status})`);
         const data = await res.json();
 
         if (data.status === 'already_running') {
           btn.textContent = 'Already running...';
         }
 
-        // Poll for completion
+        // Poll for completion (even if already_running — we still want to track it)
         pollScanStatus(btn);
       } catch (err) {
         btn.textContent = 'Error';
         btn.classList.remove('scanning');
-        setTimeout(() => { btn.textContent = 'Scan Now'; }, 2000);
+        _scanRunning = false;
+        showToast('Scan failed: ' + err.message, 'error');
+        setTimeout(() => { btn.textContent = 'Scan Now'; }, 3000);
         console.error('Scan failed:', err);
       }
     }
 
     function pollScanStatus(btn) {
       const startCount = allSignals.length;
+      const maxPollTime = 30 * 60 * 1000; // 30 minute timeout
+      const startTime = Date.now();
       const interval = setInterval(async () => {
+        // Timeout protection
+        if (Date.now() - startTime > maxPollTime) {
+          clearInterval(interval);
+          btn.textContent = 'Timed out';
+          btn.classList.remove('scanning');
+          _scanRunning = false;
+          showToast('Scan timed out after 30 minutes', 'error');
+          setTimeout(() => { btn.textContent = 'Scan Now'; }, 3000);
+          return;
+        }
         try {
           const res = await fetch('/api/signals/scan-status');
+          if (!res.ok) throw new Error(`Status check failed (${res.status})`);
           const data = await res.json();
 
           // Refresh signals list while scanning
@@ -442,12 +488,16 @@
             const finalNew = allSignals.length - startCount;
             btn.textContent = `Done! ${finalNew} new`;
             btn.classList.remove('scanning');
+            _scanRunning = false;
+            if (finalNew > 0) showToast(`Found ${finalNew} new signal${finalNew !== 1 ? 's' : ''}!`, 'success');
             setTimeout(() => { btn.textContent = 'Scan Now'; }, 3000);
           }
         } catch (err) {
           clearInterval(interval);
           btn.textContent = 'Scan Now';
           btn.classList.remove('scanning');
+          _scanRunning = false;
+          showToast('Polling error: ' + err.message, 'error');
         }
       }, 5000);
     }
