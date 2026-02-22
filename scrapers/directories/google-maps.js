@@ -26,8 +26,16 @@ const https = require('https');
 const { log } = require('../../lib/logger');
 const { RateLimiter, sleep } = require('../../lib/rate-limiter');
 
-// Nominatim bounding-box cache (avoids re-fetching during a session)
+// Nominatim bounding-box cache (avoids re-fetching during a session, capped at 100 entries)
 const _boundsCache = new Map();
+const BOUNDS_CACHE_MAX = 100;
+function _boundsCacheSet(key, val) {
+  if (_boundsCache.size >= BOUNDS_CACHE_MAX) {
+    const oldest = _boundsCache.keys().next().value;
+    _boundsCache.delete(oldest);
+  }
+  _boundsCache.set(key, val);
+}
 
 // Major cities — same as google-places.js
 const DEFAULT_CITY_ENTRIES = [
@@ -203,14 +211,14 @@ class GoogleMapsScraper extends BaseScraper {
       });
 
       if (!data || !data[0] || !data[0].boundingbox) {
-        _boundsCache.set(key, null);
+        _boundsCacheSet(key, null);
         return null;
       }
 
       // Nominatim boundingbox = [south, north, west, east] as strings
       const [south, north, west, east] = data[0].boundingbox.map(Number);
       const bounds = { south, north, west, east };
-      _boundsCache.set(key, bounds);
+      _boundsCacheSet(key, bounds);
       return bounds;
     } catch (err) {
       log.warn(`[Google Maps] Nominatim lookup failed for "${cityName}": ${err.message}`);
@@ -388,12 +396,14 @@ class GoogleMapsScraper extends BaseScraper {
       // Block images and tiles for speed
       await page.setRequestInterception(true);
       page.on('request', (req) => {
-        const type = req.resourceType();
-        if (['image', 'media', 'font'].includes(type)) {
-          req.abort();
-        } else {
-          req.continue();
-        }
+        try {
+          const type = req.resourceType();
+          if (['image', 'media', 'font'].includes(type)) {
+            req.abort();
+          } else {
+            req.continue();
+          }
+        } catch { /* request already handled */ }
       });
 
       await page.setViewport({ width: 1280, height: 900 });
@@ -693,7 +703,10 @@ class GoogleMapsScraper extends BaseScraper {
    * Scroll the results feed to load more items.
    */
   async _scrollFeed(page, maxScrolls) {
+    const scrollStart = Date.now();
+    const maxScrollTime = 30000; // 30s safety timeout for entire scroll sequence
     for (let i = 0; i < maxScrolls; i++) {
+      if (Date.now() - scrollStart > maxScrollTime) break;
       const previousCount = await page.evaluate(() => {
         const feed = document.querySelector('div[role="feed"]');
         return feed ? feed.querySelectorAll('a[aria-label]').length : 0;
