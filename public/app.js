@@ -133,6 +133,37 @@ const app = {
     const personExtractGroup = document.getElementById('person-extract-group');
     if (personExtractGroup) personExtractGroup.style.display = isGoogleScraper ? '' : 'none';
 
+    // Show/hide practice area (not relevant for Google scrapers)
+    const practiceGroup = document.getElementById('practice-group');
+    if (practiceGroup) practiceGroup.style.display = isGoogleScraper ? 'none' : '';
+
+    // Switch city input: text input for Google scrapers, dropdown for bar scrapers
+    const citySelectGroup = document.getElementById('city-select-group');
+    const cityInputGroup = document.getElementById('city-input-group');
+    if (citySelectGroup) citySelectGroup.style.display = isGoogleScraper ? 'none' : '';
+    if (cityInputGroup) cityInputGroup.style.display = isGoogleScraper ? '' : 'none';
+
+    // Populate city suggestions datalist for Google scrapers
+    if (isGoogleScraper) {
+      const datalist = document.getElementById('city-suggestions');
+      if (datalist) {
+        datalist.innerHTML = '';
+        for (const city of stateMeta.defaultCities) {
+          const opt = document.createElement('option');
+          opt.value = city;
+          datalist.appendChild(opt);
+        }
+      }
+    }
+
+    // Update hint text based on scraper type
+    const hint = document.getElementById('configure-hint');
+    if (hint) {
+      hint.textContent = isGoogleScraper
+        ? 'Search Google Maps for any business type in any city worldwide.'
+        : 'Choose what to scrape. The scraper will search bar association directories for matching attorneys.';
+    }
+
     // Show/hide lawyer-specific waterfall options
     const nicheVal = (document.getElementById('input-niche')?.value || '').trim().toLowerCase();
     const isNonLawyer = isGoogleScraper && nicheVal && !/^(lawyers?|law\s*firms?|attorneys?)$/.test(nicheVal);
@@ -153,7 +184,7 @@ const app = {
       practiceSelect.appendChild(opt);
     }
 
-    // Update cities — for Google scrapers, also allow free-text city via the select
+    // Update cities dropdown (for bar scrapers)
     const citySelect = document.getElementById('select-city');
     citySelect.innerHTML = '<option value="">All major cities</option>';
     for (const city of stateMeta.defaultCities) {
@@ -408,9 +439,12 @@ const app = {
   async startScrape() {
     const state = document.getElementById('select-state').value;
     const practice = document.getElementById('select-practice').value;
-    const city = document.getElementById('select-city').value;
     const test = document.getElementById('toggle-test').checked;
     const isGoogleScraper = state === 'GOOGLE-PLACES' || state === 'GOOGLE-MAPS';
+    // Google scrapers use text input for city; bar scrapers use dropdown
+    const city = isGoogleScraper
+      ? (document.getElementById('input-city')?.value || '').trim()
+      : document.getElementById('select-city').value;
     const niche = isGoogleScraper ? (document.getElementById('input-niche')?.value || '').trim() : '';
     const personExtract = isGoogleScraper && (document.getElementById('toggle-person-extract')?.checked || false);
 
@@ -1181,6 +1215,12 @@ const app = {
     document.getElementById('upload-status').classList.add('hidden');
     document.getElementById('btn-upload-next').disabled = true;
     document.getElementById('file-input').value = '';
+
+    // Reset text inputs
+    const nicheInput = document.getElementById('input-niche');
+    if (nicheInput) nicheInput.value = '';
+    const cityInput = document.getElementById('input-city');
+    if (cityInput) cityInput.value = '';
 
     // Reset Step 3 UI
     document.getElementById('btn-stop-scrape').hidden = true;
