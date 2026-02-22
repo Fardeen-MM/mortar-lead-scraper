@@ -3930,7 +3930,7 @@
         });
         await res.json();
         loadLists();
-      } catch {}
+      } catch (err) { toast('Failed to create list: ' + err.message, 'error'); }
     }
 
     async function deleteListUI(id) {
@@ -3939,7 +3939,7 @@
         await fetch('/api/lists/' + id, { method: 'DELETE' });
         if (_activeListId === id) _activeListId = null;
         loadLists();
-      } catch {}
+      } catch (err) { toast('Failed to delete list: ' + err.message, 'error'); }
     }
 
     function toggleListFilter(id) {
@@ -3971,7 +3971,7 @@
         toast(`Added ${d.added} leads to "${list.name}"`);
         clearSelection();
         loadLists();
-      } catch {}
+      } catch (err) { toast('Failed to add to list: ' + err.message, 'error'); }
     }
 
     // --- Scraper Health ---
@@ -4507,7 +4507,7 @@
           toast(`Tagged ${d.updated} leads with "${tag.trim()}"`);
           clearSelection();
         })
-        .catch(() => {});
+        .catch(err => toast('Failed to tag leads: ' + err.message, 'error'));
     }
 
     function deleteSelected() {
@@ -4525,7 +4525,7 @@
           clearSelection();
           refreshAll();
         })
-        .catch(() => {});
+        .catch(err => toast('Failed to delete leads: ' + err.message, 'error'));
     }
 
     // --- Bulk Scrape ---
@@ -5662,7 +5662,7 @@
         const colors = { A: '#22c55e', B: '#3b82f6', C: '#f59e0b', D: '#ef4444', F: '#991b1b' };
         el.textContent = `Health: ${d.grade} (${d.score})`;
         el.style.color = colors[d.grade] || '#9ca3af';
-      } catch {}
+      } catch (err) { console.warn('loadHealthScore:', err.message); }
     }
 
     // --- Similar Leads ---
@@ -5899,7 +5899,7 @@
       try {
         await fetch(`/api/quality/resolve/${alertId}`, { method: 'POST' });
         loadQualityAlerts();
-      } catch {}
+      } catch (err) { toast('Failed to resolve alert: ' + err.message, 'error'); }
     }
 
     // --- Export History ---
@@ -6970,7 +6970,7 @@
       if (sel.options.length <= 1) {
         fetch('/api/config').then(r => r.json()).then(data => {
           sel.innerHTML = data.scrapers.filter(s => s.working).map(s => `<option value="${s.stateCode}">${s.stateCode} — ${s.name}</option>`).join('');
-        });
+        }).catch(err => console.warn('schedule config:', err.message));
       }
     }
 
@@ -7245,7 +7245,7 @@
       try {
         const config = await fetch('/api/table-config').then(r => r.json());
         if (config && config.columns) _visibleColumns = config.columns;
-      } catch {}
+      } catch (err) { console.warn('table-config:', err.message); }
     })();
 
     function toggleColumnPicker() {
@@ -8474,7 +8474,7 @@
             sel.appendChild(opt);
           }
         }
-      } catch {}
+      } catch (err) { console.warn('state-dropdown:', err.message); }
     })();
 
     // === Lead Notes ===
@@ -9108,7 +9108,7 @@
       } else {
         fetch('/api/leads/' + leadId).then(r => r.json()).then(l => {
           toast('Lead: ' + (l.first_name || '') + ' ' + (l.last_name || '') + ' (score: ' + l.lead_score + ')', 'info');
-        }).catch(() => {});
+        }).catch(err => console.warn('typeahead lookup:', err.message));
       }
     }
 
@@ -9176,7 +9176,7 @@
       fetch('/api/leads?limit=200&' + field + '=' + encodeURIComponent(value)).then(r => r.json()).then(d => {
         _currentLeads = d.leads || d;
         renderLeadTable();
-      }).catch(() => {});
+      }).catch(err => toast('Filter failed: ' + err.message, 'error'));
     }
 
     // === Enrichment Queue (Batch 21) ===
@@ -11613,7 +11613,7 @@
               setTimeout(() => { pbTotal.style.color = ''; }, 500);
             }
           }
-        } catch {}
+        } catch (err) { console.warn('ws message parse:', err.message); }
       };
 
       _ws.onclose = () => {

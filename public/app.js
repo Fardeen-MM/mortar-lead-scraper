@@ -697,7 +697,7 @@ const app = {
           document.getElementById('scrape-heading').textContent = 'Scrape Complete';
           this.showConnectionStatus(null);
         }
-      } catch {}
+      } catch (err) { console.warn('HTTP poll:', err.message); }
     }, 5000);
   },
 
