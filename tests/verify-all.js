@@ -358,6 +358,37 @@ try {
 }
 
 // ============================================================
+// 14. AI MODULE
+// ============================================================
+console.log('\n=== 14. AI MODULE ===');
+try {
+  const ai = require('../lib/ai');
+  assertTruthy('AI module loads', typeof ai === 'object');
+  assertTruthy('isAvailable function exists', typeof ai.isAvailable === 'function');
+  assertTruthy('askBrain function exists', typeof ai.askBrain === 'function');
+  assertTruthy('analyzeLeadInsights function exists', typeof ai.analyzeLeadInsights === 'function');
+  assertTruthy('writeEmail function exists', typeof ai.writeEmail === 'function');
+  assertTruthy('classifyPracticeAreas function exists', typeof ai.classifyPracticeAreas === 'function');
+  assertTruthy('auditDataQuality function exists', typeof ai.auditDataQuality === 'function');
+  assertTruthy('generateDashboardBrief function exists', typeof ai.generateDashboardBrief === 'function');
+  assertTruthy('summarizeBatch function exists', typeof ai.summarizeBatch === 'function');
+  assertTruthy('parseJSON function exists', typeof ai.parseJSON === 'function');
+  assertTruthy('HAIKU model constant set', typeof ai.HAIKU === 'string' && ai.HAIKU.length > 5);
+  assertTruthy('SONNET model constant set', typeof ai.SONNET === 'string' && ai.SONNET.length > 5);
+  assertTruthy('API key available', ai.isAvailable() === true);
+  // Test parseJSON with various formats
+  const jsonDirect = ai.parseJSON('{"foo":"bar"}');
+  assertTruthy('parseJSON handles direct JSON', jsonDirect.foo === 'bar');
+  const jsonFenced = ai.parseJSON('```json\n{"a":1}\n```');
+  assertTruthy('parseJSON handles fenced JSON', jsonFenced.a === 1);
+  const jsonEmbedded = ai.parseJSON('Here is the result: {"x":"y"} end');
+  assertTruthy('parseJSON handles embedded JSON', jsonEmbedded.x === 'y');
+} catch (e) {
+  totalFail++;
+  failures.push(`  FAIL: AI module: ${e.message}`);
+}
+
+// ============================================================
 // SUMMARY
 // ============================================================
 console.log('\n' + '='.repeat(50));

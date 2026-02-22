@@ -2229,16 +2229,36 @@ app.post('/api/leads/import-preview', upload.single('file'), (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// === Email Validation ===
+// === Email Validation (background job) ===
+let _validateEmailsRunning = false;
+let _validateEmailsProgress = null;
 app.post('/api/leads/validate-emails', async (req, res) => {
+  if (_validateEmailsRunning) return res.json({ running: true, progress: _validateEmailsProgress });
   try {
     const leadDb = require('./lib/lead-db');
-    const result = await leadDb.batchValidateEmails((progress) => {
+    _validateEmailsRunning = true;
+    _validateEmailsProgress = { started: true, processed: 0 };
+    res.json({ started: true });
+    // Run in background
+    leadDb.batchValidateEmails((progress) => {
+      _validateEmailsProgress = progress;
       broadcastAll({ type: 'validation-progress', ...progress });
+    }).then(result => {
+      _validateEmailsRunning = false;
+      _validateEmailsProgress = { ...result, done: true };
+      broadcastAll({ type: 'validation-complete', ...result });
+    }).catch(err => {
+      _validateEmailsRunning = false;
+      _validateEmailsProgress = { error: err.message };
+      console.error('[validate-emails] Error:', err.message);
     });
-    broadcastAll({ type: 'validation-complete', ...result });
-    res.json(result);
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) {
+    _validateEmailsRunning = false;
+    res.status(500).json({ error: err.message });
+  }
+});
+app.get('/api/leads/validate-emails/status', (req, res) => {
+  res.json({ running: _validateEmailsRunning, progress: _validateEmailsProgress });
 });
 
 app.get('/api/leads/validate-email/:email', async (req, res) => {
@@ -4230,6 +4250,148 @@ app.get('/api/growth-analytics', (req, res) => {
     const leadDb = require('./lib/lead-db');
     res.json(leadDb.getGrowthAnalytics());
   } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ============================================================
+// === AI INTELLIGENCE ENDPOINTS ===
+// ============================================================
+
+function aiError(res, err) {
+  const msg = err.message || '';
+  if (msg.includes('credit') || msg.includes('depleted') || msg.includes('API key')) {
+    return res.status(503).json({ error: msg });
+  }
+  return res.status(500).json({ error: msg });
+}
+
+// AI status check (lightweight — no API call, just checks key exists)
+app.get('/api/ai/status', (req, res) => {
+  const ai = require('./lib/ai');
+  res.json({ available: ai.isAvailable(), models: { fast: ai.HAIKU, deep: ai.SONNET } });
+});
+
+// AI Ask Brain — natural language queries
+app.post('/api/ai/ask', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    const { question } = req.body;
+    if (!question) return res.status(400).json({ error: 'question required' });
+    const result = await ai.askBrain(question, leadDb.getDb());
+    res.json(result);
+  } catch (err) { aiError(res, err); }
+});
+
+// AI Lead Insights — per-lead analysis
+app.post('/api/ai/lead-insights', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    const { leadId } = req.body;
+    if (!leadId) return res.status(400).json({ error: 'leadId required' });
+    const lead = leadDb.getLeadById(leadId);
+    if (!lead) return res.status(404).json({ error: 'Lead not found' });
+    const insights = await ai.analyzeLeadInsights(lead);
+    res.json({ lead: { id: lead.id, name: `${lead.first_name} ${lead.last_name}` }, insights });
+  } catch (err) { aiError(res, err); }
+});
+
+// AI Email Writer — generate personalized cold email
+app.post('/api/ai/write-email', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    const { leadId, tone, goal, template } = req.body;
+    if (!leadId) return res.status(400).json({ error: 'leadId required' });
+    const lead = leadDb.getLeadById(leadId);
+    if (!lead) return res.status(404).json({ error: 'Lead not found' });
+    const email = await ai.writeEmail(lead, { tone, goal, template });
+    res.json({ lead: { id: lead.id, name: `${lead.first_name} ${lead.last_name}` }, email });
+  } catch (err) { aiError(res, err); }
+});
+
+// AI Practice Area Classifier — batch auto-tag
+let _classifyRunning = false;
+let _classifyProgress = null;
+app.post('/api/ai/classify-practice-areas', async (req, res) => {
+  if (_classifyRunning) return res.json({ running: true, progress: _classifyProgress });
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    _classifyRunning = true;
+    _classifyProgress = { processed: 0, total: 0, updated: 0 };
+    res.json({ started: true });
+
+    // Run in background
+    const db = leadDb.getDb();
+    const leads = db.prepare("SELECT id, first_name, last_name, firm_name, title, bio, city, state, practice_area FROM leads WHERE (practice_area IS NULL OR practice_area = '') LIMIT 500").all();
+    _classifyProgress.total = leads.length;
+
+    const results = await ai.classifyPracticeAreas(leads);
+    let updated = 0;
+    for (const r of results) {
+      if (r.id && r.practice_area) {
+        try {
+          leadDb.updateLead(r.id, { practice_area: r.practice_area });
+          updated++;
+        } catch {}
+      }
+      _classifyProgress.processed++;
+      _classifyProgress.updated = updated;
+    }
+    _classifyRunning = false;
+    _classifyProgress = { processed: leads.length, total: leads.length, updated, done: true };
+  } catch (err) {
+    _classifyRunning = false;
+    _classifyProgress = { error: err.message };
+    console.error('[AI] Practice area classification error:', err.message);
+  }
+});
+
+app.get('/api/ai/classify-practice-areas/status', (req, res) => {
+  res.json({ running: _classifyRunning, progress: _classifyProgress });
+});
+
+// AI Data Quality Audit
+app.post('/api/ai/audit-quality', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    const state = req.body.state || null;
+    const limit = Math.min(parseInt(req.body.limit) || 50, 100);
+    const db = leadDb.getDb();
+    let sql = "SELECT id, first_name, last_name, firm_name, city, state, email, phone, lead_score, practice_area, website FROM leads";
+    const params = [];
+    if (state) { sql += " WHERE state = ?"; params.push(state); }
+    sql += " ORDER BY lead_score ASC LIMIT ?";
+    params.push(limit);
+    const leads = db.prepare(sql).all(...params);
+    const audit = await ai.auditDataQuality(leads);
+    res.json(audit);
+  } catch (err) { aiError(res, err); }
+});
+
+// AI Dashboard Intelligence
+app.get('/api/ai/dashboard-brief', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    const stats = leadDb.getStats();
+    const brief = await ai.generateDashboardBrief(stats);
+    res.json(brief);
+  } catch (err) { aiError(res, err); }
+});
+
+// AI Summarize search results
+app.post('/api/ai/summarize', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    const { query, filters } = req.body;
+    const results = leadDb.searchLeads({ ...filters, limit: 100 });
+    const summary = await ai.summarizeBatch(results.leads || results, query);
+    res.json({ summary, count: (results.leads || results).length });
+  } catch (err) { aiError(res, err); }
 });
 
 // === Table Configuration ===

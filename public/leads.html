@@ -1363,6 +1363,68 @@
       </button>
     </div>
 
+    <!-- AI Intelligence Panel -->
+    <div id="ai-brief-panel" class="bp" style="background:linear-gradient(135deg,#1e1b4b,#312e81);border:1px solid #4f46e5;border-radius:10px;color:#e0e7ff;display:none;margin-bottom:1rem;padding:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.6rem;">
+        <div style="display:flex;align-items:center;gap:0.4rem;">
+          <span style="font-size:1.1rem;">&#x1F9E0;</span>
+          <span style="font-weight:700;font-size:0.95rem;color:#c7d2fe;">AI Intelligence</span>
+        </div>
+        <div style="display:flex;gap:0.3rem;">
+          <button onclick="loadAiBrief()" style="font-size:0.65rem;padding:0.15rem 0.5rem;background:rgba(99,102,241,0.3);color:#c7d2fe;border:1px solid #6366f1;border-radius:4px;cursor:pointer;" id="ai-brief-refresh">Refresh</button>
+          <button onclick="runAiClassify()" style="font-size:0.65rem;padding:0.15rem 0.5rem;background:rgba(139,92,246,0.3);color:#c7d2fe;border:1px solid #8b5cf6;border-radius:4px;cursor:pointer;">Auto-Tag Practice Areas</button>
+          <button onclick="runAiAudit()" style="font-size:0.65rem;padding:0.15rem 0.5rem;background:rgba(236,72,153,0.3);color:#fce7f3;border:1px solid #ec4899;border-radius:4px;cursor:pointer;">AI Quality Audit</button>
+        </div>
+      </div>
+      <div id="ai-brief-headline" style="font-size:1.05rem;font-weight:600;color:#fff;margin-bottom:0.6rem;line-height:1.3;">Loading AI analysis...</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;">
+        <div>
+          <div style="font-size:0.68rem;font-weight:600;color:#a5b4fc;margin-bottom:0.25rem;text-transform:uppercase;letter-spacing:0.5px;">Highlights</div>
+          <div id="ai-brief-highlights" style="font-size:0.75rem;color:#e0e7ff;line-height:1.5;"></div>
+        </div>
+        <div>
+          <div style="font-size:0.68rem;font-weight:600;color:#a5b4fc;margin-bottom:0.25rem;text-transform:uppercase;letter-spacing:0.5px;">Opportunities</div>
+          <div id="ai-brief-opportunities" style="font-size:0.75rem;color:#e0e7ff;line-height:1.5;"></div>
+        </div>
+        <div>
+          <div style="font-size:0.68rem;font-weight:600;color:#a5b4fc;margin-bottom:0.25rem;text-transform:uppercase;letter-spacing:0.5px;">Recommendation</div>
+          <div id="ai-brief-recommendation" style="font-size:0.75rem;color:#fbbf24;font-weight:500;line-height:1.5;"></div>
+          <div id="ai-brief-warnings" style="font-size:0.72rem;color:#fca5a5;margin-top:0.3rem;line-height:1.4;"></div>
+        </div>
+      </div>
+      <div id="ai-classify-status" style="display:none;margin-top:0.5rem;font-size:0.72rem;color:#a5b4fc;"></div>
+      <div id="ai-audit-results" style="display:none;margin-top:0.5rem;"></div>
+    </div>
+
+    <!-- AI Brain Chat (floating) -->
+    <div id="ai-brain-widget" style="position:fixed;bottom:20px;right:20px;z-index:10000;">
+      <button onclick="toggleAiBrain()" id="ai-brain-toggle" style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#7c3aed);border:2px solid #818cf8;color:white;font-size:1.4rem;cursor:pointer;box-shadow:0 4px 20px rgba(79,70,229,0.4);display:flex;align-items:center;justify-content:center;transition:transform 0.2s;">&#x1F9E0;</button>
+      <div id="ai-brain-badge" style="display:none;position:absolute;top:-4px;right:-4px;background:#ef4444;color:white;border-radius:50%;width:18px;height:18px;font-size:0.6rem;display:none;align-items:center;justify-content:center;font-weight:700;"></div>
+    </div>
+    <div id="ai-brain-panel" style="display:none;position:fixed;bottom:86px;right:20px;width:420px;max-height:520px;background:#1e1b4b;border:1px solid #4f46e5;border-radius:12px;z-index:10001;box-shadow:0 8px 40px rgba(0,0,0,0.4);overflow:hidden;font-family:inherit;">
+      <div style="padding:0.7rem 1rem;background:linear-gradient(135deg,#312e81,#1e1b4b);border-bottom:1px solid #4338ca;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:0.4rem;">
+          <span style="font-size:1rem;">&#x1F9E0;</span>
+          <span style="font-weight:700;color:#c7d2fe;font-size:0.85rem;">Ask the Brain</span>
+          <span style="font-size:0.6rem;color:#818cf8;background:rgba(99,102,241,0.2);padding:0.1rem 0.3rem;border-radius:3px;">AI</span>
+        </div>
+        <button onclick="toggleAiBrain()" style="background:none;border:none;color:#818cf8;cursor:pointer;font-size:1.1rem;">&times;</button>
+      </div>
+      <div id="ai-brain-messages" style="padding:0.8rem;max-height:350px;overflow-y:auto;display:flex;flex-direction:column;gap:0.6rem;">
+        <div class="ai-msg ai-msg-system" style="background:rgba(99,102,241,0.15);border-radius:8px;padding:0.5rem 0.7rem;font-size:0.75rem;color:#a5b4fc;line-height:1.4;">
+          Ask me anything about your leads. Examples:<br>
+          <span style="color:#c7d2fe;cursor:pointer;" onclick="aiAsk('How many gold leads do I have in Florida?')">&#x2022; "How many gold leads in Florida?"</span><br>
+          <span style="color:#c7d2fe;cursor:pointer;" onclick="aiAsk('Show me the top 10 firms by attorney count')">&#x2022; "Top 10 firms by attorney count"</span><br>
+          <span style="color:#c7d2fe;cursor:pointer;" onclick="aiAsk('Which states have the most leads without email?')">&#x2022; "States with most leads missing email"</span><br>
+          <span style="color:#c7d2fe;cursor:pointer;" onclick="aiAsk('Find personal injury lawyers with websites in TX')">&#x2022; "PI lawyers with websites in TX"</span>
+        </div>
+      </div>
+      <div style="padding:0.5rem 0.8rem;border-top:1px solid #4338ca;display:flex;gap:0.4rem;">
+        <input type="text" id="ai-brain-input" placeholder="Ask about your leads..." onkeydown="if(event.key==='Enter')aiAsk()" style="flex:1;padding:0.45rem 0.6rem;background:#312e81;border:1px solid #4f46e5;border-radius:6px;color:#e0e7ff;font-size:0.8rem;outline:none;" autocomplete="off">
+        <button onclick="aiAsk()" style="padding:0.45rem 0.8rem;background:#4f46e5;color:white;border:none;border-radius:6px;cursor:pointer;font-size:0.8rem;font-weight:600;">Send</button>
+      </div>
+    </div>
+
     <!-- Email Verification Stats -->
     <div id="verification-panel" class="bp" style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border-color:#bbf7d0;display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -5224,6 +5286,9 @@
         // Add timeline section
         container.insertAdjacentHTML('beforeend', '<div style="margin-top:0.75rem;"><div style="font-size:0.82rem;font-weight:600;color:var(--text-muted);margin-bottom:0.4rem;">Activity Timeline</div><div id="lead-timeline" style="max-height:200px;overflow-y:auto;"></div></div>');
         loadLeadTimeline(lead.id, document.getElementById('lead-timeline'));
+        // Add AI Insights section
+        container.insertAdjacentHTML('beforeend', '<div id="ai-lead-insights" style="margin-top:0.75rem;"></div>');
+        loadAiInsights(lead.id);
       });
     }
 
@@ -9839,6 +9904,279 @@
       } catch (err) { console.error('Priority inbox error:', err); }
     }
 
+    // ============================================================
+    // === AI INTELLIGENCE ===
+    // ============================================================
+
+    let _aiBrainOpen = false;
+
+    function toggleAiBrain() {
+      _aiBrainOpen = !_aiBrainOpen;
+      document.getElementById('ai-brain-panel').style.display = _aiBrainOpen ? '' : 'none';
+      if (_aiBrainOpen) document.getElementById('ai-brain-input').focus();
+    }
+
+    async function aiAsk(q) {
+      const input = document.getElementById('ai-brain-input');
+      const question = q || input.value.trim();
+      if (!question) return;
+      input.value = '';
+      if (!_aiBrainOpen) toggleAiBrain();
+
+      const msgs = document.getElementById('ai-brain-messages');
+      // User message
+      msgs.innerHTML += `<div style="align-self:flex-end;background:#4f46e5;color:white;padding:0.4rem 0.7rem;border-radius:8px 8px 2px 8px;font-size:0.78rem;max-width:85%;">${esc(question)}</div>`;
+      // Thinking indicator
+      const thinkId = 'ai-think-' + Date.now();
+      msgs.innerHTML += `<div id="${thinkId}" style="align-self:flex-start;color:#818cf8;font-size:0.72rem;padding:0.3rem;">Thinking...</div>`;
+      msgs.scrollTop = msgs.scrollHeight;
+
+      try {
+        const res = await fetch('/api/ai/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question }),
+        });
+        const data = await safeJSON(res);
+        const el = document.getElementById(thinkId);
+        if (!el) return;
+
+        if (data.error) {
+          el.outerHTML = `<div style="align-self:flex-start;background:rgba(239,68,68,0.15);color:#fca5a5;padding:0.5rem 0.7rem;border-radius:8px;font-size:0.75rem;max-width:90%;">${esc(data.error)}</div>`;
+        } else {
+          let html = `<div style="align-self:flex-start;background:rgba(99,102,241,0.12);border-radius:8px;padding:0.5rem 0.7rem;max-width:95%;font-size:0.75rem;color:#e0e7ff;">`;
+          html += `<div style="color:#818cf8;font-size:0.65rem;margin-bottom:0.3rem;">${esc(data.explanation || '')} (${data.count} result${data.count !== 1 ? 's' : ''})</div>`;
+
+          if (data.results && data.results.length > 0) {
+            const keys = Object.keys(data.results[0]).filter(k => !['id','created_at','updated_at','bio','education','enrichment_steps','profile_url','notes','bar_number'].includes(k));
+            const displayKeys = keys.slice(0, 8);
+
+            if (data.results[0].count !== undefined || data.results[0].total !== undefined || data.results.length <= 5) {
+              // Aggregate or small result — show as list
+              html += `<div style="display:flex;flex-direction:column;gap:0.2rem;">`;
+              for (const r of data.results.slice(0, 20)) {
+                const vals = displayKeys.map(k => r[k] != null ? `<span style="color:#c7d2fe;">${esc(String(r[k]))}</span>` : '').filter(Boolean);
+                html += `<div style="padding:0.15rem 0;border-bottom:1px solid rgba(99,102,241,0.15);font-size:0.72rem;">${vals.join(' &middot; ')}</div>`;
+              }
+              html += `</div>`;
+            } else {
+              // Table for multiple results
+              html += `<div style="overflow-x:auto;max-height:200px;overflow-y:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.68rem;"><thead><tr>`;
+              for (const k of displayKeys) html += `<th style="padding:0.2rem 0.4rem;text-align:left;color:#a5b4fc;border-bottom:1px solid #4338ca;white-space:nowrap;">${esc(k)}</th>`;
+              html += `</tr></thead><tbody>`;
+              for (const r of data.results.slice(0, 30)) {
+                html += `<tr>`;
+                for (const k of displayKeys) {
+                  const v = r[k] != null ? String(r[k]).substring(0, 60) : '';
+                  const style = k === 'lead_score' ? `color:${parseInt(v) >= 70 ? '#4ade80' : parseInt(v) >= 40 ? '#fbbf24' : '#f87171'}` : 'color:#e0e7ff';
+                  html += `<td style="padding:0.2rem 0.4rem;border-bottom:1px solid rgba(67,56,202,0.3);${style};white-space:nowrap;">${esc(v)}</td>`;
+                }
+                html += `</tr>`;
+              }
+              html += `</tbody></table></div>`;
+              if (data.count > 30) html += `<div style="color:#818cf8;font-size:0.65rem;margin-top:0.2rem;">... and ${data.count - 30} more</div>`;
+            }
+          }
+          html += `</div>`;
+          el.outerHTML = html;
+        }
+      } catch (err) {
+        const el = document.getElementById(thinkId);
+        if (el) el.outerHTML = `<div style="align-self:flex-start;color:#fca5a5;font-size:0.72rem;">Error: ${esc(err.message)}</div>`;
+      }
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    // AI Dashboard Brief
+    async function loadAiBrief() {
+      const panel = document.getElementById('ai-brief-panel');
+      const btn = document.getElementById('ai-brief-refresh');
+      try {
+        const statusRes = await fetch('/api/ai/status');
+        const status = await safeJSON(statusRes);
+        if (!status.available) { panel.style.display = 'none'; return; }
+
+        panel.style.display = '';
+        btn.textContent = 'Loading...';
+        btn.disabled = true;
+        const res = await fetch('/api/ai/dashboard-brief');
+        const d = await safeJSON(res);
+        if (d.error) {
+          if (d.error.includes('credit') || d.error.includes('depleted')) {
+            document.getElementById('ai-brief-headline').textContent = 'AI Ready — Add API credits to activate';
+            document.getElementById('ai-brief-highlights').innerHTML = '<div style="margin-bottom:0.2rem;">&#x2022; AI features are fully built and ready</div><div>&#x2022; Add credits at console.anthropic.com</div>';
+            document.getElementById('ai-brief-opportunities').innerHTML = '<div>&#x2714; Ask Brain: natural language queries</div><div>&#x2714; AI Lead Insights per attorney</div><div>&#x2714; AI Email Writer</div>';
+            document.getElementById('ai-brief-recommendation').textContent = 'Top up Anthropic API credits to unlock AI intelligence across the entire app.';
+            document.getElementById('ai-brief-warnings').innerHTML = '';
+            return;
+          }
+          throw new Error(d.error);
+        }
+
+        document.getElementById('ai-brief-headline').textContent = d.headline || 'AI brief loaded';
+        document.getElementById('ai-brief-highlights').innerHTML = (d.highlights || []).map(h => `<div style="margin-bottom:0.2rem;">&#x2022; ${esc(h)}</div>`).join('');
+        document.getElementById('ai-brief-opportunities').innerHTML = (d.opportunities || []).map(o => `<div style="margin-bottom:0.2rem;">&#x2714; ${esc(o)}</div>`).join('');
+        document.getElementById('ai-brief-recommendation').textContent = d.recommendation || '';
+        document.getElementById('ai-brief-warnings').innerHTML = (d.warnings || []).map(w => `<div>&#x26A0; ${esc(w)}</div>`).join('');
+      } catch (err) {
+        panel.style.display = '';
+        document.getElementById('ai-brief-headline').textContent = err.message.includes('credit') ? 'AI Ready — Add API credits to activate' : 'AI brief unavailable';
+        console.error('AI brief error:', err);
+      } finally {
+        btn.textContent = 'Refresh';
+        btn.disabled = false;
+      }
+    }
+
+    // AI Practice Area Classifier
+    async function runAiClassify() {
+      const status = document.getElementById('ai-classify-status');
+      status.style.display = '';
+      status.textContent = 'Starting AI practice area classification...';
+      try {
+        await fetch('/api/ai/classify-practice-areas', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+        // Poll for status
+        const poll = setInterval(async () => {
+          try {
+            const r = await fetch('/api/ai/classify-practice-areas/status');
+            const d = await safeJSON(r);
+            if (d.progress) {
+              status.textContent = d.progress.done
+                ? `Done! Tagged ${d.progress.updated} leads with practice areas.`
+                : `Classifying... ${d.progress.processed}/${d.progress.total} (${d.progress.updated} tagged)`;
+              if (d.progress.done || d.progress.error) {
+                clearInterval(poll);
+                if (d.progress.error) status.textContent = 'Error: ' + d.progress.error;
+                setTimeout(() => refreshAll(), 2000);
+              }
+            }
+          } catch {}
+        }, 2000);
+      } catch (err) {
+        status.textContent = 'Error: ' + err.message;
+      }
+    }
+
+    // AI Data Quality Audit
+    async function runAiAudit() {
+      const container = document.getElementById('ai-audit-results');
+      container.style.display = '';
+      container.innerHTML = '<div style="font-size:0.72rem;color:#a5b4fc;">Running AI quality audit...</div>';
+      try {
+        const res = await fetch('/api/ai/audit-quality', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ limit: 50 }),
+        });
+        const d = await safeJSON(res);
+        if (d.error) throw new Error(d.error);
+
+        let html = `<div style="font-size:0.78rem;color:#e0e7ff;font-weight:600;margin-bottom:0.3rem;">Quality Score: <span style="color:${d.score >= 70 ? '#4ade80' : d.score >= 40 ? '#fbbf24' : '#f87171'}">${d.score || '?'}/100</span></div>`;
+        html += `<div style="font-size:0.72rem;color:#a5b4fc;margin-bottom:0.4rem;">${esc(d.summary || '')}</div>`;
+        if (d.issues && d.issues.length > 0) {
+          html += `<div style="max-height:150px;overflow-y:auto;">`;
+          for (const issue of d.issues.slice(0, 15)) {
+            const sev = issue.severity === 'high' ? '#ef4444' : issue.severity === 'medium' ? '#f59e0b' : '#6b7280';
+            html += `<div style="padding:0.2rem 0;border-bottom:1px solid rgba(99,102,241,0.15);font-size:0.7rem;">
+              <span style="color:${sev};font-weight:600;">${esc(issue.severity || '?').toUpperCase()}</span>
+              <span style="color:#c7d2fe;cursor:pointer;" onclick="openLeadById(${issue.id})">Lead #${issue.id}</span>:
+              <span style="color:#e0e7ff;">${esc(issue.field)}</span> — ${esc(issue.issue)}
+              <span style="color:#818cf8;font-style:italic;"> ${esc(issue.suggestion || '')}</span>
+            </div>`;
+          }
+          html += `</div>`;
+        }
+        container.innerHTML = html;
+      } catch (err) {
+        container.innerHTML = `<div style="font-size:0.72rem;color:#fca5a5;">Error: ${esc(err.message)}</div>`;
+      }
+    }
+
+    // AI Lead Insights (called from lead detail modal)
+    async function loadAiInsights(leadId) {
+      const container = document.getElementById('ai-lead-insights');
+      if (!container) return;
+      container.style.display = '';
+      container.innerHTML = '<div style="color:#818cf8;font-size:0.75rem;">Analyzing lead with AI...</div>';
+      try {
+        const res = await fetch('/api/ai/lead-insights', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leadId }),
+        });
+        const d = await safeJSON(res);
+        if (d.error) throw new Error(d.error);
+        const i = d.insights;
+        const priorityColor = i.priority === 'high' ? '#4ade80' : i.priority === 'medium' ? '#fbbf24' : '#6b7280';
+
+        let html = `<div style="background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:8px;padding:0.7rem;color:#e0e7ff;">`;
+        html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
+          <span style="font-weight:700;color:#c7d2fe;font-size:0.82rem;">AI Insights</span>
+          <span style="background:${priorityColor}20;color:${priorityColor};padding:0.1rem 0.4rem;border-radius:4px;font-size:0.68rem;font-weight:600;">${esc((i.priority || '').toUpperCase())} PRIORITY</span>
+        </div>`;
+        html += `<div style="font-size:0.74rem;color:#a5b4fc;margin-bottom:0.4rem;">${esc(i.quality_assessment || '')}</div>`;
+        html += `<div style="font-size:0.74rem;margin-bottom:0.4rem;"><strong style="color:#c7d2fe;">Outreach Angle:</strong> ${esc(i.outreach_angle || '')}</div>`;
+        html += `<div style="background:rgba(99,102,241,0.15);border-radius:6px;padding:0.5rem;margin-bottom:0.4rem;">
+          <div style="font-size:0.68rem;color:#a5b4fc;margin-bottom:0.2rem;">PERSONALIZED OPENER</div>
+          <div style="font-size:0.78rem;color:#e0e7ff;font-style:italic;line-height:1.4;">"${esc(i.personalized_opener || '')}"</div>
+          <button onclick="navigator.clipboard.writeText('${esc((i.personalized_opener || '').replace(/'/g, "\\'"))}');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)" style="margin-top:0.3rem;font-size:0.62rem;padding:0.1rem 0.4rem;background:#4f46e5;color:white;border:none;border-radius:3px;cursor:pointer;">Copy</button>
+        </div>`;
+        html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;margin-bottom:0.4rem;">
+          <div><div style="font-size:0.65rem;color:#a5b4fc;margin-bottom:0.15rem;">Pain Points</div>${(i.pain_points || []).map(p => `<div style="font-size:0.7rem;color:#fbbf24;">&#x2022; ${esc(p)}</div>`).join('')}</div>
+          <div><div style="font-size:0.65rem;color:#a5b4fc;margin-bottom:0.15rem;">Recommended Services</div>${(i.recommended_services || []).map(s => `<div style="font-size:0.7rem;color:#4ade80;">&#x2713; ${esc(s)}</div>`).join('')}</div>
+        </div>`;
+        html += `<div style="font-size:0.65rem;color:#a5b4fc;margin-bottom:0.15rem;">Next Steps</div>`;
+        html += (i.next_steps || []).map(s => `<div style="font-size:0.7rem;color:#c7d2fe;">&#x2192; ${esc(s)}</div>`).join('');
+        html += `<button onclick="loadAiEmail(${leadId})" style="margin-top:0.5rem;width:100%;padding:0.4rem;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;border:none;border-radius:6px;cursor:pointer;font-size:0.78rem;font-weight:600;">&#x2709; Generate Cold Email</button>`;
+        html += `</div>`;
+        container.innerHTML = html;
+      } catch (err) {
+        container.innerHTML = `<div style="color:#fca5a5;font-size:0.75rem;">AI Error: ${esc(err.message)}</div>`;
+      }
+    }
+
+    // AI Email Writer (called from lead detail)
+    async function loadAiEmail(leadId) {
+      const container = document.getElementById('ai-lead-insights');
+      if (!container) return;
+      const prev = container.innerHTML;
+      container.innerHTML += '<div id="ai-email-loading" style="color:#818cf8;font-size:0.75rem;margin-top:0.4rem;">Generating personalized email...</div>';
+      try {
+        const res = await fetch('/api/ai/write-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leadId }),
+        });
+        const d = await safeJSON(res);
+        if (d.error) throw new Error(d.error);
+        const e = d.email;
+        const loadEl = document.getElementById('ai-email-loading');
+        if (!loadEl) return;
+
+        let html = `<div style="background:rgba(99,102,241,0.1);border-radius:8px;padding:0.7rem;margin-top:0.4rem;">`;
+        html += `<div style="font-size:0.68rem;color:#a5b4fc;margin-bottom:0.3rem;">AI-GENERATED EMAIL</div>`;
+        html += `<div style="font-size:0.78rem;color:#c7d2fe;font-weight:600;margin-bottom:0.3rem;">Subject: ${esc(e.subject || '')}</div>`;
+        html += `<div style="font-size:0.76rem;color:#e0e7ff;white-space:pre-line;line-height:1.5;margin-bottom:0.3rem;">${esc(e.body || '')}</div>`;
+        if (e.ps) html += `<div style="font-size:0.72rem;color:#a5b4fc;font-style:italic;">P.S. ${esc(e.ps)}</div>`;
+        html += `<div style="display:flex;gap:0.3rem;margin-top:0.4rem;">`;
+        const fullEmail = `Subject: ${e.subject || ''}\n\n${e.body || ''}${e.ps ? '\n\nP.S. ' + e.ps : ''}`;
+        html += `<button onclick="navigator.clipboard.writeText(${JSON.stringify(fullEmail).replace(/'/g, '&#39;')});this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Email',1500)" style="padding:0.3rem 0.6rem;background:#4f46e5;color:white;border:none;border-radius:4px;cursor:pointer;font-size:0.72rem;">Copy Email</button>`;
+        html += `<button onclick="loadAiEmail(${leadId})" style="padding:0.3rem 0.6rem;background:rgba(99,102,241,0.2);color:#c7d2fe;border:1px solid #4f46e5;border-radius:4px;cursor:pointer;font-size:0.72rem;">Regenerate</button>`;
+        html += `</div>`;
+        if (e.follow_up) {
+          html += `<div style="margin-top:0.4rem;padding-top:0.3rem;border-top:1px solid rgba(99,102,241,0.2);">
+            <div style="font-size:0.65rem;color:#818cf8;">FOLLOW-UP (3 days later)</div>
+            <div style="font-size:0.72rem;color:#a5b4fc;margin-top:0.15rem;">${esc(e.follow_up)}</div>
+          </div>`;
+        }
+        html += `</div>`;
+        loadEl.outerHTML = html;
+      } catch (err) {
+        const loadEl = document.getElementById('ai-email-loading');
+        if (loadEl) loadEl.outerHTML = `<div style="color:#fca5a5;font-size:0.72rem;margin-top:0.3rem;">Email generation error: ${esc(err.message)}</div>`;
+      }
+    }
+
     // === Practice Area Analytics (Batch 24) ===
     async function loadPracticeAnalytics() {
       try {
@@ -12223,7 +12561,7 @@
     async function refreshAll() {
       // Wrap each loader so a single failure doesn't break the entire refresh
       const safe = (fn) => fn().catch(err => console.warn('[refresh]', fn.name || 'loader', 'failed:', err.message));
-      await Promise.all([safe(loadStats), safe(loadScores), safe(loadRecommendations), safe(loadFreshness), safe(loadActivity), safe(loadPracticeAreas), safe(loadCompleteness), safe(loadLists), safe(loadEnrichmentDashboard), safe(loadActivityFeed), safe(loadQualityAlerts), safe(loadExportHistory), safe(loadGrowthChart), safe(loadFirmIntel), safe(loadHealthScore), safe(loadPipeline), safe(loadSegments), safe(loadSchedules), safe(loadWebhooks), safe(loadEnrichmentQueue), safe(loadVerificationStats), safe(loadExportTemplates), safe(loadAnalytics), safe(loadEmailClassification), safe(loadConfidencePanel), safe(loadStalenessPanel), safe(loadTagDefinitions), safe(loadChangeSignals), safe(loadIcpPanel), safe(loadSavedSearches), safe(loadAdmissionSignals), safe(loadSequences), safe(loadFirmDirectory), safe(loadEngagementPanel), safe(loadDncPanel), safe(loadSmartDuplicates), safe(loadTerritories), safe(loadSourceAttribution), safe(loadDecayPreview), safe(loadIntentSignals), safe(loadRoutingRules), safe(loadCompletenessHeatmap), safe(loadRecentNotes), safe(loadSmartLists), safe(loadKpiMetrics), safe(loadScoringModels), safe(loadCampaigns), safe(loadCrossSourceDuplicates), safe(loadEngagementHeatmap), safe(loadOwners), safe(loadLeaderboard), safe(loadAutomationRules), safe(loadDataQuality), safe(loadExportProfiles), safe(loadRecentContacts), safe(loadWarmUpScores), safe(loadFilterFacets), safe(loadEnrichQueue), safe(loadFirmIntelligence), safe(loadDedupQueue), safe(loadAuditLog), safe(loadLifecycleAnalytics), safe(loadSequencePerformance), safe(loadActivityScores), safe(loadBulkEnrichmentRuns), safe(loadFirmNetwork), safe(loadFreshnessMonitor), safe(loadScoringRankings), safe(loadGeoClusters), safe(loadPriorityInbox), safe(loadPracticeAnalytics), safe(loadSourceROI), safe(loadComplianceDashboard), safe(loadPredictiveScores), safe(loadTeamPerformance), safe(loadEmailDeliverability), safe(loadTagRulesEngine), safe(loadNurtureCadence), safe(loadCustomFields), safe(loadScoreDecayConfig), safe(loadLookalikes), safe(loadConversionFunnel), safe(loadLeadVelocity), safe(loadCompletenessMatrix), safe(loadLeadClusters), safe(loadAbTests), safe(loadReengagement), safe(loadAttribution), safe(loadSLATracker), safe(loadSaturation), safe(loadEnrichWaterfall), safe(loadCompetitiveIntel), safe(loadSeqTemplates), safe(loadQualityRulesPanel), safe(loadTimelinePanel), safe(loadExportScheduler), safe(loadPropensity), safe(loadCohorts), safe(loadChannelPrefs), safe(loadBenchmarks), safe(loadDealEstimates), safe(loadOutreachCal), safe(loadRiskScores), safe(loadNetworkMap), safe(loadJourneyMapping), safe(loadScoringAudit), safe(loadGeoExpansion), safe(loadFreshnessAlerts2), safe(loadMergeCandidates), safe(loadOutreachAnalytics), safe(loadIcpScoring), safe(loadPipelineVelocity), safe(loadRelationshipGraph), safe(loadEnrichmentROI), safe(loadEngagementPrediction), safe(loadCampaignPerformance2), safe(loadPrioritizationMatrix), safe(loadFirmAggregation), safe(loadImprovementRecs), safe(loadLifecycleFunnel), safe(loadCadenceOptimizer), safe(loadScoringCalibration), safe(loadPracticeMarketSize), safe(loadPipelineHealthPanel), safe(loadAffinityScoring), safe(loadScraperGaps), safe(loadFreshnessIndex), safe(loadFirmGrowthPanel), safe(loadRevenueAttribution), safe(loadSaturationHeatmap2), safe(loadSmartListBuilder), safe(loadQualityScorecard), safe(loadDedupIntelligence), safe(loadOutboundReadiness), safe(loadAgingReport), safe(loadGrowthAnalytics2), safe(loadWaterfallHistory), safe(loadRecentlyEnriched), safe(loadEnrichmentPriority), safe(loadEnrichmentCoverage), safe(loadEnrichmentFailures)]);
+      await Promise.all([safe(loadStats), safe(loadScores), safe(loadRecommendations), safe(loadFreshness), safe(loadActivity), safe(loadPracticeAreas), safe(loadCompleteness), safe(loadLists), safe(loadEnrichmentDashboard), safe(loadActivityFeed), safe(loadQualityAlerts), safe(loadExportHistory), safe(loadGrowthChart), safe(loadFirmIntel), safe(loadHealthScore), safe(loadPipeline), safe(loadSegments), safe(loadSchedules), safe(loadWebhooks), safe(loadEnrichmentQueue), safe(loadVerificationStats), safe(loadExportTemplates), safe(loadAnalytics), safe(loadEmailClassification), safe(loadConfidencePanel), safe(loadStalenessPanel), safe(loadTagDefinitions), safe(loadChangeSignals), safe(loadIcpPanel), safe(loadSavedSearches), safe(loadAdmissionSignals), safe(loadSequences), safe(loadFirmDirectory), safe(loadEngagementPanel), safe(loadDncPanel), safe(loadSmartDuplicates), safe(loadTerritories), safe(loadSourceAttribution), safe(loadDecayPreview), safe(loadIntentSignals), safe(loadRoutingRules), safe(loadCompletenessHeatmap), safe(loadRecentNotes), safe(loadSmartLists), safe(loadKpiMetrics), safe(loadScoringModels), safe(loadCampaigns), safe(loadCrossSourceDuplicates), safe(loadEngagementHeatmap), safe(loadOwners), safe(loadLeaderboard), safe(loadAutomationRules), safe(loadDataQuality), safe(loadExportProfiles), safe(loadRecentContacts), safe(loadWarmUpScores), safe(loadFilterFacets), safe(loadEnrichQueue), safe(loadFirmIntelligence), safe(loadDedupQueue), safe(loadAuditLog), safe(loadLifecycleAnalytics), safe(loadSequencePerformance), safe(loadActivityScores), safe(loadBulkEnrichmentRuns), safe(loadFirmNetwork), safe(loadFreshnessMonitor), safe(loadScoringRankings), safe(loadGeoClusters), safe(loadPriorityInbox), safe(loadPracticeAnalytics), safe(loadSourceROI), safe(loadComplianceDashboard), safe(loadPredictiveScores), safe(loadTeamPerformance), safe(loadEmailDeliverability), safe(loadTagRulesEngine), safe(loadNurtureCadence), safe(loadCustomFields), safe(loadScoreDecayConfig), safe(loadLookalikes), safe(loadConversionFunnel), safe(loadLeadVelocity), safe(loadCompletenessMatrix), safe(loadLeadClusters), safe(loadAbTests), safe(loadReengagement), safe(loadAttribution), safe(loadSLATracker), safe(loadSaturation), safe(loadEnrichWaterfall), safe(loadCompetitiveIntel), safe(loadSeqTemplates), safe(loadQualityRulesPanel), safe(loadTimelinePanel), safe(loadExportScheduler), safe(loadPropensity), safe(loadCohorts), safe(loadChannelPrefs), safe(loadBenchmarks), safe(loadDealEstimates), safe(loadOutreachCal), safe(loadRiskScores), safe(loadNetworkMap), safe(loadJourneyMapping), safe(loadScoringAudit), safe(loadGeoExpansion), safe(loadFreshnessAlerts2), safe(loadMergeCandidates), safe(loadOutreachAnalytics), safe(loadIcpScoring), safe(loadPipelineVelocity), safe(loadRelationshipGraph), safe(loadEnrichmentROI), safe(loadEngagementPrediction), safe(loadCampaignPerformance2), safe(loadPrioritizationMatrix), safe(loadFirmAggregation), safe(loadImprovementRecs), safe(loadLifecycleFunnel), safe(loadCadenceOptimizer), safe(loadScoringCalibration), safe(loadPracticeMarketSize), safe(loadPipelineHealthPanel), safe(loadAffinityScoring), safe(loadScraperGaps), safe(loadFreshnessIndex), safe(loadFirmGrowthPanel), safe(loadRevenueAttribution), safe(loadSaturationHeatmap2), safe(loadSmartListBuilder), safe(loadQualityScorecard), safe(loadDedupIntelligence), safe(loadOutboundReadiness), safe(loadAgingReport), safe(loadGrowthAnalytics2), safe(loadWaterfallHistory), safe(loadRecentlyEnriched), safe(loadEnrichmentPriority), safe(loadEnrichmentCoverage), safe(loadEnrichmentFailures), safe(loadAiBrief)]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
