@@ -666,6 +666,8 @@ class QueenslandScraper extends BaseScraper {
       let page = 1;
       let pagesFetched = 0;
       let consecutiveEmpty = 0;
+      let retries = 0;
+      const maxRetries = 5;
       let currentHtml = searchResultHtml;
 
       while (true) {
@@ -723,9 +725,13 @@ class QueenslandScraper extends BaseScraper {
           const pageResp = await this.httpGetWithCookies(nextUrl, rateLimiter, cookieHeader);
 
           if (pageResp.statusCode === 429 || pageResp.statusCode === 403) {
-            log.warn(`AU-QLD: Got ${pageResp.statusCode} on page ${page}`);
-            const shouldRetry = await rateLimiter.handleBlock(pageResp.statusCode);
-            if (!shouldRetry) break;
+            retries++;
+            log.warn(`AU-QLD: Got ${pageResp.statusCode} on page ${page} (retry ${retries}/${maxRetries})`);
+            if (retries >= maxRetries) {
+              log.error(`AU-QLD: Max retries reached on page ${page} — stopping for ${city}`);
+              break;
+            }
+            await rateLimiter.handleBlock(pageResp.statusCode);
             page--; // Retry same page
             pagesFetched--;
             continue;
@@ -736,6 +742,7 @@ class QueenslandScraper extends BaseScraper {
             break;
           }
 
+          retries = 0; // Reset retry counter on success
           // Update cookies if new ones are set
           const newCookies = this._extractCookies(pageResp.cookies);
           cookieHeader = this._mergeCookies(cookieHeader, newCookies);
