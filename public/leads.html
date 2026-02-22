@@ -7660,7 +7660,7 @@
       formData.append('source', 'csv-import');
 
       try {
-        const res = await fetch('/api/leads/import', { method: 'POST', body: formData });
+        const res = await fetch('/api/leads/import/csv', { method: 'POST', body: formData });
         const d = await res.json();
         if (d.error) {
           resultEl.innerHTML = '<span style="color:#dc2626;">Import failed: ' + esc(d.error) + '</span>';

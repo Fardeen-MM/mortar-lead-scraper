@@ -90,6 +90,8 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
     // Store parsed leads associated with the upload
     const uploadId = req.file.filename;
     jobs.set(`upload-${uploadId}`, { leads, originalName: req.file.originalname });
+    // Clean up upload from memory after 30 min
+    setTimeout(() => jobs.delete(`upload-${uploadId}`), 30 * 60 * 1000);
 
     // Clean up uploaded temp file after successful parsing
     fs.unlink(req.file.path, (err) => {
@@ -582,7 +584,7 @@ app.get('/api/leads/export', (req, res) => {
       const filename = path.basename(outputFile);
       leadDb.recordExport('csv', leads.length, req.query, filename);
       res.download(outputFile, filename);
-    });
+    }).catch(err => res.status(500).json({ error: 'CSV write failed: ' + err.message }));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -638,7 +640,7 @@ app.get('/api/leads/export/instantly', (req, res) => {
 
     writer.writeRecords(instantlyLeads).then(() => {
       res.download(outputFile, path.basename(outputFile));
-    });
+    }).catch(err => res.status(500).json({ error: 'CSV write failed: ' + err.message }));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -888,7 +890,7 @@ app.get('/api/leads/export/smartlead', (req, res) => {
 
     writer.writeRecords(smartLeads).then(() => {
       res.download(outputFile, path.basename(outputFile));
-    });
+    }).catch(err => res.status(500).json({ error: 'CSV write failed: ' + err.message }));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -921,7 +923,7 @@ app.get('/api/leads/export/by-score', (req, res) => {
     const outputFile = generateOutputPath(`SCORE-${minScore}`, '');
     writeCSV(outputFile, leads).then(() => {
       res.download(outputFile, path.basename(outputFile));
-    });
+    }).catch(err => res.status(500).json({ error: 'CSV write failed: ' + err.message }));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -1363,7 +1365,7 @@ app.post('/api/export-templates/:id/export', (req, res) => {
       return row;
     });
     const outPath = generateOutputPath(`export-${template.name.toLowerCase().replace(/\s+/g, '-')}`);
-    writeCSV(mapped, outPath);
+    writeCSV(outPath, mapped);
     leadDb.recordExport(template.name, mapped.length, JSON.stringify(template.filters), require('path').basename(outPath));
     res.download(outPath);
   } catch (err) { res.status(500).json({ error: err.message }); }
@@ -1441,12 +1443,12 @@ app.get('/api/leads/verification-stats', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-app.post('/api/leads/import-verification', upload.single('file'), (req, res) => {
+app.post('/api/leads/import-verification', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
     const leadDb = require('./lib/lead-db');
     const csv = require('./lib/csv-handler');
-    const rows = csv.readCSV(req.file.path);
+    const rows = await csv.readCSV(req.file.path);
     const verifications = rows.map(r => ({
       email: r.email || r.Email || r.EMAIL,
       valid: (r.valid || r.status || r.result || '').toString().toLowerCase() === 'valid' ||
@@ -3755,7 +3757,7 @@ app.post('/api/leads/delete', (req, res) => {
 });
 
 // --- CSV Import ---
-app.post('/api/leads/import', upload.single('file'), (req, res) => {
+app.post('/api/leads/import/csv', upload.single('file'), (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
 
@@ -4129,6 +4131,9 @@ app.post('/api/scrape/quick', (req, res) => {
     job.error = data.message;
   });
 
+  // Clean up quick-scrape job after 10 min
+  setTimeout(() => jobs.delete(jobId), 10 * 60 * 1000);
+
   res.json({ jobId, state });
 });
 
@@ -4322,6 +4327,9 @@ function fireWebhook(url, event, payload) {
   });
   req.on('error', (err) => {
     console.error(`[webhook] Error delivering to ${url}:`, err.message);
+  });
+  req.on('timeout', () => {
+    req.destroy(new Error('Webhook request timed out'));
   });
   req.write(data);
   req.end();
