@@ -218,6 +218,7 @@ const GET_ENDPOINTS = [
   '/api/leads/waterfall/history',
   '/api/leads/waterfall/summary',
   '/api/leads/enrichment-priority',
+  '/api/leads/enrichment-coverage',
   '/api/leads/recently-enriched',
 ];
 

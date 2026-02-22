@@ -627,9 +627,15 @@ app.get('/api/leads/export/instantly', (req, res) => {
       state: l.state || '',
       country: l.country || '',
       practice_area: l.practice_area || '',
-      personalization: l.practice_area
-        ? `I noticed you practice ${l.practice_area} in ${l.city || l.state}`
-        : `I came across your firm${l.firm_name ? ' ' + l.firm_name : ''} in ${l.city || l.state}`,
+      personalization: (() => {
+        const parts = [];
+        if (l.title && l.firm_name) parts.push(`I see you're ${l.title} at ${l.firm_name}`);
+        else if (l.firm_name) parts.push(`I came across ${l.firm_name}`);
+        if (l.practice_area) parts.push(`specializing in ${l.practice_area}`);
+        if (l.city && l.state) parts.push(`in ${l.city}, ${l.state}`);
+        else if (l.city || l.state) parts.push(`in ${l.city || l.state}`);
+        return parts.length > 0 ? parts.join(' ') : `I came across your profile`;
+      })(),
     }));
 
     const outputFile = generateOutputPath('INSTANTLY-EXPORT', '');
@@ -1031,6 +1037,40 @@ app.get('/api/leads/waterfall/summary', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
     res.json(leadDb.getWaterfallSummary());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// State enrichment coverage: how much of each state has been enriched
+app.get('/api/leads/enrichment-coverage', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const db = leadDb.getDb();
+    const states = db.prepare(`
+      SELECT state,
+        COUNT(*) as total,
+        SUM(CASE WHEN last_enriched_at IS NOT NULL THEN 1 ELSE 0 END) as enriched,
+        SUM(CASE WHEN phone IS NOT NULL AND phone != '' THEN 1 ELSE 0 END) as withPhone,
+        SUM(CASE WHEN email IS NOT NULL AND email != '' THEN 1 ELSE 0 END) as withEmail,
+        SUM(CASE WHEN website IS NOT NULL AND website != '' THEN 1 ELSE 0 END) as withWebsite,
+        SUM(CASE WHEN profile_url IS NOT NULL AND profile_url != '' THEN 1 ELSE 0 END) as hasProfileUrl,
+        SUM(CASE WHEN lead_score >= 80 THEN 1 ELSE 0 END) as excellent,
+        SUM(CASE WHEN lead_score >= 55 AND lead_score < 80 THEN 1 ELSE 0 END) as good,
+        ROUND(AVG(lead_score), 1) as avgScore
+      FROM leads
+      GROUP BY state
+      HAVING total > 0
+      ORDER BY total DESC
+    `).all();
+    const totals = {
+      total: states.reduce((s, r) => s + r.total, 0),
+      enriched: states.reduce((s, r) => s + r.enriched, 0),
+      withPhone: states.reduce((s, r) => s + r.withPhone, 0),
+      withEmail: states.reduce((s, r) => s + r.withEmail, 0),
+      withWebsite: states.reduce((s, r) => s + r.withWebsite, 0),
+    };
+    res.json({ states, totals });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -4567,6 +4607,25 @@ app.get('/api/leads/export/state/:state', (req, res) => {
         try { fs.unlinkSync(tmpPath); } catch {}
       });
     }).catch(err => res.status(500).json({ error: err.message }));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Backfill last_enriched_at for leads that were enriched before tracking was added
+app.post('/api/leads/backfill-enrichment-dates', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const db = leadDb.getDb();
+    // Set last_enriched_at = updated_at for leads that have phone (enriched) + profile_url (enrichable) but no last_enriched_at
+    const result = db.prepare(`
+      UPDATE leads SET last_enriched_at = updated_at, enrichment_steps = 'profile'
+      WHERE last_enriched_at IS NULL
+        AND profile_url IS NOT NULL AND profile_url != ''
+        AND phone IS NOT NULL AND phone != ''
+        AND updated_at > datetime('now', '-7 days')
+    `).run();
+    res.json({ updated: result.changes, message: `Backfilled ${result.changes} leads with enrichment dates` });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
