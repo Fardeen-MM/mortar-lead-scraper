@@ -504,12 +504,14 @@ app.get('/api/leads/stats', (req, res) => {
 app.get('/api/leads', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
-    const { q, state, country, hasEmail, hasPhone, hasWebsite, practiceArea, minScore, maxScore, tags, tag, source, sort, order, limit, offset } = req.query;
+    const { q, state, country, hasEmail, hasPhone, hasWebsite, practiceArea, minScore, maxScore, tags, tag, source, sort, order, limit, offset, enrichedAfter, hasProfileUrl } = req.query;
     const result = leadDb.searchLeads(q, {
       state, country, practiceArea, tags: tags || tag, source,
       hasEmail: hasEmail === 'true',
       hasPhone: hasPhone === 'true',
       hasWebsite: hasWebsite === 'true',
+      hasProfileUrl: hasProfileUrl === 'true',
+      enrichedAfter,
       minScore: minScore ? Number(minScore) : undefined,
       maxScore: maxScore ? Number(maxScore) : undefined,
       sort, order,
@@ -571,12 +573,14 @@ app.get('/api/leads/export', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
     const { writeCSV, generateOutputPath } = require('./lib/csv-handler');
-    const { state, country, hasEmail, hasPhone, verified } = req.query;
+    const { state, country, hasEmail, hasPhone, hasWebsite, verified, enrichedAfter } = req.query;
     const leads = leadDb.exportLeads({
       state, country,
       hasEmail: hasEmail === 'true',
       hasPhone: hasPhone === 'true',
+      hasWebsite: hasWebsite === 'true',
       verified: verified === 'true',
+      enrichedAfter,
     });
     if (leads.length === 0) {
       return res.status(404).json({ error: 'No leads match filters' });
@@ -598,10 +602,10 @@ app.get('/api/leads/export/instantly', (req, res) => {
     const leadDb = require('./lib/lead-db');
     const { createObjectCsvWriter } = require('csv-writer');
     const { generateOutputPath } = require('./lib/csv-handler');
-    const { state, country } = req.query;
+    const { state, country, enrichedAfter } = req.query;
 
     const leads = leadDb.exportLeads({
-      state, country,
+      state, country, enrichedAfter,
       hasEmail: true, // Instantly requires email
     });
 
@@ -615,10 +619,14 @@ app.get('/api/leads/export/instantly', (req, res) => {
       first_name: l.first_name,
       last_name: l.last_name,
       company_name: l.firm_name || '',
+      title: l.title || '',
       phone: l.phone || '',
       website: l.website || '',
+      linkedin_url: l.linkedin_url || '',
       city: l.city || '',
       state: l.state || '',
+      country: l.country || '',
+      practice_area: l.practice_area || '',
       personalization: l.practice_area
         ? `I noticed you practice ${l.practice_area} in ${l.city || l.state}`
         : `I came across your firm${l.firm_name ? ' ' + l.firm_name : ''} in ${l.city || l.state}`,
@@ -632,10 +640,14 @@ app.get('/api/leads/export/instantly', (req, res) => {
         { id: 'first_name', title: 'first_name' },
         { id: 'last_name', title: 'last_name' },
         { id: 'company_name', title: 'company_name' },
+        { id: 'title', title: 'title' },
         { id: 'phone', title: 'phone' },
         { id: 'website', title: 'website' },
+        { id: 'linkedin_url', title: 'linkedin_url' },
         { id: 'city', title: 'city' },
         { id: 'state', title: 'state' },
+        { id: 'country', title: 'country' },
+        { id: 'practice_area', title: 'practice_area' },
         { id: 'personalization', title: 'personalization' },
       ],
     });
@@ -942,6 +954,16 @@ app.post('/api/leads/waterfall', (req, res) => {
       }
 
       if (Object.keys(updates).length > 0) {
+        // Track enrichment timestamp and steps
+        updates.last_enriched_at = new Date().toISOString();
+        const stepNames = [];
+        if (steps.fetchProfiles) stepNames.push('profile');
+        if (steps.crossRefMartindale) stepNames.push('martindale');
+        if (steps.crossRefLawyersCom) stepNames.push('lawyerscom');
+        if (steps.nameLookups) stepNames.push('name-lookup');
+        if (steps.emailCrawl) stepNames.push('email-crawl');
+        if (steps.smtpPatterns) stepNames.push('smtp');
+        updates.enrichment_steps = stepNames.join(',');
         try {
           leadDb.updateLead(lead.id, updates);
           saved++;
@@ -1037,6 +1059,35 @@ app.get('/api/leads/enrichment-priority', (req, res) => {
   }
 });
 
+// Recently enriched leads (enriched in last N hours, default 24)
+app.get('/api/leads/recently-enriched', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const db = leadDb.getDb();
+    const hours = parseInt(req.query.hours) || 24;
+    const limit = Math.min(parseInt(req.query.limit) || 100, 500);
+    const cutoff = new Date(Date.now() - hours * 60 * 60 * 1000).toISOString();
+    const leads = db.prepare(`
+      SELECT id, first_name, last_name, firm_name, city, state, email, phone, website,
+             last_enriched_at, enrichment_steps, lead_score, profile_url
+      FROM leads
+      WHERE last_enriched_at >= ?
+      ORDER BY last_enriched_at DESC
+      LIMIT ?
+    `).all(cutoff, limit);
+    const stats = db.prepare(`
+      SELECT COUNT(*) as total,
+        SUM(CASE WHEN email IS NOT NULL AND email != '' THEN 1 ELSE 0 END) as withEmail,
+        SUM(CASE WHEN phone IS NOT NULL AND phone != '' THEN 1 ELSE 0 END) as withPhone,
+        SUM(CASE WHEN website IS NOT NULL AND website != '' THEN 1 ELSE 0 END) as withWebsite
+      FROM leads WHERE last_enriched_at >= ?
+    `).get(cutoff);
+    res.json({ leads, stats, cutoff, hours });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Multi-state waterfall: queue enrichment for all priority states
 app.post('/api/leads/waterfall/multi', (req, res) => {
   if (_waterfallRunning) {
@@ -1119,6 +1170,8 @@ app.post('/api/leads/waterfall/multi', (req, res) => {
           if (lead[f]) updates[f] = lead[f];
         }
         if (Object.keys(updates).length > 0) {
+          updates.last_enriched_at = new Date().toISOString();
+          updates.enrichment_steps = 'profile,smtp';
           try { leadDb.updateLead(lead.id, updates); saved++; } catch {}
         }
       }
@@ -1176,20 +1229,23 @@ app.get('/api/leads/export/smartlead', (req, res) => {
     const leadDb = require('./lib/lead-db');
     const { createObjectCsvWriter } = require('csv-writer');
     const { generateOutputPath } = require('./lib/csv-handler');
-    const { state, country } = req.query;
+    const { state, country, enrichedAfter } = req.query;
 
-    const leads = leadDb.exportLeads({ state, country, hasEmail: true });
+    const leads = leadDb.exportLeads({ state, country, enrichedAfter, hasEmail: true });
     if (leads.length === 0) {
       return res.status(404).json({ error: 'No leads with email found' });
     }
 
-    // SmartLead format: email, first_name, last_name, company, phone, tags
+    // SmartLead format: email, first_name, last_name, company, phone, website, title, tags
     const smartLeads = leads.map(l => ({
       email: l.email,
       first_name: l.first_name,
       last_name: l.last_name,
       company: l.firm_name || '',
+      title: l.title || '',
       phone: l.phone || '',
+      website: l.website || '',
+      linkedin_url: l.linkedin_url || '',
       location: [l.city, l.state].filter(Boolean).join(', '),
       tags: [l.practice_area, l.state, l.country].filter(Boolean).join(';'),
     }));
@@ -1202,7 +1258,10 @@ app.get('/api/leads/export/smartlead', (req, res) => {
         { id: 'first_name', title: 'first_name' },
         { id: 'last_name', title: 'last_name' },
         { id: 'company', title: 'company' },
+        { id: 'title', title: 'title' },
         { id: 'phone', title: 'phone' },
+        { id: 'website', title: 'website' },
+        { id: 'linkedin_url', title: 'linkedin_url' },
         { id: 'location', title: 'location' },
         { id: 'tags', title: 'tags' },
       ],
@@ -1223,7 +1282,7 @@ app.get('/api/leads/export/by-score', (req, res) => {
     const leadDb = require('./lib/lead-db');
     const { writeCSV, generateOutputPath } = require('./lib/csv-handler');
     const minScore = parseInt(req.query.minScore) || 55;
-    const { state, country } = req.query;
+    const { state, country, enrichedAfter } = req.query;
 
     const db = leadDb.getDb();
     let where = [`lead_score >= ?`];
@@ -1231,6 +1290,7 @@ app.get('/api/leads/export/by-score', (req, res) => {
 
     if (state) { where.push('state = ?'); params.push(state); }
     if (country) { where.push('country = ?'); params.push(country); }
+    if (enrichedAfter) { where.push('last_enriched_at >= ?'); params.push(enrichedAfter); }
 
     const leads = db.prepare(
       `SELECT * FROM leads WHERE ${where.join(' AND ')} ORDER BY lead_score DESC, state, city`
@@ -4489,7 +4549,13 @@ app.get('/api/leads/export/state/:state', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
     const { createObjectCsvWriter } = require('csv-writer');
-    const leads = leadDb.exportLeads({ state: req.params.state });
+    const { enrichedAfter, hasEmail, hasPhone } = req.query;
+    const leads = leadDb.exportLeads({
+      state: req.params.state,
+      enrichedAfter,
+      hasEmail: hasEmail === 'true',
+      hasPhone: hasPhone === 'true',
+    });
     if (leads.length === 0) return res.status(404).json({ error: 'No leads for this state' });
 
     const tmpPath = path.join(OUTPUT_DIR, `${req.params.state}-export-${Date.now()}.csv`);
@@ -4635,6 +4701,8 @@ const server = app.listen(PORT, () => {
             if (lead[f]) updates[f] = lead[f];
           }
           if (Object.keys(updates).length > 0) {
+            updates.last_enriched_at = new Date().toISOString();
+            updates.enrichment_steps = 'profile,smtp';
             try { leadDb.updateLead(lead.id, updates); saved++; } catch {}
           }
         }

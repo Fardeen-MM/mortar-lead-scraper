@@ -282,6 +282,58 @@ try {
 }
 
 // ============================================================
+// 12. LEAD DB MODULE
+// ============================================================
+console.log('\n=== 12. LEAD DB MODULE ===');
+try {
+  const leadDb = require('../lib/lead-db');
+  assertTruthy('getStats function exists', typeof leadDb.getStats === 'function');
+  assertTruthy('searchLeads function exists', typeof leadDb.searchLeads === 'function');
+  assertTruthy('exportLeads function exists', typeof leadDb.exportLeads === 'function');
+  assertTruthy('updateLead function exists', typeof leadDb.updateLead === 'function');
+  assertTruthy('recordWaterfallRun function exists', typeof leadDb.recordWaterfallRun === 'function');
+  assertTruthy('getWaterfallRuns function exists', typeof leadDb.getWaterfallRuns === 'function');
+  assertTruthy('getWaterfallSummary function exists', typeof leadDb.getWaterfallSummary === 'function');
+  assertTruthy('getEnrichmentStats function exists', typeof leadDb.getEnrichmentStats === 'function');
+  assertTruthy('getDb function exists', typeof leadDb.getDb === 'function');
+
+  // Test getStats returns expected shape
+  const stats = leadDb.getStats();
+  assertTruthy('getStats returns object with total', typeof stats.total === 'number');
+  assertTruthy('getStats returns withEmail', typeof stats.withEmail === 'number');
+  assertTruthy('getStats returns withPhone', typeof stats.withPhone === 'number');
+
+  // Test searchLeads with enrichedAfter param
+  const result = leadDb.searchLeads('', { limit: 1, enrichedAfter: '2020-01-01' });
+  assertTruthy('searchLeads with enrichedAfter returns leads array', Array.isArray(result.leads));
+
+  // Test exportLeads with hasWebsite param
+  const exported = leadDb.exportLeads({ hasWebsite: true });
+  assertTruthy('exportLeads with hasWebsite returns array', Array.isArray(exported));
+
+  // Test waterfall run history
+  const runs = leadDb.getWaterfallRuns(5);
+  assertTruthy('getWaterfallRuns returns array', Array.isArray(runs));
+  const summary = leadDb.getWaterfallSummary();
+  assertTruthy('getWaterfallSummary returns totalRuns', typeof summary.totalRuns === 'number');
+} catch (e) {
+  totalFail++;
+  failures.push(`  FAIL: Lead DB module: ${e.message}`);
+}
+
+// ============================================================
+// 13. WATERFALL MODULE
+// ============================================================
+console.log('\n=== 13. WATERFALL MODULE ===');
+try {
+  const { runWaterfall } = require('../lib/waterfall');
+  assertTruthy('runWaterfall function exists', typeof runWaterfall === 'function');
+} catch (e) {
+  totalFail++;
+  failures.push(`  FAIL: Waterfall module: ${e.message}`);
+}
+
+// ============================================================
 // SUMMARY
 // ============================================================
 console.log('\n' + '='.repeat(50));

@@ -214,6 +214,11 @@ const GET_ENDPOINTS = [
   '/api/leads/growth',
   '/api/leads/completeness',
   '/api/leads/duplicates',
+  '/api/leads/waterfall/status',
+  '/api/leads/waterfall/history',
+  '/api/leads/waterfall/summary',
+  '/api/leads/enrichment-priority',
+  '/api/leads/recently-enriched',
 ];
 
 // GET endpoints with path params (test with dummy values)

@@ -1304,6 +1304,14 @@
         <div class="tam-value" id="tam-avg-score">-</div>
         <div class="tam-label">Avg Score</div>
       </div>
+      <div class="tam-card" style="border-left:3px solid #22c55e;">
+        <div class="tam-value" id="tam-enriched" style="color:#16a34a;">-</div>
+        <div class="tam-label">Enriched</div>
+      </div>
+      <div class="tam-card" style="border-left:3px solid #10b981;">
+        <div class="tam-value" id="tam-enriched-24h" style="color:#059669;">-</div>
+        <div class="tam-label">Enriched 24h</div>
+      </div>
     </div>
 
     <!-- Tab Navigation -->
@@ -2396,6 +2404,32 @@
       <div id="waterfall-history-table" style="max-height:280px;overflow-y:auto;"></div>
     </div>
 
+    <!-- Recently Enriched Leads -->
+    <div id="recently-enriched-panel" class="bp" style="background:linear-gradient(135deg,#f0fdf4,#bbf7d0);border-color:#22c55e">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#16a34a;">Recently Enriched</span>
+        <div style="display:flex;gap:0.3rem;">
+          <select id="enriched-hours" onchange="loadRecentlyEnriched()" style="font-size:0.68rem;padding:0.15rem 0.3rem;border:1px solid #22c55e;border-radius:4px;background:#bbf7d0;color:#16a34a;">
+            <option value="6">6h</option><option value="24" selected>24h</option><option value="48">48h</option><option value="168">7d</option>
+          </select>
+          <button onclick="loadRecentlyEnriched()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#bbf7d0;color:#16a34a;border:1px solid #22c55e;border-radius:4px;cursor:pointer;">Refresh</button>
+          <button onclick="exportRecentlyEnriched()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#16a34a;color:#fff;border:1px solid #16a34a;border-radius:4px;cursor:pointer;">Export CSV</button>
+        </div>
+      </div>
+      <div id="recently-enriched-stats" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="recently-enriched-table" style="max-height:280px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Enrichment Priority by State -->
+    <div id="enrichment-priority-panel" class="bp" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe);border-color:#3b82f6">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#1d4ed8;">Enrichment Priority</span>
+        <button onclick="loadEnrichmentPriority()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#bfdbfe;color:#1d4ed8;border:1px solid #3b82f6;border-radius:4px;cursor:pointer;">Refresh</button>
+      </div>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">States ranked by enrichable leads (has profile URL, missing phone). Click a state to start enrichment.</p>
+      <div id="enrichment-priority-table" style="max-height:280px;overflow-y:auto;"></div>
+    </div>
+
     <!-- Competitive Intelligence (Batch 29) -->
     <div id="competitive-panel" class="bp" style="background:linear-gradient(135deg,#fff7ed,#fed7aa);border-color:#fb923c">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
@@ -3002,6 +3036,7 @@
       <span class="qf-chip" onclick="applyQuickFilter('has-website-no-email')">Has Website, No Email</span>
       <span class="qf-chip" onclick="applyQuickFilter('excellent')">Excellent Score</span>
       <span class="qf-chip" onclick="applyQuickFilter('needs-enrichment')">Needs Enrichment</span>
+      <span class="qf-chip" onclick="applyQuickFilter('recently-enriched')">Recently Enriched</span>
       <span class="qf-chip" onclick="applyQuickFilter('new-today')">New Today</span>
       <span class="qf-chip" onclick="applyQuickFilter('clear')">Clear All</span>
     </div>
@@ -3437,7 +3472,7 @@
         'deliverability-panel',
         'outbound-ready-panel',
         'scraper-gaps-panel',
-        'enrich-waterfall-panel', 'waterfall-history-panel', 'bulk-enrichment-panel',
+        'enrich-waterfall-panel', 'waterfall-history-panel', 'recently-enriched-panel', 'enrichment-priority-panel', 'bulk-enrichment-panel',
         'enrichment-queue-panel', 'enrichment-queue-panel2',
         'heatmap-panel',
       ],
@@ -3562,6 +3597,8 @@
         document.getElementById('tam-phone').textContent = fmt(d.withPhone);
         document.getElementById('tam-website').textContent = fmt(d.withWebsite);
         document.getElementById('tam-firms').textContent = fmt(d.uniqueFirms);
+        document.getElementById('tam-enriched').textContent = fmt(d.enriched || 0);
+        document.getElementById('tam-enriched-24h').textContent = fmt(d.enrichedLast24h || 0);
 
         document.getElementById('tam-contactable-pct').textContent = (d.coverage.contactable || 0) + '%';
         document.getElementById('tam-email-pct').textContent = d.coverage.email + '%';
@@ -4216,6 +4253,10 @@
         const [min, max] = scoreRange.split('-').map(Number);
         params.set('minScore', min);
         params.set('maxScore', max);
+      }
+      // Apply extra filters (e.g., enrichedAfter from quick filter)
+      for (const [k, v] of Object.entries(_extraFilters)) {
+        if (v) params.set(k, v);
       }
 
       try {
@@ -5645,6 +5686,7 @@
 
     // --- Quick Filter Presets ---
     let _activeQuickFilter = null;
+    let _extraFilters = {};
 
     function applyQuickFilter(preset) {
       // Clear previous
@@ -5660,6 +5702,7 @@
       document.getElementById('filter-email').checked = false;
       document.getElementById('filter-phone').checked = false;
       document.getElementById('filter-website').checked = false;
+      _extraFilters = {};
 
       if (preset === 'clear') { loadLeads(); return; }
 
@@ -5684,6 +5727,11 @@
           break;
         case 'needs-enrichment':
           document.getElementById('filter-score').value = '0-29';
+          break;
+        case 'recently-enriched':
+          _extraFilters = { enrichedAfter: new Date(Date.now() - 24*60*60*1000).toISOString() };
+          _currentSort = 'updated';
+          _currentOrder = 'desc';
           break;
         case 'new-today':
           document.getElementById('search-input').value = '';
@@ -10923,7 +10971,115 @@
       } catch (err) { console.error('Waterfall history error:', err); }
     }
 
+    // === Recently Enriched Leads ===
+    async function loadRecentlyEnriched() {
+      try {
+        const hours = document.getElementById('enriched-hours')?.value || 24;
+        const res = await fetch(`/api/leads/recently-enriched?hours=${hours}&limit=50`);
+        const d = await safeJSON(res);
+        const sEl = document.getElementById('recently-enriched-stats');
+        sEl.innerHTML = `
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#16a34a;">${d.stats?.total || 0}</div><div style="font-size:0.65rem;">Enriched</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#2563eb;">${d.stats?.withEmail || 0}</div><div style="font-size:0.65rem;">With Email</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#7c3aed;">${d.stats?.withPhone || 0}</div><div style="font-size:0.65rem;">With Phone</div></div>
+          <div style="text-align:center;"><div style="font-size:1rem;font-weight:700;color:#f59e0b;">${d.stats?.withWebsite || 0}</div><div style="font-size:0.65rem;">With Website</div></div>
+        `;
+        const tEl = document.getElementById('recently-enriched-table');
+        if (!d.leads || !d.leads.length) {
+          tEl.innerHTML = '<div style="font-size:0.72rem;color:#78716c;text-align:center;padding:1rem;">No leads enriched in the last ' + hours + ' hours.</div>';
+          return;
+        }
+        tEl.innerHTML = `<table style="width:100%;font-size:0.68rem;border-collapse:collapse;">
+          <thead><tr style="border-bottom:2px solid #bbf7d0;">
+            <th style="text-align:left;padding:0.2rem;">Name</th>
+            <th style="text-align:left;padding:0.2rem;">Firm</th>
+            <th style="text-align:left;padding:0.2rem;">State</th>
+            <th style="text-align:center;padding:0.2rem;">Email</th>
+            <th style="text-align:center;padding:0.2rem;">Phone</th>
+            <th style="text-align:center;padding:0.2rem;">Web</th>
+            <th style="text-align:left;padding:0.2rem;">Steps</th>
+            <th style="text-align:right;padding:0.2rem;">Score</th>
+          </tr></thead>
+          <tbody>${d.leads.slice(0, 30).map(l => {
+            const sc = l.lead_score || 0;
+            const scColor = sc >= 80 ? '#16a34a' : sc >= 55 ? '#2563eb' : sc >= 30 ? '#d97706' : '#dc2626';
+            const check = '&#10003;', cross = '&#8212;';
+            const steps = (l.enrichment_steps || '').split(',').map(s => {
+              const colors = {profile:'#3b82f6',martindale:'#8b5cf6',lawyerscom:'#ec4899',smtp:'#f59e0b','email-crawl':'#10b981','name-lookup':'#f97316'};
+              return '<span style="background:' + (colors[s] || '#94a3b8') + ';color:#fff;padding:0.1rem 0.25rem;border-radius:3px;font-size:0.6rem;">' + s + '</span>';
+            }).join(' ');
+            return '<tr style="border-bottom:1px solid #dcfce7;cursor:pointer;" onclick="showLeadDetail(' + l.id + ')">' +
+              '<td style="padding:0.2rem;">' + (l.first_name || '') + ' ' + (l.last_name || '') + '</td>' +
+              '<td style="padding:0.2rem;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (l.firm_name || '—') + '</td>' +
+              '<td style="padding:0.2rem;">' + (l.state || '') + '</td>' +
+              '<td style="text-align:center;padding:0.2rem;color:' + (l.email ? '#16a34a' : '#d1d5db') + ';">' + (l.email ? check : cross) + '</td>' +
+              '<td style="text-align:center;padding:0.2rem;color:' + (l.phone ? '#16a34a' : '#d1d5db') + ';">' + (l.phone ? check : cross) + '</td>' +
+              '<td style="text-align:center;padding:0.2rem;color:' + (l.website ? '#16a34a' : '#d1d5db') + ';">' + (l.website ? check : cross) + '</td>' +
+              '<td style="padding:0.2rem;">' + steps + '</td>' +
+              '<td style="text-align:right;padding:0.2rem;color:' + scColor + ';font-weight:600;">' + sc + '</td>' +
+            '</tr>';
+          }).join('')}</tbody>
+        </table>`;
+      } catch (err) { console.error('Recently enriched error:', err); }
+    }
+
     // === Competitive Intelligence (Batch 29) ===
+    function exportRecentlyEnriched() {
+      const hours = document.getElementById('enriched-hours')?.value || 24;
+      const cutoff = new Date(Date.now() - hours * 60 * 60 * 1000).toISOString();
+      window.open('/api/leads/export?enrichedAfter=' + encodeURIComponent(cutoff), '_blank');
+    }
+
+    async function loadEnrichmentPriority() {
+      try {
+        const data = await fetch('/api/leads/enrichment-priority').then(safeJSON);
+        const tEl = document.getElementById('enrichment-priority-table');
+        if (!data || !data.length) {
+          tEl.innerHTML = '<div style="font-size:0.72rem;color:#78716c;text-align:center;padding:1rem;">No enrichable leads found.</div>';
+          return;
+        }
+        const maxEnrichable = Math.max(...data.map(d => d.enrichable));
+        tEl.innerHTML = `<table style="width:100%;font-size:0.68rem;border-collapse:collapse;">
+          <thead><tr style="border-bottom:2px solid #bfdbfe;">
+            <th style="text-align:left;padding:0.2rem;">State</th>
+            <th style="text-align:right;padding:0.2rem;">Total</th>
+            <th style="text-align:right;padding:0.2rem;">Enrichable</th>
+            <th style="text-align:right;padding:0.2rem;">Missing Phone</th>
+            <th style="text-align:right;padding:0.2rem;">Missing Email</th>
+            <th style="padding:0.2rem;width:30%;">Progress</th>
+            <th style="padding:0.2rem;"></th>
+          </tr></thead>
+          <tbody>${data.slice(0, 20).map(d => {
+            const pct = d.total > 0 ? Math.round((1 - d.enrichable / d.total) * 100) : 100;
+            const barWidth = maxEnrichable > 0 ? Math.round(d.enrichable / maxEnrichable * 100) : 0;
+            return '<tr style="border-bottom:1px solid #dbeafe;">' +
+              '<td style="padding:0.2rem;font-weight:600;">' + d.state + '</td>' +
+              '<td style="text-align:right;padding:0.2rem;">' + d.total + '</td>' +
+              '<td style="text-align:right;padding:0.2rem;color:#1d4ed8;font-weight:600;">' + d.enrichable + '</td>' +
+              '<td style="text-align:right;padding:0.2rem;color:#dc2626;">' + d.missing_phone + '</td>' +
+              '<td style="text-align:right;padding:0.2rem;color:#d97706;">' + d.missing_email + '</td>' +
+              '<td style="padding:0.2rem;"><div style="background:#e2e8f0;border-radius:4px;height:10px;"><div style="background:linear-gradient(90deg,#3b82f6,#1d4ed8);height:100%;border-radius:4px;width:' + barWidth + '%;"></div></div></td>' +
+              '<td style="padding:0.2rem;"><button onclick="startStateWaterfall(\'' + d.state + '\')" style="font-size:0.6rem;padding:0.1rem 0.3rem;background:#3b82f6;color:#fff;border:none;border-radius:3px;cursor:pointer;">Enrich</button></td>' +
+            '</tr>';
+          }).join('')}</tbody>
+        </table>`;
+      } catch (err) { console.error('Enrichment priority error:', err); }
+    }
+
+    async function startStateWaterfall(state) {
+      if (!confirm('Start waterfall enrichment for ' + state + '?')) return;
+      try {
+        const res = await fetch('/api/leads/waterfall', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ state, limit: 500, fetchProfiles: true, smtpPatterns: true, crossRefMartindale: false, crossRefLawyersCom: false, nameLookups: false, emailCrawl: false }),
+        });
+        const d = await safeJSON(res);
+        if (d.error) { alert('Error: ' + d.error); return; }
+        alert('Waterfall started for ' + state + '. Check status in the Waterfall panel.');
+      } catch (err) { alert('Failed: ' + err.message); }
+    }
+
     async function loadCompetitiveIntel() {
       try {
         const data = await fetch('/api/competitive').then(safeJSON);
@@ -11790,7 +11946,7 @@
     async function refreshAll() {
       // Wrap each loader so a single failure doesn't break the entire refresh
       const safe = (fn) => fn().catch(err => console.warn('[refresh]', fn.name || 'loader', 'failed:', err.message));
-      await Promise.all([safe(loadStats), safe(loadScores), safe(loadRecommendations), safe(loadFreshness), safe(loadActivity), safe(loadPracticeAreas), safe(loadCompleteness), safe(loadLists), safe(loadEnrichmentDashboard), safe(loadActivityFeed), safe(loadQualityAlerts), safe(loadExportHistory), safe(loadGrowthChart), safe(loadFirmIntel), safe(loadHealthScore), safe(loadPipeline), safe(loadSegments), safe(loadSchedules), safe(loadWebhooks), safe(loadEnrichmentQueue), safe(loadVerificationStats), safe(loadExportTemplates), safe(loadAnalytics), safe(loadEmailClassification), safe(loadConfidencePanel), safe(loadStalenessPanel), safe(loadTagDefinitions), safe(loadChangeSignals), safe(loadIcpPanel), safe(loadSavedSearches), safe(loadAdmissionSignals), safe(loadSequences), safe(loadFirmDirectory), safe(loadEngagementPanel), safe(loadDncPanel), safe(loadSmartDuplicates), safe(loadTerritories), safe(loadSourceAttribution), safe(loadDecayPreview), safe(loadIntentSignals), safe(loadRoutingRules), safe(loadCompletenessHeatmap), safe(loadRecentNotes), safe(loadSmartLists), safe(loadKpiMetrics), safe(loadScoringModels), safe(loadCampaigns), safe(loadCrossSourceDuplicates), safe(loadEngagementHeatmap), safe(loadOwners), safe(loadLeaderboard), safe(loadAutomationRules), safe(loadDataQuality), safe(loadExportProfiles), safe(loadRecentContacts), safe(loadWarmUpScores), safe(loadFilterFacets), safe(loadEnrichQueue), safe(loadFirmIntelligence), safe(loadDedupQueue), safe(loadAuditLog), safe(loadLifecycleAnalytics), safe(loadSequencePerformance), safe(loadActivityScores), safe(loadBulkEnrichmentRuns), safe(loadFirmNetwork), safe(loadFreshnessMonitor), safe(loadScoringRankings), safe(loadGeoClusters), safe(loadPriorityInbox), safe(loadPracticeAnalytics), safe(loadSourceROI), safe(loadComplianceDashboard), safe(loadPredictiveScores), safe(loadTeamPerformance), safe(loadEmailDeliverability), safe(loadTagRulesEngine), safe(loadNurtureCadence), safe(loadCustomFields), safe(loadScoreDecayConfig), safe(loadLookalikes), safe(loadConversionFunnel), safe(loadLeadVelocity), safe(loadCompletenessMatrix), safe(loadLeadClusters), safe(loadAbTests), safe(loadReengagement), safe(loadAttribution), safe(loadSLATracker), safe(loadSaturation), safe(loadEnrichWaterfall), safe(loadCompetitiveIntel), safe(loadSeqTemplates), safe(loadQualityRulesPanel), safe(loadTimelinePanel), safe(loadExportScheduler), safe(loadPropensity), safe(loadCohorts), safe(loadChannelPrefs), safe(loadBenchmarks), safe(loadDealEstimates), safe(loadOutreachCal), safe(loadRiskScores), safe(loadNetworkMap), safe(loadJourneyMapping), safe(loadScoringAudit), safe(loadGeoExpansion), safe(loadFreshnessAlerts2), safe(loadMergeCandidates), safe(loadOutreachAnalytics), safe(loadIcpScoring), safe(loadPipelineVelocity), safe(loadRelationshipGraph), safe(loadEnrichmentROI), safe(loadEngagementPrediction), safe(loadCampaignPerformance2), safe(loadPrioritizationMatrix), safe(loadFirmAggregation), safe(loadImprovementRecs), safe(loadLifecycleFunnel), safe(loadCadenceOptimizer), safe(loadScoringCalibration), safe(loadPracticeMarketSize), safe(loadPipelineHealthPanel), safe(loadAffinityScoring), safe(loadScraperGaps), safe(loadFreshnessIndex), safe(loadFirmGrowthPanel), safe(loadRevenueAttribution), safe(loadSaturationHeatmap2), safe(loadSmartListBuilder), safe(loadQualityScorecard), safe(loadDedupIntelligence), safe(loadOutboundReadiness), safe(loadAgingReport), safe(loadGrowthAnalytics2), safe(loadWaterfallHistory)]);
+      await Promise.all([safe(loadStats), safe(loadScores), safe(loadRecommendations), safe(loadFreshness), safe(loadActivity), safe(loadPracticeAreas), safe(loadCompleteness), safe(loadLists), safe(loadEnrichmentDashboard), safe(loadActivityFeed), safe(loadQualityAlerts), safe(loadExportHistory), safe(loadGrowthChart), safe(loadFirmIntel), safe(loadHealthScore), safe(loadPipeline), safe(loadSegments), safe(loadSchedules), safe(loadWebhooks), safe(loadEnrichmentQueue), safe(loadVerificationStats), safe(loadExportTemplates), safe(loadAnalytics), safe(loadEmailClassification), safe(loadConfidencePanel), safe(loadStalenessPanel), safe(loadTagDefinitions), safe(loadChangeSignals), safe(loadIcpPanel), safe(loadSavedSearches), safe(loadAdmissionSignals), safe(loadSequences), safe(loadFirmDirectory), safe(loadEngagementPanel), safe(loadDncPanel), safe(loadSmartDuplicates), safe(loadTerritories), safe(loadSourceAttribution), safe(loadDecayPreview), safe(loadIntentSignals), safe(loadRoutingRules), safe(loadCompletenessHeatmap), safe(loadRecentNotes), safe(loadSmartLists), safe(loadKpiMetrics), safe(loadScoringModels), safe(loadCampaigns), safe(loadCrossSourceDuplicates), safe(loadEngagementHeatmap), safe(loadOwners), safe(loadLeaderboard), safe(loadAutomationRules), safe(loadDataQuality), safe(loadExportProfiles), safe(loadRecentContacts), safe(loadWarmUpScores), safe(loadFilterFacets), safe(loadEnrichQueue), safe(loadFirmIntelligence), safe(loadDedupQueue), safe(loadAuditLog), safe(loadLifecycleAnalytics), safe(loadSequencePerformance), safe(loadActivityScores), safe(loadBulkEnrichmentRuns), safe(loadFirmNetwork), safe(loadFreshnessMonitor), safe(loadScoringRankings), safe(loadGeoClusters), safe(loadPriorityInbox), safe(loadPracticeAnalytics), safe(loadSourceROI), safe(loadComplianceDashboard), safe(loadPredictiveScores), safe(loadTeamPerformance), safe(loadEmailDeliverability), safe(loadTagRulesEngine), safe(loadNurtureCadence), safe(loadCustomFields), safe(loadScoreDecayConfig), safe(loadLookalikes), safe(loadConversionFunnel), safe(loadLeadVelocity), safe(loadCompletenessMatrix), safe(loadLeadClusters), safe(loadAbTests), safe(loadReengagement), safe(loadAttribution), safe(loadSLATracker), safe(loadSaturation), safe(loadEnrichWaterfall), safe(loadCompetitiveIntel), safe(loadSeqTemplates), safe(loadQualityRulesPanel), safe(loadTimelinePanel), safe(loadExportScheduler), safe(loadPropensity), safe(loadCohorts), safe(loadChannelPrefs), safe(loadBenchmarks), safe(loadDealEstimates), safe(loadOutreachCal), safe(loadRiskScores), safe(loadNetworkMap), safe(loadJourneyMapping), safe(loadScoringAudit), safe(loadGeoExpansion), safe(loadFreshnessAlerts2), safe(loadMergeCandidates), safe(loadOutreachAnalytics), safe(loadIcpScoring), safe(loadPipelineVelocity), safe(loadRelationshipGraph), safe(loadEnrichmentROI), safe(loadEngagementPrediction), safe(loadCampaignPerformance2), safe(loadPrioritizationMatrix), safe(loadFirmAggregation), safe(loadImprovementRecs), safe(loadLifecycleFunnel), safe(loadCadenceOptimizer), safe(loadScoringCalibration), safe(loadPracticeMarketSize), safe(loadPipelineHealthPanel), safe(loadAffinityScoring), safe(loadScraperGaps), safe(loadFreshnessIndex), safe(loadFirmGrowthPanel), safe(loadRevenueAttribution), safe(loadSaturationHeatmap2), safe(loadSmartListBuilder), safe(loadQualityScorecard), safe(loadDedupIntelligence), safe(loadOutboundReadiness), safe(loadAgingReport), safe(loadGrowthAnalytics2), safe(loadWaterfallHistory), safe(loadRecentlyEnriched), safe(loadEnrichmentPriority)]);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();
