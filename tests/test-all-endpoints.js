@@ -220,6 +220,7 @@ const GET_ENDPOINTS = [
   '/api/leads/enrichment-priority',
   '/api/leads/enrichment-coverage',
   '/api/leads/recently-enriched',
+  '/api/leads/enrichment-failures',
 ];
 
 // GET endpoints with path params (test with dummy values)

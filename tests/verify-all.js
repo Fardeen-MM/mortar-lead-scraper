@@ -296,6 +296,9 @@ try {
   assertTruthy('getWaterfallSummary function exists', typeof leadDb.getWaterfallSummary === 'function');
   assertTruthy('getEnrichmentStats function exists', typeof leadDb.getEnrichmentStats === 'function');
   assertTruthy('getDb function exists', typeof leadDb.getDb === 'function');
+  assertTruthy('getEnrichmentFailures function exists', typeof leadDb.getEnrichmentFailures === 'function');
+  assertTruthy('getEnrichmentFailureStats function exists', typeof leadDb.getEnrichmentFailureStats === 'function');
+  assertTruthy('clearEnrichmentErrors function exists', typeof leadDb.clearEnrichmentErrors === 'function');
 
   // Test getStats returns expected shape
   const stats = leadDb.getStats();
@@ -312,6 +315,14 @@ try {
   const result = leadDb.searchLeads('', { limit: 1, enrichedAfter: '2020-01-01' });
   assertTruthy('searchLeads with enrichedAfter returns leads array', Array.isArray(result.leads));
 
+  // Test searchLeads with new filter params
+  const linkedinResult = leadDb.searchLeads('', { limit: 1, hasLinkedin: true });
+  assertTruthy('searchLeads with hasLinkedin returns array', Array.isArray(linkedinResult.leads));
+  const errorResult = leadDb.searchLeads('', { limit: 1, hasEnrichmentError: true });
+  assertTruthy('searchLeads with hasEnrichmentError returns array', Array.isArray(errorResult.leads));
+  const createdResult = leadDb.searchLeads('', { limit: 1, createdAfter: '2020-01-01' });
+  assertTruthy('searchLeads with createdAfter returns array', Array.isArray(createdResult.leads));
+
   // Test exportLeads with hasWebsite param
   const exported = leadDb.exportLeads({ hasWebsite: true });
   assertTruthy('exportLeads with hasWebsite returns array', Array.isArray(exported));
@@ -321,6 +332,14 @@ try {
   assertTruthy('getWaterfallRuns returns array', Array.isArray(runs));
   const summary = leadDb.getWaterfallSummary();
   assertTruthy('getWaterfallSummary returns totalRuns', typeof summary.totalRuns === 'number');
+
+  // Test enrichment failure tracking
+  const failures2 = leadDb.getEnrichmentFailures(undefined, 5);
+  assertTruthy('getEnrichmentFailures returns array', Array.isArray(failures2));
+  const failStats = leadDb.getEnrichmentFailureStats();
+  assertTruthy('getEnrichmentFailureStats returns total', typeof failStats.total === 'number');
+  assertTruthy('getEnrichmentFailureStats returns byError', Array.isArray(failStats.byError));
+  assertTruthy('getEnrichmentFailureStats returns byState', Array.isArray(failStats.byState));
 } catch (e) {
   totalFail++;
   failures.push(`  FAIL: Lead DB module: ${e.message}`);

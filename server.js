@@ -504,14 +504,16 @@ app.get('/api/leads/stats', (req, res) => {
 app.get('/api/leads', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
-    const { q, state, country, hasEmail, hasPhone, hasWebsite, practiceArea, minScore, maxScore, tags, tag, source, sort, order, limit, offset, enrichedAfter, hasProfileUrl } = req.query;
+    const { q, state, country, hasEmail, hasPhone, hasWebsite, practiceArea, minScore, maxScore, tags, tag, source, sort, order, limit, offset, enrichedAfter, hasProfileUrl, hasLinkedin, hasEnrichmentError, createdAfter } = req.query;
     const result = leadDb.searchLeads(q, {
       state, country, practiceArea, tags: tags || tag, source,
       hasEmail: hasEmail === 'true',
       hasPhone: hasPhone === 'true',
       hasWebsite: hasWebsite === 'true',
       hasProfileUrl: hasProfileUrl === 'true',
-      enrichedAfter,
+      hasLinkedin: hasLinkedin === 'true',
+      hasEnrichmentError: hasEnrichmentError === 'true',
+      enrichedAfter, createdAfter,
       minScore: minScore ? Number(minScore) : undefined,
       maxScore: maxScore ? Number(maxScore) : undefined,
       sort, order,
@@ -959,6 +961,12 @@ app.post('/api/leads/waterfall', (req, res) => {
         if (lead[f]) updates[f] = lead[f];
       }
 
+      // Track enrichment errors per-lead
+      if (lead._enrichmentError) {
+        updates.last_enrichment_error = lead._enrichmentError;
+        updates.enrichment_attempts = (orig.enrichment_attempts || 0) + 1;
+      }
+
       if (Object.keys(updates).length > 0) {
         // Track enrichment timestamp and steps (merge with existing)
         updates.last_enriched_at = new Date().toISOString();
@@ -978,6 +986,17 @@ app.post('/api/leads/waterfall', (req, res) => {
         } catch (err) {
           console.error(`[Waterfall] Failed to save lead ${lead.id}:`, err.message);
         }
+      } else if (lead._enrichmentError) {
+        // Even if no fields were filled, still record the error
+        try {
+          leadDb.updateLead(lead.id, {
+            last_enrichment_error: lead._enrichmentError,
+            enrichment_attempts: (orig.enrichment_attempts || 0) + 1,
+            last_enriched_at: new Date().toISOString(),
+          });
+        } catch (err) {
+          console.error(`[Waterfall] Failed to save error for lead ${lead.id}:`, err.message);
+        }
       }
     }
 
@@ -996,10 +1015,12 @@ app.post('/api/leads/waterfall', (req, res) => {
         leadsEnriched: saved,
         fieldsFilled: stats.totalFieldsFilled,
         profilesFetched: stats.profilesFetched || 0,
+        profilesAttempted: stats.profilesAttempted || 0,
+        profilesFailed: stats.profilesFailed || 0,
         websitesFound: stats.websitesFound || 0,
         emailsFound: stats.emailsCrawled || 0,
         trigger: 'manual',
-        stats,
+        stats: { ...stats, profileErrors: (stats.profileErrors || []).slice(0, 50) },
         durationSecs: Math.round((Date.now() - _waterfallStartTime) / 1000),
       });
     } catch {}
@@ -1130,6 +1151,31 @@ app.get('/api/leads/recently-enriched', (req, res) => {
   }
 });
 
+// Enrichment failure tracking
+app.get('/api/leads/enrichment-failures', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const state = req.query.state || '';
+    const limit = Math.min(parseInt(req.query.limit) || 100, 500);
+    const failures = leadDb.getEnrichmentFailures(state || undefined, limit);
+    const stats = leadDb.getEnrichmentFailureStats();
+    res.json({ failures, stats });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/leads/enrichment-failures/clear', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { state } = req.body || {};
+    const result = leadDb.clearEnrichmentErrors(state || undefined);
+    res.json({ cleared: result.changes });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Multi-state waterfall: queue enrichment for all priority states
 app.post('/api/leads/waterfall/multi', (req, res) => {
   if (_waterfallRunning) {
@@ -1211,10 +1257,22 @@ app.post('/api/leads/waterfall/multi', (req, res) => {
         for (const f of ['email_source', 'phone_source', 'website_source']) {
           if (lead[f]) updates[f] = lead[f];
         }
+        if (lead._enrichmentError) {
+          updates.last_enrichment_error = lead._enrichmentError;
+          updates.enrichment_attempts = (orig.enrichment_attempts || 0) + 1;
+        }
         if (Object.keys(updates).length > 0) {
           updates.last_enriched_at = new Date().toISOString();
           updates.enrichment_steps = 'profile,smtp';
           try { leadDb.updateLead(lead.id, updates); saved++; } catch {}
+        } else if (lead._enrichmentError) {
+          try {
+            leadDb.updateLead(lead.id, {
+              last_enrichment_error: lead._enrichmentError,
+              enrichment_attempts: (orig.enrichment_attempts || 0) + 1,
+              last_enriched_at: new Date().toISOString(),
+            });
+          } catch {}
         }
       }
 
@@ -1229,10 +1287,12 @@ app.post('/api/leads/waterfall/multi', (req, res) => {
           leadsEnriched: saved,
           fieldsFilled: stats.totalFieldsFilled,
           profilesFetched: stats.profilesFetched || 0,
+          profilesAttempted: stats.profilesAttempted || 0,
+          profilesFailed: stats.profilesFailed || 0,
           websitesFound: stats.websitesFound || 0,
           emailsFound: (stats.emailsCrawled || 0) + (stats.smtpPatternsFound || 0),
           trigger: 'multi-state',
-          stats,
+          stats: { ...stats, profileErrors: (stats.profileErrors || []).slice(0, 50) },
           durationSecs: 0,
         });
       } catch {}
@@ -4761,10 +4821,22 @@ const server = app.listen(PORT, () => {
           for (const f of ['email_source', 'phone_source', 'website_source']) {
             if (lead[f]) updates[f] = lead[f];
           }
+          if (lead._enrichmentError) {
+            updates.last_enrichment_error = lead._enrichmentError;
+            updates.enrichment_attempts = (orig.enrichment_attempts || 0) + 1;
+          }
           if (Object.keys(updates).length > 0) {
             updates.last_enriched_at = new Date().toISOString();
             updates.enrichment_steps = 'profile,smtp';
             try { leadDb.updateLead(lead.id, updates); saved++; } catch {}
+          } else if (lead._enrichmentError) {
+            try {
+              leadDb.updateLead(lead.id, {
+                last_enrichment_error: lead._enrichmentError,
+                enrichment_attempts: (orig.enrichment_attempts || 0) + 1,
+                last_enriched_at: new Date().toISOString(),
+              });
+            } catch {}
           }
         }
         leadDb.batchScoreLeads();
@@ -4777,11 +4849,13 @@ const server = app.listen(PORT, () => {
             leadsEnriched: saved,
             fieldsFilled: stats.totalFieldsFilled,
             profilesFetched: stats.profilesFetched || 0,
+            profilesAttempted: stats.profilesAttempted || 0,
+            profilesFailed: stats.profilesFailed || 0,
             websitesFound: stats.websitesFound || 0,
             emailsFound: stats.emailsCrawled || 0,
             trigger: 'auto-cron',
-            stats,
-            durationSecs: 0, // Don't track timing for cron
+            stats: { ...stats, profileErrors: (stats.profileErrors || []).slice(0, 50) },
+            durationSecs: 0,
           });
         } catch {}
 
