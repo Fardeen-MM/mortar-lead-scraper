@@ -870,7 +870,8 @@ app.post('/api/leads/waterfall', (req, res) => {
     crossRefMartindale: req.body.crossRefMartindale !== false,
     crossRefLawyersCom: req.body.crossRefLawyersCom !== false,
     nameLookups: req.body.nameLookups !== false,
-    emailCrawl: req.body.emailCrawl === true, // off by default (slow)
+    emailCrawl: req.body.emailCrawl === true, // off by default (slow, needs Puppeteer)
+    smtpPatterns: req.body.smtpPatterns !== false, // on by default (fast, zero deps)
     masterDbLookup: false, // not needed — leads are already in the DB
   };
 
@@ -4468,7 +4469,8 @@ const server = app.listen(PORT, () => {
           crossRefMartindale: false, // skip slow cross-ref for auto-enrich
           crossRefLawyersCom: false,
           nameLookups: false,
-          emailCrawl: false,
+          emailCrawl: false, // no Puppeteer in cron
+          smtpPatterns: true, // fast email discovery via SMTP (zero deps)
           masterDbLookup: false,
           emitter,
           isCancelled: () => !_waterfallRunning,
