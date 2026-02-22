@@ -12,22 +12,6 @@
     /* Override container width for data-dense dashboard */
     .container { max-width: 1200px; }
 
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-    .nav-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--indigo);
-      text-decoration: none;
-    }
-    .nav-link:hover { text-decoration: underline; }
-
     .tam-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -961,7 +945,7 @@
       border-radius: 6px;
       background: white;
       cursor: pointer;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
     }
     body.dark .dark-toggle { background: var(--surface); color: var(--text-muted); border-color: var(--border); }
@@ -1062,7 +1046,6 @@
       font-weight: 500;
     }
     .leads-nav-link:hover { text-decoration: underline; }
-    .dark-toggle { font-size: 0.72rem; }
 
     /* === Power Bar === */
     .power-bar {
@@ -2989,7 +2972,7 @@
         <h2 style="margin-bottom: 0.5rem;">Lead Explorer</h2>
         <div style="display:flex;gap:0.4rem;align-items:center;">
           <button class="btn btn-secondary" style="font-size:0.72rem;padding:0.2rem 0.5rem;" onclick="saveCurrentView()">Save View</button>
-          <button class="btn btn-secondary" style="font-size:0.72rem;padding:0.2rem 0.5rem;" onclick="toggleColumnPicker()">Columns</button>
+          <button class="btn btn-secondary" style="font-size:0.72rem;padding:0.2rem 0.5rem;" onclick="toggleExplorerColumnPicker()">Columns</button>
         </div>
       </div>
     </div>
@@ -3537,17 +3520,15 @@
       return n.toLocaleString();
     }
 
-    function timeAgo(dateStr) {
-      if (!dateStr) return '';
-      const d = new Date(dateStr + (dateStr.includes('Z') ? '' : 'Z'));
-      const now = new Date();
-      const mins = Math.floor((now - d) / 60000);
-      if (mins < 1) return 'just now';
-      if (mins < 60) return mins + 'm ago';
-      const hrs = Math.floor(mins / 60);
-      if (hrs < 24) return hrs + 'h ago';
-      const days = Math.floor(hrs / 24);
-      return days + 'd ago';
+    function timeAgo(input) {
+      if (!input) return '';
+      const d = input instanceof Date ? input : new Date(String(input) + (String(input).includes('Z') ? '' : 'Z'));
+      const secs = Math.floor((Date.now() - d.getTime()) / 1000);
+      if (secs < 60) return 'just now';
+      if (secs < 3600) return Math.floor(secs / 60) + 'm ago';
+      if (secs < 86400) return Math.floor(secs / 3600) + 'h ago';
+      if (secs < 604800) return Math.floor(secs / 86400) + 'd ago';
+      return d.toLocaleDateString();
     }
 
     // --- Stats ---
@@ -4436,39 +4417,6 @@
         document.body.removeChild(ta);
       }
       toast(`Copied ${leads.length} personalization texts`);
-    }
-
-    function compareSelectedLeads() {
-      if (_selectedIds.size < 2) { toast('Select at least 2 leads to compare', 'info'); return; }
-      if (_selectedIds.size > 4) { toast('Select at most 4 leads to compare', 'info'); return; }
-      const leads = _currentLeads.filter(l => _selectedIds.has(l.id));
-      if (leads.length < 2) return;
-
-      const fields = ['email','phone','website','firm_name','city','state','bar_number','practice_area','title','linkedin_url','lead_score'];
-      const fieldLabels = { email:'Email', phone:'Phone', website:'Website', firm_name:'Firm', city:'City', state:'State', bar_number:'Bar #', practice_area:'Practice', title:'Title', linkedin_url:'LinkedIn', lead_score:'Score' };
-
-      let html = '<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.75rem;">';
-      html += '<thead><tr><th style="text-align:left;padding:0.3rem;border-bottom:2px solid var(--border,#e5e7eb);"></th>';
-      leads.forEach(l => {
-        html += `<th style="padding:0.3rem;border-bottom:2px solid var(--border,#e5e7eb);min-width:120px;"><strong>${esc(l.first_name)} ${esc(l.last_name)}</strong></th>`;
-      });
-      html += '</tr></thead><tbody>';
-
-      fields.forEach(f => {
-        html += `<tr><td style="font-weight:600;padding:0.3rem 0.5rem;color:var(--text-muted,#6b7280);border-bottom:1px solid var(--border,#f3f4f6);">${fieldLabels[f] || f}</td>`;
-        leads.forEach(l => {
-          const val = l[f] || '';
-          const hasVal = val && val.toString().trim();
-          html += `<td style="padding:0.3rem 0.5rem;border-bottom:1px solid var(--border,#f3f4f6);${hasVal ? 'color:var(--text-primary,#111);' : 'color:var(--text-muted,#d1d5db);'}">${hasVal ? esc(val.toString()) : '-'}</td>`;
-        });
-        html += '</tr>';
-      });
-      html += '</tbody></table></div>';
-
-      // Show in state modal (reuse it)
-      document.getElementById('state-modal-title').textContent = 'Compare Leads';
-      document.getElementById('state-modal-body').innerHTML = html;
-      document.getElementById('state-modal').classList.add('active');
     }
 
     function compareSelected() {
@@ -5494,9 +5442,9 @@
       renderViews();
     }
 
-    // --- Column Visibility ---
+    // --- Column Visibility (Explorer Table) ---
     const COLS_KEY = 'mortar_visible_cols';
-    const ALL_COLUMNS = [
+    const EXPLORER_COLUMNS = [
       { key: 'select', label: 'Select', default: true },
       { key: 'name', label: 'Name', default: true },
       { key: 'firm', label: 'Firm', default: true },
@@ -5508,23 +5456,23 @@
       { key: 'website', label: 'Website', default: true },
       { key: 'source', label: 'Source', default: true },
     ];
-    let _visibleCols = JSON.parse(localStorage.getItem(COLS_KEY) || 'null') || ALL_COLUMNS.filter(c => c.default).map(c => c.key);
+    let _visibleCols = JSON.parse(localStorage.getItem(COLS_KEY) || 'null') || EXPLORER_COLUMNS.filter(c => c.default).map(c => c.key);
     let _colPickerVisible = false;
 
-    function toggleColumnPicker() {
+    function toggleExplorerColumnPicker() {
       _colPickerVisible = !_colPickerVisible;
       const el = document.getElementById('col-toggles');
       if (_colPickerVisible) {
         el.style.display = 'flex';
-        el.innerHTML = ALL_COLUMNS.map(c =>
-          `<span class="col-toggle ${_visibleCols.includes(c.key) ? 'active' : ''}" onclick="toggleColumn('${c.key}', this)">${c.label}</span>`
+        el.innerHTML = EXPLORER_COLUMNS.map(c =>
+          `<span class="col-toggle ${_visibleCols.includes(c.key) ? 'active' : ''}" onclick="toggleExplorerColumn('${c.key}', this)">${c.label}</span>`
         ).join('');
       } else {
         el.style.display = 'none';
       }
     }
 
-    function toggleColumn(key, chip) {
+    function toggleExplorerColumn(key, chip) {
       if (_visibleCols.includes(key)) {
         _visibleCols = _visibleCols.filter(k => k !== key);
       } else {
@@ -5537,10 +5485,9 @@
 
     function applyColumnVisibility() {
       const table = document.getElementById('leads-table');
-      const colIdxMap = { select: 0, name: 1, firm: 2, city: 3, state: 4, score: 5, email: 6, phone: 7, website: 8, source: 9 };
       table.querySelectorAll('tr').forEach(tr => {
         const cells = tr.querySelectorAll('th, td');
-        ALL_COLUMNS.forEach((col, i) => {
+        EXPLORER_COLUMNS.forEach((col, i) => {
           if (cells[i]) {
             cells[i].style.display = _visibleCols.includes(col.key) ? '' : 'none';
           }
@@ -6105,15 +6052,6 @@
       }
     }
 
-    function timeAgo(date) {
-      const secs = Math.floor((Date.now() - date.getTime()) / 1000);
-      if (secs < 60) return 'just now';
-      if (secs < 3600) return Math.floor(secs / 60) + 'm ago';
-      if (secs < 86400) return Math.floor(secs / 3600) + 'h ago';
-      if (secs < 604800) return Math.floor(secs / 86400) + 'd ago';
-      return date.toLocaleDateString();
-    }
-
     // --- Geographic Map View ---
     // US state grid positions (row, col) — "tile grid map" layout
     const US_GRID = {
@@ -6632,18 +6570,6 @@
     }
 
     // --- Quick Actions ---
-    function quickScrape() {
-      const state = prompt('Enter state code to scrape (e.g., FL, CA, NY):');
-      if (!state) return;
-      fetch('/api/scrape/quick', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ state: state.toUpperCase(), testMode: false })
-      }).then(r => r.json()).then(d => {
-        if (d.error) return toast(d.error, 'error');
-        toast(`Scraping ${state.toUpperCase()}...`, 'info');
-      }).catch(() => toast('Failed to start scrape', 'error'));
-    }
-
     function startBulkOp(op) {
       const endpoints = {
         'find-websites': '/api/leads/find-websites',
@@ -9801,13 +9727,13 @@
             <span style="color:#059669;">${s.sent || 0} sent</span>
             <span style="color:#2563eb;">${s.reply_rate || 0}% reply</span>
             <span style="color:#ef4444;font-size:0.65rem;">${s.bounced || 0} bounced</span>
-            <button onclick="showSequenceDetail(${s.id})" style="font-size:0.6rem;padding:0.1rem 0.3rem;background:#f3e8ff;color:#9333ea;border:1px solid #c084fc;border-radius:3px;cursor:pointer;">Detail</button>
+            <button onclick="showSequenceAnalytics(${s.id})" style="font-size:0.6rem;padding:0.1rem 0.3rem;background:#f3e8ff;color:#9333ea;border:1px solid #c084fc;border-radius:3px;cursor:pointer;">Detail</button>
           </div>
         `).join('');
       } catch (err) { console.error('Sequence perf error:', err); }
     }
 
-    async function showSequenceDetail(seqId) {
+    async function showSequenceAnalytics(seqId) {
       try {
         const data = await fetch('/api/sequences/' + seqId + '/analytics').then(r => r.json());
         const el = document.getElementById('sequence-performance-list');
@@ -10931,7 +10857,7 @@
     async function loadLookalikes() {
       // Default: show top-scored lead's lookalikes
       try {
-        const stats = await fetch('/api/stats').then(r => r.json());
+        const stats = await fetch('/api/leads/stats').then(r => r.json());
         if (stats.total > 0) {
           const leads = await fetch('/api/leads?limit=1&sort=lead_score&order=desc').then(r => r.json());
           if (leads.leads && leads.leads.length > 0) {

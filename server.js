@@ -261,6 +261,40 @@ app.post('/api/scrape/start', (req, res) => {
   res.json({ jobId });
 });
 
+// --- Bulk Scrape (must be before :id/status to avoid route collision) ---
+let _bulkScraper = null;
+
+app.post('/api/scrape/bulk', (req, res) => {
+  const BulkScraper = require('./lib/bulk-scraper');
+  if (_bulkScraper && _bulkScraper.running) {
+    return res.json({ status: 'already_running', progress: _bulkScraper.getProgress() });
+  }
+
+  _bulkScraper = new BulkScraper();
+  const { test, countries, scrapers } = req.body || {};
+
+  res.json({ status: 'started', message: 'Bulk scrape started in background' });
+
+  _bulkScraper.run({ test: !!test, countries, scrapers })
+    .catch(err => console.error('[Bulk] Error:', err.message));
+});
+
+app.get('/api/scrape/bulk/status', (req, res) => {
+  if (!_bulkScraper) {
+    return res.json({ running: false, progress: null });
+  }
+  res.json(_bulkScraper.getProgress());
+});
+
+app.post('/api/scrape/bulk/cancel', (req, res) => {
+  if (_bulkScraper && _bulkScraper.running) {
+    _bulkScraper.cancel();
+    res.json({ ok: true });
+  } else {
+    res.json({ ok: false, message: 'No bulk scrape running' });
+  }
+});
+
 // Get job status (for session restore after page refresh)
 app.get('/api/scrape/:id/status', (req, res) => {
   const job = jobs.get(req.params.id);
@@ -393,39 +427,6 @@ app.get('/api/signals/scan-status', (req, res) => {
 
 // --- Bulk Scraper Endpoints ---
 
-let _bulkScraper = null;
-
-app.post('/api/scrape/bulk', (req, res) => {
-  const BulkScraper = require('./lib/bulk-scraper');
-  if (_bulkScraper && _bulkScraper.running) {
-    return res.json({ status: 'already_running', progress: _bulkScraper.getProgress() });
-  }
-
-  _bulkScraper = new BulkScraper();
-  const { test, countries, scrapers } = req.body || {};
-
-  res.json({ status: 'started', message: 'Bulk scrape started in background' });
-
-  _bulkScraper.run({ test: !!test, countries, scrapers })
-    .catch(err => console.error('[Bulk] Error:', err.message));
-});
-
-app.get('/api/scrape/bulk/status', (req, res) => {
-  if (!_bulkScraper) {
-    return res.json({ running: false, progress: null });
-  }
-  res.json(_bulkScraper.getProgress());
-});
-
-app.post('/api/scrape/bulk/cancel', (req, res) => {
-  if (_bulkScraper && _bulkScraper.running) {
-    _bulkScraper.cancel();
-    res.json({ ok: true });
-  } else {
-    res.json({ ok: false, message: 'No bulk scrape running' });
-  }
-});
-
 // --- Website Finder Endpoint ---
 
 let _websiteFinderRunning = false;
@@ -554,8 +555,9 @@ app.post('/api/leads/auto-merge', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
     const threshold = req.body.confidenceThreshold || 90;
-    const result = leadDb.autoMergeDuplicates(threshold);
-    fireWebhookEvent('lead.merged', { merged: result.merged });
+    const dryRun = req.body.dryRun !== undefined ? req.body.dryRun !== false : false;
+    const result = leadDb.autoMergeDuplicates(dryRun || threshold);
+    if (!dryRun && result.merged) fireWebhookEvent('lead.merged', { merged: result.merged });
     res.json(result);
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -1532,7 +1534,8 @@ app.delete('/api/notes/:id', (req, res) => {
 app.get('/api/leads/:id/timeline', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
-    res.json(leadDb.getLeadTimeline(parseInt(req.params.id)));
+    const limit = parseInt(req.query.limit) || 50;
+    res.json(leadDb.getLeadTimeline(parseInt(req.params.id), limit));
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
@@ -2002,14 +2005,6 @@ app.get('/api/leads/smart-duplicates', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-app.post('/api/leads/auto-merge', (req, res) => {
-  try {
-    const leadDb = require('./lib/lead-db');
-    const dryRun = req.body.dryRun !== false;
-    res.json(leadDb.autoMergeDuplicates(dryRun));
-  } catch (err) { res.status(500).json({ error: err.message }); }
-});
-
 // === Territory Management ===
 app.get('/api/territories', (req, res) => {
   try {
@@ -2134,29 +2129,6 @@ app.get('/api/leads/enrichment-recommendations', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// === Instantly-Optimized Export ===
-app.get('/api/leads/export/instantly', (req, res) => {
-  try {
-    const leadDb = require('./lib/lead-db');
-    const leads = leadDb.exportForInstantly({
-      state: req.query.state, practiceArea: req.query.practice,
-      minScore: req.query.minScore, pipelineStage: req.query.stage,
-      tags: req.query.tags,
-    });
-    if (leads.length === 0) return res.status(404).json({ error: 'No leads match filters' });
-
-    const { createObjectCsvWriter } = require('csv-writer');
-    const tmpPath = path.join(OUTPUT_DIR, `instantly-export-${Date.now()}.csv`);
-    const headers = Object.keys(leads[0]).map(k => ({ id: k, title: k }));
-    const writer = createObjectCsvWriter({ path: tmpPath, header: headers });
-    writer.writeRecords(leads).then(() => {
-      res.download(tmpPath, 'instantly-leads.csv', () => {
-        try { fs.unlinkSync(tmpPath); } catch {}
-      });
-    });
-  } catch (err) { res.status(500).json({ error: err.message }); }
-});
-
 app.get('/api/leads/export/instantly/preview', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
@@ -2166,31 +2138,6 @@ app.get('/api/leads/export/instantly/preview', (req, res) => {
       tags: req.query.tags,
     });
     res.json({ count: leads.length, sample: leads.slice(0, 5) });
-  } catch (err) { res.status(500).json({ error: err.message }); }
-});
-
-// === Lead Notes ===
-app.get('/api/leads/:id/notes', (req, res) => {
-  try {
-    const leadDb = require('./lib/lead-db');
-    res.json(leadDb.getLeadNotes(parseInt(req.params.id)));
-  } catch (err) { res.status(500).json({ error: err.message }); }
-});
-
-app.post('/api/leads/:id/notes', (req, res) => {
-  try {
-    const leadDb = require('./lib/lead-db');
-    const { content, author } = req.body;
-    if (!content) return res.status(400).json({ error: 'content required' });
-    res.json(leadDb.addNote(parseInt(req.params.id), content, author || 'user'));
-  } catch (err) { res.status(500).json({ error: err.message }); }
-});
-
-app.delete('/api/notes/:id', (req, res) => {
-  try {
-    const leadDb = require('./lib/lead-db');
-    leadDb.deleteNote(parseInt(req.params.id));
-    res.json({ success: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
@@ -2209,13 +2156,6 @@ app.get('/api/notes/recent', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// === Lead Timeline ===
-app.get('/api/leads/:id/timeline', (req, res) => {
-  try {
-    const leadDb = require('./lib/lead-db');
-    res.json(leadDb.getLeadTimeline(parseInt(req.params.id)));
-  } catch (err) { res.status(500).json({ error: err.message }); }
-});
 
 // === A/B Variant Stats ===
 app.get('/api/sequences/:id/variants', (req, res) => {
@@ -3215,15 +3155,6 @@ app.get('/api/score-decay/preview', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// === Lookalike Finder (Batch 27) ===
-app.get('/api/leads/:id/lookalikes', (req, res) => {
-  try {
-    const leadDb = require('./lib/lead-db');
-    const limit = parseInt(req.query.limit) || 20;
-    res.json(leadDb.findLookalikes(parseInt(req.params.id), limit));
-  } catch (err) { res.status(500).json({ error: err.message }); }
-});
-
 // === Conversion Funnel (Batch 27) ===
 app.get('/api/funnel', (req, res) => {
   try {
@@ -3402,15 +3333,6 @@ app.post('/api/quality-rules/run', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
     res.json(leadDb.runQualityRules());
-  } catch (err) { res.status(500).json({ error: err.message }); }
-});
-
-// === Unified Timeline (Batch 30) ===
-app.get('/api/leads/:id/timeline', (req, res) => {
-  try {
-    const leadDb = require('./lib/lead-db');
-    const limit = parseInt(req.query.limit) || 50;
-    res.json(leadDb.getLeadTimeline(parseInt(req.params.id), limit));
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
