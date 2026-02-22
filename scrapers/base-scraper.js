@@ -388,7 +388,12 @@ class BaseScraper {
 
         // Get total count on first page
         if (page === 1) {
-          totalResults = this.extractResultCount($);
+          try {
+            totalResults = this.extractResultCount($);
+          } catch (err) {
+            log.error(`extractResultCount() threw for ${city}: ${err.message}`);
+            totalResults = 0;
+          }
           if (totalResults === 0) {
             log.info(`No results for ${practiceArea || 'all'} in ${city}`);
             break;
@@ -401,7 +406,13 @@ class BaseScraper {
           }
         }
 
-        const attorneys = this.parseResultsPage($);
+        let attorneys;
+        try {
+          attorneys = this.parseResultsPage($);
+        } catch (err) {
+          log.error(`parseResultsPage() threw for ${city}, page ${page}: ${err.message}`);
+          attorneys = [];
+        }
 
         if (attorneys.length === 0) {
           consecutiveEmpty++;
@@ -422,7 +433,14 @@ class BaseScraper {
             const year = parseInt(attorney.admission_date.match(/\d{4}/)?.[0] || '0', 10);
             if (year > 0 && year < options.minYear) continue;
           }
-          yield this.transformResult(attorney, practiceArea);
+          let transformed;
+          try {
+            transformed = this.transformResult(attorney, practiceArea);
+          } catch (err) {
+            log.warn(`transformResult() threw for ${city}: ${err.message}`);
+            continue;
+          }
+          yield transformed;
         }
 
         // Check if we've reached the last page
