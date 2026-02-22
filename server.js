@@ -1014,6 +1014,151 @@ app.get('/api/leads/waterfall/summary', (req, res) => {
   }
 });
 
+// Enrichment priority: which states need enrichment most
+app.get('/api/leads/enrichment-priority', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const db = leadDb.getDb();
+    const gaps = db.prepare(`
+      SELECT state,
+        COUNT(*) as total,
+        SUM(CASE WHEN profile_url IS NOT NULL AND profile_url != '' AND (phone IS NULL OR phone = '') THEN 1 ELSE 0 END) as enrichable,
+        SUM(CASE WHEN (phone IS NULL OR phone = '') THEN 1 ELSE 0 END) as missing_phone,
+        SUM(CASE WHEN (email IS NULL OR email = '') THEN 1 ELSE 0 END) as missing_email,
+        SUM(CASE WHEN (website IS NULL OR website = '') THEN 1 ELSE 0 END) as missing_website
+      FROM leads
+      GROUP BY state
+      HAVING enrichable > 0
+      ORDER BY enrichable DESC
+    `).all();
+    res.json(gaps);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Multi-state waterfall: queue enrichment for all priority states
+app.post('/api/leads/waterfall/multi', (req, res) => {
+  if (_waterfallRunning) {
+    return res.json({ status: 'already_running', progress: _waterfallProgress });
+  }
+
+  _waterfallRunning = true;
+  _waterfallStartTime = Date.now();
+  _waterfallProgress = { step: 'Loading enrichment priorities...', current: 0, total: 0, stats: null, multiState: true };
+  res.json({ status: 'started', message: 'Multi-state waterfall enrichment started' });
+
+  const leadDb = require('./lib/lead-db');
+  const { runWaterfall } = require('./lib/waterfall');
+  const limitPerState = Math.min(Math.max(parseInt(req.body.limitPerState) || 200, 1), 1000);
+  const maxStates = Math.min(Math.max(parseInt(req.body.maxStates) || 10, 1), 30);
+
+  (async () => {
+    const db = leadDb.getDb();
+    // Get top states by enrichable lead count
+    const states = db.prepare(`
+      SELECT state,
+        SUM(CASE WHEN profile_url IS NOT NULL AND profile_url != '' AND (phone IS NULL OR phone = '') THEN 1 ELSE 0 END) as enrichable
+      FROM leads
+      GROUP BY state
+      HAVING enrichable > 0
+      ORDER BY enrichable DESC
+      LIMIT ?
+    `).all(maxStates);
+
+    _waterfallProgress.total = states.length;
+    let totalFieldsFilled = 0;
+    let totalSaved = 0;
+
+    for (let i = 0; i < states.length; i++) {
+      if (!_waterfallRunning) break;
+
+      const { state } = states[i];
+      _waterfallProgress.step = `Enriching ${state} (${i + 1}/${states.length})`;
+      _waterfallProgress.current = i;
+      _waterfallProgress.detail = `Loading ${state} leads...`;
+
+      const dbLeads = db.prepare(`
+        SELECT * FROM leads WHERE profile_url != '' AND profile_url IS NOT NULL
+        AND (email = '' OR email IS NULL OR phone = '' OR phone IS NULL OR website = '' OR website IS NULL)
+        AND state = ? ORDER BY lead_score ASC LIMIT ?
+      `).all(state, limitPerState);
+
+      if (dbLeads.length === 0) continue;
+
+      const leads = dbLeads.map(row => ({ ...row, source: row.primary_source || '' }));
+      const EventEmitter = require('events');
+      const emitter = new EventEmitter();
+      emitter.on('waterfall-progress', (p) => {
+        _waterfallProgress.detail = `${state}: ${p.step} ${p.current}/${p.total} — ${p.detail || ''}`;
+      });
+
+      const stats = await runWaterfall(leads, {
+        fetchProfiles: true,
+        crossRefMartindale: false,
+        crossRefLawyersCom: false,
+        nameLookups: false,
+        emailCrawl: false,
+        smtpPatterns: true,
+        masterDbLookup: false,
+        emitter,
+        isCancelled: () => !_waterfallRunning,
+        maxProfileFetches: limitPerState,
+      });
+
+      // Save enriched data back
+      const origMap = new Map(dbLeads.map(d => [d.id, d]));
+      let saved = 0;
+      for (const lead of leads) {
+        const orig = origMap.get(lead.id) || {};
+        const updates = {};
+        for (const f of ['email', 'phone', 'website', 'bar_number', 'admission_date', 'firm_name', 'title', 'education', 'city', 'state']) {
+          if (lead[f] && !orig[f]) updates[f] = lead[f];
+        }
+        for (const f of ['email_source', 'phone_source', 'website_source']) {
+          if (lead[f]) updates[f] = lead[f];
+        }
+        if (Object.keys(updates).length > 0) {
+          try { leadDb.updateLead(lead.id, updates); saved++; } catch {}
+        }
+      }
+
+      totalFieldsFilled += stats.totalFieldsFilled;
+      totalSaved += saved;
+
+      // Record this state's run
+      try {
+        leadDb.recordWaterfallRun({
+          stateFilter: state,
+          leadsProcessed: dbLeads.length,
+          leadsEnriched: saved,
+          fieldsFilled: stats.totalFieldsFilled,
+          profilesFetched: stats.profilesFetched || 0,
+          websitesFound: stats.websitesFound || 0,
+          emailsFound: (stats.emailsCrawled || 0) + (stats.smtpPatternsFound || 0),
+          trigger: 'multi-state',
+          stats,
+          durationSecs: 0,
+        });
+      } catch {}
+
+      console.log(`[Waterfall Multi] ${state}: ${stats.totalFieldsFilled} fields, ${saved} saved`);
+    }
+
+    leadDb.batchScoreLeads();
+    _waterfallProgress.step = `Done — ${totalFieldsFilled} fields filled across ${states.length} states, ${totalSaved} leads updated`;
+    _waterfallProgress.current = states.length;
+    _waterfallProgress.saved = totalSaved;
+    _waterfallProgress.stats = { totalFieldsFilled, totalSaved, statesProcessed: states.length };
+    console.log(`[Waterfall Multi] Done: ${totalFieldsFilled} fields, ${totalSaved} saved across ${states.length} states`);
+  })()
+    .catch(err => {
+      _waterfallProgress.step = `Error: ${err.message}`;
+      console.error('[Waterfall Multi] Error:', err.message);
+    })
+    .finally(() => { _waterfallRunning = false; });
+});
+
 // Batch score all leads
 app.post('/api/leads/score', (req, res) => {
   try {

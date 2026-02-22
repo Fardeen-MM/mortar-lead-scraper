@@ -2902,6 +2902,7 @@
         <button class="btn btn-secondary" id="website-btn" onclick="startWebsiteFinder()">Find Websites</button>
         <button class="btn btn-secondary" id="email-btn" onclick="startVerify()">Find Emails (SMTP)</button>
         <button class="btn btn-primary" id="waterfall-btn" onclick="startWaterfall()" style="background:#8b5cf6;border-color:#8b5cf6;">Waterfall Enrich</button>
+        <button class="btn btn-primary" id="multi-waterfall-btn" onclick="startMultiWaterfall()" style="background:#059669;border-color:#059669;">Multi-State Enrich</button>
         <button class="btn btn-primary" id="enrich-all-btn" onclick="enrichAll()" style="background:#f59e0b;border-color:#f59e0b;">Enrich All</button>
         <button class="btn btn-secondary" id="firm-share-btn" onclick="shareFirmData()">Share Firm Data</button>
         <button class="btn btn-secondary" id="deduce-btn" onclick="deduceWebsites()">Deduce Websites</button>
@@ -4818,6 +4819,57 @@
       } catch (err) {
         statusEl.textContent = 'Waterfall error: ' + err.message;
         btn.textContent = 'Waterfall Enrich';
+        btn.disabled = false;
+      }
+    }
+
+    // --- Multi-State Waterfall Enrich ---
+    async function startMultiWaterfall() {
+      const btn = document.getElementById('multi-waterfall-btn');
+      btn.disabled = true;
+      btn.textContent = 'Starting...';
+      const statusEl = document.getElementById('bulk-status');
+
+      try {
+        const res = await fetch('/api/leads/waterfall/multi', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ limitPerState: 200, maxStates: 10 }),
+        });
+        const d = await safeJSON(res);
+        if (d.status === 'already_running') {
+          btn.textContent = 'Already running';
+          setTimeout(() => { btn.textContent = 'Multi-State Enrich'; btn.disabled = false; }, 3000);
+          return;
+        }
+
+        btn.textContent = 'Running...';
+        const interval = setInterval(async () => {
+          try {
+            const res2 = await fetch('/api/leads/waterfall/status');
+            const d2 = await safeJSON(res2);
+            const p = d2.progress || {};
+            if (d2.running) {
+              const pct = p.total > 0 ? Math.round((p.current / p.total) * 100) : 0;
+              statusEl.innerHTML = `<span style="color:#059669;">Multi-State:</span> <strong>${esc(p.step || '')}</strong> ${p.current || 0}/${p.total || 0} states (${pct}%)${p.detail ? '<br><span style="font-size:0.72rem;color:#78716c;">' + esc(p.detail) + '</span>' : ''}`;
+              btn.textContent = `Running ${pct}%`;
+            } else {
+              clearInterval(interval);
+              btn.textContent = 'Multi-State Enrich';
+              btn.disabled = false;
+              const s = p.stats || {};
+              statusEl.innerHTML = `<strong style="color:#059669;">Multi-state done</strong> | ${s.totalFieldsFilled || 0} fields filled | ${s.statesProcessed || 0} states | ${p.saved || 0} leads updated`;
+              refreshAll();
+            }
+          } catch {
+            clearInterval(interval);
+            btn.textContent = 'Multi-State Enrich';
+            btn.disabled = false;
+          }
+        }, 5000);
+      } catch (err) {
+        statusEl.textContent = 'Multi-state error: ' + err.message;
+        btn.textContent = 'Multi-State Enrich';
         btn.disabled = false;
       }
     }
