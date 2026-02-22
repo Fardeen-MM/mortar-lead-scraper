@@ -2890,6 +2890,7 @@
         <button class="btn btn-secondary" id="prepop-btn" onclick="startPrepopulate()">Pre-populate DB</button>
         <button class="btn btn-secondary" id="website-btn" onclick="startWebsiteFinder()">Find Websites</button>
         <button class="btn btn-secondary" id="email-btn" onclick="startVerify()">Find Emails (SMTP)</button>
+        <button class="btn btn-primary" id="waterfall-btn" onclick="startWaterfall()" style="background:#8b5cf6;border-color:#8b5cf6;">Waterfall Enrich</button>
         <button class="btn btn-primary" id="enrich-all-btn" onclick="enrichAll()" style="background:#f59e0b;border-color:#f59e0b;">Enrich All</button>
         <button class="btn btn-secondary" id="firm-share-btn" onclick="shareFirmData()">Share Firm Data</button>
         <button class="btn btn-secondary" id="deduce-btn" onclick="deduceWebsites()">Deduce Websites</button>
@@ -4757,6 +4758,57 @@
           btn.disabled = false;
         }
       }, 5000);
+    }
+
+    // --- Waterfall Enrich (profile pages + cross-ref + name lookups) ---
+    async function startWaterfall() {
+      const btn = document.getElementById('waterfall-btn');
+      btn.disabled = true;
+      btn.textContent = 'Starting...';
+      const statusEl = document.getElementById('bulk-status');
+
+      try {
+        const res = await fetch('/api/leads/waterfall', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ limit: 200, fetchProfiles: true, crossRefMartindale: true, crossRefLawyersCom: true, nameLookups: true }),
+        });
+        const d = await safeJSON(res);
+        if (d.status === 'already_running') {
+          btn.textContent = 'Already running';
+          setTimeout(() => { btn.textContent = 'Waterfall Enrich'; btn.disabled = false; }, 3000);
+          return;
+        }
+
+        btn.textContent = 'Running...';
+        const interval = setInterval(async () => {
+          try {
+            const res2 = await fetch('/api/leads/waterfall/status');
+            const d2 = await safeJSON(res2);
+            const p = d2.progress || {};
+            if (d2.running) {
+              const pct = p.total > 0 ? Math.round((p.current / p.total) * 100) : 0;
+              statusEl.innerHTML = `<span style="color:#8b5cf6;">Waterfall:</span> <strong>${esc(p.step || '')}</strong> ${p.current || 0}/${p.total || 0} (${pct}%)${p.detail ? ' — ' + esc(p.detail) : ''}`;
+              btn.textContent = `Running ${pct}%`;
+            } else {
+              clearInterval(interval);
+              btn.textContent = 'Waterfall Enrich';
+              btn.disabled = false;
+              const s = p.stats || {};
+              statusEl.innerHTML = `<strong style="color:#8b5cf6;">Waterfall done</strong> | ${s.totalFieldsFilled || 0} fields filled | ${s.profilesFetched || 0} profiles | ${s.crossRefMatches || 0} cross-refs | ${p.saved || 0} leads saved`;
+              refreshAll();
+            }
+          } catch {
+            clearInterval(interval);
+            btn.textContent = 'Waterfall Enrich';
+            btn.disabled = false;
+          }
+        }, 3000);
+      } catch (err) {
+        statusEl.textContent = 'Waterfall error: ' + err.message;
+        btn.textContent = 'Waterfall Enrich';
+        btn.disabled = false;
+      }
     }
 
     // --- Enrich All ---
@@ -6882,11 +6934,12 @@
     // --- Enrichment Queue ---
     async function loadEnrichmentQueue() {
       try {
-        const [stats, wsStatus, emailStatus, enrichStatus] = await Promise.all([
+        const [stats, wsStatus, emailStatus, enrichStatus, waterfallStatus] = await Promise.all([
           fetch('/api/leads/enrichment-stats').then(safeJSON),
           fetch('/api/leads/find-websites/status').then(safeJSON).catch(() => null),
           fetch('/api/leads/verify-status').then(safeJSON).catch(() => null),
           fetch('/api/leads/enrich-all/status').then(safeJSON).catch(() => null),
+          fetch('/api/leads/waterfall/status').then(safeJSON).catch(() => null),
         ]);
         const container = document.getElementById('enrichment-queue');
         const jobs = [];
@@ -6899,6 +6952,10 @@
         }
         if (enrichStatus && enrichStatus.status === 'running') {
           jobs.push({ name: 'Enrich All', status: 'running', progress: enrichStatus.processed || 0, total: enrichStatus.total || 0 });
+        }
+        if (waterfallStatus && waterfallStatus.running) {
+          const wp = waterfallStatus.progress || {};
+          jobs.push({ name: 'Waterfall Enrich', status: 'running', progress: wp.current || 0, total: wp.total || 0 });
         }
 
         if (jobs.length === 0) {
