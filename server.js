@@ -3974,7 +3974,7 @@ app.get('/api/lists/:id/export', (req, res) => {
       res.download(tmpPath, `${list.name.replace(/\W+/g, '-')}-leads.csv`, () => {
         try { fs.unlinkSync(tmpPath); } catch {}
       });
-    });
+    }).catch(err => res.status(500).json({ error: err.message }));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -4169,7 +4169,7 @@ app.get('/api/leads/export/state/:state', (req, res) => {
       res.download(tmpPath, `${req.params.state}-leads.csv`, () => {
         try { fs.unlinkSync(tmpPath); } catch {}
       });
-    });
+    }).catch(err => res.status(500).json({ error: err.message }));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
