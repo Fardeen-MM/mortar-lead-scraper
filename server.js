@@ -1309,7 +1309,7 @@ app.post('/api/segments/query', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
     const { filters } = req.body;
-    if (!filters) return res.status(400).json({ error: 'filters required' });
+    if (!filters || !Array.isArray(filters)) return res.status(400).json({ error: 'filters must be an array of {field, op, value}' });
     res.json(leadDb.querySegment(filters));
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -1318,7 +1318,7 @@ app.post('/api/segments/query/leads', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
     const { filters, limit = 100, offset = 0 } = req.body;
-    if (!filters) return res.status(400).json({ error: 'filters required' });
+    if (!filters || !Array.isArray(filters)) return res.status(400).json({ error: 'filters must be an array of {field, op, value}' });
     res.json(leadDb.querySegmentLeads(filters, limit, offset));
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
