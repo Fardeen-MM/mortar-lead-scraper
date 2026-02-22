@@ -845,6 +845,133 @@ app.get('/api/leads/enrich-all/status', (req, res) => {
   res.json({ running: _enrichAllRunning, progress: _enrichAllProgress });
 });
 
+// === Batch Waterfall Enrichment (profile fetch + cross-ref + email crawl on existing DB leads) ===
+let _waterfallRunning = false;
+let _waterfallProgress = null;
+
+app.post('/api/leads/waterfall', (req, res) => {
+  if (_waterfallRunning) {
+    return res.json({ status: 'already_running', progress: _waterfallProgress });
+  }
+
+  _waterfallRunning = true;
+  _waterfallProgress = { step: 'Loading leads...', current: 0, total: 0, stats: null };
+  res.json({ status: 'started', message: 'Waterfall enrichment started in background' });
+
+  const leadDb = require('./lib/lead-db');
+  const { runWaterfall } = require('./lib/waterfall');
+
+  const limit = Math.min(Math.max(parseInt(req.body.limit) || 200, 1), 2000);
+  const state = req.body.state || null; // optional: only enrich leads from a specific state
+  const steps = {
+    fetchProfiles: req.body.fetchProfiles !== false,
+    crossRefMartindale: req.body.crossRefMartindale !== false,
+    crossRefLawyersCom: req.body.crossRefLawyersCom !== false,
+    nameLookups: req.body.nameLookups !== false,
+    emailCrawl: req.body.emailCrawl === true, // off by default (slow)
+    masterDbLookup: false, // not needed — leads are already in the DB
+  };
+
+  (async () => {
+    // Load leads from DB that have profile_url and are missing phone/email/website
+    const db = leadDb.getDb();
+    let query = `SELECT * FROM leads WHERE profile_url != '' AND profile_url IS NOT NULL
+      AND (email = '' OR email IS NULL OR phone = '' OR phone IS NULL OR website = '' OR website IS NULL)`;
+    const params = [];
+    if (state) {
+      query += ` AND state = ?`;
+      params.push(state);
+    }
+    query += ` ORDER BY lead_score ASC LIMIT ?`;
+    params.push(limit);
+
+    const dbLeads = db.prepare(query).all(...params);
+    _waterfallProgress.total = dbLeads.length;
+    _waterfallProgress.step = `Enriching ${dbLeads.length} leads...`;
+
+    if (dbLeads.length === 0) {
+      _waterfallProgress.step = 'No leads need enrichment';
+      _waterfallRunning = false;
+      return;
+    }
+
+    // Convert DB rows to waterfall format (needs 'source' field for scraper lookup)
+    const leads = dbLeads.map(row => ({
+      ...row,
+      source: row.primary_source || '',
+    }));
+
+    // Run waterfall
+    const EventEmitter = require('events');
+    const emitter = new EventEmitter();
+    emitter.on('waterfall-progress', (progress) => {
+      _waterfallProgress.step = progress.step;
+      _waterfallProgress.current = progress.current;
+      _waterfallProgress.total = progress.total;
+      _waterfallProgress.detail = progress.detail;
+    });
+
+    const stats = await runWaterfall(leads, {
+      ...steps,
+      emitter,
+      isCancelled: () => !_waterfallRunning,
+      maxProfileFetches: limit,
+    });
+
+    _waterfallProgress.stats = stats;
+    _waterfallProgress.step = 'Saving to database...';
+
+    // Save enriched data back to DB
+    let saved = 0;
+    for (const lead of leads) {
+      const updates = {};
+      if (lead.email && (!dbLeads.find(d => d.id === lead.id)?.email)) updates.email = lead.email;
+      if (lead.phone && (!dbLeads.find(d => d.id === lead.id)?.phone)) updates.phone = lead.phone;
+      if (lead.website && (!dbLeads.find(d => d.id === lead.id)?.website)) updates.website = lead.website;
+      if (lead.email_source) updates.email_source = lead.email_source;
+      if (lead.phone_source) updates.phone_source = lead.phone_source;
+      if (lead.website_source) updates.website_source = lead.website_source;
+      if (lead.bar_number && (!dbLeads.find(d => d.id === lead.id)?.bar_number)) updates.bar_number = lead.bar_number;
+      if (lead.admission_date && (!dbLeads.find(d => d.id === lead.id)?.admission_date)) updates.admission_date = lead.admission_date;
+      if (lead.firm_name && (!dbLeads.find(d => d.id === lead.id)?.firm_name)) updates.firm_name = lead.firm_name;
+
+      if (Object.keys(updates).length > 0) {
+        try {
+          leadDb.updateLead(lead.id, updates);
+          saved++;
+        } catch (err) {
+          console.error(`[Waterfall] Failed to save lead ${lead.id}:`, err.message);
+        }
+      }
+    }
+
+    // Re-score enriched leads
+    leadDb.batchScoreLeads();
+
+    _waterfallProgress.step = `Done — ${stats.totalFieldsFilled} fields filled, ${saved} leads updated`;
+    _waterfallProgress.saved = saved;
+    console.log(`[Waterfall] Done: ${stats.totalFieldsFilled} fields filled, ${saved} leads saved to DB`);
+  })()
+    .catch(err => {
+      _waterfallProgress.step = `Error: ${err.message}`;
+      console.error('[Waterfall] Error:', err.message);
+    })
+    .finally(() => { _waterfallRunning = false; });
+});
+
+app.get('/api/leads/waterfall/status', (req, res) => {
+  res.json({ running: _waterfallRunning, progress: _waterfallProgress });
+});
+
+app.post('/api/leads/waterfall/cancel', (req, res) => {
+  if (_waterfallRunning) {
+    _waterfallRunning = false;
+    res.json({ cancelled: true });
+  } else {
+    res.json({ cancelled: false, message: 'Not running' });
+  }
+});
+
 // Batch score all leads
 app.post('/api/leads/score', (req, res) => {
   try {
