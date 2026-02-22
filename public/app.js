@@ -623,6 +623,8 @@ const app = {
   connectWebSocket() {
     const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
     this.ws = new WebSocket(`${protocol}//${location.host}/ws`);
+    // Capture job ID at connection time to prevent stale onclose handlers
+    const wsJobId = this.jobId;
 
     this.ws.onopen = () => {
       console.debug('[mortar] WS connected, subscribing to', this.jobId);
@@ -650,8 +652,8 @@ const app = {
 
     this.ws.onclose = (event) => {
       console.debug('[mortar] WS closed — code:', event.code, 'reason:', event.reason || 'none', 'jobId:', this.jobId, 'hasStats:', !!this.stats);
-      // Reconnect only if job is still running (no stats yet = still running)
-      if (this.jobId && !this.stats) {
+      // Only reconnect if this WS was for the current job (prevents stale onclose from reconnecting wrong job)
+      if (this.jobId && this.jobId === wsJobId && !this.stats) {
         this.showConnectionStatus('reconnecting');
         this.reconnectWebSocket();
       } else {
