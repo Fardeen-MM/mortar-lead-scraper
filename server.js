@@ -66,17 +66,19 @@ const jobs = new Map();
 
 // Get available scrapers and their practice areas
 app.get('/api/config', (req, res) => {
-  const metadata = getScraperMetadata();
-  res.json({
-    states: metadata,
-    hasAnthropicKey: !!process.env.ANTHROPIC_API_KEY,
-    enrichmentFeatures: [
-      { id: 'deriveWebsite', label: 'Derive website from email', default: true, cost: 'free' },
-      { id: 'scrapeWebsite', label: 'Scrape firm websites', default: true, cost: 'free, ~5s/lead' },
-      { id: 'findLinkedIn', label: 'Find LinkedIn profiles', default: true, cost: 'free' },
-      { id: 'extractWithAI', label: 'AI fallback for missing data', default: false, cost: '~$0.001/lead' },
-    ],
-  });
+  try {
+    const metadata = getScraperMetadata();
+    res.json({
+      states: metadata,
+      hasAnthropicKey: !!process.env.ANTHROPIC_API_KEY,
+      enrichmentFeatures: [
+        { id: 'deriveWebsite', label: 'Derive website from email', default: true, cost: 'free' },
+        { id: 'scrapeWebsite', label: 'Scrape firm websites', default: true, cost: 'free, ~5s/lead' },
+        { id: 'findLinkedIn', label: 'Find LinkedIn profiles', default: true, cost: 'free' },
+        { id: 'extractWithAI', label: 'AI fallback for missing data', default: false, cost: '~$0.001/lead' },
+      ],
+    });
+  } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 // Upload existing leads CSV for dedup
@@ -455,7 +457,7 @@ app.post('/api/leads/find-websites', (req, res) => {
         AND firm_name != '' AND firm_name IS NOT NULL
       ORDER BY updated_at DESC
       LIMIT ?
-    `).all(req.body.limit || 500);
+    `).all(Math.min(Math.max(parseInt(req.body.limit) || 500, 1), 5000));
 
     _websiteFinderProgress.total = leadsNeedingWebsite.length;
 
@@ -662,12 +664,16 @@ app.post('/api/leads/prepopulate', (req, res) => {
 
   const leadDb = require('./lib/lead-db');
   const { runPipeline } = require('./lib/pipeline');
-  const sources = req.body.sources || ['AVVO', 'FINDLAW'];
+  let sources = req.body.sources || ['AVVO', 'FINDLAW'];
+  if (!Array.isArray(sources)) sources = ['AVVO', 'FINDLAW'];
+  sources = sources.slice(0, 20); // Cap at 20 sources max
   const test = req.body.test !== false; // Default test mode for safety
 
   const scraperQueue = [];
   for (const source of sources) {
-    scraperQueue.push({ state: source, test });
+    if (typeof source === 'string' && source.length <= 30) {
+      scraperQueue.push({ state: source, test });
+    }
   }
 
   _prepopProgress.total = scraperQueue.length;
@@ -950,7 +956,7 @@ app.post('/api/leads/verify-emails', (req, res) => {
 
   (async () => {
     // Get leads needing email (have website but no email)
-    const leadsNeedingEmail = leadDb.getLeadsNeedingEmail(req.body.limit || 200);
+    const leadsNeedingEmail = leadDb.getLeadsNeedingEmail(Math.min(Math.max(parseInt(req.body.limit) || 200, 1), 5000));
     _verifyProgress.total = leadsNeedingEmail.length;
 
     const stats = await verifier.batchProcess(leadsNeedingEmail, {
@@ -1478,6 +1484,17 @@ app.post('/api/webhooks', (req, res) => {
     const leadDb = require('./lib/lead-db');
     const { url, events, secret } = req.body;
     if (!url || !events) return res.status(400).json({ error: 'url and events required' });
+    // Validate URL format — must be https:// and not a private/localhost address
+    try {
+      const parsed = new URL(url);
+      if (!['https:', 'http:'].includes(parsed.protocol)) {
+        return res.status(400).json({ error: 'Webhook URL must use http or https' });
+      }
+      const host = parsed.hostname.toLowerCase();
+      if (host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || host.startsWith('192.168.') || host.startsWith('10.') || host.startsWith('172.')) {
+        return res.status(400).json({ error: 'Webhook URL must not point to private/local addresses' });
+      }
+    } catch { return res.status(400).json({ error: 'Invalid webhook URL format' }); }
     res.json(leadDb.createWebhook(url, events, secret));
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -2677,7 +2694,7 @@ app.get('/api/firms/:name', (req, res) => {
 app.post('/api/dedup/scan', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
-    res.json(leadDb.scanForDuplicates(parseInt(req.body.limit) || 200));
+    res.json(leadDb.scanForDuplicates(Math.min(Math.max(parseInt(req.body.limit) || 200, 1), 2000)));
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 

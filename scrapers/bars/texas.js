@@ -249,11 +249,14 @@ class TexasScraper extends BaseScraper {
     const result = {};
     const bodyText = $('body').text();
 
-    // Phone
+    // Phone — require at least 7 digits to avoid matching "--" or similar artifacts
     const phoneMatch = bodyText.match(/(?:Phone|Tel(?:ephone)?|Office):\s*([\d().\s-]+)/i) ||
                        bodyText.match(/(\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4})/);
     if (phoneMatch) {
-      result.phone = phoneMatch[1].trim();
+      const digits = phoneMatch[1].replace(/\D/g, '');
+      if (digits.length >= 7) {
+        result.phone = phoneMatch[1].trim();
+      }
     }
 
     // Email from mailto links

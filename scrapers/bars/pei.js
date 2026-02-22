@@ -260,6 +260,30 @@ class PEIScraper extends BaseScraper {
    * The API accepts POST with FormData: search[name], search[firm], search[city].
    * Returns JSON arrays with known fields.
    */
+  /**
+   * Map Dynamics CRM membership type codes to human-readable labels.
+   * Profile API returns membership_type_name, but search results only have the numeric code.
+   */
+  _resolveStatus(code) {
+    if (!code) return 'Active';
+    const str = String(code).trim();
+    // If it's already a text label, return as-is
+    if (!/^\d+$/.test(str)) return str;
+    const STATUS_MAP = {
+      '848150000': 'Non-Practising',
+      '848150001': 'Practising Lawyer',
+      '848150002': 'Practising Lawyer (Restricted)',
+      '848150004': 'Retired',
+      '848150005': 'Honorary Member',
+      '848150006': 'Student-at-Law',
+      '848150008': 'Canadian Legal Advisor',
+      '848150009': 'Suspended',
+      '848150010': 'Resigned',
+      '848150015': 'Active',
+    };
+    return STATUS_MAP[str] || 'Active';
+  }
+
   async *search(practiceArea, options = {}) {
     const rateLimiter = new RateLimiter();
     const practiceCode = this.resolvePracticeCode(practiceArea);
@@ -340,7 +364,7 @@ class PEIScraper extends BaseScraper {
           email: (rec.emailaddress1 || '').trim(),
           website: '',
           bar_number: lawyerId,
-          bar_status: (rec.lspei_membershiptype || 'Active').trim(),
+          bar_status: this._resolveStatus(rec.lspei_membershiptype),
           profile_url: profileUrl,
         };
 
