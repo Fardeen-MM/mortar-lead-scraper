@@ -355,7 +355,12 @@ const app = {
       e.preventDefault();
       zone.classList.remove('drag-over');
       if (e.dataTransfer.files.length) {
-        this.uploadFile(e.dataTransfer.files[0]);
+        const file = e.dataTransfer.files[0];
+        if (!file.name.toLowerCase().endsWith('.csv')) {
+          this.showNotification('Please drop a CSV file', 'error');
+          return;
+        }
+        this.uploadFile(file);
       }
     });
 
@@ -621,6 +626,11 @@ const app = {
   // --- WebSocket ---
 
   connectWebSocket() {
+    // Close existing WS before opening new one to prevent multiple connections
+    if (this.ws && this.ws.readyState !== WebSocket.CLOSED) {
+      this.ws.onclose = null; // Prevent stale close handler from firing
+      this.ws.close();
+    }
     const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
     this.ws = new WebSocket(`${protocol}//${location.host}/ws`);
     // Capture job ID at connection time to prevent stale onclose handlers
@@ -863,6 +873,9 @@ const app = {
       case 'error':
         this.addLog('error', msg.message);
         break;
+
+      default:
+        console.warn('[mortar] Unknown WS message type:', msg.type);
     }
   },
 
@@ -1276,6 +1289,10 @@ const app = {
     if (nicheInput) nicheInput.value = '';
     const cityInput = document.getElementById('input-city');
     if (cityInput) cityInput.value = '';
+
+    // Reset Start button (may be stuck disabled if reset called mid-flight)
+    const startBtn = document.getElementById('btn-start-scrape');
+    if (startBtn) { startBtn.disabled = false; startBtn.textContent = 'Start Scrape'; }
 
     // Reset Step 3 UI
     document.getElementById('btn-stop-scrape').hidden = true;
