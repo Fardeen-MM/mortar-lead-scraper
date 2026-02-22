@@ -558,7 +558,7 @@ app.post('/api/leads/auto-merge', (req, res) => {
     const leadDb = require('./lib/lead-db');
     const threshold = req.body.confidenceThreshold || 90;
     const dryRun = req.body.dryRun !== undefined ? req.body.dryRun !== false : false;
-    const result = leadDb.autoMergeDuplicates(dryRun || threshold);
+    const result = leadDb.autoMergeDuplicates(dryRun);
     if (!dryRun && result.merged) fireWebhookEvent('lead.merged', { merged: result.merged });
     res.json(result);
   } catch (err) { res.status(500).json({ error: err.message }); }
@@ -1241,7 +1241,7 @@ app.post('/api/pipeline/bulk-move', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
     const { leadIds, stage } = req.body;
-    if (!leadIds || !stage) return res.status(400).json({ error: 'leadIds and stage required' });
+    if (!Array.isArray(leadIds) || !leadIds.length || !stage) return res.status(400).json({ error: 'leadIds (array) and stage required' });
     res.json(leadDb.bulkMoveToStage(leadIds, stage));
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -1549,7 +1549,7 @@ app.post('/api/leads/bulk-update', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
     const { leadIds, updates } = req.body;
-    if (!leadIds || !updates) return res.status(400).json({ error: 'leadIds and updates required' });
+    if (!Array.isArray(leadIds) || !leadIds.length || !updates || typeof updates !== 'object') return res.status(400).json({ error: 'leadIds (array) and updates (object) required' });
     const result = leadDb.bulkUpdateLeads(leadIds, updates);
     // Fire webhook
     fireWebhookEvent('lead.bulk_updated', { count: result.updated, updates });
@@ -2432,7 +2432,7 @@ app.post('/api/leads/merge-with-picks', (req, res) => {
   try {
     const leadDb = require('./lib/lead-db');
     const { targetId, sourceIds, fieldPicks } = req.body;
-    if (!targetId || !sourceIds) return res.status(400).json({ error: 'targetId and sourceIds required' });
+    if (!targetId || !Array.isArray(sourceIds) || !sourceIds.length) return res.status(400).json({ error: 'targetId and sourceIds (array) required' });
     res.json(leadDb.mergeLeadsWithPicks(targetId, sourceIds, fieldPicks || {}));
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -4268,6 +4268,11 @@ wss.on('connection', (ws) => {
     const jobId = wsClients.get(ws);
     wsClients.delete(ws);
     console.log(`[ws] Client disconnected${jobId ? ` (was on ${jobId})` : ''} (${wsClients.size} remaining)`);
+  });
+
+  ws.on('error', (err) => {
+    console.error('[ws] Connection error:', err.message);
+    wsClients.delete(ws);
   });
 });
 
