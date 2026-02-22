@@ -9,18 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
-    .nav-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--indigo);
-      text-decoration: none;
-      margin-bottom: 1.5rem;
-    }
-    .nav-link:hover { text-decoration: underline; }
-
     .signals-header {
       display: flex;
       align-items: center;
@@ -171,7 +159,10 @@
       <p class="subtitle">Signal Engine</p>
     </header>
 
-    <a href="/" class="nav-link">&larr; Back to Lead Scraper</a>
+    <nav class="header-nav" style="margin-bottom: 0.5rem;">
+      <a href="/" class="nav-pill">&larr; Lead Scraper</a>
+      <a href="/leads.html" class="nav-pill">Lead Database &rarr;</a>
+    </nav>
 
     <!-- Stats -->
     <div class="stats-bar" id="stats-bar">
@@ -336,7 +327,19 @@
 
       document.getElementById('result-count').textContent = `${filtered.length} signal${filtered.length !== 1 ? 's' : ''}`;
       document.getElementById('load-more-wrap').style.display = displayedCount < filtered.length ? '' : 'none';
-      document.getElementById('empty-state').style.display = allSignals.length === 0 ? '' : 'none';
+      // Show empty state if no signals at all, or "no results" if filters have no matches
+      const emptyEl = document.getElementById('empty-state');
+      if (allSignals.length === 0) {
+        emptyEl.style.display = '';
+        emptyEl.querySelector('h3').textContent = 'No signals yet';
+        emptyEl.querySelector('p').textContent = 'Click "Scan Now" to search Indeed for law firms hiring marketing, intake, and BD roles.';
+      } else if (filtered.length === 0) {
+        emptyEl.style.display = '';
+        emptyEl.querySelector('h3').textContent = 'No matching signals';
+        emptyEl.querySelector('p').textContent = 'Try adjusting your search or filters.';
+      } else {
+        emptyEl.style.display = 'none';
+      }
     }
 
     function loadMore() {
@@ -366,8 +369,11 @@
 
     function populateStateFilter() {
       const select = document.getElementById('filter-state');
-      const states = [...new Set(allSignals.map(s => s.state).filter(Boolean))].sort();
-      // Keep existing selection
+      const countryFilter = document.getElementById('filter-country').value;
+      const filtered = countryFilter
+        ? allSignals.filter(s => s.country === countryFilter)
+        : allSignals;
+      const states = [...new Set(filtered.map(s => s.state).filter(Boolean))].sort();
       const current = select.value;
       select.innerHTML = '<option value="">All States</option>';
       states.forEach(st => {
@@ -376,7 +382,10 @@
         opt.textContent = st;
         select.appendChild(opt);
       });
-      select.value = current;
+      // Restore selection if still valid, otherwise reset
+      if (states.includes(current)) {
+        select.value = current;
+      }
     }
 
     async function loadSignals() {
@@ -450,7 +459,10 @@
     });
 
     document.getElementById('filter-state').addEventListener('change', renderFeed);
-    document.getElementById('filter-country').addEventListener('change', renderFeed);
+    document.getElementById('filter-country').addEventListener('change', () => {
+      populateStateFilter(); // Re-filter state options when country changes
+      renderFeed();
+    });
 
     // Initial load
     loadSignals();

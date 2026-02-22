@@ -148,7 +148,7 @@ const app = {
       const datalist = document.getElementById('city-suggestions');
       if (datalist) {
         datalist.innerHTML = '';
-        for (const city of stateMeta.defaultCities) {
+        for (const city of (stateMeta.defaultCities || [])) {
           const opt = document.createElement('option');
           opt.value = city;
           datalist.appendChild(opt);
@@ -175,7 +175,7 @@ const app = {
 
     // Deduplicate practice areas (some states have aliases like 'family' and 'family law')
     const seen = new Set();
-    for (const area of stateMeta.practiceAreas) {
+    for (const area of (stateMeta.practiceAreas || [])) {
       if (seen.has(area)) continue;
       seen.add(area);
       const opt = document.createElement('option');
@@ -187,7 +187,7 @@ const app = {
     // Update cities dropdown (for bar scrapers)
     const citySelect = document.getElementById('select-city');
     citySelect.innerHTML = '<option value="">All major cities</option>';
-    for (const city of stateMeta.defaultCities) {
+    for (const city of (stateMeta.defaultCities || [])) {
       const opt = document.createElement('option');
       opt.value = city;
       opt.textContent = city;
@@ -899,7 +899,7 @@ const app = {
 
     if (query) {
       results = results.filter(l =>
-        Object.values(l).some(v => (v || '').toLowerCase().includes(query))
+        Object.values(l).some(v => String(v || '').toLowerCase().includes(query))
       );
     }
 
@@ -1224,10 +1224,35 @@ const app = {
 
     // Reset Step 3 UI
     document.getElementById('btn-stop-scrape').hidden = true;
+    document.getElementById('btn-view-results').disabled = true;
     document.getElementById('test-mode-badge').classList.add('hidden');
     document.getElementById('scrape-heading').textContent = 'Scraping...';
     this.$progressBar.classList.remove('progress-bar-cancelled');
+    this.$progressBar.style.width = '0%';
     this.showConnectionStatus(null);
+
+    // Reset stats counters
+    document.getElementById('stat-scraped').textContent = '0';
+    document.getElementById('stat-dupes').textContent = '0';
+    document.getElementById('stat-new').textContent = '0';
+    document.getElementById('stat-emails').textContent = '0';
+
+    // Clear scrape log
+    document.getElementById('log-container').innerHTML = '<div class="log-line log-info">Waiting for scrape to start...</div>';
+
+    // Re-hide enrichment/progress sections
+    document.getElementById('waterfall-section').classList.add('hidden');
+    document.getElementById('waterfall-progress-bar').style.width = '0%';
+    document.getElementById('person-extract-section').classList.add('hidden');
+    document.getElementById('person-extract-progress-bar').style.width = '0%';
+    document.getElementById('enrichment-section').classList.add('hidden');
+    document.getElementById('enrich-progress-bar').style.width = '0%';
+    document.getElementById('enrich-preview').classList.add('hidden');
+
+    // Clear Step 4 table
+    document.getElementById('results-body').innerHTML = '';
+    document.getElementById('table-search').value = '';
+    document.getElementById('result-count').textContent = '';
 
     // Restore download card HTML in case it was replaced by empty state
     const downloadCard = document.querySelector('.download-card');
@@ -1245,8 +1270,8 @@ const app = {
 
 // Escape HTML
 function esc(str) {
-  if (!str) return '';
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  if (!str && str !== 0) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
 // Boot
