@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mortar Signal Engine</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧱</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -116,6 +117,10 @@
     }
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .new-badge {
@@ -250,16 +255,17 @@
     }
 
     function isToday(dateStr) {
-      const d = new Date(dateStr + 'Z');
-      const now = new Date();
-      return d.toDateString() === now.toDateString();
+      if (!dateStr) return false;
+      const d = new Date(dateStr + (String(dateStr).includes('Z') ? '' : 'Z'));
+      if (isNaN(d.getTime())) return false;
+      return d.toDateString() === new Date().toDateString();
     }
 
     function isThisWeek(dateStr) {
-      const d = new Date(dateStr + 'Z');
-      const now = new Date();
-      const weekAgo = new Date(now.getTime() - 7 * 86400000);
-      return d >= weekAgo;
+      if (!dateStr) return false;
+      const d = new Date(dateStr + (String(dateStr).includes('Z') ? '' : 'Z'));
+      if (isNaN(d.getTime())) return false;
+      return d >= new Date(Date.now() - 7 * 86400000);
     }
 
     const COUNTRY_FLAGS = { US: '🇺🇸', UK: '🇬🇧', CA: '🇨🇦', AU: '🇦🇺' };
@@ -295,10 +301,8 @@
     }
 
     function esc(str) {
-      if (!str) return '';
-      const div = document.createElement('div');
-      div.textContent = str;
-      return div.innerHTML;
+      if (!str && str !== 0) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
     function safeUrl(url) {
@@ -325,6 +329,7 @@
 
     function renderFeed() {
       const feed = document.getElementById('signal-feed');
+      if (!feed) return;
       const filtered = getFilteredSignals();
 
       feed.innerHTML = '';
@@ -334,20 +339,26 @@
         feed.appendChild(renderSignal(filtered[i]));
       }
 
-      document.getElementById('result-count').textContent = `${filtered.length} signal${filtered.length !== 1 ? 's' : ''}`;
-      document.getElementById('load-more-wrap').style.display = displayedCount < filtered.length ? '' : 'none';
+      const countEl = document.getElementById('result-count');
+      if (countEl) countEl.textContent = `${filtered.length} signal${filtered.length !== 1 ? 's' : ''}`;
+      const loadMoreEl = document.getElementById('load-more-wrap');
+      if (loadMoreEl) loadMoreEl.style.display = displayedCount < filtered.length ? '' : 'none';
       // Show empty state if no signals at all, or "no results" if filters have no matches
       const emptyEl = document.getElementById('empty-state');
-      if (allSignals.length === 0) {
-        emptyEl.style.display = '';
-        emptyEl.querySelector('h3').textContent = 'No signals yet';
-        emptyEl.querySelector('p').textContent = 'Click "Scan Now" to search Indeed for law firms hiring marketing, intake, and BD roles.';
-      } else if (filtered.length === 0) {
-        emptyEl.style.display = '';
-        emptyEl.querySelector('h3').textContent = 'No matching signals';
-        emptyEl.querySelector('p').textContent = 'Try adjusting your search or filters.';
-      } else {
-        emptyEl.style.display = 'none';
+      if (emptyEl) {
+        const h3 = emptyEl.querySelector('h3');
+        const p = emptyEl.querySelector('p');
+        if (allSignals.length === 0) {
+          emptyEl.style.display = '';
+          if (h3) h3.textContent = 'No signals yet';
+          if (p) p.textContent = 'Click "Scan Now" to search Indeed for law firms hiring marketing, intake, and BD roles.';
+        } else if (filtered.length === 0) {
+          emptyEl.style.display = '';
+          if (h3) h3.textContent = 'No matching signals';
+          if (p) p.textContent = 'Try adjusting your search or filters.';
+        } else {
+          emptyEl.style.display = 'none';
+        }
       }
     }
 
@@ -461,10 +472,12 @@
       const startCount = allSignals.length;
       const maxPollTime = 30 * 60 * 1000; // 30 minute timeout
       const startTime = Date.now();
+      if (_activePollInterval) clearInterval(_activePollInterval);
       const interval = setInterval(async () => {
         // Timeout protection
         if (Date.now() - startTime > maxPollTime) {
           clearInterval(interval);
+          _activePollInterval = null;
           btn.textContent = 'Timed out';
           btn.classList.remove('scanning');
           _scanRunning = false;
@@ -484,6 +497,7 @@
 
           if (!data.running) {
             clearInterval(interval);
+            _activePollInterval = null;
             await loadSignals();
             const finalNew = allSignals.length - startCount;
             btn.textContent = `Done! ${finalNew} new`;
@@ -494,13 +508,18 @@
           }
         } catch (err) {
           clearInterval(interval);
+          _activePollInterval = null;
           btn.textContent = 'Scan Now';
           btn.classList.remove('scanning');
           _scanRunning = false;
           showToast('Polling error: ' + err.message, 'error');
         }
       }, 5000);
+      _activePollInterval = interval;
     }
+
+    // Track active poll interval for cleanup
+    let _activePollInterval = null;
 
     // Event listeners
     document.getElementById('search-input').addEventListener('input', () => {
@@ -508,10 +527,23 @@
       searchTimeout = setTimeout(renderFeed, 200);
     });
 
-    document.getElementById('filter-state').addEventListener('change', renderFeed);
-    document.getElementById('filter-country').addEventListener('change', () => {
-      populateStateFilter(); // Re-filter state options when country changes
+    // Use flag to prevent double render when country change triggers populateStateFilter
+    let _skipStateRender = false;
+    document.getElementById('filter-state').addEventListener('change', () => {
+      if (_skipStateRender) return;
       renderFeed();
+    });
+    document.getElementById('filter-country').addEventListener('change', () => {
+      _skipStateRender = true;
+      populateStateFilter();
+      _skipStateRender = false;
+      renderFeed();
+    });
+
+    // Cleanup intervals on page unload
+    window.addEventListener('beforeunload', () => {
+      if (_activePollInterval) clearInterval(_activePollInterval);
+      clearTimeout(searchTimeout);
     });
 
     // Initial load

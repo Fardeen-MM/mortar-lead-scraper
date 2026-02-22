@@ -40,11 +40,13 @@ const app = {
   async loadConfig() {
     try {
       const res = await fetch('/api/config');
+      if (!res.ok) throw new Error('Server returned ' + res.status);
       this.config = await res.json();
       this.populateDropdowns();
       this.setupEnrichmentToggles();
     } catch (err) {
       console.error('[mortar] Failed to load config:', err);
+      this.showNotification('Failed to load configuration. Please refresh the page.', 'error');
     }
   },
 
@@ -187,6 +189,7 @@ const app = {
 
     // Update cities dropdown (for bar scrapers)
     const citySelect = document.getElementById('select-city');
+    if (!citySelect) return;
     citySelect.innerHTML = '<option value="">All major cities</option>';
     for (const city of (stateMeta.defaultCities || [])) {
       const opt = document.createElement('option');
@@ -511,6 +514,10 @@ const app = {
     document.getElementById('enrichment-section').classList.add('hidden');
     document.getElementById('enrich-progress-bar').style.width = '0%';
 
+    // Disable start button to prevent double-click
+    const startBtn = document.getElementById('btn-start-scrape');
+    if (startBtn) { startBtn.disabled = true; startBtn.textContent = 'Starting...'; }
+
     // Start the job
     try {
       const res = await fetch('/api/scrape/start', {
@@ -522,6 +529,7 @@ const app = {
 
       if (!res.ok) {
         this.addLog('error', data.error || 'Failed to start scrape');
+        this.showNotification(data.error || 'Failed to start scrape', 'error');
         document.getElementById('btn-stop-scrape').hidden = true;
         return;
       }
@@ -533,7 +541,10 @@ const app = {
     } catch (err) {
       console.error('[mortar] Start scrape error:', err);
       this.addLog('error', 'Failed to start scrape: ' + err.message);
+      this.showNotification('Failed to start scrape: ' + err.message, 'error');
       document.getElementById('btn-stop-scrape').hidden = true;
+    } finally {
+      if (startBtn) { startBtn.disabled = false; startBtn.textContent = 'Start Scrape'; }
     }
   },
 
@@ -618,7 +629,14 @@ const app = {
       this.ws.send(JSON.stringify({ type: 'subscribe', jobId: this.jobId }));
       this.wsReconnectAttempts = 0;
       this.showConnectionStatus('connected');
-      this.addLog('info', 'Connected — scrape started');
+      // Stop HTTP polling if WS reconnects
+      if (this._httpPollTimer) {
+        clearInterval(this._httpPollTimer);
+        this._httpPollTimer = null;
+        this.addLog('info', 'Reconnected — switching back to live updates');
+      } else {
+        this.addLog('info', 'Connected — scrape started');
+      }
     };
 
     this.ws.onmessage = (event) => {
@@ -750,7 +768,7 @@ const app = {
         const section = document.getElementById('waterfall-section');
         if (section) {
           section.classList.remove('hidden');
-          const pct = msg.total > 0 ? Math.round((msg.current / msg.total) * 100) : 0;
+          const pct = msg.total > 0 ? Math.min(100, Math.round((msg.current / msg.total) * 100)) : 0;
           document.getElementById('waterfall-progress-bar').style.width = pct + '%';
           const stepLabels = {
             'master-db': 'Cross-referencing master database',
@@ -773,7 +791,7 @@ const app = {
         const peSection = document.getElementById('person-extract-section');
         if (peSection) {
           peSection.classList.remove('hidden');
-          const pePct = msg.total > 0 ? Math.round((msg.current / msg.total) * 100) : 0;
+          const pePct = msg.total > 0 ? Math.min(100, Math.round((msg.current / msg.total) * 100)) : 0;
           document.getElementById('person-extract-progress-bar').style.width = pePct + '%';
           document.getElementById('person-extract-status-text').textContent =
             `Extracting: ${msg.current}/${msg.total} — ${msg.detail || ''}`;
@@ -785,7 +803,7 @@ const app = {
         const section = document.getElementById('enrichment-section');
         if (!section) break;
         section.classList.remove('hidden');
-        const pct = msg.total > 0 ? Math.round((msg.current / msg.total) * 100) : 0;
+        const pct = msg.total > 0 ? Math.min(100, Math.round((msg.current / msg.total) * 100)) : 0;
         document.getElementById('enrich-progress-bar').style.width = pct + '%';
         document.getElementById('enrich-status-text').textContent =
           `Enriching: ${msg.current}/${msg.total} — ${msg.leadName}`;
@@ -1236,6 +1254,11 @@ const app = {
       clearTimeout(this.wsReconnectTimer);
       this.wsReconnectTimer = null;
     }
+    if (this._httpPollTimer) {
+      clearInterval(this._httpPollTimer);
+      this._httpPollTimer = null;
+    }
+    clearTimeout(this._filterDebounceTimer);
     if (this.ws) {
       this.ws.close();
       this.ws = null;
