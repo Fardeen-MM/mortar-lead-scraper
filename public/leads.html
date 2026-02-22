@@ -3539,7 +3539,7 @@
     async function loadStats() {
       try {
         const res = await fetch('/api/leads/stats');
-        const d = await res.json();
+        const d = await safeJSON(res);
 
         document.title = `Mortar (${fmt(d.total)}) Lead Database`;
         document.getElementById('tam-total').textContent = fmt(d.total);
@@ -3616,7 +3616,7 @@
     async function loadScores() {
       try {
         const res = await fetch('/api/leads/scores');
-        const d = await res.json();
+        const d = await safeJSON(res);
         document.getElementById('tam-avg-score').textContent = d.avgScore;
         document.getElementById('score-excellent').textContent = fmt(d.excellent);
         document.getElementById('score-good').textContent = fmt(d.good);
@@ -3657,7 +3657,7 @@
     async function loadRecommendations() {
       try {
         const res = await fetch('/api/leads/recommendations');
-        const recs = await res.json();
+        const recs = await safeJSON(res);
         const panel = document.getElementById('recs-panel');
         const list = document.getElementById('recs-list');
 
@@ -3682,7 +3682,7 @@
     async function loadActivity() {
       try {
         const res = await fetch('/api/leads/activity?limit=20');
-        const data = await res.json();
+        const data = await safeJSON(res);
         const el = document.getElementById('activity-timeline');
         if (!data || data.length === 0) {
           el.innerHTML = '<div style="color:var(--text-muted);font-size:0.8rem;padding:0.5rem 0;">No scrape runs yet</div>';
@@ -3707,7 +3707,7 @@
     async function loadPracticeAreas() {
       try {
         const res = await fetch('/api/leads/practice-areas');
-        const data = await res.json();
+        const data = await safeJSON(res);
         const select = document.getElementById('filter-practice');
         const current = select.value;
         select.innerHTML = '<option value="">All Practice Areas</option>';
@@ -3727,7 +3727,7 @@
     async function loadFreshness() {
       try {
         const res = await fetch('/api/leads/freshness');
-        const data = await res.json();
+        const data = await safeJSON(res);
         _freshnessMap = {};
         data.forEach(d => {
           _freshnessMap[d.state] = { days: d.days_since_scrape, last: d.last_scraped, runs: d.run_count };
@@ -3750,7 +3750,7 @@
     async function loadCoverage() {
       try {
         const res = await fetch('/api/leads/coverage');
-        const data = await res.json();
+        const data = await safeJSON(res);
         const tbody = document.getElementById('coverage-body');
         tbody.innerHTML = data.map(s => {
           const pctBar = (pct) => {
@@ -3789,7 +3789,7 @@
     async function loadCompleteness() {
       try {
         const res = await fetch('/api/leads/completeness');
-        const data = await res.json();
+        const data = await safeJSON(res);
         const el = document.getElementById('completeness-bars');
         const labels = { email: 'Email', phone: 'Phone', website: 'Website', firm_name: 'Firm', bar_number: 'Bar #', practice_area: 'Practice', title: 'Title', education: 'Education' };
         const fields = Object.entries(labels).map(([key, label]) => {
@@ -3822,7 +3822,7 @@
     async function loadDuplicates() {
       try {
         const res = await fetch('/api/leads/duplicates?limit=50');
-        const data = await res.json();
+        const data = await safeJSON(res);
         const list = document.getElementById('dupe-list');
         const empty = document.getElementById('dupe-empty');
         const badge = document.getElementById('dupe-count-badge');
@@ -3879,7 +3879,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ keepId, deleteId }),
         });
-        const d = await res.json();
+        const d = await safeJSON(res);
         if (d.merged) {
           btn.closest('.dupe-card').remove();
           const badge = document.getElementById('dupe-count-badge');
@@ -3898,7 +3898,7 @@
     async function loadLists() {
       try {
         const res = await fetch('/api/lists');
-        _lists = await res.json();
+        _lists = await safeJSON(res);
         renderLists();
       } catch (err) {
         console.error('Failed to load lists:', err);
@@ -3932,7 +3932,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name: name.trim(), color }),
         });
-        await res.json();
+        await safeJSON(res);
         loadLists();
       } catch (err) { toast('Failed to create list: ' + err.message, 'error'); }
     }
@@ -3970,7 +3970,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ leadIds: [..._selectedIds] }),
         });
-        const d = await res.json();
+        const d = await safeJSON(res);
         document.getElementById('bulk-status').textContent = `Added ${d.added} leads to "${list.name}"`;
         toast(`Added ${d.added} leads to "${list.name}"`);
         clearSelection();
@@ -3982,7 +3982,7 @@
     async function loadScraperHealth() {
       try {
         const res = await fetch('/api/scrapers/health');
-        const data = await res.json();
+        const data = await safeJSON(res);
         const el = document.getElementById('health-grid');
         if (!data || data.length === 0) {
           el.innerHTML = '<div style="color:var(--text-muted);font-size:0.82rem;">No scrape runs yet</div>';
@@ -4134,7 +4134,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ state, test: true }),
         });
-        const d = await res.json();
+        const d = await safeJSON(res);
         if (d.jobId) {
           pollQuickScrape(d.jobId, state, btn);
         }
@@ -4148,7 +4148,7 @@
       const interval = setInterval(async () => {
         try {
           const res = await fetch('/api/scrape/quick/' + jobId);
-          const d = await res.json();
+          const d = await safeJSON(res);
           if (d.status === 'complete' || d.status === 'error') {
             clearInterval(interval);
             btn.classList.remove('scraping');
@@ -4207,7 +4207,7 @@
 
       try {
         const res = await fetch('/api/leads?' + params);
-        const d = await res.json();
+        const d = await safeJSON(res);
 
         _totalResults = d.total || 0;
         _currentLeads = d.leads;
@@ -4347,7 +4347,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ leadIds: [..._selectedIds], template }),
         });
-        const d = await res.json();
+        const d = await safeJSON(res);
 
         // Show results in state modal (reuse)
         const leads = d.leads.filter(l => l.email);
@@ -4550,7 +4550,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ test }),
         });
-        const d = await res.json();
+        const d = await safeJSON(res);
         if (d.status === 'already_running') {
           btn.textContent = 'Already running';
         } else {
@@ -4568,7 +4568,7 @@
       const interval = setInterval(async () => {
         try {
           const res = await fetch('/api/scrape/bulk/status');
-          const d = await res.json();
+          const d = await safeJSON(res);
           if (d.running) {
             const pct = d.total > 0 ? Math.round((d.completed + d.failed + d.skipped) / d.total * 100) : 0;
             statusEl.innerHTML = `<strong>${esc(d.currentScraper)}</strong> | ${d.completed + d.failed + d.skipped}/${d.total} (${pct}%) | ${fmt(d.totalLeads)} leads | ${fmt(d.totalNew)} new`;
@@ -4597,7 +4597,7 @@
       btn.textContent = 'Starting...';
       try {
         const res = await fetch('/api/leads/verify-emails', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{"limit":200}' });
-        const d = await res.json();
+        const d = await safeJSON(res);
         if (d.status === 'already_running') {
           btn.textContent = 'Already running';
         } else {
@@ -4614,7 +4614,7 @@
       const interval = setInterval(async () => {
         try {
           const res = await fetch('/api/leads/verify-status');
-          const d = await res.json();
+          const d = await safeJSON(res);
           const p = d.progress || {};
           document.getElementById('verify-status').textContent = `${p.current || 0}/${p.total || 0} processed, ${p.found || 0} found`;
           if (!d.running) {
@@ -4656,7 +4656,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ dryRun: false }),
         });
-        const d = await res.json();
+        const d = await safeJSON(res);
         statusEl.textContent = `Merged ${d.merged} duplicates (${d.fieldsRecovered} fields recovered)`;
         toast(`Merged ${d.merged} duplicates`);
         refreshAll();
@@ -4678,7 +4678,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ limit: 500 }),
         });
-        const d = await res.json();
+        const d = await safeJSON(res);
         if (d.status === 'already_running') btn.textContent = 'Already running';
         pollWebsiteStatus(btn);
       } catch {
@@ -4692,7 +4692,7 @@
       const interval = setInterval(async () => {
         try {
           const res = await fetch('/api/leads/find-websites/status');
-          const d = await res.json();
+          const d = await safeJSON(res);
           const p = d.progress || {};
           if (d.running) {
             statusEl.textContent = `Websites: ${p.current || 0}/${p.total || 0} checked, ${p.found || 0} found`;
@@ -4722,7 +4722,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ sources: ['AVVO', 'FINDLAW'], test: true }),
         });
-        const d = await res.json();
+        const d = await safeJSON(res);
         if (d.status === 'already_running') btn.textContent = 'Already running';
         else btn.textContent = 'Running...';
         pollPrepopStatus(btn);
@@ -4737,7 +4737,7 @@
       const interval = setInterval(async () => {
         try {
           const res = await fetch('/api/leads/prepopulate/status');
-          const d = await res.json();
+          const d = await safeJSON(res);
           const p = d.progress || {};
           if (d.running) {
             statusEl.innerHTML = `Pre-populating <strong>${esc(p.currentSource)}</strong> (${p.current}/${p.total}) | ${fmt(p.totalLeads)} leads | ${fmt(p.totalNew)} new`;
@@ -4768,7 +4768,7 @@
 
       try {
         const res = await fetch('/api/leads/enrich-all', { method: 'POST' });
-        const d = await res.json();
+        const d = await safeJSON(res);
         if (d.status === 'already_running') { btn.textContent = 'Already running'; return; }
         const interval = setInterval(async () => {
           try {
@@ -4805,7 +4805,7 @@
       const statusEl = document.getElementById('bulk-status');
       try {
         const res = await fetch('/api/leads/share-firm-data', { method: 'POST' });
-        const d = await res.json();
+        const d = await safeJSON(res);
         statusEl.textContent = `Shared data across ${d.firmsProcessed} firms, ${d.leadsUpdated} leads updated, ${d.fieldsShared} fields shared`;
         toast(`Shared firm data: ${d.leadsUpdated} leads updated`);
         refreshAll();
@@ -4824,7 +4824,7 @@
       const statusEl = document.getElementById('bulk-status');
       try {
         const res = await fetch('/api/leads/deduce-websites', { method: 'POST' });
-        const d = await res.json();
+        const d = await safeJSON(res);
         statusEl.textContent = `Deduced ${d.leadsUpdated} websites from email domains`;
         toast(`Deduced ${d.leadsUpdated} websites`);
         refreshAll();
@@ -4843,7 +4843,7 @@
       const statusEl = document.getElementById('bulk-status');
       try {
         const res = await fetch('/api/leads/score', { method: 'POST' });
-        const d = await res.json();
+        const d = await safeJSON(res);
         statusEl.textContent = `Scored ${fmt(d.scored)} leads (avg: ${d.avgScore})`;
         toast(`Scored ${fmt(d.scored)} leads (avg: ${d.avgScore})`);
         refreshAll();
@@ -4862,7 +4862,7 @@
       try {
         const res = await fetch('/api/leads/' + id);
         if (!res.ok) { toast('Lead not found', 'error'); return; }
-        const lead = await res.json();
+        const lead = await safeJSON(res);
         if (lead && lead.id) showLeadDetail(lead);
         else toast('Lead not found', 'error');
       } catch (err) { toast('Failed to load lead: ' + err.message, 'error'); }
@@ -5052,7 +5052,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(updates),
         });
-        const updated = await res.json();
+        const updated = await safeJSON(res);
         if (updated.id) {
           _currentModalLead = { ..._currentModalLead, ...updates, lead_score: updated.lead_score };
           toggleEditMode();
@@ -5079,7 +5079,7 @@
 
       try {
         const res = await fetch(`/api/leads/state-details/${encodeURIComponent(stateCode)}`);
-        const d = await res.json();
+        const d = await safeJSON(res);
         if (d.error) throw new Error(d.error);
 
         const pctBar = (cnt, total, color) => {
@@ -5404,7 +5404,7 @@
 
     // --- Saved Views (localStorage) ---
     const VIEWS_KEY = 'mortar_saved_views';
-    let _savedViews = JSON.parse(localStorage.getItem(VIEWS_KEY) || '[]');
+    let _savedViews = (() => { try { return JSON.parse(localStorage.getItem(VIEWS_KEY) || '[]'); } catch { return []; } })();
 
     function renderViews() {
       const bar = document.getElementById('views-bar');
@@ -5476,7 +5476,7 @@
       { key: 'website', label: 'Website', default: true },
       { key: 'source', label: 'Source', default: true },
     ];
-    let _visibleCols = JSON.parse(localStorage.getItem(COLS_KEY) || 'null') || EXPLORER_COLUMNS.filter(c => c.default).map(c => c.key);
+    let _visibleCols = (() => { try { return JSON.parse(localStorage.getItem(COLS_KEY)) || EXPLORER_COLUMNS.filter(c => c.default).map(c => c.key); } catch { return EXPLORER_COLUMNS.filter(c => c.default).map(c => c.key); } })();
     let _colPickerVisible = false;
 
     function toggleExplorerColumnPicker() {
@@ -5604,7 +5604,7 @@
     async function loadCoverageMap() {
       try {
         const res = await fetch('/api/leads/coverage');
-        const data = await res.json();
+        const data = await safeJSON(res);
         const container = document.getElementById('coverage-map');
         if (!container || !data.length) return;
 
@@ -5676,7 +5676,7 @@
     async function loadHealthScore() {
       try {
         const res = await fetch('/api/leads/health-score');
-        const d = await res.json();
+        const d = await safeJSON(res);
         const el = document.getElementById('pb-health');
         if (!el) return;
         const colors = { A: '#22c55e', B: '#3b82f6', C: '#f59e0b', D: '#ef4444', F: '#991b1b' };
@@ -5689,7 +5689,7 @@
     async function loadSimilarLeads(leadId) {
       try {
         const res = await fetch(`/api/leads/similar/${leadId}`);
-        const d = await res.json();
+        const d = await safeJSON(res);
 
         let html = '';
         if (d.sameFirm.length > 0) {
@@ -5720,7 +5720,7 @@
     async function loadFirmIntel() {
       try {
         const res = await fetch('/api/leads/top-firms?limit=12');
-        const data = await res.json();
+        const data = await safeJSON(res);
         const container = document.getElementById('firm-intel');
         if (!container) return;
 
@@ -5767,7 +5767,7 @@
 
       try {
         const res = await fetch(`/api/leads/growth?days=${days}`);
-        const data = await res.json();
+        const data = await safeJSON(res);
         const container = document.getElementById('growth-chart');
         if (!container || !data.length) {
           if (container) container.innerHTML = '<p style="text-align:center;color:var(--text-muted);font-size:0.75rem;padding:2rem;">No growth data yet. Start scraping to see trends.</p>';
@@ -5854,7 +5854,7 @@
       try {
         toast('Running quality checks...', 'info');
         const res = await fetch('/api/quality/check', { method: 'POST' });
-        const d = await res.json();
+        const d = await safeJSON(res);
         toast(`Found ${d.alertsCreated} quality issues`);
         loadQualityAlerts();
       } catch (err) {
@@ -5926,7 +5926,7 @@
     async function loadExportHistory() {
       try {
         const res = await fetch('/api/exports/history');
-        const data = await res.json();
+        const data = await safeJSON(res);
         const container = document.getElementById('export-history');
         if (!container) return;
 
@@ -5956,7 +5956,7 @@
     async function loadLeadChangelog(leadId) {
       try {
         const res = await fetch(`/api/leads/changelog/${leadId}`);
-        const data = await res.json();
+        const data = await safeJSON(res);
         if (!data.length) return '';
 
         return `<div style="margin-top:0.75rem;border-top:1px solid var(--border);padding-top:0.5rem;">
@@ -5982,7 +5982,7 @@
     async function loadEnrichmentDashboard() {
       try {
         const res = await fetch('/api/leads/enrichment-stats');
-        const data = await res.json();
+        const data = await safeJSON(res);
 
         // Badge
         const badge = document.getElementById('enrichment-enriched-badge');
@@ -6039,7 +6039,7 @@
     async function loadActivityFeed() {
       try {
         const res = await fetch('/api/activity?limit=20');
-        const data = await res.json();
+        const data = await safeJSON(res);
         const container = document.getElementById('activity-feed');
         if (!container) return;
 
@@ -6587,7 +6587,7 @@
       suggestBox.style.display = 'none';
       loadLeads();
       // Save to recent searches
-      const recent = JSON.parse(localStorage.getItem('mortar-recent-searches') || '[]');
+      let recent; try { recent = JSON.parse(localStorage.getItem('mortar-recent-searches') || '[]'); } catch { recent = []; }
       recent.unshift({ label, type, time: Date.now() });
       localStorage.setItem('mortar-recent-searches', JSON.stringify(recent.slice(0, 10)));
     }
@@ -7703,7 +7703,7 @@
 
       try {
         const res = await fetch('/api/leads/import/csv', { method: 'POST', body: formData });
-        const d = await res.json();
+        const d = await safeJSON(res);
         if (d.error) {
           resultEl.innerHTML = '<span style="color:#dc2626;">Import failed: ' + esc(d.error) + '</span>';
           return;

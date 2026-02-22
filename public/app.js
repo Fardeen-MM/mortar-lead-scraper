@@ -708,11 +708,21 @@ const app = {
   // HTTP polling fallback when WebSocket dies mid-scrape
   startHttpPolling() {
     if (this._httpPollTimer) return;
+    let pollFailures = 0;
     this._httpPollTimer = setInterval(async () => {
       if (!this.jobId) { clearInterval(this._httpPollTimer); this._httpPollTimer = null; return; }
       try {
         const res = await fetch(`/api/scrape/${this.jobId}/status`);
-        if (!res.ok) return;
+        if (!res.ok) {
+          pollFailures++;
+          if (pollFailures >= 10) {
+            console.error('HTTP poll: too many failures, stopping');
+            clearInterval(this._httpPollTimer);
+            this._httpPollTimer = null;
+          }
+          return;
+        }
+        pollFailures = 0;
         const data = await res.json();
         this.leads = data.leads || this.leads;
         this.$statNew.textContent = this.leads.length.toLocaleString();
