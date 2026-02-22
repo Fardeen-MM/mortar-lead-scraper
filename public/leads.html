@@ -3355,13 +3355,13 @@
     <button onclick="copySelectedEmails()">Copy Emails</button>
     <button onclick="addSelectedToList()">Add to List</button>
     <button onclick="generatePersonalization()">Personalize</button>
-    <button onclick="tagSelected()">Tag</button>
+    <button id="btn-tag" onclick="tagSelected()">Tag</button>
     <button onclick="openBulkEditModal()">Bulk Edit</button>
-    <button onclick="moveSelectedToStage()">Move Stage</button>
+    <button id="btn-move-stage" onclick="moveSelectedToStage()">Move Stage</button>
     <button onclick="compareSelected()">Compare</button>
-    <button onclick="enrollSelectedInSequence()">Enroll</button>
+    <button id="btn-enroll" onclick="enrollSelectedInSequence()">Enroll</button>
     <button onclick="findLookalikesSelected()">Lookalikes</button>
-    <button onclick="deleteSelected()">Delete</button>
+    <button id="btn-delete" onclick="deleteSelected()">Delete</button>
     <button onclick="clearSelection()" style="background:transparent;border-color:rgba(255,255,255,0.4);">&times; Clear</button>
   </div>
 
@@ -4496,6 +4496,8 @@
       if (_selectedIds.size === 0) return;
       const tag = prompt('Enter tag name:');
       if (!tag || !tag.trim()) return;
+      const btn = document.getElementById('btn-tag');
+      if (btn) { btn.disabled = true; btn.textContent = 'Tagging...'; }
       fetch('/api/leads/tag', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -4507,12 +4509,15 @@
           toast(`Tagged ${d.updated} leads with "${tag.trim()}"`);
           clearSelection();
         })
-        .catch(err => toast('Failed to tag leads: ' + err.message, 'error'));
+        .catch(err => toast('Failed to tag leads: ' + err.message, 'error'))
+        .finally(() => { if (btn) { btn.disabled = false; btn.textContent = 'Tag'; } });
     }
 
     function deleteSelected() {
       if (_selectedIds.size === 0) return;
       if (!confirm(`Delete ${_selectedIds.size} leads? This cannot be undone.`)) return;
+      const btn = document.getElementById('btn-delete');
+      if (btn) { btn.disabled = true; btn.textContent = 'Deleting...'; }
       fetch('/api/leads/delete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -4525,7 +4530,8 @@
           clearSelection();
           refreshAll();
         })
-        .catch(err => toast('Failed to delete leads: ' + err.message, 'error'));
+        .catch(err => toast('Failed to delete leads: ' + err.message, 'error'))
+        .finally(() => { if (btn) { btn.disabled = false; btn.textContent = 'Delete'; } });
     }
 
     // --- Bulk Scrape ---
@@ -6257,6 +6263,8 @@
       if (idx < 0 || idx >= stageKeys.length) return;
       const stage = stageKeys[idx];
       const ids = Array.from(_selectedLeads);
+      const btn = document.getElementById('btn-move-stage');
+      if (btn) { btn.disabled = true; btn.textContent = 'Moving...'; }
       try {
         await fetch('/api/pipeline/bulk-move', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -6266,6 +6274,7 @@
         clearSelection();
         loadPipeline();
       } catch (err) { toast('Failed to move leads', 'error'); }
+      finally { if (btn) { btn.disabled = false; btn.textContent = 'Move Stage'; } }
     }
 
     // --- Smart Segments ---
@@ -7858,12 +7867,17 @@
       const seqId = seqs.length === 1 ? seqs[0].id : parseInt(prompt('Enter sequence ID:\n' + seqs.map(s => s.id + ': ' + s.name).join('\n')));
       if (!seqId) return;
 
-      const result = await fetch(`/api/sequences/${seqId}/enroll`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ leadIds: selected }),
-      }).then(r => r.json());
-      toast(`Enrolled ${result.enrolled} leads in sequence`, 'success');
-      loadSequences();
+      const btn = document.getElementById('btn-enroll');
+      if (btn) { btn.disabled = true; btn.textContent = 'Enrolling...'; }
+      try {
+        const result = await fetch(`/api/sequences/${seqId}/enroll`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leadIds: selected }),
+        }).then(r => r.json());
+        toast(`Enrolled ${result.enrolled} leads in sequence`, 'success');
+        loadSequences();
+      } catch (err) { toast('Failed to enroll: ' + err.message, 'error'); }
+      finally { if (btn) { btn.disabled = false; btn.textContent = 'Enroll'; } }
     }
 
     function findLookalikesSelected() {
