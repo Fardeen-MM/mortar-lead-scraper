@@ -5715,6 +5715,8 @@
         ${lead.website ? `<button onclick="window.open('${(lead.website.startsWith('http') ? '' : 'https://') + esc(lead.website)}','_blank');" style="${actBtnStyle}">&#x1F310; Visit Site</button>` : ''}
         ${lead.linkedin_url ? `<button onclick="window.open('${esc(lead.linkedin_url)}','_blank');" style="${actBtnStyle}">&#x1F517; LinkedIn</button>` : ''}
         <button onclick="loadAiEmail(${lead.id})" style="padding:0.3rem 0.7rem;font-size:0.75rem;border:1px solid #818cf8;border-radius:6px;cursor:pointer;background:#eef2ff;color:#4338ca;display:flex;align-items:center;gap:0.3rem;font-weight:500;">&#x2728; AI Email</button>
+        <button onclick="loadAiScoreExplain(${lead.id})" style="padding:0.3rem 0.7rem;font-size:0.75rem;border:1px solid #818cf8;border-radius:6px;cursor:pointer;background:#eef2ff;color:#4338ca;display:flex;align-items:center;gap:0.3rem;font-weight:500;">&#x1F4CA; Explain Score</button>
+        <button onclick="loadAiTalkingPoints(${lead.id})" style="padding:0.3rem 0.7rem;font-size:0.75rem;border:1px solid #818cf8;border-radius:6px;cursor:pointer;background:#eef2ff;color:#4338ca;display:flex;align-items:center;gap:0.3rem;font-weight:500;">&#x1F4AC; Talking Points</button>
         <button onclick="quickTagLead(${lead.id})" style="${actBtnStyle}">&#x1F3F7;&#xFE0F; Tag</button>
       </div>`;
 
@@ -10834,6 +10836,73 @@
       } catch (err) {
         const loadEl = document.getElementById('ai-email-loading');
         if (loadEl) loadEl.outerHTML = `<div style="color:#fca5a5;font-size:0.72rem;margin-top:0.3rem;">Email generation error: ${esc(err.message)}</div>`;
+      }
+    }
+
+    // --- AI Score Explanation ---
+    async function loadAiScoreExplain(leadId) {
+      const container = document.getElementById('ai-lead-insights');
+      if (!container) return;
+      container.innerHTML += '<div id="ai-score-loading" style="color:#818cf8;font-size:0.75rem;margin-top:0.4rem;">Analyzing score factors...</div>';
+      try {
+        const res = await fetch('/api/ai/explain-score', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leadId }),
+        });
+        const d = await safeJSON(res);
+        if (d.error) throw new Error(d.error);
+        const loadEl = document.getElementById('ai-score-loading');
+        if (!loadEl) return;
+        let html = `<div style="background:rgba(99,102,241,0.1);border-radius:8px;padding:0.7rem;margin-top:0.4rem;">`;
+        html += `<div style="font-size:0.68rem;color:#a5b4fc;margin-bottom:0.3rem;">AI SCORE ANALYSIS &middot; Grade: <strong>${esc(d.grade || '?')}</strong></div>`;
+        html += `<div style="font-size:0.76rem;color:#e0e7ff;margin-bottom:0.3rem;line-height:1.4;">${esc(d.explanation || '')}</div>`;
+        if (d.strengths && d.strengths.length > 0) {
+          html += `<div style="font-size:0.68rem;color:#86efac;margin-bottom:0.2rem;">Strengths:</div>`;
+          html += d.strengths.map(s => `<div style="font-size:0.72rem;color:#a5b4fc;padding-left:0.5rem;">&#x2713; ${esc(s)}</div>`).join('');
+        }
+        if (d.gaps && d.gaps.length > 0) {
+          html += `<div style="font-size:0.68rem;color:#fbbf24;margin-top:0.2rem;margin-bottom:0.2rem;">Gaps:</div>`;
+          html += d.gaps.map(g => `<div style="font-size:0.72rem;color:#a5b4fc;padding-left:0.5rem;">&#x2022; ${esc(g)}</div>`).join('');
+        }
+        if (d.suggestions && d.suggestions.length > 0) {
+          html += `<div style="font-size:0.68rem;color:#c7d2fe;margin-top:0.2rem;margin-bottom:0.2rem;">Suggestions:</div>`;
+          html += d.suggestions.map(s => `<div style="font-size:0.72rem;color:#e0e7ff;padding-left:0.5rem;">&#x2192; ${esc(s)}</div>`).join('');
+        }
+        html += `</div>`;
+        loadEl.outerHTML = html;
+      } catch (err) {
+        const loadEl = document.getElementById('ai-score-loading');
+        if (loadEl) loadEl.outerHTML = `<div style="color:#fca5a5;font-size:0.72rem;margin-top:0.3rem;">Score analysis error: ${esc(err.message)}</div>`;
+      }
+    }
+
+    // --- AI Talking Points ---
+    async function loadAiTalkingPoints(leadId) {
+      const container = document.getElementById('ai-lead-insights');
+      if (!container) return;
+      container.innerHTML += '<div id="ai-tp-loading" style="color:#818cf8;font-size:0.75rem;margin-top:0.4rem;">Generating talking points...</div>';
+      try {
+        const res = await fetch('/api/ai/talking-points', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leadId }),
+        });
+        const d = await safeJSON(res);
+        if (d.error) throw new Error(d.error);
+        const loadEl = document.getElementById('ai-tp-loading');
+        if (!loadEl) return;
+        let html = `<div style="background:rgba(99,102,241,0.1);border-radius:8px;padding:0.7rem;margin-top:0.4rem;">`;
+        html += `<div style="font-size:0.68rem;color:#a5b4fc;margin-bottom:0.3rem;">AI TALKING POINTS</div>`;
+        if (d.icebreaker) html += `<div style="font-size:0.78rem;color:#fbbf24;font-weight:600;margin-bottom:0.3rem;">Icebreaker: ${esc(d.icebreaker)}</div>`;
+        if (d.points && d.points.length > 0) {
+          html += d.points.map((p, i) => `<div style="font-size:0.76rem;color:#e0e7ff;padding:0.15rem 0;line-height:1.4;">${i + 1}. ${esc(p)}</div>`).join('');
+        }
+        if (d.cta) html += `<div style="font-size:0.72rem;color:#86efac;margin-top:0.3rem;font-weight:500;">CTA: ${esc(d.cta)}</div>`;
+        html += `<button onclick="navigator.clipboard.writeText('${esc(JSON.stringify(d).replace(/'/g, "\\'"))}');toast('Copied!','success');" style="margin-top:0.3rem;padding:0.2rem 0.5rem;background:#4f46e5;color:white;border:none;border-radius:4px;cursor:pointer;font-size:0.68rem;">Copy All</button>`;
+        html += `</div>`;
+        loadEl.outerHTML = html;
+      } catch (err) {
+        const loadEl = document.getElementById('ai-tp-loading');
+        if (loadEl) loadEl.outerHTML = `<div style="color:#fca5a5;font-size:0.72rem;margin-top:0.3rem;">Talking points error: ${esc(err.message)}</div>`;
       }
     }
 

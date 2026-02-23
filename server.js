@@ -4509,6 +4509,32 @@ app.post('/api/ai/summarize', async (req, res) => {
   } catch (err) { aiError(res, err); }
 });
 
+// AI Score Explanation — why a lead has its score
+app.post('/api/ai/explain-score', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    const { leadId } = req.body;
+    const lead = leadDb.getLeadById(leadId);
+    if (!lead) return res.status(404).json({ error: 'Lead not found' });
+    const explanation = await ai.explainScore(lead);
+    res.json(explanation);
+  } catch (err) { aiError(res, err); }
+});
+
+// AI Talking Points — personalized outreach points
+app.post('/api/ai/talking-points', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    const { leadId } = req.body;
+    const lead = leadDb.getLeadById(leadId);
+    if (!lead) return res.status(404).json({ error: 'Lead not found' });
+    const points = await ai.generateTalkingPoints(lead);
+    res.json(points);
+  } catch (err) { aiError(res, err); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
