@@ -1374,6 +1374,15 @@
     body.dark .kanban-col.kanban-dragover { background: #1e3a5f !important; border-color: #6366f1 !important; }
     body.dark .kanban-card { background: #334155 !important; border-color: #475569 !important; }
 
+    /* Inline edit styles */
+    td[data-editable]:hover { background: rgba(99,102,241,0.05); }
+    td[data-editable]::after { content: ''; }
+    .inline-edit-hint {
+      font-size: 0.6rem; color: #9ca3af; margin-left: 0.3rem;
+      opacity: 0; transition: opacity 0.15s;
+    }
+    tr:hover .inline-edit-hint { opacity: 1; }
+
     /* Panel loading skeleton */
     .panel-loading {
       padding: 1rem; display: flex; align-items: center; gap: 0.5rem;
@@ -3719,15 +3728,37 @@
 
   <!-- Keyboard shortcut hint (enhanced) -->
   <div class="kbd-hint" id="kbd-hint">
-    <div style="font-weight:600;margin-bottom:0.3rem;">Navigation</div>
-    <div><kbd>&#x2318;K</kbd> Command palette &nbsp; <kbd>/</kbd> Search &nbsp; <kbd>Esc</kbd> Clear/Close &nbsp; <kbd>?</kbd> Toggle hints</div>
-    <div><kbd>j</kbd>/<kbd>k</kbd> Navigate rows &nbsp; <kbd>Enter</kbd> Open detail &nbsp; <kbd>x</kbd> Toggle select &nbsp; <kbd>a</kbd> Select all</div>
-    <div><kbd>1</kbd>-<kbd>6</kbd> Switch tabs (Overview, Leads, Analytics, Quality, Outreach, Settings)</div>
-    <div style="font-weight:600;margin-top:0.3rem;">Actions</div>
-    <div><kbd>r</kbd> Refresh &nbsp; <kbd>e</kbd> Export &nbsp; <kbd>c</kbd> Copy emails &nbsp; <kbd>d</kbd> Dark mode &nbsp; <kbd>n</kbd> New scrape</div>
-    <div><kbd>t</kbd> Tag selected &nbsp; <kbd>m</kbd> Move stage &nbsp; <kbd>f</kbd> Toggle filters &nbsp; <kbd>p</kbd> Pipeline view</div>
-    <div style="font-weight:600;margin-top:0.3rem;">AI</div>
-    <div><kbd>b</kbd> Open AI Brain &nbsp; Ask questions about leads in natural language</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 1.5rem;">
+      <div>
+        <div style="font-weight:600;margin-bottom:0.3rem;color:#6366f1;">Navigation</div>
+        <div><kbd>&#x2318;K</kbd> Command palette</div>
+        <div><kbd>/</kbd> Focus search</div>
+        <div><kbd>Esc</kbd> Clear filters / Close modal</div>
+        <div><kbd>j</kbd> / <kbd>k</kbd> Navigate rows</div>
+        <div><kbd>Enter</kbd> Open lead detail</div>
+        <div><kbd>1</kbd>-<kbd>6</kbd> Switch tabs</div>
+        <div><kbd>G</kbd> First/last row (with Shift)</div>
+      </div>
+      <div>
+        <div style="font-weight:600;margin-bottom:0.3rem;color:#6366f1;">Actions</div>
+        <div><kbd>x</kbd> Toggle select row</div>
+        <div><kbd>a</kbd> Select all visible</div>
+        <div><kbd>r</kbd> Refresh all data</div>
+        <div><kbd>e</kbd> Export CSV</div>
+        <div><kbd>c</kbd> Copy all emails</div>
+        <div><kbd>d</kbd> Toggle dark mode</div>
+        <div><kbd>t</kbd> Tag selected</div>
+        <div><kbd>m</kbd> Move stage</div>
+        <div><kbd>f</kbd> Toggle filters</div>
+        <div><kbd>p</kbd> Scroll to pipeline</div>
+        <div><kbd>n</kbd> Go to scraper</div>
+        <div><kbd>b</kbd> Open AI Brain</div>
+        <div><kbd>s</kbd> Toggle sort order</div>
+        <div><kbd>v</kbd> Cycle view (table/cards/kanban)</div>
+        <div><kbd>Del</kbd> Delete selected</div>
+        <div><kbd>?</kbd> Toggle this panel</div>
+      </div>
+    </div>
   </div>
 
   <!-- Command Palette (Cmd+K) -->
@@ -4739,10 +4770,39 @@
               </span>
             </td>
           `;
-          // Click name to open detail (but not checkbox)
+          // Click to open detail, double-click to inline edit
           tr.querySelectorAll('td:not(:first-child)').forEach(td => {
             td.style.cursor = 'pointer';
             td.addEventListener('click', () => showLeadDetail(lead));
+          });
+          // Inline edit: double-click on email, phone, or firm cells
+          const editableCells = tr.querySelectorAll('td:nth-child(3), td:nth-child(7), td:nth-child(8)');
+          editableCells.forEach((td, ci) => {
+            const fieldMap = ['firm_name', 'email', 'phone'];
+            td.addEventListener('dblclick', (e) => {
+              e.stopPropagation();
+              const field = fieldMap[ci];
+              const currentVal = lead[field] || '';
+              td.innerHTML = `<input type="text" value="${esc(currentVal)}" style="width:100%;padding:0.2rem 0.3rem;font-size:0.78rem;border:2px solid #6366f1;border-radius:4px;outline:none;background:#fff;" autofocus>`;
+              const input = td.querySelector('input');
+              input.focus();
+              input.select();
+              const save = () => {
+                const newVal = input.value.trim();
+                if (newVal !== currentVal) {
+                  fetch('/api/leads/' + lead.id, {
+                    method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ [field]: newVal })
+                  }).then(safeJSON).then(updated => {
+                    lead[field] = newVal;
+                    toast(`Updated ${field.replace('_', ' ')}`, 'success');
+                    loadLeads();
+                  }).catch(err => { toast('Update failed: ' + err.message, 'error'); loadLeads(); });
+                } else { loadLeads(); }
+              };
+              input.addEventListener('blur', save);
+              input.addEventListener('keydown', (ke) => { if (ke.key === 'Enter') { ke.preventDefault(); input.blur(); } if (ke.key === 'Escape') { loadLeads(); } });
+            });
           });
           tbody.appendChild(tr);
         }
@@ -6081,6 +6141,61 @@
           e.preventDefault();
           if (!_aiBrainOpen) toggleAiBrain();
           document.getElementById('ai-brain-input').focus();
+          break;
+        case 's': // Toggle sort
+          e.preventDefault();
+          _currentOrder = _currentOrder === 'desc' ? 'asc' : 'desc';
+          toast(`Sort: ${_currentSort} ${_currentOrder}`, 'info');
+          loadLeads();
+          break;
+        case 'v': // Cycle view
+          e.preventDefault();
+          { const views = ['table', 'cards', 'kanban'];
+            const ci = views.indexOf(_currentView);
+            const next = views[(ci + 1) % views.length];
+            switchView(next);
+            toast(`View: ${next}`, 'info');
+          }
+          break;
+        case 'Delete': case 'Backspace': // Delete selected
+          if (_selectedIds.size > 0) {
+            e.preventDefault();
+            deleteSelected();
+          }
+          break;
+        case 'G': // Jump to top/bottom
+          e.preventDefault();
+          if (e.shiftKey) {
+            // Shift+G → last row
+            const rows = document.querySelectorAll('#leads-body tr');
+            if (rows.length > 0) { _focusedRow = rows.length - 1; navigateRow(0); }
+          }
+          break;
+        case 'H': // Jump to start
+          e.preventDefault();
+          _focusedRow = 0; navigateRow(0);
+          break;
+        case '[': // Previous page
+          e.preventDefault();
+          if (currentOffset > 0) {
+            currentOffset = Math.max(0, currentOffset - PAGE_SIZE);
+            loadLeads();
+            toast(`Page ${Math.floor(currentOffset / PAGE_SIZE) + 1}`, 'info');
+          }
+          break;
+        case ']': // Next page
+          e.preventDefault();
+          if (currentOffset + PAGE_SIZE < _totalResults) {
+            currentOffset += PAGE_SIZE;
+            loadLeads();
+            toast(`Page ${Math.floor(currentOffset / PAGE_SIZE) + 1}`, 'info');
+          }
+          break;
+        case 'i': // Inline edit focused row
+          if (_focusedRow >= 0 && _currentLeads[_focusedRow]) {
+            e.preventDefault();
+            showLeadDetail(_currentLeads[_focusedRow]);
+          }
           break;
         case '1': case '2': case '3': case '4': case '5': case '6': {
           // Jump to tab
