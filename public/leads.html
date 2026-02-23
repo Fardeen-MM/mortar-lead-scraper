@@ -8692,23 +8692,41 @@
         const seqs = await fetch('/api/sequences').then(safeJSON);
         const list = document.getElementById('sequences-list');
         if (seqs.length === 0) {
-          list.innerHTML = '<span style="font-size:0.72rem;color:#a78bfa;">No sequences yet. Create one to start building outreach templates.</span>';
+          list.innerHTML = `<div style="text-align:center;padding:0.8rem;">
+            <div style="font-size:1.4rem;margin-bottom:0.3rem;">&#x1F4E7;</div>
+            <span style="font-size:0.75rem;color:#a78bfa;">No sequences yet. Create your first outreach sequence.</span>
+          </div>`;
           return;
         }
-        list.innerHTML = seqs.map(s => `
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:0.4rem 0.6rem;background:#fff;border:1px solid #e9d5ff;border-radius:6px;">
-            <div>
-              <strong style="font-size:0.8rem;color:#7c3aed;">${esc(s.name)}</strong>
-              <span style="font-size:0.7rem;color:#6b7280;margin-left:0.4rem;">${s.steps?.length || 0} steps</span>
-              ${s.description ? '<br><span style="font-size:0.68rem;color:#9ca3af;">' + esc(s.description) + '</span>' : ''}
+        list.innerHTML = seqs.map(s => {
+          const stepCount = s.steps?.length || 0;
+          const uniqueSteps = [...new Set((s.steps || []).map(st => st.step_number))].length;
+          const channels = [...new Set((s.steps || []).map(st => st.channel))];
+          const channelIcons = { email: '\u{2709}\uFE0F', phone: '\u{1F4DE}', linkedin: '\u{1F517}', sms: '\u{1F4AC}' };
+          // Mini step dots
+          let dots = '';
+          for (let i = 0; i < Math.min(uniqueSteps, 7); i++) {
+            dots += '<span style="width:8px;height:8px;border-radius:50%;background:#7c3aed;display:inline-block;"></span>';
+            if (i < uniqueSteps - 1 && i < 6) dots += '<span style="width:12px;height:1px;background:#d8b4fe;display:inline-block;vertical-align:middle;"></span>';
+          }
+          if (uniqueSteps > 7) dots += '<span style="font-size:0.6rem;color:#9ca3af;">+' + (uniqueSteps - 7) + '</span>';
+          return `
+          <div style="background:#fff;border:1px solid #e9d5ff;border-radius:8px;padding:0.5rem 0.6rem;cursor:pointer;transition:box-shadow 0.15s;" onclick="showSequenceDetail(${s.id})" onmouseover="this.style.boxShadow='0 2px 8px rgba(124,58,237,0.15)'" onmouseout="this.style.boxShadow='none'">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <strong style="font-size:0.8rem;color:#7c3aed;">${esc(s.name)}</strong>
+                <span style="font-size:0.65rem;color:#9ca3af;margin-left:0.3rem;">${channels.map(c => channelIcons[c] || c).join(' ')}</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.4rem;">
+                <span style="font-size:0.62rem;padding:0.1rem 0.35rem;border-radius:8px;background:#dcfce7;color:#166534;font-weight:600;">${fmt(s.active)} active</span>
+                <span style="font-size:0.62rem;padding:0.1rem 0.35rem;border-radius:8px;background:#ede9fe;color:#7c3aed;font-weight:600;">${fmt(s.enrolled)} total</span>
+                <button onclick="event.stopPropagation();deleteSequence(${s.id})" style="font-size:0.6rem;padding:0.1rem 0.3rem;background:none;color:#dc2626;border:1px solid #fecaca;border-radius:3px;cursor:pointer;">&times;</button>
+              </div>
             </div>
-            <div style="display:flex;align-items:center;gap:0.5rem;">
-              <span style="font-size:0.68rem;color:#7c3aed;font-weight:600;">${fmt(s.enrolled)} enrolled / ${fmt(s.active)} active</span>
-              <button onclick="showSequenceDetail(${s.id})" style="font-size:0.65rem;padding:0.15rem 0.4rem;background:#ede9fe;color:#7c3aed;border:1px solid #d8b4fe;border-radius:4px;cursor:pointer;">View</button>
-              <button onclick="deleteSequence(${s.id})" style="font-size:0.65rem;padding:0.15rem 0.4rem;background:#fef2f2;color:#dc2626;border:1px solid #fecaca;border-radius:4px;cursor:pointer;">Del</button>
-            </div>
-          </div>
-        `).join('');
+            <div style="display:flex;align-items:center;gap:0;margin-top:0.3rem;">${dots}</div>
+            ${s.description ? '<div style="font-size:0.65rem;color:#9ca3af;margin-top:0.15rem;">' + esc(s.description) + '</div>' : ''}
+          </div>`;
+        }).join('');
       } catch (err) { console.error('Sequences error:', err); }
     }
 
@@ -8717,34 +8735,72 @@
       modal.id = 'sequence-modal';
       modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
       modal.innerHTML = `
-        <div style="background:#fff;border-radius:12px;padding:1.5rem;width:500px;max-width:90vw;max-height:80vh;overflow-y:auto;">
-          <h3 style="margin:0 0 1rem;font-size:1.1rem;color:#7c3aed;">Create Outreach Sequence</h3>
-          <div style="margin-bottom:0.75rem;">
-            <label style="font-size:0.78rem;font-weight:600;display:block;margin-bottom:0.25rem;">Sequence Name</label>
-            <input id="modal-seq-name" type="text" placeholder="e.g., Cold Outreach" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+        <div style="background:#fff;border-radius:12px;padding:1.5rem;width:520px;max-width:90vw;max-height:85vh;overflow-y:auto;">
+          <h3 style="margin:0 0 0.75rem;font-size:1.1rem;color:#7c3aed;">Create Outreach Sequence</h3>
+          <div style="margin-bottom:0.6rem;">
+            <label style="font-size:0.78rem;font-weight:600;display:block;margin-bottom:0.2rem;">Sequence Name</label>
+            <input id="modal-seq-name" type="text" placeholder="e.g., PI Attorney Cold Outreach" style="width:100%;padding:0.35rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.82rem;">
           </div>
-          <div style="margin-bottom:0.75rem;">
-            <label style="font-size:0.78rem;font-weight:600;display:block;margin-bottom:0.25rem;">Description</label>
-            <input id="seq-desc" type="text" placeholder="Optional description" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          <div style="margin-bottom:0.6rem;">
+            <label style="font-size:0.78rem;font-weight:600;display:block;margin-bottom:0.2rem;">Description</label>
+            <input id="seq-desc" type="text" placeholder="Optional description" style="width:100%;padding:0.35rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.82rem;">
           </div>
-          <h4 style="font-size:0.85rem;margin:1rem 0 0.5rem;">Step 1: Initial Email</h4>
-          <div style="margin-bottom:0.5rem;">
-            <label style="font-size:0.72rem;font-weight:600;display:block;margin-bottom:0.2rem;">Subject Line</label>
-            <input id="seq-subject-1" type="text" placeholder="Hi {{first_name}}, quick question about {{firm_name}}" style="width:100%;padding:0.35rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.8rem;">
+
+          <!-- Quick Start Templates -->
+          <div style="background:#f5f3ff;border:1px solid #e9d5ff;border-radius:8px;padding:0.5rem;margin-bottom:0.6rem;">
+            <div style="font-size:0.72rem;font-weight:600;color:#7c3aed;margin-bottom:0.3rem;">Quick Start Templates</div>
+            <div style="display:flex;gap:0.3rem;flex-wrap:wrap;">
+              <button onclick="applySeqTemplate('cold')" class="seq-template-btn" style="font-size:0.68rem;padding:0.2rem 0.5rem;border:1px solid #d8b4fe;border-radius:4px;background:#fff;cursor:pointer;color:#7c3aed;">Cold Outreach (3-step)</button>
+              <button onclick="applySeqTemplate('followup')" class="seq-template-btn" style="font-size:0.68rem;padding:0.2rem 0.5rem;border:1px solid #d8b4fe;border-radius:4px;background:#fff;cursor:pointer;color:#7c3aed;">Follow-up (2-step)</button>
+              <button onclick="applySeqTemplate('breakup')" class="seq-template-btn" style="font-size:0.68rem;padding:0.2rem 0.5rem;border:1px solid #d8b4fe;border-radius:4px;background:#fff;cursor:pointer;color:#7c3aed;">Break-up (1-step)</button>
+            </div>
           </div>
-          <div style="margin-bottom:0.5rem;">
-            <label style="font-size:0.72rem;font-weight:600;display:block;margin-bottom:0.2rem;">Body</label>
-            <textarea id="seq-body-1" rows="4" placeholder="Hi {{first_name}},\n\nI noticed you're a {{practice_area}} attorney in {{city}}..." style="width:100%;padding:0.35rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.8rem;font-family:inherit;resize:vertical;"></textarea>
+
+          <h4 style="font-size:0.82rem;margin:0.5rem 0 0.4rem;">Step 1: Initial Email</h4>
+          <div style="margin-bottom:0.4rem;">
+            <input id="seq-subject-1" type="text" placeholder="Hi {{first_name}}, quick question about {{firm_name}}" style="width:100%;padding:0.3rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.78rem;">
           </div>
-          <p style="font-size:0.68rem;color:#9ca3af;">Variables: {{first_name}}, {{last_name}}, {{firm_name}}, {{city}}, {{state}}, {{practice_area}}, {{title}}, {{email}}</p>
-          <div style="display:flex;justify-content:flex-end;gap:0.5rem;margin-top:1rem;">
-            <button onclick="document.getElementById('sequence-modal').remove()" style="padding:0.4rem 0.8rem;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:0.82rem;">Cancel</button>
-            <button onclick="createSequence()" style="padding:0.4rem 0.8rem;border:none;border-radius:6px;background:#7c3aed;color:#fff;cursor:pointer;font-size:0.82rem;">Create Sequence</button>
+          <div style="margin-bottom:0.4rem;">
+            <textarea id="seq-body-1" rows="4" placeholder="Hi {{first_name}},\n\nI noticed you're a {{practice_area}} attorney in {{city}}..." style="width:100%;padding:0.3rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.78rem;font-family:inherit;resize:vertical;"></textarea>
+          </div>
+          <p style="font-size:0.65rem;color:#9ca3af;margin-bottom:0.5rem;">Variables: {{first_name}}, {{last_name}}, {{firm_name}}, {{city}}, {{state}}, {{practice_area}}, {{title}}</p>
+          <div style="display:flex;justify-content:flex-end;gap:0.4rem;">
+            <button onclick="document.getElementById('sequence-modal').remove()" style="padding:0.35rem 0.7rem;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:0.8rem;">Cancel</button>
+            <button onclick="createSequence()" style="padding:0.35rem 0.7rem;border:none;border-radius:6px;background:#7c3aed;color:#fff;cursor:pointer;font-size:0.8rem;font-weight:500;">Create Sequence</button>
           </div>
         </div>
       `;
       document.body.appendChild(modal);
       modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+    }
+
+    function applySeqTemplate(type) {
+      const subj = document.getElementById('seq-subject-1');
+      const body = document.getElementById('seq-body-1');
+      const name = document.getElementById('modal-seq-name');
+      const templates = {
+        cold: {
+          name: 'Cold Outreach',
+          subject: 'Quick question about {{firm_name}}\'s growth',
+          body: 'Hi {{first_name}},\n\nI noticed {{firm_name}} focuses on {{practice_area}} in {{city}}. We help firms like yours generate 15-30 qualified consultations per month through targeted digital marketing.\n\nWould you be open to a quick 15-minute chat this week to see if there\'s a fit?\n\nBest,\n[Your Name]',
+        },
+        followup: {
+          name: 'Follow-up',
+          subject: 'Re: {{firm_name}} marketing',
+          body: 'Hi {{first_name}},\n\nJust following up on my previous email. I know {{practice_area}} attorneys are busy, so I\'ll keep this brief.\n\nWe recently helped a {{practice_area}} firm in {{state}} increase their qualified leads by 40% in 90 days. Happy to share the case study if you\'re interested.\n\nBest,\n[Your Name]',
+        },
+        breakup: {
+          name: 'Break-up',
+          subject: 'Should I close your file?',
+          body: 'Hi {{first_name}},\n\nI\'ve reached out a few times about helping {{firm_name}} with marketing. I don\'t want to be a pest, so this will be my last email.\n\nIf you ever want to explore how other {{practice_area}} firms are growing their practice, feel free to reach out.\n\nWishing you continued success,\n[Your Name]',
+        },
+      };
+      const t = templates[type];
+      if (t) {
+        if (!name.value) name.value = t.name;
+        subj.value = t.subject;
+        body.value = t.body;
+      }
     }
 
     async function createSequence() {
@@ -8786,59 +8842,187 @@
         const seq = seqs.find(s => s.id === id);
         if (!seq) return;
         const enrollments = await fetch(`/api/sequences/${id}/enrollments`).then(safeJSON);
+        const steps = seq.steps || [];
+        // Group steps by step_number to show variants
+        const stepGroups = {};
+        steps.forEach(st => {
+          if (!stepGroups[st.step_number]) stepGroups[st.step_number] = [];
+          stepGroups[st.step_number].push(st);
+        });
+        const stepNums = Object.keys(stepGroups).map(Number).sort((a, b) => a - b);
 
         const modal = document.createElement('div');
         modal.id = 'sequence-detail-modal';
         modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
+        let stepsHtml = '';
+        if (stepNums.length === 0) {
+          stepsHtml = '<p style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:1rem 0;">No steps yet. Add a step below or let AI generate a full sequence.</p>';
+        } else {
+          // Visual timeline
+          stepsHtml += '<div style="position:relative;padding-left:24px;">';
+          stepsHtml += '<div style="position:absolute;left:10px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,#c4b5fd,#e9d5ff);"></div>';
+          stepNums.forEach((num, idx) => {
+            const variants = stepGroups[num];
+            const delay = variants[0].delay_days;
+            const channel = variants[0].channel || 'email';
+            const channelIcons = { email: '\u{2709}\uFE0F', phone: '\u{1F4DE}', linkedin: '\u{1F517}', sms: '\u{1F4AC}' };
+            stepsHtml += `<div style="position:relative;margin-bottom:0.8rem;">`;
+            stepsHtml += `<div style="position:absolute;left:-18px;top:4px;width:14px;height:14px;border-radius:50%;background:#7c3aed;border:2px solid #e9d5ff;z-index:1;"></div>`;
+            stepsHtml += `<div style="display:flex;align-items:center;gap:0.4rem;margin-bottom:0.3rem;">`;
+            stepsHtml += `<span style="font-size:0.72rem;font-weight:700;color:#7c3aed;">Step ${num}</span>`;
+            stepsHtml += `<span style="font-size:0.65rem;padding:0.1rem 0.35rem;border-radius:8px;background:#ede9fe;color:#7c3aed;">${channelIcons[channel] || ''} ${channel}</span>`;
+            if (delay > 0 || idx > 0) stepsHtml += `<span style="font-size:0.62rem;color:#9ca3af;">wait ${delay}d</span>`;
+            stepsHtml += `</div>`;
+            // Variant tabs
+            if (variants.length > 1) {
+              stepsHtml += `<div style="display:flex;gap:0.2rem;margin-bottom:0.2rem;">`;
+              variants.forEach(v => {
+                stepsHtml += `<span style="font-size:0.6rem;padding:0.08rem 0.35rem;border-radius:4px;background:${v.variant === 'A' ? '#7c3aed' : v.variant === 'B' ? '#3b82f6' : '#10b981'};color:#fff;font-weight:600;">Variant ${v.variant}</span>`;
+              });
+              stepsHtml += `</div>`;
+            }
+            variants.forEach(v => {
+              stepsHtml += `<div style="background:#f5f3ff;border:1px solid #e9d5ff;border-radius:6px;padding:0.4rem 0.5rem;margin-bottom:0.25rem;${variants.length > 1 ? 'border-left:3px solid ' + (v.variant === 'A' ? '#7c3aed' : v.variant === 'B' ? '#3b82f6' : '#10b981') : ''}">`;
+              if (variants.length > 1) stepsHtml += `<span style="font-size:0.6rem;color:#9ca3af;font-weight:600;">Variant ${v.variant}</span> `;
+              stepsHtml += `<div style="font-size:0.76rem;font-weight:500;color:#1e1b4b;">${esc(v.subject || '(no subject)')}</div>`;
+              stepsHtml += `<div style="font-size:0.7rem;color:#6b7280;margin-top:0.1rem;white-space:pre-wrap;max-height:60px;overflow-y:auto;">${esc(v.body || '(no body)')}</div>`;
+              stepsHtml += `</div>`;
+            });
+            stepsHtml += `</div>`;
+          });
+          stepsHtml += '</div>';
+        }
+
         modal.innerHTML = `
-          <div style="background:#fff;border-radius:12px;padding:1.5rem;width:600px;max-width:90vw;max-height:80vh;overflow-y:auto;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-              <h3 style="margin:0;font-size:1.1rem;color:#7c3aed;">${esc(seq.name)}</h3>
-              <button onclick="document.getElementById('sequence-detail-modal').remove()" style="border:none;background:none;font-size:1.2rem;cursor:pointer;">&times;</button>
-            </div>
-            ${seq.description ? '<p style="font-size:0.78rem;color:#6b7280;margin-bottom:0.75rem;">' + esc(seq.description) + '</p>' : ''}
-
-            <h4 style="font-size:0.85rem;margin:0 0 0.5rem;">Steps (${seq.steps?.length || 0})</h4>
-            ${(seq.steps || []).map(st => `
-              <div style="background:#f5f3ff;border:1px solid #e9d5ff;border-radius:6px;padding:0.5rem 0.6rem;margin-bottom:0.4rem;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <span style="font-size:0.75rem;font-weight:600;color:#7c3aed;">Step ${st.step_number} (${st.channel}${st.variant !== 'A' ? ' - Variant ' + st.variant : ''})</span>
-                  <span style="font-size:0.68rem;color:#9ca3af;">Delay: ${st.delay_days}d</span>
-                </div>
-                <div style="font-size:0.78rem;font-weight:500;margin-top:0.25rem;">${esc(st.subject || '(no subject)')}</div>
-                <div style="font-size:0.72rem;color:#6b7280;margin-top:0.15rem;white-space:pre-wrap;max-height:80px;overflow-y:auto;">${esc(st.body || '(no body)')}</div>
+          <div style="background:#fff;border-radius:12px;padding:1.5rem;width:680px;max-width:92vw;max-height:85vh;overflow-y:auto;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+              <div>
+                <h3 style="margin:0;font-size:1.1rem;color:#7c3aed;">${esc(seq.name)}</h3>
+                ${seq.description ? '<p style="font-size:0.72rem;color:#6b7280;margin:0.15rem 0 0;">' + esc(seq.description) + '</p>' : ''}
               </div>
-            `).join('') || '<p style="font-size:0.72rem;color:#9ca3af;">No steps yet.</p>'}
+              <div style="display:flex;align-items:center;gap:0.5rem;">
+                <span style="font-size:0.68rem;padding:0.15rem 0.5rem;border-radius:10px;background:#ede9fe;color:#7c3aed;font-weight:600;">${stepNums.length} steps</span>
+                <span style="font-size:0.68rem;padding:0.15rem 0.5rem;border-radius:10px;background:#dcfce7;color:#166534;font-weight:600;">${fmt(seq.enrolled)} enrolled</span>
+                <button onclick="document.getElementById('sequence-detail-modal').remove()" style="border:none;background:none;font-size:1.4rem;cursor:pointer;color:#9ca3af;line-height:1;">&times;</button>
+              </div>
+            </div>
 
-            <div style="margin-top:0.75rem;">
-              <h4 style="font-size:0.85rem;margin:0 0 0.5rem;">Add Step</h4>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;margin-bottom:0.4rem;">
-                <input id="new-step-subject" type="text" placeholder="Subject line..." style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
-                <select id="new-step-delay" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
-                  <option value="0">No delay</option><option value="1">1 day</option><option value="2">2 days</option><option value="3">3 days</option><option value="5">5 days</option><option value="7">7 days</option>
+            <!-- Steps Timeline -->
+            <div style="margin:0.75rem 0;">${stepsHtml}</div>
+
+            <!-- AI Generate Variants -->
+            <div style="background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1px solid #c7d2fe;border-radius:8px;padding:0.6rem;margin-bottom:0.75rem;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.3rem;">
+                <span style="font-size:0.78rem;font-weight:600;color:#4338ca;">AI Variant Generator</span>
+              </div>
+              <div style="display:flex;gap:0.3rem;flex-wrap:wrap;margin-bottom:0.3rem;">
+                <select id="ai-variant-step" style="padding:0.25rem;border:1px solid #c7d2fe;border-radius:4px;font-size:0.72rem;">
+                  ${stepNums.length > 0 ? stepNums.map(n => '<option value="' + n + '">Step ' + n + '</option>').join('') : '<option value="1">Step 1 (new)</option>'}
+                </select>
+                <input id="ai-variant-practice" type="text" placeholder="Practice area..." value="personal injury" style="padding:0.25rem;border:1px solid #c7d2fe;border-radius:4px;font-size:0.72rem;width:120px;">
+                <select id="ai-variant-purpose" style="padding:0.25rem;border:1px solid #c7d2fe;border-radius:4px;font-size:0.72rem;">
+                  <option value="initial cold outreach">Cold outreach</option>
+                  <option value="follow-up after no reply">Follow-up</option>
+                  <option value="break-up / last attempt">Break-up</option>
+                  <option value="value-add / case study share">Value-add</option>
+                  <option value="meeting request">Meeting request</option>
+                </select>
+                <button id="ai-gen-variants-btn" onclick="aiGenerateVariants(${id})" style="padding:0.25rem 0.6rem;background:#4f46e5;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:0.72rem;font-weight:500;">Generate 3 Variants</button>
+              </div>
+              <div id="ai-variant-results"></div>
+            </div>
+
+            <!-- Add Step Manually -->
+            <div style="border:1px solid #e5e7eb;border-radius:8px;padding:0.6rem;margin-bottom:0.75rem;">
+              <div style="font-size:0.78rem;font-weight:600;color:#374151;margin-bottom:0.3rem;">Add Step Manually</div>
+              <div style="display:grid;grid-template-columns:1fr auto auto;gap:0.3rem;margin-bottom:0.3rem;">
+                <input id="new-step-subject" type="text" placeholder="Subject line..." style="padding:0.25rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.74rem;">
+                <select id="new-step-channel" style="padding:0.25rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.74rem;">
+                  <option value="email">Email</option><option value="phone">Phone</option><option value="linkedin">LinkedIn</option><option value="sms">SMS</option>
+                </select>
+                <select id="new-step-delay" style="padding:0.25rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.74rem;">
+                  <option value="0">No delay</option><option value="1">1 day</option><option value="2">2 days</option><option value="3">3 days</option><option value="5">5 days</option><option value="7">7 days</option><option value="14">14 days</option>
                 </select>
               </div>
-              <textarea id="new-step-body" rows="2" placeholder="Email body..." style="width:100%;padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;font-family:inherit;resize:vertical;margin-bottom:0.4rem;"></textarea>
+              <textarea id="new-step-body" rows="2" placeholder="Email body... Use {{first_name}}, {{firm_name}}, {{city}}, {{practice_area}}" style="width:100%;padding:0.25rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.74rem;font-family:inherit;resize:vertical;margin-bottom:0.3rem;"></textarea>
               <button onclick="addStepToSequence(${id})" style="font-size:0.72rem;padding:0.25rem 0.6rem;background:#7c3aed;color:#fff;border:none;border-radius:4px;cursor:pointer;">Add Step</button>
             </div>
 
-            <h4 style="font-size:0.85rem;margin:1rem 0 0.5rem;">Enrolled (${enrollments.length})</h4>
-            ${enrollments.length > 0 ? `
-              <div style="max-height:150px;overflow-y:auto;">
-                ${enrollments.slice(0, 20).map(e => `
-                  <div style="display:flex;justify-content:space-between;padding:0.2rem 0;border-bottom:1px solid #f3f4f6;font-size:0.72rem;">
-                    <span>${esc(e.first_name)} ${esc(e.last_name)} ${e.email ? '<span style="color:#6b7280;">(' + esc(e.email) + ')</span>' : ''}</span>
-                    <span style="color:${e.status === 'active' ? '#15803d' : '#9ca3af'};font-weight:500;">${e.status}</span>
-                  </div>
-                `).join('')}
-                ${enrollments.length > 20 ? '<p style="font-size:0.68rem;color:#9ca3af;">...and ' + (enrollments.length - 20) + ' more</p>' : ''}
+            <!-- Enrollments -->
+            <div style="border:1px solid #e5e7eb;border-radius:8px;padding:0.6rem;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.3rem;">
+                <span style="font-size:0.78rem;font-weight:600;color:#374151;">Enrolled Leads (${enrollments.length})</span>
+                ${enrollments.length > 0 ? '<span style="font-size:0.65rem;color:#16a34a;font-weight:600;">' + enrollments.filter(e => e.status === 'active').length + ' active</span>' : ''}
               </div>
-            ` : '<p style="font-size:0.72rem;color:#9ca3af;">No leads enrolled. Select leads and enroll them.</p>'}
+              ${enrollments.length > 0 ? `
+                <div style="max-height:120px;overflow-y:auto;">
+                  ${enrollments.slice(0, 30).map(e => `
+                    <div style="display:flex;justify-content:space-between;padding:0.15rem 0;border-bottom:1px solid #f3f4f6;font-size:0.7rem;">
+                      <span style="color:#374151;">${esc(e.first_name || '')} ${esc(e.last_name || '')} ${e.email ? '<span style="color:#6b7280;">(' + esc(e.email) + ')</span>' : ''}</span>
+                      <span style="padding:0.05rem 0.3rem;border-radius:8px;font-size:0.6rem;font-weight:600;${e.status === 'active' ? 'background:#dcfce7;color:#166534;' : e.status === 'completed' ? 'background:#dbeafe;color:#1e40af;' : 'background:#f3f4f6;color:#6b7280;'}">${e.status}</span>
+                    </div>
+                  `).join('')}
+                  ${enrollments.length > 30 ? '<p style="font-size:0.65rem;color:#9ca3af;text-align:center;">...and ' + (enrollments.length - 30) + ' more</p>' : ''}
+                </div>
+              ` : '<p style="font-size:0.72rem;color:#9ca3af;">No leads enrolled. Select leads in the table and use "Enroll" to add them.</p>'}
+            </div>
           </div>
         `;
         document.body.appendChild(modal);
         modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
       } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    async function aiGenerateVariants(seqId) {
+      const stepNum = parseInt(document.getElementById('ai-variant-step').value) || 1;
+      const practice = document.getElementById('ai-variant-practice').value.trim() || 'general';
+      const purpose = document.getElementById('ai-variant-purpose').value;
+      const resultEl = document.getElementById('ai-variant-results');
+      const btn = document.getElementById('ai-gen-variants-btn');
+      btn.disabled = true; btn.textContent = 'Generating...';
+      resultEl.innerHTML = '<div style="font-size:0.72rem;color:#6366f1;">AI is writing variants...</div>';
+      try {
+        const res = await fetch('/api/ai/sequence-variants', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ stepContext: { stepNumber: stepNum, channel: 'email', purpose, practiceArea: practice }, numVariants: 3 }),
+        });
+        const d = await safeJSON(res);
+        if (d.error) throw new Error(d.error);
+        const variants = d.variants || [];
+        if (variants.length === 0) { resultEl.innerHTML = '<div style="font-size:0.72rem;color:#fca5a5;">No variants generated.</div>'; return; }
+        let html = '';
+        variants.forEach((v, i) => {
+          const varLabel = String.fromCharCode(65 + i);
+          html += `<div style="background:#fff;border:1px solid #c7d2fe;border-left:3px solid ${['#7c3aed','#3b82f6','#10b981'][i] || '#6366f1'};border-radius:6px;padding:0.4rem 0.5rem;margin-top:0.3rem;">`;
+          html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
+          html += `<span style="font-size:0.68rem;font-weight:600;color:${['#7c3aed','#3b82f6','#10b981'][i] || '#6366f1'};">${esc(v.label || 'Variant ' + varLabel)}</span>`;
+          html += `<button onclick="saveAiVariant(${seqId}, ${stepNum}, '${varLabel}', this)" style="font-size:0.62rem;padding:0.1rem 0.4rem;background:#7c3aed;color:#fff;border:none;border-radius:3px;cursor:pointer;">Save as Variant ${varLabel}</button>`;
+          html += `</div>`;
+          html += `<div style="font-size:0.74rem;font-weight:500;margin-top:0.1rem;">${esc(v.subject || '')}</div>`;
+          html += `<div style="font-size:0.7rem;color:#6b7280;margin-top:0.05rem;white-space:pre-wrap;">${esc(v.body || '')}</div>`;
+          html += `<input type="hidden" class="ai-variant-subject" value="${esc(v.subject || '')}"><input type="hidden" class="ai-variant-body" value="${esc(v.body || '')}">`;
+          html += `</div>`;
+        });
+        resultEl.innerHTML = html;
+      } catch (err) {
+        resultEl.innerHTML = `<div style="font-size:0.72rem;color:#fca5a5;">Error: ${esc(err.message)}</div>`;
+      } finally { btn.disabled = false; btn.textContent = 'Generate 3 Variants'; }
+    }
+
+    async function saveAiVariant(seqId, stepNumber, variant, btn) {
+      const card = btn.closest('div[style*="border-left"]');
+      const subject = card.querySelector('.ai-variant-subject').value;
+      const body = card.querySelector('.ai-variant-body').value;
+      btn.disabled = true; btn.textContent = 'Saving...';
+      try {
+        await fetch(`/api/sequences/${seqId}/steps`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ stepNumber, channel: 'email', subject, body, delayDays: 0, variant }),
+        });
+        btn.textContent = 'Saved!';
+        btn.style.background = '#059669';
+        toast(`Variant ${variant} saved to step ${stepNumber}`, 'success');
+      } catch (err) { btn.textContent = 'Error'; toast('Save failed: ' + err.message, 'error'); }
     }
 
     async function addStepToSequence(seqId) {
