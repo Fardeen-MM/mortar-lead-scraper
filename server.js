@@ -4590,6 +4590,24 @@ app.post('/api/ai/sequence-variants', async (req, res) => {
   } catch (err) { aiError(res, err); }
 });
 
+app.post('/api/ai/outreach-plan', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    const { leadIds, goal } = req.body;
+    let leads;
+    if (leadIds && leadIds.length > 0) {
+      leads = leadIds.map(id => leadDb.getLeadById(id)).filter(Boolean);
+    } else {
+      const result = leadDb.searchLeads({ sort: 'lead_score', order: 'desc', limit: 15, minScore: 30 });
+      leads = result.leads || [];
+    }
+    if (leads.length === 0) return res.status(400).json({ error: 'No leads found' });
+    const plan = await ai.planOutreach(leads, { goal });
+    res.json(plan);
+  } catch (err) { aiError(res, err); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {
