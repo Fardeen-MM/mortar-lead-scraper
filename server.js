@@ -115,285 +115,330 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
 
 // Start a scrape job
 app.post('/api/scrape/start', (req, res) => {
-  const { state, practice, city, test, uploadId, enrich, enrichOptions, waterfall, niche, personExtract } = req.body;
+  try {
+    const { state, practice, city, test, uploadId, enrich, enrichOptions, waterfall, niche, personExtract } = req.body;
 
-  if (!state) {
-    return res.status(400).json({ error: 'State is required' });
-  }
-
-  // Validate state against registered scrapers
-  const { getRegistry } = require('./lib/registry');
-  const registry = getRegistry();
-  if (!registry[state]) {
-    return res.status(400).json({ error: `Unknown scraper: ${state}` });
-  }
-
-  const jobId = `job-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
-
-  // Get existing leads from upload if provided
-  let existingLeads = [];
-  if (uploadId) {
-    const uploadData = jobs.get(`upload-${uploadId}`);
-    if (uploadData) {
-      existingLeads = uploadData.leads;
+    if (!state) {
+      return res.status(400).json({ error: 'State is required' });
     }
-  }
 
-  // Start pipeline
-  const emitter = runPipeline({
-    state,
-    practice: practice || undefined,
-    city: city || undefined,
-    test: !!test,
-    emailScrape: req.body.emailScrape !== false, // Default on — crawl firm websites for emails
-    existingLeads,
-    enrich: !!enrich,
-    enrichOptions: enrichOptions || {},
-    waterfall: waterfall || {},
-    niche: niche || undefined,
-    personExtract: !!personExtract,
-  });
+    // Validate state against registered scrapers
+    const { getRegistry } = require('./lib/registry');
+    const registry = getRegistry();
+    if (!registry[state]) {
+      return res.status(400).json({ error: `Unknown scraper: ${state}` });
+    }
 
-  // Store job
-  const job = {
-    id: jobId,
-    state,
-    practice,
-    city,
-    test,
-    status: 'running',
-    cancelled: false,
-    emitter,
-    leads: [],
-    stats: null,
-    outputFile: null,
-  };
-  jobs.set(jobId, job);
-  console.log(`[job:${jobId}] Started — state=${state} practice=${practice || 'all'} city=${city || 'all'} test=${!!test} enrich=${!!enrich}`);
+    const jobId = `job-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
 
-  // Forward emitter events to all WebSocket clients subscribed to this job
-  emitter.on('lead', (data) => {
-    job.leads.push(data.data);
-    broadcast(jobId, { type: 'lead', data: data.data });
-  });
-
-  emitter.on('progress', (data) => {
-    broadcast(jobId, { type: 'progress', ...data });
-  });
-
-  emitter.on('log', (data) => {
-    broadcast(jobId, { type: 'log', level: data.level, message: data.message });
-  });
-
-  emitter.on('enrichment-progress', (data) => {
-    broadcast(jobId, { type: 'enrichment-progress', ...data });
-  });
-
-  emitter.on('waterfall-progress', (data) => {
-    broadcast(jobId, { type: 'waterfall-progress', ...data });
-  });
-
-  emitter.on('person-extract-progress', (data) => {
-    broadcast(jobId, { type: 'person-extract-progress', ...data });
-  });
-
-  // Schedule job cleanup after terminal state (30 min TTL)
-  function scheduleJobCleanup() {
-    setTimeout(() => {
-      jobs.delete(jobId);
-      console.log(`[job:${jobId}] Cleaned up from memory (TTL expired)`);
-    }, 30 * 60 * 1000);
-  }
-
-  emitter.on('complete', (data) => {
-    job.status = 'complete';
-    job.stats = data.stats;
-    job.outputFile = data.outputFile;
-    console.log(`[job:${jobId}] Complete — ${data.stats.netNew} new leads, output=${data.outputFile || 'none'}`);
-
-    // Auto-save leads to master database
-    if (data.leads && data.leads.length > 0) {
-      try {
-        const leadDb = require('./lib/lead-db');
-        const dbStats = leadDb.batchUpsert(data.leads, `scraper:${state}`);
-        leadDb.recordScrapeRun({
-          state, source: `scraper:${state}`,
-          practice_area: practice || 'all',
-          leadsFound: data.leads.length,
-          leadsNew: dbStats.inserted,
-          leadsUpdated: dbStats.updated,
-          emailsFound: data.leads.filter(l => l.email).length,
-        });
-
-        // Auto-enrich: share firm data + deduce websites for new leads
-        if (dbStats.inserted > 0) {
-          const firmResult = leadDb.shareFirmData();
-          const deduceResult = leadDb.deduceWebsitesFromEmail();
-          if (firmResult.leadsUpdated > 0 || deduceResult.leadsUpdated > 0) {
-            console.log(`[job:${jobId}] Auto-enriched: ${firmResult.leadsUpdated} firm shares, ${deduceResult.leadsUpdated} websites deduced`);
-          }
-        }
-
-        console.log(`[job:${jobId}] Saved to master DB: ${dbStats.inserted} new, ${dbStats.updated} updated, ${dbStats.unchanged} unchanged`);
-      } catch (err) {
-        console.error(`[job:${jobId}] Failed to save to master DB:`, err.message);
+    // Get existing leads from upload if provided
+    let existingLeads = [];
+    if (uploadId) {
+      const uploadData = jobs.get(`upload-${uploadId}`);
+      if (uploadData) {
+        existingLeads = uploadData.leads;
       }
     }
 
-    broadcast(jobId, { type: 'complete', stats: data.stats, jobId });
-    broadcastAll({ type: 'db-update', event: 'scrape-complete', state: job.state, stats: data.stats });
-    fireWebhookEvent('scrape.complete', { state: job.state, stats: data.stats });
-    scheduleJobCleanup();
-  });
+    // Start pipeline
+    const emitter = runPipeline({
+      state,
+      practice: practice || undefined,
+      city: city || undefined,
+      test: !!test,
+      emailScrape: req.body.emailScrape !== false, // Default on — crawl firm websites for emails
+      existingLeads,
+      enrich: !!enrich,
+      enrichOptions: enrichOptions || {},
+      waterfall: waterfall || {},
+      niche: niche || undefined,
+      personExtract: !!personExtract,
+    });
 
-  emitter.on('cancelled-complete', (data) => {
-    job.status = 'cancelled';
-    job.stats = data.stats;
-    job.outputFile = data.outputFile;
-    console.log(`[job:${jobId}] Cancelled — ${data.stats.netNew} leads collected before cancel`);
-    broadcast(jobId, { type: 'cancelled-complete', stats: data.stats, jobId });
-    scheduleJobCleanup();
-  });
+    // Store job
+    const job = {
+      id: jobId,
+      state,
+      practice,
+      city,
+      test,
+      status: 'running',
+      cancelled: false,
+      emitter,
+      leads: [],
+      stats: null,
+      outputFile: null,
+    };
+    jobs.set(jobId, job);
+    console.log(`[job:${jobId}] Started — state=${state} practice=${practice || 'all'} city=${city || 'all'} test=${!!test} enrich=${!!enrich}`);
 
-  emitter.on('error', (data) => {
-    job.status = 'error';
-    console.error(`[job:${jobId}] Error:`, data.message);
-    broadcast(jobId, { type: 'error', message: data.message });
-    scheduleJobCleanup();
-  });
+    // Forward emitter events to all WebSocket clients subscribed to this job
+    emitter.on('lead', (data) => {
+      job.leads.push(data.data);
+      broadcast(jobId, { type: 'lead', data: data.data });
+    });
 
-  res.json({ jobId });
+    emitter.on('progress', (data) => {
+      broadcast(jobId, { type: 'progress', ...data });
+    });
+
+    emitter.on('log', (data) => {
+      broadcast(jobId, { type: 'log', level: data.level, message: data.message });
+    });
+
+    emitter.on('enrichment-progress', (data) => {
+      broadcast(jobId, { type: 'enrichment-progress', ...data });
+    });
+
+    emitter.on('waterfall-progress', (data) => {
+      broadcast(jobId, { type: 'waterfall-progress', ...data });
+    });
+
+    emitter.on('person-extract-progress', (data) => {
+      broadcast(jobId, { type: 'person-extract-progress', ...data });
+    });
+
+    // Schedule job cleanup after terminal state (30 min TTL)
+    function scheduleJobCleanup() {
+      setTimeout(() => {
+        jobs.delete(jobId);
+        console.log(`[job:${jobId}] Cleaned up from memory (TTL expired)`);
+      }, 30 * 60 * 1000);
+    }
+
+    emitter.on('complete', (data) => {
+      job.status = 'complete';
+      job.stats = data.stats;
+      job.outputFile = data.outputFile;
+      console.log(`[job:${jobId}] Complete — ${data.stats.netNew} new leads, output=${data.outputFile || 'none'}`);
+
+      // Auto-save leads to master database
+      if (data.leads && data.leads.length > 0) {
+        try {
+          const leadDb = require('./lib/lead-db');
+          const dbStats = leadDb.batchUpsert(data.leads, `scraper:${state}`);
+          leadDb.recordScrapeRun({
+            state, source: `scraper:${state}`,
+            practice_area: practice || 'all',
+            leadsFound: data.leads.length,
+            leadsNew: dbStats.inserted,
+            leadsUpdated: dbStats.updated,
+            emailsFound: data.leads.filter(l => l.email).length,
+          });
+
+          // Auto-enrich: share firm data + deduce websites for new leads
+          if (dbStats.inserted > 0) {
+            const firmResult = leadDb.shareFirmData();
+            const deduceResult = leadDb.deduceWebsitesFromEmail();
+            if (firmResult.leadsUpdated > 0 || deduceResult.leadsUpdated > 0) {
+              console.log(`[job:${jobId}] Auto-enriched: ${firmResult.leadsUpdated} firm shares, ${deduceResult.leadsUpdated} websites deduced`);
+            }
+          }
+
+          console.log(`[job:${jobId}] Saved to master DB: ${dbStats.inserted} new, ${dbStats.updated} updated, ${dbStats.unchanged} unchanged`);
+        } catch (err) {
+          console.error(`[job:${jobId}] Failed to save to master DB:`, err.message);
+        }
+      }
+
+      broadcast(jobId, { type: 'complete', stats: data.stats, jobId });
+      broadcastAll({ type: 'db-update', event: 'scrape-complete', state: job.state, stats: data.stats });
+      fireWebhookEvent('scrape.complete', { state: job.state, stats: data.stats });
+      scheduleJobCleanup();
+    });
+
+    emitter.on('cancelled-complete', (data) => {
+      job.status = 'cancelled';
+      job.stats = data.stats;
+      job.outputFile = data.outputFile;
+      console.log(`[job:${jobId}] Cancelled — ${data.stats.netNew} leads collected before cancel`);
+      broadcast(jobId, { type: 'cancelled-complete', stats: data.stats, jobId });
+      scheduleJobCleanup();
+    });
+
+    emitter.on('error', (data) => {
+      job.status = 'error';
+      console.error(`[job:${jobId}] Error:`, data.message);
+      broadcast(jobId, { type: 'error', message: data.message });
+      scheduleJobCleanup();
+    });
+
+    res.json({ jobId });
+  } catch (err) {
+    console.error('[scrape/start] Error:', err.message, err.stack);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // --- Bulk Scrape (must be before :id/status to avoid route collision) ---
 let _bulkScraper = null;
 
 app.post('/api/scrape/bulk', (req, res) => {
-  const BulkScraper = require('./lib/bulk-scraper');
-  if (_bulkScraper && _bulkScraper.running) {
-    return res.json({ status: 'already_running', progress: _bulkScraper.getProgress() });
+  try {
+    const BulkScraper = require('./lib/bulk-scraper');
+    if (_bulkScraper && _bulkScraper.running) {
+      return res.json({ status: 'already_running', progress: _bulkScraper.getProgress() });
+    }
+
+    _bulkScraper = new BulkScraper();
+    const { test, countries, scrapers } = req.body || {};
+
+    res.json({ status: 'started', message: 'Bulk scrape started in background' });
+
+    _bulkScraper.run({ test: !!test, countries, scrapers })
+      .catch(err => console.error('[Bulk] Error:', err.message));
+  } catch (err) {
+    console.error('[scrape/bulk] Error:', err.message, err.stack);
+    res.status(500).json({ error: err.message });
   }
-
-  _bulkScraper = new BulkScraper();
-  const { test, countries, scrapers } = req.body || {};
-
-  res.json({ status: 'started', message: 'Bulk scrape started in background' });
-
-  _bulkScraper.run({ test: !!test, countries, scrapers })
-    .catch(err => console.error('[Bulk] Error:', err.message));
 });
 
 app.get('/api/scrape/bulk/status', (req, res) => {
-  if (!_bulkScraper) {
-    return res.json({ running: false, progress: null });
+  try {
+    if (!_bulkScraper) {
+      return res.json({ running: false, progress: null });
+    }
+    res.json(_bulkScraper.getProgress());
+  } catch (err) {
+    console.error('[scrape/bulk/status] Error:', err.message, err.stack);
+    res.status(500).json({ error: err.message });
   }
-  res.json(_bulkScraper.getProgress());
 });
 
 app.post('/api/scrape/bulk/cancel', (req, res) => {
-  if (_bulkScraper && _bulkScraper.running) {
-    _bulkScraper.cancel();
-    res.json({ ok: true });
-  } else {
-    res.json({ ok: false, message: 'No bulk scrape running' });
+  try {
+    if (_bulkScraper && _bulkScraper.running) {
+      _bulkScraper.cancel();
+      res.json({ ok: true });
+    } else {
+      res.json({ ok: false, message: 'No bulk scrape running' });
+    }
+  } catch (err) {
+    console.error('[scrape/bulk/cancel] Error:', err.message, err.stack);
+    res.status(500).json({ error: err.message });
   }
 });
 
 // Get job status (for session restore after page refresh)
 app.get('/api/scrape/:id/status', (req, res) => {
-  const job = jobs.get(req.params.id);
-  if (!job) {
-    return res.status(404).json({ error: 'Job not found' });
+  try {
+    const job = jobs.get(req.params.id);
+    if (!job) {
+      return res.status(404).json({ error: 'Job not found' });
+    }
+    res.json({
+      jobId: job.id,
+      status: job.status,
+      state: job.state,
+      practice: job.practice,
+      city: job.city,
+      test: job.test,
+      stats: job.stats,
+      leadCount: job.leads.length,
+      leads: job.leads.slice(-20),
+      hasOutputFile: !!job.outputFile,
+    });
+  } catch (err) {
+    console.error('[scrape/:id/status] Error:', err.message, err.stack);
+    res.status(500).json({ error: err.message });
   }
-  res.json({
-    jobId: job.id,
-    status: job.status,
-    state: job.state,
-    practice: job.practice,
-    city: job.city,
-    test: job.test,
-    stats: job.stats,
-    leadCount: job.leads.length,
-    leads: job.leads.slice(-20),
-    hasOutputFile: !!job.outputFile,
-  });
 });
 
 // Cancel a running scrape job
 app.post('/api/scrape/:id/cancel', (req, res) => {
-  const job = jobs.get(req.params.id);
-  if (!job) {
-    return res.status(404).json({ error: 'Job not found' });
+  try {
+    const job = jobs.get(req.params.id);
+    if (!job) {
+      return res.status(404).json({ error: 'Job not found' });
+    }
+    if (job.status !== 'running') {
+      return res.status(400).json({ error: 'Job is not running' });
+    }
+    job.cancelled = true;
+    job.emitter.emit('cancel');
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('[scrape/:id/cancel] Error:', err.message, err.stack);
+    res.status(500).json({ error: err.message });
   }
-  if (job.status !== 'running') {
-    return res.status(400).json({ error: 'Job is not running' });
-  }
-  job.cancelled = true;
-  job.emitter.emit('cancel');
-  res.json({ ok: true });
 });
 
 // Download CSV for a completed job
 app.get('/api/scrape/:id/download', (req, res) => {
-  const job = jobs.get(req.params.id);
-  if (!job) {
-    console.error(`[download] Job not found: ${req.params.id} (active jobs: ${[...jobs.keys()].filter(k => !k.startsWith('upload-')).join(', ') || 'none'})`);
-    return res.status(404).json({ error: 'Job not found' });
-  }
-  if (!job.outputFile) {
-    console.error(`[download] No output file for ${req.params.id} (status=${job.status}, leads=${job.leads.length})`);
-    return res.status(400).json({ error: 'No output file available' });
-  }
-  if (!fs.existsSync(job.outputFile)) {
-    console.error(`[download] Output file missing from disk: ${job.outputFile}`);
-    return res.status(404).json({ error: 'Output file not found on disk' });
-  }
+  try {
+    const job = jobs.get(req.params.id);
+    if (!job) {
+      console.error(`[download] Job not found: ${req.params.id} (active jobs: ${[...jobs.keys()].filter(k => !k.startsWith('upload-')).join(', ') || 'none'})`);
+      return res.status(404).json({ error: 'Job not found' });
+    }
+    if (!job.outputFile) {
+      console.error(`[download] No output file for ${req.params.id} (status=${job.status}, leads=${job.leads.length})`);
+      return res.status(400).json({ error: 'No output file available' });
+    }
+    if (!fs.existsSync(job.outputFile)) {
+      console.error(`[download] Output file missing from disk: ${job.outputFile}`);
+      return res.status(404).json({ error: 'Output file not found on disk' });
+    }
 
-  const filename = path.basename(job.outputFile);
-  res.download(job.outputFile, filename);
+    const filename = path.basename(job.outputFile);
+    res.download(job.outputFile, filename);
+  } catch (err) {
+    console.error('[scrape/:id/download] Error:', err.message, err.stack);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // Health check — test each scraper's connectivity
 app.get('/api/health', async (req, res) => {
-  const { getRegistry } = require('./lib/registry');
-  const SCRAPERS = getRegistry();
-  const results = {};
-  const https = require('https');
-  const http = require('http');
+  try {
+    const { getRegistry } = require('./lib/registry');
+    const SCRAPERS = getRegistry();
+    const results = {};
+    const https = require('https');
+    const http = require('http');
 
-  const checkUrl = (url) => new Promise((resolve) => {
-    const protocol = url.startsWith('https') ? https : http;
-    const req = protocol.get(url, { timeout: 8000 }, (r) => {
-      r.resume();
-      resolve(r.statusCode < 500 ? 'green' : 'yellow');
+    const checkUrl = (url) => new Promise((resolve) => {
+      const protocol = url.startsWith('https') ? https : http;
+      const req = protocol.get(url, { timeout: 8000 }, (r) => {
+        r.resume();
+        resolve(r.statusCode < 500 ? 'green' : 'yellow');
+      });
+      req.on('error', () => resolve('red'));
+      req.on('timeout', () => { req.destroy(); resolve('red'); });
     });
-    req.on('error', () => resolve('red'));
-    req.on('timeout', () => { req.destroy(); resolve('red'); });
-  });
 
-  const checks = Object.entries(SCRAPERS).map(async ([code, loader]) => {
-    const scraper = loader();
-    try {
-      const status = await checkUrl(scraper.baseUrl);
-      results[code] = status;
-    } catch {
-      results[code] = 'red';
-    }
-  });
+    const checks = Object.entries(SCRAPERS).map(async ([code, loader]) => {
+      const scraper = loader();
+      try {
+        const status = await checkUrl(scraper.baseUrl);
+        results[code] = status;
+      } catch {
+        results[code] = 'red';
+      }
+    });
 
-  await Promise.all(checks);
-  res.json(results);
+    await Promise.all(checks);
+    res.json(results);
+  } catch (err) {
+    console.error('[health] Error:', err.message, err.stack);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // --- Signal Engine Endpoints ---
 
 // Get signals (paginated)
 app.get('/api/signals', (req, res) => {
-  const { getRecent, getCount } = require('./lib/signal-db');
-  const limit = Math.min(parseInt(req.query.limit) || 50, 5000);
-  const signals = getRecent(limit);
-  const total = getCount();
-  res.json({ signals, total });
+  try {
+    const { getRecent, getCount } = require('./lib/signal-db');
+    const limit = Math.min(parseInt(req.query.limit) || 50, 5000);
+    const signals = getRecent(limit);
+    const total = getCount();
+    res.json({ signals, total });
+  } catch (err) {
+    console.error('[signals] Error:', err.message, err.stack);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // Trigger a manual scan (non-blocking — responds immediately, runs in background)
@@ -401,32 +446,43 @@ let _scanRunning = false;
 let _lastScanResult = null;
 
 app.post('/api/signals/scan', (req, res) => {
-  if (_scanRunning) {
-    return res.json({ status: 'already_running', message: 'Scan is already in progress' });
+  try {
+    if (_scanRunning) {
+      return res.json({ status: 'already_running', message: 'Scan is already in progress' });
+    }
+
+    _scanRunning = true;
+    res.json({ status: 'started', message: 'Scan started in background' });
+
+    const jobBoards = require('./watchers/job-boards');
+    jobBoards.run()
+      .then(count => {
+        _lastScanResult = { newSignals: count, completedAt: new Date().toISOString() };
+        console.log(`[Signal] Manual scan complete — ${count} new signals`);
+      })
+      .catch(err => {
+        _lastScanResult = { error: err.message, completedAt: new Date().toISOString() };
+        console.error('[Signal] Manual scan error:', err.message);
+      })
+      .finally(() => { _scanRunning = false; });
+  } catch (err) {
+    console.error('[signals/scan] Error:', err.message, err.stack);
+    _scanRunning = false;
+    res.status(500).json({ error: err.message });
   }
-
-  _scanRunning = true;
-  res.json({ status: 'started', message: 'Scan started in background' });
-
-  const jobBoards = require('./watchers/job-boards');
-  jobBoards.run()
-    .then(count => {
-      _lastScanResult = { newSignals: count, completedAt: new Date().toISOString() };
-      console.log(`[Signal] Manual scan complete — ${count} new signals`);
-    })
-    .catch(err => {
-      _lastScanResult = { error: err.message, completedAt: new Date().toISOString() };
-      console.error('[Signal] Manual scan error:', err.message);
-    })
-    .finally(() => { _scanRunning = false; });
 });
 
 // Check scan status
 app.get('/api/signals/scan-status', (req, res) => {
-  res.json({
-    running: _scanRunning,
-    lastResult: _lastScanResult,
-  });
+  try {
+    res.json({
+      running: _scanRunning,
+      lastResult: _lastScanResult,
+    });
+  } catch (err) {
+    console.error('[signals/scan-status] Error:', err.message, err.stack);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // --- Bulk Scraper Endpoints ---
@@ -437,55 +493,66 @@ let _websiteFinderRunning = false;
 let _websiteFinderProgress = null;
 
 app.post('/api/leads/find-websites', (req, res) => {
-  if (_websiteFinderRunning) {
-    return res.json({ status: 'already_running', progress: _websiteFinderProgress });
-  }
-
-  _websiteFinderRunning = true;
-  _websiteFinderProgress = { current: 0, total: 0, found: 0 };
-  res.json({ status: 'started', message: 'Website finder started in background' });
-
-  const { batchFindWebsites } = require('./lib/website-finder');
-  const leadDb = require('./lib/lead-db');
-
-  (async () => {
-    // Get leads without website from master DB
-    const db = leadDb.getDb();
-    const leadsNeedingWebsite = db.prepare(`
-      SELECT * FROM leads
-      WHERE (website = '' OR website IS NULL)
-        AND firm_name != '' AND firm_name IS NOT NULL
-      ORDER BY updated_at DESC
-      LIMIT ?
-    `).all(Math.min(Math.max(parseInt(req.body.limit) || 500, 1), 5000));
-
-    _websiteFinderProgress.total = leadsNeedingWebsite.length;
-
-    const stats = await batchFindWebsites(leadsNeedingWebsite, {
-      onProgress: (current, total) => {
-        _websiteFinderProgress.current = current;
-        _websiteFinderProgress.total = total;
-      },
-      googleSearch: req.body.googleSearch !== false,
-    });
-
-    _websiteFinderProgress.found = stats.found;
-
-    // Save found websites back to DB
-    for (const lead of leadsNeedingWebsite) {
-      if (lead.website) {
-        leadDb.upsertLead(lead);
-      }
+  try {
+    if (_websiteFinderRunning) {
+      return res.json({ status: 'already_running', progress: _websiteFinderProgress });
     }
 
-    console.log(`[Website Finder] Done — found ${stats.found} websites out of ${leadsNeedingWebsite.length}`);
-  })()
-    .catch(err => console.error('[Website Finder] Error:', err.message))
-    .finally(() => { _websiteFinderRunning = false; });
+    _websiteFinderRunning = true;
+    _websiteFinderProgress = { current: 0, total: 0, found: 0 };
+    res.json({ status: 'started', message: 'Website finder started in background' });
+
+    const { batchFindWebsites } = require('./lib/website-finder');
+    const leadDb = require('./lib/lead-db');
+
+    (async () => {
+      // Get leads without website from master DB
+      const db = leadDb.getDb();
+      const leadsNeedingWebsite = db.prepare(`
+        SELECT * FROM leads
+        WHERE (website = '' OR website IS NULL)
+          AND firm_name != '' AND firm_name IS NOT NULL
+        ORDER BY updated_at DESC
+        LIMIT ?
+      `).all(Math.min(Math.max(parseInt(req.body.limit) || 500, 1), 5000));
+
+      _websiteFinderProgress.total = leadsNeedingWebsite.length;
+
+      const stats = await batchFindWebsites(leadsNeedingWebsite, {
+        onProgress: (current, total) => {
+          _websiteFinderProgress.current = current;
+          _websiteFinderProgress.total = total;
+        },
+        googleSearch: req.body.googleSearch !== false,
+      });
+
+      _websiteFinderProgress.found = stats.found;
+
+      // Save found websites back to DB
+      for (const lead of leadsNeedingWebsite) {
+        if (lead.website) {
+          leadDb.upsertLead(lead);
+        }
+      }
+
+      console.log(`[Website Finder] Done — found ${stats.found} websites out of ${leadsNeedingWebsite.length}`);
+    })()
+      .catch(err => console.error('[Website Finder] Error:', err.message))
+      .finally(() => { _websiteFinderRunning = false; });
+  } catch (err) {
+    console.error('[leads/find-websites] Error:', err.message, err.stack);
+    _websiteFinderRunning = false;
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.get('/api/leads/find-websites/status', (req, res) => {
-  res.json({ running: _websiteFinderRunning, progress: _websiteFinderProgress });
+  try {
+    res.json({ running: _websiteFinderRunning, progress: _websiteFinderProgress });
+  } catch (err) {
+    console.error('[leads/find-websites/status] Error:', err.message, err.stack);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // --- Lead Database Endpoints ---
@@ -705,88 +772,99 @@ let _prepopRunning = false;
 let _prepopProgress = null;
 
 app.post('/api/leads/prepopulate', (req, res) => {
-  if (_prepopRunning) {
-    return res.json({ status: 'already_running', progress: _prepopProgress });
-  }
-
-  _prepopRunning = true;
-  _prepopProgress = { current: 0, total: 0, totalLeads: 0, totalNew: 0, currentSource: '', results: [] };
-  res.json({ status: 'started', message: 'Pre-population started in background' });
-
-  const leadDb = require('./lib/lead-db');
-  const { runPipeline } = require('./lib/pipeline');
-  let sources = req.body.sources || ['AVVO', 'FINDLAW'];
-  if (!Array.isArray(sources)) sources = ['AVVO', 'FINDLAW'];
-  sources = sources.slice(0, 20); // Cap at 20 sources max
-  const test = req.body.test !== false; // Default test mode for safety
-
-  const scraperQueue = [];
-  for (const source of sources) {
-    if (typeof source === 'string' && source.length <= 30) {
-      scraperQueue.push({ state: source, test });
+  try {
+    if (_prepopRunning) {
+      return res.json({ status: 'already_running', progress: _prepopProgress });
     }
-  }
 
-  _prepopProgress.total = scraperQueue.length;
+    _prepopRunning = true;
+    _prepopProgress = { current: 0, total: 0, totalLeads: 0, totalNew: 0, currentSource: '', results: [] };
+    res.json({ status: 'started', message: 'Pre-population started in background' });
 
-  (async () => {
-    for (let i = 0; i < scraperQueue.length; i++) {
-      if (!_prepopRunning) break;
-      const { state, test: isTest } = scraperQueue[i];
-      _prepopProgress.current = i + 1;
-      _prepopProgress.currentSource = state;
+    const leadDb = require('./lib/lead-db');
+    const { runPipeline } = require('./lib/pipeline');
+    let sources = req.body.sources || ['AVVO', 'FINDLAW'];
+    if (!Array.isArray(sources)) sources = ['AVVO', 'FINDLAW'];
+    sources = sources.slice(0, 20); // Cap at 20 sources max
+    const test = req.body.test !== false; // Default test mode for safety
 
-      try {
-        const result = await new Promise((resolve, reject) => {
-          const startTime = Date.now();
-          const emitter = runPipeline({
-            state,
-            test: isTest,
-            emailScrape: false,
-            waterfall: {
-              masterDbLookup: false,
-              fetchProfiles: false,
-              crossRefMartindale: false,
-              crossRefLawyersCom: false,
-              nameLookups: false,
-              emailCrawl: false,
-            },
-          });
-
-          let leads = [];
-          emitter.on('lead', d => leads.push(d.data));
-
-          emitter.on('complete', (data) => {
-            const time = Math.round((Date.now() - startTime) / 1000);
-            let dbStats = { inserted: 0, updated: 0 };
-            if (leads.length > 0) {
-              try { dbStats = leadDb.batchUpsert(leads, `prepop:${state}`); } catch (err) { console.error(`[Prepop] batchUpsert failed for ${state}:`, err.message); }
-            }
-            resolve({ state, leads: leads.length, newInDb: dbStats.inserted, updated: dbStats.updated, time });
-          });
-
-          emitter.on('error', (data) => reject(new Error(data.message)));
-          setTimeout(() => { emitter.emit('cancel'); reject(new Error('Timeout')); }, 10 * 60 * 1000);
-        });
-
-        _prepopProgress.totalLeads += result.leads;
-        _prepopProgress.totalNew += result.newInDb;
-        _prepopProgress.results.push(result);
-        console.log(`[Prepop] ${state}: ${result.leads} leads, ${result.newInDb} new (${result.time}s)`);
-      } catch (err) {
-        _prepopProgress.results.push({ state, error: err.message });
-        console.error(`[Prepop] ${state} failed: ${err.message}`);
+    const scraperQueue = [];
+    for (const source of sources) {
+      if (typeof source === 'string' && source.length <= 30) {
+        scraperQueue.push({ state: source, test });
       }
     }
-    _prepopProgress.currentSource = '';
-    console.log(`[Prepop] Done: ${_prepopProgress.totalLeads} leads, ${_prepopProgress.totalNew} new`);
-  })()
-    .catch(err => console.error('[Prepop] Error:', err.message))
-    .finally(() => { _prepopRunning = false; });
+
+    _prepopProgress.total = scraperQueue.length;
+
+    (async () => {
+      for (let i = 0; i < scraperQueue.length; i++) {
+        if (!_prepopRunning) break;
+        const { state, test: isTest } = scraperQueue[i];
+        _prepopProgress.current = i + 1;
+        _prepopProgress.currentSource = state;
+
+        try {
+          const result = await new Promise((resolve, reject) => {
+            const startTime = Date.now();
+            const emitter = runPipeline({
+              state,
+              test: isTest,
+              emailScrape: false,
+              waterfall: {
+                masterDbLookup: false,
+                fetchProfiles: false,
+                crossRefMartindale: false,
+                crossRefLawyersCom: false,
+                nameLookups: false,
+                emailCrawl: false,
+              },
+            });
+
+            let leads = [];
+            emitter.on('lead', d => leads.push(d.data));
+
+            emitter.on('complete', (data) => {
+              const time = Math.round((Date.now() - startTime) / 1000);
+              let dbStats = { inserted: 0, updated: 0 };
+              if (leads.length > 0) {
+                try { dbStats = leadDb.batchUpsert(leads, `prepop:${state}`); } catch (err) { console.error(`[Prepop] batchUpsert failed for ${state}:`, err.message); }
+              }
+              resolve({ state, leads: leads.length, newInDb: dbStats.inserted, updated: dbStats.updated, time });
+            });
+
+            emitter.on('error', (data) => reject(new Error(data.message)));
+            setTimeout(() => { emitter.emit('cancel'); reject(new Error('Timeout')); }, 10 * 60 * 1000);
+          });
+
+          _prepopProgress.totalLeads += result.leads;
+          _prepopProgress.totalNew += result.newInDb;
+          _prepopProgress.results.push(result);
+          console.log(`[Prepop] ${state}: ${result.leads} leads, ${result.newInDb} new (${result.time}s)`);
+        } catch (err) {
+          _prepopProgress.results.push({ state, error: err.message });
+          console.error(`[Prepop] ${state} failed: ${err.message}`);
+        }
+      }
+      _prepopProgress.currentSource = '';
+      console.log(`[Prepop] Done: ${_prepopProgress.totalLeads} leads, ${_prepopProgress.totalNew} new`);
+    })()
+      .catch(err => console.error('[Prepop] Error:', err.message))
+      .finally(() => { _prepopRunning = false; });
+  } catch (err) {
+    console.error('[leads/prepopulate] Error:', err.message, err.stack);
+    _prepopRunning = false;
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.get('/api/leads/prepopulate/status', (req, res) => {
-  res.json({ running: _prepopRunning, progress: _prepopProgress });
+  try {
+    res.json({ running: _prepopRunning, progress: _prepopProgress });
+  } catch (err) {
+    console.error('[leads/prepopulate/status] Error:', err.message, err.stack);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // --- Freshness + Recommendations + Scoring ---
@@ -848,52 +926,63 @@ let _enrichAllRunning = false;
 let _enrichAllProgress = null;
 
 app.post('/api/leads/enrich-all', (req, res) => {
-  if (_enrichAllRunning) {
-    return res.json({ status: 'already_running', progress: _enrichAllProgress });
+  try {
+    if (_enrichAllRunning) {
+      return res.json({ status: 'already_running', progress: _enrichAllProgress });
+    }
+
+    _enrichAllRunning = true;
+    _enrichAllProgress = { step: '', steps: [], totalUpdated: 0 };
+    res.json({ status: 'started', message: 'Enrich All started in background' });
+
+    const leadDb = require('./lib/lead-db');
+
+    (async () => {
+      // Step 1: Merge duplicates
+      _enrichAllProgress.step = 'Merging duplicates...';
+      const mergeResult = leadDb.mergeDuplicates({});
+      _enrichAllProgress.steps.push({ name: 'Merge Dupes', result: `${mergeResult.merged} merged, ${mergeResult.fieldsRecovered} fields recovered` });
+      _enrichAllProgress.totalUpdated += mergeResult.merged;
+
+      // Step 2: Share firm data
+      _enrichAllProgress.step = 'Sharing firm data...';
+      const firmResult = leadDb.shareFirmData();
+      _enrichAllProgress.steps.push({ name: 'Firm Share', result: `${firmResult.leadsUpdated} leads updated across ${firmResult.firmsProcessed} firms` });
+      _enrichAllProgress.totalUpdated += firmResult.leadsUpdated;
+
+      // Step 3: Deduce websites from email
+      _enrichAllProgress.step = 'Deducing websites...';
+      const deduceResult = leadDb.deduceWebsitesFromEmail();
+      _enrichAllProgress.steps.push({ name: 'Website Deduction', result: `${deduceResult.leadsUpdated} websites from email domains` });
+      _enrichAllProgress.totalUpdated += deduceResult.leadsUpdated;
+
+      // Step 4: Re-score all leads
+      _enrichAllProgress.step = 'Scoring leads...';
+      const scoreResult = leadDb.batchScoreLeads();
+      _enrichAllProgress.steps.push({ name: 'Score', result: `${scoreResult.scored} scored, avg: ${scoreResult.avgScore}` });
+
+      _enrichAllProgress.step = 'Done';
+      console.log(`[Enrich All] Done: ${_enrichAllProgress.totalUpdated} total updates`);
+    })()
+      .catch(err => {
+        _enrichAllProgress.step = `Error: ${err.message}`;
+        console.error('[Enrich All] Error:', err.message);
+      })
+      .finally(() => { _enrichAllRunning = false; });
+  } catch (err) {
+    console.error('[leads/enrich-all] Error:', err.message, err.stack);
+    _enrichAllRunning = false;
+    res.status(500).json({ error: err.message });
   }
-
-  _enrichAllRunning = true;
-  _enrichAllProgress = { step: '', steps: [], totalUpdated: 0 };
-  res.json({ status: 'started', message: 'Enrich All started in background' });
-
-  const leadDb = require('./lib/lead-db');
-
-  (async () => {
-    // Step 1: Merge duplicates
-    _enrichAllProgress.step = 'Merging duplicates...';
-    const mergeResult = leadDb.mergeDuplicates({});
-    _enrichAllProgress.steps.push({ name: 'Merge Dupes', result: `${mergeResult.merged} merged, ${mergeResult.fieldsRecovered} fields recovered` });
-    _enrichAllProgress.totalUpdated += mergeResult.merged;
-
-    // Step 2: Share firm data
-    _enrichAllProgress.step = 'Sharing firm data...';
-    const firmResult = leadDb.shareFirmData();
-    _enrichAllProgress.steps.push({ name: 'Firm Share', result: `${firmResult.leadsUpdated} leads updated across ${firmResult.firmsProcessed} firms` });
-    _enrichAllProgress.totalUpdated += firmResult.leadsUpdated;
-
-    // Step 3: Deduce websites from email
-    _enrichAllProgress.step = 'Deducing websites...';
-    const deduceResult = leadDb.deduceWebsitesFromEmail();
-    _enrichAllProgress.steps.push({ name: 'Website Deduction', result: `${deduceResult.leadsUpdated} websites from email domains` });
-    _enrichAllProgress.totalUpdated += deduceResult.leadsUpdated;
-
-    // Step 4: Re-score all leads
-    _enrichAllProgress.step = 'Scoring leads...';
-    const scoreResult = leadDb.batchScoreLeads();
-    _enrichAllProgress.steps.push({ name: 'Score', result: `${scoreResult.scored} scored, avg: ${scoreResult.avgScore}` });
-
-    _enrichAllProgress.step = 'Done';
-    console.log(`[Enrich All] Done: ${_enrichAllProgress.totalUpdated} total updates`);
-  })()
-    .catch(err => {
-      _enrichAllProgress.step = `Error: ${err.message}`;
-      console.error('[Enrich All] Error:', err.message);
-    })
-    .finally(() => { _enrichAllRunning = false; });
 });
 
 app.get('/api/leads/enrich-all/status', (req, res) => {
-  res.json({ running: _enrichAllRunning, progress: _enrichAllProgress });
+  try {
+    res.json({ running: _enrichAllRunning, progress: _enrichAllProgress });
+  } catch (err) {
+    console.error('[leads/enrich-all/status] Error:', err.message, err.stack);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // === Batch Waterfall Enrichment (profile fetch + cross-ref + email crawl on existing DB leads) ===
@@ -902,21 +991,22 @@ let _waterfallProgress = null;
 let _waterfallStartTime = null;
 
 app.post('/api/leads/waterfall', (req, res) => {
-  if (_waterfallRunning) {
-    return res.json({ status: 'already_running', progress: _waterfallProgress });
-  }
+  try {
+    if (_waterfallRunning) {
+      return res.json({ status: 'already_running', progress: _waterfallProgress });
+    }
 
-  _waterfallRunning = true;
-  _waterfallStartTime = Date.now();
-  _waterfallProgress = { step: 'Loading leads...', current: 0, total: 0, stats: null };
-  res.json({ status: 'started', message: 'Waterfall enrichment started in background' });
+    _waterfallRunning = true;
+    _waterfallStartTime = Date.now();
+    _waterfallProgress = { step: 'Loading leads...', current: 0, total: 0, stats: null };
+    res.json({ status: 'started', message: 'Waterfall enrichment started in background' });
 
-  const leadDb = require('./lib/lead-db');
-  const { runWaterfall } = require('./lib/waterfall');
+    const leadDb = require('./lib/lead-db');
+    const { runWaterfall } = require('./lib/waterfall');
 
-  const limit = Math.min(Math.max(parseInt(req.body.limit) || 200, 1), 2000);
-  const state = req.body.state || null; // optional: only enrich leads from a specific state
-  const steps = {
+    const limit = Math.min(Math.max(parseInt(req.body.limit) || 200, 1), 2000);
+    const state = req.body.state || null; // optional: only enrich leads from a specific state
+    const steps = {
     fetchProfiles: req.body.fetchProfiles !== false,
     crossRefMartindale: req.body.crossRefMartindale !== false,
     crossRefLawyersCom: req.body.crossRefLawyersCom !== false,
@@ -1061,18 +1151,33 @@ app.post('/api/leads/waterfall', (req, res) => {
       console.error('[Waterfall] Error:', err.message);
     })
     .finally(() => { _waterfallRunning = false; });
+  } catch (err) {
+    console.error('[leads/waterfall] Error:', err.message, err.stack);
+    _waterfallRunning = false;
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.get('/api/leads/waterfall/status', (req, res) => {
-  res.json({ running: _waterfallRunning, progress: _waterfallProgress });
+  try {
+    res.json({ running: _waterfallRunning, progress: _waterfallProgress });
+  } catch (err) {
+    console.error('[leads/waterfall/status] Error:', err.message, err.stack);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.post('/api/leads/waterfall/cancel', (req, res) => {
-  if (_waterfallRunning) {
-    _waterfallRunning = false;
-    res.json({ cancelled: true });
-  } else {
-    res.json({ cancelled: false, message: 'Not running' });
+  try {
+    if (_waterfallRunning) {
+      _waterfallRunning = false;
+      res.json({ cancelled: true });
+    } else {
+      res.json({ cancelled: false, message: 'Not running' });
+    }
+  } catch (err) {
+    console.error('[leads/waterfall/cancel] Error:', err.message, err.stack);
+    res.status(500).json({ error: err.message });
   }
 });
 

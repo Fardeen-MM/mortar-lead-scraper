@@ -145,13 +145,41 @@
     }
     .breakdown-row {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 0.3rem 0;
+      padding: 0.25rem 0;
       font-size: 0.82rem;
+      gap: 0.5rem;
+      cursor: pointer;
+      border-radius: 4px;
+      padding-left: 0.25rem;
+      padding-right: 0.25rem;
+      transition: background 0.1s;
     }
-    .breakdown-key { color: var(--text-muted); }
-    .breakdown-val { font-weight: 600; color: var(--text); }
+    .breakdown-row:hover { background: rgba(99,102,241,0.04); }
+    .breakdown-key { color: var(--text-muted); min-width: 60px; white-space: nowrap; }
+    .breakdown-bar { flex: 1; height: 6px; background: var(--bg-primary, #f3f4f6); border-radius: 3px; overflow: hidden; }
+    .breakdown-bar .fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+    .breakdown-val { font-weight: 600; color: var(--text); min-width: 35px; text-align: right; font-size: 0.75rem; }
+
+    /* Lead table row hover actions */
+    .lead-row-actions {
+      display: none;
+      gap: 0.2rem;
+      align-items: center;
+    }
+    tr:hover .lead-row-actions { display: inline-flex; }
+    .lead-row-actions button {
+      padding: 0.1rem 0.35rem;
+      font-size: 0.65rem;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      color: #6b7280;
+      transition: all 0.1s;
+      white-space: nowrap;
+    }
+    .lead-row-actions button:hover { background: #4f46e5; color: #fff; border-color: #4f46e5; }
 
     .lead-controls {
       display: flex;
@@ -871,6 +899,11 @@
     body.dark .toast { box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
     body.dark #search-suggestions { background: var(--surface); border-color: var(--border); }
     body.dark #search-suggestions div:hover { background: rgba(99,102,241,0.1) !important; }
+    body.dark .breakdown-bar { background: var(--surface); }
+    body.dark .breakdown-row:hover { background: rgba(99,102,241,0.08); }
+    body.dark .lead-row-actions button { background: var(--surface); color: var(--text-muted); border-color: var(--border); }
+    body.dark .lead-row-actions button:hover { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+    body.dark #modal-quick-actions button { background: var(--surface); color: var(--text); border-color: var(--border); }
 
     /* Tag color picker */
     .tag-color-opt {
@@ -1337,23 +1370,23 @@
         <div class="tam-pct" id="tam-contactable-pct"></div>
         <div class="coverage-bar"><div class="fill" id="contactable-bar" style="width:0%"></div></div>
       </div>
-      <div class="tam-card" style="border-color: #f59e0b;">
+      <div class="tam-card" onclick="switchMainTab('leads');document.getElementById('filter-email').checked=true;document.getElementById('filter-phone').checked=true;loadLeads();" style="border-color:#f59e0b;cursor:pointer;" title="Click to filter gold leads">
         <div class="tam-value" style="color:#f59e0b" id="tam-gold">-</div>
         <div class="tam-label">Gold (email+phone)</div>
       </div>
-      <div class="tam-card">
+      <div class="tam-card" onclick="switchMainTab('leads');document.getElementById('filter-email').checked=true;loadLeads();" style="cursor:pointer;" title="Click to filter leads with email">
         <div class="tam-value" id="tam-email">-</div>
         <div class="tam-label">With Email</div>
         <div class="tam-pct" id="tam-email-pct"></div>
         <div class="coverage-bar"><div class="fill" id="email-bar" style="width:0%"></div></div>
       </div>
-      <div class="tam-card">
+      <div class="tam-card" onclick="switchMainTab('leads');document.getElementById('filter-phone').checked=true;loadLeads();" style="cursor:pointer;" title="Click to filter leads with phone">
         <div class="tam-value" id="tam-phone">-</div>
         <div class="tam-label">With Phone</div>
         <div class="tam-pct" id="tam-phone-pct"></div>
         <div class="coverage-bar"><div class="fill" id="phone-bar" style="width:0%"></div></div>
       </div>
-      <div class="tam-card">
+      <div class="tam-card" onclick="switchMainTab('leads');document.getElementById('filter-website').checked=true;loadLeads();" style="cursor:pointer;" title="Click to filter leads with website">
         <div class="tam-value" id="tam-website">-</div>
         <div class="tam-label">With Website</div>
         <div class="tam-pct" id="tam-website-pct"></div>
@@ -3316,6 +3349,7 @@
       <!-- View Mode -->
       <div id="modal-view">
         <div class="detail-grid" id="modal-details"></div>
+        <div id="modal-quick-actions"></div>
         <div style="margin-top:0.75rem;border-top:1px solid var(--border);padding-top:0.75rem;" id="modal-notes-section">
           <div style="font-size:0.82rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">Notes</div>
           <div id="modal-notes" style="font-size:0.82rem;color:var(--text);white-space:pre-wrap;min-height:1.5em;"></div>
@@ -3714,6 +3748,41 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    // --- Breakdown Bar Helper ---
+    const BREAKDOWN_COLORS = ['#6366f1','#3b82f6','#10b981','#f59e0b','#ef4444','#8b5cf6','#ec4899','#0ea5e9','#14b8a6','#f97316','#84cc16','#a855f7','#06b6d4','#e11d48','#65a30d'];
+    function renderBreakdownRows(items, opts = {}) {
+      if (!items || items.length === 0) return opts.empty || '<div style="font-size:0.78rem;color:var(--text-muted);padding:0.3rem 0;">No data yet</div>';
+      const max = Math.max(...items.map(i => i.count), 1);
+      return items.map((item, idx) => {
+        const pct = Math.max(3, (item.count / max) * 100);
+        const color = BREAKDOWN_COLORS[idx % BREAKDOWN_COLORS.length];
+        const onclick = opts.onclick ? ` onclick="${opts.onclick(item)}"` : '';
+        return `<div class="breakdown-row"${onclick}>
+          <span class="breakdown-key">${esc(item.label)}</span>
+          <div class="breakdown-bar"><div class="fill" style="width:${pct.toFixed(1)}%;background:${color};"></div></div>
+          <span class="breakdown-val">${fmt(item.count)}</span>
+        </div>`;
+      }).join('');
+    }
+
+    // --- Animated Count-up ---
+    function animateCount(el, target, duration = 600) {
+      if (!el) return;
+      const start = parseInt(el.textContent.replace(/,/g, '')) || 0;
+      if (start === target) return;
+      const startTime = performance.now();
+      const step = (now) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(start + (target - start) * eased);
+        el.textContent = current.toLocaleString();
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
     // --- Toast Notification System ---
     function toast(msg, type = 'success') {
       const container = document.getElementById('toast-container');
@@ -3782,17 +3851,17 @@
         const d = await safeJSON(res);
 
         document.title = `Mortar (${fmt(d.total)}) Lead Database`;
-        document.getElementById('tam-total').textContent = fmt(d.total);
-        document.getElementById('tam-contactable').textContent = fmt(d.contactable || 0);
-        document.getElementById('tam-gold').textContent = fmt(d.goldLeads || 0);
-        document.getElementById('tam-email').textContent = fmt(d.withEmail);
-        document.getElementById('tam-phone').textContent = fmt(d.withPhone);
-        document.getElementById('tam-website').textContent = fmt(d.withWebsite);
-        document.getElementById('tam-firms').textContent = fmt(d.uniqueFirms);
-        document.getElementById('tam-enriched').textContent = fmt(d.enriched || 0);
-        document.getElementById('tam-enriched-24h').textContent = fmt(d.enrichedLast24h || 0);
-        document.getElementById('tam-linkedin').textContent = fmt(d.withLinkedin || 0);
-        document.getElementById('tam-title').textContent = fmt(d.withTitle || 0);
+        animateCount(document.getElementById('tam-total'), d.total);
+        animateCount(document.getElementById('tam-contactable'), d.contactable || 0);
+        animateCount(document.getElementById('tam-gold'), d.goldLeads || 0);
+        animateCount(document.getElementById('tam-email'), d.withEmail);
+        animateCount(document.getElementById('tam-phone'), d.withPhone);
+        animateCount(document.getElementById('tam-website'), d.withWebsite);
+        animateCount(document.getElementById('tam-firms'), d.uniqueFirms);
+        animateCount(document.getElementById('tam-enriched'), d.enriched || 0);
+        animateCount(document.getElementById('tam-enriched-24h'), d.enrichedLast24h || 0);
+        animateCount(document.getElementById('tam-linkedin'), d.withLinkedin || 0);
+        animateCount(document.getElementById('tam-title'), d.withTitle || 0);
 
         document.getElementById('tam-contactable-pct').textContent = (d.coverage.contactable || 0) + '%';
         document.getElementById('tam-email-pct').textContent = d.coverage.email + '%';
@@ -3804,35 +3873,41 @@
         document.getElementById('phone-bar').style.width = d.coverage.phone + '%';
         document.getElementById('website-bar').style.width = d.coverage.website + '%';
 
-        // By country
-        document.getElementById('by-country').innerHTML = (d.byCountry || []).map(c =>
-          `<div class="breakdown-row"><span class="breakdown-key">${esc(c.country)}</span><span class="breakdown-val">${fmt(c.count)}</span></div>`
-        ).join('');
+        // By country — with bar charts
+        document.getElementById('by-country').innerHTML = renderBreakdownRows(
+          (d.byCountry || []).map(c => ({ label: c.country, count: c.count })),
+          { onclick: (item) => `document.getElementById('filter-country').value='${item.label}';loadLeads()` }
+        );
 
-        // By state
-        document.getElementById('by-state').innerHTML = (d.byState || []).slice(0, 15).map(s =>
-          `<div class="breakdown-row"><span class="breakdown-key">${esc(s.state)}</span><span class="breakdown-val">${fmt(s.count)}</span></div>`
-        ).join('');
+        // By state — with bar charts
+        document.getElementById('by-state').innerHTML = renderBreakdownRows(
+          (d.byState || []).slice(0, 15).map(s => ({ label: s.state, count: s.count })),
+          { onclick: (item) => `document.getElementById('filter-state').value='${item.label}';loadLeads()` }
+        );
 
-        // By source
-        document.getElementById('by-source').innerHTML = (d.bySource || []).slice(0, 15).map(s =>
-          `<div class="breakdown-row"><span class="breakdown-key">${esc(s.source)}</span><span class="breakdown-val">${fmt(s.count)}</span></div>`
-        ).join('');
+        // By source — with bar charts
+        document.getElementById('by-source').innerHTML = renderBreakdownRows(
+          (d.bySource || []).slice(0, 15).map(s => ({ label: s.source, count: s.count })),
+          { onclick: (item) => `document.getElementById('filter-source').value='${item.label}';loadLeads()` }
+        );
 
-        // Top cities
-        document.getElementById('by-city').innerHTML = (d.topCities || []).slice(0, 15).map(c =>
-          `<div class="breakdown-row"><span class="breakdown-key">${esc(c.location)}</span><span class="breakdown-val">${fmt(c.count)}</span></div>`
-        ).join('');
+        // Top cities — with bar charts
+        document.getElementById('by-city').innerHTML = renderBreakdownRows(
+          (d.topCities || []).slice(0, 15).map(c => ({ label: c.location, count: c.count }))
+        );
 
-        // Email sources
-        document.getElementById('by-email-source').innerHTML = (d.emailSources || []).map(s =>
-          `<div class="breakdown-row"><span class="breakdown-key">${esc(s.email_source)}</span><span class="breakdown-val">${fmt(s.count)}</span></div>`
-        ).join('') || '<div class="breakdown-row"><span class="breakdown-key">No email sources yet</span></div>';
+        // Email sources — with bar charts
+        document.getElementById('by-email-source').innerHTML = renderBreakdownRows(
+          (d.emailSources || []).map(s => ({ label: s.email_source, count: s.count })),
+          { empty: '<div style="font-size:0.78rem;color:var(--text-muted);padding:0.3rem 0;">No email sources yet</div>' }
+        );
 
-        // Practice areas
-        document.getElementById('by-practice-area').innerHTML = (d.byPracticeArea || []).slice(0, 15).map(p =>
-          `<div class="breakdown-row"><span class="breakdown-key">${esc(p.practice_area)}</span><span class="breakdown-val">${fmt(p.count)}</span></div>`
-        ).join('') || '<div class="breakdown-row"><span class="breakdown-key">No practice areas yet</span></div>';
+        // Practice areas — with bar charts
+        document.getElementById('by-practice-area').innerHTML = renderBreakdownRows(
+          (d.byPracticeArea || []).slice(0, 15).map(p => ({ label: p.practice_area, count: p.count })),
+          { onclick: (item) => `document.getElementById('filter-practice').value='${item.label}';loadLeads()`,
+            empty: '<div style="font-size:0.78rem;color:var(--text-muted);padding:0.3rem 0;">No practice areas yet</div>' }
+        );
 
         // Populate state filter
         const stateSelect = document.getElementById('filter-state');
@@ -4495,7 +4570,14 @@
             <td class="${lead.email ? 'has-data' : 'no-data'}">${lead.email ? esc(lead.email) + (lead.email_verified === 1 ? ' <span title="Verified" style="color:#16a34a;">&#x2713;</span>' : lead.email_verified === -1 ? ' <span title="Invalid" style="color:#dc2626;">&#x2717;</span>' : '') : '-'}</td>
             <td class="${lead.phone ? 'has-data' : 'no-data'}">${lead.phone ? esc(lead.phone) : '-'}</td>
             <td class="${lead.website ? 'has-data' : 'no-data'}">${lead.website ? '<a href="' + (lead.website.startsWith('http') ? '' : 'https://') + esc(lead.website) + '" target="_blank" rel="noopener">' + esc(lead.website).substring(0, 30) + '</a>' : '-'}</td>
-            <td>${esc(lead.primary_source)}</td>
+            <td>
+              <span>${esc(lead.primary_source)}</span>
+              <span class="lead-row-actions">
+                ${lead.email ? `<button onclick="event.stopPropagation();navigator.clipboard.writeText('${esc(lead.email)}');toast('Email copied','success');" title="Copy email">Copy</button>` : ''}
+                ${lead.phone ? `<button onclick="event.stopPropagation();navigator.clipboard.writeText('${esc(lead.phone)}');toast('Phone copied','success');" title="Copy phone">Phone</button>` : ''}
+                <button onclick="event.stopPropagation();quickTagLead(${lead.id})" title="Add tag">Tag</button>
+              </span>
+            </td>
           `;
           // Click name to open detail (but not checkbox)
           tr.querySelectorAll('td:not(:first-child)').forEach(td => {
@@ -4772,6 +4854,19 @@
         document.body.removeChild(ta);
       }
       toast(`Copied ${emails.length} emails to clipboard`);
+    }
+
+    function quickTagLead(leadId) {
+      const tag = prompt('Enter tag name:');
+      if (!tag || !tag.trim()) return;
+      fetch('/api/leads/tag', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ leadIds: [leadId], tag: tag.trim() }),
+      })
+        .then(safeJSON)
+        .then(() => toast(`Tagged with "${tag.trim()}"`, 'success'))
+        .catch(err => toast('Failed to tag: ' + err.message, 'error'));
     }
 
     function tagSelected() {
@@ -5305,6 +5400,18 @@
         ).join('');
 
       document.getElementById('modal-notes').textContent = lead.notes || 'No notes yet. Click Edit to add.';
+
+      // Quick Action Buttons
+      const actBtnStyle = 'padding:0.3rem 0.7rem;font-size:0.75rem;border:1px solid #d1d5db;border-radius:6px;cursor:pointer;background:#fff;display:flex;align-items:center;gap:0.3rem;';
+      document.getElementById('modal-quick-actions').innerHTML = `<div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin:0.5rem 0;padding:0.6rem 0;border-top:1px solid var(--border,#e5e7eb);border-bottom:1px solid var(--border,#e5e7eb);">
+        ${lead.email ? `<button onclick="navigator.clipboard.writeText('${esc(lead.email)}');toast('Email copied','success');" style="${actBtnStyle}">&#x1F4CB; Copy Email</button>` : ''}
+        ${lead.email ? `<button onclick="window.location.href='mailto:${esc(lead.email)}';" style="${actBtnStyle}">&#x2709;&#xFE0F; Send Email</button>` : ''}
+        ${lead.phone ? `<button onclick="navigator.clipboard.writeText('${esc(lead.phone)}');toast('Phone copied','success');" style="${actBtnStyle}">&#x1F4DE; Copy Phone</button>` : ''}
+        ${lead.website ? `<button onclick="window.open('${(lead.website.startsWith('http') ? '' : 'https://') + esc(lead.website)}','_blank');" style="${actBtnStyle}">&#x1F310; Visit Site</button>` : ''}
+        ${lead.linkedin_url ? `<button onclick="window.open('${esc(lead.linkedin_url)}','_blank');" style="${actBtnStyle}">&#x1F517; LinkedIn</button>` : ''}
+        <button onclick="loadAiEmail(${lead.id})" style="padding:0.3rem 0.7rem;font-size:0.75rem;border:1px solid #818cf8;border-radius:6px;cursor:pointer;background:#eef2ff;color:#4338ca;display:flex;align-items:center;gap:0.3rem;font-weight:500;">&#x2728; AI Email</button>
+        <button onclick="quickTagLead(${lead.id})" style="${actBtnStyle}">&#x1F3F7;&#xFE0F; Tag</button>
+      </div>`;
 
       // Data provenance pipeline
       const pipelineSteps = [
