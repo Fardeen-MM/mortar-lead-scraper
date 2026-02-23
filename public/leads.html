@@ -3558,6 +3558,33 @@
           <div style="font-size:0.82rem;font-weight:600;color:var(--text-muted);margin-bottom:0.3rem;">Notes</div>
           <div id="modal-notes" style="font-size:0.82rem;color:var(--text);white-space:pre-wrap;min-height:1.5em;"></div>
         </div>
+        <!-- Contact Timeline -->
+        <div style="margin-top:0.75rem;border-top:1px solid var(--border);padding-top:0.75rem;" id="modal-timeline-section">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.3rem;">
+            <span style="font-size:0.82rem;font-weight:600;color:var(--text-muted);">Contact Timeline</span>
+            <button id="log-contact-btn" style="font-size:0.65rem;padding:0.15rem 0.4rem;background:#4f46e5;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ Log Contact</button>
+          </div>
+          <div id="modal-timeline" style="max-height:200px;overflow-y:auto;"></div>
+          <div id="log-contact-form" style="display:none;margin-top:0.3rem;background:var(--bg-secondary,#f8fafc);border-radius:6px;padding:0.4rem;">
+            <div style="display:flex;gap:0.3rem;margin-bottom:0.3rem;">
+              <select id="log-channel" style="padding:0.2rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.72rem;flex:1;">
+                <option value="email">Email</option><option value="phone">Phone</option><option value="linkedin">LinkedIn</option><option value="meeting">Meeting</option><option value="sms">SMS</option>
+              </select>
+              <select id="log-direction" style="padding:0.2rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.72rem;flex:1;">
+                <option value="outbound">Outbound</option><option value="inbound">Inbound</option>
+              </select>
+              <select id="log-outcome" style="padding:0.2rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.72rem;flex:1;">
+                <option value="">No outcome</option><option value="replied">Replied</option><option value="interested">Interested</option><option value="meeting_set">Meeting set</option><option value="not_interested">Not interested</option><option value="no_answer">No answer</option><option value="voicemail">Voicemail</option>
+              </select>
+            </div>
+            <input id="log-subject" type="text" placeholder="Subject/topic..." style="width:100%;padding:0.2rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.72rem;margin-bottom:0.3rem;">
+            <textarea id="log-notes" rows="2" placeholder="Notes..." style="width:100%;padding:0.2rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.72rem;font-family:inherit;resize:vertical;margin-bottom:0.3rem;"></textarea>
+            <div style="display:flex;gap:0.3rem;justify-content:flex-end;">
+              <button onclick="document.getElementById('log-contact-form').style.display='none'" style="font-size:0.68rem;padding:0.15rem 0.4rem;border:1px solid #d1d5db;border-radius:4px;background:#fff;cursor:pointer;">Cancel</button>
+              <button id="save-contact-btn" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#4f46e5;color:#fff;border:none;border-radius:4px;cursor:pointer;">Save</button>
+            </div>
+          </div>
+        </div>
         <div class="detail-sources" id="modal-sources"></div>
       </div>
       <!-- Edit Mode -->
@@ -3851,6 +3878,7 @@
     <button onclick="compareSelected()">Compare</button>
     <button id="btn-enroll" onclick="enrollSelectedInSequence()">Enroll</button>
     <button onclick="findLookalikesSelected()">Lookalikes</button>
+    <button onclick="batchAiEmails()" style="background:#4f46e5;border-color:#6366f1;">AI Emails</button>
     <button id="btn-delete" onclick="deleteSelected()">Delete</button>
     <button onclick="clearSelection()" style="background:transparent;border-color:rgba(255,255,255,0.4);">&times; Clear</button>
   </div>
@@ -5804,6 +5832,14 @@
         <button onclick="addNoteToLead(${lead.id})" style="font-size:0.72rem;padding:0.15rem 0.5rem;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:4px;cursor:pointer;">+ Note</button>
       </div>`;
       document.getElementById('modal-sources').insertAdjacentHTML('beforeend', stageHtml);
+
+      // Load contact timeline
+      loadContactTimeline(lead.id);
+      // Wire up log contact button
+      document.getElementById('log-contact-btn').onclick = () => {
+        document.getElementById('log-contact-form').style.display = document.getElementById('log-contact-form').style.display === 'none' ? '' : 'none';
+      };
+      document.getElementById('save-contact-btn').onclick = () => saveContactLog(lead.id);
 
       // Load changelog, similar leads, and timeline async
       Promise.all([
@@ -7791,6 +7827,60 @@
       } catch (err) { container.innerHTML = '<div style="color:#ef4444;font-size:0.8rem;">Failed to load timeline</div>'; }
     }
 
+    async function loadContactTimeline(leadId) {
+      const container = document.getElementById('modal-timeline');
+      if (!container) return;
+      container.innerHTML = '<div class="skeleton skeleton-line" style="width:80%;"></div><div class="skeleton skeleton-line" style="width:60%;"></div>';
+      try {
+        const contacts = await fetch('/api/leads/' + leadId + '/contacts?limit=20').then(safeJSON);
+        if (!contacts || contacts.length === 0) {
+          container.innerHTML = '<div style="font-size:0.72rem;color:#9ca3af;text-align:center;padding:0.5rem;">No contacts logged yet. Click "+ Log Contact" to record outreach.</div>';
+          return;
+        }
+        const channelIcons = { email: '\u{2709}\uFE0F', phone: '\u{1F4DE}', linkedin: '\u{1F517}', meeting: '\u{1F91D}', sms: '\u{1F4AC}', other: '\u{1F4CB}' };
+        const outcomeColors = { replied: '#22c55e', interested: '#22c55e', meeting_set: '#7c3aed', not_interested: '#ef4444', no_answer: '#f59e0b', voicemail: '#f59e0b' };
+        container.innerHTML = '<div style="position:relative;padding-left:16px;">' +
+          '<div style="position:absolute;left:5px;top:0;bottom:0;width:2px;background:#e5e7eb;"></div>' +
+          contacts.map(c => {
+            const icon = channelIcons[c.channel] || '\u{1F4CB}';
+            const dir = c.direction === 'inbound' ? '\u{2B05}\uFE0F' : '\u{27A1}\uFE0F';
+            const time = typeof timeAgo === 'function' ? timeAgo(c.contact_at) : new Date(c.contact_at).toLocaleDateString();
+            const outColor = outcomeColors[c.outcome] || '#6b7280';
+            return `<div style="position:relative;padding:0.25rem 0 0.25rem 0.5rem;border-bottom:1px solid #f9fafb;">
+              <div style="position:absolute;left:-7px;top:8px;width:10px;height:10px;border-radius:50%;background:${c.direction === 'inbound' ? '#3b82f6' : '#6366f1'};border:2px solid #fff;"></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:0.72rem;">${icon} ${dir} ${esc(c.channel)} ${c.subject ? '— ' + esc(c.subject) : ''}</span>
+                <span style="font-size:0.62rem;color:#9ca3af;">${time}</span>
+              </div>
+              ${c.outcome ? '<span style="font-size:0.6rem;padding:0.05rem 0.3rem;border-radius:8px;background:' + outColor + '20;color:' + outColor + ';font-weight:600;">' + esc(c.outcome.replace(/_/g, ' ')) + '</span>' : ''}
+              ${c.notes ? '<div style="font-size:0.68rem;color:#6b7280;margin-top:0.1rem;padding-left:0.3rem;">' + esc(c.notes.substring(0, 150)) + '</div>' : ''}
+            </div>`;
+          }).join('') + '</div>';
+      } catch (err) {
+        container.innerHTML = '<div style="font-size:0.72rem;color:#ef4444;">Failed to load contacts</div>';
+      }
+    }
+
+    async function saveContactLog(leadId) {
+      const channel = document.getElementById('log-channel').value;
+      const direction = document.getElementById('log-direction').value;
+      const outcome = document.getElementById('log-outcome').value;
+      const subject = document.getElementById('log-subject').value.trim();
+      const notes = document.getElementById('log-notes').value.trim();
+      try {
+        await fetch('/api/leads/' + leadId + '/contacts', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ channel, direction, subject, notes, outcome }),
+        });
+        toast('Contact logged', 'success');
+        document.getElementById('log-contact-form').style.display = 'none';
+        document.getElementById('log-subject').value = '';
+        document.getElementById('log-notes').value = '';
+        loadContactTimeline(leadId);
+        addNotification('\u{1F4DE}', `Contact logged for lead #${leadId}`, 'success');
+      } catch (err) { toast('Failed to log: ' + err.message, 'error'); }
+    }
+
     async function addNoteToLead(leadId) {
       const content = prompt('Add a note:');
       if (!content) return;
@@ -9071,6 +9161,96 @@
       const selected = [..._selectedIds];
       if (selected.length === 0) { toast('Select a lead first', 'error'); return; }
       findLookalikes(selected[0]);
+    }
+
+    async function batchAiEmails() {
+      const selected = [..._selectedIds];
+      if (selected.length === 0) { toast('Select leads first', 'error'); return; }
+      if (selected.length > 20) { toast('Max 20 leads at a time for AI emails', 'error'); return; }
+      const leads = _currentLeads.filter(l => selected.includes(l.id));
+      if (leads.length === 0) return;
+
+      // Show progress modal
+      const modal = document.createElement('div');
+      modal.id = 'batch-ai-modal';
+      modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
+      modal.innerHTML = `
+        <div style="background:#fff;border-radius:12px;padding:1.5rem;width:700px;max-width:92vw;max-height:85vh;overflow-y:auto;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+            <h3 style="margin:0;font-size:1rem;color:#4f46e5;">AI Batch Email Generator</h3>
+            <button onclick="document.getElementById('batch-ai-modal').remove()" style="border:none;background:none;font-size:1.3rem;cursor:pointer;color:#9ca3af;">&times;</button>
+          </div>
+          <div style="margin-bottom:0.5rem;">
+            <div style="display:flex;gap:0.3rem;margin-bottom:0.3rem;">
+              <select id="batch-email-tone" style="padding:0.25rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.75rem;">
+                <option value="professional">Professional</option><option value="friendly">Friendly</option><option value="casual">Casual</option><option value="urgent">Urgent</option>
+              </select>
+              <select id="batch-email-purpose" style="padding:0.25rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.75rem;">
+                <option value="cold outreach">Cold Outreach</option><option value="follow-up">Follow-up</option><option value="case study share">Case Study</option><option value="meeting request">Meeting Request</option>
+              </select>
+            </div>
+            <div style="font-size:0.7rem;color:#6b7280;">Generating for ${leads.length} lead${leads.length > 1 ? 's' : ''}...</div>
+          </div>
+          <div style="height:4px;background:#e5e7eb;border-radius:2px;margin-bottom:0.5rem;"><div id="batch-progress" style="height:100%;background:#6366f1;border-radius:2px;width:0;transition:width 0.3s;"></div></div>
+          <div id="batch-results" style="display:flex;flex-direction:column;gap:0.3rem;"></div>
+          <div style="display:flex;gap:0.3rem;margin-top:0.5rem;">
+            <button id="batch-start-btn" onclick="startBatchAiEmails()" style="padding:0.3rem 0.8rem;background:#4f46e5;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:0.78rem;font-weight:500;">Generate All</button>
+            <button onclick="copyAllBatchEmails()" style="padding:0.3rem 0.8rem;background:#059669;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:0.78rem;font-weight:500;">Copy All</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+      window._batchLeads = leads;
+    }
+
+    async function startBatchAiEmails() {
+      const leads = window._batchLeads || [];
+      const tone = document.getElementById('batch-email-tone').value;
+      const purpose = document.getElementById('batch-email-purpose').value;
+      const bar = document.getElementById('batch-progress');
+      const results = document.getElementById('batch-results');
+      const btn = document.getElementById('batch-start-btn');
+      btn.disabled = true; btn.textContent = 'Generating...';
+      results.innerHTML = '';
+
+      for (let i = 0; i < leads.length; i++) {
+        const lead = leads[i];
+        bar.style.width = ((i + 1) / leads.length * 100) + '%';
+        try {
+          const res = await fetch('/api/ai/write-email', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ leadId: lead.id, tone, context: purpose }),
+          });
+          const d = await safeJSON(res);
+          if (d.error) throw new Error(d.error);
+          results.innerHTML += `
+            <div class="batch-email-result" style="background:#f8fafc;border:1px solid #e5e7eb;border-radius:6px;padding:0.4rem 0.5rem;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.15rem;">
+                <span style="font-size:0.72rem;font-weight:600;color:#374151;">${esc(lead.first_name || '')} ${esc(lead.last_name || '')} ${lead.email ? '<span style="color:#6b7280;font-weight:400;">(' + esc(lead.email) + ')</span>' : ''}</span>
+                <button onclick="navigator.clipboard.writeText(this.closest('.batch-email-result').querySelector('.email-body').textContent);toast('Copied!','success');" style="font-size:0.6rem;padding:0.1rem 0.3rem;border:1px solid #d1d5db;border-radius:3px;background:#fff;cursor:pointer;">Copy</button>
+              </div>
+              <div style="font-size:0.72rem;font-weight:500;color:#4338ca;">${esc(d.subject || '')}</div>
+              <div class="email-body" style="font-size:0.7rem;color:#4b5563;white-space:pre-wrap;max-height:80px;overflow-y:auto;">${esc(d.body || '')}</div>
+            </div>`;
+        } catch (err) {
+          results.innerHTML += `<div style="font-size:0.72rem;color:#ef4444;padding:0.2rem;">Failed: ${esc(lead.first_name || '')} ${esc(lead.last_name || '')} — ${esc(err.message)}</div>`;
+        }
+      }
+      btn.textContent = 'Done!'; btn.style.background = '#059669';
+    }
+
+    function copyAllBatchEmails() {
+      const results = document.querySelectorAll('.batch-email-result');
+      if (results.length === 0) { toast('Generate emails first', 'error'); return; }
+      const texts = [...results].map(r => {
+        const name = r.querySelector('span').textContent;
+        const subj = r.querySelector('div[style*="color:#4338ca"]')?.textContent || '';
+        const body = r.querySelector('.email-body')?.textContent || '';
+        return `To: ${name}\nSubject: ${subj}\n\n${body}`;
+      }).join('\n\n---\n\n');
+      navigator.clipboard.writeText(texts);
+      toast(`${results.length} emails copied to clipboard`, 'success');
     }
 
     // === Firm Directory ===
