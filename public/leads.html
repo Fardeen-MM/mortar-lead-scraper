@@ -1479,6 +1479,7 @@
       <div class="tam-card">
         <div class="tam-value" id="tam-total">-</div>
         <div class="tam-label">Total Leads</div>
+        <div id="spark-total"></div>
       </div>
       <div class="tam-card">
         <div class="tam-value" id="tam-contactable">-</div>
@@ -1495,18 +1496,21 @@
         <div class="tam-label">With Email</div>
         <div class="tam-pct" id="tam-email-pct"></div>
         <div class="coverage-bar"><div class="fill" id="email-bar" style="width:0%"></div></div>
+        <div id="spark-email"></div>
       </div>
       <div class="tam-card" onclick="switchMainTab('leads');document.getElementById('filter-phone').checked=true;loadLeads();" style="cursor:pointer;" title="Click to filter leads with phone">
         <div class="tam-value" id="tam-phone">-</div>
         <div class="tam-label">With Phone</div>
         <div class="tam-pct" id="tam-phone-pct"></div>
         <div class="coverage-bar"><div class="fill" id="phone-bar" style="width:0%"></div></div>
+        <div id="spark-phone"></div>
       </div>
       <div class="tam-card" onclick="switchMainTab('leads');document.getElementById('filter-website').checked=true;loadLeads();" style="cursor:pointer;" title="Click to filter leads with website">
         <div class="tam-value" id="tam-website">-</div>
         <div class="tam-label">With Website</div>
         <div class="tam-pct" id="tam-website-pct"></div>
         <div class="coverage-bar"><div class="fill" id="website-bar" style="width:0%"></div></div>
+        <div id="spark-website"></div>
       </div>
       <div class="tam-card">
         <div class="tam-value" id="tam-firms">-</div>
@@ -3943,6 +3947,27 @@
       requestAnimationFrame(step);
     }
 
+    // --- Sparkline Generator ---
+    function sparkline(values, opts = {}) {
+      const { width = 60, height = 16, color = '#6366f1', filled = false } = opts;
+      if (!values || values.length < 2) return '';
+      const max = Math.max(...values, 1);
+      const min = Math.min(...values, 0);
+      const range = max - min || 1;
+      const step = width / (values.length - 1);
+      const points = values.map((v, i) => `${(i * step).toFixed(1)},${(height - ((v - min) / range) * height).toFixed(1)}`);
+      let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" style="display:block;margin:0.2rem auto 0;">`;
+      if (filled) {
+        svg += `<path d="M0,${height} ${points.map(p => 'L' + p).join(' ')} L${width},${height} Z" fill="${color}" fill-opacity="0.15"/>`;
+      }
+      svg += `<polyline points="${points.join(' ')}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+      // End dot
+      const lastPt = points[points.length - 1].split(',');
+      svg += `<circle cx="${lastPt[0]}" cy="${lastPt[1]}" r="1.5" fill="${color}"/>`;
+      svg += '</svg>';
+      return svg;
+    }
+
     // --- Toast Notification System ---
     function toast(msg, type = 'success') {
       const container = document.getElementById('toast-container');
@@ -4104,6 +4129,19 @@
       }
     }
 
+    // --- TAM Sparklines ---
+    async function loadSparklines() {
+      try {
+        const data = await fetch('/api/leads/growth?days=7').then(safeJSON);
+        if (!data || data.length < 2) return;
+        const el = (id) => document.getElementById(id);
+        if (el('spark-total')) el('spark-total').innerHTML = sparkline(data.map(d => d.created), { color: '#6366f1', filled: true });
+        if (el('spark-email')) el('spark-email').innerHTML = sparkline(data.map(d => d.with_email), { color: '#22c55e', filled: true });
+        if (el('spark-phone')) el('spark-phone').innerHTML = sparkline(data.map(d => d.with_phone), { color: '#3b82f6', filled: true });
+        if (el('spark-website')) el('spark-website').innerHTML = sparkline(data.map(d => d.with_website), { color: '#8b5cf6', filled: true });
+      } catch (err) { /* sparklines are optional */ }
+    }
+
     // --- Scores + Donut Chart ---
     async function loadScores() {
       try {
@@ -4130,14 +4168,16 @@
       const cx = 70, cy = 70, r = 55, strokeW = 18;
       const total = segments.reduce((s, d) => s + d.value, 0);
       if (total === 0) { svg.innerHTML = '<text x="70" y="75" text-anchor="middle" font-size="12" fill="#9ca3af">No data</text>'; return; }
-      let html = '';
+      let html = '<style>svg circle.donut-seg { cursor: pointer; transition: stroke-width 0.2s; } svg circle.donut-seg:hover { stroke-width: 22; }</style>';
       const circumf = 2 * Math.PI * r;
       let offset = 0;
       for (const seg of segments) {
         if (seg.value === 0) continue;
         const pct = seg.value / total;
         const dash = pct * circumf;
-        html += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${seg.color}" stroke-width="${strokeW}" stroke-dasharray="${dash} ${circumf - dash}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${cx} ${cy})" style="transition:stroke-dasharray 0.5s,stroke-dashoffset 0.5s;"/>`;
+        html += `<circle class="donut-seg" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${seg.color}" stroke-width="${strokeW}" stroke-dasharray="${dash} ${circumf - dash}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${cx} ${cy})" style="transition:stroke-dasharray 0.5s,stroke-dashoffset 0.5s,stroke-width 0.2s;">
+          <title>${seg.label}: ${fmt(seg.value)} (${(pct * 100).toFixed(1)}%)</title>
+        </circle>`;
         offset += dash;
       }
       html += `<text x="${cx}" y="${cy - 6}" text-anchor="middle" font-size="18" font-weight="700" fill="var(--text)">${fmt(total)}</text>`;
@@ -6675,11 +6715,18 @@
           data.forEach((d, i) => { if (i > 0) linePath += ` L${xScale(i)},${yScale(d[s.key])}`; });
           svg += `<path d="${linePath}" stroke="${s.color}" stroke-width="2" fill="none"/>`;
 
-          // End dot
-          const lastIdx = data.length - 1;
-          svg += `<circle cx="${xScale(lastIdx)}" cy="${yScale(data[lastIdx][s.key])}" r="3" fill="${s.color}"/>`;
+          // Data points with hover tooltips
+          data.forEach((d, i) => {
+            const val = d[s.key] || 0;
+            const dateStr = new Date(d.day).toLocaleDateString('en', { month: 'short', day: 'numeric' });
+            svg += `<circle cx="${xScale(i)}" cy="${yScale(val)}" r="3" fill="${s.color}" opacity="0" style="transition:opacity 0.15s;">
+              <title>${s.label}: ${fmt(val)} (${dateStr})</title>
+            </circle>`;
+          });
         });
 
+        // Hover areas for showing dots
+        svg += `<style>svg circle:hover { opacity: 1 !important; r: 5; }</style>`;
         svg += '</svg>';
         container.innerHTML = svg;
 
@@ -13130,7 +13177,7 @@
     async function refreshAll() {
       const bar = document.getElementById('refresh-bar');
       bar.style.width = '5%';
-      const loaders = [loadStats, loadScores, loadRecommendations, loadFreshness, loadActivity, loadPracticeAreas, loadCompleteness, loadLists, loadEnrichmentDashboard, loadActivityFeed, loadQualityAlerts, loadExportHistory, loadGrowthChart, loadFirmIntel, loadHealthScore, loadPipeline, loadSegments, loadSchedules, loadWebhooks, loadEnrichmentQueue, loadVerificationStats, loadExportTemplates, loadAnalytics, loadEmailClassification, loadConfidencePanel, loadStalenessPanel, loadTagDefinitions, loadChangeSignals, loadIcpPanel, loadSavedSearches, loadAdmissionSignals, loadSequences, loadFirmDirectory, loadEngagementPanel, loadDncPanel, loadSmartDuplicates, loadTerritories, loadSourceAttribution, loadDecayPreview, loadIntentSignals, loadRoutingRules, loadCompletenessHeatmap, loadRecentNotes, loadSmartLists, loadKpiMetrics, loadScoringModels, loadCampaigns, loadCrossSourceDuplicates, loadEngagementHeatmap, loadOwners, loadLeaderboard, loadAutomationRules, loadDataQuality, loadExportProfiles, loadRecentContacts, loadWarmUpScores, loadFilterFacets, loadEnrichQueue, loadFirmIntelligence, loadDedupQueue, loadAuditLog, loadLifecycleAnalytics, loadSequencePerformance, loadActivityScores, loadBulkEnrichmentRuns, loadFirmNetwork, loadFreshnessMonitor, loadScoringRankings, loadGeoClusters, loadPriorityInbox, loadPracticeAnalytics, loadSourceROI, loadComplianceDashboard, loadPredictiveScores, loadTeamPerformance, loadEmailDeliverability, loadTagRulesEngine, loadNurtureCadence, loadCustomFields, loadScoreDecayConfig, loadLookalikes, loadConversionFunnel, loadLeadVelocity, loadCompletenessMatrix, loadLeadClusters, loadAbTests, loadReengagement, loadAttribution, loadSLATracker, loadSaturation, loadEnrichWaterfall, loadCompetitiveIntel, loadSeqTemplates, loadQualityRulesPanel, loadTimelinePanel, loadExportScheduler, loadPropensity, loadCohorts, loadChannelPrefs, loadBenchmarks, loadDealEstimates, loadOutreachCal, loadRiskScores, loadNetworkMap, loadJourneyMapping, loadScoringAudit, loadGeoExpansion, loadFreshnessAlerts2, loadMergeCandidates, loadOutreachAnalytics, loadIcpScoring, loadPipelineVelocity, loadRelationshipGraph, loadEnrichmentROI, loadEngagementPrediction, loadCampaignPerformance2, loadPrioritizationMatrix, loadFirmAggregation, loadImprovementRecs, loadLifecycleFunnel, loadCadenceOptimizer, loadScoringCalibration, loadPracticeMarketSize, loadPipelineHealthPanel, loadAffinityScoring, loadScraperGaps, loadFreshnessIndex, loadFirmGrowthPanel, loadRevenueAttribution, loadSaturationHeatmap2, loadSmartListBuilder, loadQualityScorecard, loadDedupIntelligence, loadOutboundReadiness, loadAgingReport, loadGrowthAnalytics2, loadWaterfallHistory, loadRecentlyEnriched, loadEnrichmentPriority, loadEnrichmentCoverage, loadEnrichmentFailures, loadAiBrief, loadDigest];
+      const loaders = [loadStats, loadScores, loadRecommendations, loadFreshness, loadActivity, loadPracticeAreas, loadCompleteness, loadLists, loadEnrichmentDashboard, loadActivityFeed, loadQualityAlerts, loadExportHistory, loadGrowthChart, loadFirmIntel, loadHealthScore, loadPipeline, loadSegments, loadSchedules, loadWebhooks, loadEnrichmentQueue, loadVerificationStats, loadExportTemplates, loadAnalytics, loadEmailClassification, loadConfidencePanel, loadStalenessPanel, loadTagDefinitions, loadChangeSignals, loadIcpPanel, loadSavedSearches, loadAdmissionSignals, loadSequences, loadFirmDirectory, loadEngagementPanel, loadDncPanel, loadSmartDuplicates, loadTerritories, loadSourceAttribution, loadDecayPreview, loadIntentSignals, loadRoutingRules, loadCompletenessHeatmap, loadRecentNotes, loadSmartLists, loadKpiMetrics, loadScoringModels, loadCampaigns, loadCrossSourceDuplicates, loadEngagementHeatmap, loadOwners, loadLeaderboard, loadAutomationRules, loadDataQuality, loadExportProfiles, loadRecentContacts, loadWarmUpScores, loadFilterFacets, loadEnrichQueue, loadFirmIntelligence, loadDedupQueue, loadAuditLog, loadLifecycleAnalytics, loadSequencePerformance, loadActivityScores, loadBulkEnrichmentRuns, loadFirmNetwork, loadFreshnessMonitor, loadScoringRankings, loadGeoClusters, loadPriorityInbox, loadPracticeAnalytics, loadSourceROI, loadComplianceDashboard, loadPredictiveScores, loadTeamPerformance, loadEmailDeliverability, loadTagRulesEngine, loadNurtureCadence, loadCustomFields, loadScoreDecayConfig, loadLookalikes, loadConversionFunnel, loadLeadVelocity, loadCompletenessMatrix, loadLeadClusters, loadAbTests, loadReengagement, loadAttribution, loadSLATracker, loadSaturation, loadEnrichWaterfall, loadCompetitiveIntel, loadSeqTemplates, loadQualityRulesPanel, loadTimelinePanel, loadExportScheduler, loadPropensity, loadCohorts, loadChannelPrefs, loadBenchmarks, loadDealEstimates, loadOutreachCal, loadRiskScores, loadNetworkMap, loadJourneyMapping, loadScoringAudit, loadGeoExpansion, loadFreshnessAlerts2, loadMergeCandidates, loadOutreachAnalytics, loadIcpScoring, loadPipelineVelocity, loadRelationshipGraph, loadEnrichmentROI, loadEngagementPrediction, loadCampaignPerformance2, loadPrioritizationMatrix, loadFirmAggregation, loadImprovementRecs, loadLifecycleFunnel, loadCadenceOptimizer, loadScoringCalibration, loadPracticeMarketSize, loadPipelineHealthPanel, loadAffinityScoring, loadScraperGaps, loadFreshnessIndex, loadFirmGrowthPanel, loadRevenueAttribution, loadSaturationHeatmap2, loadSmartListBuilder, loadQualityScorecard, loadDedupIntelligence, loadOutboundReadiness, loadAgingReport, loadGrowthAnalytics2, loadWaterfallHistory, loadRecentlyEnriched, loadEnrichmentPriority, loadEnrichmentCoverage, loadEnrichmentFailures, loadAiBrief, loadDigest, loadSparklines];
       let done = 0;
       const total = loaders.length;
       const tracked = loaders.map(fn => fn().then(() => { done++; bar.style.width = Math.round((done / total) * 95) + '%'; }).catch(err => { done++; bar.style.width = Math.round((done / total) * 95) + '%'; console.warn('[refresh]', fn.name || 'loader', 'failed:', err.message); }));
