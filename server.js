@@ -4670,6 +4670,39 @@ app.post('/api/ai/data-fixes', async (req, res) => {
   } catch (err) { aiError(res, err); }
 });
 
+app.post('/api/ai/build-icp', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    const topResult = leadDb.searchLeads('', { sort: 'lead_score', order: 'desc', limit: 20, minScore: 50 });
+    const topLeads = topResult.leads || [];
+    if (topLeads.length < 3) return res.status(400).json({ error: 'Need at least 3 high-scoring leads to build ICP' });
+    const tam = leadDb.getTamStats ? leadDb.getTamStats() : {};
+    const stats = { total: tam.total || 0, contactable: tam.contactable || 0, withEmail: tam.withEmail || 0, withPhone: tam.withPhone || 0 };
+    const result = await ai.buildICP(topLeads, stats);
+    res.json(result);
+  } catch (err) { aiError(res, err); }
+});
+
+app.post('/api/ai/source-roi', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    const sources = leadDb.getDistinctSources ? leadDb.getDistinctSources() : [];
+    const sourceData = sources.slice(0, 15).map(s => {
+      try {
+        const result = leadDb.searchLeads('', { source: s, limit: 1 });
+        const total = result.total || 0;
+        const withEmail = leadDb.searchLeads('', { source: s, hasEmail: true, limit: 1 }).total || 0;
+        const withPhone = leadDb.searchLeads('', { source: s, hasPhone: true, limit: 1 }).total || 0;
+        return { source: s, total, withEmail, withPhone, emailRate: total ? Math.round((withEmail / total) * 100) : 0, phoneRate: total ? Math.round((withPhone / total) * 100) : 0 };
+      } catch { return { source: s, total: 0 }; }
+    });
+    const result = await ai.analyzeSourceROI(sourceData);
+    res.json(result);
+  } catch (err) { aiError(res, err); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {

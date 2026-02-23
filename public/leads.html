@@ -910,6 +910,18 @@
     body.dark #log-contact-form textarea { background: var(--bg); color: var(--text); border-color: var(--border); }
     body.dark .notif-panel { background: var(--surface); border-color: var(--border); }
     body.dark .notif-item.unread { background: rgba(99,102,241,0.08); }
+    /* Enhanced panels dark mode */
+    body.dark #smart-lists-panel { background: linear-gradient(135deg, #1a1a2e, #16213e); border-color: #fde047; }
+    body.dark #smart-lists-panel span, body.dark #smart-lists-panel p { color: #e2e8f0; }
+    body.dark #smart-list-drilldown { border-color: #334155; }
+    body.dark #practice-ai-insights { border-color: #334155; }
+    body.dark #practice-ai-insights div { color: #e2e8f0; }
+    body.dark #outreach-ai-plan { border-color: #334155; }
+    body.dark #quality-ai-fixes { border-color: #334155; }
+    body.dark #sl-templates-modal > div, body.dark #smart-list-modal > div { background: var(--surface); color: var(--text); }
+    body.dark #sl-templates-modal button, body.dark #smart-list-modal button { color: var(--text); }
+    body.dark #sl-templates-modal input, body.dark #smart-list-modal input,
+    body.dark #sl-templates-modal select, body.dark #smart-list-modal select { background: var(--bg); color: var(--text); border-color: var(--border); }
 
     /* Tag color picker */
     .tag-color-opt {
@@ -1786,12 +1798,14 @@
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Ideal Customer Profile (ICP)</span>
         <div style="display:flex;gap:0.3rem;">
+          <button onclick="loadAiICP()" style="font-size:0.68rem;padding:0.2rem 0.4rem;background:#7c3aed;color:#fff;border:none;border-radius:4px;cursor:pointer;">AI Build ICP</button>
           <button onclick="scoreAllIcp()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#fff;border:1px solid #e9d5ff;border-radius:4px;cursor:pointer;">Score All</button>
-          <button onclick="openIcpBuilder()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#7c3aed;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ Add Criteria</button>
+          <button onclick="openIcpBuilder()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#f3e8ff;color:#7c3aed;border:1px solid #e9d5ff;border-radius:4px;cursor:pointer;">+ Add</button>
         </div>
       </div>
       <div id="icp-criteria-list" style="margin-bottom:0.5rem;"></div>
       <div id="icp-distribution" style="display:flex;gap:1rem;flex-wrap:wrap;"></div>
+      <div id="icp-ai-result" style="display:none;margin-top:0.4rem;border-top:1px solid #e9d5ff;padding-top:0.4rem;"></div>
     </div>
 
     <!-- Saved Searches (Apollo-style) -->
@@ -2278,10 +2292,14 @@
     <div id="source-roi-panel" class="bp" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border-color:#eab308">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#ca8a04;">Source ROI</span>
-        <button onclick="loadSourceROI()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fef9c3;color:#ca8a04;border:1px solid #eab308;border-radius:4px;cursor:pointer;">Refresh</button>
+        <div style="display:flex;gap:0.3rem;">
+          <button onclick="loadAiSourceROI()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#ca8a04;color:#fff;border:none;border-radius:4px;cursor:pointer;">AI Analysis</button>
+          <button onclick="loadSourceROI()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fef9c3;color:#ca8a04;border:1px solid #eab308;border-radius:4px;cursor:pointer;">Refresh</button>
+        </div>
       </div>
-      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Track effectiveness of each data source — email rate, phone rate, conversion. Like Apollo's data provider metrics.</p>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Track effectiveness of each data source — email rate, phone rate, conversion.</p>
       <div id="source-roi-list" style="max-height:200px;overflow-y:auto;"></div>
+      <div id="source-roi-ai" style="display:none;margin-top:0.4rem;border-top:1px solid #eab308;padding-top:0.4rem;"></div>
     </div>
 
     <!-- Compliance Dashboard (Batch 24) -->
@@ -8265,6 +8283,42 @@
       loadIcpPanel();
     }
 
+    async function loadAiICP() {
+      const el = document.getElementById('icp-ai-result');
+      if (!el) return;
+      el.style.display = 'block';
+      el.innerHTML = '<div style="font-size:0.72rem;color:#7c3aed;">AI analyzing your best leads to build ICP...</div>';
+      try {
+        const res = await fetch('/api/ai/build-icp', { method: 'POST' });
+        const d = await safeJSON(res);
+        if (d.error) throw new Error(d.error);
+        let html = '<div style="font-size:0.68rem;font-weight:600;color:#7c3aed;margin-bottom:0.3rem;">AI-GENERATED ICP</div>';
+        if (d.icp_summary) html += `<div style="font-size:0.75rem;color:#374151;margin-bottom:0.4rem;line-height:1.4;background:#f3e8ff;padding:0.3rem 0.5rem;border-radius:6px;">${esc(d.icp_summary)}</div>`;
+        if (d.attributes && d.attributes.length > 0) {
+          html += '<div style="font-size:0.62rem;font-weight:600;color:#7c3aed;margin-bottom:0.2rem;">KEY ATTRIBUTES</div>';
+          d.attributes.forEach(attr => {
+            const wColor = attr.weight === 'high' ? '#7c3aed' : attr.weight === 'medium' ? '#f59e0b' : '#94a3b8';
+            html += `<div style="display:flex;align-items:flex-start;gap:0.3rem;padding:0.15rem 0;border-bottom:1px solid #f3e8ff;">
+              <span style="font-size:0.55rem;padding:0.05rem 0.2rem;border-radius:3px;background:${wColor};color:#fff;flex-shrink:0;margin-top:0.1rem;">${esc(attr.weight || '')}</span>
+              <div style="min-width:0;">
+                <div style="font-size:0.68rem;font-weight:600;color:#1f2937;">${esc(attr.dimension || '')}: <span style="font-weight:400;color:#6b7280;">${esc(attr.ideal_value || '')}</span></div>
+                <div style="font-size:0.6rem;color:#9ca3af;">${esc(attr.reasoning || '')}</div>
+              </div>
+            </div>`;
+          });
+        }
+        if (d.anti_patterns && d.anti_patterns.length > 0) {
+          html += '<div style="font-size:0.62rem;font-weight:600;color:#dc2626;margin-top:0.3rem;margin-bottom:0.1rem;">ANTI-PATTERNS (avoid)</div>';
+          html += d.anti_patterns.map(p => `<span style="display:inline-block;font-size:0.6rem;padding:0.1rem 0.3rem;background:#fef2f2;border:1px solid #fca5a5;border-radius:4px;margin:0.1rem 0.1rem 0.1rem 0;color:#dc2626;">${esc(p)}</span>`).join('');
+        }
+        if (d.recommendations && d.recommendations.length > 0) {
+          html += '<div style="font-size:0.62rem;font-weight:600;color:#7c3aed;margin-top:0.3rem;margin-bottom:0.1rem;">RECOMMENDATIONS</div>';
+          html += d.recommendations.map(r => `<div style="font-size:0.62rem;color:#374151;padding:0.05rem 0;">&#x2192; ${esc(r)}</div>`).join('');
+        }
+        el.innerHTML = html;
+      } catch (err) { el.innerHTML = `<div style="color:#dc2626;font-size:0.72rem;">Error: ${esc(err.message)}</div>`; }
+    }
+
     // === Saved Searches (Apollo-style) ===
     async function loadSavedSearches() {
       try {
@@ -11889,6 +11943,42 @@
           </div>
         `).join('');
       } catch (err) { console.error('Source ROI error:', err); }
+    }
+
+    async function loadAiSourceROI() {
+      const el = document.getElementById('source-roi-ai');
+      if (!el) return;
+      el.style.display = 'block';
+      el.innerHTML = '<div style="font-size:0.72rem;color:#ca8a04;">AI analyzing source performance...</div>';
+      try {
+        const res = await fetch('/api/ai/source-roi', { method: 'POST' });
+        const d = await safeJSON(res);
+        if (d.error) throw new Error(d.error);
+        let html = '<div style="font-size:0.68rem;font-weight:600;color:#ca8a04;margin-bottom:0.3rem;">AI SOURCE ANALYSIS</div>';
+        if (d.summary) html += `<div style="font-size:0.72rem;color:#374151;margin-bottom:0.3rem;line-height:1.4;">${esc(d.summary)}</div>`;
+        const rankings = d.rankings || [];
+        if (rankings.length > 0) {
+          rankings.forEach(r => {
+            const gradeColors = { A: '#22c55e', B: '#3b82f6', C: '#f59e0b', D: '#f97316', F: '#dc2626' };
+            const color = gradeColors[r.grade] || '#6b7280';
+            const recColors = { expand: '#22c55e', maintain: '#3b82f6', deprioritize: '#dc2626' };
+            const recColor = recColors[r.recommendation] || '#6b7280';
+            html += `<div style="display:flex;align-items:center;gap:0.3rem;padding:0.2rem 0;border-bottom:1px solid #fef9c3;">
+              <span style="width:22px;height:22px;border-radius:50%;background:${color};color:#fff;font-size:0.65rem;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">${esc(r.grade || '?')}</span>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:0.7rem;font-weight:600;color:#1f2937;">${esc(r.source || '')}</div>
+                <div style="font-size:0.6rem;color:#6b7280;">${esc(r.strengths || '')}</div>
+              </div>
+              <span style="font-size:0.55rem;padding:0.1rem 0.3rem;border-radius:4px;background:${recColor}20;color:${recColor};font-weight:600;flex-shrink:0;">${esc(r.recommendation || '')}</span>
+            </div>`;
+          });
+        }
+        if (d.strategy && d.strategy.length > 0) {
+          html += '<div style="font-size:0.62rem;font-weight:600;color:#ca8a04;margin-top:0.3rem;margin-bottom:0.1rem;">STRATEGY</div>';
+          html += d.strategy.map(s => `<div style="font-size:0.62rem;color:#374151;padding:0.05rem 0;">&#x2192; ${esc(s)}</div>`).join('');
+        }
+        el.innerHTML = html;
+      } catch (err) { el.innerHTML = `<div style="color:#dc2626;font-size:0.72rem;">Error: ${esc(err.message)}</div>`; }
     }
 
     // === Compliance Dashboard (Batch 24) ===
