@@ -3506,6 +3506,8 @@
     <div><kbd>r</kbd> Refresh &nbsp; <kbd>e</kbd> Export &nbsp; <kbd>c</kbd> Copy emails &nbsp; <kbd>d</kbd> Dark mode</div>
     <div><kbd>t</kbd> Tag selected &nbsp; <kbd>s</kbd> Star/favorite &nbsp; <kbd>m</kbd> Move stage &nbsp; <kbd>p</kbd> Pipeline view</div>
     <div><kbd>1</kbd>-<kbd>5</kbd> Jump to pipeline stage &nbsp; <kbd>f</kbd> Toggle filters &nbsp; <kbd>n</kbd> New scrape</div>
+    <div style="font-weight:600;margin-top:0.3rem;">AI</div>
+    <div><kbd>b</kbd> Open AI Brain &nbsp; <kbd>i</kbd> AI insights (in modal)</div>
   </div>
 
   <!-- Toast Container -->
@@ -5668,6 +5670,11 @@
           break;
         case 'g': // Scroll to geographic map
           document.querySelector('.panel h2')?.closest('.panel')?.scrollIntoView({ behavior: 'smooth' });
+          break;
+        case 'b': // Open AI Brain
+          e.preventDefault();
+          if (!_aiBrainOpen) toggleAiBrain();
+          document.getElementById('ai-brain-input').focus();
           break;
         case '1': case '2': case '3': case '4': case '5': {
           // Jump to pipeline stage
