@@ -4892,6 +4892,55 @@ app.patch('/api/leads/:id', (req, res) => {
   }
 });
 
+// --- Delete a single lead ---
+app.delete('/api/leads/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const id = parseInt(req.params.id);
+    const lead = leadDb.getLeadById(id);
+    if (!lead) return res.status(404).json({ error: 'Lead not found' });
+    leadDb.deleteLeads([id]);
+    res.json({ deleted: true, id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Bulk delete leads ---
+app.post('/api/leads/bulk-delete', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { leadIds } = req.body;
+    if (!leadIds || !Array.isArray(leadIds) || leadIds.length === 0) {
+      return res.status(400).json({ error: 'leadIds array required' });
+    }
+    if (leadIds.length > 500) {
+      return res.status(400).json({ error: 'Max 500 leads per bulk delete' });
+    }
+    leadDb.deleteLeads(leadIds.map(Number));
+    res.json({ deleted: leadIds.length });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Dashboard aggregation endpoint ---
+app.get('/api/dashboard/overview', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const [stats, scores, freshness, recommendations, digest] = [
+      leadDb.getStats(),
+      leadDb.getScoreDistribution(),
+      leadDb.getFreshnessReport(),
+      leadDb.getRecommendations(),
+      leadDb.getTodayDigest()
+    ];
+    res.json({ stats, scores, freshness, recommendations, digest });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // --- Quick Scrape (single state from coverage table) ---
 app.post('/api/scrape/quick', (req, res) => {
   const { state, test = true } = req.body;

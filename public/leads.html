@@ -1286,6 +1286,94 @@
     @keyframes toastIn { from { opacity: 0; transform: translateY(10px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
     @keyframes toastOut { to { opacity: 0; transform: translateY(-10px) scale(0.95); } }
 
+    /* Notification Center */
+    .notif-bell {
+      position: relative; cursor: pointer; padding: 0.25rem 0.5rem;
+      font-size: 1rem; background: none; border: none; color: var(--text);
+      transition: transform 0.2s;
+    }
+    .notif-bell:hover { transform: scale(1.15); }
+    .notif-bell .badge {
+      position: absolute; top: 0; right: 0;
+      background: #ef4444; color: #fff; font-size: 0.55rem; font-weight: 700;
+      min-width: 14px; height: 14px; line-height: 14px; text-align: center;
+      border-radius: 7px; padding: 0 3px;
+    }
+    .notif-bell .badge:empty { display: none; }
+    .notif-bell.ringing { animation: bellRing 0.5s ease; }
+    @keyframes bellRing {
+      0%, 100% { transform: rotate(0); }
+      20% { transform: rotate(15deg); }
+      40% { transform: rotate(-10deg); }
+      60% { transform: rotate(5deg); }
+      80% { transform: rotate(-5deg); }
+    }
+    #notif-panel {
+      display: none; position: absolute; top: 100%; right: 0;
+      width: 360px; max-height: 420px; overflow-y: auto;
+      background: #fff; border: 1px solid #e5e7eb; border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12); z-index: 1000;
+    }
+    .notif-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.6rem 0.8rem; border-bottom: 1px solid #f3f4f6;
+      font-size: 0.82rem; font-weight: 600;
+    }
+    .notif-header button {
+      font-size: 0.68rem; color: #6366f1; background: none; border: none;
+      cursor: pointer; font-weight: 500;
+    }
+    .notif-header button:hover { text-decoration: underline; }
+    .notif-item {
+      display: flex; gap: 0.5rem; padding: 0.5rem 0.8rem;
+      border-bottom: 1px solid #f9fafb; cursor: pointer; transition: background 0.1s;
+      font-size: 0.78rem;
+    }
+    .notif-item:hover { background: #f9fafb; }
+    .notif-item.unread { background: #f0f4ff; }
+    .notif-item.unread:hover { background: #e8edff; }
+    .notif-icon { font-size: 1rem; flex-shrink: 0; width: 24px; text-align: center; }
+    .notif-body { flex: 1; min-width: 0; }
+    .notif-text { color: #374151; line-height: 1.3; }
+    .notif-time { font-size: 0.65rem; color: #9ca3af; margin-top: 2px; }
+    .notif-empty { padding: 2rem 1rem; text-align: center; color: #9ca3af; font-size: 0.8rem; }
+    body.dark #notif-panel { background: #1e293b; border-color: #334155; }
+    body.dark .notif-header { border-color: #334155; }
+    body.dark .notif-item { border-color: #1e293b; }
+    body.dark .notif-item:hover { background: #334155; }
+    body.dark .notif-item.unread { background: #1e3a5f; }
+    body.dark .notif-text { color: #e2e8f0; }
+
+    /* Activity Feed */
+    .activity-feed { max-height: 300px; overflow-y: auto; }
+    .activity-item {
+      display: flex; gap: 0.5rem; padding: 0.4rem 0;
+      border-bottom: 1px solid #f3f4f6; font-size: 0.78rem;
+      align-items: flex-start;
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .activity-text { flex: 1; color: #374151; line-height: 1.3; }
+    .activity-text strong { font-weight: 600; }
+    .activity-time { font-size: 0.65rem; color: #9ca3af; white-space: nowrap; }
+    body.dark .activity-item { border-color: #334155; }
+    body.dark .activity-text { color: #e2e8f0; }
+    @keyframes pulse { 0%, 100% { opacity:1; } 50% { opacity:0.3; } }
+
+    /* Kanban drag-drop styles */
+    .kanban-col.kanban-dragover {
+      background: #eef2ff !important; border-color: #818cf8 !important;
+      box-shadow: inset 0 0 0 2px rgba(99,102,241,0.2);
+    }
+    .kanban-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); transform: translateY(-1px); }
+    .kanban-card.dragging { opacity: 0.5; transform: rotate(2deg); }
+    body.dark .kanban-col { background: #1e293b !important; border-color: #334155 !important; }
+    body.dark .kanban-col.kanban-dragover { background: #1e3a5f !important; border-color: #6366f1 !important; }
+    body.dark .kanban-card { background: #334155 !important; border-color: #475569 !important; }
+
     /* Panel loading skeleton */
     .panel-loading {
       padding: 1rem; display: flex; align-items: center; gap: 0.5rem;
@@ -1329,6 +1417,18 @@
       <div class="leads-header-right">
         <a href="/" class="leads-nav-link">Scraper</a>
         <a href="/signals.html" class="leads-nav-link">Signals</a>
+        <div style="position:relative;display:inline-block;">
+          <button class="notif-bell" id="notif-bell" onclick="toggleNotifPanel()" title="Notifications">
+            &#x1F514;<span class="badge" id="notif-badge"></span>
+          </button>
+          <div id="notif-panel">
+            <div class="notif-header">
+              <span>Notifications</span>
+              <button onclick="clearAllNotifs()">Clear all</button>
+            </div>
+            <div id="notif-list"></div>
+          </div>
+        </div>
         <button class="dark-toggle" id="dark-toggle" onclick="toggleDarkMode()">Dark</button>
       </div>
     </header>
@@ -1468,6 +1568,17 @@
       </button>
     </div>
 
+    <!-- Activity Feed -->
+    <div id="activity-feed-panel" class="bp" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border-color:#cbd5e1;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+        <span style="font-weight:600;font-size:0.85rem;color:#475569;">Live Activity</span>
+        <div style="display:flex;gap:0.3rem;align-items:center;">
+          <span id="activity-live-dot" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite;"></span>
+          <button onclick="loadActivityFeed()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;border-radius:4px;cursor:pointer;">Refresh</button>
+        </div>
+      </div>
+      <div id="activity-feed" class="activity-feed"></div>
+    </div>
     <!-- AI Intelligence Panel -->
     <div id="ai-brief-panel" class="bp" style="background:linear-gradient(135deg,#1e1b4b,#312e81);border:1px solid #4f46e5;border-radius:10px;color:#e0e7ff;display:none;margin-bottom:1rem;padding:1rem;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.6rem;">
@@ -4953,6 +5064,7 @@
         .then(d => {
           document.getElementById('bulk-status').textContent = `Deleted ${d.deleted} leads`;
           toast(`Deleted ${d.deleted} leads`);
+          addNotification('&#x1F5D1;', `Deleted <strong>${d.deleted}</strong> leads`, 'warning');
           clearSelection();
           refreshAll();
         })
@@ -9763,23 +9875,27 @@
       try {
         const leads = await fetch('/api/leads/card-view?limit=30').then(safeJSON);
         const el = document.getElementById('card-view-container');
-        el.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.5rem;';
-        el.innerHTML = leads.map(l => `
-          <div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:0.6rem;font-size:0.72rem;">
-            <div style="display:flex;justify-content:space-between;margin-bottom:0.3rem;">
-              <strong>${esc(l.first_name || '')} ${esc(l.last_name || '')}</strong>
-              <span style="font-size:0.65rem;padding:0.1rem 0.3rem;background:${l.lead_score >= 60 ? '#dcfce7' : '#fef3c7'};color:${l.lead_score >= 60 ? '#16a34a' : '#b45309'};border-radius:4px;font-weight:600;">${l.lead_score}</span>
+        el.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:0.6rem;';
+        el.innerHTML = leads.map(l => {
+          const scoreBg = l.lead_score >= 60 ? '#dcfce7' : l.lead_score >= 30 ? '#fef3c7' : '#fee2e2';
+          const scoreFg = l.lead_score >= 60 ? '#16a34a' : l.lead_score >= 30 ? '#b45309' : '#dc2626';
+          const borderColor = l.lead_score >= 60 ? '#22c55e' : l.lead_score >= 30 ? '#f59e0b' : '#e5e7eb';
+          return `
+          <div onclick="openLeadById(${l.id})" style="background:#fff;border:1px solid #e5e7eb;border-left:3px solid ${borderColor};border-radius:8px;padding:0.7rem 0.8rem;font-size:0.75rem;cursor:pointer;transition:box-shadow 0.15s,transform 0.1s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.08)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.3rem;">
+              <strong style="font-size:0.78rem;">${esc(l.first_name || '')} ${esc(l.last_name || '')}</strong>
+              <span style="font-size:0.65rem;padding:0.1rem 0.35rem;background:${scoreBg};color:${scoreFg};border-radius:6px;font-weight:700;">${l.lead_score || 0}</span>
             </div>
-            ${l.firm_name ? `<div style="color:#6b7280;font-size:0.68rem;">${esc(l.firm_name)}</div>` : ''}
+            ${l.firm_name ? `<div style="color:#6b7280;font-size:0.7rem;margin-bottom:0.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(l.firm_name)}</div>` : ''}
             <div style="color:#9ca3af;font-size:0.65rem;">${esc(l.city || '')}${l.city && l.state ? ', ' : ''}${esc(l.state || '')}</div>
-            <div style="display:flex;gap:0.3rem;margin-top:0.3rem;flex-wrap:wrap;">
-              ${l.email ? '<span style="font-size:0.6rem;padding:0.05rem 0.2rem;background:#dbeafe;color:#2563eb;border-radius:3px;">email</span>' : ''}
-              ${l.phone ? '<span style="font-size:0.6rem;padding:0.05rem 0.2rem;background:#dcfce7;color:#16a34a;border-radius:3px;">phone</span>' : ''}
-              ${l.website ? '<span style="font-size:0.6rem;padding:0.05rem 0.2rem;background:#fef3c7;color:#b45309;border-radius:3px;">web</span>' : ''}
-              ${l.linkedin_url ? '<span style="font-size:0.6rem;padding:0.05rem 0.2rem;background:#e0e7ff;color:#4338ca;border-radius:3px;">LI</span>' : ''}
+            <div style="display:flex;gap:0.3rem;margin-top:0.35rem;flex-wrap:wrap;">
+              ${l.email ? '<span style="font-size:0.6rem;padding:0.08rem 0.25rem;background:#dbeafe;color:#2563eb;border-radius:4px;">&#x2709; email</span>' : ''}
+              ${l.phone ? '<span style="font-size:0.6rem;padding:0.08rem 0.25rem;background:#dcfce7;color:#16a34a;border-radius:4px;">&#x260E; phone</span>' : ''}
+              ${l.website ? '<span style="font-size:0.6rem;padding:0.08rem 0.25rem;background:#fef3c7;color:#b45309;border-radius:4px;">&#x1F310; web</span>' : ''}
+              ${l.linkedin_url ? '<span style="font-size:0.6rem;padding:0.08rem 0.25rem;background:#e0e7ff;color:#4338ca;border-radius:4px;">in</span>' : ''}
             </div>
-          </div>
-        `).join('');
+          </div>`;
+        }).join('');
       } catch (err) { console.error('Card view error:', err); }
     }
 
@@ -9787,28 +9903,66 @@
       try {
         const data = await fetch('/api/leads/kanban?limit=20').then(safeJSON);
         const el = document.getElementById('kanban-view-container');
-        el.style.cssText = 'display:flex;gap:0.5rem;overflow-x:auto;padding:0.5rem 0;';
+        el.style.cssText = 'display:flex;gap:0.5rem;overflow-x:auto;padding:0.5rem 0;min-height:300px;';
         const stageColors = { new: '#3b82f6', contacted: '#f59e0b', qualified: '#22c55e', proposal: '#8b5cf6', negotiation: '#ec4899', won: '#059669', lost: '#6b7280' };
 
         el.innerHTML = data.stages.map(stage => {
           const leads = data.data[stage] || [];
           const color = stageColors[stage] || '#6b7280';
           return `
-            <div style="min-width:180px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:0.5rem;">
-              <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem;">
-                <span style="font-weight:600;font-size:0.75rem;color:${color};text-transform:capitalize;">${stage}</span>
-                <span style="font-size:0.65rem;padding:0.1rem 0.3rem;background:${color}20;color:${color};border-radius:4px;">${leads.length}</span>
+            <div class="kanban-col" data-stage="${stage}"
+              ondragover="event.preventDefault();this.classList.add('kanban-dragover')"
+              ondragleave="this.classList.remove('kanban-dragover')"
+              ondrop="handleKanbanDrop(event,'${stage}');this.classList.remove('kanban-dragover')"
+              style="min-width:200px;flex:1;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:0.5rem;transition:background 0.15s,border-color 0.15s;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;padding-bottom:0.3rem;border-bottom:2px solid ${color};">
+                <span style="font-weight:600;font-size:0.78rem;color:${color};text-transform:capitalize;">${stage}</span>
+                <span style="font-size:0.65rem;padding:0.1rem 0.4rem;background:${color}15;color:${color};border-radius:8px;font-weight:600;">${leads.length}</span>
               </div>
-              ${leads.slice(0, 10).map(l => `
-                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:4px;padding:0.3rem;margin-bottom:0.3rem;font-size:0.68rem;">
-                  <div style="font-weight:600;">${esc(l.first_name || '')} ${esc(l.last_name || '')}</div>
-                  <div style="color:#6b7280;font-size:0.6rem;">${esc(l.firm_name || '')}</div>
-                </div>
-              `).join('')}
+              <div style="display:flex;flex-direction:column;gap:0.3rem;min-height:40px;">
+                ${leads.slice(0, 15).map(l => {
+                  const scoreBg = l.lead_score >= 60 ? '#dcfce7' : l.lead_score >= 30 ? '#fef3c7' : '#fee2e2';
+                  const scoreFg = l.lead_score >= 60 ? '#16a34a' : l.lead_score >= 30 ? '#b45309' : '#dc2626';
+                  return `
+                  <div draggable="true" data-lead-id="${l.id}" class="kanban-card"
+                    ondragstart="event.dataTransfer.setData('text/plain','${l.id}');this.classList.add('dragging')"
+                    ondragend="this.classList.remove('dragging')"
+                    onclick="openLeadById(${l.id})"
+                    style="background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:0.4rem 0.5rem;cursor:grab;font-size:0.72rem;transition:box-shadow 0.15s,transform 0.1s;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                      <strong style="font-size:0.72rem;">${esc(l.first_name || '')} ${esc(l.last_name || '')}</strong>
+                      <span style="font-size:0.6rem;padding:0.05rem 0.25rem;background:${scoreBg};color:${scoreFg};border-radius:4px;font-weight:600;">${l.lead_score || 0}</span>
+                    </div>
+                    ${l.firm_name ? `<div style="color:#6b7280;font-size:0.65rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(l.firm_name)}</div>` : ''}
+                    <div style="display:flex;gap:0.2rem;margin-top:0.2rem;">
+                      ${l.email ? '<span style="font-size:0.55rem;padding:0.02rem 0.15rem;background:#dbeafe;color:#2563eb;border-radius:2px;">&#x2709;</span>' : ''}
+                      ${l.phone ? '<span style="font-size:0.55rem;padding:0.02rem 0.15rem;background:#dcfce7;color:#16a34a;border-radius:2px;">&#x260E;</span>' : ''}
+                      ${l.website ? '<span style="font-size:0.55rem;padding:0.02rem 0.15rem;background:#fef3c7;color:#b45309;border-radius:2px;">&#x1F310;</span>' : ''}
+                    </div>
+                  </div>`;
+                }).join('')}
+                ${leads.length === 0 ? '<div style="padding:0.5rem;text-align:center;color:#d1d5db;font-size:0.7rem;">Drop leads here</div>' : ''}
+              </div>
             </div>
           `;
         }).join('');
       } catch (err) { console.error('Kanban view error:', err); }
+    }
+
+    async function handleKanbanDrop(event, stage) {
+      event.preventDefault();
+      const leadId = event.dataTransfer.getData('text/plain');
+      if (!leadId) return;
+      try {
+        await fetch('/api/pipeline/move', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leadId: parseInt(leadId), stage })
+        });
+        toast(`Moved to ${stage}`, 'success');
+        addNotification('&#x1F4CB;', `Lead moved to <strong>${esc(stage)}</strong> stage`, 'info');
+        loadKanbanView();
+        loadPipeline();
+      } catch (err) { toast('Failed to move lead', 'error'); }
     }
 
     // === Search Typeahead (Batch 20) ===
@@ -12874,6 +13028,144 @@
       loadLeads();
     }
 
+    // --- Notification Center ---
+    let _notifications = JSON.parse(localStorage.getItem('mortar_notifs') || '[]');
+    let _notifOpen = false;
+
+    function addNotification(icon, text, type = 'info') {
+      const notif = { id: Date.now(), icon, text, type, time: new Date().toISOString(), read: false };
+      _notifications.unshift(notif);
+      if (_notifications.length > 50) _notifications = _notifications.slice(0, 50);
+      localStorage.setItem('mortar_notifs', JSON.stringify(_notifications));
+      updateNotifBadge();
+      renderNotifList();
+      // Ring the bell
+      const bell = document.getElementById('notif-bell');
+      if (bell) { bell.classList.add('ringing'); setTimeout(() => bell.classList.remove('ringing'), 600); }
+      // Also add to activity feed
+      addActivityItem(icon, text, type);
+    }
+
+    function updateNotifBadge() {
+      const badge = document.getElementById('notif-badge');
+      const unread = _notifications.filter(n => !n.read).length;
+      if (badge) badge.textContent = unread > 0 ? (unread > 9 ? '9+' : unread) : '';
+    }
+
+    function toggleNotifPanel() {
+      _notifOpen = !_notifOpen;
+      const panel = document.getElementById('notif-panel');
+      panel.style.display = _notifOpen ? 'block' : 'none';
+      if (_notifOpen) {
+        _notifications.forEach(n => n.read = true);
+        localStorage.setItem('mortar_notifs', JSON.stringify(_notifications));
+        updateNotifBadge();
+        renderNotifList();
+      }
+    }
+
+    function renderNotifList() {
+      const list = document.getElementById('notif-list');
+      if (!list) return;
+      if (_notifications.length === 0) {
+        list.innerHTML = '<div class="notif-empty">No notifications yet</div>';
+        return;
+      }
+      list.innerHTML = _notifications.slice(0, 30).map(n => {
+        const ago = timeAgo(n.time);
+        return `<div class="notif-item${n.read ? '' : ' unread'}">
+          <span class="notif-icon">${n.icon}</span>
+          <div class="notif-body">
+            <div class="notif-text">${n.text}</div>
+            <div class="notif-time">${ago}</div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function clearAllNotifs() {
+      _notifications = [];
+      localStorage.setItem('mortar_notifs', JSON.stringify(_notifications));
+      updateNotifBadge();
+      renderNotifList();
+    }
+
+    function timeAgo(dateStr) {
+      const secs = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
+      if (secs < 60) return 'just now';
+      if (secs < 3600) return Math.floor(secs / 60) + 'm ago';
+      if (secs < 86400) return Math.floor(secs / 3600) + 'h ago';
+      return Math.floor(secs / 86400) + 'd ago';
+    }
+
+    // Close notification panel when clicking outside
+    document.addEventListener('click', (e) => {
+      if (_notifOpen && !e.target.closest('#notif-panel') && !e.target.closest('#notif-bell')) {
+        _notifOpen = false;
+        document.getElementById('notif-panel').style.display = 'none';
+      }
+    });
+
+    // --- Activity Feed ---
+    let _activityItems = [];
+
+    function addActivityItem(icon, text, type = 'info') {
+      const colors = { success: '#22c55e', error: '#ef4444', info: '#6366f1', warning: '#f59e0b', scrape: '#3b82f6' };
+      _activityItems.unshift({ icon, text, type, color: colors[type] || colors.info, time: new Date().toISOString() });
+      if (_activityItems.length > 30) _activityItems = _activityItems.slice(0, 30);
+      renderActivityFeed();
+    }
+
+    function renderActivityFeed() {
+      const feed = document.getElementById('activity-feed');
+      if (!feed) return;
+      if (_activityItems.length === 0) {
+        feed.innerHTML = '<div style="padding:1rem;text-align:center;font-size:0.78rem;color:#9ca3af;">Activity will appear here as you work</div>';
+        return;
+      }
+      feed.innerHTML = _activityItems.slice(0, 15).map(item => `
+        <div class="activity-item">
+          <div class="activity-dot" style="background:${item.color}"></div>
+          <div class="activity-text">${item.text}</div>
+          <span class="activity-time">${timeAgo(item.time)}</span>
+        </div>
+      `).join('');
+    }
+
+    async function loadActivityFeed() {
+      try {
+        const data = await fetch('/api/audit-log?limit=15').then(safeJSON);
+        const items = (data.entries || data || []).slice(0, 15);
+        const feed = document.getElementById('activity-feed');
+        if (!feed) return;
+        if (items.length === 0 && _activityItems.length === 0) {
+          feed.innerHTML = '<div style="padding:1rem;text-align:center;font-size:0.78rem;color:#9ca3af;">No recent activity</div>';
+          return;
+        }
+        // Merge audit log items with live items
+        const auditIcons = { create: '&#x2795;', update: '&#x270F;&#xFE0F;', delete: '&#x1F5D1;', merge: '&#x1F500;', enrich: '&#x2728;', export: '&#x1F4E5;', import: '&#x1F4E4;', scrape: '&#x1F310;' };
+        const auditColors = { create: '#22c55e', update: '#3b82f6', delete: '#ef4444', merge: '#8b5cf6', enrich: '#f59e0b', export: '#0ea5e9', import: '#ec4899', scrape: '#10b981' };
+        const auditHtml = items.map(item => `
+          <div class="activity-item">
+            <div class="activity-dot" style="background:${auditColors[item.action] || '#6366f1'}"></div>
+            <div class="activity-text">${auditIcons[item.action] || '&#x2022;'} <strong>${esc(item.action || 'action')}</strong> ${esc(item.details || item.description || '')} ${item.lead_name ? '— ' + esc(item.lead_name) : ''}</div>
+            <span class="activity-time">${timeAgo(item.created_at || item.timestamp)}</span>
+          </div>
+        `).join('');
+        // Show live items first, then audit items
+        const liveHtml = _activityItems.slice(0, 5).map(item => `
+          <div class="activity-item">
+            <div class="activity-dot" style="background:${item.color}"></div>
+            <div class="activity-text">${item.text}</div>
+            <span class="activity-time">${timeAgo(item.time)}</span>
+          </div>
+        `).join('');
+        feed.innerHTML = liveHtml + auditHtml;
+      } catch (err) {
+        renderActivityFeed(); // Fall back to live-only items
+      }
+    }
+
     // --- WebSocket Real-Time Updates ---
     let _ws = null;
     let _wsReconnectTimer = null;
@@ -12885,24 +13177,29 @@
       _ws.onopen = () => {
         console.log('[ws] Connected to server');
         _ws.send(JSON.stringify({ type: 'subscribe-all' }));
-        // Update power bar pulse to green
         const pulse = document.querySelector('#power-bar span:first-child span');
         if (pulse) pulse.style.background = '#22c55e';
+        addActivityItem('&#x1F4E1;', 'Connected to server', 'success');
       };
 
       _ws.onmessage = (event) => {
         try {
           const msg = JSON.parse(event.data);
           if (msg.type === 'db-update') {
-            // Auto-refresh dashboard when scrape completes
-            toast(`${msg.state || 'Scrape'} complete: ${msg.stats?.netNew || 0} new leads`, 'success');
+            const state = msg.state || 'Scrape';
+            const newLeads = msg.stats?.netNew || 0;
+            toast(`${state} complete: ${newLeads} new leads`, 'success');
+            addNotification('&#x1F310;', `<strong>${esc(state)}</strong> scrape complete — ${newLeads} new leads added`, 'scrape');
             refreshAll();
           } else if (msg.type === 'validation-progress') {
             const pct = msg.total > 0 ? Math.round((msg.validated / msg.total) * 100) : 0;
-            document.getElementById('validation-bar').style.width = pct + '%';
-            document.getElementById('validation-status').textContent = `Validating ${fmt(msg.validated)}/${fmt(msg.total)} (${msg.valid} valid, ${msg.invalid} invalid)`;
+            const bar = document.getElementById('validation-bar');
+            if (bar) bar.style.width = pct + '%';
+            const status = document.getElementById('validation-status');
+            if (status) status.textContent = `Validating ${fmt(msg.validated)}/${fmt(msg.total)} (${msg.valid} valid, ${msg.invalid} invalid)`;
+          } else if (msg.type === 'validation-complete') {
+            addNotification('&#x2705;', `Email validation complete — ${msg.valid || 0} valid, ${msg.invalid || 0} invalid`, 'success');
           } else if (msg.type === 'lead') {
-            // Live lead coming in — update the power bar counter
             const pbTotal = document.getElementById('pb-total');
             if (pbTotal) {
               const current = parseInt(pbTotal.textContent.replace(/,/g, '')) || 0;
@@ -12910,6 +13207,12 @@
               pbTotal.style.color = '#86efac';
               setTimeout(() => { pbTotal.style.color = ''; }, 500);
             }
+          } else if (msg.type === 'enrichment-progress') {
+            if (msg.step === 'complete') {
+              addNotification('&#x2728;', `Enrichment complete — ${msg.enriched || 0} leads enriched`, 'success');
+            }
+          } else if (msg.type === 'error') {
+            addNotification('&#x274C;', `Error: ${esc(msg.message || 'Unknown error')}`, 'error');
           }
         } catch (err) { console.warn('ws message parse:', err.message); }
       };
@@ -12918,7 +13221,7 @@
         console.log('[ws] Disconnected');
         const pulse = document.querySelector('#power-bar span:first-child span');
         if (pulse) pulse.style.background = '#f59e0b';
-        // Auto-reconnect after 5s
+        addActivityItem('&#x26A0;', 'Disconnected from server — reconnecting...', 'warning');
         if (!_wsReconnectTimer) {
           _wsReconnectTimer = setTimeout(() => {
             _wsReconnectTimer = null;
@@ -12933,6 +13236,9 @@
     // Initial load
     renderViews();
     switchMainTab('overview');
+    updateNotifBadge();
+    renderNotifList();
+    renderActivityFeed();
     refreshAll();
     connectWebSocket();
 
