@@ -1628,6 +1628,16 @@ app.get('/api/scrape/:id/enrich-preview', async (req, res) => {
   res.json({ samples, totalLeads: job.leads.length, enrichableCount: enrichable.length });
 });
 
+// --- Today's Digest ---
+app.get('/api/leads/digest', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getTodayDigest());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // --- Activity Timeline ---
 app.get('/api/leads/activity', (req, res) => {
   try {

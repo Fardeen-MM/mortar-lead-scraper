@@ -1418,6 +1418,17 @@
       </div>
     </div>
 
+    <!-- Today's Digest -->
+    <div id="digest-bar" style="display:none;margin-bottom:0.75rem;padding:0.6rem 1rem;background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #93c5fd;border-radius:8px;font-size:0.78rem;color:#1e40af;">
+      <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+        <span style="font-weight:700;font-size:0.82rem;">Today</span>
+        <span id="digest-added"></span>
+        <span id="digest-enriched"></span>
+        <span id="digest-top-state"></span>
+        <span id="digest-trend" style="margin-left:auto;font-weight:600;"></span>
+      </div>
+    </div>
+
     <!-- Tab Navigation -->
     <nav class="tab-nav" id="tab-nav">
       <button class="tab-btn active" data-tab="overview" onclick="switchMainTab('overview')">Overview</button>
@@ -4003,6 +4014,25 @@
     }
 
     // --- Activity Timeline ---
+    async function loadDigest() {
+      try {
+        const d = await fetch('/api/leads/digest').then(safeJSON);
+        const bar = document.getElementById('digest-bar');
+        if (d.today.added === 0 && d.today.enriched === 0) { bar.style.display = 'none'; return; }
+        bar.style.display = '';
+        document.getElementById('digest-added').innerHTML = d.today.added > 0
+          ? `<span style="background:#dcfce7;color:#166534;padding:0.1rem 0.4rem;border-radius:4px;font-weight:600;">+${d.today.added} leads</span>` +
+            (d.today.withEmail > 0 ? ` <span style="color:#059669;">(${d.today.withEmail} with email)</span>` : '')
+          : '';
+        document.getElementById('digest-enriched').innerHTML = d.today.enriched > 0
+          ? `<span style="background:#ede9fe;color:#5b21b6;padding:0.1rem 0.4rem;border-radius:4px;">${d.today.enriched} enriched</span>` : '';
+        document.getElementById('digest-top-state').innerHTML = d.topState
+          ? `Top: <strong>${d.topState.state}</strong> (${d.topState.count})` : '';
+        const trends = { up: '<span style="color:#16a34a;">&#x25B2; Up from yesterday</span>', down: '<span style="color:#dc2626;">&#x25BC; Down from yesterday</span>', flat: '<span style="color:#6b7280;">&#x2500; Same as yesterday</span>' };
+        document.getElementById('digest-trend').innerHTML = d.yesterday.added > 0 ? (trends[d.trend] || '') : '';
+      } catch (err) { console.error('Digest error:', err); }
+    }
+
     async function loadActivity() {
       try {
         const res = await fetch('/api/leads/activity?limit=20');
@@ -12764,7 +12794,7 @@
     async function refreshAll() {
       const bar = document.getElementById('refresh-bar');
       bar.style.width = '5%';
-      const loaders = [loadStats, loadScores, loadRecommendations, loadFreshness, loadActivity, loadPracticeAreas, loadCompleteness, loadLists, loadEnrichmentDashboard, loadActivityFeed, loadQualityAlerts, loadExportHistory, loadGrowthChart, loadFirmIntel, loadHealthScore, loadPipeline, loadSegments, loadSchedules, loadWebhooks, loadEnrichmentQueue, loadVerificationStats, loadExportTemplates, loadAnalytics, loadEmailClassification, loadConfidencePanel, loadStalenessPanel, loadTagDefinitions, loadChangeSignals, loadIcpPanel, loadSavedSearches, loadAdmissionSignals, loadSequences, loadFirmDirectory, loadEngagementPanel, loadDncPanel, loadSmartDuplicates, loadTerritories, loadSourceAttribution, loadDecayPreview, loadIntentSignals, loadRoutingRules, loadCompletenessHeatmap, loadRecentNotes, loadSmartLists, loadKpiMetrics, loadScoringModels, loadCampaigns, loadCrossSourceDuplicates, loadEngagementHeatmap, loadOwners, loadLeaderboard, loadAutomationRules, loadDataQuality, loadExportProfiles, loadRecentContacts, loadWarmUpScores, loadFilterFacets, loadEnrichQueue, loadFirmIntelligence, loadDedupQueue, loadAuditLog, loadLifecycleAnalytics, loadSequencePerformance, loadActivityScores, loadBulkEnrichmentRuns, loadFirmNetwork, loadFreshnessMonitor, loadScoringRankings, loadGeoClusters, loadPriorityInbox, loadPracticeAnalytics, loadSourceROI, loadComplianceDashboard, loadPredictiveScores, loadTeamPerformance, loadEmailDeliverability, loadTagRulesEngine, loadNurtureCadence, loadCustomFields, loadScoreDecayConfig, loadLookalikes, loadConversionFunnel, loadLeadVelocity, loadCompletenessMatrix, loadLeadClusters, loadAbTests, loadReengagement, loadAttribution, loadSLATracker, loadSaturation, loadEnrichWaterfall, loadCompetitiveIntel, loadSeqTemplates, loadQualityRulesPanel, loadTimelinePanel, loadExportScheduler, loadPropensity, loadCohorts, loadChannelPrefs, loadBenchmarks, loadDealEstimates, loadOutreachCal, loadRiskScores, loadNetworkMap, loadJourneyMapping, loadScoringAudit, loadGeoExpansion, loadFreshnessAlerts2, loadMergeCandidates, loadOutreachAnalytics, loadIcpScoring, loadPipelineVelocity, loadRelationshipGraph, loadEnrichmentROI, loadEngagementPrediction, loadCampaignPerformance2, loadPrioritizationMatrix, loadFirmAggregation, loadImprovementRecs, loadLifecycleFunnel, loadCadenceOptimizer, loadScoringCalibration, loadPracticeMarketSize, loadPipelineHealthPanel, loadAffinityScoring, loadScraperGaps, loadFreshnessIndex, loadFirmGrowthPanel, loadRevenueAttribution, loadSaturationHeatmap2, loadSmartListBuilder, loadQualityScorecard, loadDedupIntelligence, loadOutboundReadiness, loadAgingReport, loadGrowthAnalytics2, loadWaterfallHistory, loadRecentlyEnriched, loadEnrichmentPriority, loadEnrichmentCoverage, loadEnrichmentFailures, loadAiBrief];
+      const loaders = [loadStats, loadScores, loadRecommendations, loadFreshness, loadActivity, loadPracticeAreas, loadCompleteness, loadLists, loadEnrichmentDashboard, loadActivityFeed, loadQualityAlerts, loadExportHistory, loadGrowthChart, loadFirmIntel, loadHealthScore, loadPipeline, loadSegments, loadSchedules, loadWebhooks, loadEnrichmentQueue, loadVerificationStats, loadExportTemplates, loadAnalytics, loadEmailClassification, loadConfidencePanel, loadStalenessPanel, loadTagDefinitions, loadChangeSignals, loadIcpPanel, loadSavedSearches, loadAdmissionSignals, loadSequences, loadFirmDirectory, loadEngagementPanel, loadDncPanel, loadSmartDuplicates, loadTerritories, loadSourceAttribution, loadDecayPreview, loadIntentSignals, loadRoutingRules, loadCompletenessHeatmap, loadRecentNotes, loadSmartLists, loadKpiMetrics, loadScoringModels, loadCampaigns, loadCrossSourceDuplicates, loadEngagementHeatmap, loadOwners, loadLeaderboard, loadAutomationRules, loadDataQuality, loadExportProfiles, loadRecentContacts, loadWarmUpScores, loadFilterFacets, loadEnrichQueue, loadFirmIntelligence, loadDedupQueue, loadAuditLog, loadLifecycleAnalytics, loadSequencePerformance, loadActivityScores, loadBulkEnrichmentRuns, loadFirmNetwork, loadFreshnessMonitor, loadScoringRankings, loadGeoClusters, loadPriorityInbox, loadPracticeAnalytics, loadSourceROI, loadComplianceDashboard, loadPredictiveScores, loadTeamPerformance, loadEmailDeliverability, loadTagRulesEngine, loadNurtureCadence, loadCustomFields, loadScoreDecayConfig, loadLookalikes, loadConversionFunnel, loadLeadVelocity, loadCompletenessMatrix, loadLeadClusters, loadAbTests, loadReengagement, loadAttribution, loadSLATracker, loadSaturation, loadEnrichWaterfall, loadCompetitiveIntel, loadSeqTemplates, loadQualityRulesPanel, loadTimelinePanel, loadExportScheduler, loadPropensity, loadCohorts, loadChannelPrefs, loadBenchmarks, loadDealEstimates, loadOutreachCal, loadRiskScores, loadNetworkMap, loadJourneyMapping, loadScoringAudit, loadGeoExpansion, loadFreshnessAlerts2, loadMergeCandidates, loadOutreachAnalytics, loadIcpScoring, loadPipelineVelocity, loadRelationshipGraph, loadEnrichmentROI, loadEngagementPrediction, loadCampaignPerformance2, loadPrioritizationMatrix, loadFirmAggregation, loadImprovementRecs, loadLifecycleFunnel, loadCadenceOptimizer, loadScoringCalibration, loadPracticeMarketSize, loadPipelineHealthPanel, loadAffinityScoring, loadScraperGaps, loadFreshnessIndex, loadFirmGrowthPanel, loadRevenueAttribution, loadSaturationHeatmap2, loadSmartListBuilder, loadQualityScorecard, loadDedupIntelligence, loadOutboundReadiness, loadAgingReport, loadGrowthAnalytics2, loadWaterfallHistory, loadRecentlyEnriched, loadEnrichmentPriority, loadEnrichmentCoverage, loadEnrichmentFailures, loadAiBrief, loadDigest];
       let done = 0;
       const total = loaders.length;
       const tracked = loaders.map(fn => fn().then(() => { done++; bar.style.width = Math.round((done / total) * 95) + '%'; }).catch(err => { done++; bar.style.width = Math.round((done / total) * 95) + '%'; console.warn('[refresh]', fn.name || 'loader', 'failed:', err.message); }));
