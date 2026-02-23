@@ -4924,11 +4924,11 @@
           if (isSelected) tr.classList.add('selected');
           tr.innerHTML = `
             <td><input type="checkbox" class="lead-cb" data-id="${lead.id}" ${isSelected ? 'checked' : ''}></td>
-            <td style="cursor:pointer;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${cColor};margin-right:5px;" title="${cPct}% complete (${cFields}/8 fields)"></span><strong>${esc(lead.first_name)} ${esc(lead.last_name)}</strong></td>
+            <td style="cursor:pointer;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${cColor};margin-right:3px;" title="${cPct}% complete (${cFields}/8 fields)"></span><strong>${esc(lead.first_name)} ${esc(lead.last_name)}</strong>${lead.email && lead.phone ? '<span title="Gold: email+phone" style="margin-left:3px;font-size:0.55rem;color:#d97706;">&#x2605;</span>' : ''}</td>
             <td>${lead.firm_name ? '<span onclick="event.stopPropagation();openFirmDetail(\'' + esc(lead.firm_name).replace(/'/g, "\\'") + '\')" style="cursor:pointer;color:#2563eb;text-decoration:underline dotted;" title="View firm details">' + esc(lead.firm_name) + '</span>' : ''}</td>
             <td>${esc(lead.city)}</td>
             <td>${esc(lead.state)}</td>
-            <td><span style="display:inline-block;padding:0.1rem 0.4rem;border-radius:4px;font-size:0.72rem;font-weight:600;background:${scoreBg};color:${scoreColor};">${score}</span></td>
+            <td><span style="display:inline-flex;align-items:center;gap:0.2rem;padding:0.1rem 0.4rem;border-radius:4px;font-size:0.72rem;font-weight:600;background:${scoreBg};color:${scoreColor};"><span style="display:inline-block;width:3px;height:12px;border-radius:1px;background:${scoreColor};opacity:0.3;position:relative;overflow:hidden;"><span style="position:absolute;bottom:0;width:100%;height:${score}%;background:${scoreColor};border-radius:1px;"></span></span>${score}</span></td>
             <td class="${lead.email ? 'has-data' : 'no-data'}">${lead.email ? esc(lead.email) + (lead.email_verified === 1 ? ' <span title="Verified" style="color:#16a34a;">&#x2713;</span>' : lead.email_verified === -1 ? ' <span title="Invalid" style="color:#dc2626;">&#x2717;</span>' : '') : '-'}</td>
             <td class="${lead.phone ? 'has-data' : 'no-data'}">${lead.phone ? esc(lead.phone) : '-'}</td>
             <td class="${lead.website ? 'has-data' : 'no-data'}">${lead.website ? '<a href="' + (lead.website.startsWith('http') ? '' : 'https://') + esc(lead.website) + '" target="_blank" rel="noopener">' + esc(lead.website).substring(0, 30) + '</a>' : '-'}</td>
