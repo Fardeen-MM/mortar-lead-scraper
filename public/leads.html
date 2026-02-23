@@ -1220,9 +1220,60 @@
       .tam-grid { grid-template-columns: repeat(2, 1fr); }
       #quick-actions { grid-template-columns: 1fr 1fr; }
     }
+
+    /* Toast notification system */
+    #toast-container {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      z-index: 10000; display: flex; flex-direction: column-reverse; gap: 0.5rem;
+      pointer-events: none; max-width: 380px;
+    }
+    .toast {
+      pointer-events: auto;
+      padding: 0.7rem 1rem; border-radius: 8px;
+      font-size: 0.82rem; font-weight: 500;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      animation: toastIn 0.3s ease; display: flex; align-items: center; gap: 0.5rem;
+      backdrop-filter: blur(8px);
+    }
+    .toast.success { background: rgba(22,163,74,0.95); color: white; }
+    .toast.error { background: rgba(220,38,38,0.95); color: white; }
+    .toast.info { background: rgba(79,70,229,0.95); color: white; }
+    .toast.warning { background: rgba(217,119,6,0.95); color: white; }
+    .toast.out, .toast.leaving { animation: toastOut 0.3s ease forwards; }
+    @keyframes toastIn { from { opacity: 0; transform: translateY(10px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes toastOut { to { opacity: 0; transform: translateY(-10px) scale(0.95); } }
+
+    /* Panel loading skeleton */
+    .panel-loading {
+      padding: 1rem; display: flex; align-items: center; gap: 0.5rem;
+      color: var(--text-muted); font-size: 0.8rem;
+    }
+    .panel-loading .spin {
+      width: 16px; height: 16px; border: 2px solid #e5e7eb;
+      border-top-color: var(--indigo); border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Panel empty state */
+    .panel-empty {
+      padding: 1.5rem 1rem; text-align: center;
+      color: var(--text-muted); font-size: 0.82rem;
+    }
+    .panel-empty .icon { font-size: 1.5rem; margin-bottom: 0.3rem; opacity: 0.5; }
+    .panel-empty .msg { font-weight: 500; }
+
+    /* Refresh progress bar */
+    #refresh-bar {
+      position: fixed; top: 0; left: 0; height: 2px; z-index: 9999;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6, #a78bfa);
+      transition: width 0.3s ease; border-radius: 0 2px 2px 0;
+    }
   </style>
 </head>
 <body>
+  <div id="refresh-bar" style="width:0"></div>
+  <div id="toast-container"></div>
   <div class="container">
     <header class="leads-header">
       <div class="leads-header-left">
@@ -3502,16 +3553,13 @@
     <div style="font-weight:600;margin-bottom:0.3rem;">Navigation</div>
     <div><kbd>&#x2318;K</kbd> Command palette &nbsp; <kbd>/</kbd> Search &nbsp; <kbd>Esc</kbd> Clear/Close &nbsp; <kbd>?</kbd> Toggle hints</div>
     <div><kbd>j</kbd>/<kbd>k</kbd> Navigate rows &nbsp; <kbd>Enter</kbd> Open detail &nbsp; <kbd>x</kbd> Toggle select &nbsp; <kbd>a</kbd> Select all</div>
+    <div><kbd>1</kbd>-<kbd>6</kbd> Switch tabs (Overview, Leads, Analytics, Quality, Outreach, Settings)</div>
     <div style="font-weight:600;margin-top:0.3rem;">Actions</div>
-    <div><kbd>r</kbd> Refresh &nbsp; <kbd>e</kbd> Export &nbsp; <kbd>c</kbd> Copy emails &nbsp; <kbd>d</kbd> Dark mode</div>
-    <div><kbd>t</kbd> Tag selected &nbsp; <kbd>s</kbd> Star/favorite &nbsp; <kbd>m</kbd> Move stage &nbsp; <kbd>p</kbd> Pipeline view</div>
-    <div><kbd>1</kbd>-<kbd>5</kbd> Jump to pipeline stage &nbsp; <kbd>f</kbd> Toggle filters &nbsp; <kbd>n</kbd> New scrape</div>
+    <div><kbd>r</kbd> Refresh &nbsp; <kbd>e</kbd> Export &nbsp; <kbd>c</kbd> Copy emails &nbsp; <kbd>d</kbd> Dark mode &nbsp; <kbd>n</kbd> New scrape</div>
+    <div><kbd>t</kbd> Tag selected &nbsp; <kbd>m</kbd> Move stage &nbsp; <kbd>f</kbd> Toggle filters &nbsp; <kbd>p</kbd> Pipeline view</div>
     <div style="font-weight:600;margin-top:0.3rem;">AI</div>
-    <div><kbd>b</kbd> Open AI Brain &nbsp; <kbd>i</kbd> AI insights (in modal)</div>
+    <div><kbd>b</kbd> Open AI Brain &nbsp; Ask questions about leads in natural language</div>
   </div>
-
-  <!-- Toast Container -->
-  <div class="toast-container" id="toast-container"></div>
 
   <!-- Command Palette (Cmd+K) -->
   <div class="cmd-overlay" id="cmd-palette" onclick="if(event.target===this)closeCmdPalette()">
@@ -3584,8 +3632,8 @@
         'affinity-panel', 'lookalike-panel',
         'reengage-panel', 'sla-panel',
         'cadence-opt-panel', 'improvement-panel',
-        'smart-list-panel', 'saturation-heatmap-panel',
-        'revenue-attr-panel', 'smart-list-builder-panel',
+        'smart-list-panel', 'saturation-heat-panel',
+        'revenue-attr-panel',
         'engagement-heatmap-panel',
       ],
       quality: [
@@ -3663,19 +3711,30 @@
     // --- Toast Notification System ---
     function toast(msg, type = 'success') {
       const container = document.getElementById('toast-container');
-      const icons = { success: '&#x2705;', error: '&#x274C;', info: '&#x2139;&#xFE0F;' };
+      const icons = { success: '&#x2705;', error: '&#x274C;', info: '&#x2139;&#xFE0F;', warning: '&#x26A0;&#xFE0F;' };
       const el = document.createElement('div');
       el.className = `toast ${type}`;
-      el.innerHTML = `<span class="toast-icon">${icons[type] || icons.info}</span><span class="toast-msg">${msg}</span>`;
+      el.innerHTML = `<span>${icons[type] || icons.info}</span><span>${msg}</span>`;
       container.appendChild(el);
-      setTimeout(() => {
-        el.classList.add('leaving');
-        setTimeout(() => el.remove(), 300);
-      }, 4000);
+      setTimeout(() => { el.classList.add('leaving'); setTimeout(() => el.remove(), 300); }, 4000);
     }
 
     // Safe JSON response parser — throws on HTTP errors instead of silently failing
     function safeJSON(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }
+
+    // --- Panel loading helper: shows spinner during load, empty state if no data ---
+    function panelLoading(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const content = el.querySelector('.panel-content');
+      if (content) content.innerHTML = '<div class="panel-loading"><div class="spin"></div>Loading...</div>';
+    }
+    function panelEmpty(id, msg = 'No data yet') {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const content = el.querySelector('.panel-content');
+      if (content) content.innerHTML = `<div class="panel-empty"><div class="msg">${msg}</div></div>`;
+    }
 
     let currentOffset = 0;
     const PAGE_SIZE = 100;
@@ -4213,9 +4272,18 @@
       { label: 'Copy Emails', desc: 'Copy filtered lead emails to clipboard', icon: '&#x1F4CB;', action: () => copyAllEmails() },
       { label: 'Compare Selected', desc: 'Side-by-side compare selected leads', icon: '&#x1F50D;', action: () => compareSelectedLeads() },
       { label: 'Quality Check', desc: 'Scan for data quality issues', icon: '&#x1F50D;', action: () => runQualityCheck() },
+      { label: 'AI Brain', desc: 'Ask questions about your leads', icon: '&#x1F9E0;', action: () => toggleAiBrain() },
+      { label: 'AI Classify', desc: 'Auto-tag practice areas with AI', icon: '&#x1F3AF;', action: () => runAiClassify() },
+      { label: 'AI Quality Audit', desc: 'AI-powered data quality check', icon: '&#x1F50D;', action: () => runAiAudit() },
       { label: 'Dark Mode', desc: 'Toggle dark/light theme', icon: '&#x1F319;', action: () => toggleDarkMode() },
       { label: 'Clear Filters', desc: 'Reset all search filters', icon: '&#x1F6AB;', action: () => { document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })); } },
       { label: 'Refresh Data', desc: 'Reload all dashboard data', icon: '&#x1F504;', action: () => refreshAll() },
+      { label: 'Switch to Overview', desc: 'Go to overview tab', icon: '&#x1F4CA;', action: () => switchMainTab('overview') },
+      { label: 'Switch to Leads', desc: 'Go to leads explorer', icon: '&#x1F465;', action: () => switchMainTab('leads') },
+      { label: 'Switch to Analytics', desc: 'Go to analytics tab', icon: '&#x1F4C8;', action: () => switchMainTab('analytics') },
+      { label: 'Switch to Quality', desc: 'Go to data quality tab', icon: '&#x2705;', action: () => switchMainTab('quality') },
+      { label: 'Switch to Outreach', desc: 'Go to outreach tab', icon: '&#x1F4E7;', action: () => switchMainTab('outreach') },
+      { label: 'Switch to Settings', desc: 'Go to settings tab', icon: '&#x2699;&#xFE0F;', action: () => switchMainTab('settings') },
     ];
 
     function openCmdPalette() {
@@ -5676,14 +5744,13 @@
           if (!_aiBrainOpen) toggleAiBrain();
           document.getElementById('ai-brain-input').focus();
           break;
-        case '1': case '2': case '3': case '4': case '5': {
-          // Jump to pipeline stage
-          const stages = ['new', 'contacted', 'replied', 'meeting', 'client'];
+        case '1': case '2': case '3': case '4': case '5': case '6': {
+          // Jump to tab
+          const tabs = ['overview', 'leads', 'analytics', 'quality', 'outreach', 'settings'];
           const idx = parseInt(e.key) - 1;
-          if (stages[idx]) {
-            document.getElementById('search-input').value = 'stage:' + stages[idx];
-            loadLeads();
-            toast('Filtered to ' + stages[idx] + ' stage', 'info');
+          if (tabs[idx]) {
+            switchMainTab(tabs[idx]);
+            toast('Switched to ' + tabs[idx], 'info');
           }
           break;
         }
@@ -12566,9 +12633,15 @@
 
     // --- Refresh All ---
     async function refreshAll() {
-      // Wrap each loader so a single failure doesn't break the entire refresh
-      const safe = (fn) => fn().catch(err => console.warn('[refresh]', fn.name || 'loader', 'failed:', err.message));
-      await Promise.all([safe(loadStats), safe(loadScores), safe(loadRecommendations), safe(loadFreshness), safe(loadActivity), safe(loadPracticeAreas), safe(loadCompleteness), safe(loadLists), safe(loadEnrichmentDashboard), safe(loadActivityFeed), safe(loadQualityAlerts), safe(loadExportHistory), safe(loadGrowthChart), safe(loadFirmIntel), safe(loadHealthScore), safe(loadPipeline), safe(loadSegments), safe(loadSchedules), safe(loadWebhooks), safe(loadEnrichmentQueue), safe(loadVerificationStats), safe(loadExportTemplates), safe(loadAnalytics), safe(loadEmailClassification), safe(loadConfidencePanel), safe(loadStalenessPanel), safe(loadTagDefinitions), safe(loadChangeSignals), safe(loadIcpPanel), safe(loadSavedSearches), safe(loadAdmissionSignals), safe(loadSequences), safe(loadFirmDirectory), safe(loadEngagementPanel), safe(loadDncPanel), safe(loadSmartDuplicates), safe(loadTerritories), safe(loadSourceAttribution), safe(loadDecayPreview), safe(loadIntentSignals), safe(loadRoutingRules), safe(loadCompletenessHeatmap), safe(loadRecentNotes), safe(loadSmartLists), safe(loadKpiMetrics), safe(loadScoringModels), safe(loadCampaigns), safe(loadCrossSourceDuplicates), safe(loadEngagementHeatmap), safe(loadOwners), safe(loadLeaderboard), safe(loadAutomationRules), safe(loadDataQuality), safe(loadExportProfiles), safe(loadRecentContacts), safe(loadWarmUpScores), safe(loadFilterFacets), safe(loadEnrichQueue), safe(loadFirmIntelligence), safe(loadDedupQueue), safe(loadAuditLog), safe(loadLifecycleAnalytics), safe(loadSequencePerformance), safe(loadActivityScores), safe(loadBulkEnrichmentRuns), safe(loadFirmNetwork), safe(loadFreshnessMonitor), safe(loadScoringRankings), safe(loadGeoClusters), safe(loadPriorityInbox), safe(loadPracticeAnalytics), safe(loadSourceROI), safe(loadComplianceDashboard), safe(loadPredictiveScores), safe(loadTeamPerformance), safe(loadEmailDeliverability), safe(loadTagRulesEngine), safe(loadNurtureCadence), safe(loadCustomFields), safe(loadScoreDecayConfig), safe(loadLookalikes), safe(loadConversionFunnel), safe(loadLeadVelocity), safe(loadCompletenessMatrix), safe(loadLeadClusters), safe(loadAbTests), safe(loadReengagement), safe(loadAttribution), safe(loadSLATracker), safe(loadSaturation), safe(loadEnrichWaterfall), safe(loadCompetitiveIntel), safe(loadSeqTemplates), safe(loadQualityRulesPanel), safe(loadTimelinePanel), safe(loadExportScheduler), safe(loadPropensity), safe(loadCohorts), safe(loadChannelPrefs), safe(loadBenchmarks), safe(loadDealEstimates), safe(loadOutreachCal), safe(loadRiskScores), safe(loadNetworkMap), safe(loadJourneyMapping), safe(loadScoringAudit), safe(loadGeoExpansion), safe(loadFreshnessAlerts2), safe(loadMergeCandidates), safe(loadOutreachAnalytics), safe(loadIcpScoring), safe(loadPipelineVelocity), safe(loadRelationshipGraph), safe(loadEnrichmentROI), safe(loadEngagementPrediction), safe(loadCampaignPerformance2), safe(loadPrioritizationMatrix), safe(loadFirmAggregation), safe(loadImprovementRecs), safe(loadLifecycleFunnel), safe(loadCadenceOptimizer), safe(loadScoringCalibration), safe(loadPracticeMarketSize), safe(loadPipelineHealthPanel), safe(loadAffinityScoring), safe(loadScraperGaps), safe(loadFreshnessIndex), safe(loadFirmGrowthPanel), safe(loadRevenueAttribution), safe(loadSaturationHeatmap2), safe(loadSmartListBuilder), safe(loadQualityScorecard), safe(loadDedupIntelligence), safe(loadOutboundReadiness), safe(loadAgingReport), safe(loadGrowthAnalytics2), safe(loadWaterfallHistory), safe(loadRecentlyEnriched), safe(loadEnrichmentPriority), safe(loadEnrichmentCoverage), safe(loadEnrichmentFailures), safe(loadAiBrief)]);
+      const bar = document.getElementById('refresh-bar');
+      bar.style.width = '5%';
+      const loaders = [loadStats, loadScores, loadRecommendations, loadFreshness, loadActivity, loadPracticeAreas, loadCompleteness, loadLists, loadEnrichmentDashboard, loadActivityFeed, loadQualityAlerts, loadExportHistory, loadGrowthChart, loadFirmIntel, loadHealthScore, loadPipeline, loadSegments, loadSchedules, loadWebhooks, loadEnrichmentQueue, loadVerificationStats, loadExportTemplates, loadAnalytics, loadEmailClassification, loadConfidencePanel, loadStalenessPanel, loadTagDefinitions, loadChangeSignals, loadIcpPanel, loadSavedSearches, loadAdmissionSignals, loadSequences, loadFirmDirectory, loadEngagementPanel, loadDncPanel, loadSmartDuplicates, loadTerritories, loadSourceAttribution, loadDecayPreview, loadIntentSignals, loadRoutingRules, loadCompletenessHeatmap, loadRecentNotes, loadSmartLists, loadKpiMetrics, loadScoringModels, loadCampaigns, loadCrossSourceDuplicates, loadEngagementHeatmap, loadOwners, loadLeaderboard, loadAutomationRules, loadDataQuality, loadExportProfiles, loadRecentContacts, loadWarmUpScores, loadFilterFacets, loadEnrichQueue, loadFirmIntelligence, loadDedupQueue, loadAuditLog, loadLifecycleAnalytics, loadSequencePerformance, loadActivityScores, loadBulkEnrichmentRuns, loadFirmNetwork, loadFreshnessMonitor, loadScoringRankings, loadGeoClusters, loadPriorityInbox, loadPracticeAnalytics, loadSourceROI, loadComplianceDashboard, loadPredictiveScores, loadTeamPerformance, loadEmailDeliverability, loadTagRulesEngine, loadNurtureCadence, loadCustomFields, loadScoreDecayConfig, loadLookalikes, loadConversionFunnel, loadLeadVelocity, loadCompletenessMatrix, loadLeadClusters, loadAbTests, loadReengagement, loadAttribution, loadSLATracker, loadSaturation, loadEnrichWaterfall, loadCompetitiveIntel, loadSeqTemplates, loadQualityRulesPanel, loadTimelinePanel, loadExportScheduler, loadPropensity, loadCohorts, loadChannelPrefs, loadBenchmarks, loadDealEstimates, loadOutreachCal, loadRiskScores, loadNetworkMap, loadJourneyMapping, loadScoringAudit, loadGeoExpansion, loadFreshnessAlerts2, loadMergeCandidates, loadOutreachAnalytics, loadIcpScoring, loadPipelineVelocity, loadRelationshipGraph, loadEnrichmentROI, loadEngagementPrediction, loadCampaignPerformance2, loadPrioritizationMatrix, loadFirmAggregation, loadImprovementRecs, loadLifecycleFunnel, loadCadenceOptimizer, loadScoringCalibration, loadPracticeMarketSize, loadPipelineHealthPanel, loadAffinityScoring, loadScraperGaps, loadFreshnessIndex, loadFirmGrowthPanel, loadRevenueAttribution, loadSaturationHeatmap2, loadSmartListBuilder, loadQualityScorecard, loadDedupIntelligence, loadOutboundReadiness, loadAgingReport, loadGrowthAnalytics2, loadWaterfallHistory, loadRecentlyEnriched, loadEnrichmentPriority, loadEnrichmentCoverage, loadEnrichmentFailures, loadAiBrief];
+      let done = 0;
+      const total = loaders.length;
+      const tracked = loaders.map(fn => fn().then(() => { done++; bar.style.width = Math.round((done / total) * 95) + '%'; }).catch(err => { done++; bar.style.width = Math.round((done / total) * 95) + '%'; console.warn('[refresh]', fn.name || 'loader', 'failed:', err.message); }));
+      await Promise.all(tracked);
+      bar.style.width = '100%';
+      setTimeout(() => { bar.style.width = '0'; bar.style.transition = 'none'; requestAnimationFrame(() => { bar.style.transition = 'width 0.3s ease'; }); }, 500);
       loadCoverage();
       loadCoverageMap();
       loadGeoMap();

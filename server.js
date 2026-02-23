@@ -760,7 +760,7 @@ app.post('/api/leads/prepopulate', (req, res) => {
             const time = Math.round((Date.now() - startTime) / 1000);
             let dbStats = { inserted: 0, updated: 0 };
             if (leads.length > 0) {
-              try { dbStats = leadDb.batchUpsert(leads, `prepop:${state}`); } catch {}
+              try { dbStats = leadDb.batchUpsert(leads, `prepop:${state}`); } catch (err) { console.error(`[Prepop] batchUpsert failed for ${state}:`, err.message); }
             }
             resolve({ state, leads: leads.length, newInDb: dbStats.inserted, updated: dbStats.updated, time });
           });
@@ -1054,7 +1054,7 @@ app.post('/api/leads/waterfall', (req, res) => {
         stats: { ...stats, profileErrors: (stats.profileErrors || []).slice(0, 50) },
         durationSecs: Math.round((Date.now() - _waterfallStartTime) / 1000),
       });
-    } catch {}
+    } catch (err) { console.error('[Waterfall] recordWaterfallRun failed:', err.message); }
   })()
     .catch(err => {
       _waterfallProgress.step = `Error: ${err.message}`;
@@ -1295,7 +1295,7 @@ app.post('/api/leads/waterfall/multi', (req, res) => {
         if (Object.keys(updates).length > 0) {
           updates.last_enriched_at = new Date().toISOString();
           updates.enrichment_steps = 'profile,smtp';
-          try { leadDb.updateLead(lead.id, updates); saved++; } catch {}
+          try { leadDb.updateLead(lead.id, updates); saved++; } catch (err) { console.error(`[Waterfall Multi] updateLead failed for lead ${lead.id}:`, err.message); }
         } else if (lead._enrichmentError) {
           try {
             leadDb.updateLead(lead.id, {
@@ -1303,7 +1303,7 @@ app.post('/api/leads/waterfall/multi', (req, res) => {
               enrichment_attempts: (orig.enrichment_attempts || 0) + 1,
               last_enriched_at: new Date().toISOString(),
             });
-          } catch {}
+          } catch (err) { console.error(`[Waterfall Multi] updateLead enrichment-error failed for lead ${lead.id}:`, err.message); }
         }
       }
 
@@ -1326,7 +1326,7 @@ app.post('/api/leads/waterfall/multi', (req, res) => {
           stats: { ...stats, profileErrors: (stats.profileErrors || []).slice(0, 50) },
           durationSecs: 0,
         });
-      } catch {}
+      } catch (err) { console.error(`[Waterfall Multi] recordWaterfallRun failed for ${state}:`, err.message); }
 
       console.log(`[Waterfall Multi] ${state}: ${stats.totalFieldsFilled} fields, ${saved} saved`);
     }
@@ -4334,7 +4334,7 @@ app.post('/api/ai/classify-practice-areas', async (req, res) => {
         try {
           leadDb.updateLead(r.id, { practice_area: r.practice_area });
           updated++;
-        } catch {}
+        } catch (err) { console.error(`[Classify] updateLead failed for lead ${r.id}:`, err.message); }
       }
       _classifyProgress.processed++;
       _classifyProgress.updated = updated;
@@ -5021,7 +5021,7 @@ const server = app.listen(PORT, () => {
           if (Object.keys(updates).length > 0) {
             updates.last_enriched_at = new Date().toISOString();
             updates.enrichment_steps = 'profile,smtp';
-            try { leadDb.updateLead(lead.id, updates); saved++; } catch {}
+            try { leadDb.updateLead(lead.id, updates); saved++; } catch (err) { console.error(`[Cron] updateLead failed for lead ${lead.id}:`, err.message); }
           } else if (lead._enrichmentError) {
             try {
               leadDb.updateLead(lead.id, {
@@ -5029,7 +5029,7 @@ const server = app.listen(PORT, () => {
                 enrichment_attempts: (orig.enrichment_attempts || 0) + 1,
                 last_enriched_at: new Date().toISOString(),
               });
-            } catch {}
+            } catch (err) { console.error(`[Cron] updateLead enrichment-error failed for lead ${lead.id}:`, err.message); }
           }
         }
         leadDb.batchScoreLeads();
@@ -5050,7 +5050,7 @@ const server = app.listen(PORT, () => {
             stats: { ...stats, profileErrors: (stats.profileErrors || []).slice(0, 50) },
             durationSecs: 0,
           });
-        } catch {}
+        } catch (err) { console.error('[Cron] recordWaterfallRun failed:', err.message); }
 
         console.log(`[Cron] Auto-enrich done: ${stats.totalFieldsFilled} fields filled, ${saved} leads saved`);
       } catch (err) {
