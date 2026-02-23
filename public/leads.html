@@ -1809,6 +1809,44 @@
     </div>
 
     <!-- Outreach Sequences Panel -->
+    <!-- AI Command Center -->
+    <div id="ai-command-panel" class="bp" style="background:linear-gradient(135deg,#0f172a,#1e293b);border:1px solid #334155;color:#e2e8f0;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+        <div style="display:flex;align-items:center;gap:0.4rem;">
+          <span style="font-size:1.1rem;">&#x1F916;</span>
+          <span style="font-weight:700;font-size:0.9rem;background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">AI Command Center</span>
+        </div>
+        <span style="font-size:0.62rem;padding:0.1rem 0.4rem;border-radius:8px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-weight:600;">Powered by Claude</span>
+      </div>
+      <p style="font-size:0.72rem;color:#94a3b8;margin-bottom:0.5rem;">One-click AI actions for your leads. Select a segment, choose an action, let AI do the rest.</p>
+
+      <!-- Quick AI Actions Grid -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:0.4rem;margin-bottom:0.5rem;">
+        <button onclick="aiCommandAction('top-leads')" style="padding:0.5rem;background:#1e293b;border:1px solid #334155;border-radius:8px;cursor:pointer;text-align:left;transition:border-color 0.15s;" onmouseover="this.style.borderColor='#818cf8'" onmouseout="this.style.borderColor='#334155'">
+          <div style="font-size:0.9rem;margin-bottom:0.15rem;">&#x1F3AF;</div>
+          <div style="font-size:0.72rem;font-weight:600;color:#e2e8f0;">Top Leads Today</div>
+          <div style="font-size:0.62rem;color:#64748b;">AI picks your best leads</div>
+        </button>
+        <button onclick="aiCommandAction('batch-email')" style="padding:0.5rem;background:#1e293b;border:1px solid #334155;border-radius:8px;cursor:pointer;text-align:left;transition:border-color 0.15s;" onmouseover="this.style.borderColor='#818cf8'" onmouseout="this.style.borderColor='#334155'">
+          <div style="font-size:0.9rem;margin-bottom:0.15rem;">&#x2709;&#xFE0F;</div>
+          <div style="font-size:0.72rem;font-weight:600;color:#e2e8f0;">Write Emails</div>
+          <div style="font-size:0.62rem;color:#64748b;">AI emails for segment</div>
+        </button>
+        <button onclick="aiCommandAction('call-list')" style="padding:0.5rem;background:#1e293b;border:1px solid #334155;border-radius:8px;cursor:pointer;text-align:left;transition:border-color 0.15s;" onmouseover="this.style.borderColor='#818cf8'" onmouseout="this.style.borderColor='#334155'">
+          <div style="font-size:0.9rem;margin-bottom:0.15rem;">&#x1F4DE;</div>
+          <div style="font-size:0.72rem;font-weight:600;color:#e2e8f0;">Call Scripts</div>
+          <div style="font-size:0.62rem;color:#64748b;">Scripts for top leads</div>
+        </button>
+        <button onclick="aiCommandAction('audit')" style="padding:0.5rem;background:#1e293b;border:1px solid #334155;border-radius:8px;cursor:pointer;text-align:left;transition:border-color 0.15s;" onmouseover="this.style.borderColor='#818cf8'" onmouseout="this.style.borderColor='#334155'">
+          <div style="font-size:0.9rem;margin-bottom:0.15rem;">&#x1F50D;</div>
+          <div style="font-size:0.72rem;font-weight:600;color:#e2e8f0;">Data Audit</div>
+          <div style="font-size:0.62rem;color:#64748b;">Find data quality issues</div>
+        </button>
+      </div>
+
+      <div id="ai-command-result" style="max-height:250px;overflow-y:auto;"></div>
+    </div>
+
     <div id="sequences-panel" class="bp" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border-color:#d8b4fe">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#7c3aed;">Outreach Sequences</span>
@@ -3946,7 +3984,7 @@
         'heatmap-panel',
       ],
       outreach: [
-        'sequences-panel', 'sequence-analytics-panel', 'seq-templates-panel',
+        'ai-command-panel', 'sequences-panel', 'sequence-analytics-panel', 'seq-templates-panel',
         'campaigns-panel',
         'dnc-panel', 'compliance-panel',
         'territory-panel', 'routing-panel',
@@ -9251,6 +9289,116 @@
       }).join('\n\n---\n\n');
       navigator.clipboard.writeText(texts);
       toast(`${results.length} emails copied to clipboard`, 'success');
+    }
+
+    // --- AI Command Center ---
+    async function aiCommandAction(action) {
+      const result = document.getElementById('ai-command-result');
+      if (!result) return;
+
+      if (action === 'top-leads') {
+        result.innerHTML = '<div style="color:#818cf8;font-size:0.75rem;padding:0.5rem;">Analyzing your best leads...</div>';
+        try {
+          const res = await fetch('/api/leads?sort=lead_score&order=desc&limit=10&minScore=50');
+          const d = await safeJSON(res);
+          const leads = d.leads || [];
+          if (leads.length === 0) { result.innerHTML = '<div style="color:#94a3b8;font-size:0.75rem;padding:0.5rem;">No high-score leads found.</div>'; return; }
+          let html = '<div style="font-size:0.68rem;color:#818cf8;font-weight:600;margin-bottom:0.3rem;">TOP LEADS TO CONTACT TODAY</div>';
+          html += leads.map((l, i) => {
+            const scoreColor = l.lead_score >= 80 ? '#22c55e' : l.lead_score >= 60 ? '#f59e0b' : '#6366f1';
+            return `<div style="display:flex;align-items:center;gap:0.4rem;padding:0.25rem 0;border-bottom:1px solid #1e293b;">
+              <span style="width:18px;height:18px;border-radius:50%;background:${scoreColor};color:#fff;font-size:0.55rem;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">${i + 1}</span>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:0.72rem;font-weight:500;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(l.first_name || '')} ${esc(l.last_name || '')} <span style="color:#64748b;">— ${esc(l.firm_name || '?')}</span></div>
+                <div style="font-size:0.62rem;color:#64748b;">${esc(l.city || '')} ${esc(l.state || '')} &middot; ${esc(l.practice_area || '')} &middot; Score: ${l.lead_score}</div>
+              </div>
+              <div style="display:flex;gap:0.2rem;flex-shrink:0;">
+                ${l.email ? '<button onclick="navigator.clipboard.writeText(\'' + esc(l.email) + '\');toast(\'Copied!\',\'success\');" style="font-size:0.55rem;padding:0.1rem 0.25rem;background:#1e293b;border:1px solid #334155;border-radius:3px;color:#818cf8;cursor:pointer;">Email</button>' : ''}
+                ${l.phone ? '<button onclick="navigator.clipboard.writeText(\'' + esc(l.phone) + '\');toast(\'Copied!\',\'success\');" style="font-size:0.55rem;padding:0.1rem 0.25rem;background:#1e293b;border:1px solid #334155;border-radius:3px;color:#818cf8;cursor:pointer;">Phone</button>' : ''}
+                <button onclick="openLeadModal(${l.id})" style="font-size:0.55rem;padding:0.1rem 0.25rem;background:#4f46e5;border:none;border-radius:3px;color:#fff;cursor:pointer;">View</button>
+              </div>
+            </div>`;
+          }).join('');
+          result.innerHTML = html;
+        } catch (err) { result.innerHTML = `<div style="color:#fca5a5;font-size:0.75rem;">Error: ${esc(err.message)}</div>`; }
+      }
+
+      else if (action === 'batch-email') {
+        result.innerHTML = '<div style="color:#818cf8;font-size:0.75rem;padding:0.5rem;">Fetching leads with email for batch generation...</div>';
+        try {
+          const res = await fetch('/api/leads?sort=lead_score&order=desc&limit=5&hasEmail=true&minScore=40');
+          const d = await safeJSON(res);
+          const leads = d.leads || [];
+          if (leads.length === 0) { result.innerHTML = '<div style="color:#94a3b8;font-size:0.75rem;">No leads with email found.</div>'; return; }
+          let html = '<div style="font-size:0.68rem;color:#818cf8;font-weight:600;margin-bottom:0.3rem;">AI EMAILS FOR TOP LEADS</div>';
+          html += '<div style="font-size:0.65rem;color:#64748b;margin-bottom:0.3rem;">Generating for ' + leads.length + ' leads...</div>';
+          html += '<div id="ai-cmd-emails"></div>';
+          result.innerHTML = html;
+          const emailEl = document.getElementById('ai-cmd-emails');
+          for (const lead of leads) {
+            try {
+              const eRes = await fetch('/api/ai/write-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ leadId: lead.id }) });
+              const email = await safeJSON(eRes);
+              if (email.error) throw new Error(email.error);
+              emailEl.innerHTML += `<div style="background:#1e293b;border:1px solid #334155;border-radius:6px;padding:0.35rem 0.5rem;margin-bottom:0.3rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-size:0.68rem;color:#e2e8f0;font-weight:500;">${esc(lead.first_name || '')} ${esc(lead.last_name || '')} <span style="color:#64748b;">(${esc(lead.email || '')})</span></span>
+                  <button onclick="navigator.clipboard.writeText(this.parentElement.parentElement.querySelector('.cmd-email-body').textContent);toast('Copied!','success');" style="font-size:0.55rem;padding:0.1rem 0.25rem;background:#4f46e5;border:none;border-radius:3px;color:#fff;cursor:pointer;">Copy</button>
+                </div>
+                <div style="font-size:0.68rem;color:#818cf8;margin-top:0.1rem;">Subject: ${esc(email.subject || '')}</div>
+                <div class="cmd-email-body" style="font-size:0.65rem;color:#94a3b8;white-space:pre-wrap;max-height:60px;overflow-y:auto;margin-top:0.1rem;">${esc(email.body || '')}</div>
+              </div>`;
+            } catch (err) {
+              emailEl.innerHTML += `<div style="font-size:0.65rem;color:#fca5a5;">Failed for ${esc(lead.first_name || '')}: ${esc(err.message)}</div>`;
+            }
+          }
+        } catch (err) { result.innerHTML = `<div style="color:#fca5a5;font-size:0.75rem;">Error: ${esc(err.message)}</div>`; }
+      }
+
+      else if (action === 'call-list') {
+        result.innerHTML = '<div style="color:#818cf8;font-size:0.75rem;padding:0.5rem;">Building your call list...</div>';
+        try {
+          const res = await fetch('/api/leads?sort=lead_score&order=desc&limit=10&hasPhone=true&minScore=30');
+          const d = await safeJSON(res);
+          const leads = d.leads || [];
+          if (leads.length === 0) { result.innerHTML = '<div style="color:#94a3b8;font-size:0.75rem;">No leads with phone found.</div>'; return; }
+          let html = '<div style="font-size:0.68rem;color:#818cf8;font-weight:600;margin-bottom:0.3rem;">CALL LIST — ' + leads.length + ' leads with phone</div>';
+          html += '<table style="width:100%;font-size:0.68rem;border-collapse:collapse;">';
+          html += '<tr style="color:#64748b;border-bottom:1px solid #334155;"><th style="text-align:left;padding:0.15rem 0.3rem;">#</th><th style="text-align:left;padding:0.15rem 0.3rem;">Name</th><th style="text-align:left;padding:0.15rem 0.3rem;">Firm</th><th style="text-align:left;padding:0.15rem 0.3rem;">Phone</th><th style="text-align:left;padding:0.15rem 0.3rem;">Score</th></tr>';
+          leads.forEach((l, i) => {
+            html += `<tr style="border-bottom:1px solid #1e293b;cursor:pointer;" onclick="openLeadModal(${l.id})">
+              <td style="padding:0.15rem 0.3rem;color:#94a3b8;">${i + 1}</td>
+              <td style="padding:0.15rem 0.3rem;color:#e2e8f0;">${esc(l.first_name || '')} ${esc(l.last_name || '')}</td>
+              <td style="padding:0.15rem 0.3rem;color:#94a3b8;">${esc(l.firm_name || '')}</td>
+              <td style="padding:0.15rem 0.3rem;"><a href="tel:${esc(l.phone || '')}" style="color:#818cf8;">${esc(l.phone || '')}</a></td>
+              <td style="padding:0.15rem 0.3rem;color:${l.lead_score >= 60 ? '#22c55e' : '#f59e0b'};">${l.lead_score}</td>
+            </tr>`;
+          });
+          html += '</table>';
+          html += '<div style="margin-top:0.3rem;font-size:0.62rem;color:#64748b;">Click any lead to open their profile and generate a call script.</div>';
+          result.innerHTML = html;
+        } catch (err) { result.innerHTML = `<div style="color:#fca5a5;font-size:0.75rem;">Error: ${esc(err.message)}</div>`; }
+      }
+
+      else if (action === 'audit') {
+        result.innerHTML = '<div style="color:#818cf8;font-size:0.75rem;padding:0.5rem;">Running AI data quality audit...</div>';
+        try {
+          const res = await fetch('/api/ai/audit', { method: 'POST' });
+          const d = await safeJSON(res);
+          if (d.error) throw new Error(d.error);
+          let html = '<div style="font-size:0.68rem;color:#818cf8;font-weight:600;margin-bottom:0.3rem;">DATA QUALITY AUDIT</div>';
+          if (d.overall_grade) html += `<div style="font-size:0.82rem;font-weight:700;color:${d.overall_grade === 'A' ? '#22c55e' : d.overall_grade === 'B' ? '#3b82f6' : '#f59e0b'};margin-bottom:0.3rem;">Grade: ${esc(d.overall_grade)}</div>`;
+          if (d.summary) html += `<div style="font-size:0.72rem;color:#cbd5e1;margin-bottom:0.3rem;">${esc(d.summary)}</div>`;
+          if (d.issues && d.issues.length > 0) {
+            html += d.issues.map(issue => `<div style="font-size:0.68rem;color:#fbbf24;padding:0.1rem 0;">&#x26A0; ${esc(issue)}</div>`).join('');
+          }
+          if (d.recommendations && d.recommendations.length > 0) {
+            html += '<div style="font-size:0.62rem;color:#818cf8;font-weight:600;margin-top:0.3rem;">Recommendations:</div>';
+            html += d.recommendations.map(r => `<div style="font-size:0.68rem;color:#94a3b8;padding:0.05rem 0;">&#x2192; ${esc(r)}</div>`).join('');
+          }
+          result.innerHTML = html;
+        } catch (err) { result.innerHTML = `<div style="color:#fca5a5;font-size:0.75rem;">Audit error: ${esc(err.message)}</div>`; }
+      }
     }
 
     // === Firm Directory ===
