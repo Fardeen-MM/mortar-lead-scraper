@@ -2004,10 +2004,14 @@
     <div id="smart-lists-panel" class="bp" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border-color:#fde047">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#a16207;">Smart Lists</span>
-        <button onclick="showCreateSmartListModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#a16207;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New Smart List</button>
+        <div style="display:flex;gap:0.3rem;">
+          <button onclick="showSmartListTemplates()" style="font-size:0.68rem;padding:0.2rem 0.4rem;background:#fef9c3;color:#a16207;border:1px solid #fde047;border-radius:4px;cursor:pointer;">Templates</button>
+          <button onclick="showCreateSmartListModal()" style="font-size:0.7rem;padding:0.2rem 0.5rem;background:#a16207;color:#fff;border:none;border-radius:4px;cursor:pointer;">+ New</button>
+        </div>
       </div>
-      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Dynamic lists that auto-update as new leads match criteria. Like Apollo's saved filters.</p>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Dynamic lists that auto-update as new leads match criteria. Click any list to filter the lead table.</p>
       <div id="smart-lists-list" style="display:flex;flex-wrap:wrap;gap:0.3rem;"></div>
+      <div id="smart-list-drilldown" style="display:none;margin-top:0.4rem;border-top:1px solid #fde047;padding-top:0.4rem;"></div>
     </div>
 
     <!-- KPI Dashboard (Batch 17) -->
@@ -2259,11 +2263,15 @@
     <div id="practice-analytics-panel" class="bp" style="background:linear-gradient(135deg,#f0fdf4,#d1fae5);border-color:#34d399">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#059669;">Practice Area Intelligence</span>
-        <button onclick="loadPracticeAnalytics()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#d1fae5;color:#059669;border:1px solid #34d399;border-radius:4px;cursor:pointer;">Refresh</button>
+        <div style="display:flex;gap:0.3rem;">
+          <button onclick="loadAiPracticeMarket()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#059669;color:#fff;border:none;border-radius:4px;cursor:pointer;">AI Insights</button>
+          <button onclick="loadPracticeAnalytics()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#d1fae5;color:#059669;border:1px solid #34d399;border-radius:4px;cursor:pointer;">Refresh</button>
+        </div>
       </div>
-      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Practice area distribution, firm specialization patterns, cross-sell opportunities. Like ZoomInfo's industry intelligence.</p>
+      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Practice area distribution, firm specialization patterns, cross-sell opportunities.</p>
       <div id="practice-areas-list" style="max-height:150px;overflow-y:auto;margin-bottom:0.3rem;"></div>
       <div id="practice-crosssell" style="max-height:120px;overflow-y:auto;"></div>
+      <div id="practice-ai-insights" style="display:none;margin-top:0.4rem;border-top:1px solid #34d399;padding-top:0.4rem;"></div>
     </div>
 
     <!-- Source ROI (Batch 24) -->
@@ -2634,11 +2642,14 @@
     <div id="outreach-cal-panel" class="bp" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border-color:#7dd3fc">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#0284c7;">Outreach Calendar</span>
-        <button onclick="loadOutreachCal()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#e0f2fe;color:#0284c7;border:1px solid #7dd3fc;border-radius:4px;cursor:pointer;">Refresh</button>
+        <div style="display:flex;gap:0.3rem;">
+          <button onclick="generateAiWeekPlan()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#0284c7;color:#fff;border:none;border-radius:4px;cursor:pointer;">AI Plan Week</button>
+          <button onclick="loadOutreachCal()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#e0f2fe;color:#0284c7;border:1px solid #7dd3fc;border-radius:4px;cursor:pointer;">Refresh</button>
+        </div>
       </div>
-      <p style="font-size:0.72rem;color:#78716c;margin-bottom:0.4rem;">Daily outreach capacity planning. Shows backlog, suggested daily volumes, and 7-day plan. Like Outreach's daily planner.</p>
-      <div id="outreach-backlog" style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
+      <div id="outreach-backlog" style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
       <div id="outreach-plan" style=""></div>
+      <div id="outreach-ai-plan" style="display:none;margin-top:0.4rem;border-top:1px solid #7dd3fc;padding-top:0.4rem;"></div>
     </div>
 
     <!-- Risk Scoring (Batch 32) -->
@@ -3087,10 +3098,14 @@
     <div id="quality-panel" class="bp" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border-color:#fca5a5">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
         <span style="font-weight:600;font-size:0.85rem;color:#dc2626;">Data Quality</span>
-        <button onclick="loadDataQuality()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:4px;cursor:pointer;">Scan</button>
+        <div style="display:flex;gap:0.3rem;">
+          <button onclick="loadAiDataFixes()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#dc2626;color:#fff;border:none;border-radius:4px;cursor:pointer;">AI Fix Suggest</button>
+          <button onclick="loadDataQuality()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:4px;cursor:pointer;">Scan</button>
+        </div>
       </div>
       <div id="quality-summary" style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.4rem;"></div>
       <div id="quality-leads" style="max-height:180px;overflow-y:auto;"></div>
+      <div id="quality-ai-fixes" style="display:none;margin-top:0.4rem;border-top:1px solid #fca5a5;padding-top:0.4rem;"></div>
     </div>
 
     <!-- Export Profiles (Batch 19) -->
@@ -10220,64 +10235,56 @@
       } catch (err) { console.error('Notes error:', err); }
     }
 
-    // === Smart Lists ===
+    // === Smart Lists (Enhanced) ===
+    let _activeSmartListId = null;
+    const SL_TEMPLATES = [
+      { name: 'Gold Leads (Email + Phone)', icon: '⭐', filters: { logic: 'AND', conditions: [{ field: 'email', operator: 'is_not_empty', value: '' }, { field: 'phone', operator: 'is_not_empty', value: '' }] } },
+      { name: 'High Scorers (80+)', icon: '🏆', filters: { logic: 'AND', conditions: [{ field: 'lead_score', operator: 'greater_than', value: '79' }] } },
+      { name: 'Has Email, No Phone', icon: '✉️', filters: { logic: 'AND', conditions: [{ field: 'email', operator: 'is_not_empty', value: '' }, { field: 'phone', operator: 'is_empty', value: '' }] } },
+      { name: 'Has Website, No Email', icon: '🌐', filters: { logic: 'AND', conditions: [{ field: 'website', operator: 'is_not_empty', value: '' }, { field: 'email', operator: 'is_empty', value: '' }] } },
+      { name: 'Personal Injury Lawyers', icon: '⚖️', filters: { logic: 'AND', conditions: [{ field: 'practice_area', operator: 'contains', value: 'injury' }] } },
+      { name: 'Florida Leads', icon: '🌴', filters: { logic: 'AND', conditions: [{ field: 'state', operator: 'equals', value: 'FL' }] } },
+      { name: 'New York Leads', icon: '🗽', filters: { logic: 'AND', conditions: [{ field: 'state', operator: 'equals', value: 'NY' }] } },
+      { name: 'Needs Enrichment', icon: '🔍', filters: { logic: 'AND', conditions: [{ field: 'email', operator: 'is_empty', value: '' }, { field: 'website', operator: 'is_not_empty', value: '' }] } },
+    ];
+
     async function loadSmartLists() {
       try {
         const lists = await fetch('/api/smart-lists').then(safeJSON);
         const container = document.getElementById('smart-lists-list');
         if (lists.length === 0) {
-          container.innerHTML = '<span style="font-size:0.72rem;color:#fde047;">No smart lists. Build dynamic lists with compound filters.</span>';
+          container.innerHTML = '<span style="font-size:0.72rem;color:#a16207;">No smart lists yet. Click <b>Templates</b> for quick presets or <b>+ New</b> to build custom filters.</span>';
           return;
         }
         container.innerHTML = lists.map(l => {
-          const filters = JSON.parse(l.filters);
-          return `
-            <span onclick="viewSmartList(${l.id})" style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.2rem 0.6rem;background:#fff;border:1px solid #fde047;border-radius:8px;font-size:0.72rem;cursor:pointer;">
-              <strong>${esc(l.name)}</strong>
-              <span style="color:#a16207;">${fmt(l.last_count)}</span>
-              <button onclick="event.stopPropagation();deleteSmartList(${l.id})" style="border:none;background:none;cursor:pointer;color:#dc2626;font-size:0.7rem;padding:0;">&times;</button>
-            </span>
-          `;
+          const isActive = _activeSmartListId === l.id;
+          return `<span onclick="viewSmartList(${l.id})" style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.25rem 0.6rem;background:${isActive ? '#a16207' : '#fff'};color:${isActive ? '#fff' : 'inherit'};border:1px solid ${isActive ? '#a16207' : '#fde047'};border-radius:8px;font-size:0.72rem;cursor:pointer;transition:all 0.15s;" onmouseover="if(!${isActive})this.style.borderColor='#a16207'" onmouseout="if(!${isActive})this.style.borderColor='#fde047'">
+            <strong style="color:${isActive ? '#fff' : '#1f2937'};">${esc(l.name)}</strong>
+            <span style="background:${isActive ? 'rgba(255,255,255,0.2)' : '#fef9c3'};padding:0.05rem 0.3rem;border-radius:6px;font-size:0.65rem;font-weight:600;color:${isActive ? '#fff' : '#a16207'};">${fmt(l.last_count)}</span>
+            <button onclick="event.stopPropagation();deleteSmartList(${l.id})" style="border:none;background:none;cursor:pointer;color:${isActive ? 'rgba(255,255,255,0.7)' : '#dc2626'};font-size:0.7rem;padding:0;" title="Delete">&times;</button>
+          </span>`;
         }).join('');
       } catch (err) { console.error('Smart lists error:', err); }
     }
 
-    function showCreateSmartListModal() {
+    function showSmartListTemplates() {
       const modal = document.createElement('div');
-      modal.id = 'smart-list-modal';
+      modal.id = 'sl-templates-modal';
       modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
       modal.innerHTML = `
         <div style="background:#fff;border-radius:12px;padding:1.5rem;width:500px;max-width:90vw;">
-          <h3 style="margin:0 0 1rem;font-size:1rem;color:#a16207;">Create Smart List</h3>
-          <div style="margin-bottom:0.75rem;">
-            <label style="font-size:0.78rem;font-weight:600;">Name</label>
-            <input id="sl-name" type="text" placeholder="e.g., FL attorneys with email" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;">
+          <h3 style="margin:0 0 0.5rem;font-size:1rem;color:#a16207;">Quick Start Templates</h3>
+          <p style="font-size:0.75rem;color:#6b7280;margin-bottom:0.75rem;">One-click to create a smart list from these common filters.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;">
+            ${SL_TEMPLATES.map((t, i) => `
+              <button onclick="createFromTemplate(${i})" style="display:flex;align-items:center;gap:0.4rem;padding:0.5rem;background:#fffbeb;border:1px solid #fde047;border-radius:8px;cursor:pointer;text-align:left;transition:border-color 0.15s;" onmouseover="this.style.borderColor='#a16207'" onmouseout="this.style.borderColor='#fde047'">
+                <span style="font-size:1rem;">${t.icon}</span>
+                <span style="font-size:0.75rem;font-weight:500;color:#1f2937;">${esc(t.name)}</span>
+              </button>
+            `).join('')}
           </div>
-          <div style="margin-bottom:0.5rem;">
-            <label style="font-size:0.78rem;font-weight:600;">Logic</label>
-            <select id="sl-logic" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
-              <option value="AND">Match ALL conditions (AND)</option>
-              <option value="OR">Match ANY condition (OR)</option>
-            </select>
-          </div>
-          <div id="sl-conditions">
-            <div class="sl-condition" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.3rem;margin-bottom:0.3rem;">
-              <select class="sl-field" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
-                <option value="state">State</option><option value="city">City</option><option value="practice_area">Practice Area</option>
-                <option value="email">Email</option><option value="phone">Phone</option><option value="lead_score">Score</option>
-                <option value="pipeline_stage">Stage</option><option value="tags">Tags</option><option value="email_type">Email Type</option>
-              </select>
-              <select class="sl-op" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
-                <option value="equals">Equals</option><option value="contains">Contains</option><option value="is_not_empty">Has Value</option>
-                <option value="is_empty">Is Empty</option><option value="greater_than">Greater Than</option><option value="less_than">Less Than</option>
-              </select>
-              <input class="sl-value" type="text" placeholder="Value" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
-            </div>
-          </div>
-          <button onclick="addSmartListCondition()" style="font-size:0.68rem;padding:0.15rem 0.4rem;background:#fef9c3;color:#a16207;border:1px solid #fde047;border-radius:4px;cursor:pointer;margin-bottom:0.75rem;">+ Add Condition</button>
-          <div style="display:flex;justify-content:flex-end;gap:0.5rem;">
-            <button onclick="document.getElementById('smart-list-modal').remove()" style="padding:0.4rem 0.8rem;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;">Cancel</button>
-            <button onclick="createSmartListFromModal()" style="padding:0.4rem 0.8rem;border:none;border-radius:6px;background:#a16207;color:#fff;cursor:pointer;">Create</button>
+          <div style="display:flex;justify-content:flex-end;margin-top:0.75rem;">
+            <button onclick="document.getElementById('sl-templates-modal').remove()" style="padding:0.35rem 0.7rem;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:0.78rem;">Close</button>
           </div>
         </div>
       `;
@@ -10285,42 +10292,120 @@
       modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
     }
 
+    async function createFromTemplate(idx) {
+      const t = SL_TEMPLATES[idx];
+      if (!t) return;
+      try {
+        await fetch('/api/smart-lists', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: t.name, description: '', filters: t.filters }),
+        });
+        const m = document.getElementById('sl-templates-modal');
+        if (m) m.remove();
+        toast('Created "' + t.name + '"', 'success');
+        loadSmartLists();
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
+    }
+
+    const SL_FIELD_OPTIONS = `
+      <option value="state">State</option><option value="city">City</option><option value="practice_area">Practice Area</option>
+      <option value="firm_name">Firm</option><option value="email">Email</option><option value="phone">Phone</option>
+      <option value="website">Website</option><option value="lead_score">Score</option><option value="pipeline_stage">Stage</option>
+      <option value="tags">Tags</option><option value="email_type">Email Type</option><option value="country">Country</option>
+      <option value="bar_status">Bar Status</option><option value="title">Title</option>
+    `;
+    const SL_OP_OPTIONS = `
+      <option value="equals">Equals</option><option value="not_equals">Not Equals</option><option value="contains">Contains</option>
+      <option value="starts_with">Starts With</option><option value="is_not_empty">Has Value</option><option value="is_empty">Is Empty</option>
+      <option value="greater_than">Greater Than</option><option value="less_than">Less Than</option>
+    `;
+
+    function showCreateSmartListModal() {
+      const modal = document.createElement('div');
+      modal.id = 'smart-list-modal';
+      modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;';
+      modal.innerHTML = `
+        <div style="background:#fff;border-radius:12px;padding:1.5rem;width:520px;max-width:90vw;">
+          <h3 style="margin:0 0 0.75rem;font-size:1rem;color:#a16207;">Create Smart List</h3>
+          <div style="margin-bottom:0.6rem;">
+            <label style="font-size:0.78rem;font-weight:600;">Name</label>
+            <input id="sl-name" type="text" placeholder="e.g., FL attorneys with email" style="width:100%;padding:0.4rem;border:1px solid #d1d5db;border-radius:6px;font-size:0.85rem;box-sizing:border-box;">
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+            <label style="font-size:0.78rem;font-weight:600;">Logic</label>
+            <select id="sl-logic" onchange="slPreviewCount()" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+              <option value="AND">Match ALL (AND)</option>
+              <option value="OR">Match ANY (OR)</option>
+            </select>
+            <span id="sl-preview" style="margin-left:auto;font-size:0.72rem;font-weight:600;color:#a16207;"></span>
+          </div>
+          <div id="sl-conditions"></div>
+          <div style="display:flex;gap:0.3rem;margin-bottom:0.75rem;">
+            <button onclick="addSmartListCondition()" style="font-size:0.68rem;padding:0.2rem 0.5rem;background:#fef9c3;color:#a16207;border:1px solid #fde047;border-radius:4px;cursor:pointer;">+ Add Filter</button>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:0.5rem;">
+            <button onclick="document.getElementById('smart-list-modal').remove()" style="padding:0.4rem 0.8rem;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;">Cancel</button>
+            <button onclick="createSmartListFromModal()" style="padding:0.4rem 0.8rem;border:none;border-radius:6px;background:#a16207;color:#fff;cursor:pointer;font-weight:600;">Create List</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+      addSmartListCondition(); // Start with one condition row
+    }
+
     function addSmartListCondition() {
       const container = document.getElementById('sl-conditions');
       const row = document.createElement('div');
       row.className = 'sl-condition';
-      row.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.3rem;margin-bottom:0.3rem;';
+      row.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 1fr 24px;gap:0.3rem;margin-bottom:0.3rem;align-items:center;';
       row.innerHTML = `
-        <select class="sl-field" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
-          <option value="state">State</option><option value="city">City</option><option value="practice_area">Practice Area</option>
-          <option value="email">Email</option><option value="phone">Phone</option><option value="lead_score">Score</option>
-          <option value="pipeline_stage">Stage</option><option value="tags">Tags</option><option value="email_type">Email Type</option>
-        </select>
-        <select class="sl-op" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
-          <option value="equals">Equals</option><option value="contains">Contains</option><option value="is_not_empty">Has Value</option>
-          <option value="is_empty">Is Empty</option><option value="greater_than">Greater Than</option><option value="less_than">Less Than</option>
-        </select>
-        <input class="sl-value" type="text" placeholder="Value" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+        <select class="sl-field" onchange="slPreviewCount()" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">${SL_FIELD_OPTIONS}</select>
+        <select class="sl-op" onchange="slPreviewCount()" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">${SL_OP_OPTIONS}</select>
+        <input class="sl-value" type="text" placeholder="Value" oninput="slPreviewDebounced()" style="padding:0.3rem;border:1px solid #d1d5db;border-radius:4px;font-size:0.78rem;">
+        <button onclick="this.parentElement.remove();slPreviewCount();" style="border:none;background:none;cursor:pointer;color:#dc2626;font-size:0.85rem;padding:0;" title="Remove">&times;</button>
       `;
       container.appendChild(row);
     }
 
-    async function createSmartListFromModal() {
-      const name = document.getElementById('sl-name').value.trim();
-      if (!name) { alert('Name required'); return; }
-      const logic = document.getElementById('sl-logic').value;
+    let _slPreviewTimer = null;
+    function slPreviewDebounced() { clearTimeout(_slPreviewTimer); _slPreviewTimer = setTimeout(slPreviewCount, 400); }
+
+    async function slPreviewCount() {
+      const el = document.getElementById('sl-preview');
+      if (!el) return;
+      const filters = _gatherSlFilters();
+      if (!filters.conditions.length) { el.textContent = ''; return; }
+      el.textContent = 'counting...';
+      try {
+        const res = await fetch('/api/smart-lists/preview', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ filters }) });
+        const d = await safeJSON(res);
+        el.textContent = fmt(d.count) + ' leads match';
+        el.style.color = d.count > 0 ? '#059669' : '#dc2626';
+      } catch { el.textContent = ''; }
+    }
+
+    function _gatherSlFilters() {
+      const logic = document.getElementById('sl-logic')?.value || 'AND';
       const rows = document.querySelectorAll('.sl-condition');
       const conditions = [];
       rows.forEach(row => {
-        conditions.push({
-          field: row.querySelector('.sl-field').value,
-          operator: row.querySelector('.sl-op').value,
-          value: row.querySelector('.sl-value').value.trim(),
-        });
+        const field = row.querySelector('.sl-field')?.value;
+        const operator = row.querySelector('.sl-op')?.value;
+        const value = row.querySelector('.sl-value')?.value?.trim() || '';
+        if (field && operator) conditions.push({ field, operator, value });
       });
+      return { logic, conditions };
+    }
+
+    async function createSmartListFromModal() {
+      const name = document.getElementById('sl-name').value.trim();
+      if (!name) { toast('Name required', 'error'); return; }
+      const filters = _gatherSlFilters();
+      if (!filters.conditions.length) { toast('Add at least one filter', 'error'); return; }
       await fetch('/api/smart-lists', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, description: '', filters: { logic, conditions } }),
+        body: JSON.stringify({ name, description: '', filters }),
       });
       document.getElementById('smart-list-modal').remove();
       toast('Smart list "' + esc(name) + '" created', 'success');
@@ -10329,20 +10414,114 @@
 
     async function viewSmartList(id) {
       try {
-        const leads = await fetch(`/api/smart-lists/${id}/leads?limit=20`).then(safeJSON);
-        const lists = await fetch('/api/smart-lists').then(safeJSON);
+        if (_activeSmartListId === id) {
+          // Toggle off — clear filter
+          _activeSmartListId = null;
+          document.getElementById('smart-list-drilldown').style.display = 'none';
+          loadSmartLists();
+          loadLeads();
+          return;
+        }
+        _activeSmartListId = id;
+        const [leads, lists] = await Promise.all([
+          fetch(`/api/smart-lists/${id}/leads?limit=100`).then(safeJSON),
+          fetch('/api/smart-lists').then(safeJSON),
+        ]);
         const list = lists.find(l => l.id === id);
-        toast(`"${list?.name}" — ${leads.length} leads matching`, 'info');
-        // Apply as filter
+        const filters = list ? JSON.parse(list.filters) : {};
+        const dd = document.getElementById('smart-list-drilldown');
+        dd.style.display = 'block';
+        const condText = (filters.conditions || []).map(c => `<span style="background:#fef9c3;padding:0.1rem 0.3rem;border-radius:4px;font-size:0.65rem;">${esc(c.field)} ${esc(c.operator)} ${esc(c.value || '—')}</span>`).join(` <span style="font-size:0.6rem;color:#a16207;">${filters.logic || 'AND'}</span> `);
+        const emailCount = leads.filter(l => l.email).length;
+        const phoneCount = leads.filter(l => l.phone).length;
+        const avgScore = leads.length ? Math.round(leads.reduce((s, l) => s + (l.lead_score || 0), 0) / leads.length) : 0;
+        dd.innerHTML = `
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.3rem;">
+            <span style="font-size:0.78rem;font-weight:600;color:#a16207;">${esc(list?.name || 'List')} — ${leads.length} leads</span>
+            <button onclick="_activeSmartListId=null;document.getElementById('smart-list-drilldown').style.display='none';loadSmartLists();loadLeads();" style="font-size:0.65rem;padding:0.1rem 0.3rem;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:4px;cursor:pointer;">Clear Filter</button>
+          </div>
+          <div style="margin-bottom:0.3rem;">${condText}</div>
+          <div style="display:flex;gap:0.6rem;font-size:0.68rem;color:#78716c;margin-bottom:0.3rem;">
+            <span>✉️ ${emailCount} emails</span>
+            <span>📞 ${phoneCount} phones</span>
+            <span>📊 Avg score: ${avgScore}</span>
+          </div>
+          <div style="display:flex;gap:0.3rem;">
+            <button onclick="exportSmartListCSV(${id})" style="font-size:0.65rem;padding:0.15rem 0.4rem;background:#fef9c3;color:#a16207;border:1px solid #fde047;border-radius:4px;cursor:pointer;">Export CSV</button>
+            <button onclick="batchAiEmailsForList(${id})" style="font-size:0.65rem;padding:0.15rem 0.4rem;background:#eef2ff;color:#4f46e5;border:1px solid #c7d2fe;border-radius:4px;cursor:pointer;">AI Emails</button>
+          </div>
+        `;
+        loadSmartLists(); // re-render to highlight active
         _currentLeads = leads;
         renderLeadTable();
+        toast(`Filtered to "${list?.name}" — ${leads.length} leads`, 'info');
       } catch (err) { toast('Error: ' + err.message, 'error'); }
     }
 
     async function deleteSmartList(id) {
+      if (!confirm('Delete this smart list?')) return;
       await fetch('/api/smart-lists/' + id, { method: 'DELETE' });
+      if (_activeSmartListId === id) {
+        _activeSmartListId = null;
+        document.getElementById('smart-list-drilldown').style.display = 'none';
+        loadLeads();
+      }
       toast('Smart list deleted', 'success');
       loadSmartLists();
+    }
+
+    async function exportSmartListCSV(listId) {
+      try {
+        const leads = await fetch(`/api/smart-lists/${listId}/leads?limit=500`).then(safeJSON);
+        if (!leads.length) { toast('No leads to export', 'error'); return; }
+        const headers = ['first_name','last_name','email','phone','firm_name','city','state','practice_area','website','lead_score'];
+        const rows = [headers.join(',')];
+        leads.forEach(l => {
+          rows.push(headers.map(h => `"${(l[h] || '').toString().replace(/"/g, '""')}"`).join(','));
+        });
+        const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'smart-list-export.csv';
+        a.click();
+        toast('Exported ' + leads.length + ' leads', 'success');
+      } catch (err) { toast('Export error: ' + err.message, 'error'); }
+    }
+
+    async function batchAiEmailsForList(listId) {
+      try {
+        const leads = await fetch(`/api/smart-lists/${listId}/leads?limit=10`).then(safeJSON);
+        const withEmail = leads.filter(l => l.email);
+        if (!withEmail.length) { toast('No leads with email in this list', 'error'); return; }
+        // Switch to outreach tab and trigger batch email
+        switchMainTab('outreach');
+        setTimeout(() => {
+          const result = document.getElementById('ai-command-result');
+          if (result) {
+            result.innerHTML = '<div style="color:#818cf8;font-size:0.75rem;padding:0.5rem;">Generating AI emails for ' + withEmail.length + ' leads from smart list...</div><div id="ai-cmd-emails"></div>';
+            const emailEl = document.getElementById('ai-cmd-emails');
+            (async () => {
+              for (const lead of withEmail.slice(0, 5)) {
+                try {
+                  const eRes = await fetch('/api/ai/write-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ leadId: lead.id }) });
+                  const email = await safeJSON(eRes);
+                  if (email.error) throw new Error(email.error);
+                  emailEl.innerHTML += `<div style="background:#1e293b;border:1px solid #334155;border-radius:6px;padding:0.35rem 0.5rem;margin-bottom:0.3rem;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                      <span style="font-size:0.68rem;color:#e2e8f0;font-weight:500;">${esc(lead.first_name || '')} ${esc(lead.last_name || '')} <span style="color:#64748b;">(${esc(lead.email || '')})</span></span>
+                      <button onclick="navigator.clipboard.writeText(this.parentElement.parentElement.querySelector('.cmd-email-body').textContent);toast('Copied!','success');" style="font-size:0.55rem;padding:0.1rem 0.25rem;background:#4f46e5;border:none;border-radius:3px;color:#fff;cursor:pointer;">Copy</button>
+                    </div>
+                    <div style="font-size:0.68rem;color:#818cf8;margin-top:0.1rem;">Subject: ${esc(email.subject || '')}</div>
+                    <div class="cmd-email-body" style="font-size:0.65rem;color:#94a3b8;white-space:pre-wrap;max-height:60px;overflow-y:auto;margin-top:0.1rem;">${esc(email.body || '')}</div>
+                  </div>`;
+                } catch (err) {
+                  emailEl.innerHTML += `<div style="font-size:0.65rem;color:#fca5a5;">Failed: ${esc(err.message)}</div>`;
+                }
+              }
+            })();
+          }
+        }, 200);
+      } catch (err) { toast('Error: ' + err.message, 'error'); }
     }
 
     // === KPI Dashboard (Batch 17) ===
@@ -11653,6 +11832,43 @@
       } catch (err) { console.error('Practice analytics error:', err); }
     }
 
+    async function loadAiPracticeMarket() {
+      const el = document.getElementById('practice-ai-insights');
+      if (!el) return;
+      el.style.display = 'block';
+      el.innerHTML = '<div style="font-size:0.72rem;color:#059669;">Analyzing practice area market...</div>';
+      try {
+        const res = await fetch('/api/ai/practice-market', { method: 'POST' });
+        const d = await safeJSON(res);
+        if (d.error) throw new Error(d.error);
+        let html = '<div style="font-size:0.68rem;font-weight:600;color:#059669;margin-bottom:0.3rem;">AI MARKET INTELLIGENCE</div>';
+        if (d.market_overview) html += `<div style="font-size:0.72rem;color:#374151;margin-bottom:0.3rem;line-height:1.4;">${esc(d.market_overview)}</div>`;
+        if (d.top_opportunities && d.top_opportunities.length > 0) {
+          html += '<div style="font-size:0.65rem;font-weight:600;color:#059669;margin-bottom:0.2rem;">TOP OPPORTUNITIES</div>';
+          d.top_opportunities.forEach(opp => {
+            const qualColor = opp.lead_quality === 'high' ? '#22c55e' : opp.lead_quality === 'medium' ? '#f59e0b' : '#94a3b8';
+            html += `<div style="padding:0.2rem 0;border-bottom:1px solid #d1fae5;">
+              <div style="display:flex;align-items:center;gap:0.3rem;">
+                <span style="font-size:0.72rem;font-weight:600;color:#1f2937;">${esc(opp.practice_area || '')}</span>
+                <span style="font-size:0.55rem;padding:0.05rem 0.2rem;border-radius:4px;background:${qualColor};color:#fff;">${esc(opp.lead_quality || '')}</span>
+              </div>
+              <div style="font-size:0.65rem;color:#6b7280;">${esc(opp.opportunity || '')}</div>
+              <div style="font-size:0.62rem;color:#059669;">${esc(opp.recommended_action || '')}</div>
+            </div>`;
+          });
+        }
+        if (d.underserved_areas && d.underserved_areas.length > 0) {
+          html += '<div style="font-size:0.65rem;font-weight:600;color:#dc2626;margin-top:0.3rem;margin-bottom:0.1rem;">UNDERSERVED AREAS</div>';
+          html += d.underserved_areas.map(a => `<span style="display:inline-block;font-size:0.62rem;padding:0.1rem 0.3rem;background:#fef2f2;border:1px solid #fca5a5;border-radius:4px;margin:0.1rem 0.15rem 0.1rem 0;color:#dc2626;">${esc(a)}</span>`).join('');
+        }
+        if (d.recommendations && d.recommendations.length > 0) {
+          html += '<div style="font-size:0.65rem;font-weight:600;color:#059669;margin-top:0.3rem;margin-bottom:0.1rem;">RECOMMENDATIONS</div>';
+          html += d.recommendations.map(r => `<div style="font-size:0.65rem;color:#374151;padding:0.05rem 0;">&#x2192; ${esc(r)}</div>`).join('');
+        }
+        el.innerHTML = html;
+      } catch (err) { el.innerHTML = `<div style="color:#dc2626;font-size:0.72rem;">Error: ${esc(err.message)}</div>`; }
+    }
+
     // === Source ROI (Batch 24) ===
     async function loadSourceROI() {
       try {
@@ -12488,6 +12704,39 @@
             <span style="font-size:0.62rem;color:#059669;">${d.calls} calls</span>
           </div>`).join('');
       } catch (err) { console.error('Outreach cal error:', err); }
+    }
+
+    async function generateAiWeekPlan() {
+      const el = document.getElementById('outreach-ai-plan');
+      if (!el) return;
+      el.style.display = 'block';
+      el.innerHTML = '<div style="font-size:0.72rem;color:#0284c7;">Generating AI weekly outreach plan...</div>';
+      try {
+        const res = await fetch('/api/ai/outreach-plan', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ goal: 'Maximize meetings booked this week' }) });
+        const d = await safeJSON(res);
+        if (d.error) throw new Error(d.error);
+        const dayColors = ['#3b82f6','#22c55e','#f59e0b','#ec4899','#8b5cf6'];
+        let html = '<div style="font-size:0.68rem;font-weight:600;color:#0284c7;margin-bottom:0.3rem;">AI WEEKLY OUTREACH PLAN</div>';
+        if (d.summary) html += `<div style="font-size:0.72rem;color:#374151;margin-bottom:0.3rem;line-height:1.4;">${esc(d.summary)}</div>`;
+        const days = d.daily_plan || [];
+        html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:0.4rem;margin-bottom:0.3rem;">';
+        days.forEach((day, i) => {
+          const color = dayColors[i % dayColors.length];
+          html += `<div style="background:#fff;border:1px solid #bfdbfe;border-radius:8px;padding:0.4rem;border-top:3px solid ${color};">
+            <div style="font-size:0.72rem;font-weight:600;color:${color};margin-bottom:0.2rem;">Day ${day.day}</div>
+            <div style="font-size:0.62rem;color:#6b7280;margin-bottom:0.2rem;">${esc(day.focus || '')}</div>`;
+          (day.leads || []).forEach(l => {
+            const icon = l.action === 'call' ? '📞' : l.action === 'linkedin' ? '🔗' : '✉️';
+            html += `<div style="font-size:0.62rem;padding:0.1rem 0;color:#1f2937;">${icon} ${esc(l.name || '')}</div>`;
+          });
+          html += '</div>';
+        });
+        html += '</div>';
+        if (d.tips && d.tips.length > 0) {
+          html += d.tips.map(t => `<div style="font-size:0.62rem;color:#0284c7;padding:0.05rem 0;">&#x1F4A1; ${esc(t)}</div>`).join('');
+        }
+        el.innerHTML = html;
+      } catch (err) { el.innerHTML = `<div style="color:#dc2626;font-size:0.72rem;">Error: ${esc(err.message)}</div>`; }
     }
 
     // === Risk Scoring (Batch 32) ===
@@ -13745,6 +13994,42 @@
           </div>
         `).join('');
       } catch (err) { console.error('Quality error:', err); }
+    }
+
+    async function loadAiDataFixes() {
+      const el = document.getElementById('quality-ai-fixes');
+      if (!el) return;
+      el.style.display = 'block';
+      el.innerHTML = '<div style="font-size:0.72rem;color:#dc2626;">AI analyzing data quality issues...</div>';
+      try {
+        const res = await fetch('/api/ai/data-fixes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({}) });
+        const d = await safeJSON(res);
+        if (d.error) throw new Error(d.error);
+        let html = `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.3rem;">
+          <span style="font-size:0.68rem;font-weight:600;color:#dc2626;">AI DATA FIX SUGGESTIONS</span>
+          <span style="font-size:0.62rem;color:#6b7280;">${d.issues_found || 0} issues, ${d.auto_fixable || 0} auto-fixable</span>
+        </div>`;
+        const fixes = d.fixes || [];
+        if (fixes.length > 0) {
+          fixes.slice(0, 10).forEach(fix => {
+            const confColor = fix.confidence === 'high' ? '#22c55e' : fix.confidence === 'medium' ? '#f59e0b' : '#94a3b8';
+            html += `<div style="display:flex;align-items:center;gap:0.3rem;padding:0.15rem 0;border-bottom:1px solid #fee2e2;font-size:0.65rem;">
+              <span style="width:6px;height:6px;border-radius:50%;background:${confColor};flex-shrink:0;"></span>
+              <span style="color:#374151;min-width:0;">
+                <strong>Lead #${fix.lead_id}</strong> ${esc(fix.field)}:
+                <span style="color:#dc2626;text-decoration:line-through;">${esc((fix.current_value || '').substring(0, 30))}</span>
+                &#x2192; <span style="color:#059669;">${esc((fix.suggested_fix || '').substring(0, 40))}</span>
+              </span>
+              <span style="flex-shrink:0;font-size:0.55rem;padding:0.05rem 0.2rem;border-radius:3px;background:${confColor};color:#fff;">${esc(fix.confidence || '')}</span>
+            </div>`;
+          });
+        }
+        if (d.patterns && d.patterns.length > 0) {
+          html += '<div style="font-size:0.62rem;font-weight:600;color:#dc2626;margin-top:0.3rem;">PATTERNS</div>';
+          html += d.patterns.map(p => `<div style="font-size:0.62rem;color:#6b7280;padding:0.05rem 0;">&#x2022; ${esc(p)}</div>`).join('');
+        }
+        el.innerHTML = html;
+      } catch (err) { el.innerHTML = `<div style="color:#dc2626;font-size:0.72rem;">Error: ${esc(err.message)}</div>`; }
     }
 
     // === Export Profiles (Batch 19) ===

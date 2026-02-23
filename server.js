@@ -2863,6 +2863,31 @@ app.get('/api/smart-lists/:id/leads', (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+app.post('/api/smart-lists/preview', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    const { filters } = req.body;
+    if (!filters) return res.status(400).json({ error: 'filters required' });
+    const count = leadDb.previewSmartListCount(filters);
+    res.json({ count });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.put('/api/smart-lists/:id', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    leadDb.updateSmartList(parseInt(req.params.id), req.body);
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/smart-lists/stats', (req, res) => {
+  try {
+    const leadDb = require('./lib/lead-db');
+    res.json(leadDb.getSmartListStats());
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // === Custom Scoring Models ===
 app.get('/api/scoring-models', (req, res) => {
   try {
@@ -4599,12 +4624,49 @@ app.post('/api/ai/outreach-plan', async (req, res) => {
     if (leadIds && leadIds.length > 0) {
       leads = leadIds.map(id => leadDb.getLeadById(id)).filter(Boolean);
     } else {
-      const result = leadDb.searchLeads({ sort: 'lead_score', order: 'desc', limit: 15, minScore: 30 });
+      const result = leadDb.searchLeads('', { sort: 'lead_score', order: 'desc', limit: 15, minScore: 30 });
       leads = result.leads || [];
     }
     if (leads.length === 0) return res.status(400).json({ error: 'No leads found' });
     const plan = await ai.planOutreach(leads, { goal });
     res.json(plan);
+  } catch (err) { aiError(res, err); }
+});
+
+app.post('/api/ai/practice-market', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    const practiceStats = leadDb.getPracticeAreaStats ? leadDb.getPracticeAreaStats() : {};
+    const geoStats = leadDb.getGeographicClusters ? leadDb.getGeographicClusters() : {};
+    const tam = leadDb.getTamStats ? leadDb.getTamStats() : {};
+    const stats = {
+      total_leads: tam.total || 0,
+      contactable: tam.contactable || 0,
+      with_email: tam.withEmail || 0,
+      practice_areas: practiceStats,
+      geographic: geoStats,
+    };
+    const result = await ai.analyzePracticeAreaMarket(stats);
+    res.json(result);
+  } catch (err) { aiError(res, err); }
+});
+
+app.post('/api/ai/data-fixes', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    const { leadIds } = req.body;
+    let leads;
+    if (leadIds && leadIds.length > 0) {
+      leads = leadIds.map(id => leadDb.getLeadById(id)).filter(Boolean);
+    } else {
+      const result = leadDb.searchLeads('', { limit: 15, sort: 'id', order: 'desc' });
+      leads = result.leads || [];
+    }
+    if (leads.length === 0) return res.status(400).json({ error: 'No leads found' });
+    const result = await ai.suggestDataFixes(leads);
+    res.json(result);
   } catch (err) { aiError(res, err); }
 });
 
