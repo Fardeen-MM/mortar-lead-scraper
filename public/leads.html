@@ -1257,11 +1257,39 @@
     body.dark [style*="overflow-y:auto"]::-webkit-scrollbar-thumb { background: #475569; }
 
     /* Responsive fixes */
-    @media (max-width: 640px) {
-      .tab-nav { gap: 0.15rem; padding: 0.2rem; }
-      .tab-btn { padding: 0.4rem 0.6rem; font-size: 0.72rem; }
-      .tam-grid { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 768px) {
+      .container { padding: 0 0.5rem; }
+      .tab-nav { gap: 0.15rem; padding: 0.2rem; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+      .tab-btn { padding: 0.4rem 0.6rem; font-size: 0.72rem; white-space: nowrap; flex-shrink: 0; }
+      .tam-grid { grid-template-columns: repeat(2, 1fr); gap: 0.4rem; }
       #quick-actions { grid-template-columns: 1fr 1fr; }
+      .leads-header { flex-wrap: wrap; gap: 0.4rem; padding: 0.4rem 0; }
+      .leads-header-right { gap: 0.3rem; }
+      .power-bar { flex-wrap: wrap; gap: 0.2rem; font-size: 0.68rem; padding: 0.35rem 0.5rem; }
+      .pb-sep { display: none; }
+      .bp { padding: 0.5rem 0.6rem; margin-bottom: 0.6rem; }
+      table { font-size: 0.72rem; }
+      table th, table td { padding: 0.3rem 0.4rem; }
+      /* Hide less important columns on mobile */
+      table th:nth-child(4), table td:nth-child(4),
+      table th:nth-child(9), table td:nth-child(9),
+      table th:nth-child(10), table td:nth-child(10) { display: none; }
+      .fab { flex-wrap: wrap; padding: 0.5rem; gap: 0.3rem; }
+      .fab button { font-size: 0.65rem; padding: 0.25rem 0.5rem; }
+      #notif-panel { width: calc(100vw - 40px); right: -10px; }
+      .kbd-hint { display: none !important; } /* Hide keyboard hints on mobile */
+      .lead-row-actions { display: none !important; } /* Too small for inline actions */
+      #ai-brain-panel { width: calc(100vw - 40px); right: 10px; max-height: 400px; }
+      .cmd-dialog { width: calc(100vw - 40px); }
+      #modal-quick-actions div { flex-direction: column; gap: 0.2rem; }
+    }
+    @media (max-width: 480px) {
+      .tam-grid { grid-template-columns: 1fr 1fr; }
+      .tam-card { padding: 0.5rem; }
+      .tam-value { font-size: 1.1rem; }
+      .tam-label { font-size: 0.6rem; }
+      #quick-actions { grid-template-columns: 1fr; }
+      .leads-header-subtitle { display: none; }
     }
 
     /* Toast notification system */
@@ -1394,6 +1422,22 @@
       animation: spin 0.6s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Skeleton loading blocks */
+    .skeleton {
+      background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 4px;
+    }
+    .skeleton-line { height: 10px; margin: 6px 0; }
+    .skeleton-line.w75 { width: 75%; }
+    .skeleton-line.w50 { width: 50%; }
+    .skeleton-line.w90 { width: 90%; }
+    .skeleton-circle { width: 32px; height: 32px; border-radius: 50%; }
+    .skeleton-card { height: 60px; margin-bottom: 8px; border-radius: 6px; }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    body.dark .skeleton { background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%); background-size: 200% 100%; }
 
     /* Panel empty state */
     .panel-empty {
@@ -3987,13 +4031,13 @@
       const el = document.getElementById(id);
       if (!el) return;
       const content = el.querySelector('.panel-content');
-      if (content) content.innerHTML = '<div class="panel-loading"><div class="spin"></div>Loading...</div>';
+      if (content) content.innerHTML = '<div style="padding:0.5rem;"><div class="skeleton skeleton-line w90"></div><div class="skeleton skeleton-line w75"></div><div class="skeleton skeleton-line w50"></div></div>';
     }
-    function panelEmpty(id, msg = 'No data yet') {
+    function panelEmpty(id, msg = 'No data yet', icon = '') {
       const el = document.getElementById(id);
       if (!el) return;
       const content = el.querySelector('.panel-content');
-      if (content) content.innerHTML = `<div class="panel-empty"><div class="msg">${msg}</div></div>`;
+      if (content) content.innerHTML = `<div class="panel-empty">${icon ? '<div class="icon">' + icon + '</div>' : ''}<div class="msg">${msg}</div></div>`;
     }
 
     let currentOffset = 0;
