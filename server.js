@@ -4535,6 +4535,61 @@ app.post('/api/ai/talking-points', async (req, res) => {
   } catch (err) { aiError(res, err); }
 });
 
+app.post('/api/ai/analyze-reply', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    const { replyText, leadId } = req.body;
+    if (!replyText) return res.status(400).json({ error: 'replyText required' });
+    const lead = leadId ? leadDb.getLeadById(leadId) : {};
+    const analysis = await ai.analyzeReply(replyText, lead || {});
+    // Log to contact_log if lead provided
+    if (leadId && analysis) {
+      try {
+        leadDb.logContact(leadId, 'email', 'inbound', analysis.category || 'reply', replyText.slice(0, 500), analysis.interest || 'unknown');
+      } catch (e) { /* non-critical */ }
+    }
+    res.json(analysis);
+  } catch (err) { aiError(res, err); }
+});
+
+app.post('/api/ai/call-script', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    const { leadId, context } = req.body;
+    if (!leadId) return res.status(400).json({ error: 'leadId required' });
+    const lead = leadDb.getLeadById(leadId);
+    if (!lead) return res.status(404).json({ error: 'Lead not found' });
+    const script = await ai.generateCallScript(lead, { context });
+    res.json(script);
+  } catch (err) { aiError(res, err); }
+});
+
+app.post('/api/ai/win-probability', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const leadDb = require('./lib/lead-db');
+    const { leadId } = req.body;
+    if (!leadId) return res.status(400).json({ error: 'leadId required' });
+    const lead = leadDb.getLeadById(leadId);
+    if (!lead) return res.status(404).json({ error: 'Lead not found' });
+    const engagement = leadDb.getContactStats(leadId);
+    const result = await ai.scoreWinProbability(lead, engagement);
+    res.json(result);
+  } catch (err) { aiError(res, err); }
+});
+
+app.post('/api/ai/sequence-variants', async (req, res) => {
+  try {
+    const ai = require('./lib/ai');
+    const { stepContext, numVariants } = req.body;
+    if (!stepContext) return res.status(400).json({ error: 'stepContext required' });
+    const variants = await ai.generateSequenceVariants(stepContext, numVariants || 3);
+    res.json(variants);
+  } catch (err) { aiError(res, err); }
+});
+
 // === Table Configuration ===
 app.get('/api/table-config', (req, res) => {
   try {

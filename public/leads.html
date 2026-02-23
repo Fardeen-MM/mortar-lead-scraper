@@ -5738,6 +5738,9 @@
         <button onclick="loadAiEmail(${lead.id})" style="padding:0.3rem 0.7rem;font-size:0.75rem;border:1px solid #818cf8;border-radius:6px;cursor:pointer;background:#eef2ff;color:#4338ca;display:flex;align-items:center;gap:0.3rem;font-weight:500;">&#x2728; AI Email</button>
         <button onclick="loadAiScoreExplain(${lead.id})" style="padding:0.3rem 0.7rem;font-size:0.75rem;border:1px solid #818cf8;border-radius:6px;cursor:pointer;background:#eef2ff;color:#4338ca;display:flex;align-items:center;gap:0.3rem;font-weight:500;">&#x1F4CA; Explain Score</button>
         <button onclick="loadAiTalkingPoints(${lead.id})" style="padding:0.3rem 0.7rem;font-size:0.75rem;border:1px solid #818cf8;border-radius:6px;cursor:pointer;background:#eef2ff;color:#4338ca;display:flex;align-items:center;gap:0.3rem;font-weight:500;">&#x1F4AC; Talking Points</button>
+        <button onclick="loadAiCallScript(${lead.id})" style="padding:0.3rem 0.7rem;font-size:0.75rem;border:1px solid #10b981;border-radius:6px;cursor:pointer;background:#ecfdf5;color:#065f46;display:flex;align-items:center;gap:0.3rem;font-weight:500;">&#x1F4DE; Call Script</button>
+        <button onclick="loadAiWinProb(${lead.id})" style="padding:0.3rem 0.7rem;font-size:0.75rem;border:1px solid #f59e0b;border-radius:6px;cursor:pointer;background:#fffbeb;color:#92400e;display:flex;align-items:center;gap:0.3rem;font-weight:500;">&#x1F3AF; Win Prob</button>
+        <button onclick="openReplyAnalyzer(${lead.id})" style="padding:0.3rem 0.7rem;font-size:0.75rem;border:1px solid #ec4899;border-radius:6px;cursor:pointer;background:#fdf2f8;color:#9d174d;display:flex;align-items:center;gap:0.3rem;font-weight:500;">&#x1F4E8; Analyze Reply</button>
         <button onclick="quickTagLead(${lead.id})" style="${actBtnStyle}">&#x1F3F7;&#xFE0F; Tag</button>
       </div>`;
 
@@ -10924,6 +10927,143 @@
       } catch (err) {
         const loadEl = document.getElementById('ai-tp-loading');
         if (loadEl) loadEl.outerHTML = `<div style="color:#fca5a5;font-size:0.72rem;margin-top:0.3rem;">Talking points error: ${esc(err.message)}</div>`;
+      }
+    }
+
+    // --- AI Call Script Generator ---
+    async function loadAiCallScript(leadId) {
+      const container = document.getElementById('ai-lead-insights');
+      if (!container) return;
+      container.innerHTML += '<div id="ai-call-loading" style="color:#10b981;font-size:0.75rem;margin-top:0.4rem;">Generating call script...</div>';
+      try {
+        const res = await fetch('/api/ai/call-script', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leadId }),
+        });
+        const d = await safeJSON(res);
+        if (d.error) throw new Error(d.error);
+        const loadEl = document.getElementById('ai-call-loading');
+        if (!loadEl) return;
+        let html = `<div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:8px;padding:0.7rem;margin-top:0.4rem;">`;
+        html += `<div style="font-size:0.68rem;color:#6ee7b7;margin-bottom:0.4rem;font-weight:600;">COLD CALL SCRIPT</div>`;
+        if (d.opener) html += `<div style="margin-bottom:0.4rem;"><div style="font-size:0.62rem;color:#34d399;font-weight:600;text-transform:uppercase;margin-bottom:0.1rem;">Opener</div><div style="font-size:0.76rem;color:#e0e7ff;line-height:1.4;">${esc(d.opener)}</div></div>`;
+        if (d.value_prop) html += `<div style="margin-bottom:0.4rem;"><div style="font-size:0.62rem;color:#34d399;font-weight:600;text-transform:uppercase;margin-bottom:0.1rem;">Value Prop</div><div style="font-size:0.76rem;color:#e0e7ff;line-height:1.4;">${esc(d.value_prop)}</div></div>`;
+        if (d.discovery_questions && d.discovery_questions.length > 0) {
+          html += `<div style="margin-bottom:0.4rem;"><div style="font-size:0.62rem;color:#34d399;font-weight:600;text-transform:uppercase;margin-bottom:0.1rem;">Discovery Questions</div>`;
+          html += d.discovery_questions.map(q => `<div style="font-size:0.74rem;color:#c7d2fe;padding:0.1rem 0 0.1rem 0.5rem;">&#x2022; ${esc(q)}</div>`).join('');
+          html += `</div>`;
+        }
+        if (d.objection_responses) {
+          html += `<div style="margin-bottom:0.4rem;"><div style="font-size:0.62rem;color:#fbbf24;font-weight:600;text-transform:uppercase;margin-bottom:0.1rem;">Objection Responses</div>`;
+          Object.entries(d.objection_responses).forEach(([key, val]) => {
+            const label = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            html += `<div style="font-size:0.72rem;padding:0.15rem 0 0.15rem 0.5rem;border-left:2px solid #fbbf24;margin:0.15rem 0;"><strong style="color:#fcd34d;">"${esc(label)}"</strong><br><span style="color:#e0e7ff;">${esc(val)}</span></div>`;
+          });
+          html += `</div>`;
+        }
+        if (d.closing) html += `<div style="margin-bottom:0.4rem;"><div style="font-size:0.62rem;color:#34d399;font-weight:600;text-transform:uppercase;margin-bottom:0.1rem;">Closing</div><div style="font-size:0.76rem;color:#86efac;font-weight:500;line-height:1.4;">${esc(d.closing)}</div></div>`;
+        if (d.voicemail) html += `<div style="margin-bottom:0.3rem;"><div style="font-size:0.62rem;color:#a78bfa;font-weight:600;text-transform:uppercase;margin-bottom:0.1rem;">Voicemail</div><div style="font-size:0.74rem;color:#c4b5fd;line-height:1.4;">${esc(d.voicemail)}</div></div>`;
+        html += `<button onclick="navigator.clipboard.writeText(document.getElementById('ai-call-text').innerText);toast('Script copied!','success');" style="margin-top:0.3rem;padding:0.2rem 0.5rem;background:#059669;color:white;border:none;border-radius:4px;cursor:pointer;font-size:0.68rem;">Copy Script</button>`;
+        html += `</div><div id="ai-call-text" style="display:none;">${esc(d.opener || '')}\\n${esc(d.value_prop || '')}\\n${(d.discovery_questions || []).map(q => '- ' + q).join('\\n')}\\n${esc(d.closing || '')}\\n\\nVoicemail: ${esc(d.voicemail || '')}</div>`;
+        loadEl.outerHTML = html;
+      } catch (err) {
+        const loadEl = document.getElementById('ai-call-loading');
+        if (loadEl) loadEl.outerHTML = `<div style="color:#fca5a5;font-size:0.72rem;margin-top:0.3rem;">Call script error: ${esc(err.message)}</div>`;
+      }
+    }
+
+    // --- AI Win Probability ---
+    async function loadAiWinProb(leadId) {
+      const container = document.getElementById('ai-lead-insights');
+      if (!container) return;
+      container.innerHTML += '<div id="ai-win-loading" style="color:#f59e0b;font-size:0.75rem;margin-top:0.4rem;">Calculating win probability...</div>';
+      try {
+        const res = await fetch('/api/ai/win-probability', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ leadId }),
+        });
+        const d = await safeJSON(res);
+        if (d.error) throw new Error(d.error);
+        const loadEl = document.getElementById('ai-win-loading');
+        if (!loadEl) return;
+        const prob = d.probability || 0;
+        const tierColors = { hot: '#ef4444', warm: '#f59e0b', cool: '#3b82f6', cold: '#94a3b8' };
+        const tierColor = tierColors[d.tier] || '#94a3b8';
+        let html = `<div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:0.7rem;margin-top:0.4rem;">`;
+        html += `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">`;
+        html += `<div style="font-size:0.68rem;color:#fbbf24;font-weight:600;">WIN PROBABILITY</div>`;
+        html += `<div style="display:flex;align-items:center;gap:0.4rem;">`;
+        html += `<span style="font-size:1.3rem;font-weight:700;color:${tierColor};">${prob}%</span>`;
+        html += `<span style="padding:0.1rem 0.4rem;border-radius:10px;font-size:0.62rem;font-weight:600;background:${tierColor};color:white;text-transform:uppercase;">${esc(d.tier || '?')}</span>`;
+        html += `</div></div>`;
+        // Progress bar
+        html += `<div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;margin-bottom:0.4rem;"><div style="height:100%;width:${prob}%;background:${tierColor};border-radius:3px;transition:width 0.5s;"></div></div>`;
+        if (d.recommended_channel) html += `<div style="font-size:0.72rem;color:#e0e7ff;margin-bottom:0.3rem;">Best channel: <strong style="color:#fbbf24;">${esc(d.recommended_channel)}</strong>${d.best_time ? ` &middot; ${esc(d.best_time)}` : ''}</div>`;
+        if (d.factors_positive && d.factors_positive.length > 0) {
+          html += d.factors_positive.map(f => `<div style="font-size:0.72rem;color:#86efac;padding:0.05rem 0;">&#x2191; ${esc(f)}</div>`).join('');
+        }
+        if (d.factors_negative && d.factors_negative.length > 0) {
+          html += d.factors_negative.map(f => `<div style="font-size:0.72rem;color:#fca5a5;padding:0.05rem 0;">&#x2193; ${esc(f)}</div>`).join('');
+        }
+        html += `</div>`;
+        loadEl.outerHTML = html;
+      } catch (err) {
+        const loadEl = document.getElementById('ai-win-loading');
+        if (loadEl) loadEl.outerHTML = `<div style="color:#fca5a5;font-size:0.72rem;margin-top:0.3rem;">Win prob error: ${esc(err.message)}</div>`;
+      }
+    }
+
+    // --- AI Reply Analyzer ---
+    function openReplyAnalyzer(leadId) {
+      const container = document.getElementById('ai-lead-insights');
+      if (!container) return;
+      let html = `<div id="reply-analyzer" style="background:rgba(236,72,153,0.1);border:1px solid rgba(236,72,153,0.2);border-radius:8px;padding:0.7rem;margin-top:0.4rem;">`;
+      html += `<div style="font-size:0.68rem;color:#f9a8d4;font-weight:600;margin-bottom:0.3rem;">REPLY ANALYZER</div>`;
+      html += `<textarea id="reply-text-input" placeholder="Paste the prospect's email reply here..." style="width:100%;min-height:80px;padding:0.4rem;border:1px solid rgba(236,72,153,0.3);border-radius:6px;background:rgba(0,0,0,0.2);color:#e0e7ff;font-size:0.75rem;resize:vertical;font-family:inherit;"></textarea>`;
+      html += `<button onclick="analyzeReplyText(${leadId})" style="margin-top:0.3rem;padding:0.3rem 0.7rem;background:#db2777;color:white;border:none;border-radius:5px;cursor:pointer;font-size:0.72rem;font-weight:500;">Analyze Reply</button>`;
+      html += `<div id="reply-analysis-result"></div>`;
+      html += `</div>`;
+      container.innerHTML += html;
+      document.getElementById('reply-text-input').focus();
+    }
+
+    async function analyzeReplyText(leadId) {
+      const text = document.getElementById('reply-text-input').value.trim();
+      if (!text) { toast('Paste a reply first', 'error'); return; }
+      const resultEl = document.getElementById('reply-analysis-result');
+      resultEl.innerHTML = '<div style="color:#f9a8d4;font-size:0.72rem;margin-top:0.3rem;">Analyzing reply...</div>';
+      try {
+        const res = await fetch('/api/ai/analyze-reply', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ replyText: text, leadId }),
+        });
+        const d = await safeJSON(res);
+        if (d.error) throw new Error(d.error);
+        const interestColors = { high: '#22c55e', medium: '#f59e0b', low: '#f97316', none: '#ef4444' };
+        const sentColors = { positive: '#22c55e', neutral: '#94a3b8', negative: '#ef4444', mixed: '#f59e0b' };
+        let html = `<div style="margin-top:0.4rem;">`;
+        // Interest + Sentiment badges
+        html += `<div style="display:flex;gap:0.3rem;flex-wrap:wrap;margin-bottom:0.3rem;">`;
+        html += `<span style="padding:0.1rem 0.5rem;border-radius:10px;font-size:0.65rem;font-weight:600;background:${interestColors[d.interest] || '#94a3b8'};color:white;">Interest: ${esc(d.interest || '?')}</span>`;
+        html += `<span style="padding:0.1rem 0.5rem;border-radius:10px;font-size:0.65rem;font-weight:600;background:${sentColors[d.sentiment] || '#94a3b8'};color:white;">${esc(d.sentiment || '?')}</span>`;
+        html += `<span style="padding:0.1rem 0.5rem;border-radius:10px;font-size:0.65rem;font-weight:600;background:rgba(99,102,241,0.3);color:#a5b4fc;">${esc((d.category || '').replace(/_/g, ' '))}</span>`;
+        if (d.urgency) html += `<span style="padding:0.1rem 0.5rem;border-radius:10px;font-size:0.65rem;font-weight:600;background:${d.urgency === 'high' ? '#ef4444' : d.urgency === 'medium' ? '#f59e0b' : '#6b7280'};color:white;">Urgency: ${esc(d.urgency)}</span>`;
+        html += `</div>`;
+        if (d.summary) html += `<div style="font-size:0.76rem;color:#e0e7ff;line-height:1.4;margin-bottom:0.3rem;">${esc(d.summary)}</div>`;
+        if (d.pain_points && d.pain_points.length > 0) {
+          html += `<div style="font-size:0.62rem;color:#86efac;font-weight:600;margin-bottom:0.1rem;">PAIN POINTS</div>`;
+          html += d.pain_points.map(p => `<div style="font-size:0.72rem;color:#a5b4fc;padding-left:0.5rem;">&#x2022; ${esc(p)}</div>`).join('');
+        }
+        if (d.objections && d.objections.length > 0) {
+          html += `<div style="font-size:0.62rem;color:#fbbf24;font-weight:600;margin-top:0.2rem;margin-bottom:0.1rem;">OBJECTIONS</div>`;
+          html += d.objections.map(o => `<div style="font-size:0.72rem;color:#fcd34d;padding-left:0.5rem;">&#x26A0; ${esc(o)}</div>`).join('');
+        }
+        if (d.next_action) html += `<div style="font-size:0.74rem;color:#22c55e;font-weight:600;margin-top:0.3rem;padding:0.3rem;background:rgba(34,197,94,0.1);border-radius:4px;">Next: ${esc(d.next_action)}</div>`;
+        if (d.suggested_reply_tone) html += `<div style="font-size:0.68rem;color:#94a3b8;margin-top:0.2rem;">Tone: ${esc(d.suggested_reply_tone)}</div>`;
+        html += `</div>`;
+        resultEl.innerHTML = html;
+      } catch (err) {
+        resultEl.innerHTML = `<div style="color:#fca5a5;font-size:0.72rem;margin-top:0.3rem;">Reply analysis error: ${esc(err.message)}</div>`;
       }
     }
 
