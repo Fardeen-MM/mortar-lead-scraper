@@ -868,6 +868,9 @@
     body.dark .btn-secondary { background: var(--surface); color: var(--text); border-color: var(--border); }
     body.dark .panel-tab { color: var(--text-muted); border-bottom-color: transparent; }
     body.dark .panel-tab.active { color: var(--indigo); border-bottom-color: var(--indigo); }
+    body.dark .toast { box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+    body.dark #search-suggestions { background: var(--surface); border-color: var(--border); }
+    body.dark #search-suggestions div:hover { background: rgba(99,102,241,0.1) !important; }
 
     /* Tag color picker */
     .tag-color-opt {
@@ -3260,6 +3263,9 @@
       <span id="result-count" style="font-size:0.8rem; color:var(--text-muted); margin-left:auto;"></span>
     </div>
 
+    <!-- Active Filters Bar -->
+    <div id="active-filters-bar" style="display:none;padding:0.3rem 0;margin-bottom:0.3rem;display:flex;align-items:center;gap:0.3rem;flex-wrap:wrap;font-size:0.75rem;"></div>
+
     <!-- Leads Table -->
     <div style="overflow-x: auto;">
       <table class="leads-table" id="leads-table">
@@ -4512,6 +4518,22 @@
         document.getElementById('next-page-btn').disabled = currentOffset >= _totalResults;
 
         document.getElementById('result-count').textContent = `${fmt(_totalResults)} total`;
+
+        // Render active filters bar
+        const afBar = document.getElementById('active-filters-bar');
+        const chips = [];
+        if (q) chips.push(`<span style="background:#e0e7ff;color:#3730a3;padding:0.1rem 0.5rem;border-radius:10px;cursor:pointer;" onclick="document.getElementById('search-input').value='';loadLeads();">"${esc(q)}" &times;</span>`);
+        if (country) chips.push(`<span style="background:#dbeafe;color:#1e40af;padding:0.1rem 0.5rem;border-radius:10px;cursor:pointer;" onclick="document.getElementById('filter-country').value='';loadLeads();">${country} &times;</span>`);
+        if (state) chips.push(`<span style="background:#dbeafe;color:#1e40af;padding:0.1rem 0.5rem;border-radius:10px;cursor:pointer;" onclick="document.getElementById('filter-state').value='';loadLeads();">${state} &times;</span>`);
+        if (hasEmail) chips.push(`<span style="background:#dcfce7;color:#166534;padding:0.1rem 0.5rem;border-radius:10px;cursor:pointer;" onclick="document.getElementById('filter-email').checked=false;loadLeads();">Has Email &times;</span>`);
+        if (hasPhone) chips.push(`<span style="background:#dcfce7;color:#166534;padding:0.1rem 0.5rem;border-radius:10px;cursor:pointer;" onclick="document.getElementById('filter-phone').checked=false;loadLeads();">Has Phone &times;</span>`);
+        if (hasWebsite) chips.push(`<span style="background:#dcfce7;color:#166534;padding:0.1rem 0.5rem;border-radius:10px;cursor:pointer;" onclick="document.getElementById('filter-website').checked=false;loadLeads();">Has Website &times;</span>`);
+        if (practice) chips.push(`<span style="background:#fef3c7;color:#92400e;padding:0.1rem 0.5rem;border-radius:10px;cursor:pointer;" onclick="document.getElementById('filter-practice').value='';loadLeads();">${esc(practice)} &times;</span>`);
+        if (scoreRange) chips.push(`<span style="background:#fef3c7;color:#92400e;padding:0.1rem 0.5rem;border-radius:10px;cursor:pointer;" onclick="document.getElementById('filter-score').value='';loadLeads();">Score ${scoreRange} &times;</span>`);
+        if (tag) chips.push(`<span style="background:#ede9fe;color:#5b21b6;padding:0.1rem 0.5rem;border-radius:10px;cursor:pointer;" onclick="document.getElementById('filter-tags').value='';loadLeads();">${esc(tag)} &times;</span>`);
+        if (source) chips.push(`<span style="background:#ede9fe;color:#5b21b6;padding:0.1rem 0.5rem;border-radius:10px;cursor:pointer;" onclick="document.getElementById('filter-source').value='';loadLeads();">${esc(source)} &times;</span>`);
+        afBar.style.display = chips.length > 0 ? 'flex' : 'none';
+        afBar.innerHTML = chips.length > 0 ? '<span style="color:var(--text-muted);font-weight:500;">Active:</span>' + chips.join('') : '';
 
         // Update checkbox listeners
         document.querySelectorAll('.lead-cb').forEach(cb => {
