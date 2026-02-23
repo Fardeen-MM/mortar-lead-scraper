@@ -1669,8 +1669,26 @@
       <div id="ai-audit-results" style="display:none;margin-top:0.5rem;"></div>
     </div>
 
+    <!-- Status Bar -->
+    <div id="status-bar" style="position:fixed;bottom:0;left:0;right:0;height:24px;background:var(--bg-secondary,#f8fafc);border-top:1px solid var(--border,#e5e7eb);display:flex;align-items:center;justify-content:space-between;padding:0 0.8rem;font-size:0.65rem;color:var(--text-muted,#9ca3af);z-index:9998;">
+      <div style="display:flex;align-items:center;gap:0.8rem;">
+        <span id="status-ws" style="display:flex;align-items:center;gap:0.2rem;"><span style="width:6px;height:6px;border-radius:50%;background:#22c55e;"></span> Connected</span>
+        <span id="status-tab" style="font-weight:500;color:var(--text,#374151);"></span>
+        <span id="status-count"></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.8rem;">
+        <span id="status-refresh"></span>
+        <span style="opacity:0.6;">Press <kbd style="font-size:0.6rem;padding:0.05rem 0.2rem;border:1px solid #d1d5db;border-radius:2px;background:#fff;">?</kbd> for shortcuts</span>
+      </div>
+    </div>
+    <style>
+      body { padding-bottom: 28px; }
+      body.dark #status-bar { background: #0f172a; border-color: #334155; }
+      body.dark #status-bar kbd { background: #1e293b; border-color: #475569; color: #94a3b8; }
+    </style>
+
     <!-- AI Brain Chat (floating) -->
-    <div id="ai-brain-widget" style="position:fixed;bottom:20px;right:20px;z-index:10000;">
+    <div id="ai-brain-widget" style="position:fixed;bottom:44px;right:20px;z-index:10000;">
       <button onclick="toggleAiBrain()" id="ai-brain-toggle" style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#7c3aed);border:2px solid #818cf8;color:white;font-size:1.4rem;cursor:pointer;box-shadow:0 4px 20px rgba(79,70,229,0.4);display:flex;align-items:center;justify-content:center;transition:transform 0.2s;">&#x1F9E0;</button>
       <div id="ai-brain-badge" style="display:none;position:absolute;top:-4px;right:-4px;background:#ef4444;color:white;border-radius:50%;width:18px;height:18px;font-size:0.6rem;display:none;align-items:center;justify-content:center;font-weight:700;"></div>
     </div>
@@ -3954,6 +3972,9 @@
 
       // Scroll to top
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Update status bar
+      if (typeof updateStatusBar === 'function') updateStatusBar();
     }
 
     // --- Breakdown Bar Helper ---
@@ -13301,6 +13322,8 @@
       loadCoverageMap();
       loadGeoMap();
       loadLeads();
+      _lastRefreshTime = Date.now();
+      if (typeof updateStatusBar === 'function') updateStatusBar();
     }
 
     // --- Notification Center ---
@@ -13455,6 +13478,7 @@
         const pulse = document.querySelector('#power-bar span:first-child span');
         if (pulse) pulse.style.background = '#22c55e';
         addActivityItem('&#x1F4E1;', 'Connected to server', 'success');
+        updateStatusWs(true);
       };
 
       _ws.onmessage = (event) => {
@@ -13497,6 +13521,7 @@
         const pulse = document.querySelector('#power-bar span:first-child span');
         if (pulse) pulse.style.background = '#f59e0b';
         addActivityItem('&#x26A0;', 'Disconnected from server — reconnecting...', 'warning');
+        updateStatusWs(false);
         if (!_wsReconnectTimer) {
           _wsReconnectTimer = setTimeout(() => {
             _wsReconnectTimer = null;
@@ -13507,6 +13532,28 @@
 
       _ws.onerror = () => {};
     }
+
+    // --- Status Bar ---
+    let _lastRefreshTime = null;
+    function updateStatusBar() {
+      const tabEl = document.getElementById('status-tab');
+      const countEl = document.getElementById('status-count');
+      const refreshEl = document.getElementById('status-refresh');
+      if (tabEl) tabEl.textContent = _activeTab.charAt(0).toUpperCase() + _activeTab.slice(1);
+      if (countEl) countEl.textContent = _totalResults > 0 ? fmt(_totalResults) + ' leads' : '';
+      if (refreshEl && _lastRefreshTime) {
+        const ago = Math.floor((Date.now() - _lastRefreshTime) / 1000);
+        refreshEl.textContent = ago < 5 ? 'Just refreshed' : ago < 60 ? ago + 's ago' : Math.floor(ago / 60) + 'm ago';
+      }
+    }
+    function updateStatusWs(connected) {
+      const el = document.getElementById('status-ws');
+      if (!el) return;
+      el.innerHTML = connected
+        ? '<span style="width:6px;height:6px;border-radius:50%;background:#22c55e;display:inline-block;"></span> Connected'
+        : '<span style="width:6px;height:6px;border-radius:50%;background:#f59e0b;display:inline-block;"></span> Reconnecting';
+    }
+    setInterval(updateStatusBar, 10000);
 
     // Initial load
     renderViews();
