@@ -1043,6 +1043,13 @@
       font-weight: 600;
     }
     .tab-btn.active .tab-count { background: #4f46e5; color: white; }
+    .tab-badge { display: inline-block; font-size: 0.6rem; font-weight: 700; background: #e0e7ff; color: #4338ca; border-radius: 8px; padding: 0 0.35rem; margin-left: 0.2rem; min-width: 14px; text-align: center; }
+    .tab-badge:empty { display: none; }
+    .tab-badge-warn { background: #fef3c7; color: #92400e; }
+    .tab-btn.active .tab-badge { background: #4f46e5; color: white; }
+    .tab-btn.active .tab-badge-warn { background: #f59e0b; color: white; }
+    body.dark .tab-badge { background: #312e81; color: #a5b4fc; }
+    body.dark .tab-badge-warn { background: #451a03; color: #fbbf24; }
     body.dark .tab-nav { background: #1e293b; }
     body.dark .tab-btn { color: #94a3b8; }
     body.dark .tab-btn:hover { color: #cbd5e1; background: rgba(255,255,255,0.05); }
@@ -1432,9 +1439,9 @@
     <!-- Tab Navigation -->
     <nav class="tab-nav" id="tab-nav">
       <button class="tab-btn active" data-tab="overview" onclick="switchMainTab('overview')">Overview</button>
-      <button class="tab-btn" data-tab="leads" onclick="switchMainTab('leads')">Leads</button>
+      <button class="tab-btn" data-tab="leads" onclick="switchMainTab('leads')">Leads <span class="tab-badge" id="tab-badge-leads"></span></button>
       <button class="tab-btn" data-tab="analytics" onclick="switchMainTab('analytics')">Analytics</button>
-      <button class="tab-btn" data-tab="quality" onclick="switchMainTab('quality')">Quality</button>
+      <button class="tab-btn" data-tab="quality" onclick="switchMainTab('quality')">Quality <span class="tab-badge tab-badge-warn" id="tab-badge-quality"></span></button>
       <button class="tab-btn" data-tab="outreach" onclick="switchMainTab('outreach')">Outreach</button>
       <button class="tab-btn" data-tab="settings" onclick="switchMainTab('settings')">Settings</button>
     </nav>
@@ -3942,6 +3949,14 @@
         document.getElementById('pb-phones').textContent = fmt(d.withPhone) + ' phones';
         document.getElementById('pb-websites').textContent = fmt(d.withWebsite) + ' websites';
         document.getElementById('pb-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
+
+        // Tab badges
+        const leadsBadge = document.getElementById('tab-badge-leads');
+        if (leadsBadge) leadsBadge.textContent = d.total > 0 ? (d.total > 999 ? Math.round(d.total / 1000) + 'k' : d.total) : '';
+        // Quality badge shows count of leads missing email (opportunity count)
+        const qualityBadge = document.getElementById('tab-badge-quality');
+        const missingEmail = d.total - (d.withEmail || 0);
+        if (qualityBadge) qualityBadge.textContent = missingEmail > 0 ? (missingEmail > 999 ? Math.round(missingEmail / 1000) + 'k' : missingEmail) : '';
       } catch (err) {
         console.error('Failed to load stats:', err);
       }
@@ -4586,13 +4601,17 @@
           const score = lead.lead_score || 0;
           const scoreColor = score >= 80 ? '#166534' : score >= 55 ? '#1e40af' : score >= 30 ? '#92400e' : '#991b1b';
           const scoreBg = score >= 80 ? '#dcfce7' : score >= 55 ? '#dbeafe' : score >= 30 ? '#fef3c7' : '#fee2e2';
+          // Compute completeness dot
+          const cFields = [lead.email, lead.phone, lead.website, lead.firm_name, lead.city, lead.bar_number, lead.practice_area, lead.title].filter(Boolean).length;
+          const cPct = Math.round(100 * cFields / 8);
+          const cColor = cPct >= 75 ? '#22c55e' : cPct >= 50 ? '#3b82f6' : cPct >= 25 ? '#f59e0b' : '#ef4444';
           const isSelected = _selectedIds.has(lead.id);
           const tr = document.createElement('tr');
           tr.dataset.id = lead.id;
           if (isSelected) tr.classList.add('selected');
           tr.innerHTML = `
             <td><input type="checkbox" class="lead-cb" data-id="${lead.id}" ${isSelected ? 'checked' : ''}></td>
-            <td style="cursor:pointer;"><strong>${esc(lead.first_name)} ${esc(lead.last_name)}</strong></td>
+            <td style="cursor:pointer;"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${cColor};margin-right:5px;" title="${cPct}% complete (${cFields}/8 fields)"></span><strong>${esc(lead.first_name)} ${esc(lead.last_name)}</strong></td>
             <td>${lead.firm_name ? '<span onclick="event.stopPropagation();openFirmDetail(\'' + esc(lead.firm_name).replace(/'/g, "\\'") + '\')" style="cursor:pointer;color:#2563eb;text-decoration:underline dotted;" title="View firm details">' + esc(lead.firm_name) + '</span>' : ''}</td>
             <td>${esc(lead.city)}</td>
             <td>${esc(lead.state)}</td>
