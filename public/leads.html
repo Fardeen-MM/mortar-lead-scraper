@@ -3262,7 +3262,7 @@
     <!-- Search/Filter Row 1 -->
     <div class="lead-controls">
       <div style="position:relative;flex:1;">
-        <input type="text" class="search-input" id="search-input" placeholder="Search name, firm, city, email..." autocomplete="off" style="width:100%;">
+        <input type="text" class="search-input" id="search-input" placeholder="Search... try 'gold in Florida' or 'with email in NY'" autocomplete="off" style="width:100%;">
         <div id="search-suggestions" style="display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px;max-height:200px;overflow-y:auto;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
       </div>
       <select id="filter-country">
@@ -5728,8 +5728,56 @@
     });
 
     // --- Event Listeners ---
+    // --- Smart Search Parser ---
+    // Detects patterns like "in Florida", "with email", "score 80+" and auto-applies filters
+    const STATE_NAMES = {AK:'Alaska',AL:'Alabama',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming'};
+    const STATE_LOOKUP = {};
+    for (const [code, name] of Object.entries(STATE_NAMES)) { STATE_LOOKUP[name.toLowerCase()] = code; STATE_LOOKUP[code.toLowerCase()] = code; }
+
+    function parseSmartSearch(query) {
+      let remaining = query;
+      const actions = {};
+
+      // "with email" / "has email"
+      if (/\b(with|has)\s+email/i.test(remaining)) { actions.hasEmail = true; remaining = remaining.replace(/\b(with|has)\s+email/gi, ''); }
+      if (/\b(with|has)\s+phone/i.test(remaining)) { actions.hasPhone = true; remaining = remaining.replace(/\b(with|has)\s+phone/gi, ''); }
+      if (/\b(with|has)\s+website/i.test(remaining)) { actions.hasWebsite = true; remaining = remaining.replace(/\b(with|has)\s+website/gi, ''); }
+      if (/\b(no|without|missing)\s+email/i.test(remaining)) { actions.noEmail = true; remaining = remaining.replace(/\b(no|without|missing)\s+email/gi, ''); }
+
+      // "score 80+" / "excellent" / "gold"
+      const scoreMatch = remaining.match(/\bscore\s*(\d+)\+?/i);
+      if (scoreMatch) { actions.minScore = parseInt(scoreMatch[1]); remaining = remaining.replace(scoreMatch[0], ''); }
+      if (/\bexcellent/i.test(remaining)) { actions.scoreRange = '80-100'; remaining = remaining.replace(/\bexcellent/gi, ''); }
+      if (/\bgold/i.test(remaining)) { actions.hasEmail = true; actions.hasPhone = true; remaining = remaining.replace(/\bgold/gi, ''); }
+
+      // "in Florida" / "in FL" / "in New York"
+      const inMatch = remaining.match(/\bin\s+([a-z][a-z\s]+)/i);
+      if (inMatch) {
+        const place = inMatch[1].trim().toLowerCase();
+        if (STATE_LOOKUP[place]) { actions.state = STATE_LOOKUP[place]; remaining = remaining.replace(inMatch[0], ''); }
+      }
+
+      actions.text = remaining.trim();
+      return actions;
+    }
+
     document.getElementById('search-input').addEventListener('input', () => {
       clearTimeout(searchTimeout);
+      const val = document.getElementById('search-input').value.trim();
+      // Check if input looks like a smart search (has keywords)
+      const actions = parseSmartSearch(val);
+      if (actions.hasEmail || actions.hasPhone || actions.hasWebsite || actions.state || actions.scoreRange || actions.minScore || actions.noEmail) {
+        // Apply smart filters
+        if (actions.hasEmail) document.getElementById('filter-email').checked = true;
+        if (actions.hasPhone) document.getElementById('filter-phone').checked = true;
+        if (actions.hasWebsite) document.getElementById('filter-website').checked = true;
+        if (actions.state) document.getElementById('filter-state').value = actions.state;
+        if (actions.scoreRange) document.getElementById('filter-score').value = actions.scoreRange;
+        if (actions.minScore) document.getElementById('filter-score').value = actions.minScore >= 80 ? '80-100' : actions.minScore >= 55 ? '55-79' : actions.minScore >= 30 ? '30-54' : '0-29';
+        // Replace search text with just the remaining text
+        document.getElementById('search-input').value = actions.text;
+        toast('Smart search: applied ' + Object.keys(actions).filter(k => k !== 'text').join(', '), 'info');
+      }
       searchTimeout = setTimeout(() => loadLeads(), 300);
     });
     document.getElementById('filter-country').addEventListener('change', () => loadLeads());
