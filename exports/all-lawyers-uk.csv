@@ -1,14 +1,20 @@
 first_name,last_name,email,firm_name,title,phone,website,city,state,country,practice_area,bar_status,admission_date,linkedin_url,decision_maker_score,lead_score,primary_source,email_source
 Richard John,Allan,richardjohn.allan@richardlegal.com,Richard John Allan Solicitor,,,https://richardlegal.com,Edinburgh,UK-SC,United Kingdom,,Practising,10/11/2005,,105,25,scotland_bar,generated_pattern
 Andrew,Baillie,andrew.baillie@andrewlaw.com,Andrew Baillie Solicitors,,,https://andrewlaw.com,Edinburgh,UK-SC,United Kingdom,,Practising,27/08/1991,,105,25,scotland_bar,generated_pattern
-Ian,Beatson,ian.beatson@ianbeatson.com,Ian Beatson,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/08/1987,,105,10,scotland_bar,generated_pattern
-Vincent,Brown,vincent.brown@vincentbrownlimited.com,Vincent Brown Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/12/1983,,105,10,scotland_bar,generated_pattern
+Ian,Beatson,,Ian Beatson,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/08/1987,,105,10,scotland_bar,
+Vincent,Brown,,Vincent Brown Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/12/1983,,105,10,scotland_bar,
+Con,Cunningham,con.cunningham@concunningham.com,Con Cunningham Legal Services Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,31/05/2012,,95,10,scotland_bar,generated_pattern
 Ruth Mary,Aberdein,raberdein@acandco.com,Aberdein Considine LLP,,01224 589700,https://acandco.com,Edinburgh,UK-SC,United Kingdom,,Practising,14/08/2000,,80,90,scotland_bar,profile
 Emily Frances,Allan,emilyfrances.allan@allanlegal.com,Allan McDougall McQueen LLP,,,https://allanlegal.com,Edinburgh,UK-SC,United Kingdom,,Practising,10/11/2005,,80,25,scotland_bar,generated_pattern
 Gillian Anne,Anderson,gilliananne.anderson@andersonstrathern.co.uk,Anderson Strathern LLP,,,http://www.andersonstrathern.co.uk,Edinburgh,UK-SC,United Kingdom,,Practising,27/10/1998,,80,25,scotland_bar,generated_pattern
 Peter Duthie,Anderson,peterduthie.anderson@andersonbain.com,Andersonbain LLP,,,https://andersonbain.com,Edinburgh,UK-SC,United Kingdom,,Practising,17/09/1982,,80,25,scotland_bar,generated_pattern
 Stuart McDonald,Bain,stuartmcdonald.bain@andersonbain.com,Andersonbain LLP,,,https://andersonbain.com,Edinburgh,UK-SC,United Kingdom,,Practising,13/11/1986,,80,25,scotland_bar,generated_pattern
 Iona Jane,Brown,ionajane.brown@digbybrown.com,Digby Brown LLP,,,https://digbybrown.com,Edinburgh,UK-SC,United Kingdom,,Practising,13/09/1999,,80,25,scotland_bar,generated_pattern
+Francis,Cannon,,Cannons Law Practice LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/08/1968,,80,10,scotland_bar,
+Nicola Simone,Cannon,,Cannons Law Practice LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/03/1997,,80,10,scotland_bar,
+John Alexander Gunn,Chalmers,johnalexandergunn.chalmers@ledinghamchalmers.com,Ledingham Chalmers LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/02/1987,,80,10,scotland_bar,generated_pattern
+Jennifer Claire,Colledge,,Colledge & Shields LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/09/1996,,80,10,scotland_bar,
+Laura Jane,Considine,laurajane.considine@acandco.com,Aberdein Considine LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/01/2005,,80,10,scotland_bar,generated_pattern
 Jack Scott,Adair,jackscott.adair@adairs.com,Adairs,,,https://adairs.com,Edinburgh,UK-SC,United Kingdom,,Practising,09/09/1993,,70,25,scotland_bar,generated_pattern
 Colin George,Adam,colingeorge.adam@mclennanlaw.com,McLennan Adam Davis,,,https://mclennanlaw.com,Edinburgh,UK-SC,United Kingdom,,Practising,30/09/1986,,70,25,scotland_bar,generated_pattern
 John Henry,Adam,johnhenry.adam@adamlegal.com,Adam Flowerdew & Reynolds,,,https://adamlegal.com,Edinburgh,UK-SC,United Kingdom,,Practising,23/09/1996,,70,25,scotland_bar,generated_pattern
@@ -32,53 +38,84 @@ Eric James,Barton,ericjames.barton@bartonlaw.com,Barton & Hendry,,,https://barto
 James,Bready,james.bready@bclegal.com,Bready & Co.,,,https://bclegal.com,Edinburgh,UK-SC,United Kingdom,,Practising,16/08/1979,,70,25,scotland_bar,generated_pattern
 Craig,Brown,craig.brown@digbybrown.com,Digby Brown LLP,,,https://digbybrown.com,Edinburgh,UK-SC,United Kingdom,,Practising,29/08/2008,,70,25,scotland_bar,generated_pattern
 Gerard Anthony,Brown,gerardanthony.brown@livingstonelaw.com,Livingstone Brown Limited,,,https://livingstonelaw.com,Edinburgh,UK-SC,United Kingdom,,Practising,29/10/1973,,70,25,scotland_bar,generated_pattern
-Nigel James Bruce,Beaumont,nigeljamesbruce.beaumont@nigelbeaumontco.com,Nigel Beaumont & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/11/1978,,70,10,scotland_bar,generated_pattern
-Paul Michael,Belardo,paulmichael.belardo@maninibelardolimited.com,Manini Belardo Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/02/1995,,70,10,scotland_bar,generated_pattern
-David Alan,Bell,davidalan.bell@patersonbelllimited.com,Paterson Bell Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/11/1994,,70,10,scotland_bar,generated_pattern
-Fergus Carson Pattison,Bell,ferguscarsonpattison.bell@bellcraiglimited.com,Bell & Craig Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/03/1989,,70,10,scotland_bar,generated_pattern
-Susan Carol,Bell,susancarol.bell@belllegallimited.com,Bell Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/02/1994,,70,10,scotland_bar,generated_pattern
-Brian,Black,brian.black@blackmarkie.com,Black & Markie,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/08/2005,,70,10,scotland_bar,generated_pattern
+Nigel James Bruce,Beaumont,,Nigel Beaumont & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/11/1978,,70,10,scotland_bar,
+Paul Michael,Belardo,,Manini Belardo Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/02/1995,,70,10,scotland_bar,
+David Alan,Bell,,Paterson Bell Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/11/1994,,70,10,scotland_bar,
+Fergus Carson Pattison,Bell,,Bell & Craig Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/03/1989,,70,10,scotland_bar,
+Susan Carol,Bell,,Bell Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/02/1994,,70,10,scotland_bar,
+Brian,Black,,Black & Markie,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/08/2005,,70,10,scotland_bar,
 Elspeth Catherine,Black,elspethcatherine.black@corrigallblack.com,Corrigall Black,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/11/1973,,70,10,scotland_bar,generated_pattern
-Patricia,Black,patricia.black@pblacksolicitorslimited.com,P Black Solicitors Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/10/1983,,70,10,scotland_bar,generated_pattern
+Patricia,Black,,P Black Solicitors Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/10/1983,,70,10,scotland_bar,
 Telfer George,Blacklock,telfergeorge.blacklock@blacklocks.com,Blacklocks,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/01/1984,,70,10,scotland_bar,generated_pattern
 Neil John,Bon,neiljohn.bon@bonlaw.com,Bon Law Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,31/01/2005,,70,10,scotland_bar,generated_pattern
-Damian Colin,Bonnar,damiancolin.bonnar@bonnarlawlimited.com,Bonnar Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/09/1999,,70,10,scotland_bar,generated_pattern
-Simon Donald,Booker-Milburn,simondonald.booker-milburn@simondbookermilburn.com,Simon D Booker-Milburn,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/09/1995,,70,10,scotland_bar,generated_pattern
-Alistair MacGregor,Bowman,alistairmacgregor.bowman@macgregorbowmanws.com,MacGregor Bowman WS,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/10/1982,,70,10,scotland_bar,generated_pattern
-Diana Glennie,Boyd,dianaglennie.boyd@boydlegallimited.com,Boyd Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/11/1989,,70,10,scotland_bar,generated_pattern
+Damian Colin,Bonnar,,Bonnar Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/09/1999,,70,10,scotland_bar,
+Simon Donald,Booker-Milburn,,Simon D Booker-Milburn,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/09/1995,,70,10,scotland_bar,
+Alistair MacGregor,Bowman,,MacGregor Bowman WS,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/10/1982,,70,10,scotland_bar,
+Diana Glennie,Boyd,,Boyd Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/11/1989,,70,10,scotland_bar,
 Michael William,Boyd,michaelwilliam.boyd@boydslaw.com,Boyds Law,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/02/2003,,70,10,scotland_bar,generated_pattern
-William Peter,Boyd,williampeter.boyd@boydlegallimited.com,Boyd Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/12/1973,,70,10,scotland_bar,generated_pattern
-Christopher Francis,Boyle,christopherfrancis.boyle@cfboylecolimited.com,C.F. Boyle & Co Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/09/1981,,70,10,scotland_bar,generated_pattern
+William Peter,Boyd,,Boyd Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/12/1973,,70,10,scotland_bar,
+Christopher Francis,Boyle,,C.F. Boyle & Co Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/09/1981,,70,10,scotland_bar,
 John Ross,Boyle,johnross.boyle@boylessolicitors.com,Boyles Solicitors,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/03/2006,,70,10,scotland_bar,generated_pattern
-Andrew John,Bradley,andrewjohn.bradley@ajbradleyco.com,AJ Bradley & Co Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/10/1996,,70,10,scotland_bar,generated_pattern
+Andrew John,Bradley,,AJ Bradley & Co Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/10/1996,,70,10,scotland_bar,
 Peter Maxwell,Braidwood,petermaxwell.braidwood@braidwoods.com,Braidwoods,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/09/2006,,70,10,scotland_bar,generated_pattern
-Andrew Edward,Brophy,andrewedward.brophy@andrewbrophy.com,Andrew Brophy,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/08/1983,,70,10,scotland_bar,generated_pattern
-Anne,Brophy,anne.brophy@brophycareyco.com,Brophy Carey & Co Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/08/1991,,70,10,scotland_bar,generated_pattern
-Michael Andrew,Brown,michaelandrew.brown@michaelabrownsolicitors.com,Michael A Brown Solicitors,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/11/1975,,70,10,scotland_bar,generated_pattern
-Monica Anne,Brown,monicaanne.brown@kerrbrownpartnership.com,The Kerr Brown Partnership,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/09/1998,,70,10,scotland_bar,generated_pattern
-Ross James Elrick,Brown,rossjameselrick.brown@dunipacebrown.com,Dunipace Brown,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/10/1983,,70,10,scotland_bar,generated_pattern
-Simon David,Brown,simondavid.brown@matthewbrown.com,Matthew Brown,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/10/1996,,70,10,scotland_bar,generated_pattern
-Tracey Kathryn Elizabeth,Brown,traceykathrynelizabeth.brown@matthewbrown.com,Matthew Brown,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/08/1998,,70,10,scotland_bar,generated_pattern
-David Grant,Bruce,davidgrant.bruce@rbruceco.com,R. Bruce & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/08/2001,,70,10,scotland_bar,generated_pattern
-Diarmid Noel,Bruce,diarmidnoel.bruce@brucemccormacklimited.com,Bruce McCormack Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/09/1993,,70,10,scotland_bar,generated_pattern
-John,Buchanan,john.buchanan@buchananburtonlimited.com,Buchanan Burton Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/11/1979,,70,10,scotland_bar,generated_pattern
-Karen Elaine,Buchanan,karenelaine.buchanan@buchananmacleod.com,Buchanan Macleod,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/09/1987,,70,10,scotland_bar,generated_pattern
+Andrew Edward,Brophy,,Andrew Brophy,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/08/1983,,70,10,scotland_bar,
+Anne,Brophy,,Brophy Carey & Co Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/08/1991,,70,10,scotland_bar,
+Michael Andrew,Brown,,Michael A Brown Solicitors,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/11/1975,,70,10,scotland_bar,
+Monica Anne,Brown,,The Kerr Brown Partnership,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/09/1998,,70,10,scotland_bar,
+Ross James Elrick,Brown,,Dunipace Brown,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/10/1983,,70,10,scotland_bar,
+Simon David,Brown,,Matthew Brown,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/10/1996,,70,10,scotland_bar,
+Tracey Kathryn Elizabeth,Brown,,Matthew Brown,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/08/1998,,70,10,scotland_bar,
+David Grant,Bruce,,R. Bruce & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/08/2001,,70,10,scotland_bar,
+Diarmid Noel,Bruce,,Bruce McCormack Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/09/1993,,70,10,scotland_bar,
+John,Buchanan,,Buchanan Burton Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/11/1979,,70,10,scotland_bar,
+Karen Elaine,Buchanan,,Buchanan Macleod,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/09/1987,,70,10,scotland_bar,
 Iain Thomas,Burke,iainthomas.burke@burkelegal.com,Burke Legal,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/09/1991,,70,10,scotland_bar,generated_pattern
-Leonard James,Burkinshaw,leonardjames.burkinshaw@burkinshawcriminaldefence.com,Burkinshaw Criminal Defence,,,,Edinburgh,UK-SC,United Kingdom,Criminal Defense,Practising,31/08/1988,,70,10,scotland_bar,generated_pattern
-Alexander McLennan,Burn,alexandermclennan.burn@burnmcgregor.com,Burn & McGregor,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/09/1996,,70,10,scotland_bar,generated_pattern
-Alexandria Catherine Thorburn,Burton,alexandriacatherinethorburn.burton@buchananburtonlimited.com,Buchanan Burton Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/01/1981,,70,10,scotland_bar,generated_pattern
+Leonard James,Burkinshaw,,Burkinshaw Criminal Defence,,,,Edinburgh,UK-SC,United Kingdom,Criminal Defense,Practising,31/08/1988,,70,10,scotland_bar,
+Alexander McLennan,Burn,,Burn & McGregor,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/09/1996,,70,10,scotland_bar,
+Alexandria Catherine Thorburn,Burton,,Buchanan Burton Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/01/1981,,70,10,scotland_bar,
+James Ronald Archibald,Caird,,Caird & Vaughan,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/03/1987,,70,10,scotland_bar,
+Edward Anthony,Callahan,,Callahan McKeown & Co Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/08/1991,,70,10,scotland_bar,
+Margaret Ann,Callan,,Callan & Co (Glasgow) Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/08/1991,,70,10,scotland_bar,
+Patrick Ian,Campbell,,Campbell & McCartney,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/07/1998,,70,10,scotland_bar,
+Stacy Elise,Campbell,,McKee Campbell Morrison Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/10/2005,,70,10,scotland_bar,
+Fiona Janet,Carey,,Brophy Carey & Co Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/07/1989,,70,10,scotland_bar,
+Margaret Claire,Chalmers,,"Murray, Hamilton & Chalmers",,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/12/1988,,70,10,scotland_bar,
+Michael,Chapman,michael.chapman@chapmansolicitors.com,Chapman Solicitors,,,,Edinburgh,UK-SC,United Kingdom,,Practising,31/03/1983,,70,10,scotland_bar,generated_pattern
+Pauline,Chapman,pauline.chapman@chapmansolicitors.com,Chapman Solicitors,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/11/1983,,70,10,scotland_bar,generated_pattern
+John Kyle,Christison,,Christison Law Practice Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/12/2006,,70,10,scotland_bar,
+Paul Harvey,Clancy,,Clancys Solicitors and Estate Agents Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/12/1977,,70,10,scotland_bar,
+David Charles,Clapham,davidcharles.clapham@claphams.com,Claphams,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/09/1981,,70,10,scotland_bar,generated_pattern
+Debra Harriet,Clapham,debraharriet.clapham@claphams.com,Claphams,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/12/1989,,70,10,scotland_bar,generated_pattern
+Jennifer May,Cochran,jennifermay.cochran@cochranlaw.com,Cochran Dickie & Mackenzie Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/08/2006,,70,10,scotland_bar,generated_pattern
+Elizabeth Ross,Cockburn,,Cockburn & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/08/1972,,70,10,scotland_bar,
+Simon Gerard Corrieri,Collins,simongerardcorrieri.collins@collinslaw.com,Collins & Co Defence Lawyers Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/09/1993,,70,10,scotland_bar,generated_pattern
+Eva Margaret,Comrie,evamargaret.comrie@comrielaw.com,Comrie Law,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/08/1986,,70,10,scotland_bar,generated_pattern
+Alan,Conroy,,Conroy McInnes Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/12/1984,,70,10,scotland_bar,
+Ronald Edward,Conway,,The Conway Accident Law Practice Ltd,,,,Edinburgh,UK-SC,United Kingdom,Personal Injury,Practising,24/01/1978,,70,10,scotland_bar,
+Patricia Ann,Coyle,,Kavanagh Coyle Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/08/1984,,70,10,scotland_bar,
+Paul Vincent,Coyle,,Kavanagh Coyle Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/07/1984,,70,10,scotland_bar,
+Virgil Martin,Crawford,virgilmartin.crawford@virgil-crawford.com,Virgil M. Crawford,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/08/1991,,70,10,scotland_bar,generated_pattern
+Elspeth,Curle,elspeth.curle@csllegal.com,Curle Stewart Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/08/1999,,70,10,scotland_bar,generated_pattern
+Philip,Curle,philip.curle@csllegal.com,Curle Stewart Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/12/1999,,70,10,scotland_bar,generated_pattern
 Kristin Margaret,Alexander,kristinmargaret.alexander@scott-alexander.com,Scott Alexander,,,https://scott-alexander.com,Edinburgh,UK-SC,United Kingdom,,Practising,16/08/2007,,60,25,scotland_bar,generated_pattern
 Sidra,Ali,sidra.ali@alilegal.com,Ali Law Ltd,,,https://alilegal.com,Edinburgh,UK-SC,United Kingdom,,Practising,13/08/2015,,60,25,scotland_bar,generated_pattern
 Allan John,Argue,allanjohn.argue@arguelaw.com,Argue & Co Legal,,,https://arguelaw.com,Edinburgh,UK-SC,United Kingdom,,Practising,09/09/2015,,60,25,scotland_bar,generated_pattern
 Anelia,Black,anelia.black@blackadders.com,Blackadders LLP,,,https://blackadders.com,Edinburgh,UK-SC,United Kingdom,,Practising,12/03/2020,,60,25,scotland_bar,generated_pattern
 Lynsey Meiklem,Brown,lynseymeiklem.brown@livingstonelaw.com,Livingstone Brown Limited,,,https://livingstonelaw.com,Edinburgh,UK-SC,United Kingdom,,Practising,08/12/2016,,60,25,scotland_bar,generated_pattern
-Stephen Thomas Wilson,Bentley,stephenthomaswilson.bentley@bentleylawsco.com,Bentley Law (Sco) Ltd ,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/07/2009,,60,10,scotland_bar,generated_pattern
-Christopher Thomas,Bollen,christopherthomas.bollen@ctbollenlimited.com,C.T. Bollen Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/10/2015,,60,10,scotland_bar,generated_pattern
-Joseph George,Boyd,josephgeorge.boyd@josephgboydcocourtlawyers.com,Joseph G Boyd & Co Court Lawyers Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/08/2010,,60,10,scotland_bar,generated_pattern
+Stephen Thomas Wilson,Bentley,,Bentley Law (Sco) Ltd ,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/07/2009,,60,10,scotland_bar,
+Christopher Thomas,Bollen,,C.T. Bollen Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/10/2015,,60,10,scotland_bar,
+Joseph George,Boyd,,Joseph G Boyd & Co Court Lawyers Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/08/2010,,60,10,scotland_bar,
 Catherine Emily,Braidwood,catherineemily.braidwood@braidwoods.com,Braidwoods,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/10/2007,,60,10,scotland_bar,generated_pattern
-Sarah Margaret,Brown,sarahmargaret.brown@sarahbrowncharitylawlimited.com,Sarah Brown Charity Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/01/2013,,60,10,scotland_bar,generated_pattern
-Michael Ian James,Burnett,michaelianjames.burnett@burnettcriminaldefence.com,Burnett Criminal Defence,,,,Edinburgh,UK-SC,United Kingdom,Criminal Defense,Practising,29/08/2008,,60,10,scotland_bar,generated_pattern
+Sarah Margaret,Brown,,Sarah Brown Charity Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/01/2013,,60,10,scotland_bar,
+Michael Ian James,Burnett,,Burnett Criminal Defence,,,,Edinburgh,UK-SC,United Kingdom,Criminal Defense,Practising,29/08/2008,,60,10,scotland_bar,
+Paul Neil,Cavers,,Cavers & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/09/2011,,60,10,scotland_bar,
+Lorna Esther,Clark,lornaesther.clark@lornaclarksolicitors.com,Lorna Clark Solicitors Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/09/2009,,60,10,scotland_bar,generated_pattern
+Stephanie Louise,Clinkscale,,Stephanie Clinkscale Solicitor Advocate,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/11/2013,,60,10,scotland_bar,
+Sharon Louise,Collins,sharonlouise.collins@sharoncollinssolicitors.com,Sharon Collins Solicitors Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/08/2007,,60,10,scotland_bar,generated_pattern
+Michael John Northcote,Coyle,,Kavanagh Coyle Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/08/2016,,60,10,scotland_bar,
 Matthew Campbell,Braidwood,matthewcampbell.braidwood@braidwoods.com,Braidwoods,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/11/2018,,50,10,scotland_bar,generated_pattern
+Jane Elizabeth,Caird,,Caird & Vaughan,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/05/2017,,50,10,scotland_bar,
+Rachel Anne,Conway,,The Conway Accident Law Practice Ltd,,,,Edinburgh,UK-SC,United Kingdom,Personal Injury,Practising,04/04/2019,,50,10,scotland_bar,
 Helen Cecilia,Abrams,helen.abrams@brodies.com,Brodies LLP,,0131 2283777,http://www.brodies.com,Edinburgh,UK-SC,United Kingdom,,Practising,07/11/2001,,40,90,scotland_bar,profile
 Michelle,Adam,michelle.adam@thorntonslegal.com,Thorntons Law LLP,,,https://thorntonslegal.com,Edinburgh,UK-SC,United Kingdom,,Practising,01/10/1996,,40,25,scotland_bar,generated_pattern
 Graham Reid,Adams,grahamreid.adams@wrightlaw.com,"Wright, Johnston & Mackenzie LLP",,,https://wrightlaw.com,Edinburgh,UK-SC,United Kingdom,,Practising,21/10/1986,,40,25,scotland_bar,generated_pattern
@@ -248,20 +285,180 @@ Pamela Winifred Sharon,Bursill,pamelawinifredsharon.bursill@mslaw.com,Mackinnons
 Seonaid Buchanan,Busby,seonaidbuchanan.busby@hslaw.com,HF Scotland LLP,,,https://hslaw.com,Edinburgh,UK-SC,United Kingdom,,Practising,06/03/1992,,40,25,scotland_bar,generated_pattern
 Christopher James,Byrne,christopherjames.byrne@thorntonslegal.com,Thorntons Law LLP,,,https://thorntonslegal.com,Edinburgh,UK-SC,United Kingdom,,Practising,05/12/2002,,40,25,scotland_bar,generated_pattern
 Sheila Janet,Byth,sheilajanet.byth@cullenkilshaw.com,Cullen Kilshaw LLP,,,https://cullenkilshaw.com,Edinburgh,UK-SC,United Kingdom,,Practising,20/06/1997,,40,25,scotland_bar,generated_pattern
-Graham John,Basten,grahamjohn.basten@bswsolicitors.com,BSW Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/07/1993,,40,10,scotland_bar,generated_pattern
-Alan Robert,Bayley,alanrobert.bayley@stodarts.com,Stodarts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/09/1991,,40,10,scotland_bar,generated_pattern
+Graham John,Basten,,BSW Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/07/1993,,40,10,scotland_bar,
+Alan Robert,Bayley,,Stodarts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/09/1991,,40,10,scotland_bar,
 David Bryce,Bell,davidbryce.bell@irwinmitchellscotland.com,Irwin Mitchell Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/12/1984,,40,10,scotland_bar,generated_pattern
-Jonathan Richard Miles,Bell,jonathanrichardmiles.bell@twindeerlaw.com,Twin Deer Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/01/1997,,40,10,scotland_bar,generated_pattern
-Mary,Biggam,mary.biggam@djmackayandpartners.com,DJ Mackay and Partners LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/11/1994,,40,10,scotland_bar,generated_pattern
-Gillian,Black,gillian.black@skofamilylawspecialists.com,SKO Family Law Specialists LLP,,,,Edinburgh,UK-SC,United Kingdom,Family Law,Practising,01/10/2001,,40,10,scotland_bar,generated_pattern
-Kathleen Janet,Bolt,kathleenjanet.bolt@djmackayandpartners.com,DJ Mackay and Partners LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/08/1991,,40,10,scotland_bar,generated_pattern
-Eugene Francis,Boyle,eugenefrancis.boyle@prgpartnershipsolicitors.com,The PRG Partnership Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/12/1983,,40,10,scotland_bar,generated_pattern
-Alastair,Bracken,alastair.bracken@rossconnel.com,Ross & Connel LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/01/1992,,40,10,scotland_bar,generated_pattern
+Jonathan Richard Miles,Bell,,Twin Deer Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/01/1997,,40,10,scotland_bar,
+Mary,Biggam,,DJ Mackay and Partners LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/11/1994,,40,10,scotland_bar,
+Gillian,Black,,SKO Family Law Specialists LLP,,,,Edinburgh,UK-SC,United Kingdom,Family Law,Practising,01/10/2001,,40,10,scotland_bar,
+Kathleen Janet,Bolt,,DJ Mackay and Partners LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/08/1991,,40,10,scotland_bar,
+Eugene Francis,Boyle,,The PRG Partnership Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/12/1983,,40,10,scotland_bar,
+Alastair,Bracken,,Ross & Connel LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/01/1992,,40,10,scotland_bar,
 Stephen,Bradford,stephen.bradford@lockhartslaw.com,Lockharts Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/12/1996,,40,10,scotland_bar,generated_pattern
-Peter Melrose,Brash,petermelrose.brash@grigoryoung.com,Grigor & Young LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/09/1991,,40,10,scotland_bar,generated_pattern
-Colin Scott,Bremner,colinscott.bremner@burnettreid.com,Burnett & Reid LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/11/1992,,40,10,scotland_bar,generated_pattern
-Donna-Marie,Brennan,donna-marie.brennan@weightmansscotland.com,Weightmans (Scotland) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/09/1996,,40,10,scotland_bar,generated_pattern
-Paul Alexander,Buist,paulalexander.buist@lynnherbertandco.com,Lynn Herbert and Co LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/12/1991,,40,10,scotland_bar,generated_pattern
+Peter Melrose,Brash,,Grigor & Young LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/09/1991,,40,10,scotland_bar,
+Colin Scott,Bremner,,Burnett & Reid LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/11/1992,,40,10,scotland_bar,
+Donna-Marie,Brennan,,Weightmans (Scotland) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/09/1996,,40,10,scotland_bar,
+Paul Alexander,Buist,,Lynn Herbert and Co LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/12/1991,,40,10,scotland_bar,
+Diane Christine,Cairney,dianechristine.cairney@millerlaw.com,Miller Samuel Hill Brown LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/08/1992,,40,10,scotland_bar,generated_pattern
+Allan Steven,Cairns,allansteven.cairns@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/09/2005,,40,10,scotland_bar,generated_pattern
+Gordon Douglas,Cairns,gordondouglas.cairns@connelllaw.com,Connell & Connell LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/08/1981,,40,10,scotland_bar,generated_pattern
+Rodger William,Cairns,rodgerwilliam.cairns@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/10/1996,,40,10,scotland_bar,generated_pattern
+Heather Elizabeth,Calderwood,heatherelizabeth.calderwood@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/09/2006,,40,10,scotland_bar,generated_pattern
+Bruce Alan,Caldow,brucealan.caldow@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/01/2003,,40,10,scotland_bar,generated_pattern
+Kenneth Andrew,Caldwell,,Patten & Prentice LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/01/1988,,40,10,scotland_bar,
+Ross Graham,Caldwell,rossgraham.caldwell@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/11/1998,,40,10,scotland_bar,generated_pattern
+Michael Andrew,Callaghan,michaelandrew.callaghan@jacksonlaw.com,Jackson Boyd LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/11/1993,,40,10,scotland_bar,generated_pattern
+Alan Donald,Calvert,alandonald.calvert@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/10/1984,,40,10,scotland_bar,generated_pattern
+Karen Myra Shaw,Cameron Latif,karenmyrashaw.cameronlatif@ledinghamchalmers.com,Ledingham Chalmers LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/01/1996,,40,10,scotland_bar,generated_pattern
+Alan Ian,Cameron,alanian.cameron@jacksonlaw.com,Jackson Boyd LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/07/2006,,40,10,scotland_bar,generated_pattern
+Anthony James William,Cameron,anthonyjameswilliam.cameron@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/12/2001,,40,10,scotland_bar,generated_pattern
+Audrey Clare,Cameron,audreyclare.cameron@andersonstrathern.co.uk,Anderson Strathern LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/08/1992,,40,10,scotland_bar,generated_pattern
+Laura Elaine,Cameron,lauraelaine.cameron@pinsentmasons.com,"Pinsent Masons LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/12/1991,,40,10,scotland_bar,generated_pattern
+Joanna Mary,Campbell-Smith,joannamary.campbell-smith@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/05/2001,,40,10,scotland_bar,generated_pattern
+Aidan George,Campbell,aidangeorge.campbell@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/03/1998,,40,10,scotland_bar,generated_pattern
+David Haddow,Campbell,davidhaddow.campbell@andersonstrathern.co.uk,Anderson Strathern LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/11/1989,,40,10,scotland_bar,generated_pattern
+Duncan Craig,Campbell,duncancraig.campbell@stronachs.com,Stronachs LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/06/1997,,40,10,scotland_bar,generated_pattern
+Ewan Mackenzie,Campbell,,SKO Family Law Specialists LLP,,,,Edinburgh,UK-SC,United Kingdom,Family Law,Practising,11/12/1991,,40,10,scotland_bar,
+Gary Angus,Campbell,garyangus.campbell@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/11/1991,,40,10,scotland_bar,generated_pattern
+Gillian Aida,Campbell,gillianaida.campbell@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/10/1988,,40,10,scotland_bar,generated_pattern
+Grant Stewart,Campbell,grantstewart.campbell@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/09/1995,,40,10,scotland_bar,generated_pattern
+Jacqueline Mary,Campbell,,Dales Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/07/2005,,40,10,scotland_bar,
+Janet Frances,Campbell,janetfrances.campbell@cullenkilshaw.com,Cullen Kilshaw LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/09/1986,,40,10,scotland_bar,generated_pattern
+Jenna Louise,Campbell,jennalouise.campbell@daclaw.com,DAC Beachcroft Claims Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/11/2006,,40,10,scotland_bar,generated_pattern
+Margaret April,Campbell,margaretapril.campbell@millerlaw.com,Miller Samuel Hill Brown LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/09/1999,,40,10,scotland_bar,generated_pattern
+Martin Stuart,Campbell,martinstuart.campbell@andersonstrathern.co.uk,Anderson Strathern LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/06/2003,,40,10,scotland_bar,generated_pattern
+Morag,Campbell,morag.campbell@dentons.law,Dentons UK and Middle East LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/09/1981,,40,10,scotland_bar,generated_pattern
+Ross Donald,Campbell,,DLA Piper Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/11/1989,,40,10,scotland_bar,
+Marie Josephine,Canning,mariejosephine.canning@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/10/1992,,40,10,scotland_bar,generated_pattern
+Monica Eleanor,Cannon,monicaeleanor.cannon@gillespiemacandrew.com,Gillespie Macandrew LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/09/2006,,40,10,scotland_bar,generated_pattern
+Richard,Cannon,richard.cannon@dwf.law,DWF LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/08/2002,,40,10,scotland_bar,generated_pattern
+Anthony Max,Caplan,anthonymax.caplan@levylaw.com,Levy & McRae Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/10/1977,,40,10,scotland_bar,generated_pattern
+Lynne Margaret Wallace,Cardow,lynnemargaretwallace.cardow@daclaw.com,DAC Beachcroft Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/11/2000,,40,10,scotland_bar,generated_pattern
+Fiona Jacqueline,Carlin,fionajacqueline.carlin@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/09/2004,,40,10,scotland_bar,generated_pattern
+Nicholas Charles,Carlin,nicholascharles.carlin@pinsentmasons.com,"Pinsent Masons LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/11/2005,,40,10,scotland_bar,generated_pattern
+Paul Haining,Carlyle,paulhaining.carlyle@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/11/1995,,40,10,scotland_bar,generated_pattern
+Caroline Ann,Carr,carolineann.carr@btosolicitors.com,BTO Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/01/1993,,40,10,scotland_bar,generated_pattern
+Robert,Carr,robert.carr@andersonstrathern.co.uk,Anderson Strathern LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/12/1982,,40,10,scotland_bar,generated_pattern
+Stephanie Margaret Mary,Carr,stephaniemargaretmary.carr@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/09/1999,,40,10,scotland_bar,generated_pattern
+Lindsey Marie,Carroll,,Grigor & Young LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/08/1998,,40,10,scotland_bar,
+Kenneth William,Carruthers,kennethwilliam.carruthers@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/08/1991,,40,10,scotland_bar,generated_pattern
+Paul Barry,Carter,paulbarry.carter@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/11/1990,,40,10,scotland_bar,generated_pattern
+Marie Patricia,Cartney,mariepatricia.cartney@ledinghamchalmers.com,Ledingham Chalmers LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/07/1998,,40,10,scotland_bar,generated_pattern
+Lindsey Jane,Cartwright,lindseyjane.cartwright@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/02/1996,,40,10,scotland_bar,generated_pattern
+Gillian Anne,Carty,gilliananne.carty@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/02/1995,,40,10,scotland_bar,generated_pattern
+Gaenor Judith,Cassell,gaenorjudith.cassell@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/11/1999,,40,10,scotland_bar,generated_pattern
+Alan McLeod,Cassels,alanmcleod.cassels@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/09/1999,,40,10,scotland_bar,generated_pattern
+Anne Margaret,Cassidy,,Laurie & Co Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/11/1990,,40,10,scotland_bar,
+Kirsty Louise,Cassidy,kirstylouise.cassidy@kslaw.com,Keoghs Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,31/10/2006,,40,10,scotland_bar,generated_pattern
+Stacey-Anne,Cassidy,stacey-anne.cassidy@tlt.com,TLT LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/09/2003,,40,10,scotland_bar,generated_pattern
+Brian Christopher,Castle,brianchristopher.castle@digbybrown.com,Digby Brown LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/09/1995,,40,10,scotland_bar,generated_pattern
+Simon James Dawson,Catto,simonjamesdawson.catto@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/02/1997,,40,10,scotland_bar,generated_pattern
+Louise Anne,Cent,louiseanne.cent@pinsentmasons.com,"Pinsent Masons LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/12/1997,,40,10,scotland_bar,generated_pattern
+Rosalie Madeleine,Chadwick,rosaliemadeleine.chadwick@pinsentmasons.com,"Pinsent Masons LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/03/2002,,40,10,scotland_bar,generated_pattern
+Jatinder Kaur,Chall,,MacRae & Kaur LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/11/1999,,40,10,scotland_bar,
+Andrew Simon,Chalmers,andrewsimon.chalmers@wrightlaw.com,"Wright, Johnston & Mackenzie LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/11/1988,,40,10,scotland_bar,generated_pattern
+James David,Chalmers,jamesdavid.chalmers@stronachs.com,Stronachs LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/10/1994,,40,10,scotland_bar,generated_pattern
+Jennifer,Cham,jennifer.cham@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,31/05/2005,,40,10,scotland_bar,generated_pattern
+Louise,Chambers,louise.chambers@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/10/2006,,40,10,scotland_bar,generated_pattern
+Peter Martin Antony,Chambers,petermartinantony.chambers@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/05/2004,,40,10,scotland_bar,generated_pattern
+Stephen Ka Leung,Chan,stephenkaleung.chan@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/02/2000,,40,10,scotland_bar,generated_pattern
+Anne Margaret,Chapman,annemargaret.chapman@andersonstrathern.co.uk,Anderson Strathern LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/10/2006,,40,10,scotland_bar,generated_pattern
+Steven,Chesney,steven.chesney@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/10/2004,,40,10,scotland_bar,generated_pattern
+Louise,Chopra,louise.chopra@tlt.com,TLT LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/08/2006,,40,10,scotland_bar,generated_pattern
+Catherine Mary,Christie,catherinemary.christie@dicksonminto.com,Dickson Minto LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/10/1999,,40,10,scotland_bar,generated_pattern
+Victoria Yvonne,Christie,victoriayvonne.christie@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/09/2000,,40,10,scotland_bar,generated_pattern
+Lorna Margaret,Christine,lornamargaret.christine@blackadders.com,Blackadders LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/09/2002,,40,10,scotland_bar,generated_pattern
+Duncan Iain,Christison,duncaniain.christison@dicksonminto.com,Dickson Minto LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/11/2000,,40,10,scotland_bar,generated_pattern
+Shuk Chun Catherine,Chung,shukchuncatherine.chung@daclaw.com,DAC Beachcroft Claims Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/04/2003,,40,10,scotland_bar,generated_pattern
+Julie Ann,Clark-Spence,julieann.clark-spence@balfourlaw.com,Balfour + Manson LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/01/2004,,40,10,scotland_bar,generated_pattern
+Campbell John Scott,Clark,campbelljohnscott.clark@blackadders.com,Blackadders LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/03/1997,,40,10,scotland_bar,generated_pattern
+Geoffrey Alan,Clark,geoffreyalan.clark@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/11/1998,,40,10,scotland_bar,generated_pattern
+Iain Kemley,Clark,iainkemley.clark@gilsongray.com,Gilson Gray LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/10/1993,,40,10,scotland_bar,generated_pattern
+James Innes,Clark,jamesinnes.clark@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/11/1997,,40,10,scotland_bar,generated_pattern
+Jennifer,Clark,jennifer.clark@blackwoodpartners.com,Blackwood Partners LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/11/1997,,40,10,scotland_bar,generated_pattern
+Joanna Christine,Clark,joannachristine.clark@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/10/1996,,40,10,scotland_bar,generated_pattern
+Johnston Peter Campbell,Clark,johnstonpetercampbell.clark@blackadders.com,Blackadders LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/10/1985,,40,10,scotland_bar,generated_pattern
+Linda Jane,Clark,,The McKinstry Company LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/08/2006,,40,10,scotland_bar,
+Lucia Elaine,Clark,luciaelaine.clark@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/09/2004,,40,10,scotland_bar,generated_pattern
+Martha,Clark,,Mackintosh & Wylie LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/06/2004,,40,10,scotland_bar,
+Paul John,Clark,pauljohn.clark@burges-salmon.com,Burges Salmon LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/10/2002,,40,10,scotland_bar,generated_pattern
+Sally Margaret,Clark,sallymargaret.clark@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/12/2003,,40,10,scotland_bar,generated_pattern
+Sarah Jane,Clark,sarahjane.clark@tlt.com,TLT LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/10/2004,,40,10,scotland_bar,generated_pattern
+Walter James,Clark,walterjames.clark@pinsentmasons.com,Pinsent Masons LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/02/2002,,40,10,scotland_bar,generated_pattern
+Alison,Clarke,alison.clarke@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/11/2006,,40,10,scotland_bar,generated_pattern
+Nicola Jane,Clemence,nicolajane.clemence@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/11/1998,,40,10,scotland_bar,generated_pattern
+Carrie-Anne,Clifford,carrie-anne.clifford@brownco.com,Brown & Co Legal LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/08/2006,,40,10,scotland_bar,generated_pattern
+Graeme Matheson,Clubley,graemematheson.clubley@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/11/2003,,40,10,scotland_bar,generated_pattern
+Euan Alastair,Cluness,euanalastair.cluness@tlt.com,TLT LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/01/2004,,40,10,scotland_bar,generated_pattern
+Margaret Frances,Coady,margaretfrances.coady@esilaw.com,Eversheds Sutherland (International) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/12/1988,,40,10,scotland_bar,generated_pattern
+Sascha Jane,Cochran,saschajane.cochran@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/09/2001,,40,10,scotland_bar,generated_pattern
+Steven Francis,Cochrane,stevenfrancis.cochrane@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/01/2006,,40,10,scotland_bar,generated_pattern
+Richard James,Cockburn,,Womble Bond Dickinson (UK) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/10/1995,,40,10,scotland_bar,
+Sophie,Coffey,sophie.coffey@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/08/2005,,40,10,scotland_bar,generated_pattern
+William Pitkaithley,Cole,williampitkaithley.cole@btosolicitors.com,BTO Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/04/2001,,40,10,scotland_bar,generated_pattern
+Neil Andrew,Collar,neilandrew.collar@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/02/1993,,40,10,scotland_bar,generated_pattern
+Roger Parker,Colledge,,Brazenall and Orr LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/11/1990,,40,10,scotland_bar,
+Douglas,Collingham,douglas.collingham@tcyoung.com,TC Young LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/12/1990,,40,10,scotland_bar,generated_pattern
+Lynne,Collingham,lynne.collingham@tcyoung.com,TC Young LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/10/1990,,40,10,scotland_bar,generated_pattern
+Anna Rose,Collins,annarose.collins@collinslaw.com,Collins & Co Defence Lawyers Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/11/2025,,40,10,scotland_bar,generated_pattern
+Caroline Anne Watt,Colliston,carolineannewatt.colliston@dwf.law,DWF LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/10/1998,,40,10,scotland_bar,generated_pattern
+Stephen David,Colliston,stephendavid.colliston@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/11/1995,,40,10,scotland_bar,generated_pattern
+Mark James,Colquhoun,markjames.colquhoun@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/06/2002,,40,10,scotland_bar,generated_pattern
+Alexis Kasia,Condie,alexiskasia.condie@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/08/2005,,40,10,scotland_bar,generated_pattern
+Fiona Agnes,Connolly,,Mackintosh & Wylie LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/06/2005,,40,10,scotland_bar,
+Paul Anthony,Connolly,paulanthony.connolly@pinsentmasons.com,"Pinsent Masons LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/11/2000,,40,10,scotland_bar,generated_pattern
+Stephen David,Connolly,stephendavid.connolly@blackadders.com,Blackadders LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/03/2004,,40,10,scotland_bar,generated_pattern
+Roger Gordon,Connon,rogergordon.connon@pinsentmasons.com,Pinsent Masons LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/09/1988,,40,10,scotland_bar,generated_pattern
+Deborah Anne,Connor,deborahanne.connor@dwf.law,DWF LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/10/2001,,40,10,scotland_bar,generated_pattern
+Michael Christopher,Conroy,michaelchristopher.conroy@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/01/1991,,40,10,scotland_bar,generated_pattern
+Andrew Alan,Constable,andrewalan.constable@clydelaw.com,Clyde & Co (Scotland) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/11/1996,,40,10,scotland_bar,generated_pattern
+Alan Russell,Cook,alanrussell.cook@esilaw.com,Eversheds Sutherland (International) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/12/1992,,40,10,scotland_bar,generated_pattern
+Amanda Jayne,Cooke,amandajayne.cooke@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/10/1996,,40,10,scotland_bar,generated_pattern
+Ann Frances,Cooney,annfrances.cooney@dwf.law,DWF LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/11/2003,,40,10,scotland_bar,generated_pattern
+Donna Marie,Cooper,donnamarie.cooper@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/11/2006,,40,10,scotland_bar,generated_pattern
+Gavin Bruce,Cooper,gavinbruce.cooper@support.google.com,Raeburn Christie Clark & Wallace LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/05/2003,,40,10,scotland_bar,generated_pattern
+Kirsty Anne,Cooper,kirstyanne.cooper@lindsays.co.uk,Lindsays LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/10/2005,,40,10,scotland_bar,generated_pattern
+James Shearer,Cormack,jamesshearer.cormack@pinsentmasons.com,Pinsent Masons LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/12/1992,,40,10,scotland_bar,generated_pattern
+Roderick Stewart,Cormack,roderickstewart.cormack@dentons.law,Dentons UK and Middle East LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/08/1999,,40,10,scotland_bar,generated_pattern
+Anne Bicket,Cornelius,annebicket.cornelius@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/05/1996,,40,10,scotland_bar,generated_pattern
+Jonathan Islay,Cornwell,jonathanislay.cornwell@lindsays.co.uk,Lindsays LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/03/1999,,40,10,scotland_bar,generated_pattern
+Caroline,Coulter,caroline.coulter@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/06/2000,,40,10,scotland_bar,generated_pattern
+Caroline Isobel,Court,carolineisobel.court@wrightlaw.com,"Wright, Johnston & Mackenzie LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/10/1980,,40,10,scotland_bar,generated_pattern
+Fiona Lynne,Coutts,fionalynne.coutts@support.google.com,Raeburn Christie Clark & Wallace LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/10/1995,,40,10,scotland_bar,generated_pattern
+Morna Jane,Coutts,mornajane.coutts@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/09/1995,,40,10,scotland_bar,generated_pattern
+Alastair Lindsay,Cowan,alastairlindsay.cowan@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/03/2000,,40,10,scotland_bar,generated_pattern
+Andrew Stuart,Cowan,andrewstuart.cowan@tcyoung.com,TC Young LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/01/1988,,40,10,scotland_bar,generated_pattern
+Douglas John Lockhart,Cowan,douglasjohnlockhart.cowan@kslaw.com,Keoghs Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/10/1998,,40,10,scotland_bar,generated_pattern
+John Blyth,Cowan,johnblyth.cowan@millerlaw.com,Miller Samuel Hill Brown LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/01/1982,,40,10,scotland_bar,generated_pattern
+Davinia-Elizabeth,Cowden,davinia-elizabeth.cowden@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/10/2002,,40,10,scotland_bar,generated_pattern
+Gillian,Cowie,gillian.cowie@wrightlaw.com,"Wright, Johnston & Mackenzie LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/09/1991,,40,10,scotland_bar,generated_pattern
+Scott Russell,Cowie,scottrussell.cowie@drummondlaw.com,Drummond Miller LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/11/1993,,40,10,scotland_bar,generated_pattern
+William Roger Murray,Cowie,,R & R Urquhart LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/05/1989,,40,10,scotland_bar,
+Caroline Louise,Coyle,carolinelouise.coyle@dwf.law,DWF LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/11/2001,,40,10,scotland_bar,generated_pattern
+Desmond John,Coyne,desmondjohn.coyne@kerrstirling.com,Kerr Stirling LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/01/1987,,40,10,scotland_bar,generated_pattern
+Darren Alexander,Craig,darrenalexander.craig@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/09/2000,,40,10,scotland_bar,generated_pattern
+William Andrew,Craig,williamandrew.craig@gairgibson.com,Gair & Gibson LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/09/1984,,40,10,scotland_bar,generated_pattern
+Graham Duncan Dunbar,Craik,grahamduncandunbar.craik@levylaw.com,Levy & McRae Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/10/2001,,40,10,scotland_bar,generated_pattern
+Lucy Ann,Cran,lucyann.cran@stronachs.com,Stronachs LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,31/12/2004,,40,10,scotland_bar,generated_pattern
+John Simon,Craske,johnsimon.craske@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/01/1998,,40,10,scotland_bar,generated_pattern
+Jayne,Crawford,jayne.crawford@thompsonslaw.com,Thompsons Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,31/03/2005,,40,10,scotland_bar,generated_pattern
+Lorne Donald,Crerar,lornedonald.crerar@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/12/1978,,40,10,scotland_bar,generated_pattern
+Sarah Helen,Crewes,sarahhelen.crewes@clydelaw.com,Clyde & Co (Scotland) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/10/2003,,40,10,scotland_bar,generated_pattern
+Andrew John Young,Crichton,andrewjohnyoung.crichton@pinsentmasons.com,Pinsent Masons LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/02/2003,,40,10,scotland_bar,generated_pattern
+Laura Margaret,Crilly,lauramargaret.crilly@pinsentmasons.com,Pinsent Masons LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/09/2000,,40,10,scotland_bar,generated_pattern
+Neil,Crockatt,,Coulters Legal LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/01/1994,,40,10,scotland_bar,
+Jody Stephen,Crockett,jodystephen.crockett@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/11/2006,,40,10,scotland_bar,generated_pattern
+Ruth Catriona,Croman,ruthcatriona.croman@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/09/1998,,40,10,scotland_bar,generated_pattern
+Douglas John,Crombie,douglasjohn.crombie@support.google.com,Raeburn Christie Clark & Wallace LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/10/1988,,40,10,scotland_bar,generated_pattern
+June,Crombie,june.crombie@dwf.law,DWF LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/01/1987,,40,10,scotland_bar,generated_pattern
+Lisa Anne,Cruickshank,lisaanne.cruickshank@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,31/10/2005,,40,10,scotland_bar,generated_pattern
+Amy Elise,Cugini,amyelise.cugini@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/08/2005,,40,10,scotland_bar,generated_pattern
+Marisa Anne,Cullen,marisaanne.cullen@familylawmattersscotland.com,Family Law Matters Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,Family Law,Practising,24/06/2005,,40,10,scotland_bar,generated_pattern
+Caroline Elspet,Cumming,carolineelspet.cumming@mslaw.com,Mackinnons Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/09/1999,,40,10,scotland_bar,generated_pattern
+Alasdair William Donald,Cummings,alasdairwilliamdonald.cummings@lindsays.co.uk,Lindsays LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/12/1987,,40,10,scotland_bar,generated_pattern
+Philippa Jayne,Cunniff,philippajayne.cunniff@gilsongray.com,Gilson Gray LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/09/1998,,40,10,scotland_bar,generated_pattern
+Catherine Ann,Currie,catherineann.currie@btosolicitors.com,BTO Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/08/1986,,40,10,scotland_bar,generated_pattern
+David John,Currie,,Gillespie Gifford & Brown LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/08/1991,,40,10,scotland_bar,
 Robert Douglas,Aberdein,rob@simpsonmarwick.com,Simpson & Marwick Legal Limited,,0131 581 5700,http://www.simpsonmarwick.com,Edinburgh,UK-SC,United Kingdom,,Practising,14/03/2005,,30,90,scotland_bar,profile
 Rebecca Fiona,Ablett,rebecca.ablett@burnesspaull.com,Burness Paull LLP,,0141 2484933,http://www.burnesspaull.com,Edinburgh,UK-SC,United Kingdom,,Practising,04/12/2015,,30,90,scotland_bar,profile
 Pria,Achall,pria.achall@kennedyslaw.com,Kennedys Scotland LLP,,0131 2256145,http://www.kennedyslaw.com,Edinburgh,UK-SC,United Kingdom,,Practising,05/09/2013,,30,90,scotland_bar,profile
@@ -471,64 +668,257 @@ Yvonne,Byrne,yvonne.byrne@turcanconnell.com,Turcan Connell,,,https://turcanconne
 Rory James Lambert,Byrom,roryjameslambert.byrom@harperlaw.com,Harper Macleod LLP,,,https://harperlaw.com,Edinburgh,UK-SC,United Kingdom,,Practising,14/05/2013,,30,25,scotland_bar,generated_pattern
 Fiona Jane,Byron,fionajane.byron@mortonlaw.com,Morton Fraser MacRoberts LLP,,,https://mortonlaw.com,Edinburgh,UK-SC,United Kingdom,,Practising,09/10/2008,,30,25,scotland_bar,generated_pattern
 Alan Desmond,Baxter,alandesmond.baxter@morgans.com,Morgans,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/01/1983,,30,10,scotland_bar,generated_pattern
-Bernadette Mary,Baxter,bernadettemary.baxter@mellicksincorporatingnaftalinduncanco.com,"Mellicks, Incorporating Naftalin Duncan & Co.",,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/10/1989,,30,10,scotland_bar,generated_pattern
-Carolyn Mary,Bean,carolynmary.bean@johnwgilbertsonlimited.com,John W. Gilbertson Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/09/1982,,30,10,scotland_bar,generated_pattern
-Alistair Iain,Beckett,alistairiain.beckett@johnroddicksonsolicitors.com,John Roddick & Son (Solicitors) Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/11/1994,,30,10,scotland_bar,generated_pattern
-Linda Agnes Jane,Beedie,lindaagnesjane.beedie@firstemploymentlawlimited.com,First Employment Law Limited,,,,Edinburgh,UK-SC,United Kingdom,Employment Law,Practising,25/09/2006,,30,10,scotland_bar,generated_pattern
-Colin,Bell,colin.bell@robertwilsonson.com,Robert Wilson & Son,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/08/1994,,30,10,scotland_bar,generated_pattern
-Derek Wright,Bell,derekwright.bell@clarkboylelimited.com,Clark Boyle Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/10/1990,,30,10,scotland_bar,generated_pattern
+Bernadette Mary,Baxter,,"Mellicks, Incorporating Naftalin Duncan & Co.",,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/10/1989,,30,10,scotland_bar,
+Carolyn Mary,Bean,,John W. Gilbertson Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/09/1982,,30,10,scotland_bar,
+Alistair Iain,Beckett,,John Roddick & Son (Solicitors) Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/11/1994,,30,10,scotland_bar,
+Linda Agnes Jane,Beedie,,First Employment Law Limited,,,,Edinburgh,UK-SC,United Kingdom,Employment Law,Practising,25/09/2006,,30,10,scotland_bar,
+Colin,Bell,,Robert Wilson & Son,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/08/1994,,30,10,scotland_bar,
+Derek Wright,Bell,,Clark Boyle Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/10/1990,,30,10,scotland_bar,
 Ross Thomas,Bennett,rossthomas.bennett@campbellboath.com,Campbell Boath,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/10/1984,,30,10,scotland_bar,generated_pattern
 Samantha Jane Scott,Bennion,samanthajanescott.bennion@stewartwatson.com,Stewart & Watson,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/10/2001,,30,10,scotland_bar,generated_pattern
-Jelina Raheema,Berlow-Rahman,jelinaraheema.berlow-rahman@berlowrahmanhassanlimited.com,Berlow Rahman Hassan Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/09/2003,,30,10,scotland_bar,generated_pattern
+Jelina Raheema,Berlow-Rahman,,Berlow Rahman Hassan Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/09/2003,,30,10,scotland_bar,
 Matthew Philip,Berlow,matthewphilip.berlow@grahamwalker.com,Graham Walker,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/10/1995,,30,10,scotland_bar,generated_pattern
-Stuart Gordon Nicholas,Beveridge,stuartgordonnicholas.beveridge@grantsmithlawpracticelimited.com,Grant Smith Law Practice Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/01/1993,,30,10,scotland_bar,generated_pattern
-Stephen James,Biggam,stephenjames.biggam@marshallwilsonlimited.com,Marshall Wilson Law Group Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/09/1993,,30,10,scotland_bar,generated_pattern
-April,Bingham,april.bingham@bellwethergreenlimited.com,Bellwether Green Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/08/2002,,30,10,scotland_bar,generated_pattern
-Joanna Gayle,Bingham,joannagayle.bingham@mckinstrycompany.com,The McKinstry Company LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/08/2009,,30,10,scotland_bar,generated_pattern
-John Paul,Bingham,johnpaul.bingham@bellwethergreenlimited.com,Bellwether Green Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/03/1993,,30,10,scotland_bar,generated_pattern
+Stuart Gordon Nicholas,Beveridge,,Grant Smith Law Practice Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/01/1993,,30,10,scotland_bar,
+Stephen James,Biggam,,Marshall Wilson Law Group Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/09/1993,,30,10,scotland_bar,
+April,Bingham,,Bellwether Green Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/08/2002,,30,10,scotland_bar,
+Joanna Gayle,Bingham,,The McKinstry Company LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/08/2009,,30,10,scotland_bar,
+John Paul,Bingham,,Bellwether Green Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/03/1993,,30,10,scotland_bar,
 Joanne Hunter,Birnie,joannehunter.birnie@stewartwatson.com,Stewart & Watson,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/10/1998,,30,10,scotland_bar,generated_pattern
 Barbara-Jane,Black,barbara-jane.black@taylorhenderson.com,Taylor & Henderson LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/08/2007,,30,10,scotland_bar,generated_pattern
-Gillian Stewart,Black,gillianstewart.black@awmurquhart.com,A. & W.M. Urquhart,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/12/1995,,30,10,scotland_bar,generated_pattern
-James,Black,james.black@stirlingmairlimited.com,Stirling & Mair Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/07/2005,,30,10,scotland_bar,generated_pattern
-Susan Alexandra,Black,susanalexandra.black@bradleycampbellco.com,Bradley Campbell & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/02/2002,,30,10,scotland_bar,generated_pattern
+Gillian Stewart,Black,,A. & W.M. Urquhart,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/12/1995,,30,10,scotland_bar,
+James,Black,,Stirling & Mair Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/07/2005,,30,10,scotland_bar,
+Susan Alexandra,Black,,Bradley Campbell & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/02/2002,,30,10,scotland_bar,
 Kathryn Mary,Blaikie,kathrynmary.blaikie@quilllegal.com,Quill Legal,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/12/1977,,30,10,scotland_bar,generated_pattern
-Frances Yvonne,Blair,francesyvonne.blair@archibaldsharpsonlimited.com,Archibald Sharp & Son Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/09/1991,,30,10,scotland_bar,generated_pattern
-Jonathan David,Blundell,jonathandavid.blundell@thomassveitchson.com,Thomas S. Veitch & Son,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/10/1987,,30,10,scotland_bar,generated_pattern
-Laura Margaret,Blyth,lauramargaret.blyth@renewlegallimited.com,Renew Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/09/2001,,30,10,scotland_bar,generated_pattern
-Anne Marie,Bolger,annemarie.bolger@mcclurecollinslimited.com,McClure Collins Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/10/2002,,30,10,scotland_bar,generated_pattern
-Murray Mackay,Bolling,murraymackay.bolling@harperrobertsonshannon.com,"Harper, Robertson & Shannon",,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/02/1994,,30,10,scotland_bar,generated_pattern
-Hazel Jeanette,Bone,hazeljeanette.bone@hamiltonwattco.com,Hamilton Watt & Co,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/01/1989,,30,10,scotland_bar,generated_pattern
+Frances Yvonne,Blair,,Archibald Sharp & Son Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/09/1991,,30,10,scotland_bar,
+Jonathan David,Blundell,,Thomas S. Veitch & Son,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/10/1987,,30,10,scotland_bar,
+Laura Margaret,Blyth,,Renew Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/09/2001,,30,10,scotland_bar,
+Anne Marie,Bolger,,McClure Collins Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/10/2002,,30,10,scotland_bar,
+Murray Mackay,Bolling,,"Harper, Robertson & Shannon",,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/02/1994,,30,10,scotland_bar,
+Hazel Jeanette,Bone,,Hamilton Watt & Co,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/01/1989,,30,10,scotland_bar,
 Nicola,Bonthrone,nicola.bonthrone@mcarthurstanton.com,McArthur Stanton,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/08/1989,,30,10,scotland_bar,generated_pattern
-Ryan,Bowie,ryan.bowie@gunnercookesco.com,Gunnercooke SCO LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/12/2008,,30,10,scotland_bar,generated_pattern
-William Thomson,Boyd,williamthomson.boyd@wilkiedundas.com,Wilkie & Dundas,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/12/1983,,30,10,scotland_bar,generated_pattern
-Ian,Brechany,ian.brechany@bridgelegallimited.com,Bridge Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/09/1991,,30,10,scotland_bar,generated_pattern
-Adam,Brewer,adam.brewer@jamesonmackay.com,Jameson + Mackay LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/01/2013,,30,10,scotland_bar,generated_pattern
-Ian,Briggs,ian.briggs@jjmccosh.com,J. & J. McCosh,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/02/1981,,30,10,scotland_bar,generated_pattern
-Cecilia Mary,Brough,ceciliamary.brough@murdochstewartslimited.com,Murdoch Stewarts Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/10/1983,,30,10,scotland_bar,generated_pattern
+Ryan,Bowie,,Gunnercooke SCO LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/12/2008,,30,10,scotland_bar,
+William Thomson,Boyd,,Wilkie & Dundas,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/12/1983,,30,10,scotland_bar,
+Ian,Brechany,,Bridge Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/09/1991,,30,10,scotland_bar,
+Adam,Brewer,,Jameson + Mackay LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/01/2013,,30,10,scotland_bar,
+Ian,Briggs,,J. & J. McCosh,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/02/1981,,30,10,scotland_bar,
+Cecilia Mary,Brough,,Murdoch Stewarts Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/10/1983,,30,10,scotland_bar,
 Cheryl Prentice,Brown,cherylprentice.brown@mcwhinneyrichards.com,McWhinney Richards,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/10/1986,,30,10,scotland_bar,generated_pattern
-Gillian Jane,Brown,gillianjane.brown@fmslawlimited.com,FMS Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/08/1988,,30,10,scotland_bar,generated_pattern
-Graeme Robert,Brown,graemerobert.brown@bridgelegallimited.com,Bridge Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,31/10/2005,,30,10,scotland_bar,generated_pattern
-Lorna Harriet,Brown,lornaharriet.brown@caritaslegallimited.com,Caritas Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/02/2001,,30,10,scotland_bar,generated_pattern
+Gillian Jane,Brown,,FMS Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/08/1988,,30,10,scotland_bar,
+Graeme Robert,Brown,,Bridge Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,31/10/2005,,30,10,scotland_bar,
+Lorna Harriet,Brown,,Caritas Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/02/2001,,30,10,scotland_bar,
 Paul Daniel,Brown,pauldaniel.brown@haycassels.com,Hay Cassels Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/08/2000,,30,10,scotland_bar,generated_pattern
-Paul Lawrence,Brown,paullawrence.brown@wjsgordon.com,W. & J.S. Gordon,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/09/1992,,30,10,scotland_bar,generated_pattern
+Paul Lawrence,Brown,,W. & J.S. Gordon,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/09/1992,,30,10,scotland_bar,
 Raymond Leslie,Brown,raymondleslie.brown@haycassels.com,Hay Cassels Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/08/1987,,30,10,scotland_bar,generated_pattern
 Scott Alexander,Brown,scottalexander.brown@connormalcolm.com,Connor Malcolm,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/01/1993,,30,10,scotland_bar,generated_pattern
-Euan Alan,Bruce,euanalan.bruce@dlapiperscotland.com,DLA Piper Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/11/2011,,30,10,scotland_bar,generated_pattern
-Alasdair David,Bryce,alasdairdavid.bryce@pollockmclean.com,Pollock & McLean,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/02/1995,,30,10,scotland_bar,generated_pattern
-Graham Robert,Bryson,grahamrobert.bryson@philiprooneyco.com,Philip Rooney & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/11/1982,,30,10,scotland_bar,generated_pattern
-Staci Ann,Buchan,staciann.buchan@brownmcrae.com,Brown & McRae LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/06/2016,,30,10,scotland_bar,generated_pattern
-Derek Henderson,Buchanan,derekhenderson.buchanan@westcourtslitigation.com,Westcourts Litigation Ltd,,,,Edinburgh,UK-SC,United Kingdom,General Litigation,Practising,04/09/1995,,30,10,scotland_bar,generated_pattern
-Gillian May,Buchanan,gillianmay.buchanan@womblebonddickinsonuk.com,Womble Bond Dickinson (UK) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/10/2013,,30,10,scotland_bar,generated_pattern
-Victoria Anne,Buchanan,victoriaanne.buchanan@jamesonmackay.com,Jameson + Mackay LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/10/2008,,30,10,scotland_bar,generated_pattern
-Elaine Marie,Buist,elainemarie.buist@robertsonwyse.com,Robertson Wyse,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/08/1991,,30,10,scotland_bar,generated_pattern
-Duncan McKinnon,Burd,duncanmckinnon.burd@andersonmacarthurlimited.com,"Anderson, MacArthur Limited",,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/08/1985,,30,10,scotland_bar,generated_pattern
-Anthony John,Burgess,anthonyjohn.burgess@justdefencelawpractice.com,Just Defence Law Practice,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/10/2003,,30,10,scotland_bar,generated_pattern
-Yvonne Glenison,Burnham,yvonneglenison.burnham@pollockfairbridgeschiavonelimited.com,Pollock Fairbridge Schiavone Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/04/2003,,30,10,scotland_bar,generated_pattern
+Euan Alan,Bruce,,DLA Piper Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/11/2011,,30,10,scotland_bar,
+Alasdair David,Bryce,,Pollock & McLean,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/02/1995,,30,10,scotland_bar,
+Graham Robert,Bryson,,Philip Rooney & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/11/1982,,30,10,scotland_bar,
+Staci Ann,Buchan,,Brown & McRae LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/06/2016,,30,10,scotland_bar,
+Derek Henderson,Buchanan,,Westcourts Litigation Ltd,,,,Edinburgh,UK-SC,United Kingdom,General Litigation,Practising,04/09/1995,,30,10,scotland_bar,
+Gillian May,Buchanan,,Womble Bond Dickinson (UK) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/10/2013,,30,10,scotland_bar,
+Victoria Anne,Buchanan,,Jameson + Mackay LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/10/2008,,30,10,scotland_bar,
+Elaine Marie,Buist,,Robertson Wyse,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/08/1991,,30,10,scotland_bar,
+Duncan McKinnon,Burd,,"Anderson, MacArthur Limited",,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/08/1985,,30,10,scotland_bar,
+Anthony John,Burgess,,Just Defence Law Practice,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/10/2003,,30,10,scotland_bar,
+Yvonne Glenison,Burnham,,Pollock Fairbridge Schiavone Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/04/2003,,30,10,scotland_bar,
 Martin David Cameron,Burns,martindavidcameron.burns@inksters.com,Inksters,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/10/1991,,30,10,scotland_bar,generated_pattern
 Catherine Anne,Bury,catherineanne.bury@stewartwatson.com,Stewart & Watson,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/03/2004,,30,10,scotland_bar,generated_pattern
 Nevin Neil,Busby,nevinneil.busby@wrights.com,Wrights LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/12/2013,,30,10,scotland_bar,generated_pattern
-Alistair Kilgour,Buttery,alistairkilgour.buttery@whytefrasercolimited.com,Whyte Fraser & Co Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/11/1991,,30,10,scotland_bar,generated_pattern
+Alistair Kilgour,Buttery,,Whyte Fraser & Co Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/11/1991,,30,10,scotland_bar,
 Ross Alan,Byford,rossalan.byford@mbmcommercial.com,MBM Commercial LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/06/2014,,30,10,scotland_bar,generated_pattern
+Mhairi Lorna,Cage,mhairilorna.cage@lindsays.co.uk,Lindsays LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/08/2012,,30,10,scotland_bar,generated_pattern
+Eilidh Marion Rarity,Calvert,eilidhmarionrarity.calvert@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/04/2015,,30,10,scotland_bar,generated_pattern
+Derek Robert,Cameron,,Grant Smith Law Practice Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/09/1980,,30,10,scotland_bar,
+Fiona,Cameron,fiona.cameron@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/10/2008,,30,10,scotland_bar,generated_pattern
+Fiona Jane,Cameron,fionajane.cameron@gillespiemacandrew.com,Gillespie Macandrew LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/02/2012,,30,10,scotland_bar,generated_pattern
+Kirsty Claire,Cameron,kirstyclaire.cameron@tlt.com,TLT LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/03/2015,,30,10,scotland_bar,generated_pattern
+Malcolm Keith MacAulay,Cameron,,Edington Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/12/1986,,30,10,scotland_bar,
+Richard Kenneth,Cameron,,Fraser Brooks & Company WS Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/10/1984,,30,10,scotland_bar,
+James Patrick,Campbell Corcoran,jamespatrick.campbellcorcoran@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/07/2014,,30,10,scotland_bar,generated_pattern
+Tracey Margaret,Campbell-Hynd,traceymargaret.campbell-hynd@tchlaw.com,TCH Law,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/12/2002,,30,10,scotland_bar,generated_pattern
+Allison Margaret,Campbell,allisonmargaret.campbell@fslaw.com,Freeths Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/09/2013,,30,10,scotland_bar,generated_pattern
+Amy Leigh,Campbell,amyleigh.campbell@tlt.com,TLT LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,31/07/2012,,30,10,scotland_bar,generated_pattern
+Charles Berry,Campbell,,W. & A.S. Bruce,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/12/1984,,30,10,scotland_bar,
+Douglas Colin,Campbell,douglascolin.campbell@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/09/2013,,30,10,scotland_bar,generated_pattern
+Elaine Constance,Campbell,,Wm. Skelton & Co. Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/09/1976,,30,10,scotland_bar,
+Finlay Norman,Campbell,,DLA Piper Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/11/2007,,30,10,scotland_bar,
+Fiona Jane,Campbell,fionajane.campbell@macleodlaw.com,Macleod & MacCallum Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/11/1989,,30,10,scotland_bar,generated_pattern
+Gillian Fay,Campbell,gillianfay.campbell@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/10/2009,,30,10,scotland_bar,generated_pattern
+Hamish William Gordon,Campbell,hamishwilliamgordon.campbell@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/01/2015,,30,10,scotland_bar,generated_pattern
+James Peter,Campbell,jamespeter.campbell@ledinghamchalmers.com,Ledingham Chalmers LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/09/2008,,30,10,scotland_bar,generated_pattern
+John Alexander,Campbell,johnalexander.campbell@beveridgekellas.com,Beveridge & Kellas,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/12/1980,,30,10,scotland_bar,generated_pattern
+Keith Fraser,Campbell,keithfraser.campbell@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/07/2008,,30,10,scotland_bar,generated_pattern
+Kim,Campbell,kim.campbell@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/11/2012,,30,10,scotland_bar,generated_pattern
+Neil,Campbell,,"Currie, Gilmour & Co.",,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/12/1981,,30,10,scotland_bar,
+Neil Colin,Campbell,neilcolin.campbell@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/02/2011,,30,10,scotland_bar,generated_pattern
+Scott,Campbell,scott.campbell@chamberpractice.com,The Chamber Practice Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/01/2000,,30,10,scotland_bar,generated_pattern
+Shane Paul,Campbell,,Hingston's Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/09/1991,,30,10,scotland_bar,
+Charles Thomas,Cant,,Charles Wood & Son Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/10/2002,,30,10,scotland_bar,
+Colin William,Cant,,Charles Wood & Son Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/10/2002,,30,10,scotland_bar,
+Kirsty Elizabeth,Cargill,kirstyelizabeth.cargill@pkw.com,P & KW,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/11/2003,,30,10,scotland_bar,generated_pattern
+Lynsay Katherine,Cargill,lynsaykatherine.cargill@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/09/2007,,30,10,scotland_bar,generated_pattern
+Emma Joy Katherine,Carle,,Robertson Murdie Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/10/2003,,30,10,scotland_bar,
+Mark,Carlin,,Friels Solicitors Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/10/1984,,30,10,scotland_bar,
+Deborah Louise,Carmichael,deborahlouise.carmichael@joneswhytelaw.com,Jones Whyte Law Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/12/2004,,30,10,scotland_bar,generated_pattern
+Emma Louise,Carmichael,emmalouise.carmichael@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/07/2013,,30,10,scotland_bar,generated_pattern
+Colin Peter,Carr,,MacDonald Lynch Solicitors,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/10/1980,,30,10,scotland_bar,
+Derek,Carrigan,derek.carrigan@lawfordkidd.com,Lawford Kidd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/02/2000,,30,10,scotland_bar,generated_pattern
+Robert Adamson,Carroll,,MOV8 Real Estate Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/05/2004,,30,10,scotland_bar,
+John,Carruthers,,Oraclelaw Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/09/1992,,30,10,scotland_bar,
+Neil Alexander,Carslaw,neilalexander.carslaw@pinsentmasons.com,Pinsent Masons LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/08/2016,,30,10,scotland_bar,generated_pattern
+John Robin Wilson,Carson,,Friels Solicitors Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/08/1988,,30,10,scotland_bar,
+Stuart Graham,Carson,,Wilson McLeod,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/12/1988,,30,10,scotland_bar,
+Stephen Patrick,Carty,,James McKay Defence Solicitors Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/07/1997,,30,10,scotland_bar,
+Derek George Alexander,Caseby,,Grant Smith Law Practice Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,31/08/1988,,30,10,scotland_bar,
+John Graham,Cassells,,Young & Partners Business Lawyers Limited,,,,Edinburgh,UK-SC,United Kingdom,Corporate,Practising,11/12/1986,,30,10,scotland_bar,
+Duncan Craig,Cathie,duncancraig.cathie@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/01/2012,,30,10,scotland_bar,generated_pattern
+Kim,Catterall,kim.catterall@digbybrown.com,Digby Brown LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/05/2013,,30,10,scotland_bar,generated_pattern
+John Gerard,Cavanagh,johngerard.cavanagh@gibsonlaw.com,Gibson Kerr Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/11/1993,,30,10,scotland_bar,generated_pattern
+Ann-Marie,Chalmers,,Rooney Family Law Limited,,,,Edinburgh,UK-SC,United Kingdom,Family Law,Practising,02/07/1993,,30,10,scotland_bar,
+Catherine Elizabeth,Chalmers,,Robert F MacDonald Solicitors,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/11/1990,,30,10,scotland_bar,
+Mark Allan,Chambers,,Tod & Mitchell,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/09/1995,,30,10,scotland_bar,
+Shuiken Nora,Chan,shuikennora.chan@slaterlegal.com,Slater and Gordon Scotland Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/02/2003,,30,10,scotland_bar,generated_pattern
+Gavin Iain,Charlton,gaviniain.charlton@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/04/2009,,30,10,scotland_bar,generated_pattern
+Sonia Kaur,Cheema,soniakaur.cheema@andersonstrathern.co.uk,Anderson Strathern LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/09/2011,,30,10,scotland_bar,generated_pattern
+Suzanne,Chitty,suzanne.chitty@andersonstrathern.co.uk,Anderson Strathern LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/08/2014,,30,10,scotland_bar,generated_pattern
+Mubasher Latif,Choudry,,MCFLS Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/01/2003,,30,10,scotland_bar,
+Stephanie Louise,Christie-Carmichael,stephanielouise.christie-carmichael@csllegal.com,Curle Stewart Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/10/2005,,30,10,scotland_bar,generated_pattern
+Andrew John,Christie,andrewjohn.christie@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/10/2007,,30,10,scotland_bar,generated_pattern
+Craig Jamieson,Christie,craigjamieson.christie@levylaw.com,Levy & McRae Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/11/2016,,30,10,scotland_bar,generated_pattern
+Diane Margaret Morrison,Christie,,"Murdoch, McMath & Mitchell",,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/11/1990,,30,10,scotland_bar,
+Gordon John,Christie,,"Murdoch, McMath & Mitchell",,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/01/1991,,30,10,scotland_bar,
+Stacey Graham,Christie,staceygraham.christie@pinsentmasons.com,Pinsent Masons LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/02/2013,,30,10,scotland_bar,generated_pattern
+Vincent Wai Ki,Chung,vincentwaiki.chung@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/07/2015,,30,10,scotland_bar,generated_pattern
+Fiona Mary Jervis,Chute,fionamaryjervis.chute@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/05/2014,,30,10,scotland_bar,generated_pattern
+Joanne,Clancy,joanne.clancy@rllaw.com,RTA Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/12/2013,,30,10,scotland_bar,generated_pattern
+John Tosh,Clancy,johntosh.clancy@mmllaw.com,MML Law,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/08/2002,,30,10,scotland_bar,generated_pattern
+Kevin John,Clancy,kevinjohn.clancy@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/10/2007,,30,10,scotland_bar,generated_pattern
+Cathleen Louise,Clark,cathleenlouise.clark@pinsentmasons.com,"Pinsent Masons LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/10/2016,,30,10,scotland_bar,generated_pattern
+Connor Scott,Clark,connorscott.clark@pinsentmasonsmpillay.com,Pinsent Masons MPillay LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/09/2015,,30,10,scotland_bar,generated_pattern
+David Andrew,Clark,davidandrew.clark@dicksonminto.com,Dickson Minto LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/03/2010,,30,10,scotland_bar,generated_pattern
+Ian Robert,Clark,ianrobert.clark@turcanconnell.com,Turcan Connell,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/10/1985,,30,10,scotland_bar,generated_pattern
+Lewis Andrew,Clark,lewisandrew.clark@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/12/2015,,30,10,scotland_bar,generated_pattern
+Linda Elisabeth Ewing,Clark,,Culley & McAlpine,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/09/1993,,30,10,scotland_bar,
+Rebecca Susan,Clark,rebeccasusan.clark@pinsentmasons.com,"Pinsent Masons LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/08/2015,,30,10,scotland_bar,generated_pattern
+Stephen John,Clark,stephenjohn.clark@andersonstrathern.co.uk,Anderson Strathern LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/11/2007,,30,10,scotland_bar,generated_pattern
+Victor William George,Clark,,Henderson & Mackay,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/10/1985,,30,10,scotland_bar,
+Fiona Marie,Clarke,fionamarie.clarke@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/11/2010,,30,10,scotland_bar,generated_pattern
+James Thomas,Clarke,,Paisley Defence Lawyers (Scotland) Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/08/1994,,30,10,scotland_bar,
+Lorna Anne,Clarke,lornaanne.clarke@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/08/2015,,30,10,scotland_bar,generated_pattern
+Christopher,Clarkson,christopher.clarkson@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/11/2012,,30,10,scotland_bar,generated_pattern
+Donald Bruce,Clayson,,Nolans Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/01/1994,,30,10,scotland_bar,
+Courtney Margaret Scott,Clelland,courtneymargaretscott.clelland@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/11/2014,,30,10,scotland_bar,generated_pattern
+Peter Healy Miller,Clelland,peterhealymiller.clelland@pinsentmasons.com,Pinsent Masons LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/09/2016,,30,10,scotland_bar,generated_pattern
+Jonathan Charles Alexander,Clinch,jonathancharlesalexander.clinch@mcarthurstanton.com,McArthur Stanton,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/10/1988,,30,10,scotland_bar,generated_pattern
+Katherine Briege,Cloherty,katherinebriege.cloherty@digbybrown.com,Digby Brown LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/11/2015,,30,10,scotland_bar,generated_pattern
+Stuart Alexander,Clubb,stuartalexander.clubb@shoosmiths.com,Shoosmiths,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/06/2002,,30,10,scotland_bar,generated_pattern
+John Mair,Clyde,,McVey & Murricane,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/12/1979,,30,10,scotland_bar,
+Katie Louise,Coates,katielouise.coates@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/10/2013,,30,10,scotland_bar,generated_pattern
+Alasdair Stuart,Cochran,alasdairstuart.cochran@slaterlegal.com,Slater and Gordon Scotland Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/11/1994,,30,10,scotland_bar,generated_pattern
+Alastair Norman,Cochrane,alastairnorman.cochrane@barnetts.com,Barnetts,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/09/1987,,30,10,scotland_bar,generated_pattern
+Kathryn Judith,Cochrane,,Fife Community Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/11/2000,,30,10,scotland_bar,
+Seonaid Claire,Cochrane,,SKO Family Law Specialists LLP,,,,Edinburgh,UK-SC,United Kingdom,Family Law,Practising,10/08/2016,,30,10,scotland_bar,
+Matthew James,Coffield,,MJC LAW (SCOTLAND) LTD,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/01/2001,,30,10,scotland_bar,
+Natalie,Colaluca,natalie.colaluca@pinsentmasons.com,"Pinsent Masons LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/07/2009,,30,10,scotland_bar,generated_pattern
+Ruaridh Mark,Cole,ruaridhmark.cole@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/10/2009,,30,10,scotland_bar,generated_pattern
+Victoria Stefanie,Cole,victoriastefanie.cole@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/08/2014,,30,10,scotland_bar,generated_pattern
+Rachel Jane,Coleman,racheljane.coleman@pinsentmasons.com,Pinsent Masons LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/10/2014,,30,10,scotland_bar,generated_pattern
+Barbara Anne,Collie,,W. & A.S. Bruce,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/11/1989,,30,10,scotland_bar,
+Alastair Buchan,Collin,alastairbuchan.collin@turcanconnell.com,Turcan Connell,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/10/1993,,30,10,scotland_bar,generated_pattern
+Michael Alan,Collins,michaelalan.collins@andersonstrathern.co.uk,Anderson Strathern LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/10/2008,,30,10,scotland_bar,generated_pattern
+Michael Philip,Collins,michaelphilip.collins@tlt.com,TLT LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/04/2014,,30,10,scotland_bar,generated_pattern
+Jennifer Anne,Colvin,jenniferanne.colvin@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/10/2016,,30,10,scotland_bar,generated_pattern
+Lyndsey Helen Janet,Combe,lyndseyhelenjanet.combe@kennedyslaw.com,Kennedys Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/09/2014,,30,10,scotland_bar,generated_pattern
+Sarah Anne,Combe,sarahanne.combe@pinsentmasons.com,Pinsent Masons LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/05/2015,,30,10,scotland_bar,generated_pattern
+Christopher Robert,Comfort,christopherrobert.comfort@acandco.com,Aberdein Considine LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/07/2011,,30,10,scotland_bar,generated_pattern
+Eleanor Clare,Comfort,eleanorclare.comfort@acandco.com,Aberdein Considine LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/09/2014,,30,10,scotland_bar,generated_pattern
+Karen Tracey,Condie,,Holmes Mackillop Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/11/1988,,30,10,scotland_bar,
+Gillian Frances,Conlon,gillianfrances.conlon@beveridgekellas.com,Beveridge & Kellas,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/08/1994,,30,10,scotland_bar,generated_pattern
+Joel Martin,Conn,joelmartin.conn@mitchellsroberton.com,Mitchells Roberton Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/09/1998,,30,10,scotland_bar,generated_pattern
+Collette Catherine,Connell,,Bell Russell & Company Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/02/2002,,30,10,scotland_bar,
+Mark,Connolly,,JC Hughes Solicitors Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/09/1998,,30,10,scotland_bar,
+Monica Louise,Connolly,monicalouise.connolly@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/08/2011,,30,10,scotland_bar,generated_pattern
+Paul Macintyre,Connolly,paulmacintyre.connolly@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/09/2007,,30,10,scotland_bar,generated_pattern
+Laura,Connor,laura.connor@thompsonslaw.com,Thompsons Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/02/2008,,30,10,scotland_bar,generated_pattern
+Louise Kathleen,Conroy,louisekathleen.conroy@dwf.law,DWF LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/07/2008,,30,10,scotland_bar,generated_pattern
+Anthony,Convery,anthony.convery@pinsentmasons.com,"Pinsent Masons LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/11/2008,,30,10,scotland_bar,generated_pattern
+Emma Louise,Conway,emmalouise.conway@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/10/2016,,30,10,scotland_bar,generated_pattern
+Nyree Mary,Conway,nyreemary.conway@johnsonlegal.com,Johnson Legal,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/02/1999,,30,10,scotland_bar,generated_pattern
+Jacqueline Elizabeth,Cook,jacquelineelizabeth.cook@burges-salmon.com,Burges Salmon LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/08/2009,,30,10,scotland_bar,generated_pattern
+Kenneth Craig,Cook,kennethcraig.cook@macdonaldlaw.com,Macdonald Henderson Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/08/1990,,30,10,scotland_bar,generated_pattern
+Lauren Rose,Cook,laurenrose.cook@gillespiemacandrew.com,Gillespie Macandrew LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/05/2011,,30,10,scotland_bar,generated_pattern
+Nicole Louise,Cook,nicolelouise.cook@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/07/2010,,30,10,scotland_bar,generated_pattern
+Diane Caroline,Cooper,dianecaroline.cooper@digbybrown.com,Digby Brown LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/10/2009,,30,10,scotland_bar,generated_pattern
+Ross Filshie,Cooper,rossfilshie.cooper@pinsentmasons.com,"Pinsent Masons LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/10/2014,,30,10,scotland_bar,generated_pattern
+Eliska,Copland,eliska.copland@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/06/2015,,30,10,scotland_bar,generated_pattern
+Amy Audrey,Cornelius,amyaudrey.cornelius@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/09/2011,,30,10,scotland_bar,generated_pattern
+Karen Margaret,Cornwell,,Flemings Legal Services Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/08/1999,,30,10,scotland_bar,
+Joanna Mary,Corrance,joannamary.corrance@digbybrown.com,Digby Brown LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/01/2016,,30,10,scotland_bar,generated_pattern
+Karen Anne,Cossar,karenanne.cossar@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/09/2015,,30,10,scotland_bar,generated_pattern
+Greg,Costello,greg.costello@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/09/2014,,30,10,scotland_bar,generated_pattern
+Beverley Susan,Cottrell,beverleysusan.cottrell@mcintoshmccann.com,McIntosh McCann Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/12/1987,,30,10,scotland_bar,generated_pattern
+Robert James Gair,Couston,robertjamesgair.couston@shiells.com,Shiells,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/12/1982,,30,10,scotland_bar,generated_pattern
+David Michael,Coutts,davidmichael.coutts@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/10/2012,,30,10,scotland_bar,generated_pattern
+Alyson Lyndsay,Cowan,alysonlyndsay.cowan@tlt.com,TLT LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/10/2015,,30,10,scotland_bar,generated_pattern
+Andrew Neil,Cowan,andrewneil.cowan@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/05/2008,,30,10,scotland_bar,generated_pattern
+Jennifer Scott,Cowan,jenniferscott.cowan@millerlaw.com,Miller Samuel Hill Brown LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/09/2010,,30,10,scotland_bar,generated_pattern
+Rory Andrew Burriss,Cowan,,"Bannatyne, Kirkwood, France & Co.",,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/07/1997,,30,10,scotland_bar,
+Susie Kathleen,Cowan,,Monteith Solicitors Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/11/1999,,30,10,scotland_bar,
+Sam Rennie,Cowie,samrennie.cowie@digbybrown.com,Digby Brown LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/02/2012,,30,10,scotland_bar,generated_pattern
+Michael Andrew,Cox,michaelandrew.cox@btosolicitors.com,BTO Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/10/2007,,30,10,scotland_bar,generated_pattern
+Paul,Coyle,paul.coyle@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/03/2011,,30,10,scotland_bar,generated_pattern
+Norna Forsyth,Crabbe,,West Anderson & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/10/1970,,30,10,scotland_bar,
+Innes John,Cradock,innesjohn.cradock@inneslaw.com,Innes & Mackay Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/11/1986,,30,10,scotland_bar,generated_pattern
+Rory,Cradock,rory.cradock@inksters.com,Inksters,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/09/1984,,30,10,scotland_bar,generated_pattern
+Andrew Robin,Craig,,McVey & Murricane,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/02/1988,,30,10,scotland_bar,
+James William,Craig,,Archibald Sharp & Son Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/09/1986,,30,10,scotland_bar,
+Karen Yvonne,Craig,karenyvonne.craig@andersonstrathern.co.uk,Anderson Strathern LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/02/2007,,30,10,scotland_bar,generated_pattern
+Lois,Craig,lois.craig@ledinghamchalmers.com,Ledingham Chalmers LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/04/2016,,30,10,scotland_bar,generated_pattern
+Gillian,Crandles,gillian.crandles@turcanconnell.com,Turcan Connell,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/11/2000,,30,10,scotland_bar,generated_pattern
+Clair Margaret Helen,Cranston,clairmargarethelen.cranston@lindsays.co.uk,Lindsays LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/07/2012,,30,10,scotland_bar,generated_pattern
+David Gordon,Cranston,davidgordon.cranston@martinlaw.com,"Martin, Johnston & Socha Limited",,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/08/1994,,30,10,scotland_bar,generated_pattern
+Robert Coutts,Cranston,robertcoutts.cranston@thompsonslaw.com,Thompsons Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/09/2012,,30,10,scotland_bar,generated_pattern
+Evelyn Ferguson,Crate,,The McKinstry Company LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,31/03/2016,,30,10,scotland_bar,
+Angus Kirkwood,Crawford,anguskirkwood.crawford@btosolicitors.com,BTO Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/01/2014,,30,10,scotland_bar,generated_pattern
+Claire Helen,Crawford,clairehelen.crawford@cochranlaw.com,Cochran Dickie & Mackenzie Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/02/2001,,30,10,scotland_bar,generated_pattern
+Clare Louise,Crawford,clarelouise.crawford@kennedyslaw.com,Kennedys Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/06/2007,,30,10,scotland_bar,generated_pattern
+Jennifer Laura Clare,Crawford,jenniferlauraclare.crawford@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/10/2009,,30,10,scotland_bar,generated_pattern
+Laura Margaret,Crawford,,A C White Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/09/2013,,30,10,scotland_bar,
+William Bryden,Crearie,williambryden.crearie@inksters.com,Inksters,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/12/1987,,30,10,scotland_bar,generated_pattern
+Murray James,Cree,murrayjames.cree@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/08/2012,,30,10,scotland_bar,generated_pattern
+Elouisa Margaret Leonard,Crichton,elouisamargaretleonard.crichton@dentons.law,Dentons UK and Middle East LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/06/2011,,30,10,scotland_bar,generated_pattern
+Calum George,Crighton,calumgeorge.crighton@gilsongray.com,Gilson Gray LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/08/2009,,30,10,scotland_bar,generated_pattern
+Mary Agnes Duffy Finlay,Crighton,maryagnesduffyfinlay.crighton@calders.com,Calders,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/09/1974,,30,10,scotland_bar,generated_pattern
+Emma Francesca,Crilley,emmafrancesca.crilley@daclaw.com,DAC Beachcroft Claims Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/11/2014,,30,10,scotland_bar,generated_pattern
+Lewis,Crofts,lewis.crofts@lindsays.co.uk,Lindsays LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/10/2014,,30,10,scotland_bar,generated_pattern
+Sofia Rosa-Maria,Crolla,sofiarosa-maria.crolla@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/07/2009,,30,10,scotland_bar,generated_pattern
+Jamie Alexander Rushford,Crook,jamiealexanderrushford.crook@dicksonminto.com,Dickson Minto LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/08/2013,,30,10,scotland_bar,generated_pattern
+Peter,Crooks,,Lanarkshire Accident Law (Scotland) Ltd,,,,Edinburgh,UK-SC,United Kingdom,Personal Injury,Practising,02/02/1996,,30,10,scotland_bar,
+Stewart James,Crosbie,stewartjames.crosbie@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/09/2014,,30,10,scotland_bar,generated_pattern
+Kimberley Anne,Cross,kimberleyanne.cross@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/11/2012,,30,10,scotland_bar,generated_pattern
+Karen,Crothers,karen.crothers@bartys.com,Bartys,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/11/2002,,30,10,scotland_bar,generated_pattern
+Anita Ingrid,Crozier,anitaingrid.crozier@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/10/2009,,30,10,scotland_bar,generated_pattern
+Robert Magnus,Cruickshank,robertmagnus.cruickshank@allanlegal.com,"Allan, Black & McCaskie",,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/10/1990,,30,10,scotland_bar,generated_pattern
+Albert John,Cullens,,Jardine Donaldson,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/12/1979,,30,10,scotland_bar,
+Pauline,Cullerton,,Culley & McAlpine,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/06/2006,,30,10,scotland_bar,
+Hugh Patrick Herries,Cumming,hughpatrickherries.cumming@stewartwatson.com,Stewart & Watson,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/01/1990,,30,10,scotland_bar,generated_pattern
+Jane Elizabeth,Cumming,,J. Myles & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/02/1985,,30,10,scotland_bar,
+John Matheson Macleod,Cumming,,Ennova Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/12/1988,,30,10,scotland_bar,
+John Carlisle,Cummins,,Hill Brown Licensing,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/10/1978,,30,10,scotland_bar,
+Graeme Miller,Cunningham,graememiller.cunningham@gmc.com,GMC Legal Services,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/09/2003,,30,10,scotland_bar,generated_pattern
+Victoria,Curren,victoria.curren@gillespiemacandrew.com,Gillespie Macandrew LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/09/2010,,30,10,scotland_bar,generated_pattern
+Alexander Blair,Currie,alexanderblair.currie@douglaswrightlaw.com,Douglas Wright,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/11/1981,,30,10,scotland_bar,generated_pattern
+Anthony David,Currie,,1st Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/03/1999,,30,10,scotland_bar,
+Craig Stewart William,Currie,,Galloway & Ayrshire Partnership LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/06/2014,,30,10,scotland_bar,
+Douglas Jackson,Currie,,Alexr. McAllister & McKechnie,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/02/2000,,30,10,scotland_bar,
+Fraser Macfarlane,Currie,,Alexr. McAllister & McKechnie,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/07/1998,,30,10,scotland_bar,
+Hannah Frances,Currie,hannahfrances.currie@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/09/2009,,30,10,scotland_bar,generated_pattern
+Lorraine Margaret Westwood,Currie,lorrainemargaretwestwood.currie@andersonstrathern.co.uk,Anderson Strathern LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/03/2009,,30,10,scotland_bar,generated_pattern
+Matthew John,Currie,matthewjohn.currie@joneswhytelaw.com,Jones Whyte Law Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/01/1999,,30,10,scotland_bar,generated_pattern
+Robin,Currie,robin.currie@macarthurlegal.com,MacArthur Legal,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/12/1978,,30,10,scotland_bar,generated_pattern
+Susan Elizabeth,Currie,susanelizabeth.currie@wrightlaw.com,"Wright, Johnston & Mackenzie LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/09/2016,,30,10,scotland_bar,generated_pattern
+Ursula Sophie,Currie,ursulasophie.currie@dwf.law,DWF LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/10/2009,,30,10,scotland_bar,generated_pattern
+Jonathan Edward,Cushley,jonathanedward.cushley@austinlaw.com,Austin Lafferty Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/08/1999,,30,10,scotland_bar,generated_pattern
 Bruce Alan,Adamson,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/02/2006,,30,0,scotland_bar,
 James Roy,Aitken,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/09/1994,,30,0,scotland_bar,
 Arlene Mary,Anderson,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/11/1986,,30,0,scotland_bar,
@@ -554,6 +944,21 @@ Kenneth,Bruce,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/11/1978,,30,0,s
 Murray John,Buchanan,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/08/1994,,30,0,scotland_bar,
 Lorna,Burnet,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/09/2003,,30,0,scotland_bar,
 David Melville,Burnside,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/10/1966,,30,0,scotland_bar,
+Paul Henry,Cackette,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/10/1985,,30,0,scotland_bar,
+Angela Mary,Cairns,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/01/1976,,30,0,scotland_bar,
+Mairi Taylor,Carlin,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/08/2005,,30,0,scotland_bar,
+Jill Elizabeth,Carrick,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/10/1984,,30,0,scotland_bar,
+Caroline Isabel,Cassidy,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/08/2001,,30,0,scotland_bar,
+Ruth Anne,Chapman,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/03/2006,,30,0,scotland_bar,
+Rabia,Choudri,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/11/2004,,30,0,scotland_bar,
+Carolyn,Christie,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/11/1999,,30,0,scotland_bar,
+Susie,Clark,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/11/1995,,30,0,scotland_bar,
+Robin Macarthur,Clarkson,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/12/1987,,30,0,scotland_bar,
+Heather Marion Margaret,Clinton,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/01/1999,,30,0,scotland_bar,
+Robert Craig,Connal,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/08/1977,,30,0,scotland_bar,
+Catherine Stacey,Cook,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/11/1994,,30,0,scotland_bar,
+Victoria Mary Louise,Corley,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/11/2006,,30,0,scotland_bar,
+Jennifer,Cowan,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/12/2001,,30,0,scotland_bar,
 Christina Balmain,Abbott,christina.abbott@andersonstrathern.co.uk,Anderson Strathern LLP,,0131 2707700,http://www.andersonstrathern.co.uk,Edinburgh,UK-SC,United Kingdom,,Practising,06/09/2017,,20,90,scotland_bar,profile
 Philippa Rose,Abernethy,philippaabernethy@lindsays.co.uk,Lindsays LLP,,0141 2216551,http://www.lindsays.co.uk,Edinburgh,UK-SC,United Kingdom,,Practising,07/11/2019,,20,90,scotland_bar,profile
 Lyndsey,Adam,lyndsey.adam@cochranlaw.com,Cochran Dickie & Mackenzie Limited,,,https://cochranlaw.com,Edinburgh,UK-SC,United Kingdom,,Practising,06/11/2007,,20,25,scotland_bar,generated_pattern
@@ -708,29 +1113,142 @@ Ally Jordan,Burr,allyjordan.burr@brodies.com,Brodies LLP,,,http://www.brodies.co
 Courtney Jade,Burr,courtneyjade.burr@brodies.com,Brodies LLP,,,http://www.brodies.com,Edinburgh,UK-SC,United Kingdom,,Practising,13/08/2021,,20,25,scotland_bar,generated_pattern
 Paige Anne,Burton,paigeanne.burton@lindsays.co.uk,Lindsays LLP,,,http://www.lindsays.co.uk,Edinburgh,UK-SC,United Kingdom,,Practising,17/08/2021,,20,25,scotland_bar,generated_pattern
 Kieran David Alexander,Buxton,kierandavidalexander.buxton@burges-salmon.com,Burges Salmon LLP,,,https://burges-salmon.com,Edinburgh,UK-SC,United Kingdom,,Practising,09/09/2020,,20,25,scotland_bar,generated_pattern
-Jackson,Bateman,jackson.bateman@cfjjlaw.com,CFJJ Law Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/10/2014,,20,10,scotland_bar,generated_pattern
-Shabana,Beg,shabana.beg@ruthvenkeenanpollockco.com,"Ruthven, Keenan, Pollock & Co.",,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/04/2009,,20,10,scotland_bar,generated_pattern
-Barry Charles,Berlow-Jackson,barrycharles.berlow-jackson@scotlegallimited.com,Scotlegal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/07/2010,,20,10,scotland_bar,generated_pattern
-Catherine Elizabeth,Berrill,catherineelizabeth.berrill@hillrobblimited.com,Hill & Robb Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/05/2014,,20,10,scotland_bar,generated_pattern
-Kimberley Anne,Berry,kimberleyanne.berry@jardinedonaldson.com,Jardine Donaldson,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/02/2014,,20,10,scotland_bar,generated_pattern
-Eilidh Jane,Beveridge,eilidhjane.beveridge@pgmbmscot.com,PGMBM Scot Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/11/2013,,20,10,scotland_bar,generated_pattern
-Stephen,Bland,stephen.bland@storiecrudensimpson.com,"Storie, Cruden & Simpson",,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/07/2009,,20,10,scotland_bar,generated_pattern
-Graham,Blyth,graham.blyth@blackaddermcmonagle.com,Blackadder & McMonagle,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/09/2014,,20,10,scotland_bar,generated_pattern
+Jackson,Bateman,,CFJJ Law Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/10/2014,,20,10,scotland_bar,
+Shabana,Beg,,"Ruthven, Keenan, Pollock & Co.",,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/04/2009,,20,10,scotland_bar,
+Barry Charles,Berlow-Jackson,,Scotlegal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/07/2010,,20,10,scotland_bar,
+Catherine Elizabeth,Berrill,,Hill & Robb Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/05/2014,,20,10,scotland_bar,
+Kimberley Anne,Berry,,Jardine Donaldson,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/02/2014,,20,10,scotland_bar,
+Eilidh Jane,Beveridge,,PGMBM Scot Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/11/2013,,20,10,scotland_bar,
+Stephen,Bland,,"Storie, Cruden & Simpson",,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/07/2009,,20,10,scotland_bar,
+Graham,Blyth,,Blackadder & McMonagle,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/09/2014,,20,10,scotland_bar,
 Lauren Nicola,Booth,laurennicola.booth@mitchellsroberton.com,Mitchells Roberton Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/08/2013,,20,10,scotland_bar,generated_pattern
-Marisa,Borland,marisa.borland@bridgelegallimited.com,Bridge Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/10/2014,,20,10,scotland_bar,generated_pattern
-Gillian Louise,Bowman,gillianlouise.bowman@cairnsbrown.com,Cairns Brown,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/09/2013,,20,10,scotland_bar,generated_pattern
+Marisa,Borland,,Bridge Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/10/2014,,20,10,scotland_bar,
+Gillian Louise,Bowman,,Cairns Brown,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/09/2013,,20,10,scotland_bar,
 Alexander Vitalievich,Boyd,alexandervitalievich.boyd@immigration.com,Immigration Law Firm Ltd,,,,Edinburgh,UK-SC,United Kingdom,Immigration,Practising,02/06/2015,,20,10,scotland_bar,generated_pattern
-Carla Louise,Boylan,carlalouise.boylan@russellsgibsonmccaffrey.com,Russells Gibson McCaffrey,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/06/2011,,20,10,scotland_bar,generated_pattern
-Rachael Anne,Brandon,rachaelanne.brandon@boydlegallimited.com,Boyd Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/01/2014,,20,10,scotland_bar,generated_pattern
-Craig Philip Alexander,Broadley,craigphilipalexander.broadley@beltramicolimited.com,Beltrami & Co Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/06/2012,,20,10,scotland_bar,generated_pattern
+Carla Louise,Boylan,,Russells Gibson McCaffrey,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/06/2011,,20,10,scotland_bar,
+Rachael Anne,Brandon,,Boyd Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/01/2014,,20,10,scotland_bar,
+Craig Philip Alexander,Broadley,,Beltrami & Co Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/06/2012,,20,10,scotland_bar,
 Carly,Brodie,carly.brodie@frazercoogans.com,Frazer Coogans Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/02/2007,,20,10,scotland_bar,generated_pattern
-Benjamin Ian,Brown,benjaminian.brown@weightmansscotland.com,Weightmans (Scotland) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/11/2020,,20,10,scotland_bar,generated_pattern
-Iain Mackenzie,Brown,iainmackenzie.brown@dlapiperscotland.com,DLA Piper Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/11/2019,,20,10,scotland_bar,generated_pattern
-Leann Marie,Brown,leannmarie.brown@connellyyeomanlawlimited.com,Connelly & Yeoman Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/04/2010,,20,10,scotland_bar,generated_pattern
-Ross Alexander,Brown,rossalexander.brown@holmesmackilloplimited.com,Holmes Mackillop Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/10/2008,,20,10,scotland_bar,generated_pattern
-Lindsay Jane,Bruce,lindsayjane.bruce@speirbuchanlimited.com,Speir Buchan Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/11/2008,,20,10,scotland_bar,generated_pattern
-Ella,Bulchenko,ella.bulchenko@mtl.com,MTL  Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/03/2009,,20,10,scotland_bar,generated_pattern
+Benjamin Ian,Brown,,Weightmans (Scotland) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/11/2020,,20,10,scotland_bar,
+Iain Mackenzie,Brown,,DLA Piper Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/11/2019,,20,10,scotland_bar,
+Leann Marie,Brown,,Connelly & Yeoman Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/04/2010,,20,10,scotland_bar,
+Ross Alexander,Brown,,Holmes Mackillop Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/10/2008,,20,10,scotland_bar,
+Lindsay Jane,Bruce,,Speir Buchan Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/11/2008,,20,10,scotland_bar,
+Ella,Bulchenko,,MTL  Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/03/2009,,20,10,scotland_bar,
 Victoria Elizabeth,Burnett,victoriaelizabeth.burnett@kellas.com,Kellas,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/05/2010,,20,10,scotland_bar,generated_pattern
+Katie,Cabrey,katie.cabrey@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/07/2021,,20,10,scotland_bar,generated_pattern
+Abigail Louise,Cadden,abigaillouise.cadden@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/09/2017,,20,10,scotland_bar,generated_pattern
+Jonathan George Woodd,Cahusac,jonathangeorgewoodd.cahusac@lindsays.co.uk,Lindsays LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/03/2021,,20,10,scotland_bar,generated_pattern
+Fiona Marie,Cairns,,Macintosh Humble,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/11/2007,,20,10,scotland_bar,
+John Munro,Callender,johnmunro.callender@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/09/2019,,20,10,scotland_bar,generated_pattern
+Marinos Thomas Gladstone,Calothis,marinosthomasgladstone.calothis@mclaw.com,MC Law,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/11/2015,,20,10,scotland_bar,generated_pattern
+Alastair,Cameron,,Oakwood Scotland Solicitors Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/07/2008,,20,10,scotland_bar,
+Daniel Graham,Cameron,,"John Pryde, SSC",,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/07/2014,,20,10,scotland_bar,
+Fraser Alexander,Cameron,fraseralexander.cameron@gilsongray.com,Gilson Gray LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/03/2017,,20,10,scotland_bar,generated_pattern
+Louise,Cameron,,Friends Legal,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/10/2009,,20,10,scotland_bar,
+Rachel,Camilleri-Brennan,rachel.camilleri-brennan@chamberpractice.com,The Chamber Practice Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/02/2011,,20,10,scotland_bar,generated_pattern
+Alexander James Murray,Campbell,alexanderjamesmurray.campbell@wrightlaw.com,"Wright, Johnston & Mackenzie LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/09/2021,,20,10,scotland_bar,generated_pattern
+Catriona Elizabeth,Campbell,catrionaelizabeth.campbell@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/09/2018,,20,10,scotland_bar,generated_pattern
+Christopher Edward,Campbell,,W. & A.S. Bruce,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/09/2016,,20,10,scotland_bar,
+Claire Louise,Campbell,clairelouise.campbell@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/04/2021,,20,10,scotland_bar,generated_pattern
+Eidann Carina,Campbell,,"Mellicks, Incorporating Naftalin Duncan & Co.",,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/08/2016,,20,10,scotland_bar,
+Eilidh Heather,Campbell,eilidhheather.campbell@allanlegal.com,Allan McDougall McQueen LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/08/2018,,20,10,scotland_bar,generated_pattern
+Eilidh Morag,Campbell,eilidhmorag.campbell@wrightlaw.com,"Wright, Johnston & Mackenzie LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/08/2021,,20,10,scotland_bar,generated_pattern
+Frances Mary,Campbell,francesmary.campbell@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/11/2019,,20,10,scotland_bar,generated_pattern
+Iona Margaret,Campbell,ionamargaret.campbell@balfourlaw.com,Balfour + Manson LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/10/2019,,20,10,scotland_bar,generated_pattern
+Katy Anne,Campbell,katyanne.campbell@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/08/2017,,20,10,scotland_bar,generated_pattern
+Kenneth,Campbell,,Ennova Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/03/2007,,20,10,scotland_bar,
+Matthew Stewart,Campbell,matthewstewart.campbell@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/09/2021,,20,10,scotland_bar,generated_pattern
+Nicola-Jane,Campbell,,Oraclelaw Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/01/2008,,20,10,scotland_bar,
+Simon David,Campbell,simondavid.campbell@winnsolicitorsscotland.com,Winn Solicitors (Scotland) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/12/2019,,20,10,scotland_bar,generated_pattern
+Paul Thomas Alexander,Cannavan,,Patterson and Company Defence Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/08/2010,,20,10,scotland_bar,
+Ashley,Canning,ashley.canning@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/11/2019,,20,10,scotland_bar,generated_pattern
+Daniel,Canning,daniel.canning@dwf.law,DWF LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/11/2018,,20,10,scotland_bar,generated_pattern
+Louis Gregory,Capaldi,,Stewart & Osborne,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/08/2012,,20,10,scotland_bar,
+Ross Ian,Cargill,rossian.cargill@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/02/2021,,20,10,scotland_bar,generated_pattern
+Sophie Margaret,Cargill,,"Mellicks, Incorporating Naftalin Duncan & Co.",,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/11/2012,,20,10,scotland_bar,
+Dawn Louise,Carlin,,Friends Legal,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/10/2010,,20,10,scotland_bar,
+Keni Campbell,Carmichael,kenicampbell.carmichael@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/12/2020,,20,10,scotland_bar,generated_pattern
+Bethany Ann,Carr,bethanyann.carr@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/07/2020,,20,10,scotland_bar,generated_pattern
+Lindsay Nicol,Carr,,Jameson + Mackay LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/08/2017,,20,10,scotland_bar,
+Roger,Carr,roger.carr@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/07/2017,,20,10,scotland_bar,generated_pattern
+Thomas Peter,Carr,,DLA Piper Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/12/2017,,20,10,scotland_bar,
+Kirstie Jane,Carrick,kirstiejane.carrick@clydelaw.com,Clyde & Co (Scotland) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/07/2017,,20,10,scotland_bar,generated_pattern
+Nicholas Steven,Carroll,nicholassteven.carroll@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/11/2019,,20,10,scotland_bar,generated_pattern
+Donna Lee,Carson,,Matheson Lawson Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/08/2012,,20,10,scotland_bar,
+Christie Rose,Carswell,christierose.carswell@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/10/2020,,20,10,scotland_bar,generated_pattern
+Emma,Carter,,Marshall Wilson Law Group Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/06/2015,,20,10,scotland_bar,
+Jade Elizabeth,Carthy,,A.C. O'Neill & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/10/2011,,20,10,scotland_bar,
+Augustine Michael Cortney,Casiday,augustinemichaelcortney.casiday@jacksonlaw.com,Jackson Boyd LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/09/2021,,20,10,scotland_bar,generated_pattern
+Madelaine,Cassidy,madelaine.cassidy@clydelaw.com,Clyde & Co (Scotland) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/09/2018,,20,10,scotland_bar,generated_pattern
+Nicola Jane,Cathcart,nicolajane.cathcart@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/07/2019,,20,10,scotland_bar,generated_pattern
+Hollie Kathleen Rose,Cavanagh,holliekathleenrose.cavanagh@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/11/2020,,20,10,scotland_bar,generated_pattern
+Ying On Anthea,Chan,yingonanthea.chan@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/03/2020,,20,10,scotland_bar,generated_pattern
+Lili Teodorova,Chaneva,liliteodorova.chaneva@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/12/2021,,20,10,scotland_bar,generated_pattern
+Ignacio,Chanzá Jordán,,Spanish + Scottish Law Practice Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/02/2013,,20,10,scotland_bar,
+Jalal Noor,Chaudry,jalalnoor.chaudry@lattalaw.com,Latta Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/11/2015,,20,10,scotland_bar,generated_pattern
+Craig James McIntosh,Chisholm,craigjamesmcintosh.chisholm@hslaw.com,HF Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/07/2019,,20,10,scotland_bar,generated_pattern
+Maxine,Chiverton,maxine.chiverton@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/07/2018,,20,10,scotland_bar,generated_pattern
+Tayeeba,Chowdhury,tayeeba.chowdhury@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/11/2021,,20,10,scotland_bar,generated_pattern
+Ailie Elizabeth,Christie,ailieelizabeth.christie@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/06/2020,,20,10,scotland_bar,generated_pattern
+Yumann Murray,Chung,,CCMC Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/06/2011,,20,10,scotland_bar,
+Sophie Frances,Church,sophiefrances.church@jhmitchell.com,J & H Mitchell LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/03/2018,,20,10,scotland_bar,generated_pattern
+Nicholas Stephen,Churchward,nicholasstephen.churchward@burges-salmon.com,Burges Salmon LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/08/2017,,20,10,scotland_bar,generated_pattern
+Malgorzata,Chylinska,,Edington Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/07/2015,,20,10,scotland_bar,
+Sorcha Elizabeth,Cierans,sorchaelizabeth.cierans@dentons.law,Dentons UK and Middle East LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/08/2021,,20,10,scotland_bar,generated_pattern
+Christopher Louis,Clark,christopherlouis.clark@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/02/2018,,20,10,scotland_bar,generated_pattern
+Dawn,Clark,dawn.clark@fitzpatrickco.com,Fitzpatrick & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/11/2009,,20,10,scotland_bar,generated_pattern
+Deborah Jane,Clark,deborahjane.clark@kennedyslaw.com,Kennedys Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/05/2021,,20,10,scotland_bar,generated_pattern
+Gordon William,Clark,,DLA Piper Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/07/2018,,20,10,scotland_bar,
+Louise Catherine,Clark,louisecatherine.clark@dwf.law,DWF LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/12/2020,,20,10,scotland_bar,generated_pattern
+Eleanor,Clarke,eleanor.clarke@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/09/2020,,20,10,scotland_bar,generated_pattern
+Laura,Clayson,,Ormistons Law Practice Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/08/2009,,20,10,scotland_bar,
+Lynsey Ross,Clelland,,McSparran McCormick,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/02/2008,,20,10,scotland_bar,
+Peter Ian,Clyde,peterian.clyde@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/10/2019,,20,10,scotland_bar,generated_pattern
+Natalie Debra Thoars,Cobley,nataliedebrathoars.cobley@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/09/2018,,20,10,scotland_bar,generated_pattern
+Rebecca,Colby,rebecca.colby@winnsolicitorsscotland.com,Winn Solicitors (Scotland) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/01/2019,,20,10,scotland_bar,generated_pattern
+Gillian Catherine,Cole,gilliancatherine.cole@dentons.law,Dentons UK and Middle East LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/01/2019,,20,10,scotland_bar,generated_pattern
+Eilidh Jane,Collins,eilidhjane.collins@pinsentmasons.com,Pinsent Masons LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/01/2021,,20,10,scotland_bar,generated_pattern
+Rebecca Carol,Coltart,rebeccacarol.coltart@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/09/2019,,20,10,scotland_bar,generated_pattern
+Sam Patrick,Conington,sampatrick.conington@gillespiemacandrew.com,Gillespie Macandrew LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/09/2020,,20,10,scotland_bar,generated_pattern
+Lucy Ferguson,Conn,lucyferguson.conn@csllegal.com,Curle Stewart Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/10/2013,,20,10,scotland_bar,generated_pattern
+John James,Connelly,johnjames.connelly@thelaw.com,The Glasgow Law Practice Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/08/2010,,20,10,scotland_bar,generated_pattern
+Caitlin,Connolly,caitlin.connolly@lindsays.co.uk,Lindsays LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/03/2020,,20,10,scotland_bar,generated_pattern
+Jennifer Kate,Connolly,jenniferkate.connolly@turcanconnell.com,Turcan Connell,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/11/2010,,20,10,scotland_bar,generated_pattern
+Stephanie Josephine,Connor,,MooreMarshall Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/07/2014,,20,10,scotland_bar,
+Nicole,Conroy,,CSG Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/01/2015,,20,10,scotland_bar,
+Daniel John,Considine,danieljohn.considine@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/11/2020,,20,10,scotland_bar,generated_pattern
+Marc,Convery,,Russel + Aitken (Falkirk + Alloa) Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/03/2013,,20,10,scotland_bar,
+Nadia Ann,Cook,nadiaann.cook@dentons.law,Dentons UK and Middle East LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/09/2019,,20,10,scotland_bar,generated_pattern
+Brian,Cooney,brian.cooney@flemingreid.com,Fleming & Reid,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/08/2013,,20,10,scotland_bar,generated_pattern
+Roisin Elizabeth,Cooper,roisinelizabeth.cooper@btosolicitors.com,BTO Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/02/2019,,20,10,scotland_bar,generated_pattern
+Sarah,Cooper,sarah.cooper@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/06/2017,,20,10,scotland_bar,generated_pattern
+Timothy,Cooper,timothy.cooper@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/08/2019,,20,10,scotland_bar,generated_pattern
+Fiona Elizabeth,Copp,fionaelizabeth.copp@mslaw.com,Mackinnons Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/05/2017,,20,10,scotland_bar,generated_pattern
+Naomi Rhiannon Elspeth,Cornish,naomirhiannonelspeth.cornish@dwf.law,DWF LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/10/2020,,20,10,scotland_bar,generated_pattern
+Kevin James,Corr,kevinjames.corr@grahamwalker.com,Graham Walker,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/12/2016,,20,10,scotland_bar,generated_pattern
+Mairead Clare,Corrigan,,SKO Family Law Specialists LLP,,,,Edinburgh,UK-SC,United Kingdom,Family Law,Practising,30/03/2021,,20,10,scotland_bar,
+Hannah Louise,Cosgrove,hannahlouise.cosgrove@lattalaw.com,Latta Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/01/2015,,20,10,scotland_bar,generated_pattern
+Derek Grant,Couper,derekgrant.couper@slaterlegal.com,Slater and Gordon Scotland Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/10/2015,,20,10,scotland_bar,generated_pattern
+Emma Louise,Cowie,emmalouise.cowie@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/04/2018,,20,10,scotland_bar,generated_pattern
+Gregor Neil,Craig-Murphy,gregorneil.craig-murphy@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/06/2021,,20,10,scotland_bar,generated_pattern
+Jamie Charles Melville,Craig,jamiecharlesmelville.craig@peterkins.com,Peterkins,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/02/2009,,20,10,scotland_bar,generated_pattern
+April Alison,Craine,aprilalison.craine@daclaw.com,DAC Beachcroft Claims Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/02/2021,,20,10,scotland_bar,generated_pattern
+Emily Chrisanne,Cranston,emilychrisanne.cranston@burges-salmon.com,Burges Salmon LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/07/2020,,20,10,scotland_bar,generated_pattern
+Stephen Robert,Cranston,,Murchison Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/09/2009,,20,10,scotland_bar,
+Antonia McCarry,Crawford,,Beltrami & Co Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/02/2011,,20,10,scotland_bar,
+Eilidh Lindsay,Crawford,eilidhlindsay.crawford@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/06/2018,,20,10,scotland_bar,generated_pattern
+Fraser William,Crombie,fraserwilliam.crombie@dentons.law,Dentons UK and Middle East LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/11/2019,,20,10,scotland_bar,generated_pattern
+Andrew John,Cullens,,Jardine Donaldson,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/07/2012,,20,10,scotland_bar,
+Stacey Grace,Culloch,staceygrace.culloch@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/02/2019,,20,10,scotland_bar,generated_pattern
+Lindsay Alison,Cumming,lindsayalison.cumming@drummondlaw.com,Drummond Miller LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/08/2018,,20,10,scotland_bar,generated_pattern
+Lynne,Cunningham,lynne.cunningham@ssslaw.com,Shelter Scotland Solicitors,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/07/2009,,20,10,scotland_bar,generated_pattern
+Robert James Craig,Cunningham,,Dales Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/07/2018,,20,10,scotland_bar,
+Sarah Louise,Cunningham,,DLA Piper Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/02/2018,,20,10,scotland_bar,
+Kevin Robert,Currie,,Womble Bond Dickinson (UK) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/01/2020,,20,10,scotland_bar,
+Michael Fraser,Currie,michaelfraser.currie@acandco.com,Aberdein Considine LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/07/2017,,20,10,scotland_bar,generated_pattern
+April Anne,Cuthbert,aprilanne.cuthbert@blackhay.com,Black Hay,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/10/2007,,20,10,scotland_bar,generated_pattern
+David George,Cuthill,davidgeorge.cuthill@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/08/2019,,20,10,scotland_bar,generated_pattern
 Julie,Adams,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/08/2015,,20,0,scotland_bar,
 Nazia Tabasum,Ahmed,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/11/2013,,20,0,scotland_bar,
 Rabia Mehreen,Ahmed,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/04/2016,,20,0,scotland_bar,
@@ -755,6 +1273,12 @@ Adele Jemma,Brownlie,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/10/2016,
 Ashleigh,Bruce,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/08/2011,,20,0,scotland_bar,
 Chloe Alexis,Buchanan,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/02/2014,,20,0,scotland_bar,
 John Michael,Burns,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/10/2016,,20,0,scotland_bar,
+Jeanette Ann,Chalmers,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/05/2008,,20,0,scotland_bar,
+Qi Rui,Chen,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/08/2016,,20,0,scotland_bar,
+Ian,Clark,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/01/2013,,20,0,scotland_bar,
+Claire Louise,Clubb,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/11/2014,,20,0,scotland_bar,
+Scott Owen,Connarty,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/10/2013,,20,0,scotland_bar,
+Karen Louise,Crichton,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/06/2015,,20,0,scotland_bar,
 Maryam,Abdel-Razik,maryam.abdel-razik@addleshawgoddard.com,Addleshaw Goddard LLP,,0131 2282400,https://addleshawgoddard.com,Edinburgh,UK-SC,United Kingdom,,Practising,23/03/2022,,10,90,scotland_bar,profile
 Dylan Luke,Ackerley,dylanluke.ackerley@lindsays.co.uk,Lindsays LLP,,,http://www.lindsays.co.uk,Edinburgh,UK-SC,United Kingdom,,Practising,29/09/2025,,10,25,scotland_bar,generated_pattern
 Evan William,Adair,evanwilliam.adair@brodies.com,Brodies LLP,,,http://www.brodies.com,Edinburgh,UK-SC,United Kingdom,,Practising,22/08/2024,,10,25,scotland_bar,generated_pattern
@@ -954,34 +1478,198 @@ Sarah,Buzuk,sarah.buzuk@addleshawgoddard.com,Addleshaw Goddard LLP,,,https://add
 Emily Elizabeth,Byrne,emilyelizabeth.byrne@addleshawgoddard.com,Addleshaw Goddard LLP,,,https://addleshawgoddard.com,Edinburgh,UK-SC,United Kingdom,,Practising,22/02/2024,,10,25,scotland_bar,generated_pattern
 Rebecca Anne,Byrne,rebeccaanne.byrne@dentons.law,Dentons UK and Middle East LLP,,,https://dentons.law,Edinburgh,UK-SC,United Kingdom,,Practising,19/08/2025,,10,25,scotland_bar,generated_pattern
 Hannah Jacqui Carolyn,Baur,hannahjacquicarolyn.baur@winnsolicitorsscotland.com,Winn Solicitors (Scotland) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/02/2025,,10,10,scotland_bar,generated_pattern
-Bethany Anne,Beattie,bethanyanne.beattie@mcveymurricane.com,McVey & Murricane,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/05/2021,,10,10,scotland_bar,generated_pattern
+Bethany Anne,Beattie,,McVey & Murricane,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/05/2021,,10,10,scotland_bar,
 Amy Lucy,Beck,amylucy.beck@mbmcommercial.com,MBM Commercial LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/08/2024,,10,10,scotland_bar,generated_pattern
-Kelsey Neve,Bell,kelseyneve.bell@millandmillard.com,Mill and Millard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/12/2023,,10,10,scotland_bar,generated_pattern
-Lauryn Kate,Bell,laurynkate.bell@stodarts.com,Stodarts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/07/2025,,10,10,scotland_bar,generated_pattern
-Natalia Eve,Bell,nataliaeve.bell@pgmbmscot.com,PGMBM Scot Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/08/2020,,10,10,scotland_bar,generated_pattern
-Adam Scott,Bennett,adamscott.bennett@hughesshaughnessymcfarlanelimited.com,Hughes Shaughnessy McFarlane Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/03/2019,,10,10,scotland_bar,generated_pattern
-Sophie Catriona Boyd,Berry,sophiecatrionaboyd.berry@daillymoonandcosolicitors.com,"Dailly, Moon and Co., Solicitors",,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/03/2020,,10,10,scotland_bar,generated_pattern
+Kelsey Neve,Bell,,Mill and Millard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/12/2023,,10,10,scotland_bar,
+Lauryn Kate,Bell,,Stodarts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/07/2025,,10,10,scotland_bar,
+Natalia Eve,Bell,,PGMBM Scot Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/08/2020,,10,10,scotland_bar,
+Adam Scott,Bennett,,Hughes Shaughnessy McFarlane Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/03/2019,,10,10,scotland_bar,
+Sophie Catriona Boyd,Berry,,"Dailly, Moon and Co., Solicitors",,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/03/2020,,10,10,scotland_bar,
 Amy Natasha Paula,Black,amynatashapaula.black@lawsoncoullduncan.com,Lawson Coull & Duncan,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/08/2018,,10,10,scotland_bar,generated_pattern
-Ian Webster,Black,ianwebster.black@mellicksincorporatingnaftalinduncanco.com,"Mellicks, Incorporating Naftalin Duncan & Co.",,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/09/2019,,10,10,scotland_bar,generated_pattern
-Jack,Blades,jack.blades@mackintoshwylie.com,Mackintosh & Wylie LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/06/2025,,10,10,scotland_bar,generated_pattern
-Melanie Caitlin Paterson,Bogle,melaniecaitlinpaterson.bogle@19gr.com,19GR Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/04/2018,,10,10,scotland_bar,generated_pattern
-Anthony Edward John,Boland,anthonyedwardjohn.boland@todmitchell.com,Tod & Mitchell,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/03/2018,,10,10,scotland_bar,generated_pattern
-Kaitlin Tress,Boswell,kaitlintress.boswell@hamiltonross.com,Hamilton Ross,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/10/2019,,10,10,scotland_bar,generated_pattern
-Connor Kenneth,Bowie,connorkenneth.bowie@mathiemortonlimited.com,Mathie Morton Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/09/2020,,10,10,scotland_bar,generated_pattern
-Kerrie,Boyd,kerrie.boyd@norriemoorelimited.com,Norrie Moore Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/03/2021,,10,10,scotland_bar,generated_pattern
+Ian Webster,Black,,"Mellicks, Incorporating Naftalin Duncan & Co.",,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/09/2019,,10,10,scotland_bar,
+Jack,Blades,,Mackintosh & Wylie LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/06/2025,,10,10,scotland_bar,
+Melanie Caitlin Paterson,Bogle,,19GR Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/04/2018,,10,10,scotland_bar,
+Anthony Edward John,Boland,,Tod & Mitchell,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/03/2018,,10,10,scotland_bar,
+Kaitlin Tress,Boswell,,Hamilton Ross,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/10/2019,,10,10,scotland_bar,
+Connor Kenneth,Bowie,,Mathie Morton Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/09/2020,,10,10,scotland_bar,
+Kerrie,Boyd,,Norrie Moore Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/03/2021,,10,10,scotland_bar,
 Matthew Alan,Boyle,matthewalan.boyle@mbmcommercial.com,MBM Commercial LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/06/2024,,10,10,scotland_bar,generated_pattern
-Lucy Anne,Boylen,lucyanne.boylen@mckennaslawpracticelimited.com,McKennas Law Practice Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/03/2021,,10,10,scotland_bar,generated_pattern
+Lucy Anne,Boylen,,McKennas Law Practice Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/03/2021,,10,10,scotland_bar,
 Ciara Claire Pia,Bradley,ciaraclairepia.bradley@flemingreid.com,Fleming & Reid,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/09/2020,,10,10,scotland_bar,generated_pattern
-Emma Louise McIntyre,Brown,emmalouisemcintyre.brown@johnhendersonsons.com,John Henderson & Sons LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/01/2025,,10,10,scotland_bar,generated_pattern
+Emma Louise McIntyre,Brown,,John Henderson & Sons LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/01/2025,,10,10,scotland_bar,
 Rachel Amy,Brown,rachelamy.brown@irwinmitchellscotland.com,Irwin Mitchell Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/02/2024,,10,10,scotland_bar,generated_pattern
-Danielle Angela,Brownlie,danielleangela.brownlie@colledgeshields.com,Colledge & Shields LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/01/2026,,10,10,scotland_bar,generated_pattern
+Danielle Angela,Brownlie,,Colledge & Shields LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/01/2026,,10,10,scotland_bar,
 Rachel,Bruce,rachel.bruce@stewartwatson.com,Stewart & Watson,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/10/2021,,10,10,scotland_bar,generated_pattern
 Lewis Greig,Bryan,lewisgreig.bryan@sneddonmorrison.com,Sneddon Morrison,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/11/2020,,10,10,scotland_bar,generated_pattern
-Linsey,Bryson,linsey.bryson@johnjacksondicklimited.com,John Jackson & Dick Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/10/2019,,10,10,scotland_bar,generated_pattern
+Linsey,Bryson,,John Jackson & Dick Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/10/2019,,10,10,scotland_bar,
 Emma Elizabeth,Buchanan,emmaelizabeth.buchanan@bartys.com,Bartys,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/11/2020,,10,10,scotland_bar,generated_pattern
-Sara Hollie,Burnett,sarahollie.burnett@brazenallandorr.com,Brazenall and Orr LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/11/2025,,10,10,scotland_bar,generated_pattern
-Eilidh Anne,Burns,eilidhanne.burns@weightmansscotland.com,Weightmans (Scotland) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/09/2024,,10,10,scotland_bar,generated_pattern
-Emma,Burns,emma.burns@millerbeckettjacksonlimited.com,Miller Beckett & Jackson Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/08/2021,,10,10,scotland_bar,generated_pattern
+Sara Hollie,Burnett,,Brazenall and Orr LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/11/2025,,10,10,scotland_bar,
+Eilidh Anne,Burns,,Weightmans (Scotland) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/09/2024,,10,10,scotland_bar,
+Emma,Burns,,Miller Beckett & Jackson Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/08/2021,,10,10,scotland_bar,
+Joanna Marielle Syversen,Anderson,joannamariellesyversen.anderson@stronachs.com,Stronachs LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/02/2026,,10,10,scotland_bar,generated_pattern
+Ava Elizabeth,Cadenhead,avaelizabeth.cadenhead@gilsongray.com,Gilson Gray LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/09/2025,,10,10,scotland_bar,generated_pattern
+Chloe Melissa,Cairns,chloemelissa.cairns@livingstonelaw.com,Livingstone Brown Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/07/2019,,10,10,scotland_bar,generated_pattern
+Matteo Giuseppe,Cairns,matteogiuseppe.cairns@dentons.law,Dentons UK and Middle East LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/11/2022,,10,10,scotland_bar,generated_pattern
+Chloe Frances,Caldwell,chloefrances.caldwell@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/06/2024,,10,10,scotland_bar,generated_pattern
+Rebecca Irene,Caldwell,rebeccairene.caldwell@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/09/2023,,10,10,scotland_bar,generated_pattern
+Megan Joy,Callaghan,meganjoy.callaghan@digbybrown.com,Digby Brown LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/01/2026,,10,10,scotland_bar,generated_pattern
+James,Callender,james.callender@dwf.law,DWF LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/10/2022,,10,10,scotland_bar,generated_pattern
+Heather,Cameron-Lawlor,,Anderson Beaton Lamond,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/06/2021,,10,10,scotland_bar,
+Eden Hannah,Cameron-Perry,edenhannah.cameron-perry@wrightlaw.com,"Wright, Johnston & Mackenzie LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/09/2025,,10,10,scotland_bar,generated_pattern
+Alec,Cameron,alec.cameron@dentons.law,Dentons UK and Middle East LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/07/2022,,10,10,scotland_bar,generated_pattern
+Eve Zoe,Cameron,evezoe.cameron@balfourlaw.com,Balfour + Manson LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/06/2025,,10,10,scotland_bar,generated_pattern
+Jodie Alexandra Barnes,Cameron,jodiealexandrabarnes.cameron@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/08/2025,,10,10,scotland_bar,generated_pattern
+Kelsey Ann,Cameron,,"Malcolm, Jack & Matheson Limited",,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/07/2018,,10,10,scotland_bar,
+Kirstie Kerr,Cameron,kirstiekerr.cameron@lindsays.co.uk,Lindsays LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/12/2025,,10,10,scotland_bar,generated_pattern
+Ruairidh Fraser,Cameron,ruairidhfraser.cameron@wrightlaw.com,"Wright, Johnston & Mackenzie LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/07/2024,,10,10,scotland_bar,generated_pattern
+Alanah Janna Tara,Campbell,alanahjannatara.campbell@hillslaw.com,Hills Solicitors,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/09/2021,,10,10,scotland_bar,generated_pattern
+Amy Catherine,Campbell,amycatherine.campbell@btosolicitors.com,BTO Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/08/2025,,10,10,scotland_bar,generated_pattern
+Ben Morgan Connor,Campbell,benmorganconnor.campbell@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/04/2024,,10,10,scotland_bar,generated_pattern
+Brandon Korey,Campbell,brandonkorey.campbell@taylorhenderson.com,Taylor & Henderson LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/07/2025,,10,10,scotland_bar,generated_pattern
+Emily Catherine,Campbell,emilycatherine.campbell@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/06/2022,,10,10,scotland_bar,generated_pattern
+Evie Lucy Lees,Campbell,evielucylees.campbell@lindsays.co.uk,Lindsays LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/09/2025,,10,10,scotland_bar,generated_pattern
+Finlay Sinclair,Campbell,,Shakespeare Martineau (Scotland) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/08/2025,,10,10,scotland_bar,
+Hannah,Campbell,hannah.campbell@digbybrown.com,Digby Brown LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/02/2023,,10,10,scotland_bar,generated_pattern
+Laura Ray,Campbell,lauraray.campbell@carters.com,Carters,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/08/2017,,10,10,scotland_bar,generated_pattern
+Lucy Frances,Campbell,lucyfrances.campbell@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/02/2022,,10,10,scotland_bar,generated_pattern
+Maia,Campbell,maia.campbell@btosolicitors.com,BTO Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/10/2025,,10,10,scotland_bar,generated_pattern
+Paulette Shanelle,Campbell,pauletteshanelle.campbell@tcyoung.com,TC Young LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/11/2025,,10,10,scotland_bar,generated_pattern
+Rachael Nicole,Campbell,rachaelnicole.campbell@cockburns.com,Cockburns,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/09/2019,,10,10,scotland_bar,generated_pattern
+Rebecca Loren,Campbell,rebeccaloren.campbell@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,31/01/2022,,10,10,scotland_bar,generated_pattern
+Sarah Margaret,Campbell,sarahmargaret.campbell@rllaw.com,Rollos Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/02/2022,,10,10,scotland_bar,generated_pattern
+Sophie,Campbell,sophie.campbell@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/03/2022,,10,10,scotland_bar,generated_pattern
+Stacii Jessie,Campbell,staciijessie.campbell@allanlegal.com,Allan McDougall McQueen LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/02/2026,,10,10,scotland_bar,generated_pattern
+Robyn Lucy,Canning,robynlucy.canning@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/09/2023,,10,10,scotland_bar,generated_pattern
+Laura Catherine,Cantwell,lauracatherine.cantwell@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/03/2024,,10,10,scotland_bar,generated_pattern
+Erin,Carchrie,erin.carchrie@acandco.com,Aberdein Considine LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/08/2025,,10,10,scotland_bar,generated_pattern
+Jonathan Paul,Carey,jonathanpaul.carey@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/09/2023,,10,10,scotland_bar,generated_pattern
+Michael Daniel,Carlin,michaeldaniel.carlin@blackwoodsmith.com,Blackwood & Smith LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/11/2024,,10,10,scotland_bar,generated_pattern
+Megan Mairi,Carling,meganmairi.carling@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/02/2022,,10,10,scotland_bar,generated_pattern
+Vanessa Patricia,Carlsson-Tait,,Ormistons Law Practice Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/12/2019,,10,10,scotland_bar,
+Charis Neve,Carmichael,,Weightmans (Scotland) LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/02/2024,,10,10,scotland_bar,
+Ellie Jane,Carmichael,elliejane.carmichael@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/09/2023,,10,10,scotland_bar,generated_pattern
+Emily Morrison,Carmichael,emilymorrison.carmichael@lattalaw.com,Latta Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/09/2021,,10,10,scotland_bar,generated_pattern
+Megan Katy,Carmody,megankaty.carmody@allanlegal.com,Allan McDougall McQueen LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/02/2024,,10,10,scotland_bar,generated_pattern
+Michael Joseph,Carroll,,L J Wade Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/10/2018,,10,10,scotland_bar,
+James Thomas Balfour,Carson,jamesthomasbalfour.carson@gillespiemacandrew.com,Gillespie Macandrew LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/12/2023,,10,10,scotland_bar,generated_pattern
+Rory Alexander,Carson,roryalexander.carson@macleodlaw.com,Macleod & MacCallum Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/11/2021,,10,10,scotland_bar,generated_pattern
+Rachael Ethel,Cartwright,rachaelethel.cartwright@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/09/2024,,10,10,scotland_bar,generated_pattern
+Vikki,Carver,,McCash & Hunter LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,31/01/2022,,10,10,scotland_bar,
+Rachael Louise,Cassidy,rachaellouise.cassidy@gilsongray.com,Gilson Gray LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/01/2024,,10,10,scotland_bar,generated_pattern
+Mollie,Castle,mollie.castle@drummondlaw.com,Drummond Miller LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/01/2026,,10,10,scotland_bar,generated_pattern
+Alfonso,Castro Sáenz Del Castillo,alfonso.castrosaenzdelcastillo@blackadders.com,Blackadders LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/06/2022,,10,10,scotland_bar,generated_pattern
+Scott Robert,Cathro,scottrobert.cathro@digbybrown.com,Digby Brown LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/11/2024,,10,10,scotland_bar,generated_pattern
+Rebekah Elizabeth,Caunt,rebekahelizabeth.caunt@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/08/2022,,10,10,scotland_bar,generated_pattern
+Greg Irvine,Center,gregirvine.center@support.google.com,Raeburn Christie Clark & Wallace LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/09/2025,,10,10,scotland_bar,generated_pattern
+David James Robertson,Chalmers,davidjamesrobertson.chalmers@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/11/2022,,10,10,scotland_bar,generated_pattern
+Ellis Anne,Chalmers,ellisanne.chalmers@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/12/2023,,10,10,scotland_bar,generated_pattern
+Georgia Rose,Chalmers,georgiarose.chalmers@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/10/2022,,10,10,scotland_bar,generated_pattern
+Kerry-Anne,Chalmers,kerry-anne.chalmers@blackadders.com,Blackadders LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/11/2022,,10,10,scotland_bar,generated_pattern
+Josh David,Chambers,joshdavid.chambers@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/09/2025,,10,10,scotland_bar,generated_pattern
+Sophie Elizabeth,Chandler,sophieelizabeth.chandler@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/07/2025,,10,10,scotland_bar,generated_pattern
+Jack,Chapman,jack.chapman@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/02/2026,,10,10,scotland_bar,generated_pattern
+Amen,Chaudry,amen.chaudry@wrightlaw.com,"Wright, Johnston & Mackenzie LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/01/2022,,10,10,scotland_bar,generated_pattern
+Sarah Gillian,Cheape,sarahgillian.cheape@andersonstrathern.co.uk,Anderson Strathern LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/02/2023,,10,10,scotland_bar,generated_pattern
+Elizabeth Anne,Cheetham,elizabethanne.cheetham@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/06/2025,,10,10,scotland_bar,generated_pattern
+Elle Kari,Chenery,ellekari.chenery@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/08/2023,,10,10,scotland_bar,generated_pattern
+Bethany Amy,Chisholm,bethanyamy.chisholm@ledinghamchalmers.com,Ledingham Chalmers LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/02/2026,,10,10,scotland_bar,generated_pattern
+Jenna Barbara,Chisholm,,Grigor & Young LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/09/2025,,10,10,scotland_bar,
+Zahra Hanif,Choudhary,zahrahanif.choudhary@jacksonlaw.com,Jackson Boyd LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/09/2023,,10,10,scotland_bar,generated_pattern
+Anoop,Christi,anoop.christi@frazercoogans.com,Frazer Coogans Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/08/2020,,10,10,scotland_bar,generated_pattern
+Michaela Catherine,Christie,michaelacatherine.christie@dwf.law,DWF LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/04/2025,,10,10,scotland_bar,generated_pattern
+Shona Lindsay,Christie,shonalindsay.christie@lindsays.co.uk,Lindsays LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/11/2023,,10,10,scotland_bar,generated_pattern
+Denny,Christison,,Jameson + Mackay LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/08/2023,,10,10,scotland_bar,
+Calum David,Chrystal,calumdavid.chrystal@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/02/2026,,10,10,scotland_bar,generated_pattern
+Aleksander Czeslaw,Ciesla,aleksanderczeslaw.ciesla@pinsentmasons.com,Pinsent Masons LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/07/2025,,10,10,scotland_bar,generated_pattern
+Agata Marta,Clark,agatamarta.clark@ledinghamchalmers.com,Ledingham Chalmers LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/05/2024,,10,10,scotland_bar,generated_pattern
+Amy Louisa Campbell,Clark,amylouisacampbell.clark@blackadders.com,Blackadders LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/08/2022,,10,10,scotland_bar,generated_pattern
+Andrew Jamie,Clark,andrewjamie.clark@dicksonminto.com,Dickson Minto,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/09/2021,,10,10,scotland_bar,generated_pattern
+Callum Scott,Clark,callumscott.clark@pinsentmasons.com,"Pinsent Masons LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/09/2025,,10,10,scotland_bar,generated_pattern
+Ellidh Meg,Clark,ellidhmeg.clark@wrightlaw.com,"Wright, Johnston & Mackenzie LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/04/2024,,10,10,scotland_bar,generated_pattern
+Emma Elizabeth Joyce C,Clark,,The McKinstry Company LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/02/2025,,10,10,scotland_bar,
+Iona Beth,Clark,ionabeth.clark@gillespiemacandrew.com,Gillespie Macandrew LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/08/2023,,10,10,scotland_bar,generated_pattern
+Louisa Jemima,Clark,louisajemima.clark@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/05/2025,,10,10,scotland_bar,generated_pattern
+Rowena Lucy,Claxton,rowenalucy.claxton@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/06/2022,,10,10,scotland_bar,generated_pattern
+Sophie Anne,Clayton,sophieanne.clayton@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/07/2023,,10,10,scotland_bar,generated_pattern
+Martin Alan,Clement,martinalan.clement@daclaw.com,DAC Beachcroft Claims Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/12/2023,,10,10,scotland_bar,generated_pattern
+Megan Louise,Clubb,meganlouise.clubb@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,31/01/2022,,10,10,scotland_bar,generated_pattern
+Robyn Melanie,Coates,robynmelanie.coates@balfourlaw.com,Balfour + Manson LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/01/2025,,10,10,scotland_bar,generated_pattern
+Abigail,Coen,abigail.coen@gillespiemacandrew.com,Gillespie Macandrew LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/09/2025,,10,10,scotland_bar,generated_pattern
+Alejandro Wallace,Coghill,alejandrowallace.coghill@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/09/2023,,10,10,scotland_bar,generated_pattern
+Rebecca,Coid,rebecca.coid@tlt.com,TLT LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/07/2023,,10,10,scotland_bar,generated_pattern
+Robbie,Cole,robbie.cole@aaclegal.com,Aamer Anwar & Co,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/10/2019,,10,10,scotland_bar,generated_pattern
+Louise,Colhoun,louise.colhoun@macarthurlegal.com,MacArthur Legal,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/07/2019,,10,10,scotland_bar,generated_pattern
+Cara Frances,Collins,carafrances.collins@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/09/2025,,10,10,scotland_bar,generated_pattern
+Megan Alexandra,Collins,meganalexandra.collins@andersonstrathern.co.uk,Anderson Strathern LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/09/2025,,10,10,scotland_bar,generated_pattern
+Rachael Anne,Collins,rachaelanne.collins@gilsongray.com,Gilson Gray LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/02/2026,,10,10,scotland_bar,generated_pattern
+Anna Elizabeth,Colquhoun,annaelizabeth.colquhoun@dentons.law,Dentons UK and Middle East LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/06/2023,,10,10,scotland_bar,generated_pattern
+Eilidh Margaret,Coltman,,Johnson Family and Property Law Ltd,,,,Edinburgh,UK-SC,United Kingdom,Real Estate,Practising,20/05/2021,,10,10,scotland_bar,
+Caitlin Mary,Colville,caitlinmary.colville@kennedyslaw.com,Kennedys Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/06/2022,,10,10,scotland_bar,generated_pattern
+Natasha Ellen,Connelly,natashaellen.connelly@blackadders.com,Blackadders LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/01/2023,,10,10,scotland_bar,generated_pattern
+Ryan James,Connelly,ryanjames.connelly@digbybrown.com,Digby Brown LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/03/2023,,10,10,scotland_bar,generated_pattern
+Frank Jack,Connon,frankjack.connon@pinsentmasons.com,Pinsent Masons LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/09/2025,,10,10,scotland_bar,generated_pattern
+Abby,Connor,abby.connor@thompsonfamilylaw.com,Thompson Family Law,,,,Edinburgh,UK-SC,United Kingdom,Family Law,Practising,12/09/2017,,10,10,scotland_bar,generated_pattern
+Erin Maria,Connor,erinmaria.connor@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/05/2024,,10,10,scotland_bar,generated_pattern
+Beth Carol,Constance,bethcarol.constance@dicksonminto.com,Dickson Minto LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/09/2024,,10,10,scotland_bar,generated_pattern
+Alexandra Jane,Cook,alexandrajane.cook@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/09/2023,,10,10,scotland_bar,generated_pattern
+Amy Louise,Cook,amylouise.cook@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/09/2022,,10,10,scotland_bar,generated_pattern
+Andreas Bryant,Cooke,andreasbryant.cooke@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/06/2025,,10,10,scotland_bar,generated_pattern
+Eve Louise,Cooper,evelouise.cooper@ledinghamchalmers.com,Ledingham Chalmers LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/02/2023,,10,10,scotland_bar,generated_pattern
+Rachel Margaret,Cooper,rachelmargaret.cooper@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/06/2022,,10,10,scotland_bar,generated_pattern
+Sophie Henderson,Cooper,sophiehenderson.cooper@gilsongray.com,Gilson Gray LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/11/2024,,10,10,scotland_bar,generated_pattern
+Andrew Wright,Corbett,andrewwright.corbett@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/07/2025,,10,10,scotland_bar,generated_pattern
+Julia Carrie Jane,Corcoran,juliacarriejane.corcoran@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/09/2025,,10,10,scotland_bar,generated_pattern
+Daniel,Cormack,daniel.cormack@mortonlaw.com,Morton Fraser MacRoberts LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/07/2024,,10,10,scotland_bar,generated_pattern
+Laura,Cormack,laura.cormack@inneslaw.com,Innes & Mackay Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/04/2019,,10,10,scotland_bar,generated_pattern
+Eliza Hope,Corr,elizahope.corr@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/08/2023,,10,10,scotland_bar,generated_pattern
+Nathan James,Corr,nathanjames.corr@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/05/2024,,10,10,scotland_bar,generated_pattern
+Claire McGilvary,Corrieri,clairemcgilvary.corrieri@neilsonslaw.com,Neilsons,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/11/2018,,10,10,scotland_bar,generated_pattern
+Regan Maxwell Crombie,Cotter,reganmaxwellcrombie.cotter@thompsonslaw.com,Thompsons Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/02/2025,,10,10,scotland_bar,generated_pattern
+Emily Claire,Couchlin,emilyclaire.couchlin@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/03/2022,,10,10,scotland_bar,generated_pattern
+Angus John,Coull,angusjohn.coull@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/06/2025,,10,10,scotland_bar,generated_pattern
+Kirsty Macleod,Cousin,kirstymacleod.cousin@dwf.law,DWF LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/09/2024,,10,10,scotland_bar,generated_pattern
+Fraser Garry,Cowan,frasergarry.cowan@tcyoung.com,TC Young LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/09/2024,,10,10,scotland_bar,generated_pattern
+Jason Gordon,Cowan,jasongordon.cowan@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/07/2024,,10,10,scotland_bar,generated_pattern
+Annabelle Elizabeth,Cowie,annabelleelizabeth.cowie@andersonstrathern.co.uk,Anderson Strathern LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/03/2025,,10,10,scotland_bar,generated_pattern
+Daniel Alexander,Cowie,danielalexander.cowie@drummondlaw.com,Drummond Miller LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/08/2024,,10,10,scotland_bar,generated_pattern
+Stephanie Catherine,Cowie,stephaniecatherine.cowie@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/08/2022,,10,10,scotland_bar,generated_pattern
+Nicole,Cox,nicole.cox@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/08/2025,,10,10,scotland_bar,generated_pattern
+Dominic Paul,Coyle,dominicpaul.coyle@austinlaw.com,Austin Lafferty Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/02/2019,,10,10,scotland_bar,generated_pattern
+Olivia,Coyle,olivia.coyle@btosolicitors.com,BTO Solicitors LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/10/2022,,10,10,scotland_bar,generated_pattern
+Kelsey,Coyne,kelsey.coyne@stirlinglaw.com,Stirling & Gilmour LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/12/2024,,10,10,scotland_bar,generated_pattern
+John Stephen,Craig,johnstephen.craig@pinsentmasons.com,"Pinsent Masons LLP",,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/10/2024,,10,10,scotland_bar,generated_pattern
+Megan Sarah Mary,Craig,megansarahmary.craig@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/07/2022,,10,10,scotland_bar,generated_pattern
+Stuart Andrew,Craig,stuartandrew.craig@mckenzies.com,McKenzies,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/08/2021,,10,10,scotland_bar,generated_pattern
+Phoebe Ngaio,Crane,phoebengaio.crane@brodies.com,Brodies LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/11/2022,,10,10,scotland_bar,generated_pattern
+Charise McIntosh,Crawford,charisemcintosh.crawford@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/08/2022,,10,10,scotland_bar,generated_pattern
+Charlotte Catherine,Crawford,charlottecatherine.crawford@digbybrown.com,Digby Brown LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/01/2024,,10,10,scotland_bar,generated_pattern
+Chloe Hope,Crawford,chloehope.crawford@tlt.com,TLT LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/04/2022,,10,10,scotland_bar,generated_pattern
+Jade Arianne,Crawford,jadearianne.crawford@blackadders.com,Blackadders LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/03/2025,,10,10,scotland_bar,generated_pattern
+Rory Thomas Andrew,Crawford,rorythomasandrew.crawford@andersonstrathern.co.uk,Anderson Strathern LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/02/2023,,10,10,scotland_bar,generated_pattern
+Erin Frances,Crawley,erinfrances.crawley@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/07/2023,,10,10,scotland_bar,generated_pattern
+Louisa Alice,Cresswell,louisaalice.cresswell@cullenkilshaw.com,Cullen Kilshaw LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/11/2025,,10,10,scotland_bar,generated_pattern
+Matthew Gordon Argyle,Crews,matthewgordonargyle.crews@support.google.com,Raeburn Christie Clark & Wallace LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/09/2025,,10,10,scotland_bar,generated_pattern
+Lauren Jayne,Crilley,laurenjayne.crilley@cmslaw.com,CMS Cameron McKenna Nabarro Olswang LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/08/2024,,10,10,scotland_bar,generated_pattern
+Findlay William,Crofts,findlaywilliam.crofts@harperlaw.com,Harper Macleod LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/01/2023,,10,10,scotland_bar,generated_pattern
+Dale Samuel,Crombie,,Freelands,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/11/2020,,10,10,scotland_bar,
+Ewan Fenton,Crombie,ewanfenton.crombie@moirandsweeney.com,Moir and Sweeney LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/02/2022,,10,10,scotland_bar,generated_pattern
+Kieran Robert,Crossley,kieranrobert.crossley@kennedyslaw.com,Kennedys Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/06/2024,,10,10,scotland_bar,generated_pattern
+Hannah,Cruickshank,hannah.cruickshank@support.google.com,Raeburn Christie Clark & Wallace LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/12/2022,,10,10,scotland_bar,generated_pattern
+Jill,Cruickshank,jill.cruickshank@gilsongray.com,Gilson Gray LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/09/2025,,10,10,scotland_bar,generated_pattern
+Paul Anthony,Cruikshank,,Ian C. McCarthy Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/01/2021,,10,10,scotland_bar,
+Morven Kathleen Isobel,Cumming,morvenkathleenisobel.cumming@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/07/2025,,10,10,scotland_bar,generated_pattern
+Sarah Helen Mary,Cumming,,Cameron Clyde Legal Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/07/2019,,10,10,scotland_bar,
+Gemma Louise,Cunningham,gemmalouise.cunningham@gilsongray.com,Gilson Gray LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/11/2022,,10,10,scotland_bar,generated_pattern
+Julia Christine,Cunningham,juliachristine.cunningham@tlt.com,TLT LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/09/2022,,10,10,scotland_bar,generated_pattern
+Lucy Margaret,Cunningham,lucymargaret.cunningham@drummondlaw.com,Drummond Miller LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/01/2023,,10,10,scotland_bar,generated_pattern
+Michael Thomas,Curley,michaelthomas.curley@burnesspaull.com,Burness Paull LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/08/2022,,10,10,scotland_bar,generated_pattern
+Eva Marie,Curran,evamarie.curran@shepherdlaw.com,Shepherd and Wedderburn LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/09/2025,,10,10,scotland_bar,generated_pattern
+Kirsty Lauren,Curran,kirstylauren.curran@addleshawgoddard.com,Addleshaw Goddard LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/06/2022,,10,10,scotland_bar,generated_pattern
+Rebecca Anne,Curran,rebeccaanne.curran@thompsonslaw.com,Thompsons Scotland LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/09/2024,,10,10,scotland_bar,generated_pattern
+Claire Elizabeth,Currie,,1st Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/08/2017,,10,10,scotland_bar,
+Francis George,Cusack,francisgeorge.cusack@thorntonslegal.com,Thorntons Law LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/09/2024,,10,10,scotland_bar,generated_pattern
+Jack Alexander,Cuthbertson,jackalexander.cuthbertson@gillespiemacandrew.com,Gillespie Macandrew LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/12/2023,,10,10,scotland_bar,generated_pattern
+Bartlomiej,Czyzyk,bartlomiej.czyzyk@stronachs.com,Stronachs LLP,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/12/2024,,10,10,scotland_bar,generated_pattern
 Gordon Robert,Adams,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/08/2018,,10,0,scotland_bar,
 Sabihah,Ahmed,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/08/2020,,10,0,scotland_bar,
 Saira,Ali,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/11/2020,,10,0,scotland_bar,
@@ -992,6 +1680,7 @@ Rory David,Brown,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/03/2021,,10,
 Sophie Rhiannon,Brown,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/05/2019,,10,0,scotland_bar,
 Suzanna Mary,Brown,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/09/2017,,10,0,scotland_bar,
 Isla Russell Urquhart,Burns,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,12/09/2018,,10,0,scotland_bar,
+Emily Louise,Campbell,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/06/2021,,10,0,scotland_bar,
 Samantha Jemma,Achampon,samanthajemma.achampon@neilsonslaw.com,Neilsons,,,https://neilsonslaw.com,Edinburgh,UK-SC,United Kingdom,,Practising,04/12/2024,,0,25,scotland_bar,generated_pattern
 Jaimie Michaela,Adams,jaimiemichaela.adams@csllegal.com,Curle Stewart Limited,,,https://csllegal.com,Edinburgh,UK-SC,United Kingdom,,Practising,29/08/2025,,0,25,scotland_bar,generated_pattern
 Kirsty Louise,Adams,kirstylouise.adams@carpenterslaw.com,Carpenters Scotland Limited,,,https://carpenterslaw.com,Edinburgh,UK-SC,United Kingdom,,Practising,06/11/2024,,0,25,scotland_bar,generated_pattern
@@ -1055,29 +1744,77 @@ Anna Elizabeth,Bruce,annaelizabeth.bruce@joneswhytelaw.com,Jones Whyte Law Ltd,,
 Sarah Katie,Buchan,sarahkatie.buchan@turcanconnell.com,Turcan Connell,,,https://turcanconnell.com,Edinburgh,UK-SC,United Kingdom,,Practising,02/07/2025,,0,25,scotland_bar,generated_pattern
 Darya Deryugina,Burton,daryaderyugina.burton@macdonaldlaw.com,Macdonald Henderson Limited,,,https://macdonaldlaw.com,Edinburgh,UK-SC,United Kingdom,,Practising,17/07/2025,,0,25,scotland_bar,generated_pattern
 Iona Elizabeth,Burton,ionaelizabeth.burton@clydeco.com,Clyde & Co,,,https://clydeco.com,Edinburgh,UK-SC,United Kingdom,,Practising,17/02/2023,,0,25,scotland_bar,generated_pattern
-Gareth,Bell-Cairns,gareth.bell-cairns@ethorntonco.com,E. Thornton & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/03/2023,,0,10,scotland_bar,generated_pattern
+Hannah Marie,Baigrie,,Friends Legal,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/10/2024,,0,10,scotland_bar,
+Gareth,Bell-Cairns,,E. Thornton & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/03/2023,,0,10,scotland_bar,
 Darren Brian,Bell,darrenbrian.bell@mmllaw.com,MML Law,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/02/2023,,0,10,scotland_bar,generated_pattern
-Nicola,Bell,nicola.bell@robertwilsonson.com,Robert Wilson & Son,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/05/2022,,0,10,scotland_bar,generated_pattern
+Nicola,Bell,,Robert Wilson & Son,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/05/2022,,0,10,scotland_bar,
 Ainslie Marie,Bennett,ainsliemarie.bennett@thompsonfamilylaw.com,Thompson Family Law,,,,Edinburgh,UK-SC,United Kingdom,Family Law,Practising,26/08/2022,,0,10,scotland_bar,generated_pattern
-Zoheb,Bilal,zoheb.bilal@bkgillsolicitorslimited.com,BK Gill Solicitors Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/06/2025,,0,10,scotland_bar,generated_pattern
+Zoheb,Bilal,,BK Gill Solicitors Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/06/2025,,0,10,scotland_bar,
 Zoë Karyn,Black,zoekaryn.black@nicolsonobrien.com,Nicolson O'Brien Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/07/2025,,0,10,scotland_bar,generated_pattern
-Erin Graham McDonald,Boyd,eringrahammcdonald.boyd@kerrbrownpartnership.com,The Kerr Brown Partnership,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/08/2024,,0,10,scotland_bar,generated_pattern
+Erin Graham McDonald,Boyd,,The Kerr Brown Partnership,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/08/2024,,0,10,scotland_bar,
 Katie Jackson,Boyd,katiejackson.boyd@campbellboath.com,Campbell Boath,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/11/2024,,0,10,scotland_bar,generated_pattern
-Stacy Joyce,Bradley-Davidson,stacyjoyce.bradley-davidson@dunnedefencelawyers.com,Dunne Defence Lawyers,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/07/2025,,0,10,scotland_bar,generated_pattern
-Patrick Ryan,Brechany,patrickryan.brechany@glasgowlawpractice.com,The Glasgow Law Practice,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/02/2022,,0,10,scotland_bar,generated_pattern
-Charis,Brooks,charis.brooks@daillymoonandcosolicitors.com,"Dailly, Moon and Co., Solicitors",,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/01/2023,,0,10,scotland_bar,generated_pattern
-Laura,Brown,laura.brown@jkcameron.com,J K Cameron,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/02/2022,,0,10,scotland_bar,generated_pattern
-Jiri,Broz,jiri.broz@ormistonslawpracticelimited.com,Ormistons Law Practice Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/11/2023,,0,10,scotland_bar,generated_pattern
-Emily,Bruce,emily.bruce@andrewormistonco.com,Andrew Ormiston & Co,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/01/2024,,0,10,scotland_bar,generated_pattern
-Alanna Andrea,Bryant,alannaandrea.bryant@anikajethwaco.com,Anika Jethwa & Co,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/11/2024,,0,10,scotland_bar,generated_pattern
-Tara Aisling,Bryson,taraaisling.bryson@ergolawlimited.com,Ergo Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/08/2025,,0,10,scotland_bar,generated_pattern
-Catherine Alice,Buchanan,catherinealice.buchanan@archibaldsharpsonlimited.com,Archibald Sharp & Son Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/08/2024,,0,10,scotland_bar,generated_pattern
-Erin Maria,Buchanan,erinmaria.buchanan@hingstonslawlimited.com,Hingston's Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/09/2024,,0,10,scotland_bar,generated_pattern
-Meghan Elizabeth,Buckley,meghanelizabeth.buckley@matthewbrown.com,Matthew Brown,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/11/2025,,0,10,scotland_bar,generated_pattern
-Gary,Burgess,gary.burgess@henrykennedycolimited.com,Henry Kennedy & Co. Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/06/2023,,0,10,scotland_bar,generated_pattern
-Rachael Theresa,Burke,rachaeltheresa.burke@hillrobblimited.com,Hill & Robb Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/09/2022,,0,10,scotland_bar,generated_pattern
-Raegan Janice,Burns,raeganjanice.burns@wasbruce.com,W. & A.S. Bruce,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/11/2022,,0,10,scotland_bar,generated_pattern
+Stacy Joyce,Bradley-Davidson,,Dunne Defence Lawyers,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/07/2025,,0,10,scotland_bar,
+Patrick Ryan,Brechany,,The Glasgow Law Practice,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/02/2022,,0,10,scotland_bar,
+Charis,Brooks,,"Dailly, Moon and Co., Solicitors",,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/01/2023,,0,10,scotland_bar,
+Laura,Brown,,J K Cameron,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/02/2022,,0,10,scotland_bar,
+Jiri,Broz,,Ormistons Law Practice Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/11/2023,,0,10,scotland_bar,
+Emily,Bruce,,Andrew Ormiston & Co,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/01/2024,,0,10,scotland_bar,
+Alanna Andrea,Bryant,,Anika Jethwa & Co,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/11/2024,,0,10,scotland_bar,
+Tara Aisling,Bryson,,Ergo Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/08/2025,,0,10,scotland_bar,
+Catherine Alice,Buchanan,,Archibald Sharp & Son Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/08/2024,,0,10,scotland_bar,
+Erin Maria,Buchanan,,Hingston's Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/09/2024,,0,10,scotland_bar,
+Meghan Elizabeth,Buckley,,Matthew Brown,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/11/2025,,0,10,scotland_bar,
+Gary,Burgess,,Henry Kennedy & Co. Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/06/2023,,0,10,scotland_bar,
+Rachael Theresa,Burke,,Hill & Robb Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/09/2022,,0,10,scotland_bar,
+Raegan Janice,Burns,,W. & A.S. Bruce,,,,Edinburgh,UK-SC,United Kingdom,,Practising,04/11/2022,,0,10,scotland_bar,
 Victoria Tamara Amandine,Burt,victoriatamaraamandine.burt@mcewanfraserlegal.com,McEwan Fraser Legal,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/10/2023,,0,10,scotland_bar,generated_pattern
+Grant Peter,Cairnduff,,Holmes Mackillop Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/08/2024,,0,10,scotland_bar,
+Anna Louise,Cameron,annalouise.cameron@peterkins.com,Peterkins,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/09/2025,,0,10,scotland_bar,generated_pattern
+Niomi Catherine L F,Cameron,,Nigel Beaumont & Co.,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/08/2025,,0,10,scotland_bar,
+Anna,Campbell,anna.campbell@joneswhytelaw.com,Jones Whyte Law Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,20/04/2023,,0,10,scotland_bar,generated_pattern
+Hugh Van Woerden,Campbell,hughvanwoerden.campbell@austinlaw.com,Austin Lafferty Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/11/2023,,0,10,scotland_bar,generated_pattern
+Iain,Campbell,iain.campbell@shoosmiths.com,Shoosmiths,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/01/2024,,0,10,scotland_bar,generated_pattern
+Kudzai,Campbell,kudzai.campbell@chamberpractice.com,The Chamber Practice Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/07/2022,,0,10,scotland_bar,generated_pattern
+Rebekah Usha,Campbell,,Friends Legal,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/04/2022,,0,10,scotland_bar,
+Rebecca Elizabeth,Carey,rebeccaelizabeth.carey@watermanslegal.com,Watermans Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/04/2023,,0,10,scotland_bar,generated_pattern
+Mark Stephen,Carlin,,Friels Solicitors Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/01/2025,,0,10,scotland_bar,
+David William Archibald,Carmichael,davidwilliamarchibald.carmichael@mcarthurstanton.com,McArthur Stanton,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/07/2022,,0,10,scotland_bar,generated_pattern
+Kirsty Katie-Morag,Carter,,"Murphy, Robb + Sutherland",,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/04/2022,,0,10,scotland_bar,
+Alexander Scott Callum,Cazaly,,Hill & Robb Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,27/06/2025,,0,10,scotland_bar,
+Ayesha Iqbal,Chaudhry,,Khan Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/06/2024,,0,10,scotland_bar,
+Ehsun Mubasher,Choudry,,"Storie, Cruden & Simpson",,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/07/2025,,0,10,scotland_bar,
+Felix Chimene,Chuku,,Wallace Quinn & Co Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/07/2022,,0,10,scotland_bar,
+Aaron Derek,Clark,aaronderek.clark@rutherfordsheridan.com,Rutherford Sheridan Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/09/2024,,0,10,scotland_bar,generated_pattern
+Andrew Hugh Martin,Clark,andrewhughmartin.clark@neilsonslaw.com,Neilsons,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/04/2025,,0,10,scotland_bar,generated_pattern
+Fiona Wyatt,Clark,,Callahan McKeown & Co Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/09/2022,,0,10,scotland_bar,
+Matthew David,Cliff,,Paisley Defence Lawyers (Scotland) Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,14/10/2025,,0,10,scotland_bar,
+Michael,Cockburn,michael.cockburn@munronoble.com,Munro & Noble,,,,Edinburgh,UK-SC,United Kingdom,,Practising,18/05/2022,,0,10,scotland_bar,generated_pattern
+Charley Frances,Coll,,JC Hughes Solicitors Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,30/08/2023,,0,10,scotland_bar,
+Loren Catherine Margaret,Colliar,lorencatherinemargaret.colliar@fairfieldfamilylaw.com,Fairfield Family Law,,,,Edinburgh,UK-SC,United Kingdom,Family Law,Practising,24/06/2024,,0,10,scotland_bar,generated_pattern
+Ross,Colquhoun,,Stirling & Mair Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/05/2023,,0,10,scotland_bar,
+Angus Fraser,Colville,angusfraser.colville@turcanconnell.com,Turcan Connell,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/09/2024,,0,10,scotland_bar,generated_pattern
+Alannah McCall,Comerford,,Grant Smith Law Practice Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/01/2023,,0,10,scotland_bar,
+Rachel Lorna,Conquer,rachellorna.conquer@adamswhyte.com,Adams Whyte,,,,Edinburgh,UK-SC,United Kingdom,,Practising,15/11/2024,,0,10,scotland_bar,generated_pattern
+Vanessa Amandine,Constant Laforce,,Mackenzie & Cormack,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/02/2025,,0,10,scotland_bar,
+Paul David,Cook,pauldavid.cook@martinlaw.com,"Martin, Johnston & Socha Limited",,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/10/2023,,0,10,scotland_bar,generated_pattern
+Sheelagh,Cooley,sheelagh.cooley@shoosmiths.com,Shoosmiths,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/11/2022,,0,10,scotland_bar,generated_pattern
+Carli Ann,Cooper,carliann.cooper@joneswhytelaw.com,Jones Whyte Law Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/03/2022,,0,10,scotland_bar,generated_pattern
+Nathan James,Cornish,,Hughes Shaughnessy McFarlane Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/02/2022,,0,10,scotland_bar,
+Rebecca Alexa,Cossar,,Lisa Rae & Co Court Solicitors,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/03/2024,,0,10,scotland_bar,
+Laura Marie,Cousins,lauramarie.cousins@scullionlaw.com,Scullion Law Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,11/03/2022,,0,10,scotland_bar,generated_pattern
+Nadia,Coyle,nadia.coyle@rutherfordsheridan.com,Rutherford Sheridan Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,08/11/2024,,0,10,scotland_bar,generated_pattern
+Oliver,Craig,,Mathie Morton Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/11/2023,,0,10,scotland_bar,
+Stephen,Crainey,stephen.crainey@maguirelaw.com,Maguire Solicitors,,,,Edinburgh,UK-SC,United Kingdom,,Practising,02/11/2023,,0,10,scotland_bar,generated_pattern
+Rebecca Jessica Anne,Crawford,rebeccajessicaanne.crawford@support.google.com,Raeside Chisholm Solicitors Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,03/06/2024,,0,10,scotland_bar,generated_pattern
+Daniella-Jane,Croly,,Bridge Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/02/2023,,0,10,scotland_bar,
+Samuel Thomas MacDonald,Cronin,,RD Legal Solicitors Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/12/2025,,0,10,scotland_bar,
+Finlay Douglas,Crowe,,Caird & Vaughan,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/09/2025,,0,10,scotland_bar,
+Sophie,Cruickshank,sophie.cruickshank@jhslaw.com,JHS LAW,,,,Edinburgh,UK-SC,United Kingdom,,Practising,09/07/2024,,0,10,scotland_bar,generated_pattern
+Samuel,Cullen,,1st Legal Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,21/09/2023,,0,10,scotland_bar,
+Christina Williamson,Cummings,christinawilliamson.cummings@munronoble.com,Munro & Noble,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/01/2025,,0,10,scotland_bar,generated_pattern
+Douglas,Cummings,douglas.cummings@joneswhytelaw.com,Jones Whyte Law Ltd,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/11/2024,,0,10,scotland_bar,generated_pattern
+Priyanka Sonum,Cunningham,,Rradar (Scotland) Limited,,,,Edinburgh,UK-SC,United Kingdom,,Practising,07/02/2024,,0,10,scotland_bar,
+Fintan James,Curran,,Anika Jethwa & Co,,,,Edinburgh,UK-SC,United Kingdom,,Practising,16/08/2023,,0,10,scotland_bar,
 Patrick Rupert,Hennessey,,,,,,London,UK-EW-BAR,United Kingdom,,Dual Capacity,,,0,0,bsb-barristers_bar,
 Abdul,Gofur,,,,,,London,UK-EW-BAR,United Kingdom,,Employed,,,0,0,bsb-barristers_bar,
 Adam Paul,Gamsa,,,,,,London,UK-EW-BAR,United Kingdom,,Self Employed,,,0,0,bsb-barristers_bar,
@@ -1106,7 +1843,6 @@ Fathima Samihah,Ashruff,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,28/01/20
 Elaine Angela,Austin-Hartwell,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,01/04/2025,,0,0,scotland_bar,
 Mohammad Abdalrahman,Bachir,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,10/02/2025,,0,0,scotland_bar,
 Anzal Faran,Baig,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/05/2022,,0,0,scotland_bar,
-Hannah Marie,Baigrie,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,23/10/2024,,0,0,scotland_bar,
 Olena Fedorivna,Batryna,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,13/10/2025,,0,0,scotland_bar,
 Harkirit Singh,Bilon,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/07/2024,,0,0,scotland_bar,
 Natasha Leone,Blackmore,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,17/11/2023,,0,0,scotland_bar,
@@ -1295,3 +2031,13 @@ Nicole,Patterson,,,,,,London,UK-EW-BAR,United Kingdom,,Employed,,,0,0,bsb-barris
 Nimue,Bruce,,,,,,Birmingham,UK-EW-BAR,United Kingdom,,Employed,,,0,0,bsb-barristers_bar,
 Rebecca Lindsay,Shorter,,,,,,London,UK-EW-BAR,United Kingdom,,Self Employed,,,0,0,bsb-barristers_bar,
 Suzanne Eve,Ter - Minassian,,,,,,London,UK-EW-BAR,United Kingdom,,Self Employed,,,0,0,bsb-barristers_bar,
+Robert,Callander,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/03/2023,,0,0,scotland_bar,
+Niall Iain Calum,Cameron,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,26/08/2025,,0,0,scotland_bar,
+Caterina Giulia,Capaldi,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,29/04/2022,,0,0,scotland_bar,
+Laura Ka Wai,Cheng,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/11/2023,,0,0,scotland_bar,
+Baris Berkay,Ciftci,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,22/01/2026,,0,0,scotland_bar,
+Kirstin Eilidh,Clark,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,19/04/2022,,0,0,scotland_bar,
+Carla,Codona,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,06/08/2024,,0,0,scotland_bar,
+Ryan William,Coffield,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,05/02/2025,,0,0,scotland_bar,
+Aine Grace,Coll,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,24/07/2024,,0,0,scotland_bar,
+Jamie,Corbitt,,,,,,Edinburgh,UK-SC,United Kingdom,,Practising,25/02/2025,,0,0,scotland_bar,

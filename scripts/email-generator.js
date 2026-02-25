@@ -303,49 +303,12 @@ function main() {
   console.log(`  Generated: ${stats.target2}`);
 
   // -------------------------------------------------------------------------
-  // TARGET 3: Derive domain from firm name
+  // TARGET 3: DISABLED — derived domains are mostly fake (no MX records)
+  // 91% of firm-name-derived domains don't exist as real email servers.
+  // Only Targets 1 (real website) and 2 (firm-mate sharing) produce usable emails.
   // -------------------------------------------------------------------------
-  console.log('--- Target 3: Firm name → derived domain → email ---');
-
-  const t3Leads = db.prepare(`
-    SELECT id, first_name, last_name, firm_name
-    FROM leads
-    WHERE (email IS NULL OR email = '')
-    AND firm_name IS NOT NULL AND firm_name != ''
-  `).all();
-
-  const t3Updates = [];
-  for (const lead of t3Leads) {
-    if (assigned.has(lead.id)) continue; // Already handled by Target 1 or 2
-
-    const candidates = deriveDomainFromFirm(lead.firm_name);
-    if (candidates.length === 0) continue;
-
-    // Use the primary domain candidate (first one)
-    const domain = candidates[0];
-    const email = buildEmail(lead.first_name, lead.last_name, domain);
-    if (!email) {
-      stats.skippedNoName++;
-      continue;
-    }
-
-    t3Updates.push({ id: lead.id, email });
-    assigned.add(lead.id);
-    stats.target3++;
-    if (samples.length < 20) {
-      samples.push({ target: 3, name: `${lead.first_name} ${lead.last_name}`, firm: lead.firm_name, email, derived: domain });
-    }
-  }
-
-  if (!DRY_RUN) {
-    const t3Transaction = db.transaction((updates) => {
-      for (const u of updates) {
-        updateStmt.run(u.email, u.id);
-      }
-    });
-    t3Transaction(t3Updates);
-  }
-  console.log(`  Generated: ${stats.target3}`);
+  console.log('--- Target 3: DISABLED (derived domains unreliable) ---');
+  stats.target3 = 0;
 
   // -------------------------------------------------------------------------
   // Summary
