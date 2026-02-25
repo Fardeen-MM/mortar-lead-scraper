@@ -1,0 +1,1282 @@
+first_name,last_name,email,firm_name,title,phone,website,city,state,country,practice_area,bar_status,admission_date,linkedin_url,decision_maker_score,lead_score,primary_source,email_source
+Abdi,Abdi,abdi.abdi@abdiabdi.com,"Abdi, Abdi",,,,Calgary,CA-AB,Canada,,Practising,2006,,105,10,alberta_bar,generated_pattern
+Carina,Au,carina.au@carinaauoacalaw.com,Carina Au Professional Corporation o/a CA Law,,,,Calgary,CA-AB,Canada,,Practising,1998,,105,10,alberta_bar,generated_pattern
+John,Brooks,john.brooks@johnbrookslawoffice.com,John Brooks Law Office,,,,St. John's,CA-NL,Canada,,Practising,1979,,105,10,newfoundland_bar,generated_pattern
+Bernard,Coffey,bernard.coffey@bernardcoffeylawoffice.com,Bernard Coffey Law Office,,,,St. John's,CA-NL,Canada,,Practising,1979,,105,10,newfoundland_bar,generated_pattern
+John,Duggan,john.duggan@johndugganlaw.com,John Duggan Law,,,,St. John's,CA-NL,Canada,,Practising,1992,,105,10,newfoundland_bar,generated_pattern
+Evan,Kipnis,evan.kipnis@evankipnislaw.com,Evan Kipnis Law,,,,St. John's,CA-NL,Canada,,Practising,1979,,105,10,newfoundland_bar,generated_pattern
+Peter,Ralph,peter.ralph@peterralphlaw.com,Peter Ralph Law,,,,St. John's,CA-NL,Canada,,Practising,1992,,105,10,newfoundland_bar,generated_pattern
+Wayne,White,wayne.white@waynewhitelawoffice.com,Wayne White Law Office,,,,St. John's,CA-NL,Canada,,Practising,1991,,105,10,newfoundland_bar,generated_pattern
+Gerard,Martin,gerard.martin@gerardmartinlawoffice.com,Gerard Martin Law Office,,,,Corner Brook,CA-NL,Canada,,Practising,1972,,105,10,newfoundland_bar,generated_pattern
+Graham,Watton,graham.watton@grahamwattonlawoffice.com,Graham Watton Law Office,,,,Corner Brook,CA-NL,Canada,,Practising,1976,,105,10,newfoundland_bar,generated_pattern
+J,French,j.french@frenchassociates.com,French & Associates,,,,St. John's,CA-NL,Canada,,Practising,1971,,100,10,newfoundland_bar,generated_pattern
+John,French,john.french@frenchassociates.com,French & Associates,,,,St. John's,CA-NL,Canada,,Practising,1999,,100,10,newfoundland_bar,generated_pattern
+Ernest,Gittens,ernest.gittens@gittensdebeerassociates.com,"Gittens, de Beer & Associates",,,,St. John's,CA-NL,Canada,,Practising,1981,,100,10,newfoundland_bar,generated_pattern
+Gregory,Stack,gregory.stack@stackassociates.com,Stack & Associates PLC Inc.,,,,St. John's,CA-NL,Canada,,Practising,1979,,100,10,newfoundland_bar,generated_pattern
+Evelyn,Ackah,evelyn.ackah@evelynackahoaackahbusinessimmigrationlaw.com,Evelyn Ackah Professional Corporation o/a Ackah Business Immigration Law,,,,Calgary,CA-AB,Canada,Immigration,Practising,2008,,95,10,alberta_bar,generated_pattern
+Houman,Agahi,houman.agahi@houmanagahi.com,Houman Agahi Professional Corporation,,,,Calgary,CA-AB,Canada,,Practising,2012,,95,10,alberta_bar,generated_pattern
+Caitlin,Urquhart,caitlin.urquhart@caitlinurquhartlaw.com,Caitlin Urquhart Law,,,,St. John's,CA-NL,Canada,,Practising,2015,,95,10,newfoundland_bar,generated_pattern
+Tyler,Anthony,tyler.anthony@tyleranthony.com,Tyler Anthony Professional Corporation,,,,Calgary,CA-AB,Canada,,Practising,2021,,85,10,alberta_bar,generated_pattern
+Fernando,Arteaga,fernando.arteaga@fernandoarteagaoaarteaga.com,Fernando Arteaga Professional Corporation o/a Arteaga Legal Group,,,,Calgary,CA-AB,Canada,,Practising,2017,,85,10,alberta_bar,generated_pattern
+Nkechi,Asekomhe,nkechi.asekomhe@nkechiasekomheoaacelegal.com,Nkechi Asekomhe Professional Corporation o/a ACE Legal,,,,Calgary,CA-AB,Canada,,Practising,2017,,85,10,alberta_bar,generated_pattern
+Gurpreet,Aulakh,gurpreet.aulakh@gurpreetaulakhprofessionallawcorporationoalawyerg.com,Gurpreet Aulakh Professional Law Corporation o/a LawyerG,,,,Calgary,CA-AB,Canada,,Practising,2017,,85,10,alberta_bar,generated_pattern
+Darryl,Aarbo,aarbo@aflawyers.ca,Aarbo Fuldauer Maitland LLP,,(403) 571-5120,https://aflawyers.ca,Calgary,CA-AB,Canada,,Practising,1997,,80,90,alberta_bar,profile
+Carolyn,Allan,carolyn.allan@matkovicallan.com,Matkovic Allan LLP,,,,Calgary,CA-AB,Canada,,Practising,2004,,80,10,alberta_bar,generated_pattern
+N.,Anderson,n.anderson@andersonmorin.com,Anderson Morin LLP,,,,Calgary,CA-AB,Canada,,Practising,1990,,80,10,alberta_bar,generated_pattern
+Brandi,Aymont,brandi.aymont@fraeseaymont.com,Fraese Aymont LLP,,,,Calgary,CA-AB,Canada,,Practising,2006,,80,10,alberta_bar,generated_pattern
+George,Akers,george.akers@georgehakersqcnichollakers.com,"George H. Akers, QC| Nicholl & Akers LLP",,,,Edmonton,CA-AB,Canada,,Practising,1969,,80,10,alberta_bar,generated_pattern
+Aituaje,Aizenobie,aituaje.aizenobie@aituajeaizenobieoaaualegal.com,Aituaje Aizenobie Professional Corporation o/a AUA Legal,,,,Calgary,CA-AB,Canada,,Practising,2022,,75,10,alberta_bar,generated_pattern
+Khalid,Akram,khalid.akram@khalidakramprofessionallawcorporation.com,Khalid Akram Professional Law Corporation,,,,Calgary,CA-AB,Canada,,Practising,2023,,75,10,alberta_bar,generated_pattern
+Temitayo,Amao,temitayo.amao@temitayoamaooaviewpointlegal.com,Temitayo Amao Professional Corporation o/a Viewpoint Legal,,,,Calgary,CA-AB,Canada,,Practising,2022,,75,10,alberta_bar,generated_pattern
+Nkiru,Anyanwu,nkiru.anyanwu@nkiruanyanwuoanklawoffice.com,Nkiru Anyanwu Professional Corporation o/a NK Law Office,,,,Calgary,CA-AB,Canada,,Practising,2023,,75,10,alberta_bar,generated_pattern
+William,Aaron,william.aaron@williamthomasaaron.com,William Thomas Aaron,,,,Calgary,CA-AB,Canada,,Practising,1972,,70,10,alberta_bar,generated_pattern
+Daniel,Aberle,daniel.aberle@aberledanielj.com,"Aberle, Daniel J.",,,,Calgary,CA-AB,Canada,,Practising,1988,,70,10,alberta_bar,generated_pattern
+Douglas,Allison,douglas.allison@dallisonprofessionallawcorporation.com,D. Allison Professional Law Corporation,,,,Calgary,CA-AB,Canada,,Practising,2003,,70,10,alberta_bar,generated_pattern
+Paul,Allyjan,paul.allyjan@colborneallyjanlaw.com,Colborne Allyjan Law,,,,Calgary,CA-AB,Canada,,Practising,2004,,70,10,alberta_bar,generated_pattern
+Ms.,Anderson,ms.anderson@lindaaanderson.com,Linda A. Anderson Professional Corporation,,,,Calgary,CA-AB,Canada,,Practising,1989,,70,10,alberta_bar,generated_pattern
+Michael,Anderson,michael.anderson@michaeldandersonoamdalaw.com,Michael D. Anderson Professional Corporation o/a MDA Law,,,,Calgary,CA-AB,Canada,,Practising,2006,,70,10,alberta_bar,generated_pattern
+John,Armstrong,john.armstrong@armstrongestatelaw.com,Armstrong Estate Law,,,,Calgary,CA-AB,Canada,Estate Planning,Practising,1965,,70,10,alberta_bar,generated_pattern
+D.,Abbey,d.abbey@davidrabbey.com,David R. Abbey Professional Corporation,,,,Edmonton,CA-AB,Canada,,Practising,1979,,70,10,alberta_bar,generated_pattern
+Raj,Abbi,raj.abbi@abbirajk.com,Abbi Raj K. Professional Corporation,,,,Edmonton,CA-AB,Canada,,Practising,1988,,70,10,alberta_bar,generated_pattern
+A.,Aboughoushe,a.aboughoushe@adamaboughoushe.com,Adam Aboughoushe Professional Corporation,,,,Edmonton,CA-AB,Canada,,Practising,1996,,70,10,alberta_bar,generated_pattern
+Jack,Agrios,jack.agrios@jacknagrios.com,Jack N. Agrios Professional Corporation,,,,Edmonton,CA-AB,Canada,,Practising,1961,,70,10,alberta_bar,generated_pattern
+Ms.,Agrios,ms.agrios@kennedyagriososhrylaw.com,Kennedy Agrios Oshry Law,,,,Edmonton,CA-AB,Canada,,Practising,1988,,70,10,alberta_bar,generated_pattern
+Adrian,Albert,adrian.albert@lyonsalbertcook.com,Lyons Albert & Cook,,,,Edmonton,CA-AB,Canada,,Practising,1975,,70,10,alberta_bar,generated_pattern
+Shannon,Allison,shannon.allison@allisonlawoffice.com,Allison Law Office,,,,Edmonton,CA-AB,Canada,,Practising,1997,,70,10,alberta_bar,generated_pattern
+Carole,Anctil-Michalyshyn,carole.anctil-michalyshyn@anctilmichalyshyncarolej.com,"Anctil-Michalyshyn, Carole J.",,,,Edmonton,CA-AB,Canada,,Practising,1991,,70,10,alberta_bar,generated_pattern
+Gordon,Andreiuk,gordon.andreiuk@gordonhandreiukllb.com,"Gordon H. Andreiuk, L.L.B.",,,,Edmonton,CA-AB,Canada,,Practising,1997,,70,10,alberta_bar,generated_pattern
+Victoria,Archer,victoria.archer@archervictoriaa.com,"Archer, Victoria A.",,,,Edmonton,CA-AB,Canada,,Practising,1991,,70,10,alberta_bar,generated_pattern
+Derek,Aschenbrenner,derek.aschenbrenner@aschenbrennerderekmlawdepot.com,"Aschenbrenner, Derek M.| LawDepot",,,,Edmonton,CA-AB,Canada,,Practising,1990,,70,10,alberta_bar,generated_pattern
+Pierre,Asselin,pierre.asselin@pierregasselinoaavocatsasselinlaw.com,Pierre G. Asselin Professional Corporation o/a Avocats Asselin Law,,,,Edmonton,CA-AB,Canada,,Practising,2006,,70,10,alberta_bar,generated_pattern
+Norman,Assiff,norman.assiff@assifflawoffice.com,Assiff Law Office,,,,Edmonton,CA-AB,Canada,,Practising,1999,,70,10,alberta_bar,generated_pattern
+Akram,Attia,akram.attia@attiareeves.com,Attia Reeves,,,,Edmonton,CA-AB,Canada,,Practising,1993,,70,10,alberta_bar,generated_pattern
+A.S.,Attia,as.attia@attiareevesattiaashraf.com,"Attia Reeves| Attia, Ashraf",,,,Edmonton,CA-AB,Canada,,Practising,1986,,70,10,alberta_bar,generated_pattern
+Nicholas,Avis,nicholas.avis@brownefitzgeraldmorganavis.com,Browne Fitzgerald Morgan & Avis,,,,St. John's,CA-NL,Canada,,Practising,1980,,70,10,newfoundland_bar,generated_pattern
+F,Aylward,f.aylward@aylwardlawca.com,AylwardLaw.ca,,,,St. John's,CA-NL,Canada,,Practising,1983,,70,10,newfoundland_bar,generated_pattern
+Denes,Bajzak,denes.bajzak@denesebajzak.com,Denes E Bajzak,,,,St. John's,CA-NL,Canada,,Practising,1989,,70,10,newfoundland_bar,generated_pattern
+Beverley,Barter,beverley.barter@beverleyabarterlawoffice.com,Beverley A. Barter Law Office,,,,St. John's,CA-NL,Canada,,Practising,1986,,70,10,newfoundland_bar,generated_pattern
+Joseph,Boulos,joseph.boulos@learmonthboulosfitzgerald.com,"Learmonth, Boulos & Fitzgerald",,,,St. John's,CA-NL,Canada,,Practising,1990,,70,10,newfoundland_bar,generated_pattern
+Robert,Bradbury,robert.bradbury@brucebradburylaw.com,Bruce & Bradbury Law,,,,St. John's,CA-NL,Canada,,Practising,2005,,70,10,newfoundland_bar,generated_pattern
+Erin,Breen,erin.breen@sullivanbreen.com,Sullivan Breen,,,,St. John's,CA-NL,Canada,,Practising,2003,,70,10,newfoundland_bar,generated_pattern
+Dennis,Browne,dennis.browne@brownefitzgeraldmorganavis.com,Browne Fitzgerald Morgan & Avis,,,,St. John's,CA-NL,Canada,,Practising,1984,,70,10,newfoundland_bar,generated_pattern
+Augustine,Bruce,augustine.bruce@brucebradburylaw.com,Bruce & Bradbury Law,,,,St. John's,CA-NL,Canada,,Practising,1985,,70,10,newfoundland_bar,generated_pattern
+John,Bruce,john.bruce@brucecompany.com,Bruce & Company,,,,St. John's,CA-NL,Canada,,Practising,1981,,70,10,newfoundland_bar,generated_pattern
+Rhona,Buchan,rhona.buchan@buchanlawdisputeresolution.com,Buchan Law & Dispute Resolution,,,,St. John's,CA-NL,Canada,,Practising,2001,,70,10,newfoundland_bar,generated_pattern
+Philip,Buckingham,philip.buckingham@goodlandbuckingham.com,Goodland Buckingham,,,,St. John's,CA-NL,Canada,,Practising,1990,,70,10,newfoundland_bar,generated_pattern
+Robert,Buckingham,robert.buckingham@bobbuckinghamlaw.com,Bob Buckingham Law,,,,St. John's,CA-NL,Canada,,Practising,1992,,70,10,newfoundland_bar,generated_pattern
+Geoffrey,Budden,geoffrey.budden@buddenhiscocklawyers.com,Budden Hiscock Lawyers,,,,St. John's,CA-NL,Canada,,Practising,1989,,70,10,newfoundland_bar,generated_pattern
+R,Burgess,r.burgess@burgesslawoffices.com,Burgess Law Offices,,,,St. John's,CA-NL,Canada,,Practising,1989,,70,10,newfoundland_bar,generated_pattern
+Sandra,Burke,sandra.burke@daweburke.com,Dawe & Burke,,,,St. John's,CA-NL,Canada,,Practising,1989,,70,10,newfoundland_bar,generated_pattern
+Ronald,Cole,ronald.cole@colelawoffice.com,Cole Law Office,,,,St. John's,CA-NL,Canada,,Practising,1978,,70,10,newfoundland_bar,generated_pattern
+Jean,Dawe,jean.dawe@daweburke.com,Dawe & Burke,,,,St. John's,CA-NL,Canada,,Practising,1978,,70,10,newfoundland_bar,generated_pattern
+Michael,Duffy,michael.duffy@duffylawoffice.com,Duffy Law Office,,,,St. John's,CA-NL,Canada,,Practising,1994,,70,10,newfoundland_bar,generated_pattern
+Anne,Fagan,anne.fagan@macnabfaganmurphy.com,"MacNab, Fagan & Murphy",,,,St. John's,CA-NL,Canada,,Practising,1986,,70,10,newfoundland_bar,generated_pattern
+Andrew,Fitzgerald,andrew.fitzgerald@learmonthboulosfitzgerald.com,"Learmonth, Boulos & Fitzgerald",,,,St. John's,CA-NL,Canada,,Practising,2003,,70,10,newfoundland_bar,generated_pattern
+F,Fitzgerald,f.fitzgerald@brownefitzgeraldmorganavis.com,Browne Fitzgerald Morgan & Avis,,,,St. John's,CA-NL,Canada,,Practising,1987,,70,10,newfoundland_bar,generated_pattern
+Thomas,Fraize,thomas.fraize@fraizelawoffices.com,Fraize Law Offices,,,,St. John's,CA-NL,Canada,,Practising,1982,,70,10,newfoundland_bar,generated_pattern
+David,Goodland,david.goodland@goodlandbuckingham.com,Goodland Buckingham,,,,St. John's,CA-NL,Canada,,Practising,1990,,70,10,newfoundland_bar,generated_pattern
+John,Harris,john.harris@johnjharriskc.com,"John J Harris, KC",,,,St. John's,CA-NL,Canada,,Practising,1980,,70,10,newfoundland_bar,generated_pattern
+Kimberley,Horwood,kimberley.horwood@horwood.com,Horwood Law Group,,,,St. John's,CA-NL,Canada,,Practising,2004,,70,10,newfoundland_bar,generated_pattern
+Susan,Hounsell,susan.hounsell@mcdonaldhounselllawoffices.com,McDonald & Hounsell Law Offices,,,,St. John's,CA-NL,Canada,,Practising,1995,,70,10,newfoundland_bar,generated_pattern
+Deborah,Hutchings,deborah.hutchings@deborahljhutchingslaw.com,Deborah L. J. Hutchings Law,,,,St. John's,CA-NL,Canada,,Practising,1990,,70,10,newfoundland_bar,generated_pattern
+William,Kennedy,william.kennedy@williamskennedylawoffice.com,William S Kennedy Law Office,,,,St. John's,CA-NL,Canada,,Practising,1990,,70,10,newfoundland_bar,generated_pattern
+R,Learmonth,r.learmonth@learmonthboulosfitzgerald.com,"Learmonth, Boulos & Fitzgerald",,,,St. John's,CA-NL,Canada,,Practising,1977,,70,10,newfoundland_bar,generated_pattern
+Susan,LeDrew,susan.ledrew@ledrewlaw.com,LeDrew Law,,,,St. John's,CA-NL,Canada,,Practising,1997,,70,10,newfoundland_bar,generated_pattern
+Chantelle,Newhook,chantelle.newhook@chantellemacdonaldnewhookkclaw.com,"Chantelle MacDonald Newhook, KC Law",,,,St. John's,CA-NL,Canada,,Practising,1995,,70,10,newfoundland_bar,generated_pattern
+Kenneth,Mahoney,kenneth.mahoney@bennettmahoney.com,Bennett Mahoney,,,,St. John's,CA-NL,Canada,,Practising,2003,,70,10,newfoundland_bar,generated_pattern
+Judy,Manning,judy.manning@manninglaw.com,Manning Law,,,,St. John's,CA-NL,Canada,,Practising,2005,,70,10,newfoundland_bar,generated_pattern
+Stephen,Marshall,stephen.marshall@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,1986,,70,10,newfoundland_bar,generated_pattern
+David,McKay,david.mckay@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,1980,,70,10,newfoundland_bar,generated_pattern
+Keith,Morgan,keith.morgan@brownefitzgeraldmorganavis.com,Browne Fitzgerald Morgan & Avis,,,,St. John's,CA-NL,Canada,,Practising,1990,,70,10,newfoundland_bar,generated_pattern
+Kenneth,Moyse,kenneth.moyse@rogersrogersmoyseconway.com,Rogers Rogers Moyse & Conway,,,,St. John's,CA-NL,Canada,,Practising,2001,,70,10,newfoundland_bar,generated_pattern
+Sheilagh,Murphy,sheilagh.murphy@macnabfaganmurphy.com,"MacNab, Fagan & Murphy",,,,St. John's,CA-NL,Canada,,Practising,1999,,70,10,newfoundland_bar,generated_pattern
+Todd,Newhook,todd.newhook@chantellemacdonaldnewhookkclaw.com,"Chantelle MacDonald Newhook, KC Law",,,,St. John's,CA-NL,Canada,,Practising,1995,,70,10,newfoundland_bar,generated_pattern
+Jonathan,Noonan,jonathan.noonan@noonanpiercey.com,Noonan Piercey,,,,St. John's,CA-NL,Canada,,Practising,2005,,70,10,newfoundland_bar,generated_pattern
+David,Orr,david.orr@orrcabotcrosbieoleylaw.com,Orr Cabot Crosbie Oley Law,,,,St. John's,CA-NL,Canada,,Practising,1980,,70,10,newfoundland_bar,generated_pattern
+Ronald,Parsons,ronald.parsons@parsonslaw.com,Parsons Law,,,,St. John's,CA-NL,Canada,,Practising,1973,,70,10,newfoundland_bar,generated_pattern
+Christopher,Peddigrew,christopher.peddigrew@peddigrewwade.com,Peddigrew Wade,,,,St. John's,CA-NL,Canada,,Practising,2004,,70,10,newfoundland_bar,generated_pattern
+Catherine,Perry,catherine.perry@catherinejperry.com,Catherine J. Perry,,,,St. John's,CA-NL,Canada,,Practising,1987,,70,10,newfoundland_bar,generated_pattern
+Randolph,Piercey,randolph.piercey@noonanpiercey.com,Noonan Piercey,,,,St. John's,CA-NL,Canada,,Practising,1984,,70,10,newfoundland_bar,generated_pattern
+Neil,Pittman,neil.pittman@marcobuildersofatlanticcanadaneilfpittmanlawoffice.com,Marco Builders of Atlantic Canada| Neil F. Pittman Law Office,,,,St. John's,CA-NL,Canada,,Practising,2000,,70,10,newfoundland_bar,generated_pattern
+Robert,Pittman,robert.pittman@robertppittmanlawoffice.com,Robert P Pittman Law Office,,,,St. John's,CA-NL,Canada,,Practising,1977,,70,10,newfoundland_bar,generated_pattern
+B,Roebothan,b.roebothan@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,1982,,70,10,newfoundland_bar,generated_pattern
+E,Rogers,e.rogers@rogersrogersmoyseconway.com,Rogers Rogers Moyse & Conway,,,,St. John's,CA-NL,Canada,,Practising,2003,,70,10,newfoundland_bar,generated_pattern
+Richard,Rogers,richard.rogers@rogersrogersmoyseconway.com,Rogers Rogers Moyse & Conway,,,,St. John's,CA-NL,Canada,,Practising,1989,,70,10,newfoundland_bar,generated_pattern
+Darlene,Russell,darlene.russell@russellaccidentlaw.com,Russell Accident Law,,,,St. John's,CA-NL,Canada,Personal Injury,Practising,1994,,70,10,newfoundland_bar,generated_pattern
+Kevin,Stamp,kevin.stamp@martinwhalenhenneburystamp.com,Martin Whalen Hennebury Stamp,,,,St. John's,CA-NL,Canada,,Practising,1978,,70,10,newfoundland_bar,generated_pattern
+Rosellen,Sullivan,rosellen.sullivan@sullivanbreen.com,Sullivan Breen,,,,St. John's,CA-NL,Canada,,Practising,1999,,70,10,newfoundland_bar,generated_pattern
+Gerlinde,Driel,gerlinde.driel@vandriellaw.com,Van Driel Law,,,,St. John's,CA-NL,Canada,,Practising,1984,,70,10,newfoundland_bar,generated_pattern
+Brian,Wentzell,brian.wentzell@collinswentzell.com,Collins Wentzell,,,,St. John's,CA-NL,Canada,,Practising,1997,,70,10,newfoundland_bar,generated_pattern
+Derrick,White,derrick.white@imperialoillimitedwhitelaw.com,Imperial Oil Limited| WhiteLaw PLC Inc.,,,,St. John's,CA-NL,Canada,,Practising,1999,,70,10,newfoundland_bar,generated_pattern
+Geoffrey,Young,geoffrey.young@geoffyoungregulatorylaw.com,Geoff Young Regulatory Law,,,,St. John's,CA-NL,Canada,,Practising,1987,,70,10,newfoundland_bar,generated_pattern
+Jill,Brown,jill.brown@penneybrownlaw.com,Penney & Brown Law,,,,Corner Brook,CA-NL,Canada,,Practising,1996,,70,10,newfoundland_bar,generated_pattern
+Donald,Gallant,donald.gallant@donaldjgallantlawoffice.com,Donald J Gallant Law Office,,,,Corner Brook,CA-NL,Canada,,Practising,1992,,70,10,newfoundland_bar,generated_pattern
+Brian,Murphy,brian.murphy@murphywattonsenior.com,"Murphy, Watton & Senior",,,,Corner Brook,CA-NL,Canada,,Practising,1988,,70,10,newfoundland_bar,generated_pattern
+J,Noseworthy,j.noseworthy@noseworthylaw.com,Noseworthy Law,,,,Corner Brook,CA-NL,Canada,,Practising,2006,,70,10,newfoundland_bar,generated_pattern
+Deanne,Penney,deanne.penney@penneybrownlaw.com,Penney & Brown Law,,,,Corner Brook,CA-NL,Canada,,Practising,1993,,70,10,newfoundland_bar,generated_pattern
+Shelley,Senior,shelley.senior@murphywattonsenior.com,"Murphy, Watton & Senior",,,,Corner Brook,CA-NL,Canada,,Practising,1993,,70,10,newfoundland_bar,generated_pattern
+Lorilee,Sharpe,lorilee.sharpe@cityofcornerbrooksharpelaw.com,City of Corner Brook| SHARPE LAW,,,,Corner Brook,CA-NL,Canada,,Practising,2003,,70,10,newfoundland_bar,generated_pattern
+Derrick,Watton,derrick.watton@murphywattonsenior.com,"Murphy, Watton & Senior",,,,Corner Brook,CA-NL,Canada,,Practising,1991,,70,10,newfoundland_bar,generated_pattern
+Jonathan,Ablett,jonathan.ablett@jonathanmablett.com,Jonathan M. Ablett Professional Corporation,,,,Calgary,CA-AB,Canada,,Practising,2010,,60,10,alberta_bar,generated_pattern
+Adebanke,Adediran,adebanke.adediran@adebankeeadediranoaadeptfamilylawyers.com,Adebanke E. Adediran Professional Corporation o/a Adept Family Lawyers,,,,Calgary,CA-AB,Canada,Family Law,Practising,2010,,60,10,alberta_bar,generated_pattern
+Blessing,Adeleye,blessing.adeleye@blessingoadeleyeoazoelaw.com,Blessing O. Adeleye Professional Corporation o/a Zoe Law,,,,Calgary,CA-AB,Canada,,Practising,2016,,60,10,alberta_bar,generated_pattern
+Uzo,Aghaegbuna,uzo.aghaegbuna@uzostanleyaghaegbunaoastanleylaw.com,Uzo Stanley Aghaegbuna Professional Corporation o/a Stanley Law,,,,Calgary,CA-AB,Canada,,Practising,2015,,60,10,alberta_bar,generated_pattern
+Emmanuel,Aideloje,emmanuel.aideloje@emmanueloaidelojeoadlojelaw.com,Emmanuel O. Aideloje Professional Corporation o/a D'Loje Law,,,,Calgary,CA-AB,Canada,,Practising,2015,,60,10,alberta_bar,generated_pattern
+Francis,Akinnuoye,francis.akinnuoye@franciskakinnuoyeoafrancislaw.com,Francis K. Akinnuoye Professional Corporation o/a Francis Law,,,,Calgary,CA-AB,Canada,,Practising,2014,,60,10,alberta_bar,generated_pattern
+Sajan,Alexander,sajan.alexander@alexanderlaw.com,Alexander Law,,,,Calgary,CA-AB,Canada,,Practising,2007,,60,10,alberta_bar,generated_pattern
+Atif,Ali,atif.ali@altadorelawatifali.com,Altadore Law| Atif Ali Professional Corporation,,,,Calgary,CA-AB,Canada,,Practising,2016,,60,10,alberta_bar,generated_pattern
+Uba,Anya,uba.anya@oneildunnanyabarristerssolicitors.com,O’Neil Dunn Anya Barristers & Solicitors,,,,Calgary,CA-AB,Canada,,Practising,2015,,60,10,alberta_bar,generated_pattern
+M.,Arial,m.arial@mariekimberlyarialoaariallaw.com,Marie Kimberly Arial Professional Corporation o/a Arial Law,,,,Calgary,CA-AB,Canada,,Practising,2013,,60,10,alberta_bar,generated_pattern
+Halley,Auger,halley.auger@thaugeroahaloemploymentlaw.com,T.H. Auger Professional Corporation o/a Halo Employment Law,,,,Calgary,CA-AB,Canada,Employment Law,Practising,2015,,60,10,alberta_bar,generated_pattern
+Barbara,Acton,barbara.acton@barbaralactonoaactonlawoffice.com,Barbara L. Acton Professional Corporation o/a Acton Law Office,,,,Edmonton,CA-AB,Canada,,Practising,2015,,60,10,alberta_bar,generated_pattern
+Fikemi,Adelowokan,fikemi.adelowokan@oluwafikemiaadelowokanoabethellawoffice.com,Oluwafikemi. A. Adelowokan Professional Corporation o/a Bethel Law Office,,,,Edmonton,CA-AB,Canada,,Practising,2016,,60,10,alberta_bar,generated_pattern
+Lonnie,Allen,lonnie.allen@manucciallen.com,Manucci Allen LLP,,,,Edmonton,CA-AB,Canada,,Practising,2017,,60,10,alberta_bar,generated_pattern
+Matthew,Anderson,matthew.anderson@manderson.com,M. Anderson Professional Corporation,,,,Edmonton,CA-AB,Canada,,Practising,2015,,60,10,alberta_bar,generated_pattern
+Michael,Andrawis,michael.andrawis@michaelsandrawis.com,Michael S. Andrawis Professional Corporation,,,,Edmonton,CA-AB,Canada,,Practising,2013,,60,10,alberta_bar,generated_pattern
+Joseph,Angeles,joseph.angeles@josephandkatrinapiadangelesoaangeleslaw.com,Joseph and Katrina Pia D. Angeles Professional Corporation o/a Angeles Law,,,,Edmonton,CA-AB,Canada,,Practising,2014,,60,10,alberta_bar,generated_pattern
+Katrina,Angeles,katrina.angeles@josephandkatrinapiadangelesoaangeleslaw.com,Joseph and Katrina Pia D. Angeles Professional Corporation o/a Angeles Law,,,,Edmonton,CA-AB,Canada,,Practising,2014,,60,10,alberta_bar,generated_pattern
+Daniel,Bennett,daniel.bennett@bennettmahoney.com,Bennett Mahoney,,,,St. John's,CA-NL,Canada,,Practising,2014,,60,10,newfoundland_bar,generated_pattern
+Arieh,Bloom,arieh.bloom@tupmanandbloom.com,Tupman and Bloom LLP,,,,St. John's| Toronto,CA-NL,Canada,,Practising,2021,,60,10,newfoundland_bar,generated_pattern
+D,Butler,d.butler@butlerwillsandestatesconsultingservices.com,Butler Wills and Estates Consulting Services,,,,St. John's,CA-NL,Canada,Estate Planning,Practising,2016,,60,10,newfoundland_bar,generated_pattern
+J,Cabot,j.cabot@orrcabotcrosbieoleylaw.com,Orr Cabot Crosbie Oley Law,,,,St. John's,CA-NL,Canada,,Practising,2012,,60,10,newfoundland_bar,generated_pattern
+J,Collins,j.collins@saunderscollinsloeblaw.com,Saunders Collins & Loeb Law,,,,St. John's,CA-NL,Canada,,Practising,2012,,60,10,newfoundland_bar,generated_pattern
+Andrew,Conway,andrew.conway@rogersrogersmoyseconway.com,Rogers Rogers Moyse & Conway,,,,St. John's,CA-NL,Canada,,Practising,2012,,60,10,newfoundland_bar,generated_pattern
+Jane,Crosbie,jane.crosbie@orrcabotcrosbieoleylaw.com,Orr Cabot Crosbie Oley Law,,,,St. John's,CA-NL,Canada,,Practising,2012,,60,10,newfoundland_bar,generated_pattern
+Sarah,Fitzgerald,sarah.fitzgerald@brownefitzgeraldmorganavis.com,Browne Fitzgerald Morgan & Avis,,,,St. John's,CA-NL,Canada,,Practising,2014,,60,10,newfoundland_bar,generated_pattern
+William,Hiscock,william.hiscock@buddenhiscocklawyers.com,Budden Hiscock Lawyers,,,,St. John's,CA-NL,Canada,,Practising,2011,,60,10,newfoundland_bar,generated_pattern
+Sarah,Learmonth,sarah.learmonth@learmonthboulosfitzgerald.com,"Learmonth, Boulos & Fitzgerald",,,,St. John's,CA-NL,Canada,,Practising,2008,,60,10,newfoundland_bar,generated_pattern
+Darlene,Lucas,darlene.lucas@parsonslucas.com,Parsons Lucas,,,,St. John's,CA-NL,Canada,,Practising,2013,,60,10,newfoundland_bar,generated_pattern
+Darren,O'Keefe,darren.okeefe@okeefesullivan.com,O'Keefe & Sullivan,,,,St. John's,CA-NL,Canada,,Practising,2008,,60,10,newfoundland_bar,generated_pattern
+Barbara,Oley,barbara.oley@orrcabotcrosbieoleylaw.com,Orr Cabot Crosbie Oley Law,,,,St. John's,CA-NL,Canada,,Practising,2011,,60,10,newfoundland_bar,generated_pattern
+Stephen,Orr,stephen.orr@orrcabotcrosbieoleylaw.com,Orr Cabot Crosbie Oley Law,,,,St. John's,CA-NL,Canada,,Practising,2011,,60,10,newfoundland_bar,generated_pattern
+Ashley,Parsons,ashley.parsons@parsonslucas.com,Parsons Lucas,,,,St. John's,CA-NL,Canada,,Practising,2010,,60,10,newfoundland_bar,generated_pattern
+Colin,Sullivan,colin.sullivan@okeefesullivan.com,O'Keefe & Sullivan,,,,St. John's,CA-NL,Canada,,Practising,2009,,60,10,newfoundland_bar,generated_pattern
+Janet,Tucker,janet.tucker@tuckerlaw.com,Tucker Law,,,,St. John's,CA-NL,Canada,,Practising,2007,,60,10,newfoundland_bar,generated_pattern
+Lionel,Tupman,lionel.tupman@tupmanandbloom.com,Tupman and Bloom LLP,,,,St. John's| Toronto,CA-NL,Canada,,Practising,2021,,60,10,newfoundland_bar,generated_pattern
+Allison,Wade,allison.wade@peddigrewwade.com,Peddigrew Wade,,,,St. John's,CA-NL,Canada,,Practising,2014,,60,10,newfoundland_bar,generated_pattern
+John,Whelan,john.whelan@whelandisputeresolution.com,Whelan Dispute Resolution,,,,St. John's,CA-NL,Canada,,Practising,2009,,60,10,newfoundland_bar,generated_pattern
+Simon,Abbott,simon.abbott@patriotcapitalsimonabbott.com,Patriot Capital| Simon Abbott,,(587) 391-9141,,Calgary,CA-AB,Canada,,Practising,2017,,50,35,alberta_bar,generated_pattern
+Adebisi,Adeyemo,adebisi.adeyemo@aadeyemo.com,A. Adeyemo Professional Corporation,,,,Calgary,CA-AB,Canada,,Practising,2021,,50,10,alberta_bar,generated_pattern
+Lawrence,Ainoo,lawrence.ainoo@ainoo.com,Ainoo Law Firm,,,,Calgary,CA-AB,Canada,,Practising,2020,,50,10,alberta_bar,generated_pattern
+Agnes,Ameh,agnes.ameh@aamehoaaameh.com,A. Ameh Professional Corporation o/a AAMEH LAW FIRM,,,,Calgary,CA-AB,Canada,,Practising,2018,,50,10,alberta_bar,generated_pattern
+Meena,Ansari,meena.ansari@ansariimmigrationlaw.com,Ansari Immigration Law,,,,Calgary,CA-AB,Canada,Immigration,Practising,2021,,50,10,alberta_bar,generated_pattern
+Chantal,Borja,chantal.borja@borjalaw.com,Borja Law,,,,Calgary,CA-AB,Canada,,Practising,2018,,50,10,alberta_bar,generated_pattern
+Sepand,Asefi,sepand.asefi@asefilawofficeoaalawoffice.com,Asefi Law Office o/a A. Law Office,,,,Calgary,CA-AB,Canada,,Practising,2020,,50,10,alberta_bar,generated_pattern
+Asif,Ashiq,asif.ashiq@asifnashiqprofessionallegalcorporationoa2alawoffice.com,Asif N. Ashiq Professional Legal Corporation o/a 2A Law Office,,,,Calgary,CA-AB,Canada,,Practising,2018,,50,10,alberta_bar,generated_pattern
+John,Abu,john.abu@johnmartinsabuoajmalaw.com,John Martins Abu Professional Corporation o/a JMA Law,,,,Edmonton,CA-AB,Canada,,Practising,2020,,50,10,alberta_bar,generated_pattern
+Cody,Ackland,cody.ackland@acklandlaw.com,Ackland Law,,,,Edmonton,CA-AB,Canada,,Practising,2017,,50,10,alberta_bar,generated_pattern
+Kalli,Fraize,kalli.fraize@fraizelawoffices.com,Fraize Law Offices,,,,St. John's,CA-NL,Canada,,Practising,2019,,50,10,newfoundland_bar,generated_pattern
+Tony,Granville,tony.granville@granvillelaw.com,Granville Law,,,,St. John's,CA-NL,Canada,,Practising,2019,,50,10,newfoundland_bar,generated_pattern
+Jeremy,Loeb,jeremy.loeb@saunderscollinsloeblaw.com,Saunders Collins & Loeb Law,,,,St. John's,CA-NL,Canada,,Practising,2017,,50,10,newfoundland_bar,generated_pattern
+Jamie,MacGillivray,jamie.macgillivray@macgillivraylawofficeincorporated.com,MacGillivray Law Office Incorporated,,,,New Glasgow| St. John's,CA-NL,Canada,,Practising,2019,,50,10,newfoundland_bar,generated_pattern
+Gregory,Noseworthy,gregory.noseworthy@noseworthy.com,Noseworthy Legal Services,,,,St. John's,CA-NL,Canada,,Practising,2019,,50,10,newfoundland_bar,generated_pattern
+Melissa,Saunders,melissa.saunders@saunderscollinsloeblaw.com,Saunders Collins & Loeb Law,,,,St. John's,CA-NL,Canada,,Practising,2017,,50,10,newfoundland_bar,generated_pattern
+Alexander,Wells,alexander.wells@wells.com,Wells PLC Inc.,,,,St. John's,CA-NL,Canada,,Practising,2017,,50,10,newfoundland_bar,generated_pattern
+Mark,Fancourt-Smith,mark.fancourt-smith@lawsonlundell.com,Lawson Lundell LLP,,604 685-3456,,Vancouver,CA-BC,Canada,,Practising,"May 14, 2003",,40,35,british-columbia_bar,generated_pattern
+Brian,Smith,brian.smith@gowlingwlgcanada.com,Gowling WLG (Canada) LLP,,604 683-6498,,Vancouver,CA-BC,Canada,,Practising,"September 29, 1961",,40,35,british-columbia_bar,generated_pattern
+Michael,Aasen,michael.aasen@mclennanross.com,McLennan Ross LLP,,,,Calgary,CA-AB,Canada,,Practising,1998,,40,10,alberta_bar,generated_pattern
+Emmanuel,Abellera,emmanuel.abellera@abelleralaw.com,Abellera Law,,,,Calgary,CA-AB,Canada,,Practising,2022,,40,10,alberta_bar,generated_pattern
+Sydney,Abougoush,sydney.abougoush@burnetduckworthpalmer.com,"Burnet, Duckworth & Palmer LLP",,,,Calgary,CA-AB,Canada,,Practising,2006,,40,10,alberta_bar,generated_pattern
+George,Akpan,george.akpan@georgesampsonakpanoafortresslaw.com,George Sampson Akpan Professional Corporation o/a The Fortress Law,,,,Calgary,CA-AB,Canada,,Practising,2024,,40,10,alberta_bar,generated_pattern
+Thoburn,Allan,thoburn.allan@mccarthytetrault.com,McCarthy Tetrault LLP,,,,Calgary,CA-AB,Canada,,Practising,2002,,40,10,alberta_bar,generated_pattern
+R.,Allford,r.allford@burnetduckworthpalmer.com,"Burnet, Duckworth & Palmer LLP",,,,Calgary,CA-AB,Canada,,Practising,1991,,40,10,alberta_bar,generated_pattern
+Pilar,Alvarado,pilar.alvarado@alvaradolegalfernandoarteagaoaarteaga.com,Alvarado Legal| Fernando Arteaga Professional Corporation o/a Arteaga Legal Group,,,,Calgary,CA-AB,Canada,,Practising,2023,,40,10,alberta_bar,generated_pattern
+Joseph,Amantea,joseph.amantea@wbalaw.com,WBA Law LLP,,,,Calgary,CA-AB,Canada,,Practising,1978,,40,10,alberta_bar,generated_pattern
+Hassen,Amery,hassen.amery@mkameryoaamerylaw.com,M.K. Amery Professional Corporation o/a Amery Law,,,,Calgary,CA-AB,Canada,,Practising,2023,,40,10,alberta_bar,generated_pattern
+Malaak,Amery,malaak.amery@mkameryoaamerylaw.com,M.K. Amery Professional Corporation o/a Amery Law,,,,Calgary,CA-AB,Canada,,Practising,2025,,40,10,alberta_bar,generated_pattern
+Emma,Amponsah,emma.amponsah@emmasamponsahprofessionallawcorporationoaampslaw.com,Emma S. Amponsah Professional Law Corporation o/a AMPS Law,,,,Calgary| Surrey,CA-AB,Canada,,Practising,2023,,40,10,alberta_bar,generated_pattern
+Bonnie,Anderson,bonnie.anderson@rose.com,Rose LLP,,,,Calgary,CA-AB,Canada,,Practising,2001,,40,10,alberta_bar,generated_pattern
+Brett,Anderson,brett.anderson@mccarthytetrault.com,McCarthy Tetrault LLP,,,,Calgary,CA-AB,Canada,,Practising,2004,,40,10,alberta_bar,generated_pattern
+G.,Anderson,g.anderson@blakecasselsgraydon.com,"Blake, Cassels & Graydon LLP",,,,Calgary,CA-AB,Canada,,Practising,1987,,40,10,alberta_bar,generated_pattern
+Kent,Anderson,kent.anderson@millerthomson.com,Miller Thomson LLP,,,,Calgary,CA-AB,Canada,,Practising,1982,,40,10,alberta_bar,generated_pattern
+Predrag,Anic,predrag.anic@milesdavison.com,Miles Davison LLP,,,,Calgary,CA-AB,Canada,,Practising,1994,,40,10,alberta_bar,generated_pattern
+Georgios,Antonopoulos,georgios.antonopoulos@oslerhoskinharcourt.com,"Osler, Hoskin & Harcourt LLP",,,,Calgary,CA-AB,Canada,,Practising,2006,,40,10,alberta_bar,generated_pattern
+Naveed,Anwar,naveed.anwar@anwarlawofficezenithlawoffice.com,Anwar Law Office| Zenith Law Office,,,,Calgary,CA-AB,Canada,,Practising (Out of Province),2022,,40,10,alberta_bar,generated_pattern
+M.,Archer,m.archer@nortonrosefulbrightcanada.com,Norton Rose Fulbright Canada LLP,,,,Calgary,CA-AB,Canada,,Practising,1999,,40,10,alberta_bar,generated_pattern
+Jennifer,Arndt,jennifer.arndt@dlapipercanada.com,DLA Piper (Canada) LLP,,,,Calgary,CA-AB,Canada,,Practising,2005,,40,10,alberta_bar,generated_pattern
+C.,Arthur,c.arthur@lawsonlundell.com,Lawson Lundell LLP,,,,Calgary,CA-AB,Canada,,Practising,1998,,40,10,alberta_bar,generated_pattern
+Elizabeth,Aspinall,elizabeth.aspinall@bennettjonesbennettjonessencrlsrl.com,"Bennett Jones LLP/ Bennett Jones S.E.N.C.R.L., SRL",,,,Calgary,CA-AB,Canada,,Practising,2002,,40,10,alberta_bar,generated_pattern
+Mary,Assaly,mary.assaly@ogilvie.com,Ogilvie LLP,,,,Calgary,CA-AB,Canada,,Practising,1999,,40,10,alberta_bar,generated_pattern
+Derrick,Auch,derrick.auch@dlapipercanada.com,DLA Piper (Canada) LLP,,,,Calgary,CA-AB,Canada,,Practising,1999,,40,10,alberta_bar,generated_pattern
+Satnam,Aujla,satnam.aujla@merchant.com,Merchant Law Group LLP,,,,Calgary,CA-AB,Canada,,Practising,1993,,40,10,alberta_bar,generated_pattern
+Taranjeet,Aujla,taranjeet.aujla@reliance.com,Reliance Legal Group LLP,,,,Calgary,CA-AB,Canada,,Practising,2002,,40,10,alberta_bar,generated_pattern
+Fatima,Abbas,fatima.abbas@fatimaazmatabbasbarristerandsolicitor.com,Fatima Azmat Abbas Barrister and Solicitor,,,,Calgary,CA-AB,Canada,,Practising,2022,,40,10,alberta_bar,generated_pattern
+Omar,Abougoush,omar.abougoush@abougoushlaw.com,Abougoush Law,,,,Edmonton,CA-AB,Canada,,Practising,2022,,40,10,alberta_bar,generated_pattern
+Terry,Antonello,terry.antonello@biamonte.com,Biamonte LLP,,,,Edmonton,CA-AB,Canada,,Practising,1983,,40,10,alberta_bar,generated_pattern
+Muhammad,Anwar,muhammad.anwar@anwarlegalsolutions.com,Anwar Legal Solutions,,,,Edmonton,CA-AB,Canada,,Practising,2023,,40,10,alberta_bar,generated_pattern
+Mariam,Assaf,mariam.assaf@assafcriminallaw.com,Assaf Criminal Law,,,,Edmonton,CA-AB,Canada,Criminal Defense,Practising,2024,,40,10,alberta_bar,generated_pattern
+Scottie,Marshall,scottie.marshall@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,2024,,40,10,newfoundland_bar,generated_pattern
+Anna,Morgan,anna.morgan@brownefitzgeraldmorganavis.com,Browne Fitzgerald Morgan & Avis,,,,St. John's,CA-NL,Canada,,Practising,2022,,40,10,newfoundland_bar,generated_pattern
+Sarah,Rowe,sarah.rowe@saraharowe.com,Sarah A. Rowe,,,,St. John's,CA-NL,Canada,,Practising,2025,,40,10,newfoundland_bar,generated_pattern
+Jacqueline,Abbott,jacqueline.abbott@crownprosecutorsoffice.com,Crown Prosecutor's Office,,(403) 297-8444,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),1995,,30,35,alberta_bar,generated_pattern
+Adrienne,Smith,adrienne.smith@criminaljusticebranchbcministryofgeneral.com,"Criminal Justice Branch, BC Ministry of Attorney General",,604 660-4100,,Vancouver,CA-BC,Canada,Criminal Defense,Practising,"June 2, 2006",,30,35,british-columbia_bar,generated_pattern
+Casey,Smith,casey.smith@singletonurquhartreynoldsvogel.com,Singleton Urquhart Reynolds Vogel LLP,,604 682-7474,,Vancouver,CA-BC,Canada,,Practising,"September 14, 2009",,30,35,british-columbia_bar,generated_pattern
+Colleen,Abel,colleen.abel@nortonrosefulbrightcanada.com,Norton Rose Fulbright Canada LLP,,,,Calgary,CA-AB,Canada,,Practising,2010,,30,10,alberta_bar,generated_pattern
+Caroline,Abougoush,caroline.abougoush@oxfordpropertiesgroup.com,Oxford Properties Group,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2006,,30,10,alberta_bar,generated_pattern
+P.,Abraham,p.abraham@grantierraenergy.com,Gran Tierra Energy Inc.,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),1999,,30,10,alberta_bar,generated_pattern
+Danilo,Aburto,danilo.aburto@mmejiaoammlaw.com,M. Mejia Professional Corporation o/a MM Law,,,,Calgary,CA-AB,Canada,,Practising,2005,,30,10,alberta_bar,generated_pattern
+Geoffrey,Adair,geoffrey.adair@blakecasselsgraydon.com,"Blake, Cassels & Graydon LLP",,,,Calgary,CA-AB,Canada,,Practising,2016,,30,10,alberta_bar,generated_pattern
+Alison,Adam,alison.adam@mclennanross.com,McLennan Ross LLP,,,,Calgary,CA-AB,Canada,,Practising,2013,,30,10,alberta_bar,generated_pattern
+J.,Afaganis,j.afaganis@enbridge.com,Enbridge Inc.,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),1996,,30,10,alberta_bar,generated_pattern
+M.,Brar,m.brar@departmentofjusticecanada.com,Department of Justice Canada,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2000,,30,10,alberta_bar,generated_pattern
+Elaine,Ahn,elaine.ahn@calgarypoliceservice.com,Calgary Police Service,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2006,,30,10,alberta_bar,generated_pattern
+Hema,Ahuja,hema.ahuja@burnetduckworthpalmer.com,"Burnet, Duckworth & Palmer LLP",,,,Calgary,CA-AB,Canada,,Practising,2008,,30,10,alberta_bar,generated_pattern
+Carrie,Aiken,carrie.aiken@blakecasselsgraydon.com,"Blake, Cassels & Graydon LLP",,,,Calgary,CA-AB,Canada,,Practising,2007,,30,10,alberta_bar,generated_pattern
+Ms.,Albus,ms.albus@sugimotocompany.com,Sugimoto & Company,,,,Calgary,CA-AB,Canada,,Practising,1984,,30,10,alberta_bar,generated_pattern
+Craig,Alcock,craig.alcock@burnetduckworthpalmer.com,"Burnet, Duckworth & Palmer LLP",,,,Calgary,CA-AB,Canada,,Practising,2011,,30,10,alberta_bar,generated_pattern
+Ryan,Algar,ryan.algar@burnetduckworthpalmer.com,"Burnet, Duckworth & Palmer LLP",,,,Calgary,CA-AB,Canada,,Practising,2014,,30,10,alberta_bar,generated_pattern
+J.,Allchurch,j.allchurch@taradpipellaoapipellalaw.com,Tara D. Pipella Professional Corporation o/a Pipella Law,,,,Calgary,CA-AB,Canada,,Practising,1994,,30,10,alberta_bar,generated_pattern
+Peter,Allegretto,peter.allegretto@dentonscanada.com,Dentons Canada LLP,,,,Calgary,CA-AB,Canada,,Practising,2009,,30,10,alberta_bar,generated_pattern
+Kristal,Allen,kristal.allen@dentonscanada.com,Dentons Canada LLP,,,,Calgary,CA-AB,Canada,,Practising,2009,,30,10,alberta_bar,generated_pattern
+Mitchell,Allison,mitchell.allison@mcmillan.com,McMillan LLP,,,,Calgary,CA-AB,Canada,,Practising,2014,,30,10,alberta_bar,generated_pattern
+Karen,Almadi,karen.almadi@taqanorth.com,TAQA North Ltd.,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),1997,,30,10,alberta_bar,generated_pattern
+Juan,Alvarez,juan.alvarez@suncorenergyservices.com,Suncor Energy Services Inc.,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2006,,30,10,alberta_bar,generated_pattern
+Lindsay,Amantea,lindsay.amantea@preliacanada.com,Prelia Canada LLP,,,,Calgary,CA-AB,Canada,,Practising,2016,,30,10,alberta_bar,generated_pattern
+Mohamed,Amery,mohamed.amery@linmac.com,Linmac LLP,,,,Calgary,CA-AB,Canada,,Practising,2011,,30,10,alberta_bar,generated_pattern
+J.,Anderson,j.anderson@paramount.com,Paramount Law Group,,,,Calgary,CA-AB,Canada,,Practising,1983,,30,10,alberta_bar,generated_pattern
+Laurie,Anderson,laurie.anderson@calgaryfamilylawassociates.com,Calgary Family Law Associates,,,,Calgary,CA-AB,Canada,Family Law,Practising,2000,,30,10,alberta_bar,generated_pattern
+Susan,Anderson,susan.anderson@cenovusenergy.com,Cenovus Energy Inc.,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),1994,,30,10,alberta_bar,generated_pattern
+Melinda,Ando,melinda.ando@dirttenvironmentalsolutions.com,DIRTT Environmental Solutions Ltd.,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),1995,,30,10,alberta_bar,generated_pattern
+Charles,Ang,charles.ang@parleemclaws.com,Parlee McLaws LLP,,,,Calgary,CA-AB,Canada,,Practising,2010,,30,10,alberta_bar,generated_pattern
+Vasiliki,Antoniou,vasiliki.antoniou@enbridge.com,Enbridge Inc.,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2004,,30,10,alberta_bar,generated_pattern
+Orieji,Anya,orieji.anya@burnetduckworthpalmer.com,"Burnet, Duckworth & Palmer LLP",,,,Calgary,CA-AB,Canada,,Practising,2015,,30,10,alberta_bar,generated_pattern
+Cynthia,Aoki,cynthia.aoki@clydecocanada.com,Clyde & Co. Canada LLP,,,,Calgary,CA-AB,Canada,,Practising,2015,,30,10,alberta_bar,generated_pattern
+Julio,Ramirez,julio.ramirez@albertasecuritiescommission.com,Alberta Securities Commission,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),1997,,30,10,alberta_bar,generated_pattern
+Kelsey,Armstrong,kelsey.armstrong@oslerhoskinharcourt.com,"Osler, Hoskin & Harcourt LLP",,,,Calgary,CA-AB,Canada,,Practising,2011,,30,10,alberta_bar,generated_pattern
+Kimberly,Armstrong,kimberly.armstrong@calgarypoliceservice.com,Calgary Police Service,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),1994,,30,10,alberta_bar,generated_pattern
+Winta,Asefaw,winta.asefaw@casselsbrockblackwell.com,Cassels Brock & Blackwell LLP,,,,Calgary,CA-AB,Canada,,Practising,2016,,30,10,alberta_bar,generated_pattern
+Robert,Ashcroft,robert.ashcroft@chevroncanadaresources.com,Chevron Canada Resources,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2006,,30,10,alberta_bar,generated_pattern
+Bradley,Ashkin,bradley.ashkin@stikemanelliott.com,Stikeman Elliott LLP,,,,Calgary,CA-AB,Canada,,Practising,2013,,30,10,alberta_bar,generated_pattern
+Sean,Assie,sean.assie@bennettjonesbennettjonessencrlsrl.com,"Bennett Jones LLP/ Bennett Jones S.E.N.C.R.L., SRL",,,,Calgary,CA-AB,Canada,,Practising,2010,,30,10,alberta_bar,generated_pattern
+Alexander,Atkinson,alexander.atkinson@walsh.com,Walsh LLP,,,,Calgary,CA-AB,Canada,,Practising,2013,,30,10,alberta_bar,generated_pattern
+Gordon,Auck,gordon.auck@westlandinvestmentco.com,Westland Investment Co. Ltd.,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),1971,,30,10,alberta_bar,generated_pattern
+Diana,Audino,diana.audino@enbridge.com,Enbridge Inc.,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2004,,30,10,alberta_bar,generated_pattern
+Alireza,Azmudeh,alireza.azmudeh@pwclaw.com,PwC Law LLP,,,,Calgary,CA-AB,Canada,,Practising,2011,,30,10,alberta_bar,generated_pattern
+Amy,Abbott,amy.abbott@emeryjamieson.com,Emery Jamieson LLP,,,,Edmonton,CA-AB,Canada,,Practising,2010,,30,10,alberta_bar,generated_pattern
+James,Ackroyd,james.ackroyd@albertafinance.com,Alberta Finance,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2006,,30,10,alberta_bar,generated_pattern
+Rhiannon,Adams,rhiannon.adams@parleemclaws.com,Parlee McLaws LLP,,,,Edmonton,CA-AB,Canada,,Practising,2012,,30,10,alberta_bar,generated_pattern
+Jennifer,Addison,jennifer.addison@epcorutilities.com,Epcor Utilities Inc.,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2005,,30,10,alberta_bar,generated_pattern
+Karen,Agnihotri,karen.agnihotri@edmontonpoliceservice.com,Edmonton Police Service,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),1994,,30,10,alberta_bar,generated_pattern
+K.,Aisenstat,k.aisenstat@albertajustice.com,Alberta Justice,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2000,,30,10,alberta_bar,generated_pattern
+Lesley,Akst,lesley.akst@albertajusticeandsolicitorgeneral.com,Alberta Justice and Solicitor General,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2004,,30,10,alberta_bar,generated_pattern
+Mark,Alexander,mark.alexander@millerthomson.com,Miller Thomson LLP,,,,Edmonton,CA-AB,Canada,,Practising,2009,,30,10,alberta_bar,generated_pattern
+Deborah,Alford,deborah.alford@albertadepartmentofjustice.com,Alberta Department of Justice,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),1990,,30,10,alberta_bar,generated_pattern
+Diane,Alguire,diane.alguire@albertajusticehealthlaw.com,Alberta Justice - Health Law,,,,Edmonton,CA-AB,Canada,Healthcare Law,Practising (Corporate/Government Counsel),2002,,30,10,alberta_bar,generated_pattern
+Kyle,Allen,kyle.allen@brownlee.com,Brownlee LLP,,,,Edmonton,CA-AB,Canada,,Practising,2014,,30,10,alberta_bar,generated_pattern
+Paul,Alpern,paul.alpern@stantecconsulting.com,Stantec Consulting Ltd.,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),1992,,30,10,alberta_bar,generated_pattern
+Alison,Altmiks,alison.altmiks@albertajustice.com,Alberta Justice,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2003,,30,10,alberta_bar,generated_pattern
+Derek,Alty,derek.alty@firstcanmanagement.com,Firstcan Management Inc.,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),1990,,30,10,alberta_bar,generated_pattern
+Baerach,Anderson,baerach.anderson@jonathonwescottoaalbertacounsel.com,Jonathon Wescott Professional Corporation o/a Alberta Counsel,,,,Edmonton,CA-AB,Canada,,Practising,2006,,30,10,alberta_bar,generated_pattern
+Derek,Anderson,derek.anderson@barr.com,BARR LLP,,,,Edmonton,CA-AB,Canada,,Practising,2009,,30,10,alberta_bar,generated_pattern
+Quinten,Anderson,quinten.anderson@teluslegalregulatoryaffairs.com,Telus  Legal & Regulatory Affairs,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),1990,,30,10,alberta_bar,generated_pattern
+Rebecca,Anderson,rebecca.anderson@enbridge.com,Enbridge Inc.,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2005,,30,10,alberta_bar,generated_pattern
+Robert,Anderson,robert.anderson@albertadepartmentofjustice.com,Alberta Department of Justice,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),1988,,30,10,alberta_bar,generated_pattern
+John,Andreassen,john.andreassen@weirbowen.com,Weir Bowen LLP,,,,Edmonton,CA-AB,Canada,,Practising,2015,,30,10,alberta_bar,generated_pattern
+Michelle,Andresen,michelle.andresen@mcallister.com,McAllister LLP,,,,Edmonton,CA-AB,Canada,,Practising,2011,,30,10,alberta_bar,generated_pattern
+Bonnie,Andriachuk,bonnie.andriachuk@servuscreditunion.com,Servus Credit Union,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),1994,,30,10,alberta_bar,generated_pattern
+Carly,Androschuk,carly.androschuk@cummingsandrewsmackay.com,Cummings Andrews Mackay LLP,,,,Edmonton,CA-AB,Canada,,Practising,2014,,30,10,alberta_bar,generated_pattern
+Darryl,Antel,darryl.antel@feleskyflynn.com,Felesky Flynn LLP,,,,Edmonton,CA-AB,Canada,,Practising,2013,,30,10,alberta_bar,generated_pattern
+Alison,Archer,alison.archer@reynoldsmirthrichardsfarmer.com,Reynolds Mirth Richards & Farmer LLP,,,,Edmonton,CA-AB,Canada,,Practising,2010,,30,10,alberta_bar,generated_pattern
+David,Archibold,david.archibold@sharekloganvanleenen.com,Sharek Logan & van Leenen LLP,,,,Edmonton,CA-AB,Canada,,Practising,2012,,30,10,alberta_bar,generated_pattern
+Carl,Argo,carl.argo@cityofedmonton.com,City of Edmonton,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2005,,30,10,alberta_bar,generated_pattern
+Mikkel,Arnston,mikkel.arnston@reynoldsmirthrichardsfarmer.com,Reynolds Mirth Richards & Farmer LLP,,,,Edmonton,CA-AB,Canada,,Practising,2015,,30,10,alberta_bar,generated_pattern
+Christine,Ashcroft,christine.ashcroft@departmentofjusticecanada.com,Department of Justice Canada,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),1992,,30,10,alberta_bar,generated_pattern
+C.,Ashmore,c.ashmore@cityofedmonton.com,City of Edmonton,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),1995,,30,10,alberta_bar,generated_pattern
+Sharon,Ashmore,sharon.ashmore@informationandprivacycommissioner.com,Office of The Information and Privacy Commissioner,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),1984,,30,10,alberta_bar,generated_pattern
+Malkit,Atwal,malkit.atwal@fieldoafieldlaw.com,Field LLP o/a Field Law LLP,,,,Edmonton,CA-AB,Canada,,Practising,2007,,30,10,alberta_bar,generated_pattern
+Sharon,Au,sharon.au@mltaikins.com,MLT Aikins LLP,,,,Edmonton,CA-AB,Canada,,Practising,2010,,30,10,alberta_bar,generated_pattern
+Karanpal,Aujla,karanpal.aujla@cambria.com,Cambria LLP,,,,Edmonton,CA-AB,Canada,,Practising,2013,,30,10,alberta_bar,generated_pattern
+Lee,Axford,lee.axford@dlapipercanada.com,DLA Piper (Canada) LLP,,,,Edmonton,CA-AB,Canada,,Practising,2012,,30,10,alberta_bar,generated_pattern
+Mark,Andrews,mark.andrews@imperialoillimited.com,Imperial Oil Limited,,,,St. John's,CA-NL,Canada,,Practising,2004,,30,10,newfoundland_bar,generated_pattern
+Donald,Anthony,donald.anthony@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1999,,30,10,newfoundland_bar,generated_pattern
+Gregory,Anthony,gregory.anthony@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,1991,,30,10,newfoundland_bar,generated_pattern
+Joseph,Anthony,joseph.anthony@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2002,,30,10,newfoundland_bar,generated_pattern
+J,Baird,j.baird@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,1973,,30,10,newfoundland_bar,generated_pattern
+Raman,Balakrishnan,raman.balakrishnan@cityofstjohns.com,City of St. John's,,,,St. John's,CA-NL,Canada,,Practising,2004,,30,10,newfoundland_bar,generated_pattern
+Nancy,Barnes,nancy.barnes@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2005,,30,10,newfoundland_bar,generated_pattern
+Steven,Barnes,steven.barnes@intactinsurance.com,Intact Insurance,,,,St. John's,CA-NL,Canada,,Practising,2005,,30,10,newfoundland_bar,generated_pattern
+Barbara,Barrowman,barbara.barrowman@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2003,,30,10,newfoundland_bar,generated_pattern
+Glen,Belbin,glen.belbin@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1990,,30,10,newfoundland_bar,generated_pattern
+Jeffrey,Benson,jeffrey.benson@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,1980,,30,10,newfoundland_bar,generated_pattern
+Glenda,Best,glenda.best@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,1986,,30,10,newfoundland_bar,generated_pattern
+Linda,Bishop,linda.bishop@cityofstjohns.com,City of St. John's,,,,St. John's,CA-NL,Canada,,Practising,1990,,30,10,newfoundland_bar,generated_pattern
+Aubrey,Bonnell,aubrey.bonnell@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,1970,,30,10,newfoundland_bar,generated_pattern
+William,Boyd,william.boyd@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,1985,,30,10,newfoundland_bar,generated_pattern
+Catherine,Boyde,catherine.boyde@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2004,,30,10,newfoundland_bar,generated_pattern
+Jeffrey,Brace,jeffrey.brace@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,1988,,30,10,newfoundland_bar,generated_pattern
+Trevor,Bridger,trevor.bridger@publicprosecutionserviceofcanada.com,Public Prosecution Service of Canada,,,,St. John's,CA-NL,Canada,,Practising,2001,,30,10,newfoundland_bar,generated_pattern
+David,Buffett,david.buffett@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,1975,,30,10,newfoundland_bar,generated_pattern
+Kimberly,Burridge,kimberly.burridge@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1994,,30,10,newfoundland_bar,generated_pattern
+Janie,Bussey,janie.bussey@newfoundlandlabradorhealthservices.com,Newfoundland & Labrador Health Services,,,,St. John's,CA-NL,Canada,,Practising,1999,,30,10,newfoundland_bar,generated_pattern
+Janis,Byrne,janis.byrne@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,1996,,30,10,newfoundland_bar,generated_pattern
+Lauren,Chafe,lauren.chafe@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,1999,,30,10,newfoundland_bar,generated_pattern
+Dennis,Clarke,dennis.clarke@goodlandbuckingham.com,Goodland Buckingham,,,,St. John's,CA-NL,Canada,,Practising,1995,,30,10,newfoundland_bar,generated_pattern
+Bernadette,Gendron,bernadette.gendron@departmentofeducationnlschools.com,Department of Education - NL Schools,,,,St. John's,CA-NL,Canada,,Practising,2001,,30,10,newfoundland_bar,generated_pattern
+Gregory,Connors,gregory.connors@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2000,,30,10,newfoundland_bar,generated_pattern
+Annette,Conway,annette.conway@avivatriallawyers.com,Aviva Trial Lawyers,,,,St. John's,CA-NL,Canada,General Litigation,Practising,1995,,30,10,newfoundland_bar,generated_pattern
+Anna,Cook,anna.cook@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2000,,30,10,newfoundland_bar,generated_pattern
+John,Cook,john.cook@vision33canada.com,Vision33 Canada Inc.,,,,St. John's,CA-NL,Canada,,Practising,2002,,30,10,newfoundland_bar,generated_pattern
+Robin,Cook,robin.cook@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,2006,,30,10,newfoundland_bar,generated_pattern
+Paul,Coxworthy,paul.coxworthy@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,1990,,30,10,newfoundland_bar,generated_pattern
+Amy,Crosbie,amy.crosbie@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,1996,,30,10,newfoundland_bar,generated_pattern
+Michael,Crosbie,michael.crosbie@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,1983,,30,10,newfoundland_bar,generated_pattern
+Jonathan,Dale,jonathan.dale@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2006,,30,10,newfoundland_bar,generated_pattern
+Bridget,Daley,bridget.daley@goodlandbuckingham.com,Goodland Buckingham,,,,St. John's,CA-NL,Canada,,Practising,2006,,30,10,newfoundland_bar,generated_pattern
+Lisa,Daly,lisa.daly@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2004,,30,10,newfoundland_bar,generated_pattern
+Michelle,Davis,michelle.davis@intactfinancialincorporation.com,Intact Financial Incorporation,,,,St. John's,CA-NL,Canada,,Practising,2004,,30,10,newfoundland_bar,generated_pattern
+Geoffrey,Davis-Abraham,geoffrey.davis-abraham@martinwhalenhenneburystamp.com,Martin Whalen Hennebury Stamp,,,,St. John's,CA-NL,Canada,,Practising,1993,,30,10,newfoundland_bar,generated_pattern
+Susan,Day,susan.day@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2003,,30,10,newfoundland_bar,generated_pattern
+Paul,Dicks,paul.dicks@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,1976,,30,10,newfoundland_bar,generated_pattern
+Robert,Dillon,robert.dillon@tdinsurance.com,TD Insurance,,,,St. John's,CA-NL,Canada,,Practising,1997,,30,10,newfoundland_bar,generated_pattern
+Veronica,Dillon,veronica.dillon@russellaccidentlaw.com,Russell Accident Law,,,,St. John's,CA-NL,Canada,Personal Injury,Practising,1998,,30,10,newfoundland_bar,generated_pattern
+Michael,Dodd,michael.dodd@rogersrogersmoyseconway.com,Rogers Rogers Moyse & Conway,,,,St. John's,CA-NL,Canada,,Practising,1985,,30,10,newfoundland_bar,generated_pattern
+Tamara,Drover,tamara.drover@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2001,,30,10,newfoundland_bar,generated_pattern
+J,Duffy,j.duffy@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2002,,30,10,newfoundland_bar,generated_pattern
+J,Eaton,j.eaton@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,1980,,30,10,newfoundland_bar,generated_pattern
+Herbert,Edwards,herbert.edwards@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1992,,30,10,newfoundland_bar,generated_pattern
+Jason,Edwards,jason.edwards@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2000,,30,10,newfoundland_bar,generated_pattern
+A,Elliott,a.elliott@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,1998,,30,10,newfoundland_bar,generated_pattern
+Colin,Feltham,colin.feltham@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,2004,,30,10,newfoundland_bar,generated_pattern
+Peter,Fitzgerald,peter.fitzgerald@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1995,,30,10,newfoundland_bar,generated_pattern
+Denis,Fleming,denis.fleming@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2004,,30,10,newfoundland_bar,generated_pattern
+Christopher,Forbes,christopher.forbes@memorialuniversityofnewfoundland.com,Memorial University of Newfoundland,,,,St. John's,CA-NL,Canada,,Practising,2006,,30,10,newfoundland_bar,generated_pattern
+Gregory,French,gregory.french@nllabourrelationsboard.com,NL Labour Relations Board,,,,St. John's,CA-NL,Canada,,Practising,1998,,30,10,newfoundland_bar,generated_pattern
+Christopher,Gill,christopher.gill@frenchassociates.com,French & Associates,,,,St. John's,CA-NL,Canada,,Practising,1999,,30,10,newfoundland_bar,generated_pattern
+Krista,Gillam,krista.gillam@workplacehealthsafetycompensationcommission.com,"Workplace Health, Safety & Compensation Commission",,,,St. John's,CA-NL,Canada,,Practising,1996,,30,10,newfoundland_bar,generated_pattern
+Margaret,Gillies,margaret.gillies@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1999,,30,10,newfoundland_bar,generated_pattern
+Daniel,Glover,daniel.glover@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,2005,,30,10,newfoundland_bar,generated_pattern
+Jacqueline,Glynn,jacqueline.glynn@publicutilitiesboard.com,Public Utilities Board,,,,St. John's,CA-NL,Canada,,Practising,2000,,30,10,newfoundland_bar,generated_pattern
+Colette,Goodyear,colette.goodyear@colabai.com,CoLab AI Inc.,,,,St. John's,CA-NL,Canada,,Practising,2000,,30,10,newfoundland_bar,generated_pattern
+F,Gosse,f.gosse@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,1994,,30,10,newfoundland_bar,generated_pattern
+Aubrey,Gover,aubrey.gover@labradorandaboriginalaffairsoffice.com,Labrador and Aboriginal Affairs Office,,,,St. John's,CA-NL,Canada,,Practising,1984,,30,10,newfoundland_bar,generated_pattern
+Brenda,Grimes,brenda.grimes@lawsocietyofnewfoundlandandlabrador.com,Law Society of Newfoundland and Labrador,,,,St. John's,CA-NL,Canada,,Practising,1992,,30,10,newfoundland_bar,generated_pattern
+John,Hartery,john.hartery@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,1994,,30,10,newfoundland_bar,generated_pattern
+Kerry,Hatfield,kerry.hatfield@informationandprivacycommissioner.com,Office of the Information and Privacy Commissioner,,,,St. John's,CA-NL,Canada,,Practising,2002,,30,10,newfoundland_bar,generated_pattern
+Kimberly,George,kimberly.george@houseofassembly.com,House of Assembly,,,,St. John's,CA-NL,Canada,,Practising,1995,,30,10,newfoundland_bar,generated_pattern
+Kathleen,Healey,kathleen.healey@buddenhiscocklawyers.com,Budden Hiscock Lawyers,,,,St. John's,CA-NL,Canada,,Practising,1987,,30,10,newfoundland_bar,generated_pattern
+Christopher,Hickey,christopher.hickey@nasdaqcanada.com,Nasdaq Canada Inc.,,,,St. John's,CA-NL,Canada,,Practising,2006,,30,10,newfoundland_bar,generated_pattern
+Robert,Hickey,robert.hickey@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,1992,,30,10,newfoundland_bar,generated_pattern
+Kenneth,Hollett,kenneth.hollett@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,1996,,30,10,newfoundland_bar,generated_pattern
+Kelly,Hopkins,kelly.hopkins@northatlantic.com,North Atlantic,,,,St. John's,CA-NL,Canada,,Practising,2006,,30,10,newfoundland_bar,generated_pattern
+Jason,House,jason.house@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2005,,30,10,newfoundland_bar,generated_pattern
+William,Howse,william.howse@publicprosecutionserviceofcanada.com,Public Prosecution Service of Canada,,,,St. John's,CA-NL,Canada,,Practising,2005,,30,10,newfoundland_bar,generated_pattern
+Keith,Humphries,keith.humphries@rcmpcanadafirearmscentre.com,RCMP Legal Services - Canada Firearms Centre,,,,St. John's,CA-NL,Canada,,Practising,1980,,30,10,newfoundland_bar,generated_pattern
+Karen,Hurley,karen.hurley@humanrightscommission.com,Human Rights Commission,,,,St. John's,CA-NL,Canada,,Practising,1998,,30,10,newfoundland_bar,generated_pattern
+Scott,Hurley,scott.hurley@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2000,,30,10,newfoundland_bar,generated_pattern
+Valerie,Hynes,valerie.hynes@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,2001,,30,10,newfoundland_bar,generated_pattern
+David,Jones,david.jones@oceanex.com,Oceanex Inc,,,,St. John's,CA-NL,Canada,,Practising,1985,,30,10,newfoundland_bar,generated_pattern
+Ian,Kelly,ian.kelly@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,1979,,30,10,newfoundland_bar,generated_pattern
+Thomas,Kendell,thomas.kendell@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,1977,,30,10,newfoundland_bar,generated_pattern
+Jerome,Kennedy,jerome.kennedy@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,1985,,30,10,newfoundland_bar,generated_pattern
+Christopher,King,christopher.king@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2004,,30,10,newfoundland_bar,generated_pattern
+Susan,King,susan.king@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1998,,30,10,newfoundland_bar,generated_pattern
+Tannis,King,tannis.king@royalnewfoundlandconstabulary.com,Royal Newfoundland Constabulary,,,,St. John's,CA-NL,Canada,,Practising,2001,,30,10,newfoundland_bar,generated_pattern
+Gregory,Kirby,gregory.kirby@odeaearle.com,"O'Dea, Earle",,,,St. John's,CA-NL,Canada,,Practising,1994,,30,10,newfoundland_bar,generated_pattern
+Barry,Lake,barry.lake@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2001,,30,10,newfoundland_bar,generated_pattern
+Raelene,Lee,raelene.lee@memorialuniversityofnewfoundland.com,Memorial University of Newfoundland,,,,St. John's,CA-NL,Canada,,Practising,2003,,30,10,newfoundland_bar,generated_pattern
+Kimberly,Mackay,kimberly.mackay@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2000,,30,10,newfoundland_bar,generated_pattern
+James,Maher,james.maher@buddenhiscocklawyers.com,Budden Hiscock Lawyers,,,,St. John's,CA-NL,Canada,,Practising,1985,,30,10,newfoundland_bar,generated_pattern
+Carey,Majid,carey.majid@humanrightscommission.com,Human Rights Commission,,,,St. John's,CA-NL,Canada,,Practising,2001,,30,10,newfoundland_bar,generated_pattern
+Susan,Marrie,susan.marrie@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1990,,30,10,newfoundland_bar,generated_pattern
+Heidi,Marshall,heidi.marshall@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2001,,30,10,newfoundland_bar,generated_pattern
+M,Mate,m.mate@nauticorlegal.com,Nauticor Legal,,,,St. John's,CA-NL,Canada,,Practising,1998,,30,10,newfoundland_bar,generated_pattern
+Stephen,May,stephen.may@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,1988,,30,10,newfoundland_bar,generated_pattern
+Ronald,McCabe,ronald.mccabe@daweburke.com,Dawe & Burke,,,,St. John's,CA-NL,Canada,,Practising,1986,,30,10,newfoundland_bar,generated_pattern
+Paul,McDonald,paul.mcdonald@saunderscollinsloeblaw.com,Saunders Collins & Loeb Law,,,,St. John's,CA-NL,Canada,,Practising,1984,,30,10,newfoundland_bar,generated_pattern
+Beth,McGrath,beth.mcgrath@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2006,,30,10,newfoundland_bar,generated_pattern
+Nancy,McKillop,nancy.mckillop@gittensdebeerassociates.com,"Gittens, de Beer & Associates",,,,St. John's,CA-NL,Canada,,Practising,2002,,30,10,newfoundland_bar,generated_pattern
+Sharon,McKim-Ryan,sharon.mckim-ryan@relationshiftfamilylaw.com,Relationshift Family Law PLC Inc.,,,,St. John's,CA-NL,Canada,Family Law,Practising,2005,,30,10,newfoundland_bar,generated_pattern
+Kimberley,McLennan,kimberley.mclennan@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1996,,30,10,newfoundland_bar,generated_pattern
+Olga,Benson,olga.benson@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2001,,30,10,newfoundland_bar,generated_pattern
+LeeAnn,Montgomery,leeann.montgomery@pringlewoodholdings.com,Pringlewood Holdings Inc,,,,St. John's,CA-NL,Canada,,Practising,1978,,30,10,newfoundland_bar,generated_pattern
+Gregory,Moores,gregory.moores@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2004,,30,10,newfoundland_bar,generated_pattern
+Riley,Moss,riley.moss@forestroad.com,Forest Road Law Group,,,,St. John's,CA-NL,Canada,,Practising,2003,,30,10,newfoundland_bar,generated_pattern
+Henry,Mugford,henry.mugford@buddenhiscocklawyers.com,Budden Hiscock Lawyers,,,,St. John's,CA-NL,Canada,,Practising,2005,,30,10,newfoundland_bar,generated_pattern
+Cheryl,Mullett,cheryl.mullett@cityofstjohns.com,City of St. John's,,,,St. John's,CA-NL,Canada,,Practising,2002,,30,10,newfoundland_bar,generated_pattern
+Andrea,McGrath,andrea.mcgrath@newfoundlandlabradorhealthservices.com,Newfoundland & Labrador Health Services,,,,St. John's,CA-NL,Canada,,Practising,2006,,30,10,newfoundland_bar,generated_pattern
+Mark,Murray,mark.murray@martinwhalenhenneburystamp.com,Martin Whalen Hennebury Stamp,,,,St. John's,CA-NL,Canada,,Practising,1991,,30,10,newfoundland_bar,generated_pattern
+R,Myles,r.myles@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,1982,,30,10,newfoundland_bar,generated_pattern
+D,Neville,d.neville@registerednursesunionnewfoundlandlabradorrnunl.com,Registered Nurses' Union Newfoundland & Labrador (RNUNL),,,,St. John's,CA-NL,Canada,,Practising,2003,,30,10,newfoundland_bar,generated_pattern
+Dwanda,Newman,dwanda.newman@publicutilitiesboard.com,Public Utilities Board,,,,St. John's,CA-NL,Canada,,Practising,1994,,30,10,newfoundland_bar,generated_pattern
+Paul,Nolan,paul.nolan@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1990,,30,10,newfoundland_bar,generated_pattern
+Susan,Norman,susan.norman@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,1999,,30,10,newfoundland_bar,generated_pattern
+Gerald,O'Brien,gerald.obrien@manninglaw.com,Manning Law,,,,St. John's,CA-NL,Canada,,Practising,1969,,30,10,newfoundland_bar,generated_pattern
+Liam,O'Brien,liam.obrien@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,1997,,30,10,newfoundland_bar,generated_pattern
+Regan,O'Dea,regan.odea@fortis.com,Fortis Inc.,,,,St. John's,CA-NL,Canada,,Practising,2001,,30,10,newfoundland_bar,generated_pattern
+Stacey,O'Dea,stacey.odea@imperialoillimited.com,Imperial Oil Limited,,,,St. John's,CA-NL,Canada,,Practising,2002,,30,10,newfoundland_bar,generated_pattern
+Natalie,O'Donnell,natalie.odonnell@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,2006,,30,10,newfoundland_bar,generated_pattern
+Kristen,O'Keefe,kristen.okeefe@courtofappealofnewfoundlandandlabrador.com,Court of Appeal of Newfoundland and Labrador,,,,St. John's,CA-NL,Canada,,Practising,2000,,30,10,newfoundland_bar,generated_pattern
+Kathleen,O'Neill,kathleen.oneill@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2001,,30,10,newfoundland_bar,generated_pattern
+Kathleen,O'Reilly,kathleen.oreilly@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2004,,30,10,newfoundland_bar,generated_pattern
+Isobel,O'Shea,isobel.oshea@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2004,,30,10,newfoundland_bar,generated_pattern
+Derrick,Oldford,derrick.oldford@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1998,,30,10,newfoundland_bar,generated_pattern
+David,Orsborn,david.orsborn@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,1979,,30,10,newfoundland_bar,generated_pattern
+Suzanne,Orsborn,suzanne.orsborn@generallitigationcounsel.com,Office of Attorney General - Litigation Counsel,,,,St. John's,CA-NL,Canada,General Litigation,Practising,2006,,30,10,newfoundland_bar,generated_pattern
+Tracy,Pasley,tracy.pasley@avivatriallawyers.com,Aviva Trial Lawyers,,,,St. John's,CA-NL,Canada,General Litigation,Practising,1997,,30,10,newfoundland_bar,generated_pattern
+Ian,Patey,ian.patey@odeaearle.com,"O'Dea, Earle",,,,St. John's,CA-NL,Canada,,Practising,2001,,30,10,newfoundland_bar,generated_pattern
+Shawn,Patten,shawn.patten@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2003,,30,10,newfoundland_bar,generated_pattern
+Nancy,Paul,nancy.paul@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1992,,30,10,newfoundland_bar,generated_pattern
+Gary,Peddle,gary.peddle@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,1989,,30,10,newfoundland_bar,generated_pattern
+Jacqueline,Pelletier,jacqueline.pelletier@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1996,,30,10,newfoundland_bar,generated_pattern
+Tracey,Pennell,tracey.pennell@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2006,,30,10,newfoundland_bar,generated_pattern
+Geoffrey,Penney,geoffrey.penney@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,1999,,30,10,newfoundland_bar,generated_pattern
+Jacqueline,Penney,jacqueline.penney@marineatlantic.com,Marine Atlantic,,,,St. John's,CA-NL,Canada,,Practising,1994,,30,10,newfoundland_bar,generated_pattern
+Stephen,Penney,stephen.penney@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,1998,,30,10,newfoundland_bar,generated_pattern
+Rebecca,Phillipps,rebecca.phillipps@workplacehealthsafetycompensationcommission.com,"Workplace Health, Safety & Compensation Commission",,,,St. John's,CA-NL,Canada,,Practising,1995,,30,10,newfoundland_bar,generated_pattern
+Tammy,Farrell,tammy.farrell@bureauveritas.com,Bureau Veritas,,,,St. John's,CA-NL,Canada,,Practising,1998,,30,10,newfoundland_bar,generated_pattern
+Christopher,Pike,christopher.pike@publicutilitiesboard.com,Public Utilities Board,,,,St. John's,CA-NL,Canada,,Practising,1989,,30,10,newfoundland_bar,generated_pattern
+Donald,Powell,donald.powell@fraizelawoffices.com,Fraize Law Offices,,,,St. John's,CA-NL,Canada,,Practising,1991,,30,10,newfoundland_bar,generated_pattern
+Elaine,Reid,elaine.reid@publicprosecutionserviceofcanada.com,Public Prosecution Service of Canada,,,,St. John's,CA-NL,Canada,,Practising,1999,,30,10,newfoundland_bar,generated_pattern
+Twila,Reid,twila.reid@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2003,,30,10,newfoundland_bar,generated_pattern
+Stephen,Ring,stephen.ring@departmentofjusticeandpublicsafetyseriousincidentresponseteamsirtnl.com,Department of Justice and Public Safety| Serious Incident Response Team (SIRTNL),,,,St. John's,CA-NL,Canada,,Practising,2001,,30,10,newfoundland_bar,generated_pattern
+Griffith,Roberts,griffith.roberts@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,1996,,30,10,newfoundland_bar,generated_pattern
+Blair,Rogers,blair.rogers@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,2006,,30,10,newfoundland_bar,generated_pattern
+Terry,Rowe,terry.rowe@martinwhalenhenneburystamp.com,Martin Whalen Hennebury Stamp,,,,St. John's,CA-NL,Canada,,Practising,1982,,30,10,newfoundland_bar,generated_pattern
+Maureen,Ryan,maureen.ryan@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,1990,,30,10,newfoundland_bar,generated_pattern
+Paula,Schumph,paula.schumph@newfoundlandassociationofpublicemployees.com,Newfoundland Association of Public Employees,,,,St. John's,CA-NL,Canada,,Practising,1996,,30,10,newfoundland_bar,generated_pattern
+Jorge,Segovia,jorge.segovia@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,1993,,30,10,newfoundland_bar,generated_pattern
+Colm,Seviour,colm.seviour@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,1983,,30,10,newfoundland_bar,generated_pattern
+Daniel,Simmons,daniel.simmons@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,1983,,30,10,newfoundland_bar,generated_pattern
+Gregory,Smith,gregory.smith@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,1989,,30,10,newfoundland_bar,generated_pattern
+Gerrie,Smith,gerrie.smith@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1998,,30,10,newfoundland_bar,generated_pattern
+Randall,Smith,randall.smith@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,1981,,30,10,newfoundland_bar,generated_pattern
+R,Smith,r.smith@publicprosecutionserviceofcanada.com,Public Prosecution Service of Canada,,,,St. John's,CA-NL,Canada,,Practising,2000,,30,10,newfoundland_bar,generated_pattern
+James,Smyth,james.smyth@forestroad.com,Forest Road Law Group,,,,St. John's,CA-NL,Canada,,Practising,1973,,30,10,newfoundland_bar,generated_pattern
+Geoffrey,Spencer,geoffrey.spencer@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,1994,,30,10,newfoundland_bar,generated_pattern
+Anthony,George,anthony.george@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,1994,,30,10,newfoundland_bar,generated_pattern
+G,Stanley,g.stanley@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,1996,,30,10,newfoundland_bar,generated_pattern
+Lisa,Stead,lisa.stead@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1998,,30,10,newfoundland_bar,generated_pattern
+Raylene,Stokes,raylene.stokes@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1998,,30,10,newfoundland_bar,generated_pattern
+Karen,Stone,karen.stone@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1992,,30,10,newfoundland_bar,generated_pattern
+Darren,Stratton,darren.stratton@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,1993,,30,10,newfoundland_bar,generated_pattern
+Dana,Sullivan,dana.sullivan@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2004,,30,10,newfoundland_bar,generated_pattern
+John,Taylor-Hood,john.taylor-hood@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2003,,30,10,newfoundland_bar,generated_pattern
+Kenneth,Templeton,kenneth.templeton@conflictresolutionconsulting.com,Conflict Resolution Consulting PLC Inc.,,,,St. John's,CA-NL,Canada,,Practising,1980,,30,10,newfoundland_bar,generated_pattern
+Ian,Tucker,ian.tucker@houseofassembly.com,House of Assembly,,,,St. John's,CA-NL,Canada,,Practising,2004,,30,10,newfoundland_bar,generated_pattern
+Kimberley,Walsh,kimberley.walsh@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2001,,30,10,newfoundland_bar,generated_pattern
+Shirley,Walsh,shirley.walsh@newfoundlandlabradorhydrocommission.com,Newfoundland & Labrador Hydro Commission,,,,St. John's,CA-NL,Canada,,Practising,2003,,30,10,newfoundland_bar,generated_pattern
+Philip,Warren,philip.warren@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2000,,30,10,newfoundland_bar,generated_pattern
+Caroline,Watton,caroline.watton@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,1991,,30,10,newfoundland_bar,generated_pattern
+Heidi,Wells,heidi.wells@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,1993,,30,10,newfoundland_bar,generated_pattern
+Sheri,Wicks,sheri.wicks@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2001,,30,10,newfoundland_bar,generated_pattern
+Michelle,Willette,michelle.willette@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,1999,,30,10,newfoundland_bar,generated_pattern
+David,Williams,david.williams@odeaearle.com,"O'Dea, Earle",,,,St. John's,CA-NL,Canada,,Practising,2006,,30,10,newfoundland_bar,generated_pattern
+Thomas,Williams,thomas.williams@odeaearle.com,"O'Dea, Earle",,,,St. John's,CA-NL,Canada,,Practising,1988,,30,10,newfoundland_bar,generated_pattern
+Stephen,Winter,stephen.winter@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2006,,30,10,newfoundland_bar,generated_pattern
+Denise,Woodrow,denise.woodrow@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2004,,30,10,newfoundland_bar,generated_pattern
+Scott,Worsfold,scott.worsfold@memorialuniversityofnewfoundland.com,Memorial University of Newfoundland,,,,St. John's,CA-NL,Canada,,Practising,1997,,30,10,newfoundland_bar,generated_pattern
+Douglas,Wright,douglas.wright@newfoundlandpower.com,Newfoundland Power,,,,St. John's,CA-NL,Canada,,Practising,2003,,30,10,newfoundland_bar,generated_pattern
+Kendra,Wright,kendra.wright@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2003,,30,10,newfoundland_bar,generated_pattern
+Kenneth,Young,kenneth.young@kmk.com,KMK Legal Services PLC Inc.,,,,St. John's,CA-NL,Canada,,Practising,1998,,30,10,newfoundland_bar,generated_pattern
+Rodney,Zdebiak,rodney.zdebiak@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,1993,,30,10,newfoundland_bar,generated_pattern
+Wendy,Zdebiak,wendy.zdebiak@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,1993,,30,10,newfoundland_bar,generated_pattern
+J,Bennett,j.bennett@poolealthouse.com,"Poole, Althouse",,,,Corner Brook| Happy Valley-Goose Bay,CA-NL,Canada,,Practising,2001,,30,10,newfoundland_bar,generated_pattern
+Peter,Chaffey,peter.chaffey@legalaidnl.com,Legal Aid NL,,,,Corner Brook,CA-NL,Canada,,Practising,2004,,30,10,newfoundland_bar,generated_pattern
+Brenda,Duffy,brenda.duffy@crownsoffice.com,Crown Attorney's Office,,,,Corner Brook,CA-NL,Canada,,Practising,1991,,30,10,newfoundland_bar,generated_pattern
+Franklin,Layte,franklin.layte@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,Corner Brook,CA-NL,Canada,,Practising,1999,,30,10,newfoundland_bar,generated_pattern
+Jamie,Luscombe,jamie.luscombe@legalaidnl.com,Legal Aid NL,,,,Corner Brook,CA-NL,Canada,,Practising,2006,,30,10,newfoundland_bar,generated_pattern
+Andrew,May,andrew.may@brotherslaw.com,Brothers Law,,,,Corner Brook,CA-NL,Canada,,Practising,2002,,30,10,newfoundland_bar,generated_pattern
+James,Merrigan,james.merrigan@poolealthouse.com,"Poole, Althouse",,,,Corner Brook| Happy Valley-Goose Bay,CA-NL,Canada,,Practising,2000,,30,10,newfoundland_bar,generated_pattern
+Adam,Sparkes,adam.sparkes@legalaidnl.com,Legal Aid NL,,,,Corner Brook,CA-NL,Canada,,Practising,1998,,30,10,newfoundland_bar,generated_pattern
+George,Alley,,,,,,Charlottetown,CA-PE,Canada,,Active,1865-01-04,,30,0,pei_bar,
+Joseph,Alpin,,,,,,Charlottetown,CA-PE,Canada,,Active,1786-01-01,,30,0,pei_bar,
+Michael,Adam,michael.adam@jci.com,Johnson Controls Canada L.P.,,7788778965,https://jci.com,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),2011-12-19,,20,90,pei_bar,profile
+Robin,Aitken,raitken@coxandpalmer.com,Cox & Palmer,,9026281033,https://coxandpalmer.com,Charlottetown,CA-PE,Canada,,Practising Lawyer,2008-09-23,,20,90,pei_bar,profile
+Peter,Allison,pfallison@gov.pe.ca,"Justice & Public Safety, Legal and Legislative Services",,9023684553,https://gov.pe.ca,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),2012-02-23,,20,90,pei_bar,profile
+Kiersten,Amos,kiersten.amos@mcinnescooper.com,McInnes Cooper,,9024448584,https://mcinnescooper.com,Charlottetown,CA-PE,Canada,,Honorary Member,2015-04-08,,20,90,pei_bar,profile
+Kaitlyn,Hornsby,kaitlyn.angus@mcinnescooper.com,McInnes Cooper,,9023688473,https://mcinnescooper.com,Charlottetown,CA-PE,Canada,,Practising Lawyer,2012-06-15,,20,90,pei_bar,profile
+Samantha,Allen,samantha.allen@novascotia.ca,Nova Scotia Public Prosecution Service,,,https://novascotia.ca,Charlottetown,CA-PE,Canada,,Honorary Member,2016-06-17,,20,65,pei_bar,profile
+Sarah,Aaron,sarah.aaron@bennettjonesbennettjonessencrlsrl.com,"Bennett Jones LLP/ Bennett Jones S.E.N.C.R.L., SRL",,(403) 298-3100,,Calgary,CA-AB,Canada,,Practising,2021,,20,35,alberta_bar,generated_pattern
+Zahra,Abbas,zahra.abbas@canadiannaturalresourceslimited.com,Canadian Natural Resources Limited,,(403) 517-6700,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2009,,20,35,alberta_bar,generated_pattern
+Georgia,Lloyd-Smith,georgia.lloyd-smith@westcoastenvironmentallawassociation.com,West Coast Environmental Law Association,,604 684-7378,,Vancouver,CA-BC,Canada,Environmental Law,Practising,"June 10, 2016",,20,35,british-columbia_bar,generated_pattern
+Elizabeth,Abidogun,elizabeth.abidogun@pinnaclelegal.com,Pinnacle Legal,,,,Calgary,CA-AB,Canada,,Practising,2014,,20,10,alberta_bar,generated_pattern
+Zoe,Abreder,zoe.abreder@fyidoctors.com,FYIdoctors,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2016,,20,10,alberta_bar,generated_pattern
+Christopher,Abtosway,christopher.abtosway@canadiannaturalresourceslimited.com,Canadian Natural Resources Limited,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2016,,20,10,alberta_bar,generated_pattern
+Justine,Abtosway,justine.abtosway@rogerscommunications.com,ROGERS COMMUNICATIONS INC.,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2016,,20,10,alberta_bar,generated_pattern
+Jillian,Acton,jillian.acton@southbowcorporation.com,South Bow Corporation,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2010,,20,10,alberta_bar,generated_pattern
+Robin,Acworth,robin.acworth@nortonrosefulbrightcanada.com,Norton Rose Fulbright Canada LLP,,,,Calgary,CA-AB,Canada,,Practising,2018,,20,10,alberta_bar,generated_pattern
+Tamara,Adderley,tamara.adderley@richmondtymchukfamilylaw.com,Richmond Tymchuk Family Law LLP,,,,Calgary,CA-AB,Canada,Family Law,Practising,2020,,20,10,alberta_bar,generated_pattern
+Rebecca,Adenekan,rebecca.adenekan@trend.com,Trend Law Firm,,,,Calgary| Red Deer,CA-AB,Canada,,Practising,2016,,20,10,alberta_bar,generated_pattern
+Abisola,Adesanya,abisola.adesanya@bowvalleycollege.com,Bow Valley College,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2013,,20,10,alberta_bar,generated_pattern
+Olubunmi,Adesina,olubunmi.adesina@gowlingwlgcanadagowlingwlgcanadasencrlsrl.com,"Gowling WLG (Canada) LLP/Gowling WLG (Canada) S.E.N.C.R.L., S.R.L.",,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2021,,20,10,alberta_bar,generated_pattern
+Taimur,Akbar,taimur.akbar@lkokeoaaxesslaw.com,L. Koke Professional Corporation o/a Axess Law,,,,Calgary,CA-AB,Canada,,Practising,2008,,20,10,alberta_bar,generated_pattern
+Michael,Akins,michael.akins@bordenladnergervais.com,Borden Ladner Gervais LLP,,,,Calgary,CA-AB,Canada,,Practising,2021,,20,10,alberta_bar,generated_pattern
+Mike,Albert,mike.albert@jensenshawasolomonduguidhawkes.com,Jensen Shawa Solomon Duguid Hawkes LLP,,,,Calgary,CA-AB,Canada,,Practising,2020,,20,10,alberta_bar,generated_pattern
+Alexandra,Alfaro,alexandra.alfaro@walsh.com,Walsh LLP,,,,Calgary,CA-AB,Canada,,Practising,2018,,20,10,alberta_bar,generated_pattern
+Maryla,Ali,maryla.ali@mmejiaoammlaw.com,M. Mejia Professional Corporation o/a MM Law,,,,Calgary,CA-AB,Canada,,Practising,2011,,20,10,alberta_bar,generated_pattern
+Stefan,Ali,stefan.ali@enerflex.com,Enerflex Ltd.,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2010,,20,10,alberta_bar,generated_pattern
+Samantha,Allan,samantha.allan@bdlfamilylaw.com,BDL Family Law LLP,,,,Calgary,CA-AB,Canada,Family Law,Practising,2021,,20,10,alberta_bar,generated_pattern
+Elizabeth,Allum,elizabeth.allum@bennettjonesbennettjonessencrlsrl.com,"Bennett Jones LLP/ Bennett Jones S.E.N.C.R.L., SRL",,,,Calgary,CA-AB,Canada,,Practising,2019,,20,10,alberta_bar,generated_pattern
+Leanne,Alport,leanne.alport@calgarypoliceservice.com,Calgary Police Service,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2014,,20,10,alberta_bar,generated_pattern
+Emily,Amirkhani,emily.amirkhani@jensenshawasolomonduguidhawkes.com,Jensen Shawa Solomon Duguid Hawkes LLP,,,,Calgary,CA-AB,Canada,,Practising,2020,,20,10,alberta_bar,generated_pattern
+Nithya,Anand,nithya.anand@deloitte.com,Deloitte LLP,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2018,,20,10,alberta_bar,generated_pattern
+Rebecca,Andersen,rebecca.andersen@cityofcalgary.com,The City of Calgary,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2010,,20,10,alberta_bar,generated_pattern
+Cameron,Anderson,cameron.anderson@northrivermidstream.com,NorthRiver Midstream Inc.,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2013,,20,10,alberta_bar,generated_pattern
+James,Anderson,james.anderson@transcanadapipelineslimited.com,TransCanada PipeLines Limited,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2010,,20,10,alberta_bar,generated_pattern
+W.,Anderson,w.anderson@parleemclaws.com,Parlee McLaws LLP,,,,Calgary,CA-AB,Canada,,Practising,2020,,20,10,alberta_bar,generated_pattern
+Kate,Andrews,kate.andrews@cpkc.com,CPKC,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2011,,20,10,alberta_bar,generated_pattern
+Susan,Ansari,susan.ansari@crownprosecutorsoffice.com,Crown Prosecutor's Office,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2015,,20,10,alberta_bar,generated_pattern
+Gianna,Argento,gianna.argento@crownprosecutorsoffice.com,Crown Prosecutor's Office,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2015,,20,10,alberta_bar,generated_pattern
+Robert,Armfield,robert.armfield@shellcanadalimited.com,Shell Canada Limited,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2010,,20,10,alberta_bar,generated_pattern
+Taylor,Armfield,taylor.armfield@peoplesgroup.com,Peoples Group,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2011,,20,10,alberta_bar,generated_pattern
+Jason,Arnason,jason.arnason@bennettjonesbennettjonessencrlsrl.com,"Bennett Jones LLP/ Bennett Jones S.E.N.C.R.L., SRL",,,,Calgary,CA-AB,Canada,,Practising,2021,,20,10,alberta_bar,generated_pattern
+Jocelyn,Arnason,jocelyn.arnason@casselsbrockblackwell.com,Cassels Brock & Blackwell LLP,,,,Calgary,CA-AB,Canada,,Practising,2019,,20,10,alberta_bar,generated_pattern
+Erik,Arnold,erik.arnold@suncorenergyservices.com,Suncor Energy Services Inc.,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2014,,20,10,alberta_bar,generated_pattern
+Prince,Arora,prince.arora@dlapipercanada.com,DLA Piper (Canada) LLP,,,,Calgary,CA-AB,Canada,,Practising,2021,,20,10,alberta_bar,generated_pattern
+Adegoke,Arowosebe,adegoke.arowosebe@transcanadapipelineslimited.com,TransCanada PipeLines Limited,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2013,,20,10,alberta_bar,generated_pattern
+Lawrence,Ator,lawrence.ator@shellcanadalimited.com,Shell Canada Limited,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2008,,20,10,alberta_bar,generated_pattern
+Curtis,Auch,curtis.auch@brownlee.com,Brownlee LLP,,,,Calgary,CA-AB,Canada,,Practising,2019,,20,10,alberta_bar,generated_pattern
+Richie,Aujla,richie.aujla@suntjensmckinnon.com,Suntjens McKinnon LLP,,,,Calgary,CA-AB,Canada,,Practising,2021,,20,10,alberta_bar,generated_pattern
+Abram,Averbach,abram.averbach@abafamilylawyers.com,ABA Family Lawyers,,,,Calgary,CA-AB,Canada,Family Law,Practising,2008,,20,10,alberta_bar,generated_pattern
+Andrew,Avery,andrew.avery@nortonrosefulbrightcanada.com,Norton Rose Fulbright Canada LLP,,,,Calgary,CA-AB,Canada,,Practising,2017,,20,10,alberta_bar,generated_pattern
+Carolyn,Ayre,carolyn.ayre@albertajustice.com,Alberta Justice,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2014,,20,10,alberta_bar,generated_pattern
+Omar,Abdulhak,omar.abdulhak@tauruslaw.com,Taurus Law LLP,,,,Edmonton,CA-AB,Canada,,Practising,2017,,20,10,alberta_bar,generated_pattern
+Ryan,Abrams,ryan.abrams@albertacrownprosecutionservice.com,Alberta Crown Prosecution Service,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2011,,20,10,alberta_bar,generated_pattern
+Kwame,Abrefah,kwame.abrefah@bowielaw.com,Bowie Law,,,,Edmonton,CA-AB,Canada,,Practising,2016,,20,10,alberta_bar,generated_pattern
+Leigh,Acheson,leigh.acheson@witten.com,Witten LLP,,,,Edmonton,CA-AB,Canada,,Practising,2021,,20,10,alberta_bar,generated_pattern
+Kwaku,Adu,kwaku.adu@jameshbrownassociates.com,James H. Brown & Associates LLP,,,,Edmonton,CA-AB,Canada,,Practising,2019,,20,10,alberta_bar,generated_pattern
+Inez,Agovic,inez.agovic@thompsonlaboucanepp.com,"Thompson, Laboucan & Epp LLP",,,,Edmonton,CA-AB,Canada,,Practising,2020,,20,10,alberta_bar,generated_pattern
+C.,Ahanonu,c.ahanonu@dukelawoffice.com,Duke Law Office,,,,Edmonton,CA-AB,Canada,,Practising,2010,,20,10,alberta_bar,generated_pattern
+Humaira,Ahmad,humaira.ahmad@tracycbrownoabrown.com,Tracy C. Brown Professional Corporation o/a Brown Law Group,,,,Edmonton,CA-AB,Canada,,Practising,2010,,20,10,alberta_bar,generated_pattern
+Sanjana,Ahmed,sanjana.ahmed@albertahumanrightscommission.com,Alberta Human Rights Commission,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2016,,20,10,alberta_bar,generated_pattern
+Mazen,Al-Badran,mazen.al-badran@forum.com,Forum Law Group LLP,,,,Edmonton,CA-AB,Canada,,Practising,2021,,20,10,alberta_bar,generated_pattern
+Peter,Alexander,peter.alexander@smiththompsonlaw.com,Smith Thompson Law LLP,,,,Edmonton,CA-AB,Canada,,Practising,2020,,20,10,alberta_bar,generated_pattern
+Veronica,Alexander,veronica.alexander@albertacrownprosecutionservice.com,Alberta Crown Prosecution Service,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2007,,20,10,alberta_bar,generated_pattern
+Kendal,Allemekinders,kendal.allemekinders@dentonscanadaedmonton.com,Dentons Canada LLP - Edmonton,,,,Edmonton,CA-AB,Canada,,Practising,2020,,20,10,alberta_bar,generated_pattern
+Anita,Allen-Lloyd,anita.allen-lloyd@alberta.com,Alberta Law Group,,,,Edmonton,CA-AB,Canada,,Practising,2015,,20,10,alberta_bar,generated_pattern
+Alia,Ally,alia.ally@albertajustice.com,Alberta Justice,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2007,,20,10,alberta_bar,generated_pattern
+Julie,Alton,julie.alton@albertajustice.com,Alberta Justice,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2014,,20,10,alberta_bar,generated_pattern
+Stephanie,Ambrose,stephanie.ambrose@parleemclaws.com,Parlee McLaws LLP,,,,Edmonton,CA-AB,Canada,,Practising,2017,,20,10,alberta_bar,generated_pattern
+Julia,Amelio,julia.amelio@bennettjonesbennettjonessencrlsrl.com,"Bennett Jones LLP/ Bennett Jones S.E.N.C.R.L., SRL",,,,Edmonton,CA-AB,Canada,,Practising,2021,,20,10,alberta_bar,generated_pattern
+Mickey,Amery,mickey.amery@ministerofjusticesolicitorgeneral.com,Minister of Justice & Solicitor General,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2012,,20,10,alberta_bar,generated_pattern
+Mark,Ammann,mark.ammann@albertadepartmentofjustice.com,Alberta Department of Justice,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2008,,20,10,alberta_bar,generated_pattern
+Peter,Amrhein,peter.amrhein@kvcapital.com,KV Capital Inc,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2016,,20,10,alberta_bar,generated_pattern
+Linda,An,linda.an@hgalaw.com,HGA Law LLP,,,,Edmonton,CA-AB,Canada,,Practising,2021,,20,10,alberta_bar,generated_pattern
+Leah,Anaka,leah.anaka@simonrenouf.com,Simon Renouf Professional Corporation,,,,Edmonton,CA-AB,Canada,,Practising,2010,,20,10,alberta_bar,generated_pattern
+Rachael,Anderson,rachael.anderson@rjalaw.com,RJA Law,,,,Edmonton,CA-AB,Canada,,Practising,2013,,20,10,alberta_bar,generated_pattern
+Travis,Anderson,travis.anderson@auroracannabis.com,Aurora Cannabis Inc.,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2008,,20,10,alberta_bar,generated_pattern
+Ian,Andrews,ian.andrews@fieldoafieldlaw.com,Field LLP o/a Field Law LLP,,,,Edmonton,CA-AB,Canada,,Practising,2019,,20,10,alberta_bar,generated_pattern
+Bradley,Angove,bradley.angove@duncancraig.com,Duncan Craig LLP,,,,Edmonton,CA-AB,Canada,,Practising,2018,,20,10,alberta_bar,generated_pattern
+Jessica,Ansell,jessica.ansell@fitlaw.com,Fit Law LLP,,,,Edmonton,CA-AB,Canada,,Practising,2021,,20,10,alberta_bar,generated_pattern
+Ryan,Antonello,ryan.antonello@feleskyflynn.com,Felesky Flynn LLP,,,,Edmonton,CA-AB,Canada,,Practising,2019,,20,10,alberta_bar,generated_pattern
+Edward,Apolonio,edward.apolonio@libertylaw.com,Liberty Law LLP,,,,Edmonton,CA-AB,Canada,,Practising,2020,,20,10,alberta_bar,generated_pattern
+Eric,Appelt,eric.appelt@mclennanross.com,McLennan Ross LLP,,,,Edmonton,CA-AB,Canada,,Practising,2019,,20,10,alberta_bar,generated_pattern
+James,Arendt,james.arendt@pactumlaw.com,Pactum Law LLP,,,,Edmonton,CA-AB,Canada,,Practising,2019,,20,10,alberta_bar,generated_pattern
+Tara,Argent,tara.argent@assifflawoffice.com,Assiff Law Office,,,,Edmonton,CA-AB,Canada,,Practising,2008,,20,10,alberta_bar,generated_pattern
+Jeffrey,Arsenault,jeffrey.arsenault@mccuaigdesrochers.com,McCuaig Desrochers LLP,,,,Edmonton,CA-AB,Canada,,Practising,2017,,20,10,alberta_bar,generated_pattern
+Terence,Arthur,terence.arthur@emeryjamieson.com,Emery Jamieson LLP,,,,Edmonton,CA-AB,Canada,,Practising,2018,,20,10,alberta_bar,generated_pattern
+Ahmad,Atwi,ahmad.atwi@forum.com,Forum Law Group LLP,,,,Edmonton,CA-AB,Canada,,Practising,2021,,20,10,alberta_bar,generated_pattern
+Jonathon,Austin,jonathon.austin@fieldoafieldlaw.com,Field LLP o/a Field Law LLP,,,,Edmonton,CA-AB,Canada,,Practising,2017,,20,10,alberta_bar,generated_pattern
+Jacob,Axelrod,jacob.axelrod@nugentlawoffice.com,Nugent Law Office,,,,Edmonton,CA-AB,Canada,,Practising,2016,,20,10,alberta_bar,generated_pattern
+Yoko,Azumaya,yoko.azumaya@frohlichrollinsschwab.com,Frohlich Rollins Schwab,,,,Edmonton,CA-AB,Canada,,Practising,2008,,20,10,alberta_bar,generated_pattern
+Krista,Atkins,krista.atkins@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Deidre,Badcock,deidre.badcock@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2012,,20,10,newfoundland_bar,generated_pattern
+Meredith,Baker,meredith.baker@newfoundlandlabradorhydrocommission.com,Newfoundland & Labrador Hydro Commission,,,,St. John's,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+Amanda,Barfitt,amanda.barfitt@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2010,,20,10,newfoundland_bar,generated_pattern
+Barbara,Barker,barbara.barker@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Stephen,Barnes,stephen.barnes@bobbuckinghamlaw.com,Bob Buckingham Law,,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+Erin,Best,erin.best@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Sydney,Blackmore,sydney.blackmore@intactinsurance.com,Intact Insurance,,,,St. John's,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Chad,Blundon,chad.blundon@cabinetsecretariatexecutivecouncilgovernmentofnl.com,"Cabinet Secretariat - Executive Council, Government of NL",,,,St. John's,CA-NL,Canada,,Practising,2007,,20,10,newfoundland_bar,generated_pattern
+Laura,Brazil,laura.brazil@intactinsurance.com,Intact Insurance,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Laura,Brocklehurst,laura.brocklehurst@tdinsurance.com,TD Insurance,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Gabriel,Brodeur,gabriel.brodeur@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2012,,20,10,newfoundland_bar,generated_pattern
+Laura,Laengle,laura.laengle@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+Elyse,Bruce,elyse.bruce@collegeofphysicianssurgeonsofnl.com,The College of Physicians & Surgeons of NL,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Amanda,Buis,amanda.buis@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,2012,,20,10,newfoundland_bar,generated_pattern
+Laura,Bursell,laura.bursell@nasdaqcanada.com,Nasdaq Canada Inc.,,,,St. John's,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Kenneth,Byrne,kenneth.byrne@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+William,Cahill,william.cahill@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+Emily,Caines,emily.caines@newfoundlandlabradorhealthservices.com,Newfoundland & Labrador Health Services,,,,St. John's,CA-NL,Canada,,Practising,2015,,20,10,newfoundland_bar,generated_pattern
+Justin,Caines,justin.caines@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2015,,20,10,newfoundland_bar,generated_pattern
+Kirsten,Calon,kirsten.calon@vandriellaw.com,Van Driel Law,,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+Janet,Carpenter,janet.carpenter@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2007,,20,10,newfoundland_bar,generated_pattern
+Lori,Chafe,lori.chafe@lawsocietyofnewfoundlandandlabrador.com,Law Society of Newfoundland and Labrador,,,,St. John's,CA-NL,Canada,,Practising,2010,,20,10,newfoundland_bar,generated_pattern
+David,Coffin,david.coffin@departmentofhealthcommunityservices.com,Department of Health & Community Services,,,,St. John's,CA-NL,Canada,,Practising,2007,,20,10,newfoundland_bar,generated_pattern
+Allison,Conway,allison.conway@workplacehealthsafetycompensationcommission.com,"Workplace Health, Safety & Compensation Commission",,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+Matthew,Craig,matthew.craig@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2013,,20,10,newfoundland_bar,generated_pattern
+Raymond,Critch,raymond.critch@macgillivraylawofficeincorporated.com,MacGillivray Law Office Incorporated,,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+Nicholas,Crosbie,nicholas.crosbie@equinorcanada.com,Equinor Canada Ltd.,,,,St. John's,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+Kellie,Cullihall,kellie.cullihall@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+Jennifer,Curran,jennifer.curran@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+Benjamin,Curties,benjamin.curties@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2012,,20,10,newfoundland_bar,generated_pattern
+Jessica,Dellow,jessica.dellow@russellaccidentlaw.com,Russell Accident Law,,,,St. John's,CA-NL,Canada,Personal Injury,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Richard,Deveau,richard.deveau@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2011,,20,10,newfoundland_bar,generated_pattern
+Adrienne,Ding,adrienne.ding@odeaearle.com,"O'Dea, Earle",,,,St. John's,CA-NL,Canada,,Practising,2015,,20,10,newfoundland_bar,generated_pattern
+Alison,Doyle,alison.doyle@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+John,Drover,john.drover@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Alana,Dwyer,alana.dwyer@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+James,Farrell,james.farrell@ffawunifor.com,FFAW - Unifor,,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+Meghan,Felt,meghan.felt@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2011,,20,10,newfoundland_bar,generated_pattern
+Cletus,Flaherty,cletus.flaherty@rogersrogersmoyseconway.com,Rogers Rogers Moyse & Conway,,,,St. John's,CA-NL,Canada,,Practising,2011,,20,10,newfoundland_bar,generated_pattern
+Dominic,Foley,dominic.foley@newfoundlandpower.com,Newfoundland Power,,,,St. John's,CA-NL,Canada,,Practising,2015,,20,10,newfoundland_bar,generated_pattern
+Lara,Fraize-Burry,lara.fraize-burry@fraizelawoffices.com,Fraize Law Offices,,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+Daniel,Furey,daniel.furey@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2010,,20,10,newfoundland_bar,generated_pattern
+C,Gallant,c.gallant@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Jessica,Gallant,jessica.gallant@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Meghan,Gardner,meghan.gardner@intactfinancialincorporation.com,Intact Financial Incorporation,,,,St. John's,CA-NL,Canada,,Practising,2015,,20,10,newfoundland_bar,generated_pattern
+Katrina,Gibbons,katrina.gibbons@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Michael,Gillingham,michael.gillingham@martinwhalenhenneburystamp.com,Martin Whalen Hennebury Stamp,,,,St. John's,CA-NL,Canada,,Practising,2013,,20,10,newfoundland_bar,generated_pattern
+Matthew,Gough,matthew.gough@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+Leah,Gruchy,leah.gruchy@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2007,,20,10,newfoundland_bar,generated_pattern
+Mark,Gruchy,mark.gruchy@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2007,,20,10,newfoundland_bar,generated_pattern
+Shelley,Handrigan,shelley.handrigan@rogersrogersmoyseconway.com,Rogers Rogers Moyse & Conway,,,,St. John's,CA-NL,Canada,,Practising,2015,,20,10,newfoundland_bar,generated_pattern
+David,Hearn,david.hearn@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Terri,Higdon,terri.higdon@intactinsurance.com,Intact Insurance,,,,St. John's,CA-NL,Canada,,Practising,2011,,20,10,newfoundland_bar,generated_pattern
+Jordan,Hodder,jordan.hodder@newfoundlandlabradorhealthservices.com,Newfoundland & Labrador Health Services,,,,St. John's,CA-NL,Canada,,Practising,2013,,20,10,newfoundland_bar,generated_pattern
+Iain,Hollett,iain.hollett@orrcabotcrosbieoleylaw.com,Orr Cabot Crosbie Oley Law,,,,St. John's,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+Lindsay,Hollett,lindsay.hollett@fortis.com,Fortis Inc.,,,,St. John's,CA-NL,Canada,,Practising,2012,,20,10,newfoundland_bar,generated_pattern
+Christian,Hurley,christian.hurley@lawsocietyofnewfoundlandandlabrador.com,Law Society of Newfoundland and Labrador,,,,St. John's,CA-NL,Canada,,Practising,2010,,20,10,newfoundland_bar,generated_pattern
+Nicole,Hurley,nicole.hurley@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Kelly,Hynes-Curties,kelly.hynes-curties@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2011,,20,10,newfoundland_bar,generated_pattern
+Sylina,Jones,sylina.jones@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Brittany,Keating,brittany.keating@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+Paul,Kennedy,paul.kennedy@buddenhiscocklawyers.com,Budden Hiscock Lawyers,,,,St. John's,CA-NL,Canada,,Practising,2012,,20,10,newfoundland_bar,generated_pattern
+Kevin,Kiley,kevin.kiley@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2013,,20,10,newfoundland_bar,generated_pattern
+M,Kindervater,m.kindervater@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2015,,20,10,newfoundland_bar,generated_pattern
+Justin,King,justin.king@odeaearle.com,"O'Dea, Earle",,,,St. John's,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Meghan,King,meghan.king@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2012,,20,10,newfoundland_bar,generated_pattern
+Michael,Ladha,michael.ladha@newfoundlandlabradorhydrocommission.com,Newfoundland & Labrador Hydro Commission,,,,St. John's,CA-NL,Canada,,Practising,2010,,20,10,newfoundland_bar,generated_pattern
+Nicholas,Leamon,nicholas.leamon@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+Aimee,Letto,aimee.letto@newfoundlandandlabradormedicalassociation.com,Newfoundland and Labrador Medical Association,,,,St. John's,CA-NL,Canada,,Practising,2013,,20,10,newfoundland_bar,generated_pattern
+Brett,Ludlow,brett.ludlow@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Jennifer,Lundrigan,jennifer.lundrigan@publicprosecutionserviceofcanada.com,Public Prosecution Service of Canada,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Rebecca,Marshall,rebecca.marshall@newfoundlandlabradorhydrocommission.com,Newfoundland & Labrador Hydro Commission,,,,St. John's,CA-NL,Canada,,Practising,2012,,20,10,newfoundland_bar,generated_pattern
+Erin,Matthews,erin.matthews@royalnewfoundlandconstabulary.com,Royal Newfoundland Constabulary,,,,St. John's,CA-NL,Canada,,Practising,2013,,20,10,newfoundland_bar,generated_pattern
+Meaghan,McCaw,meaghan.mccaw@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2015,,20,10,newfoundland_bar,generated_pattern
+Kathryn,McGarry,kathryn.mcgarry@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+Adrienne,Mercer,adrienne.mercer@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2007,,20,10,newfoundland_bar,generated_pattern
+Padraig,Mohan,padraig.mohan@odeaearle.com,"O'Dea, Earle",,,,St. John's,CA-NL,Canada,,Practising,2010,,20,10,newfoundland_bar,generated_pattern
+Jonathan,Moore,jonathan.moore@odeaearle.com,"O'Dea, Earle",,,,St. John's,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Kathy,Moulton,kathy.moulton@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2012,,20,10,newfoundland_bar,generated_pattern
+Melissa,Murphy,melissa.murphy@intactinsurance.com,Intact Insurance,,,,St. John's,CA-NL,Canada,,Practising,2010,,20,10,newfoundland_bar,generated_pattern
+Gobhina,Nagarajah,gobhina.nagarajah@humanrightscommission.com,Human Rights Commission,,,,St. John's,CA-NL,Canada,,Practising,2015,,20,10,newfoundland_bar,generated_pattern
+Amanda,Nash,amanda.nash@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2013,,20,10,newfoundland_bar,generated_pattern
+Gary,Nolan,gary.nolan@vandriellaw.com,Van Driel Law,,,,St. John's,CA-NL,Canada,,Practising,2007,,20,10,newfoundland_bar,generated_pattern
+Micheal,Noseworthy,micheal.noseworthy@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Timothy,O'Brien,timothy.obrien@publicprosecutionserviceofcanada.com,Public Prosecution Service of Canada,,,,St. John's,CA-NL,Canada,,Practising,2011,,20,10,newfoundland_bar,generated_pattern
+Ellen,O'Gorman,ellen.ogorman@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Tanya,O'Neill,tanya.oneill@akersolutionscanada.com,Aker Solutions Canada Inc.,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Christopher,Payne,christopher.payne@cenovusenergy.com,Cenovus Energy Inc,,,,St. John's,CA-NL,Canada,,Practising,2011,,20,10,newfoundland_bar,generated_pattern
+Natalie,Payne,natalie.payne@collegeofpharmacyofnewfoundlandandlabrdor.com,College of Pharmacy of Newfoundland and Labrdor,,,,St. John's,CA-NL,Canada,,Practising,2011,,20,10,newfoundland_bar,generated_pattern
+Katie,Philpott,katie.philpott@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+Lesley,Pike,lesley.pike@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2015,,20,10,newfoundland_bar,generated_pattern
+David,Pritchett,david.pritchett@intactinsurance.com,Intact Insurance,,,,St. John's,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+Darren,Purchase,darren.purchase@newfoundlandlabradorhydrocommission.com,Newfoundland & Labrador Hydro Commission,,,,St. John's,CA-NL,Canada,,Practising,2013,,20,10,newfoundland_bar,generated_pattern
+Jessica,Pynn,jessica.pynn@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2012,,20,10,newfoundland_bar,generated_pattern
+Catherine,Quinlan,catherine.quinlan@martinwhalenhenneburystamp.com,Martin Whalen Hennebury Stamp,,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+Kyle,Rees,kyle.rees@odeaearle.com,"O'Dea, Earle",,,,St. John's,CA-NL,Canada,,Practising,2013,,20,10,newfoundland_bar,generated_pattern
+Jennifer,Reid,jennifer.reid@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+Megan,Reynolds,megan.reynolds@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,2015,,20,10,newfoundland_bar,generated_pattern
+David,Rodgers,david.rodgers@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2011,,20,10,newfoundland_bar,generated_pattern
+Aimee,Rowe,aimee.rowe@lawsocietyofnewfoundlandandlabrador.com,Law Society of Newfoundland and Labrador,,,,St. John's,CA-NL,Canada,,Practising,2011,,20,10,newfoundland_bar,generated_pattern
+Matthew,Rowe,matthew.rowe@humanrightscommission.com,Human Rights Commission,,,,St. John's,CA-NL,Canada,,Practising,2010,,20,10,newfoundland_bar,generated_pattern
+Sharyl,Rowsell,sharyl.rowsell@martinwhalenhenneburystamp.com,Martin Whalen Hennebury Stamp,,,,St. John's,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+Melissa,Critch,melissa.critch@governmentofnewfoundlandandlabrador.com,Government of Newfoundland and Labrador,,,,St. John's,CA-NL,Canada,,Practising,2013,,20,10,newfoundland_bar,generated_pattern
+Mark,Russell,mark.russell@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+G,Samms,g.samms@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+Ashley,Savinov,ashley.savinov@intactinsurance.com,Intact Insurance,,,,St. John's,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Steven,Scruton,steven.scruton@macgillivraylawofficeincorporated.com,MacGillivray Law Office Incorporated,,,,St. John's,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+Beth,Sheppard,beth.sheppard@newfoundlandlabradorhydrocommission.com,Newfoundland & Labrador Hydro Commission,,,,St. John's,CA-NL,Canada,,Practising,2007,,20,10,newfoundland_bar,generated_pattern
+Colin,Sheppard,colin.sheppard@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Mark,Sheppard,mark.sheppard@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Stephanie,Sheppard,stephanie.sheppard@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+William,Sheppard,william.sheppard@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2007,,20,10,newfoundland_bar,generated_pattern
+Robin,Singleton,robin.singleton@publicprosecutionserviceofcanada.com,Public Prosecution Service of Canada,,,,St. John's,CA-NL,Canada,,Practising,2012,,20,10,newfoundland_bar,generated_pattern
+R,Skanes,r.skanes@convergencelawspellbook.com,Convergence Law| Spellbook,,,,St. John's,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Douglas,Skinner,douglas.skinner@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2007,,20,10,newfoundland_bar,generated_pattern
+Christina,Spurrell,christina.spurrell@intactfinancialincorporation.com,Intact Financial Incorporation,,,,St. John's,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Sophie,Croix,sophie.croix@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Tauna,Staniland,tauna.staniland@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2010,,20,10,newfoundland_bar,generated_pattern
+James,Strickland,james.strickland@martinwhalenhenneburystamp.com,Martin Whalen Hennebury Stamp,,,,St. John's,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Amanda,Summers,amanda.summers@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2010,,20,10,newfoundland_bar,generated_pattern
+Candace,Summers,candace.summers@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Jeffrey,Summers,jeffrey.summers@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Megan,Taylor,megan.taylor@okeefesullivan.com,O'Keefe & Sullivan,,,,St. John's,CA-NL,Canada,,Practising,2011,,20,10,newfoundland_bar,generated_pattern
+J,Templeton,j.templeton@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2007,,20,10,newfoundland_bar,generated_pattern
+Paul,Thistle,paul.thistle@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2015,,20,10,newfoundland_bar,generated_pattern
+Koren,Thomson,koren.thomson@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2011,,20,10,newfoundland_bar,generated_pattern
+Joseph,Thorne,joseph.thorne@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2013,,20,10,newfoundland_bar,generated_pattern
+Alexandria,Tizzard,alexandria.tizzard@intactinsurance.com,Intact Insurance,,,,St. John's,CA-NL,Canada,,Practising,2012,,20,10,newfoundland_bar,generated_pattern
+Ruth,Trask,ruth.trask@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2010,,20,10,newfoundland_bar,generated_pattern
+Daniel,Vavasour,daniel.vavasour@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+Anna,Wadden,anna.wadden@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+Matthew,Walsh,matthew.walsh@imperialoillimited.com,Imperial Oil Limited,,,,St. John's,CA-NL,Canada,,Practising,2012,,20,10,newfoundland_bar,generated_pattern
+Nicholas,Whalen,nicholas.whalen@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Allison,Whelan,allison.whelan@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Jaclyn,Whelan,jaclyn.whelan@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2011,,20,10,newfoundland_bar,generated_pattern
+Janna,Whelan,janna.whelan@intactinsurance.com,Intact Insurance,,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+Madeleine,White,madeleine.white@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+Amanda,Whitehead,amanda.whitehead@newfoundlandlabradorhealthservices.com,Newfoundland & Labrador Health Services,,,,St. John's,CA-NL,Canada,,Practising,2015,,20,10,newfoundland_bar,generated_pattern
+Angela,Whitehead,angela.whitehead@lawsocietyofnewfoundlandandlabrador.com,Law Society of Newfoundland and Labrador,,,,St. John's,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+Hilary,Morrow,hilary.morrow@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Michelle,Wilson,michelle.wilson@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2007,,20,10,newfoundland_bar,generated_pattern
+Andrew,Woodland,andrew.woodland@cityofstjohns.com,City of St. John's,,,,St. John's,CA-NL,Canada,,Practising,2010,,20,10,newfoundland_bar,generated_pattern
+Timothy,Young,timothy.young@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,2016,,20,10,newfoundland_bar,generated_pattern
+Jonathan,Andrews,jonathan.andrews@brotherslaw.com,Brothers Law,,,,Corner Brook,CA-NL,Canada,,Practising,2014,,20,10,newfoundland_bar,generated_pattern
+Robby,Ash,robby.ash@poolealthouse.com,"Poole, Althouse",,,,Corner Brook| Happy Valley-Goose Bay,CA-NL,Canada,,Practising,2008,,20,10,newfoundland_bar,generated_pattern
+Adam,Baker,adam.baker@okeefesullivan.com,O'Keefe & Sullivan,,,,Corner Brook,CA-NL,Canada,,Practising,2012,,20,10,newfoundland_bar,generated_pattern
+Adam,Crocker,adam.crocker@legalaidnl.com,Legal Aid NL,,,,Corner Brook,CA-NL,Canada,,Practising,2010,,20,10,newfoundland_bar,generated_pattern
+Melissa,May,melissa.may@poolealthouse.com,"Poole, Althouse",,,,Corner Brook| Happy Valley-Goose Bay,CA-NL,Canada,,Practising,2010,,20,10,newfoundland_bar,generated_pattern
+Sandra,Sarto,sandra.sarto@legalaidnl.com,Legal Aid NL,,,,Corner Brook,CA-NL,Canada,,Practising,2013,,20,10,newfoundland_bar,generated_pattern
+Glen,Seaborn,glen.seaborn@poolealthouse.com,"Poole, Althouse",,,,Corner Brook| Happy Valley-Goose Bay,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Lori-Lee,Croix,lori-lee.croix@poolealthouse.com,"Poole, Althouse",,,,Corner Brook,CA-NL,Canada,,Practising,2009,,20,10,newfoundland_bar,generated_pattern
+Katrina,Warren,katrina.warren@penneybrownlaw.com,Penney & Brown Law,,,,Corner Brook,CA-NL,Canada,,Practising,2007,,20,10,newfoundland_bar,generated_pattern
+Willis,Wiseman,willis.wiseman@crownsoffice.com,Crown Attorney's Office,,,,Corner Brook,CA-NL,Canada,,Practising,2013,,20,10,newfoundland_bar,generated_pattern
+Ryan,Anstey,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,2012-06-01,,20,0,pei_bar,
+Callaghan,Dolfo-Smith,callaghan.dolfo-smith@lamlegaltriallawyers.com,Lam Legal - Trial Lawyers,,604 800-0774,,Vancouver,CA-BC,Canada,General Litigation,Practising,"September 15, 2020",,10,35,british-columbia_bar,generated_pattern
+Kegan,Pepper-Smith,kegan.pepper-smith@ecojusticecanadasociety.com,Ecojustice Canada Society,,604 685-5618,,Vancouver,CA-BC,Canada,,Practising,"May 12, 2017",,10,35,british-columbia_bar,generated_pattern
+Ashley,Smith,ashley.smith@worksafebc.com,WorkSafeBC,,604 214-5411,,Vancouver,CA-BC,Canada,,Practising,"January 5, 2017",,10,35,british-columbia_bar,generated_pattern
+Cameron,Smith,cameron.smith@avisowealth.com,Aviso Wealth Inc.,,604 714-3800,,Vancouver,CA-BC,Canada,,Practising,"May 19, 2020",,10,35,british-columbia_bar,generated_pattern
+Carrie,Smith,carrie.smith@ebc.com,EBC Inc.,,778 372-0175,,Vancouver,CA-BC,Canada,,Practising,"August 30, 2019",,10,35,british-columbia_bar,generated_pattern
+Salman,Abbasi,salman.abbasi@dwfalbertaoadwf.com,DWF (Alberta) LLP o/a DWF,,,,Calgary,CA-AB,Canada,,Practising,2025,,10,10,alberta_bar,generated_pattern
+Nafisa,Razak,nafisa.razak@knightpatrick.com,Knight Patrick LLP,,,,Calgary,CA-AB,Canada,,Practising,2022,,10,10,alberta_bar,generated_pattern
+Ali,Abdulla,ali.abdulla@bordenladnergervais.com,Borden Ladner Gervais LLP,,,,Calgary,CA-AB,Canada,,Practising,2025,,10,10,alberta_bar,generated_pattern
+Saleem,Koube,saleem.koube@dwfalbertaoadwf.com,DWF (Alberta) LLP o/a DWF,,,,Calgary,CA-AB,Canada,,Practising,2025,,10,10,alberta_bar,generated_pattern
+Aziz,Aboudheir,aziz.aboudheir@dlapipercanada.com,DLA Piper (Canada) LLP,,,,Calgary,CA-AB,Canada,,Practising,2023,,10,10,alberta_bar,generated_pattern
+Zeyad,Aboudheir,zeyad.aboudheir@oslerhoskinharcourt.com,"Osler, Hoskin & Harcourt LLP",,,,Calgary,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Derek,Abreu,derek.abreu@preszlerinjurylawyerspreszler.com,Preszler Injury Lawyers LLP| Preszler Law Firm LLP,,,,Calgary| Toronto,CA-AB,Canada,Personal Injury,Practising (Out of Province),2025,,10,10,alberta_bar,generated_pattern
+Melissa,Abusow,melissa.abusow@bdlfamilylaw.com,BDL Family Law LLP,,,,Calgary,CA-AB,Canada,Family Law,Practising,2022,,10,10,alberta_bar,generated_pattern
+Cameron,Adamson,cameron.adamson@blakecasselsgraydon.com,"Blake, Cassels & Graydon LLP",,,,Calgary,CA-AB,Canada,,Practising,2025,,10,10,alberta_bar,generated_pattern
+Olusola,Adenekan,olusola.adenekan@saitpolytechnic.com,SAIT Polytechnic,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2017,,10,10,alberta_bar,generated_pattern
+Dedayo,Adeniji,dedayo.adeniji@corilholdings.com,Coril Holdings Ltd.,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2021,,10,10,alberta_bar,generated_pattern
+Tolu,Adetomiwa,tolu.adetomiwa@carscallen.com,Carscallen LLP,,,,Calgary,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Auska,Adhikari,auska.adhikari@stikemanelliott.com,Stikeman Elliott LLP,,,,Calgary,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Patricia,Agoncillo,patricia.agoncillo@scotiawealthmanagement.com,Scotia Wealth Management,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2021,,10,10,alberta_bar,generated_pattern
+Cesar,Tellez,cesar.tellez@camino.com,Camino Law Group,,,,Calgary,CA-AB,Canada,,Practising,2020,,10,10,alberta_bar,generated_pattern
+Chioma,Ahaneku,chioma.ahaneku@cnalawoffice.com,CNA Law Office,,,,Calgary,CA-AB,Canada,,Practising,2019,,10,10,alberta_bar,generated_pattern
+Farrukh,Ahmad,farrukh.ahmad@blakecasselsgraydon.com,"Blake, Cassels & Graydon LLP",,,,Calgary,CA-AB,Canada,,Practising,2023,,10,10,alberta_bar,generated_pattern
+Zaki,Ahmad,zaki.ahmad@esquirelaw.com,Esquire Law,,,,Calgary,CA-AB,Canada,,Practising,2020,,10,10,alberta_bar,generated_pattern
+Reihan,Ahmed,reihan.ahmed@dwfalbertaoadwf.com,DWF (Alberta) LLP o/a DWF,,,,Calgary,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Katie,Ahn,katie.ahn@carbertwaite.com,Carbert Waite LLP,,,,Calgary,CA-AB,Canada,,Practising,2022,,10,10,alberta_bar,generated_pattern
+Grace,Ajele,grace.ajele@lawsocietyofalberta.com,Law Society of Alberta,,,,Calgary,CA-AB,Canada,,Practising,2019,,10,10,alberta_bar,generated_pattern
+Francis,Akoji,francis.akoji@consolidated.com,Consolidated Legal Services LLP,,,,Calgary,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Grace,Akpan,grace.akpan@gracegeorgelaw.com,Grace George Law,,,,Calgary,CA-AB,Canada,,Practising,2019,,10,10,alberta_bar,generated_pattern
+Racheal,Akporhuarho,racheal.akporhuarho@chealslaw.com,CHEALS LAW,,,,Calgary,CA-AB,Canada,,Practising,2021,,10,10,alberta_bar,generated_pattern
+Shahd,Al-Orfali,shahd.al-orfali@faskenmartineaudumoulin.com,Fasken Martineau DuMoulin LLP,,,,Calgary,CA-AB,Canada,,Practising,2023,,10,10,alberta_bar,generated_pattern
+Jorge,Alas,jorge.alas@vogel.com,Vogel LLP,,,,Calgary,CA-AB,Canada,,Practising,2022,,10,10,alberta_bar,generated_pattern
+Onyi,Aligasim,onyi.aligasim@tinglemerrett.com,Tingle Merrett LLP,,,,Calgary,CA-AB,Canada,,Practising,2023,,10,10,alberta_bar,generated_pattern
+Antonia,Alisauskas,antonia.alisauskas@courtofappealofalberta.com,Court of Appeal of Alberta,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2017,,10,10,alberta_bar,generated_pattern
+Gregor,Allan,gregor.allan@brownlee.com,Brownlee LLP,,,,Calgary,CA-AB,Canada,,Practising,2022,,10,10,alberta_bar,generated_pattern
+Bradley,Allen,bradley.allen@mltaikins.com,MLT Aikins LLP,,,,Calgary,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Aurora,Allison,aurora.allison@dwfalbertaoadwf.com,DWF (Alberta) LLP o/a DWF,,,,Calgary,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Josiah,Allison,josiah.allison@millerthomson.com,Miller Thomson LLP,,,,Calgary,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Erin,Allison,erin.allison@bennettjonesbennettjonessencrlsrl.com,"Bennett Jones LLP/ Bennett Jones S.E.N.C.R.L., SRL",,,,Calgary,CA-AB,Canada,,Practising,2022,,10,10,alberta_bar,generated_pattern
+Ramai,Alvarez,ramai.alvarez@crownprosecutorsoffice.com,Crown Prosecutor's Office,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2017,,10,10,alberta_bar,generated_pattern
+Devin,Aman,devin.aman@albertajustice.com,Alberta Justice,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2018,,10,10,alberta_bar,generated_pattern
+Lane,Aman,lane.aman@hayherlee.com,Hayher Lee LLP,,,,Calgary,CA-AB,Canada,,Practising,2023,,10,10,alberta_bar,generated_pattern
+Daniel,Ahmad),daniel.ahmad@eolaw.com,EO Law,,,,Calgary,CA-AB,Canada,,Practising,2019,,10,10,alberta_bar,generated_pattern
+Ryan,Amaral,ryan.amaral@blakecasselsgraydon.com,"Blake, Cassels & Graydon LLP",,,,Calgary,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Tahira,Amin,tahira.amin@crownprosecutorsoffice.com,Crown Prosecutor's Office,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2018,,10,10,alberta_bar,generated_pattern
+Homa,Aminnejad,homa.aminnejad@oslerhoskinharcourt.com,"Osler, Hoskin & Harcourt LLP",,,,Calgary,CA-AB,Canada,,Practising,2025,,10,10,alberta_bar,generated_pattern
+Meghan,Anderson,meghan.anderson@albertautilitiescommission.com,Alberta Utilities Commission,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2019,,10,10,alberta_bar,generated_pattern
+Hasith,Andrahennadi,hasith.andrahennadi@gowlingwlgcanadagowlingwlgcanadasencrlsrl.com,"Gowling WLG (Canada) LLP/Gowling WLG (Canada) S.E.N.C.R.L., S.R.L.",,,,Calgary,CA-AB,Canada,,Practising,2022,,10,10,alberta_bar,generated_pattern
+Samantha,Arbor,samantha.arbor@mccarthytetrault.com,McCarthy Tetrault LLP,,,,Calgary,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Shanza,Arif,shanza.arif@mccarthytetrault.com,McCarthy Tetrault LLP,,,,Calgary,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Tristan,Aronson,tristan.aronson@vogel.com,Vogel LLP,,,,Calgary,CA-AB,Canada,,Practising,2022,,10,10,alberta_bar,generated_pattern
+Leah,Arthur,leah.arthur@nortonrosefulbrightcanada.com,Norton Rose Fulbright Canada LLP,,,,Calgary,CA-AB,Canada,,Practising,2023,,10,10,alberta_bar,generated_pattern
+Emma,Ashworth,emma.ashworth@mltaikins.com,MLT Aikins LLP,,,,Calgary,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Emma,Aspinall,emma.aspinall@dentonscanada.com,Dentons Canada LLP,,,,Calgary,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Raman,Assi,raman.assi@stokeslaw.com,Stokes Law LLP,,,,Calgary,CA-AB,Canada,,Practising,2025,,10,10,alberta_bar,generated_pattern
+Troy,Atkin,troy.atkin@mincherkoeman.com,Mincher Koeman LLP,,,,Calgary,CA-AB,Canada,,Practising,2025,,10,10,alberta_bar,generated_pattern
+Izaak,Atnikov,izaak.atnikov@rodin.com,Rodin Law Firm,,,,Calgary,CA-AB,Canada,,Practising,2017,,10,10,alberta_bar,generated_pattern
+Jessica,Atwal,jessica.atwal@whitejeetoawhitejeetlaw.com,White & Jeet LLP o/a White & Jeet Law,,,,Calgary,CA-AB,Canada,,Practising,2023,,10,10,alberta_bar,generated_pattern
+Laurence,Audesse-Keenan,laurence.audesse-keenan@dlapipercanada.com,DLA Piper (Canada) LLP,,,,Calgary,CA-AB,Canada,,Practising,2025,,10,10,alberta_bar,generated_pattern
+Naomi,Austin,naomi.austin@gowlingwlgcanadagowlingwlgcanadasencrlsrl.com,"Gowling WLG (Canada) LLP/Gowling WLG (Canada) S.E.N.C.R.L., S.R.L.",,,,Calgary,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Fiorella,Avolio,fiorella.avolio@crownprosecutorsoffice.com,Crown Prosecutor's Office,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2019,,10,10,alberta_bar,generated_pattern
+Josef,Avsenik,josef.avsenik@mltaikins.com,MLT Aikins LLP,,,,Calgary,CA-AB,Canada,,Practising,2025,,10,10,alberta_bar,generated_pattern
+Oluwadamilola,Awoniyi,oluwadamilola.awoniyi@publicprosecutionserviceofcanada.com,Public Prosecution Service of Canada,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2017,,10,10,alberta_bar,generated_pattern
+Katie,Ayer,katie.ayer@cynthiadmorinoaresolve.com,Cynthia D. Morin o/a Resolve Legal Group,,,,Calgary,CA-AB,Canada,,Practising,2020,,10,10,alberta_bar,generated_pattern
+Justin,Azevedo,justin.azevedo@litwiniukoalitcolaw.com,Litwiniuk LLP o/a Litco Law LLP,,,,Calgary,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Rachel,Abel,rachel.abel@albertajustice.com,Alberta Justice,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2019,,10,10,alberta_bar,generated_pattern
+Bukola,Abioye,bukola.abioye@daphillawoffice.com,Daphil Law Office,,,,Edmonton,CA-AB,Canada,,Practising,2018,,10,10,alberta_bar,generated_pattern
+Dotun,Abolade,dotun.abolade@durochersimpsonkoehlierler.com,Durocher Simpson Koehli & Erler LLP,,,,Edmonton,CA-AB,Canada,,Practising,2023,,10,10,alberta_bar,generated_pattern
+Manelle,Farrage,manelle.farrage@swainsonmikipeskett.com,Swainson Miki Peskett LLP,,,,Edmonton,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Deema,Rizk,deema.rizk@collegeofphysicianssurgeonsofalberta.com,College of Physicians & Surgeons of Alberta,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2019,,10,10,alberta_bar,generated_pattern
+James,Ghaida,james.ghaida@forum.com,Forum Law Group LLP,,,,Edmonton,CA-AB,Canada,,Practising,2025,,10,10,alberta_bar,generated_pattern
+Judith,Paz,judith.paz@tracycbrownoabrown.com,Tracy C. Brown Professional Corporation o/a Brown Law Group,,,,Edmonton,CA-AB,Canada,,Practising,2020,,10,10,alberta_bar,generated_pattern
+Jordan,Achtymichuk,jordan.achtymichuk@workerscompensationboard.com,Workers' Compensation Board,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2021,,10,10,alberta_bar,generated_pattern
+David,Adie,david.adie@duncancraig.com,Duncan Craig LLP,,,,Edmonton,CA-AB,Canada,,Practising,2022,,10,10,alberta_bar,generated_pattern
+Kristofer,Advent,kristofer.advent@bereshlaw.com,Beresh Law,,,,Edmonton,CA-AB,Canada,,Practising,2020,,10,10,alberta_bar,generated_pattern
+Mercy,Afrane,mercy.afrane@ackroyd.com,Ackroyd LLP,,,,Edmonton,CA-AB,Canada,,Practising,2022,,10,10,alberta_bar,generated_pattern
+Ama,Aidoo,ama.aidoo@brownlee.com,Brownlee LLP,,,,Edmonton,CA-AB,Canada,,Practising,2025,,10,10,alberta_bar,generated_pattern
+Aaron,Aitken,aaron.aitken@enbridge.com,Enbridge Inc.,,,,Edmonton,CA-AB,Canada,,Practising,2020,,10,10,alberta_bar,generated_pattern
+Alex,Akiki,alex.akiki@witten.com,Witten LLP,,,,Edmonton,CA-AB,Canada,,Practising,2025,,10,10,alberta_bar,generated_pattern
+Zachary,Al-Khatib,zachary.al-khatib@zklaw.com,ZK Law,,,,Edmonton,CA-AB,Canada,,Practising,2021,,10,10,alberta_bar,generated_pattern
+Zaid,Alaqrabawi,zaid.alaqrabawi@peakfamilylaw.com,Peak Family Law LLP,,,,Edmonton,CA-AB,Canada,Family Law,Practising,2025,,10,10,alberta_bar,generated_pattern
+Jalal,Alawes,jalal.alawes@brookstoppoaqedlaw.com,Brooks Topp Professional Corporation o/a Q.E.D. Law,,,,Edmonton,CA-AB,Canada,,Practising,2019,,10,10,alberta_bar,generated_pattern
+Bradley,Albrecht,bradley.albrecht@albertajusticelegalandlegislativeinitiatives.com,Alberta Justice - Legal and Legislative Initiatives,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2018,,10,10,alberta_bar,generated_pattern
+James,Allan,james.allan@bennettjonesbennettjonessencrlsrl.com,"Bennett Jones LLP/ Bennett Jones S.E.N.C.R.L., SRL",,,,Edmonton,CA-AB,Canada,,Practising,2022,,10,10,alberta_bar,generated_pattern
+Tomi,Ameobi,tomi.ameobi@duncancraig.com,Duncan Craig LLP,,,,Edmonton,CA-AB,Canada,,Practising,2025,,10,10,alberta_bar,generated_pattern
+Kaitlin,Andersen,kaitlin.andersen@bishopmckenzie.com,Bishop & McKenzie LLP,,,,Edmonton,CA-AB,Canada,,Practising,2025,,10,10,alberta_bar,generated_pattern
+Kristian,Andres,kristian.andres@familyandsurrogatecourtlitigation.com,Family and Surrogate Court Litigation,,,,Edmonton,CA-AB,Canada,General Litigation,Practising (Corporate/Government Counsel),2018,,10,10,alberta_bar,generated_pattern
+Kate,Andress,kate.andress@albertajustice.com,Alberta Justice,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2017,,10,10,alberta_bar,generated_pattern
+Vibha,Anthony,vibha.anthony@bryancompany.com,Bryan & Company LLP,,,,Edmonton,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Ashley,Antonio,ashley.antonio@albertajustice.com,Alberta Justice,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2019,,10,10,alberta_bar,generated_pattern
+Sunny,Anuebunwa,sunny.anuebunwa@bidexlawoffice.com,Bidex Law Office,,,,Edmonton,CA-AB,Canada,,Practising,2019,,10,10,alberta_bar,generated_pattern
+Myles,Applin,myles.applin@barr.com,BARR LLP,,,,Edmonton,CA-AB,Canada,,Practising,2023,,10,10,alberta_bar,generated_pattern
+Khalid,Assaf,khalid.assaf@assifflawoffice.com,Assiff Law Office,,,,Edmonton,CA-AB,Canada,,Practising,2020,,10,10,alberta_bar,generated_pattern
+Niha,Ather,niha.ather@bennettjonesbennettjonessencrlsrl.com,"Bennett Jones LLP/ Bennett Jones S.E.N.C.R.L., SRL",,,,Edmonton,CA-AB,Canada,,Practising,2023,,10,10,alberta_bar,generated_pattern
+Ankita,Attri,ankita.attri@advisorofficeforalbertaworkerscompensation.com,Advisor Office for Alberta Workers' Compensation,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2021,,10,10,alberta_bar,generated_pattern
+Harpreet,Aulakh,harpreet.aulakh@stokeslaw.com,Stokes Law LLP,,,,Edmonton,CA-AB,Canada,,Practising,2024,,10,10,alberta_bar,generated_pattern
+Bedilu,Aytenfisu,bedilu.aytenfisu@northcottedgertonbarristers.com,Northcott Edgerton Barristers,,,,Edmonton,CA-AB,Canada,,Practising,2017,,10,10,alberta_bar,generated_pattern
+Michael,Aytenfisu,michael.aytenfisu@albertadepartmentofjustice.com,Alberta Department of Justice,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2017,,10,10,alberta_bar,generated_pattern
+Giles,Ayers,giles.ayers@newfoundlandlabradorhealthservices.com,Newfoundland & Labrador Health Services,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Brandon,Baird,brandon.baird@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Lee,Ballett,lee.ballett@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Ryan,Belbin,ryan.belbin@odeaearle.com,"O'Dea, Earle",,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Shane,Belbin,shane.belbin@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Geoffrey,Boyd,geoffrey.boyd@newfoundlandlabradorhydrocommission.com,Newfoundland & Labrador Hydro Commission,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Robert,Bradley,robert.bradley@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Stephen,Brien,stephen.brien@martinwhalenhenneburystamp.com,Martin Whalen Hennebury Stamp,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Michaela,Brophy,michaela.brophy@spellbook.com,Spellbook,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Stefan,Brunet,stefan.brunet@departmentofhealthcommunityservices.com,Department of Health & Community Services,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Elliott,Bursey,elliott.bursey@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Christopher,Burt,christopher.burt@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2018,,10,10,newfoundland_bar,generated_pattern
+Ryan,Butler,ryan.butler@intactfinancialincorporation.com,Intact Financial Incorporation,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Sarah,Byrne,sarah.byrne@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Tyler,Callahan,tyler.callahan@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Tristan,Carroll,tristan.carroll@macgillivraylawofficeincorporated.com,MacGillivray Law Office Incorporated,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Morgan,Chafe,morgan.chafe@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Eugene,Chao,eugene.chao@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Tanisha,Connolly,tanisha.connolly@intactinsurance.com,Intact Insurance,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Dana,Constantine,dana.constantine@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2018,,10,10,newfoundland_bar,generated_pattern
+David,Constantine,david.constantine@provincialaerospace.com,Provincial Aerospace Ltd,,,,St. John's,CA-NL,Canada,,Practising,2018,,10,10,newfoundland_bar,generated_pattern
+Erin,Delaney,erin.delaney@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2018,,10,10,newfoundland_bar,generated_pattern
+Karl,Dlugosch,karl.dlugosch@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Devin,Drover,devin.drover@canadiantaxpayersfederation.com,Canadian Taxpayers Federation,,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Matthew,Drover,matthew.drover@orrcabotcrosbieoleylaw.com,Orr Cabot Crosbie Oley Law,,,,St. John's,CA-NL,Canada,,Practising,2018,,10,10,newfoundland_bar,generated_pattern
+Natasha,Escott,natasha.escott@gittensdebeerassociates.com,"Gittens, de Beer & Associates",,,,St. John's,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Robert,Escott,robert.escott@gittensdebeerassociates.com,"Gittens, de Beer & Associates",,,,St. John's,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Sarah,Evans,sarah.evans@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Robert,Fedder,robert.fedder@cityofstjohns.com,City of St. John's,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Meghan,Foley,meghan.foley@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Adam,Foote,adam.foote@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Kevin,Galway,kevin.galway@odeaearle.com,"O'Dea, Earle",,,,St. John's,CA-NL,Canada,,Practising,2018,,10,10,newfoundland_bar,generated_pattern
+Michael,Gardiner,michael.gardiner@courtofappealofnewfoundlandandlabrador.com,Court of Appeal of Newfoundland and Labrador,,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Lynette,Gibbons,lynette.gibbons@canadanewfoundlandandlabradoroffshorepetroleumboard.com,Canada-Newfoundland and Labrador Offshore Petroleum Board,,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Christopher,Goodridge,christopher.goodridge@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Victoria,Gregory,victoria.gregory@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Stephen,Griffin,stephen.griffin@intactinsurance.com,Intact Insurance,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Atanu,Haldar,atanu.haldar@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Joshua,Hancott,joshua.hancott@okeefesullivan.com,O'Keefe & Sullivan,,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Kara,Harrington,kara.harrington@newfoundlandlabradorhealthservices.com,Newfoundland & Labrador Health Services,,,,St. John's,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Luke,Hayden,luke.hayden@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Jennifer,Helleur,jennifer.helleur@buddenhiscocklawyers.com,Budden Hiscock Lawyers,,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Justin,Hewitt,justin.hewitt@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Robert,Hoskins,robert.hoskins@bobbuckinghamlaw.com,Bob Buckingham Law,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Andrew,Hurley,andrew.hurley@newfoundlandlabradorhealthservices.com,Newfoundland & Labrador Health Services,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Catherine,Hutchens,catherine.hutchens@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Matthew,Jacobs,matthew.jacobs@newfoundlandlabradorhealthservices.com,Newfoundland & Labrador Health Services,,,,St. John's,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Mark,James,mark.james@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Kolin,Kennedy,kolin.kennedy@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Neala,Kielley,neala.kielley@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Mitchell,King,mitchell.king@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Edward,Lewis,edward.lewis@goodlandbuckingham.com,Goodland Buckingham,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Marc,Lewis,marc.lewis@supremecourtofnewfoundlandandlabrador.com,Supreme Court of Newfoundland and Labrador,,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Scott,Linstead,scott.linstead@departmentofhealthcommunityservices.com,Department of Health & Community Services,,,,St. John's,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Scott,Lynch,scott.lynch@buddenhiscocklawyers.com,Budden Hiscock Lawyers,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Adam,Mayo,adam.mayo@gittensdebeerassociates.com,"Gittens, de Beer & Associates",,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Garreth,McGrath,garreth.mcgrath@publiclegalinformationassociationofnlplian.com,Public Legal Information Association of NL (PLIAN),,,,St. John's,CA-NL,Canada,,Practising,2018,,10,10,newfoundland_bar,generated_pattern
+Kyle,Mercer,kyle.mercer@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Caroline,Molloy,caroline.molloy@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+James,Molony,james.molony@medcounsellaw.com,MedCounsel Law,,,,St. John's,CA-NL,Canada,,Practising,2018,,10,10,newfoundland_bar,generated_pattern
+Julie,Morris,julie.morris@newfoundlandlabradorhealthservices.com,Newfoundland & Labrador Health Services,,,,St. John's,CA-NL,Canada,,Practising,2018,,10,10,newfoundland_bar,generated_pattern
+Aaron,Morrow,aaron.morrow@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Rebecca,Munden,rebecca.munden@rogersrogersmoyseconway.com,Rogers Rogers Moyse & Conway,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Thomas,Munn,thomas.munn@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2018,,10,10,newfoundland_bar,generated_pattern
+Christine,Noseworthy,christine.noseworthy@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Chineze,Nwokedi,chineze.nwokedi@gittensdebeerassociates.com,"Gittens, de Beer & Associates",,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Shaylyn,Oxner,shaylyn.oxner@macgillivraylawofficeincorporated.com,MacGillivray Law Office Incorporated,,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Travis,Payne,travis.payne@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,2018,,10,10,newfoundland_bar,generated_pattern
+Matthew,Peyton,matthew.peyton@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Allison,Philpott,allison.philpott@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Sean,Pittman,sean.pittman@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Ali,Raja,ali.raja@macgillivraylawofficeincorporated.com,MacGillivray Law Office Incorporated,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Marianne,Rennie,marianne.rennie@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Robert,Roach,robert.roach@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2018,,10,10,newfoundland_bar,generated_pattern
+Stephanie,Roberts,stephanie.roberts@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Ashley,Roche,ashley.roche@newfoundlandlabradorhealthservices.com,Newfoundland & Labrador Health Services,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Adam,Ronan,adam.ronan@goodlandbuckingham.com,Goodland Buckingham,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Emilie,Rowe,emilie.rowe@martinwhalenhenneburystamp.com,Martin Whalen Hennebury Stamp,,,,St. John's,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Nakita,Ryan,nakita.ryan@lawsocietyofnewfoundlandandlabrador.com,Law Society of Newfoundland and Labrador,,,,St. John's,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Nikita,Sheaves,nikita.sheaves@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Josh,Skinner,josh.skinner@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2021,,10,10,newfoundland_bar,generated_pattern
+Taylor,Starrett,taylor.starrett@noonanpiercey.com,Noonan Piercey,,,,St. John's,CA-NL,Canada,,Practising,2018,,10,10,newfoundland_bar,generated_pattern
+Felicia,Tupper,felicia.tupper@newfoundlandlabradorhealthservices.com,Newfoundland & Labrador Health Services,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Andrea,Vizsolyi,andrea.vizsolyi@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2018,,10,10,newfoundland_bar,generated_pattern
+Brandon,Walzak,brandon.walzak@macgillivraylawofficeincorporated.com,MacGillivray Law Office Incorporated,,,,St. John's,CA-NL,Canada,,Practising,2020,,10,10,newfoundland_bar,generated_pattern
+Lindsey,Wareham,lindsey.wareham@fortis.com,Fortis Inc.,,,,St. John's,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Mark,Wells,mark.wells@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2018,,10,10,newfoundland_bar,generated_pattern
+Andrea,Williams,andrea.williams@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Darby,Ashton,darby.ashton@crownsoffice.com,Crown Attorney's Office,,,,Corner Brook,CA-NL,Canada,,Practising,2018,,10,10,newfoundland_bar,generated_pattern
+Kate,Ashton,kate.ashton@crownsoffice.com,Crown Attorney's Office,,,,Corner Brook,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Amber,Haighway,amber.haighway@crownsoffice.com,Crown Attorney's Office,,,,Corner Brook,CA-NL,Canada,,Practising,2017,,10,10,newfoundland_bar,generated_pattern
+Courtney,Mills,courtney.mills@legalaidnl.com,Legal Aid NL,,,,Corner Brook,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Jill,Quilty,jill.quilty@brotherslaw.com,Brothers Law,,,,Corner Brook,CA-NL,Canada,,Practising,2019,,10,10,newfoundland_bar,generated_pattern
+Marwan,Abbas,marwan@zoomlawyers.ca,Zoom Law,,(403) 287-3134,https://zoomlawyers.ca,Calgary,CA-AB,Canada,,Practising,2023,,0,90,alberta_bar,profile
+Racha,Al-Mayaleh,racha.mayaleh@keymurraylaw.com,Key Murray Law,,9028947051,https://keymurraylaw.com,Charlottetown,CA-PE,Canada,,Practising Lawyer,2024-05-10,,0,90,pei_bar,profile
+Tammy,Abakpoya,tammy.abakpoya@ayokalawoffice.com,Ayoka Law Office,,(587) 834-3695,,Calgary,CA-AB,Canada,,Practising,2024,,0,35,alberta_bar,generated_pattern
+Benyat,Abdulwahab,benyat.abdulwahab@sophiepurnelloapurnellemploymentlaw.com,Sophie Purnell Professional Corporation o/a Purnell Employment Law,,,,Calgary,CA-AB,Canada,Employment Law,Practising,2024,,0,10,alberta_bar,generated_pattern
+Adam,Abouelwafa,adam.abouelwafa@manousoslawoffice.com,Manousos Law Office,,,,Calgary,CA-AB,Canada,,Practising,2024,,0,10,alberta_bar,generated_pattern
+Airat,Abu,airat.abu@charlesosujioaosujismithlawyers.com,Charles Osuji Professional Corporation o/a Osuji & Smith Lawyers,,,,Calgary,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Zaina,Abusayma,zaina.abusayma@samerahborhotoaborhotlaw.com,Samerah Borhot Professional Corporation o/a Borhot Law,,,,Calgary,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Adesewa,Adebayo-Araoye,adesewa.adebayo-araoye@republiclaw.com,The Republic Law,,,,Calgary,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Adelusi,Adebusuyi,adelusi.adebusuyi@whissellcontracting.com,Whissell Contracting Ltd,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2024,,0,10,alberta_bar,generated_pattern
+Zainab,Adejumobi,zainab.adejumobi@hooeycompanylawyers.com,Hooey & Company Lawyers,,,,Calgary,CA-AB,Canada,,Practising,2024,,0,10,alberta_bar,generated_pattern
+Moremi,Adekunle,moremi.adekunle@dimiclaw.com,Dimic Law,,,,Calgary,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Chioma,Agbakwuru-Onyike,chioma.agbakwuru-onyike@uzostanleyaghaegbunaoastanleylaw.com,Uzo Stanley Aghaegbuna Professional Corporation o/a Stanley Law,,,,Calgary,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Abena,Agbenu,abena.agbenu@cooperatorsgroup.com,Co-operators Group Ltd.,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2022,,0,10,alberta_bar,generated_pattern
+Anthony,Agun,anthony.agun@cityofcalgary.com,The City of Calgary,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2022,,0,10,alberta_bar,generated_pattern
+Susan,Agun,susan.agun@crownprosecutorsoffice.com,Crown Prosecutors' Office,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2024,,0,10,alberta_bar,generated_pattern
+Farhan,Ahmed,farhan.ahmed@safadministrationlp.com,SAF Administration LP,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2023,,0,10,alberta_bar,generated_pattern
+Niharika,Ahuja,niharika.ahuja@tdinsurancestafflegal.com,TD Insurance Staff Legal,,,,Calgary,CA-AB,Canada,Insurance Law,Practising (Corporate/Government Counsel),2022,,0,10,alberta_bar,generated_pattern
+Subinuer,Aizimujiang,subinuer.aizimujiang@charlesosujioaosujismithlawyers.com,Charles Osuji Professional Corporation o/a Osuji & Smith Lawyers,,,,Calgary,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Joy,Akaa,joy.akaa@accesslaw.com,Access Law,,,,Calgary,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Husna,Bik,husna.bik@napolishkolnikcanada.com,Napoli Shkolnik Canada,,,,Calgary,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Neda,Amini,neda.amini@reederassociatesoastonetreelaw.com,Reeder & Associates Professional Corporation o/a Stonetree Law,,,,Calgary,CA-AB,Canada,,Practising,2023,,0,10,alberta_bar,generated_pattern
+Sarah,Anderson,sarah.anderson@mharrisoarealtyonelegaloalegalone.com,M. Harris Professional Corporation o/a Realty One Legal o/a Legal One,,,,Calgary,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Catherine,Andrews,catherine.andrews@luboskpestaoapestalaw.com,Lubos K. Pesta Professional Corporation o/a Pesta Law,,,,Calgary,CA-AB,Canada,,Practising,2024,,0,10,alberta_bar,generated_pattern
+Mark,Andrews,mark.andrews@imperialoillimited.com,Imperial Oil Limited,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2025,,0,10,alberta_bar,generated_pattern
+Olapeju,Anozie,olapeju.anozie@albertautilitiescommission.com,Alberta Utilities Commission,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2024,,0,10,alberta_bar,generated_pattern
+Kathleen,Ard,kathleen.ard@germainefieldsoamintlegal.com,Germaine Fields Professional Corporation o/a Mint Legal,,,,Calgary,CA-AB,Canada,,Practising,2022,,0,10,alberta_bar,generated_pattern
+Elizabeth,Argento,elizabeth.argento@davidglmckenzieoawestcan.com,David G.L. McKenzie Professional Corporation o/a WestCan Law Firm,,,,Calgary,CA-AB,Canada,,Practising,2022,,0,10,alberta_bar,generated_pattern
+Jared,Armstrong,jared.armstrong@inuvialuitregionalcorporation.com,Inuvialuit Regional Corporation,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2022,,0,10,alberta_bar,generated_pattern
+Nikhil,Arora,nikhil.arora@lisahandfieldprofessionallawcorporationoacalgarylegalteam.com,Lisa Handfield Professional Law Corporation o/a The Calgary Legal Team,,,,Calgary,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Sahil,Arora,sahil.arora@hasratprofessionallawcorporationoaunitylawoffice.com,Hasrat Professional Law Corporation o/a Unity Law Office,,,,Calgary,CA-AB,Canada,,Practising,2023,,0,10,alberta_bar,generated_pattern
+Bimpe,Ashogbon,bimpe.ashogbon@transcanadapipelineslimited.com,TransCanada PipeLines Limited,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2024,,0,10,alberta_bar,generated_pattern
+Amber,Atwal,amber.atwal@heidelbergmaterialscanadalimited.com,Heidelberg Materials Canada Limited,,,,Calgary,CA-AB,Canada,,Practising (Corporate/Government Counsel),2022,,0,10,alberta_bar,generated_pattern
+Harjot,Aujla,harjot.aujla@northpointelaw.com,North Pointe Law,,,,Calgary,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Nicholas,Austin,nicholas.austin@zulkverjeeoaverjeelaw.com,Zul K. Verjee Professional Corporation o/a Verjee Law,,,,Calgary,CA-AB,Canada,,Practising,2022,,0,10,alberta_bar,generated_pattern
+Sabrina,Avery,sabrina.avery@davidawestoawestlegal.com,David A. West Professional Corporation o/a West Legal,,,,Calgary,CA-AB,Canada,,Practising,2024,,0,10,alberta_bar,generated_pattern
+Shalini,Ayalasomayajula,shalini.ayalasomayajula@jaehshimoashimlaw.com,Jae H. Shim Professional Corporation o/a Shim Law,,,,Calgary,CA-AB,Canada,,Practising,2023,,0,10,alberta_bar,generated_pattern
+Yemi,Ayorinde,yemi.ayorinde@aalegal.com,AA Legal,,,,Calgary,CA-AB,Canada,,Practising,2022,,0,10,alberta_bar,generated_pattern
+Kenechukwu,Azie,kenechukwu.azie@tdinsurancestafflegal.com,TD Insurance Staff Legal,,,,Calgary,CA-AB,Canada,Insurance Law,Practising (Corporate/Government Counsel),2024,,0,10,alberta_bar,generated_pattern
+Stella,Azom,stella.azom@zomcrestlawoffice.com,Zomcrest Law Office,,,,Calgary,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Mona,Abdolrazaghi,mona.abdolrazaghi@enbridge.com,Enbridge Inc.,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2024,,0,10,alberta_bar,generated_pattern
+Wael,Abdulgany,wael.abdulgany@salloumcompany.com,Salloum & Company,,,,Edmonton,CA-AB,Canada,,Practising,2024,,0,10,alberta_bar,generated_pattern
+Martin,Abramowski,martin.abramowski@jonathonwescottoaalbertacounsel.com,Jonathon Wescott Professional Corporation o/a Alberta Counsel,,,,Edmonton,CA-AB,Canada,,Practising,2023,,0,10,alberta_bar,generated_pattern
+Matt,Ackerman,matt.ackerman@dinobottosoabottos.com,Dino Bottos  o/a Bottos Law Group,,,,Edmonton,CA-AB,Canada,,Practising,2022,,0,10,alberta_bar,generated_pattern
+Adedoyin,Adebiyi,adedoyin.adebiyi@averhaegheoaverhaeghelawoafreedomlaw.com,A. Verhaeghe Professional Corporation o/a Verhaeghe Law o/a Freedom Law,,,,Edmonton,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Yemi,Adeleke,yemi.adeleke@albertajustice.com,Alberta Justice,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2022,,0,10,alberta_bar,generated_pattern
+Annet,Adetunji,annet.adetunji@albertajustice.com,Alberta Justice,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2023,,0,10,alberta_bar,generated_pattern
+Opeyemi,Afeni,opeyemi.afeni@md.com,MD Law Group,,,,Edmonton,CA-AB,Canada,,Practising,2024,,0,10,alberta_bar,generated_pattern
+Bukola,Agbede,bukola.agbede@governmentofalberta.com,Government of Alberta,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2023,,0,10,alberta_bar,generated_pattern
+Ebunoluwa,Agharese,ebunoluwa.agharese@ebunlawoffice.com,Ebun Law Office,,,,Edmonton,CA-AB,Canada,,Practising,2023,,0,10,alberta_bar,generated_pattern
+Busayo,Akinola,busayo.akinola@tdinsurancestafflegal.com,TD Insurance Staff Legal,,,,Edmonton,CA-AB,Canada,Insurance Law,Practising (Corporate/Government Counsel),2024,,0,10,alberta_bar,generated_pattern
+Yetunde,Akinyinka,yetunde.akinyinka@departmentofjusticecanada.com,Department of Justice Canada,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2022,,0,10,alberta_bar,generated_pattern
+Rebecca,Alexander,rebecca.alexander@albertacrownprosecutionservice.com,Alberta Crown Prosecution Service,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2025,,0,10,alberta_bar,generated_pattern
+Y.,Aliakhnovich,y.aliakhnovich@albertacrownprosecutionservice.com,Alberta Crown Prosecution Service,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2025,,0,10,alberta_bar,generated_pattern
+Olumide,Aliu,olumide.aliu@olubankolekaffo.com,Olubankole Kaffo Professional Corporation,,,,Edmonton,CA-AB,Canada,,Practising,2024,,0,10,alberta_bar,generated_pattern
+James,Alvarez,james.alvarez@chadjeremybrownoataxcounselcaoataxninjataxlaw.com,Chad Jeremy Brown Professional Corporation o/a TaxCounsel.ca o/a Tax Ninja Tax Law,,,,Edmonton,CA-AB,Canada,Tax Law,Practising (Out of Province),2022,,0,10,alberta_bar,generated_pattern
+Iman,Amin,iman.amin@legalaidalberta.com,Legal Aid Alberta,,,,Edmonton,CA-AB,Canada,,Practising,2022,,0,10,alberta_bar,generated_pattern
+Solomon,Amoateng,solomon.amoateng@bowielaw.com,Bowie Law,,,,Edmonton,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Tighe,Andreou,tighe.andreou@assifflawoffice.com,Assiff Law Office,,,,Edmonton,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Michael,Anson,michael.anson@kingdefence.com,King Defence,,,,Edmonton,CA-AB,Canada,,Practising,2024,,0,10,alberta_bar,generated_pattern
+Vivian,Anyi,vivian.anyi@belalnajmeddineoaedmontonlawofficeoagreatescaperealestatelaw.com,Belal Najmeddine Professional Corporation o/a Edmonton Law Office & o/a Great Escape Real Estate Law,,,,Edmonton,CA-AB,Canada,Real Estate,Practising,2023,,0,10,alberta_bar,generated_pattern
+Jessette,Apao,jessette.apao@belalnajmeddineoaedmontonlawofficeoagreatescaperealestatelaw.com,Belal Najmeddine Professional Corporation o/a Edmonton Law Office & o/a Great Escape Real Estate Law,,,,Edmonton,CA-AB,Canada,Real Estate,Practising,2023,,0,10,alberta_bar,generated_pattern
+Bonita,Arbeau,bonita.arbeau@albertacrownprosecutionservice.com,Alberta Crown Prosecution Service,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2022,,0,10,alberta_bar,generated_pattern
+Aman,Aujla,aman.aujla@linqlaw.com,Linq Law,,,,Edmonton,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Jonathan,Avey,jonathan.avey@albertajustice.com,Alberta Justice,,,,Edmonton,CA-AB,Canada,,Practising (Corporate/Government Counsel),2023,,0,10,alberta_bar,generated_pattern
+Bankole,Awoyemi,bankole.awoyemi@averhaegheoaverhaeghelawoafreedomlaw.com,A. Verhaeghe Professional Corporation o/a Verhaeghe Law o/a Freedom Law,,,,Edmonton,CA-AB,Canada,,Practising,2025,,0,10,alberta_bar,generated_pattern
+Nura,Awwad,nura.awwad@corycchanoachantaxlaw.com,Cory C. Chan Professional Corporation o/a Chan Tax Law,,,,Edmonton,CA-AB,Canada,Tax Law,Practising,2024,,0,10,alberta_bar,generated_pattern
+Gloria,Akabuogu,gloria.akabuogu@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Michelle,Akpaka,michelle.akpaka@gittensdebeerassociates.com,"Gittens, de Beer & Associates",,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Duncan,Allison,duncan.allison@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Kia,Andersen,kia.andersen@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Kaylyn,Anthony,kaylyn.anthony@intactinsurance.com,Intact Insurance,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Cordelia,Ayers,cordelia.ayers@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Mary,Bellefleur,mary.bellefleur@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Bradley,Budden,bradley.budden@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Olivia,Bungay,olivia.bungay@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Ricky,Cahill,ricky.cahill@forestroad.com,Forest Road Law Group,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Patrick,Cameron,patrick.cameron@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Jillian,Cleary,jillian.cleary@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Rachel,Delaney,rachel.delaney@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Stephanie,Dicks,stephanie.dicks@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Sarah,Dominic,sarah.dominic@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Siobhan,Donovan,siobhan.donovan@newfoundlandpower.com,Newfoundland Power,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Claire,Dowden,claire.dowden@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Christina,Driscoll,christina.driscoll@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Chelsea,Drodge,chelsea.drodge@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Dana,Evans,dana.evans@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Ryan,Fancey,ryan.fancey@martinwhalenhenneburystamp.com,Martin Whalen Hennebury Stamp,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Julia,Fitzpatrick,julia.fitzpatrick@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Jeremy,Gillam,jeremy.gillam@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Michele,Grant,michele.grant@gittensdebeerassociates.com,"Gittens, de Beer & Associates",,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Jayna,Green,jayna.green@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Amelia,Harris,amelia.harris@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Danielle,Harris,danielle.harris@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Ian,Hennessey,ian.hennessey@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Jillian,Hickey,jillian.hickey@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Karen,Holloway,karen.holloway@nasdaqcanada.com,Nasdaq Canada Inc.,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Michael,Hrabowsky,michael.hrabowsky@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Adrienne,Janes,adrienne.janes@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Zayd,Khraishi,zayd.khraishi@martinwhalenhenneburystamp.com,Martin Whalen Hennebury Stamp,,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Isabella,Koltunski,isabella.koltunski@peddigrewwade.com,Peddigrew Wade,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Cassidy,LaCosta,cassidy.lacosta@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Jillian,Lahey,jillian.lahey@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Chris,Layte,chris.layte@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Lexton,Lee,lexton.lee@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Frankie,Leonard,frankie.leonard@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Hannah,Loder,hannah.loder@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Raylene,Mackey,raylene.mackey@macgillivraylawofficeincorporated.com,MacGillivray Law Office Incorporated,,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Christopher,Mallard,christopher.mallard@macgillivraylawofficeincorporated.com,MacGillivray Law Office Incorporated,,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Alexander,Marshall,alexander.marshall@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Taryn,McLachlan,taryn.mclachlan@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Jessie,McNeil,jessie.mcneil@noonanpiercey.com,Noonan Piercey,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Josh,Merrigan,josh.merrigan@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Tiffany,Mitchell,tiffany.mitchell@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Kayla,Mosher,kayla.mosher@odeaearle.com,"O'Dea, Earle",,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Curtis,Mpame,curtis.mpame@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Laura,Murphy,laura.murphy@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Patrick,Murphy,patrick.murphy@gittensdebeerassociates.com,"Gittens, de Beer & Associates",,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Tyler,Murphy,tyler.murphy@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Leah,Myles,leah.myles@martinwhalenhenneburystamp.com,Martin Whalen Hennebury Stamp,,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Folabomi,Ogunyemi,folabomi.ogunyemi@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Nadine,Otten,nadine.otten@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Nicole,Payette,nicole.payette@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Nicholas,Peddle,nicholas.peddle@courtofappealofnewfoundlandandlabrador.com,Court of Appeal of Newfoundland and Labrador,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Katie,Power,katie.power@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Matthew,Raske,matthew.raske@memorialuniversityofnewfoundland.com,Memorial University of Newfoundland,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Brandon,Rideout,brandon.rideout@saunderscollinsloeblaw.com,Saunders Collins & Loeb Law,,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Colleen,Roach,colleen.roach@supremecourtofnewfoundlandandlabrador.com,Supreme Court of Newfoundland and Labrador,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Rebekah,Robbins,rebekah.robbins@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Leah,Robertson,leah.robertson@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Lucas,Roche,lucas.roche@novainjurylaw.com,Nova Injury Law,,,,St. John's,CA-NL,Canada,Personal Injury,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Lilla,Rossiter,lilla.rossiter@mcinnescooper.com,McInnes Cooper,,,,St. John's,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Bren,Slater,bren.slater@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Kristie,Smith,kristie.smith@bmoprivatewealth.com,BMO Private Wealth,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Amanda,Sooley,amanda.sooley@roebothanmckaymarshall.com,"Roebothan, McKay & Marshall",,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Benjamin,Stratton,benjamin.stratton@gittensdebeerassociates.com,"Gittens, de Beer & Associates",,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Lynn,Sullivan,lynn.sullivan@coxandpalmer.com,Cox & Palmer,,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Saad,Syed,saad.syed@departmentofjusticeandpublicsafety.com,Department of Justice and Public Safety,,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Noor,Tayyaba,noor.tayyaba@gittensdebeerassociates.com,"Gittens, de Beer & Associates",,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Lindsey,Tulk,lindsey.tulk@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Sonya,Vey,sonya.vey@curtisdawe.com,"Curtis, Dawe",,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Lauren,Walker,lauren.walker@orrcabotcrosbieoleylaw.com,Orr Cabot Crosbie Oley Law,,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Duncan,Wallace,duncan.wallace@odeaearle.com,"O'Dea, Earle",,,,St. John's,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Stuart,Wallace,stuart.wallace@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Lori,Wareham,lori.wareham@buddenhiscocklawyers.com,Budden Hiscock Lawyers,,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Andrew,Weber,andrew.weber@legalaidnl.com,Legal Aid NL,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Michael,Williams,michael.williams@odeaearle.com,"O'Dea, Earle",,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Hillary,Winter,hillary.winter@humanrightscommission.com,Human Rights Commission,,,,St. John's,CA-NL,Canada,,Practising,2023,,0,10,newfoundland_bar,generated_pattern
+Deborah,Yetman,deborah.yetman@stewartmckelvey.com,Stewart McKelvey,,,,St. John's,CA-NL,Canada,,Practising,2022,,0,10,newfoundland_bar,generated_pattern
+Dianna,Alteen,dianna.alteen@poolealthouse.com,"Poole, Althouse",,,,Corner Brook,CA-NL,Canada,,Practising,2024,,0,10,newfoundland_bar,generated_pattern
+Blair,Curtis,blair.curtis@legalaidnl.com,Legal Aid NL,,,,Corner Brook,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Amber,Murrin,amber.murrin@legalaidnl.com,Legal Aid NL,,,,Corner Brook,CA-NL,Canada,,Practising,2025,,0,10,newfoundland_bar,generated_pattern
+Adams,Archibald,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Charles,Archibald,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Adrien,Arsenault,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Ashley,Arsenault,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Aubin,Arsenault,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Michelle,Arsenault,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Hannah,Arsenault-Gallant,,,,,,Charlottetown,CA-PE,Canada,,Canadian Legal Advisor,,,0,0,pei_bar,
+Frederick,Auld,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+C.,Auwaerter,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Patrick,Aylward,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Rafeena,Bacchus,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+W.,Baird,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Blair,Barbour,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+Scott,Barry,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Ryan,Baxter,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Edward,Bayfield,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Michael,Beazeley,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Nathan,Beck,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Roderick,Beck,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+James,Beckett,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+John,Bell,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Morley,Bell,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Reginald,Bell,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Paul,Bender,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Charles,Bentley,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+James,Bentley,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+William,Bentley,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Ailish,Bergin,,,,,,Charlottetown,CA-PE,Canada,,Canadian Legal Advisor,,,0,0,pei_bar,
+Michael,Berrigan,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Charles,Binns,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+"Charles,",Binns,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+John,Binns,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Lana,Birch-Rideout,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Nancy,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Amanda,Blakeney,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+J.,Blanchard,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Jothan,Blanchard,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Stanislaus,Blanchard,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Derek,Bondt,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Keith,Boswell,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Malcolm,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Kegan,Bradley,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Matthew,Bradley,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+David,Brannen,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Samson,Brasseur,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Frederick,Brecken,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Alder,Brehaut,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Frederick,Brehaut,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+John,Brennan,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Toby,Bristow,,,,,,Charlottetown,CA-PE,Canada,,Student-at-Law,,,0,0,pei_bar,
+Charles,Brown,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Edwin,Brown,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Jordan,Brown,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Nicole,Brown,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Cody,Burke,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+E.,Burke,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+Judy,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Edward,Burton,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Megan,Butler,,,,,,Charlottetown,CA-PE,Canada,,Canadian Legal Advisor,,,0,0,pei_bar,
+Joseph,Callaghan,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Shea,Callaghan,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Phillips,Callbeck,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Donald,Cameron,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+M.,Cameron,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Allen,Campbell,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Benjamin,Campbell,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Blair,Campbell,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+Cornelius,Campbell,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Emily,Campbell,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Glenna,Campbell,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Iain,Campbell,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+J.,Campbell,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Kaylee,Campbell,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Laurence,Campbell,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Mark,Campbell,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Norman,Campbell,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Randall,Campbell,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Scott,Campbell,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Thane,Campbell,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+Alexander,Q.C.,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Bert,Q.C.,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+O.,Q.C.,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+D.,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+J.,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Karen,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Sarah,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+J.,Q.C.,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+William,Cann,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Cheryl,Canning,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+David,Canvin,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+William,Carman,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Kerri,Carpenter,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Stephen,Carpenter,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Norman,Carruthers,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Susan,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+William,Carvell,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Michael,Carver,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+Gerald,Caseley,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Sean,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+Thomas,Channell,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Alan,Cheverie,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Wayne,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Pragya,Chowdhury,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Janet,Christian,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Ewan,Clark,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Kenneth,Clark,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Marlene,Clark,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Janet,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Jonah,Clements,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Tracey,Clements,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Andrew,Coady,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Devin,Coady,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Loretta,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Jeremy,Coffin,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+Ben,Coles,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+Richard,Collier,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Gregory,Collins,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Leslie,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Bradley,Comeau,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+Jean-Daniel,Comeau,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Thomas,Compton,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Susan,Connolly,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Geoffrey,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Hans,Connor,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Francis,Conroy,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Frederick,Conroy,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Sean,Corcoran,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+John,Cormack,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Jeffery,Cormier,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Kathleen,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+Dolores,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+John,Crawford,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Andrew,Cudmore,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Clare,Cudmore,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Tracy,Cudmore,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+A.,Curley,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Kassia,Curley,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Sean,Curley,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+Arthur,Currie,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Michael,Currie,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+Nicholas,Currie,,,,,,Charlottetown,CA-PE,Canada,,Canadian Legal Advisor,,,0,0,pei_bar,
+Tracey,Cutcliffe,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Alexandra,Dalton,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Walter,Darby,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Keya,Dasgupta,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+Louis,Davies,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Caroline,Davison,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Valana,Deighan,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Gary,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Ruth,C.,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+Heidi,Desaulniers,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Benjamin,DesBrisay,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Charles,Desbrisay,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Theophilus,DesBrisay,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Sylvere,DesRoches,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Erin,Devine,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+E.W.,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Denise,Doiron,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Francis,Doiron,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Mark,Doucet,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+John,Q.C.,,,,,,Charlottetown,CA-PE,Canada,,Honorary Member,,,0,0,pei_bar,
+Bobbi-Jo,Baker,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+William,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Steven,Dowling,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Susan,Dowling-Shaw,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+J.,Doyle,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+L.,Doyle,,,,,,Charlottetown,CA-PE,Canada,,Active,,,0,0,pei_bar,
+Michael,Drake,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer,,,0,0,pei_bar,
+Madelyn,Driscoll,,,,,,Charlottetown,CA-PE,Canada,,Practising Lawyer (Restricted),,,0,0,pei_bar,
+Monica,Driscoll,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+Douglas,K.C.,,,,,,Charlottetown,CA-PE,Canada,,Non-Practising,,,0,0,pei_bar,
+Cathryn,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Colleen,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Corey,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Dane,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Donald,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Donna,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Douglas,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Genevieve,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Gordon,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Jason,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Jeffrey,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Jennifer,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+John,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Juliet,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Kevin,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Kieran,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Kirby,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Kyle,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Laésha,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Laura,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Mark,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Martin,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Matthew,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Michael,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Murray,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Nick,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Nicholas,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Paul,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Peri,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Raylene,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Reed,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Rory,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Scarlett,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Scott,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Sephra,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Shawn,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Travis,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Warren,Smith,,,,,,Vancouver,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Brian,Smith,,,,,,Victoria,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Grant,Smith,,,,,,Victoria,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Kristin,Smith,,,,,,Victoria,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Malcolm,Smith,,,,,,Victoria,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Ramiah,Smith,,,,,,Victoria,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,
+Randy,Smith,,,,,,Victoria,CA-BC,Canada,,Practising,,,0,0,british-columbia_bar,

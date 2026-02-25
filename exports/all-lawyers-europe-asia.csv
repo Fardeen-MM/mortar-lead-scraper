@@ -1,0 +1,264 @@
+first_name,last_name,email,firm_name,title,phone,website,city,state,country,practice_area,bar_status,admission_date,linkedin_url,decision_maker_score,lead_score,primary_source,email_source
+Matthew,Bermingham,info@berlaw.ie,Matthew Bermingham & Co.,,(025) 32727,https://berlaw.ie,Cork,IE,Europe,,Practising,1987,,105,90,ireland_bar,bar
+Lyn,Boxall,lyn@lynboxall.com,LYN BOXALL LLC,,+65 6829 7031,http://www.lynboxall.com/,Singapore,SG,Asia-Pacific,,,,,85,90,singapore_bar,bar
+Celine,Barrett,cbarrett@bandonsolicitors.com,Fleming & Barrett LLP,,(023) 8844211,https://www.bandonsolicitors.com,Cork,IE,Europe,,Practising,1998,,80,90,ireland_bar,bar
+Owen,Binchy,owen@oobsol.com,O'Connor O'Dea Binchy Solicitors LLP,,(063) 81214,https://www.oconnorodea.com,Cork,IE,Europe,,Practising,1971,,80,90,ireland_bar,bar
+Jenny,Lai,jlcosg@gmail.com,JENNY LAI & CO,,+65 6227 7347,http://www.jlco.com.sg/,Singapore,SG,Asia-Pacific,,,,,75,90,singapore_bar,bar
+Roger,Donnell,roger.donnell@rogerdonnellconsultant.com,Roger Donnell - Consultant,,,,Auckland,NZ,Asia-Pacific,,,,,75,10,new-zealand_bar,generated_pattern
+John,Tattersfield,john.tattersfield@johntattersfield.com,John Tattersfield,,,,Auckland,NZ,Asia-Pacific,,,,,75,10,new-zealand_bar,generated_pattern
+Michael,Scott,michael.scott@michaelscottlawoffice.com,Michael Scott Law Office,,,,Wellington,NZ,Asia-Pacific,,,,,75,10,new-zealand_bar,generated_pattern
+John,Dean,john.dean@johndeanlawoffice.com,John Dean Law Office,,,,Wellington,NZ,Asia-Pacific,,,,,75,10,new-zealand_bar,generated_pattern
+Robert,Baker,robert@jblaw.ie,Jermyn Baker,,(021) 4757080,https://www.jblaw.ie,Cork,IE,Europe,,Practising,2000,,70,90,ireland_bar,bar
+Laetitia,Baker,laetitia.baker@maccarthybaker.com,MacCarthy Baker & Co.,,(028) 21255,https://maccarthybaker.com,Cork,IE,Europe,,Practising,1981,,70,90,ireland_bar,bar
+Carmel,Best,carmel@bestandco.ie,Best & Co.,,(021) 4271012,https://www.bestandco.ie,Cork,IE,Europe,,Practising,2006,,70,90,ireland_bar,bar
+Patrick,Molloy,pat@patmolloy.co.nz,Patrick M Molloy,,09 827 1184,https://patmolloy.co.nz,Auckland,NZ,Asia-Pacific,,Barrister & Solicitor (Current),Auckland High Court on 03/02/1978,,70,90,new-zealand_bar,bar
+Williamena,Knowles,barbara@bklaw.co.nz,Barbara Knowles,,09 476 7034,https://bklaw.co.nz,Auckland,NZ,Asia-Pacific,,Barrister & Solicitor (Current),Auckland High Court on 03/02/1978,,70,90,new-zealand_bar,bar
+Helen,Foot,helen@foot.co.nz,Foot Law Limited,,04 385 7934,https://foot.co.nz,Wellington,NZ,Asia-Pacific,,Barrister & Solicitor (Current),Wellington High Court on 25/02/1977,,70,90,new-zealand_bar,bar
+James,Baylor,james.baylor@robertjbaylorson.com,Robert J. Baylor & Son,,(025) 31628,,Cork,IE,Europe,,Practising,1968,,70,35,ireland_bar,generated_pattern
+Andrew Hamilton,Abernethy,Office@abernethypartners.com,ABERNETHY & CO.,,6462-3622,https://abernethypartners.com,Hong Kong,HK,Asia-Pacific,,Holding Current Practising Certificate,05/2011,,60,90,hong-kong_bar,bar
+Lim,Toon,legal@jootoon.com.sg,JOO TOON LLC,,+65 6536 1009,https://www.jootoon.com.sg/,Singapore,SG,Asia-Pacific,,,,,50,90,singapore_bar,bar
+Alan,Adams,aadams@amoss.ie,AMOSS LLP,,(01) 2120400,https://www.amoss.ie,Dublin,IE,Europe,,Practising,2001,,40,90,ireland_bar,bar
+Patrick,Ahern,patrick.ahern@rdj.ie,RDJ LLP,,(021) 4802700,https://www.rdj.ie,Cork,IE,Europe,,Practising,1988,,40,90,ireland_bar,bar
+Farah,Namazie,farahnamazie@namazie-law.com,NAMAZIE & CO.,,+65 6538 9711,http://www.namazie-law.com/,Singapore,SG,Asia-Pacific,,,,,40,90,singapore_bar,bar
+Bouchra,AADSSI,bouchra.aadssi@aadssimorizeavocats.com,AADSSI MORIZE AVOCATS,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Siham,AADSSI,siham.aadssi@aadssisiham.com,AADSSI SIHAM,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Anissa,AAZIZ,anissa.aaziz@aazizanissa.com,AAZIZ ANISSA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Adrien,ABAD,adrien.abad@abadadrien.com,ABAD ADRIEN,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Jean-Louis,ABAD,jean-louis.abad@abadjeanlouis.com,ABAD JEAN-LOUIS,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Pauline,ABAD,pauline.abad@abadpauline.com,ABAD PAULINE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Naïma,ABADA,naima.abada@abadanama.com,ABADA NAÏMA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Sincia,ABADIE,sincia.abadie@abadiesincia.com,ABADIE SINCIA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Marie,ABBE,marie.abbe@abbemarie.com,ABBE MARIE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Abdelrahim,ABBOUB,abdelrahim.abboub@abboubabdelrahim.com,ABBOUB ABDELRAHIM,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Fatima,ABDALLAHOUI,fatima.abdallahoui@abdallahouifatima.com,ABDALLAHOUI FATIMA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Valéry,ABDOU,valery.abdou@abdouetassocies.com,ABDOU ET ASSOCIES,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Béatrice,ABEL,beatrice.abel@abelbatrice.com,ABEL BÉATRICE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Najah,ABID,najah.abid@abidnajah.com,ABID NAJAH,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Océane-Jade,ACHAINTRE,oceane-jade.achaintre@achaintreocanejade.com,ACHAINTRE OCÉANE-JADE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Benjamin,ACHARD,benjamin.achard@achardbenjamin.com,ACHARD BENJAMIN,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Camille,ACHIN,camille.achin@achincamille.com,ACHIN CAMILLE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Julie,ACHOUIL,julie.achouil@achouiljulie.com,ACHOUIL JULIE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Abdellah,ACHOURI,abdellah.achouri@achouriabdellah.com,ACHOURI ABDELLAH,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Claire,ADAM,claire.adam@adamclaire.com,ADAM CLAIRE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Sigolène,ADAM,sigolene.adam@dumoulinadam.com,DUMOULIN - ADAM,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Ala,ADAS,ala.adas@adasavocats.com,ADAS AVOCATS,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Berthey-Lee,ADJA OKE,berthey-lee.adjaoke@adjaokebertheylee.com,ADJA OKE BERTHEY-LEE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Eva,ADJEDJ,eva.adjedj@adjedjeva.com,ADJEDJ EVA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Myriam,ADJERAD,myriam.adjerad@adjeradavocats.com,ADJERAD AVOCATS,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Bruno,ADOLPHE,bruno.adolphe@adolphebruno.com,ADOLPHE BRUNO,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Ikrame,ADOUNI,ikrame.adouni@adouniikrame.com,ADOUNI IKRAME,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Marie-Christine,AGAL,marie-christine.agal@agalmariechristine.com,AGAL MARIE-CHRISTINE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Bénito,AGBO,benito.agbo@agbobnito.com,AGBO BÉNITO,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Loïc,AGBODAN,loic.agbodan@agbodanloc.com,AGBODAN LOÏC,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Johana,AGUILERA,johana.aguilera@aguilerajohana.com,AGUILERA JOHANA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Noelle Sonia,AIDER-PRUDHOMME,noellesonia.aider-prudhomme@aiderprudhommenoellesonia.com,AIDER-PRUDHOMME NOELLE SONIA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Nour,AIZEL,nour.aizel@aizelnour.com,AIZEL NOUR,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Ahmed,AKKAL,ahmed.akkal@akkalahmed.com,AKKAL AHMED,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Benjamin,AKRICH,benjamin.akrich@akrichsavaryavocatsassocies.com,AKRICH & SAVARY AVOCATS ASSOCIES,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Sonia,AKUE,sonia.akue@akuesonia.com,AKUE SONIA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Emilie,ALACIO-MARTINEZ,emilie.alacio-martinez@alaciomartinezemilie.com,ALACIO-MARTINEZ EMILIE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Anthony,ALAIMO,anthony.alaimo@alaimoanthony.com,ALAIMO ANTHONY,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Melina,ALAMELAMA,melina.alamelama@alamelamamelina.com,ALAMELAMA MELINA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Sonia,ALAMI MEJJATI,sonia.alamimejjati@alamimejjatisonia.com,ALAMI MEJJATI SONIA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Thomas,ALBERICO,thomas.alberico@albericothomas.com,ALBERICO THOMAS,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Erika,ALBERT,erika.albert@alberterika.com,ALBERT ERIKA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Sylsie,ALBERTELLI,sylsie.albertelli@albertelliassocies.com,ALBERTELLI & ASSOCIES,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Paul,ALBISSON,paul.albisson@albissonpaul.com,ALBISSON PAUL,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Clémence,ALBORGHETTI,clemence.alborghetti@alborghetticlmence.com,ALBORGHETTI CLÉMENCE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Tammuze,AL-DOURI,tammuze.al-douri@aldouritammuze.com,AL-DOURI TAMMUZE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Emel,ALKAN,emel.alkan@alkanemel.com,ALKAN EMEL,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Clément,ALLAGNAT,clement.allagnat@allagnatclment.com,ALLAGNAT CLÉMENT,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Azéline,ALLAIN,azeline.allain@allainazline.com,ALLAIN AZÉLINE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Astrid,ALLALA,astrid.allala@allalaastrid.com,ALLALA ASTRID,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Angélique,ALLAMELOU,angelique.allamelou@allamelouanglique.com,ALLAMELOU ANGÉLIQUE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Maleine,ALLARD,maleine.allard@allardmaleine.com,ALLARD MALEINE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Matthieu,ALLARD,matthieu.allard@nekaaallard.com,NEKAA ALLARD,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Florence,ALLIGIER,florence.alligier@alligierflorence.com,ALLIGIER FLORENCE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Marie,ALLUT,marie.allut@allutmarie.com,ALLUT MARIE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Ingrid,ALMANZA,ingrid.almanza@almanzaingrid.com,ALMANZA INGRID,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Cem,ALP,cem.alp@alpcem.com,ALP CEM,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Maxime,ALVES-CONDE,maxime.alves-conde@alvescondemaxime.com,ALVES-CONDE MAXIME,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Michelle,AMANTE,michelle.amante@amantetaquet.com,AMANTE-TAQUET,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Emma,AMBROSINO,emma.ambrosino@ambrosinoemma.com,AMBROSINO EMMA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Seda,AMIRA,seda.amira@amiraseda.com,AMIRA SEDA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Gauthier,AMOUROUS,gauthier.amourous@amourousgauthier.com,AMOUROUS GAUTHIER,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Léonie,AMOUROUX,leonie.amouroux@amourouxlonie.com,AMOUROUX LÉONIE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Lazare,AMRANE,lazare.amrane@amranelazare.com,AMRANE LAZARE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Joanna,AMSALLEM,joanna.amsallem@amsallemjoanna.com,AMSALLEM JOANNA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Florence,AMSELLEM-AKNIN,florence.amsellem-aknin@amsellemakninflorence.com,AMSELLEM-AKNIN FLORENCE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Lucie,ANCELET,lucie.ancelet@anceletlucie.com,ANCELET LUCIE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Eva,ANDLAUER,eva.andlauer@andlauereva.com,ANDLAUER EVA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Aurélie,ANDRE,aurelie.andre@andreaurlie.com,ANDRE AURÉLIE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Julia,ANDRE,julia.andre@andrejulia.com,ANDRE JULIA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Marine,ANDRE-COTTY,marine.andre-cotty@andrecottymarine.com,ANDRE-COTTY MARINE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Sophie,ANDREI,sophie.andrei@andreisophie.com,ANDREI SOPHIE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Stéphane,ANDREO,stephane.andreo@andreostphane.com,ANDREO STÉPHANE,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Ariel,ANDRIEUX,ariel.andrieux@andrieuxariel.com,ANDRIEUX ARIEL,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Pedro,ANDUJAR CAMACHO,pedro.andujarcamacho@andujarcamachopedro.com,ANDUJAR CAMACHO PEDRO,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Olivier,ANFRAY,olivier.anfray@anfrayolivier.com,ANFRAY OLIVIER,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Marina,ANGILERI,marina.angileri@angilerimarina.com,ANGILERI MARINA,,,,Lyon,FR,Europe,,Inscrit,,,40,10,france_bar,generated_pattern
+Paramjeet,Pabla,paramjeet.pabla@pablalaw.com,Pabla Law,,,,Auckland,NZ,Asia-Pacific,,,,,40,10,new-zealand_bar,generated_pattern
+Linda,Fox,linda.fox@carsonfoxlegallimitedtacarsonfoxlegal.com,Carson Fox Legal Limited t/a Carson Fox Legal,,,,Auckland,NZ,Asia-Pacific,,,,,40,10,new-zealand_bar,generated_pattern
+Christopher,Lynch,christopher.lynch@inderlynchlawyerspukekohebranch.com,Inder Lynch Lawyers Ltd - Pukekohe Branch,,,,Auckland,NZ,Asia-Pacific,,,,,40,10,new-zealand_bar,generated_pattern
+William,Brierley,william.brierley@wlcbrierley.com,WLC Brierley,,,,Wellington,NZ,Asia-Pacific,,,,,40,10,new-zealand_bar,generated_pattern
+Gregory,Kelly,gregory.kelly@gregkellytrustlawlimited.com,Greg Kelly Trust Law Limited,,,,Wellington,NZ,Asia-Pacific,Estate Planning,,,,40,10,new-zealand_bar,generated_pattern
+Clara,Matthews,clara.matthews@clarabmatthews.com,Clara B Matthews,,,,Wellington,NZ,Asia-Pacific,,,,,40,10,new-zealand_bar,generated_pattern
+Michael,Hay,michael.hay@michaeljhay.com,Michael J Hay,,,,Wellington,NZ,Asia-Pacific,,,,,40,10,new-zealand_bar,generated_pattern
+Louise,Acton,louise.acton@boi.com,Bank of Ireland,,(076) 6234680,https://boi.com,Dublin,IE,Europe,,Practising,1994,,30,90,ireland_bar,bar
+Jennifer,Adams,jennifer.adams@veolia.com,Veolia,,(01) 8701200,https://www.veolia.ie,Dublin,IE,Europe,,Practising,2003,,30,90,ireland_bar,bar
+John,Adams,John.Adams@matheson.com,Matheson LLP,,(01) 2322000,https://www.matheson.com,Dublin,IE,Europe,,Practising,2011,,30,90,ireland_bar,bar
+Donna,Ager,donna.ager@walkersglobal.com,Walkers (Ireland) LLP,,(01) 4706600,https://www.walkersglobal.com,Dublin,IE,Europe,,Practising,2015,,30,90,ireland_bar,bar
+Dennis,Agnew,dennis.agnew@squirepb.com,Squire Patton Boggs Ireland,,(01) 6624578,https://www.squirepattonboggs.com,Dublin,IE,Europe,,Practising,2000,,30,90,ireland_bar,bar
+Gillian,Ahern,gillian@gaconsulting.ie,EY Law Ireland,,(21) 4805700,https://www.eylaw.ie,Cork,IE,Europe,,Practising,1998,,30,90,ireland_bar,bar
+Cornelius,Barry,con.barry@ckt.ie,Comyn Kelleher Tobin LLP,,(021) 4626900,https://www.ckt.ie,Cork,IE,Europe,,Practising,2016,,30,90,ireland_bar,bar
+Gillian,Barry,gillian_barry@corkcity.ie,Cork City Council,,(021) 4924222,https://www.corkcity.ie,Cork,IE,Europe,,Practising,1990,,30,90,ireland_bar,bar
+Catherine,Barry,catherine.barry@arw.ie,Ahern Roberts O'Rourke Williams & Partners,,(021) 4374444,https://www.arw.ie,Cork,IE,Europe,,Practising,2006,,30,90,ireland_bar,bar
+Declan,Barry,declan@georgemills.ie,George Mills & Co.,,(021) 4271224,https://www.georgemills.ie,Cork,IE,Europe,,Practising,1986,,30,90,ireland_bar,bar
+Duncan Arthur William,Abate,duncan.abate@jsm.com,JOHNSON STOKES & MASTER,,2843-2211,https://jsm.com,Hong Kong,HK,Asia-Pacific,,Holding Current Practising Certificate,12/1994,,30,90,hong-kong_bar,bar
+Gloria,Abdullah,ga@loandlo.com,LO & LO,,2523-8181,https://loandlo.com,Hong Kong,HK,Asia-Pacific,,Holding Current Practising Certificate,12/1993,,30,90,hong-kong_bar,bar
+William Andrew,Ahern,william@ahernlawyers.hk,HALDANES,,2868-1234,https://ahernlawyers.hk,Hong Kong,HK,Asia-Pacific,,Holding Current Practising Certificate,08/1988,,30,90,hong-kong_bar,bar
+Sze,Chan,stella@forestharrison.co.nz,Forest Harrison,,09 308 0080,https://forestharrison.co.nz,Auckland,NZ,Asia-Pacific,,Barrister & Solicitor (Current),Auckland High Court on 17/12/1999,,30,90,new-zealand_bar,bar
+Dominic,Adair,dominic.adair@bristows.com,Bristows (Ireland) LLP,,(01) 2707751,https://www.bristows.com,Dublin,IE,Europe,,Practising,2016,,30,50,ireland_bar,generated_pattern
+David Gregory,Adams,davadms@gmail.com,AINT GAMES LIMITED,,,,,HK,Asia-Pacific,,Holding Current Practising Certificate Solicitor Not in Private Practice in Hong Kong,11/2000,,30,50,hong-kong_bar,bar
+Julius,Maskell,julius.maskell@bdmlawyerslimited.com,BDM Lawyers Limited,,04 472 5079,,Wellington,NZ,Asia-Pacific,,Barrister & Solicitor (Current),Wellington High Court on 10/02/2006,,30,35,new-zealand_bar,generated_pattern
+Claire,Tyler,claire.tyler@raineycollins.com,Rainey Collins,,04 473 6850,,Wellington,NZ,Asia-Pacific,,Barrister & Solicitor (Current),Whanganui High Court on 09/05/2006,,30,35,new-zealand_bar,generated_pattern
+Ruth,Adams,ruth.adams@matermisericordiaeuniversityhospital.com,Mater Misericordiae University Hospital,,,,Dublin,IE,Europe,,Practising,2005,,30,10,ireland_bar,generated_pattern
+Jay Shree,Aggarwal,,,,,,,HK,Asia-Pacific,,Holding Current Practising Certificate Solicitor Not in Private Practice in Hong Kong,05/2002,,30,0,hong-kong_bar,
+Fiona,Allen,fiona@dbglaw.ie,De Búrca Greene Solicitors LLP,,(021) 4272236,https://dbglaw.ie,Cork,IE,Europe,,Practising,2017,,20,90,ireland_bar,bar
+Marian,Barry,marianbarry@vincenttoher.com,Vincent Toher & Co.,,(021) 4277811,https://www.vincenttoher.com,Cork,IE,Europe,,Practising,2008,,20,90,ireland_bar,bar
+Gbemisola,Adekuoroye,gbemisola.adekuoroye@beauchamps.ie,Beauchamps LLP,,(01) 4180600,https://www.beauchamps.ie,Dublin,IE,Europe,,Practising,2021,,20,50,ireland_bar,generated_pattern
+Sean,Adye-Curran,sean.adye-curran@bhsm.ie,BHSM LLP,,(01) 4408300,https://www.bhsm.ie,Dublin,IE,Europe,,Practising,2020,,20,50,ireland_bar,generated_pattern
+Mark,Agrasut,mark.agrasut@melcoresortsserviceslimited.com,MELCO RESORTS SERVICES LIMITED,,2598-3533,,Hong Kong,HK,Asia-Pacific,,Holding Current Practising Certificate Solicitor Not in Private Practice in Hong Kong,06/2010,,20,35,hong-kong_bar,generated_pattern
+Kate,Abell,kabell@philiplee.ie,Philip Lee LLP,,(01) 2373700,https://www.philiplee.ie,Dublin,IE,Europe,,Practising,2024,,10,90,ireland_bar,bar
+Mark,Aherne,mark.aherne@gasnetworks.ie,Gas Networks Ireland,,(021) 4534000,https://www.gasnetworks.ie,Cork,IE,Europe,,Practising,2018,,10,90,ireland_bar,bar
+Martin,Cruz,shentonlaw@singnet.com.sg,SHENTON LAW PRACTICE LLC,,+65 6293 6288,https://shentonlaw.com.sg/,Singapore,SG,Asia-Pacific,,,,,10,90,singapore_bar,bar
+Chong,Yue-En,askus@bethelchambers.com,BETHEL CHAMBERS LLC,,+65 6980 0230,https://bethelchambers.com/,Singapore,SG,Asia-Pacific,,,,,10,90,singapore_bar,bar
+Elaine,Phang,admin@avodah.lawyer,AVODAH ADVOCATES LLC,,+65 6829 5408,https://avodah.lawyer/,Singapore,SG,Asia-Pacific,,,,,10,90,singapore_bar,bar
+Mohamed,Baiross,baiross@irblaw.com.sg,I.R.B. LAW LLP,,+65 6298 2537,https://irblaw.com.sg/,Singapore,SG,Asia-Pacific,,,,,10,90,singapore_bar,bar
+Jeremy,Cheong,jcheong@jcplaw.com.sg,JCP LAW LLC,,+65 6206 5200,https://jcplaw.com.sg/,Singapore,SG,Asia-Pacific,,,,,10,90,singapore_bar,bar
+Jacqueline,Chua,enquiries@jacquelaw.com,JACQUE LAW LLC,,+65 6280 7388,http://www.jacquelaw.com/,Singapore,SG,Asia-Pacific,,,,,10,90,singapore_bar,bar
+Lee,Yang,eeyang.lee@covenantchambers.com,COVENANT CHAMBERS LLC,,+65 6635 8885,https://www.covenantchambers.com/,Singapore,SG,Asia-Pacific,,,,,10,90,singapore_bar,bar
+Viviene,Sandhu,vivienesandhu@cliffordlaw.sg,CLIFFORD LAW LLP,,+65 6223 4456,https://www.cliffordlaw.sg/viviene/,Singapore,SG,Asia-Pacific,,,,,10,90,singapore_bar,bar
+Sanjiv,Kepujian,sanjiv@vaswanilawchambers.com,VASWANI LAW CHAMBERS LLC,,+65 8847 6630,https://vaswanilawchambers.com/,Singapore,SG,Asia-Pacific,,,,,10,90,singapore_bar,bar
+Yap,Ling,ysl@avantlawllc.com,AVANT LAW LLC,,+65 6926 9668,https://www.avantlawllc.com/,Singapore,SG,Asia-Pacific,,,,,10,90,singapore_bar,bar
+Nico,Lee,nico@trianglelegal.com.sg,TRIANGLE LEGAL LLC,,+65 9247 3935,https://www.trianglelegal.com.sg,Singapore,SG,Asia-Pacific,,,,,10,90,singapore_bar,bar
+Felicia,Ong,feliciaong@fellawsg.com,FEL LAW LLC,,+65 9295 2188,http://www.foreverydaylaw.com/,Singapore,SG,Asia-Pacific,,,,,10,90,singapore_bar,bar
+Pavel,Abramov,pavel.abramov@bradykilroy.ie,Brady Kilroy Solicitors,,(01) 2180806,https://www.bradykilroy.ie,Dublin,IE,Europe,,Practising,2018,,10,50,ireland_bar,generated_pattern
+Sara,Hantash,sara.hantash@clerkinlynch.com,Clerkin Lynch LLP,,(01) 6114400,https://www.clerkinlynch.com,Dublin,IE,Europe,,Practising,2026,,10,50,ireland_bar,generated_pattern
+Mark,Adair,mark.adair@primark.com,Primark,,(01) 8880500,https://www.primark.com,Dublin,IE,Europe,,Practising,2018,,10,50,ireland_bar,generated_pattern
+Robert,Adamson,robert.adamson@mhc.ie,Mason Hayes & Curran LLP,,(01) 6145000,https://www.mhc.ie,Dublin,IE,Europe,,Practising,2026,,10,50,ireland_bar,generated_pattern
+Rebecca,Baines,rebecca.baines@strykereuropeanoperationslimited.com,Stryker European Operations Limited,,(021) 6024670,,Cork,IE,Europe,,Practising,2018,,10,35,ireland_bar,generated_pattern
+Sarah,Blaney,sarah.blaney@williamfry.com,William Fry LLP,,(021) 441 4170,,Cork,IE,Europe,,Practising,2024,,10,35,ireland_bar,generated_pattern
+Thomas,Abernethy,thomas.abernethy@ratesprobravolimited.com,RatesPro Bravo Limited,,,,Dublin,IE,Europe,,Practising,2019,,10,10,ireland_bar,generated_pattern
+Daniel John,Abercromby,info-hk@gibsondunn.com,"GIBSON, DUNN & CRUTCHER",,2214-3700,https://gibsondunn.com,Hong Kong,HK,Asia-Pacific,,Holding Current Practising Certificate,09/2024,,0,90,hong-kong_bar,bar
+Ankita Rajiv,Agrawal,ankita.agrawal@crb.com.hk,CRB,,3953-3000,https://crb.com.hk,Hong Kong,HK,Asia-Pacific,,Holding Current Practising Certificate,06/2025,,0,90,hong-kong_bar,bar
+Ashfaq,Ahmed,chaudhry@kamran.hk,CHAUDHRY SOLICITORS,,2555-7676,https://kamran.hk,Hong Kong,HK,Asia-Pacific,,Holding Current Practising Certificate,12/2024,,0,90,hong-kong_bar,bar
+Julian,Tay,juliantay@leenlee.com.sg,LEE & LEE,,+65 6220 0666,https://www.leenlee.com.sg/julian-tay,Singapore,SG,Asia-Pacific,,,,,0,90,singapore_bar,bar
+Nicolas,Tang,info@fl.sg,FARALLON LAW CORPORATION,,+65 6931 9000,https://fl.sg/,Singapore,SG,Asia-Pacific,,,,,0,90,singapore_bar,bar
+Foo,Yien,foosoonyien@brlawcorp.com,B R LAW CORPORATION,,+65 6899 9888,https://www.brlawcorp.com/,Singapore,SG,Asia-Pacific,,,,,0,90,singapore_bar,bar
+Alice,Tan,acflawyer@acfergussonlaw.com,A C FERGUSSON LAW CORPORATION,,+65 6980 8674,http://www.acfergussonlaw.com/,Singapore,SG,Asia-Pacific,,,,,0,90,singapore_bar,bar
+TIMOTHY,吴啟俊,timothywu@lplaw.com.sg,LP LAW CORPORATION,,+65 6970 4184,https://www.lplaw.com.sg/,Singapore,SG,Asia-Pacific,,,,,0,90,singapore_bar,bar
+Tan,Kiat,hello@kithkinlaw.com,KITH & KIN LAW CORPORATION,,+65 8688 4783 (By SMS / WhatsApp only),http://www.kithkinlaw.com,Singapore,SG,Asia-Pacific,,,,,0,90,singapore_bar,bar
+Ewelina,Adamczuk,ewelina.adamczuk@tusla.ie,Tusla,,(01) 7718500,https://www.tusla.ie,Dublin,IE,Europe,,Practising,2025,,0,50,ireland_bar,generated_pattern
+Victor,ALTHUSER,victor.althuser@blohorn.com,BLOHORN,,,,Paris,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Ibrahim,ABDOURAOUFI,ibrahim.abdouraoufi@ratiosstandardslegal.com,RATIOS & STANDARDS LEGAL,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Odile,ACCARDI,odile.accardi@axiomeavocats.com,AXIOME AVOCATS,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Myrlène,AGBO-GARDON,myrlene.agbo-gardon@iamavocat.com,IAM AVOCAT,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Louis,AGUETTANT,louis.aguettant@implidavocats.com,IMPLID AVOCATS,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Catherine,AIGLE,catherine.aigle@grantthorntonsocietedavocatsakilys.com,GRANT THORNTON SOCIETE D'AVOCATS AKILYS,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Wissam,AIT EL FERRANE,wissam.aitelferrane@fidal.com,FIDAL,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Maxime,ALCINA,maxime.alcina@archibaldcontratsetcontentieux.com,ARCHIBALD CONTRATS ET CONTENTIEUX,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Frédéric,ALLEAUME,frederic.alleaume@axiojurislexiens.com,AXIOJURIS LEXIENS,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Guillaume,ALLEGRE,guillaume.allegre@agbcavocat.com,AGBC AVOCAT,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Emilie,ALLEGRET,emilie.allegret@oratioavocats.com,ORATIO AVOCATS,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Charlotte,ALLOUARD-VERNAY,charlotte.allouard-vernay@bremensavocats.com,BREMENS AVOCATS,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Clémentine,ALTSCHUL,clementine.altschul@barrelegleut.com,BARRE - LE GLEUT,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Colas,AMBLARD,colas.amblard@npsconsulting.com,NPS CONSULTING,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Carine,AMOURIQ,carine.amouriq@revelmahussierassocies.com,REVEL MAHUSSIER & ASSOCIES,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Séphora,AMSELLEM,sephora.amsellem@ams.com,AMS,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Florence,AMSLER,florence.amsler@b2rassocis.com,B2R & ASSOCIÉS,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Julie,ANDRE,julie.andre@ernstyoungsocietedavocats.com,ERNST & YOUNG SOCIETE D'AVOCATS,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Pauline,ANDRIEU,pauline.andrieu@activeavocats.com,ACTIVE AVOCATS,,,,Lyon,FR,Europe,,Inscrit,,,0,10,france_bar,generated_pattern
+Fiyinfoluwa,Adeleke,fiyinfoluwa.adeleke@yahooemealimited.com,Yahoo EMEA Limited,,,,Dublin,IE,Europe,,Practising,2022,,0,10,ireland_bar,generated_pattern
+Michelle,Hill,michelle.hill@dentonskensingtonswan.com,Dentons Kensington Swan,,,,Auckland,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Victor,Raman,victor.raman@southernlegal.com,Southern Legal,,,,Auckland,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Richard,Rodden,richard.rodden@tavendaleandpartnerslimitedaucklandbranch.com,Tavendale and Partners Limited - Auckland Branch,,,,Auckland,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Daniel,Williams,daniel.williams@andersonlloydauckland.com,Anderson Lloyd - Auckland,,,,Auckland,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Stephanie,Tait,stephanie.tait@conveyancingcentre.com,Conveyancing Centre,,,,Auckland,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Henry,Jansen,henry.jansen@wynyardwoodlimited.com,Wynyard Wood Limited,,,,Auckland,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Anthony,Allen,anthony.allen@webbmoricelimited.com,Webb Morice Limited,,,,Auckland,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+A'lanah,Harrison,alanah.harrison@armstrongmurraylimitedtaarmstrongmurray.com,Armstrong Murray Limited t/a Armstrong Murray,,,,Auckland,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Jourdan,Griffin,jourdan.griffin@alexanderdorringtonlimited.com,AlexanderDorrington Limited,,,,Auckland,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Frances,Edmonds,frances.edmonds@shanahanlawlimited.com,Shanahan Law Limited,,,,Auckland,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Nicolene,Toit,nicolene.toit@legalteamlimitedtalegalteam.com,The Legal Team Limited t/a The Legal Team,,,,Auckland,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Beverley,Roche,beverley.roche@sievwrightslaw.com,Sievwrights Law,,,,Wellington,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Donna-Marie,Hurley,donna-marie.hurley@simpsongrierson.com,Simpson Grierson,,,,Wellington,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Jeremy,Hunter,jeremy.hunter@zonelawlimitedtazonelaw.com,Zone Law Limited t/a Zone Law,,,,Wellington,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Deborah,Zyl,deborah.zyl@firstpropertylegalgawithburridge.com,"First Property Legal, Gawith Burridge",,,,Wellington,NZ,Asia-Pacific,Real Estate,,,,0,10,new-zealand_bar,generated_pattern
+Michelle,Stapleton,michelle.stapleton@wakefieldslawyerslimited.com,Wakefields Lawyers Limited,,,,Wellington,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Matthew,Taylor,matthew.taylor@documentedlimitedtadocumentedtearolawlimited.com,"Documented Limited t/a Documented, Te Aro Law Limited",,,,Wellington,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Umar,Kuddus,umar.kuddus@phoenixlaw.com,Phoenix Law Ltd,,,,Wellington,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Anna,Gillon,anna.gillon@goodlawlimited.com,Good Law Limited,,,,Wellington,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+John,Gwilliam,john.gwilliam@mainstreetlegallimitedtamainstreetlegal.com,Main Street Legal Limited t/a Main Street Legal,,,,Wellington,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Ruta,Faiga,ruta.faiga@lawstorelimitedtalawstore.com,The Law Store Limited t/a The Law Store,,,,Wellington,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Mark,Duston,mark.duston@bestpracticelawlimited.com,Best Practice Law Limited,,,,Wellington,NZ,Asia-Pacific,,,,,0,10,new-zealand_bar,generated_pattern
+Hibban Rafique,Ahmed,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Sheila,Ahuja,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Alexander Robert Winston,Aitken,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Nikita Chang Chih-Hsuan,Ajwani,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Kathleen Margaret,Aka,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Hina Naveed,Akhtar,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Jeffrey Mark,Alam,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Charles William,Allen,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Steven Paul,Allen,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+David Andrew,Allison,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Nima,Amini,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Peter Francis,Amour,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Fong Shuo Sean,An,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Shan,An,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Daniel Matthew,Anderson,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Gavin Alexander,Anderson,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Chee Khian Desmond,Ang,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Eng Kiat Bernard,Ang,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Yang Ting Cynthia,Ang,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Sophie Maria Louise,Antoniou,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Ka Ian,Ao,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Ronald Joseph,Arculli,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Jacqueline,Arena,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Pierre-Luc,Arsenault,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Randall Ivan,Arthur,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Karin,Asai,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Natalie Rachel,Ashford,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Robert Spencer,Ashworth,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Kajal,Aswani,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Priya Parshotam,Aswani,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Geoffrey Michael,Atkins,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Alexander,Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Amarylde Mo Yin,Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Arthur Tze Ching,Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Cheuk Yin,Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Chin Ching,Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Ching Har,Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Cho Hang,Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+"Chun Kwok, Augustus",Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Chun Wai,Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Chun Yin Edwin,Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Chung Man Joanna,Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Clement Hon Man,Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+"Din Har, Ellen",Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Fun Kuen,Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Hei Yee,Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Hiu Foong Danny,Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+"Hoe Yee, Cindia",Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Hoi Ki,Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Hoi Wun,Au,,,,,,,HK,Asia-Pacific,,,,,0,0,hong-kong_bar,
+Antonio,Abbadessa,,,,,,Roma,IT,Europe,,Iscritto,,,0,0,italy_bar,
+Domenico,Abbadessa,,,,,,Roma,IT,Europe,,Iscritto,,,0,0,italy_bar,
+Emanuela,Abbadessa,,,,,,Roma,IT,Europe,,Iscritto,,,0,0,italy_bar,
+Alessandra,Abbate,,,,,,Roma,IT,Europe,,Iscritto,,,0,0,italy_bar,
+Aniello,Abbate,,,,,,Roma,IT,Europe,,Iscritto,,,0,0,italy_bar,
+Maria,Abbadessa Francesco Paolo,,,,,,Milano,IT,Europe,,Iscritto,,,0,0,italy_bar,
+Giacomo,Abbadessa,,,,,,Milano,IT,Europe,,Iscritto,,,0,0,italy_bar,
+Maria,Abbadessa,,,,,,Milano,IT,Europe,,Iscritto,,,0,0,italy_bar,
+Giangiacomo,Abbagnato Riccardo,,,,,,Milano,IT,Europe,,Iscritto,,,0,0,italy_bar,
+Immacolata,Abbamondi,,,,,,Milano,IT,Europe,,Iscritto,,,0,0,italy_bar,
