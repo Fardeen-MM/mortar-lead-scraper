@@ -1,18 +1,30 @@
 #!/usr/bin/env node
 /**
- * export-cold-email.js — Export enriched leads from SQLite to CSV files
+ * export-cold-email.js — Export clean, priority-sorted leads for cold email
  *
- * Outputs multiple well-named CSV files into exports/ directory:
- *   - decision-makers-with-email.csv
- *   - decision-makers-all.csv
- *   - all-lawyers-us-east.csv
- *   - all-lawyers-us-west.csv
- *   - all-lawyers-us-central.csv
- *   - all-lawyers-canada.csv
- *   - all-lawyers-uk.csv
- *   - all-lawyers-australia.csv
- *   - all-lawyers-europe-asia.csv
- *   - all-with-email.csv
+ * Exports:
+ *   PRIORITY FILES (leads you can actually contact):
+ *   1. hot-leads-with-email.csv          — Decision makers (score >= 50) WITH real/verified email
+ *   2. warm-leads-with-email.csv         — Everyone else WITH email
+ *   3. leads-with-phone-no-email.csv     — Have phone but no email (for cold calling)
+ *
+ *   REGIONAL FILES (all contactable leads by geography):
+ *   4. region-us-east.csv
+ *   5. region-us-west.csv
+ *   6. region-us-central.csv
+ *   7. region-canada.csv
+ *   8. region-uk.csv
+ *   9. region-australia.csv
+ *   10. region-europe-asia.csv
+ *
+ * Filters OUT:
+ *   - Deceased, suspended, disbarred, revoked, resigned, retired
+ *   - Inactive lawyers (unless they have email — some inactive still practice)
+ *   - Leads missing both first AND last name
+ *   - Duplicate emails (keeps highest-scored lead per email)
+ *   - Generic emails (info@, contact@, office@, admin@, support@, etc.)
+ *
+ * Sort order: email quality tier → decision_maker_score → lead_score
  *
  * Usage: node scripts/export-cold-email.js
  */
@@ -24,13 +36,28 @@ const Database = require('better-sqlite3');
 const DB_PATH = process.env.LEAD_DB_PATH || path.join(__dirname, '..', 'data', 'leads.db');
 const EXPORTS_DIR = path.join(__dirname, '..', 'exports');
 
-// ── Bad statuses to exclude ──────────────────────────────────────────
-const BAD_STATUSES = [
-  'deceased', 'suspended', 'disbarred', 'revoked', 'resigned',
-  'inactive', 'retired', 'disabled', 'surrendered'
+// ── Statuses to ALWAYS exclude (truly gone) ──────────────────────
+const HARD_EXCLUDE_STATUSES = [
+  'deceased', 'disbarred', 'revoked', 'surrendered'
 ];
 
-// ── Region mappings ──────────────────────────────────────────────────
+// ── Statuses to exclude UNLESS lead has email ────────────────────
+const SOFT_EXCLUDE_STATUSES = [
+  'suspended', 'resigned', 'retired', 'inactive', 'disabled',
+  'inactive voluntary', 'not eligible', 'not authorized'
+];
+
+// ── Generic email prefixes to filter out ─────────────────────────
+const GENERIC_EMAIL_PREFIXES = new Set([
+  'info', 'contact', 'office', 'admin', 'support', 'help',
+  'mail', 'enquiries', 'inquiries', 'reception', 'general',
+  'hello', 'team', 'sales', 'billing', 'accounts', 'noreply',
+  'no-reply', 'webmaster', 'postmaster', 'abuse', 'legal',
+  'hr', 'careers', 'jobs', 'media', 'press', 'marketing',
+  'feedback', 'service', 'customerservice', 'clientservices'
+]);
+
+// ── Region mappings ──────────────────────────────────────────────
 const US_EAST = new Set([
   'NY', 'FL', 'GA', 'PA', 'NC', 'SC', 'VA', 'MD', 'DE', 'CT',
   'ME', 'MA', 'NH', 'VT', 'RI', 'NJ', 'DC', 'WV'
@@ -46,255 +73,400 @@ const US_CENTRAL = new Set([
   'IA', 'AR', 'MS', 'AL', 'LA', 'NE', 'KS', 'ND', 'SD', 'OK'
 ]);
 
+const CANADA = new Set(['CA-AB', 'CA-BC', 'CA-NL', 'CA-PE', 'CA-YT', 'CA-MB', 'CA-NB', 'CA-NS', 'CA-NT', 'CA-NU', 'CA-ON', 'CA-SK']);
+const UK = new Set(['UK-SC', 'UK-EW-BAR', 'UK-EW', 'UK-NI']);
+const AUSTRALIA = new Set(['AU-NSW', 'AU-QLD', 'AU-SA', 'AU-TAS', 'AU-VIC', 'AU-WA', 'AU-ACT', 'AU-NT']);
 const EUROPE_ASIA = new Set(['FR', 'IE', 'IT', 'HK', 'NZ', 'SG']);
 
-// ── CSV helpers ──────────────────────────────────────────────────────
+// ── CSV columns (clean, cold-email-optimized) ────────────────────
 const CSV_COLUMNS = [
-  'first_name', 'last_name', 'email', 'firm_name', 'title', 'phone',
-  'website', 'city', 'state', 'country', 'practice_area', 'bar_status',
-  'admission_date', 'linkedin_url', 'decision_maker_score', 'lead_score',
-  'primary_source', 'email_source'
+  'first_name', 'last_name', 'email', 'email_quality',
+  'firm_name', 'title', 'phone', 'website',
+  'city', 'state', 'country',
+  'practice_area', 'bar_status', 'admission_date',
+  'linkedin_url', 'decision_maker_score', 'lead_score',
+  'primary_source'
 ];
 
 const CSV_HEADER = CSV_COLUMNS.join(',');
 
 function csvEscape(val) {
   if (val === null || val === undefined) return '';
-  const s = String(val);
+  const s = String(val).trim();
   if (s.includes(',') || s.includes('"') || s.includes('\n') || s.includes('\r')) {
     return '"' + s.replace(/"/g, '""') + '"';
   }
   return s;
 }
 
+function deriveCountry(state) {
+  if (!state) return '';
+  if (CANADA.has(state)) return 'Canada';
+  if (UK.has(state)) return 'United Kingdom';
+  if (AUSTRALIA.has(state)) return 'Australia';
+  if (state === 'FR') return 'France';
+  if (state === 'IE') return 'Ireland';
+  if (state === 'IT') return 'Italy';
+  if (state === 'HK') return 'Hong Kong';
+  if (state === 'NZ') return 'New Zealand';
+  if (state === 'SG') return 'Singapore';
+  return 'United States';
+}
+
+function emailQualityLabel(source) {
+  if (!source) return 'scraped';
+  if (source === 'bar' || source === 'profile') return 'verified';
+  if (source === 'website-crawl') return 'verified';
+  if (source === 'generated_pattern') return 'pattern_guess';
+  if (source.startsWith('db:')) return 'scraped';
+  return 'scraped';
+}
+
+function isGenericEmail(email) {
+  if (!email) return false;
+  const prefix = email.split('@')[0].toLowerCase();
+  return GENERIC_EMAIL_PREFIXES.has(prefix);
+}
+
 function leadToCsvRow(lead) {
   return CSV_COLUMNS.map(col => {
-    if (col === 'decision_maker_score') return csvEscape(lead.icp_score);
-    if (col === 'country') return csvEscape(deriveCountryName(lead.state));
+    if (col === 'decision_maker_score') return csvEscape(lead.icp_score || 0);
+    if (col === 'lead_score') return csvEscape(lead.lead_score || 0);
+    if (col === 'country') return csvEscape(deriveCountry(lead.state));
+    if (col === 'email_quality') return csvEscape(emailQualityLabel(lead.email_source));
     return csvEscape(lead[col]);
   }).join(',');
 }
 
-// ── Country name from state code ─────────────────────────────────────
-function deriveCountryName(state) {
-  if (!state) return 'United States';
-  if (state.startsWith('CA-')) return 'Canada';
-  if (state.startsWith('UK-')) return 'United Kingdom';
-  if (state.startsWith('AU-')) return 'Australia';
-  if (['FR', 'IE', 'IT'].includes(state)) return 'Europe';
-  if (['HK', 'NZ', 'SG'].includes(state)) return 'Asia-Pacific';
-  return 'United States';
+function getRegion(state) {
+  if (US_EAST.has(state)) return 'us-east';
+  if (US_WEST.has(state)) return 'us-west';
+  if (US_CENTRAL.has(state)) return 'us-central';
+  if (CANADA.has(state)) return 'canada';
+  if (UK.has(state)) return 'uk';
+  if (AUSTRALIA.has(state)) return 'australia';
+  if (EUROPE_ASIA.has(state)) return 'europe-asia';
+  // Remaining US states not in the 3 sets
+  if (state && state.length === 2 && !state.includes('-')) return 'us-central';
+  return null;
 }
 
-// ── Max file size before splitting (50 MB) ───────────────────────────
+// ── Max file size before splitting (50 MB) ───────────────────────
 const MAX_FILE_SIZE = 50 * 1024 * 1024;
 
-// ── Main ─────────────────────────────────────────────────────────────
-function main() {
-  console.log('=== Cold Email Export ===\n');
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
 
-  // Ensure exports dir exists
+function formatNum(n) { return n.toLocaleString(); }
+
+// ===========================================================================
+// Main
+// ===========================================================================
+function main() {
+  console.log('=== Cold Email Export (Clean + Priority) ===\n');
+
   if (!fs.existsSync(EXPORTS_DIR)) {
     fs.mkdirSync(EXPORTS_DIR, { recursive: true });
   }
 
+  // Clean out old exports
+  const oldFiles = fs.readdirSync(EXPORTS_DIR).filter(f => f.endsWith('.csv'));
+  for (const f of oldFiles) {
+    fs.unlinkSync(path.join(EXPORTS_DIR, f));
+  }
+  console.log(`Cleaned ${oldFiles.length} old CSV files\n`);
+
   const db = new Database(DB_PATH, { readonly: true });
 
-  // Build the WHERE clause to exclude bad statuses
-  // We keep leads with NULL/blank bar_status, plus any status that does NOT
-  // contain any of the bad keywords (case-insensitive)
-  const badStatusClauses = BAD_STATUSES.map(s => `LOWER(bar_status) NOT LIKE '%${s}%'`).join(' AND ');
-  const statusFilter = `(bar_status IS NULL OR bar_status = '' OR (${badStatusClauses}))`;
-
-  // Fetch ALL valid leads once, then partition in JS
+  // ── Step 1: Load all leads ──────────────────────────────────────
   const allLeads = db.prepare(`
     SELECT
       id, first_name, last_name, email, firm_name, title, phone,
-      website, city, state, country, practice_area, bar_status,
+      website, city, state, practice_area, bar_status,
       admission_date, linkedin_url, icp_score, lead_score,
       primary_source, email_source
     FROM leads
-    WHERE ${statusFilter}
     ORDER BY icp_score DESC, lead_score DESC
   `).all();
+  console.log(`Total leads in DB: ${formatNum(allLeads.length)}`);
 
-  console.log(`Loaded ${allLeads.length} valid leads (after filtering bad statuses)\n`);
+  // ── Step 2: Filter out junk ─────────────────────────────────────
+  let cleaned = allLeads.filter(lead => {
+    // Must have a name
+    if (!lead.first_name || !lead.last_name) return false;
+    if (!lead.first_name.trim() || !lead.last_name.trim()) return false;
 
-  // Track unique lead IDs across all files
-  const allExportedIds = new Set();
-  let totalRowsExported = 0;
+    const status = (lead.bar_status || '').toLowerCase();
+
+    // Always exclude deceased/disbarred
+    for (const bad of HARD_EXCLUDE_STATUSES) {
+      if (status.includes(bad)) return false;
+    }
+
+    // Soft-exclude inactive UNLESS they have email or phone (still reachable)
+    const hasContact = (lead.email && lead.email.trim()) || (lead.phone && lead.phone.trim());
+    if (!hasContact) {
+      for (const soft of SOFT_EXCLUDE_STATUSES) {
+        if (status.includes(soft)) return false;
+      }
+    }
+
+    return true;
+  });
+  console.log(`After removing deceased/disbarred/no-name: ${formatNum(cleaned.length)}`);
+
+  // ── Step 3: Clean emails — remove generic ones ──────────────────
+  let genericRemoved = 0;
+  for (const lead of cleaned) {
+    if (lead.email && isGenericEmail(lead.email)) {
+      lead.email = null;
+      lead.email_source = null;
+      genericRemoved++;
+    }
+  }
+  console.log(`Generic emails removed (info@, contact@, etc.): ${genericRemoved}`);
+
+  // ── Step 4: Deduplicate by email (keep highest-scored) ──────────
+  const emailSeen = new Map();
+  let emailDupes = 0;
+  for (const lead of cleaned) {
+    if (!lead.email || !lead.email.trim()) continue;
+    const em = lead.email.toLowerCase().trim();
+    if (emailSeen.has(em)) {
+      const existing = emailSeen.get(em);
+      const existingScore = (existing.icp_score || 0) * 100 + (existing.lead_score || 0);
+      const thisScore = (lead.icp_score || 0) * 100 + (lead.lead_score || 0);
+      if (thisScore > existingScore) {
+        // This lead is better — blank out the old one's email
+        existing.email = null;
+        existing.email_source = null;
+        emailSeen.set(em, lead);
+      } else {
+        lead.email = null;
+        lead.email_source = null;
+      }
+      emailDupes++;
+    } else {
+      emailSeen.set(em, lead);
+    }
+  }
+  console.log(`Duplicate emails removed: ${emailDupes}`);
+
+  // ── Step 5: Must have SOME contact info to be exported ──────────
+  const contactable = cleaned.filter(l =>
+    (l.email && l.email.trim()) ||
+    (l.phone && l.phone.trim()) ||
+    (l.website && l.website.trim())
+  );
+  const noContact = cleaned.length - contactable.length;
+  console.log(`Leads with zero contact info removed: ${formatNum(noContact)}`);
+  console.log(`Contactable leads for export: ${formatNum(contactable.length)}\n`);
+
+  // ── Stats ───────────────────────────────────────────────────────
+  const withEmail = contactable.filter(l => l.email && l.email.trim());
+  const verifiedEmail = withEmail.filter(l => {
+    const s = l.email_source || '';
+    return s === 'bar' || s === 'profile' || s === 'website-crawl' || s.startsWith('db:');
+  });
+  const generatedEmail = withEmail.filter(l => l.email_source === 'generated_pattern');
+  const withPhone = contactable.filter(l => l.phone && l.phone.trim());
+  const dms = contactable.filter(l => (l.icp_score || 0) >= 50);
+
+  console.log('── Quality Breakdown ──');
+  console.log(`  With email:        ${formatNum(withEmail.length)}`);
+  console.log(`    Verified/scraped: ${formatNum(verifiedEmail.length)}`);
+  console.log(`    Pattern guess:    ${formatNum(generatedEmail.length)}`);
+  console.log(`  With phone:        ${formatNum(withPhone.length)}`);
+  console.log(`  Decision makers:   ${formatNum(dms.length)}`);
+  console.log('');
+
+  // ── Sorting function ───────────────────────────────────────────
+  // Priority: verified email first, then generated email, then phone-only
+  // Within each tier: decision_maker_score DESC, lead_score DESC
+  function prioritySort(a, b) {
+    const aHasVerified = a.email && a.email_source !== 'generated_pattern' ? 1 : 0;
+    const bHasVerified = b.email && b.email_source !== 'generated_pattern' ? 1 : 0;
+    if (bHasVerified !== aHasVerified) return bHasVerified - aHasVerified;
+
+    const aHasEmail = a.email ? 1 : 0;
+    const bHasEmail = b.email ? 1 : 0;
+    if (bHasEmail !== aHasEmail) return bHasEmail - aHasEmail;
+
+    const aScore = (a.icp_score || 0);
+    const bScore = (b.icp_score || 0);
+    if (bScore !== aScore) return bScore - aScore;
+
+    return (b.lead_score || 0) - (a.lead_score || 0);
+  }
+
   const fileSummaries = [];
+  let totalRows = 0;
 
-  // ── Helper: write a CSV file (with optional splitting) ─────────
-  function writeCsv(filename, leads, sortFn) {
-    if (sortFn) leads.sort(sortFn);
+  function writeCsv(filename, leads) {
+    leads.sort(prioritySort);
 
     const rows = leads.map(leadToCsvRow);
     const content = CSV_HEADER + '\n' + rows.join('\n') + '\n';
     const filePath = path.join(EXPORTS_DIR, filename);
-
-    // Check if we need to split
     const sizeBytes = Buffer.byteLength(content, 'utf8');
+
+    // Split by state if too large
     if (sizeBytes > MAX_FILE_SIZE) {
-      console.log(`  [!] ${filename} would be ${formatSize(sizeBytes)} — splitting...`);
-      return splitAndWrite(filename, leads, sortFn);
+      console.log(`  [!] ${filename} is ${formatSize(sizeBytes)} — splitting by state...`);
+      return splitByState(filename, leads);
     }
 
     fs.writeFileSync(filePath, content, 'utf8');
 
-    const emailCount = leads.filter(l => l.email && l.email.trim()).length;
-    const phoneCount = leads.filter(l => l.phone && l.phone.trim()).length;
+    const emailCnt = leads.filter(l => l.email && l.email.trim()).length;
+    const phoneCnt = leads.filter(l => l.phone && l.phone.trim()).length;
+    const dmCnt = leads.filter(l => (l.icp_score || 0) >= 50).length;
+    totalRows += leads.length;
 
-    leads.forEach(l => allExportedIds.add(l.id));
-    totalRowsExported += leads.length;
-
-    const summary = {
-      file: filename,
-      rows: leads.length,
-      size: sizeBytes,
-      emails: emailCount,
-      phones: phoneCount
-    };
+    const summary = { file: filename, rows: leads.length, size: sizeBytes, emails: emailCnt, phones: phoneCnt, dms: dmCnt };
     fileSummaries.push(summary);
 
     console.log(`  ${filename}`);
-    console.log(`    Rows: ${leads.length.toLocaleString()}`);
-    console.log(`    Size: ${formatSize(sizeBytes)}`);
-    console.log(`    Email: ${emailCount.toLocaleString()} | Phone: ${phoneCount.toLocaleString()}`);
+    console.log(`    ${formatNum(leads.length)} rows | ${formatSize(sizeBytes)} | ${formatNum(emailCnt)} email | ${formatNum(phoneCnt)} phone | ${formatNum(dmCnt)} DMs`);
     console.log('');
-
-    return [summary];
   }
 
-  // ── Helper: split a large file by state ────────────────────────
-  function splitAndWrite(filename, leads, sortFn) {
+  function splitByState(filename, leads) {
     const base = filename.replace('.csv', '');
     const byState = {};
     for (const lead of leads) {
-      const st = lead.state || 'unknown';
+      const st = lead.state || 'other';
       if (!byState[st]) byState[st] = [];
       byState[st].push(lead);
     }
 
-    const summaries = [];
-    // Sort states by lead count descending
     const states = Object.keys(byState).sort((a, b) => byState[b].length - byState[a].length);
-
     for (const st of states) {
-      const stateLeads = byState[st];
-      if (sortFn) stateLeads.sort(sortFn);
+      const stLeads = byState[st];
+      stLeads.sort(prioritySort);
 
-      const splitFilename = `${base}-${st.toLowerCase()}.csv`;
-      const rows = stateLeads.map(leadToCsvRow);
+      const splitName = `${base}-${st.toLowerCase().replace(/[^a-z0-9-]/g, '')}.csv`;
+      const rows = stLeads.map(leadToCsvRow);
       const content = CSV_HEADER + '\n' + rows.join('\n') + '\n';
-      const filePath = path.join(EXPORTS_DIR, splitFilename);
+      const filePath = path.join(EXPORTS_DIR, splitName);
       const sizeBytes = Buffer.byteLength(content, 'utf8');
-
       fs.writeFileSync(filePath, content, 'utf8');
 
-      const emailCount = stateLeads.filter(l => l.email && l.email.trim()).length;
-      const phoneCount = stateLeads.filter(l => l.phone && l.phone.trim()).length;
+      const emailCnt = stLeads.filter(l => l.email && l.email.trim()).length;
+      const phoneCnt = stLeads.filter(l => l.phone && l.phone.trim()).length;
+      const dmCnt = stLeads.filter(l => (l.icp_score || 0) >= 50).length;
+      totalRows += stLeads.length;
 
-      stateLeads.forEach(l => allExportedIds.add(l.id));
-      totalRowsExported += stateLeads.length;
-
-      const summary = {
-        file: splitFilename,
-        rows: stateLeads.length,
-        size: sizeBytes,
-        emails: emailCount,
-        phones: phoneCount
-      };
+      const summary = { file: splitName, rows: stLeads.length, size: sizeBytes, emails: emailCnt, phones: phoneCnt, dms: dmCnt };
       fileSummaries.push(summary);
-      summaries.push(summary);
 
-      console.log(`  ${splitFilename}`);
-      console.log(`    Rows: ${stateLeads.length.toLocaleString()}`);
-      console.log(`    Size: ${formatSize(sizeBytes)}`);
-      console.log(`    Email: ${emailCount.toLocaleString()} | Phone: ${phoneCount.toLocaleString()}`);
-      console.log('');
+      console.log(`  ${splitName}`);
+      console.log(`    ${formatNum(stLeads.length)} rows | ${formatSize(sizeBytes)} | ${formatNum(emailCnt)} email | ${formatNum(phoneCnt)} phone`);
     }
-
-    return summaries;
+    console.log('');
   }
 
-  function formatSize(bytes) {
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  // ═══════════════════════════════════════════════════════════════
+  // PRIORITY FILES — the ones you actually use for outreach
+  // ═══════════════════════════════════════════════════════════════
+
+  console.log('═══ PRIORITY FILES ═══\n');
+
+  // 1. HOT: Decision makers with email (the gold)
+  console.log('--- 1. Hot Leads (Decision Makers + Email) ---');
+  const hotLeads = contactable.filter(l =>
+    (l.icp_score || 0) >= 50 && l.email && l.email.trim()
+  );
+  writeCsv('01-hot-leads-decision-makers-with-email.csv', hotLeads);
+
+  // 2. WARM: Everyone else with email
+  console.log('--- 2. Warm Leads (All Others with Email) ---');
+  const warmLeads = contactable.filter(l =>
+    l.email && l.email.trim() && (l.icp_score || 0) < 50
+  );
+  writeCsv('02-warm-leads-with-email.csv', warmLeads);
+
+  // 3. PHONE: Have phone but no email (cold calling list)
+  console.log('--- 3. Phone Leads (No Email, Have Phone) ---');
+  const phoneLeads = contactable.filter(l =>
+    (!l.email || !l.email.trim()) &&
+    l.phone && l.phone.trim()
+  );
+  writeCsv('03-phone-leads-no-email.csv', phoneLeads);
+
+  // ═══════════════════════════════════════════════════════════════
+  // REGIONAL FILES — all contactable leads broken by geography
+  // ═══════════════════════════════════════════════════════════════
+
+  console.log('═══ REGIONAL FILES (contactable leads by geography) ═══\n');
+
+  const regionMap = {
+    'us-east': [],
+    'us-west': [],
+    'us-central': [],
+    'canada': [],
+    'uk': [],
+    'australia': [],
+    'europe-asia': [],
+  };
+
+  for (const lead of contactable) {
+    const region = getRegion(lead.state);
+    if (region && regionMap[region]) {
+      regionMap[region].push(lead);
+    }
   }
 
-  // ── Sort helpers ───────────────────────────────────────────────
-  const sortByIcpThenLead = (a, b) => (b.icp_score - a.icp_score) || (b.lead_score - a.lead_score);
-  const sortByIcp = (a, b) => b.icp_score - a.icp_score;
+  const regionNames = {
+    'us-east': 'US East Coast',
+    'us-west': 'US West Coast',
+    'us-central': 'US Central',
+    'canada': 'Canada',
+    'uk': 'United Kingdom',
+    'australia': 'Australia',
+    'europe-asia': 'Europe & Asia-Pacific',
+  };
 
-  // ── 1. Decision makers with email ──────────────────────────────
-  console.log('--- File 1: Decision Makers with Email ---');
-  const dmWithEmail = allLeads.filter(l => l.icp_score >= 50 && l.email && l.email.trim());
-  writeCsv('decision-makers-with-email.csv', dmWithEmail, sortByIcpThenLead);
+  let regionNum = 4;
+  for (const [key, leads] of Object.entries(regionMap)) {
+    if (leads.length === 0) continue;
+    const padNum = String(regionNum).padStart(2, '0');
+    console.log(`--- ${regionNum}. ${regionNames[key]} ---`);
+    writeCsv(`${padNum}-region-${key}.csv`, leads);
+    regionNum++;
+  }
 
-  // ── 2. Decision makers all ─────────────────────────────────────
-  console.log('--- File 2: Decision Makers All ---');
-  const dmAll = allLeads.filter(l => l.icp_score >= 50);
-  writeCsv('decision-makers-all.csv', dmAll, sortByIcp);
+  // ═══════════════════════════════════════════════════════════════
+  // MASTER FILE — everything contactable in one file
+  // ═══════════════════════════════════════════════════════════════
 
-  // ── 3. US East ─────────────────────────────────────────────────
-  console.log('--- File 3: US East ---');
-  const usEast = allLeads.filter(l => US_EAST.has(l.state));
-  writeCsv('all-lawyers-us-east.csv', usEast, sortByIcpThenLead);
-
-  // ── 4. US West ─────────────────────────────────────────────────
-  console.log('--- File 4: US West ---');
-  const usWest = allLeads.filter(l => US_WEST.has(l.state));
-  writeCsv('all-lawyers-us-west.csv', usWest, sortByIcpThenLead);
-
-  // ── 5. US Central ──────────────────────────────────────────────
-  console.log('--- File 5: US Central ---');
-  const usCentral = allLeads.filter(l => US_CENTRAL.has(l.state));
-  writeCsv('all-lawyers-us-central.csv', usCentral, sortByIcpThenLead);
-
-  // ── 6. Canada ──────────────────────────────────────────────────
-  console.log('--- File 6: Canada ---');
-  const canada = allLeads.filter(l => l.state && l.state.startsWith('CA-'));
-  writeCsv('all-lawyers-canada.csv', canada, sortByIcpThenLead);
-
-  // ── 7. UK ──────────────────────────────────────────────────────
-  console.log('--- File 7: UK ---');
-  const uk = allLeads.filter(l => l.state && l.state.startsWith('UK-'));
-  writeCsv('all-lawyers-uk.csv', uk, sortByIcpThenLead);
-
-  // ── 8. Australia ───────────────────────────────────────────────
-  console.log('--- File 8: Australia ---');
-  const australia = allLeads.filter(l => l.state && l.state.startsWith('AU-'));
-  writeCsv('all-lawyers-australia.csv', australia, sortByIcpThenLead);
-
-  // ── 9. Europe + Asia-Pacific ───────────────────────────────────
-  console.log('--- File 9: Europe + Asia-Pacific ---');
-  const europeAsia = allLeads.filter(l => EUROPE_ASIA.has(l.state));
-  writeCsv('all-lawyers-europe-asia.csv', europeAsia, sortByIcpThenLead);
-
-  // ── 10. All with email ─────────────────────────────────────────
-  console.log('--- File 10: All with Email ---');
-  const allWithEmail = allLeads.filter(l => l.email && l.email.trim());
-  writeCsv('all-with-email.csv', allWithEmail, sortByIcp);
+  console.log('═══ MASTER FILE ═══\n');
+  console.log(`--- ${regionNum}. All Contactable Leads ---`);
+  const padNum = String(regionNum).padStart(2, '0');
+  writeCsv(`${padNum}-all-contactable-leads.csv`, [...contactable]);
 
   db.close();
 
   // ── Final summary ──────────────────────────────────────────────
-  console.log('='.repeat(60));
-  console.log('FINAL SUMMARY');
-  console.log('='.repeat(60));
-  console.log(`Total rows exported across all files: ${totalRowsExported.toLocaleString()}`);
-  console.log(`Total unique leads: ${allExportedIds.size.toLocaleString()}`);
+  console.log('═'.repeat(65));
+  console.log('EXPORT SUMMARY');
+  console.log('═'.repeat(65));
   console.log('');
-  console.log('Files created:');
+  console.log('Files:');
   for (const s of fileSummaries) {
-    console.log(`  ${s.file.padEnd(42)} ${String(s.rows).padStart(6)} rows   ${formatSize(s.size).padStart(10)}   ${s.emails} email / ${s.phones} phone`);
+    const emailPct = s.rows > 0 ? Math.round(s.emails / s.rows * 100) : 0;
+    console.log(`  ${s.file.padEnd(48)} ${formatNum(s.rows).padStart(7)} rows  ${formatSize(s.size).padStart(8)}  ${emailPct}% email`);
   }
   console.log('');
   const totalSize = fileSummaries.reduce((acc, s) => acc + s.size, 0);
-  console.log(`Total disk usage: ${formatSize(totalSize)}`);
-  console.log(`Files: ${fileSummaries.length}`);
+  const totalEmails = fileSummaries.reduce((acc, s) => acc + s.emails, 0);
+  console.log(`  Total files:  ${fileSummaries.length}`);
+  console.log(`  Total rows:   ${formatNum(totalRows)}`);
+  console.log(`  Total size:   ${formatSize(totalSize)}`);
+  console.log(`  Total emails: ${formatNum(totalEmails)}`);
   console.log('\nDone.');
 }
 
