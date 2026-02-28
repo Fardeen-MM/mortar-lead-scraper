@@ -482,6 +482,7 @@ David,Kraitzick,,scraped,David Kraitzick Barrister,,021 045 3937,,Auckland,NZ,Ne
 Rustam,Attai,,scraped,Rustam Attai,,0404 054 254,,Parramatta,NSW,United States,,Principal of a law practice (Unsupervised),2008-12-05,,95,35,australia-nsw_bar
 Siobhan,Cervin,,scraped,Siobhan Cervin Barrister,,027 320 1007,,Auckland,NZ,New Zealand,,Barrister (Current),Auckland High Court on 13/02/2009,,95,35,new-zealand_bar
 Kellie,Arthur,,scraped,Kellie Arthur Barrister,,021 784 080,,Auckland,NZ,New Zealand,,Barrister (Current),Auckland High Court on 30/09/2011,,95,35,new-zealand_bar
+David,Dickinson,,scraped,David Dickinson Barrister,,021 167 5549,,Auckland,NZ,New Zealand,,Barrister (Current),Auckland High Court on 20/07/2007,,95,35,new-zealand_bar
 Michele,Betti,,scraped,BETTI & ASSOCIATES,,(760) 500-5451,,New York,NY,United States,,Currently registered,2011,,90,35,new-york_bar
 Weitian,Li,,scraped,"WEITIAN LI & ASSOCIATES, P.C.",,(585) 888-3888,,Brooklyn,NY,United States,,Currently registered,2017,,90,35,new-york_bar
 Stephen,McMullin,,scraped,MCMULLIN & ASSOCIATES,,(212) 882-1606,,New York,NY,United States,,Currently registered,2014,,90,35,new-york_bar
@@ -919,6 +920,7 @@ Robert,Dore,,scraped,Dore & Company,,(01) 6790580,https://dore.ie,Dublin,IE,Irel
 Dermot,Flanagan,,scraped,Flanagan Solicitors,,(01) 4589800,https://www.flanagansolicitors.ie,Dublin,IE,Ireland,,Practising,1999,,70,80,ireland_bar
 Ian,Boyd,,scraped,Kenny Boyd & Co.,,(01) 2600008,https://kennyboyd.ie,Dublin,IE,Ireland,,Practising,1980,,70,80,ireland_bar
 Mairead,Little,,scraped,M. Little,,(01) 5030119,https://mlittlesolicitors.ie,Dublin,IE,Ireland,,Practising,1998,,70,80,ireland_bar
+Ben,MacKenzie,,scraped,Stephen MacKenzie & Co.,,(01) 6623368,https://smackenzieandco.ie,Dublin,IE,Ireland,,Practising,2005,,70,80,ireland_bar
 Peter,McEvoy,,scraped,Fitzpatrick Gallagher McEvoy,,(01) 5079636,https://www.fgmcsolicitors.ie,Dublin,IE,Ireland,,Practising,1994,,70,80,ireland_bar
 Conleth,McGuinn,,scraped,McGuinn,,(01) 6725942,https://www.mcguinnsolicitors.com,Dublin,IE,Ireland,,Practising,1995,,70,80,ireland_bar
 Sharon,Murphy,,scraped,McKenna Murphy,,(01) 2721344,https://mckennamurphy.ie,Dublin,IE,Ireland,,Practising,2004,,70,80,ireland_bar
@@ -1441,7 +1443,6 @@ Margaret,Finlay,,scraped,Finlay & Co.,,(01) 2342545,,Dublin,IE,Ireland,,Practisi
 Aidan,Fitzpatrick,,scraped,Aidan J. Fitzpatrick,,(01) 6627969,,Dublin,IE,Ireland,,Practising,1991,,70,35,ireland_bar
 Avril,Gallagher,,scraped,Gallagher & Co.,,(01) 4971520,,Dublin,IE,Ireland,,Practising,1977,,70,35,ireland_bar
 Laurette,Hegarty,,scraped,Hegarty McCarthy & Co.,,(01) 6770800,,Dublin,IE,Ireland,,Practising,1983,,70,35,ireland_bar
-Ben,MacKenzie,,scraped,Stephen MacKenzie & Co.,,(01) 6623368,,Dublin,IE,Ireland,,Practising,2005,,70,35,ireland_bar
 Angela,McCann,,scraped,A McCann & Co,,(01) 2802538,,Dublin,IE,Ireland,,Practising,1967,,70,35,ireland_bar
 Maximilian,McGahon,,scraped,McGahon and Associates,,(01) 2343777,,Dublin,IE,Ireland,,Practising,2000,,70,35,ireland_bar
 James,McElroy,,scraped,The Sherwinter-McElroy Law Group,,(404) 874-8200,,Atlanta,GA,United States,,Disbarment,1989-12-12,,70,35,georgia_bar
@@ -1498,6 +1499,7 @@ Gregory,Jones,,scraped,Greg Jones Barrister,,021 624 230,,Auckland,NZ,New Zealan
 James,Adams,,scraped,SCHRECK ROSE DAPELLO ADAMS BERLIN & DUNHAM,,(212) 832-1657,,New York,NY,United States,,Currently registered,1995,,70,35,new-york_bar
 Christopher,Owen,,scraped,CHRISTOPHER T. OWEN,,(212) 725-7969,,New York,NY,United States,,Currently registered,1988,,70,35,new-york_bar
 Edward,Pan,,scraped,Pan & Partners,,07 3344 3633,,Sunnybank,AU-QLD,Australia,,,,,70,35,australia-queensland_bar
+Mark,Harrison,,scraped,Mark T Harrison,,09 411 7467,,Auckland,NZ,New Zealand,,Barrister & Solicitor (Current),Auckland High Court on 20/03/1989,,70,35,new-zealand_bar
 Rhonda,Sheehy,,scraped,Rhonda Sheehy & Associates,,07 5495 5455,https://rhondasheehysolicitor.com.au,77 King Street,AU-QLD,Australia,,,,,65,80,australia-queensland_bar
 Christopher,Myers,,scraped,"NEWMAN MYERS KREINES GROSS HARRIS, P.C.",,(212) 619-4350,,New York,NY,United States,,Currently registered,2017,,65,35,new-york_bar
 Shawn,Shirian,,scraped,"MARK DAVID SHIRIAN, P.C.",,(212) 931-6530,,New York,NY,United States,,Currently registered,2018,,65,35,new-york_bar
@@ -5372,6 +5374,13 @@ David,Rosales,,scraped,,,(505) 866-4529,,Albuquerque,NM,United States,,Active At
 Deborah,Rosenberg,,scraped,,,(505) 345-1909,,Albuquerque,NM,United States,,Former Attorney,8/1/1979,,30,25,new-mexico_bar
 Vernessa,Poole,,scraped,,,(914) 843-7589,,White Plains,NY,United States,,Currently registered,2006,,30,25,new-york_bar
 Michael,Casey,,scraped,,,(505) 247-3159,,Albuquerque,NM,United States,,Active Attorney,9/15/1975,,30,25,new-mexico_bar
+Evan,Blackstone,,scraped,,,(505) 248-5606,,Albuquerque,NM,United States,,Active Attorney,9/20/2004,,30,25,new-mexico_bar
+Rosemary,Blanchard,,scraped,,,(505) 836-6557,,Albuquerque,NM,United States,,Former Attorney,9/26/1984,,30,25,new-mexico_bar
+Jose,Blanton,,scraped,,,(505) 768-7251,,Albuquerque,NM,United States,,Active Attorney,5/2/2001,,30,25,new-mexico_bar
+Eva,Blazejewski,,scraped,,,(505) 554-1660,,Albuquerque,NM,United States,,Active Attorney,10/3/2000,,30,25,new-mexico_bar
+Felicia,Blea-Rivera,,scraped,,,(505) 841-8291,,Albuquerque,NM,United States,,Active Attorney,4/24/2006,,30,25,new-mexico_bar
+George,Bleus,,scraped,,,(505) 884-9300,,Albuquerque,NM,United States,,Active Attorney,9/20/2004,,30,25,new-mexico_bar
+Monta,Blackwell,,scraped,,,(202) 257-8201,,Albuquerque,NM,United States,,Former Attorney,9/16/1975,,30,25,new-mexico_bar
 Mary,Dolan,,scraped,"MOLOD SPITZ & DESANTIS, P.C.",,(212) 869-3200,,New York,NY,United States,,Currently registered,2017,,25,35,new-york_bar
 Kevin,Hall,,scraped,"TUCKER ARENSBERG, PC",,(212) 739-7910,,New York,NY,United States,,Currently registered,2017,,25,35,new-york_bar
 Caneel,Radinson-blasucci,,scraped,"PRICKETT JONES & ELLIOTT, P.A.",,302-888-6337,,WILMINGTON,DE,United States,,ACTIVE,12/12/2018,,25,35,delaware_bar
@@ -5453,6 +5462,7 @@ Samantha,Curro,,scraped,Benefit Legal Lawyers,,02 9266 0046,https://benefitlegal
 Casey,Hamann,,scraped,Milad S Raad & Associates,,02 9687 0099,https://raad.com.au,Parramatta,NSW,United States,,Employee of a law practice (Unsupervised),2013-10-11,,20,80,australia-nsw_bar
 Angelita,Hatton,,scraped,Sydney Lawyers and Associates Pty Ltd,,02 8843 1343,https://sydlawyers.com.au,Parramatta,NSW,United States,,Principal of a law practice (Unsupervised),2010-04-09,,20,80,australia-nsw_bar
 Margaret,O'Flaherty,,scraped,Tyrrell Solicitors,,(01) 6671476,https://www.lawyer.ie,Dublin,IE,Ireland,,Practising,2009,,20,80,ireland_bar
+Cheuk Ngan,Chan,,scraped,HUI DOE & SUM LAW FIRM LLP,,3621-0599,https://hdslaw.hk,Hong Kong,HK,Hong Kong,,Holding Current Practising Certificate,08/2021,,20,80,hong-kong_bar
 Uzma,Abbas,,scraped,ETB Legal,,0412 915 247,,Sydney,AU-NSW,Australia,,Principal of a law practice (Unsupervised),2008-07-04,,20,75,australia-nsw_bar
 Joel,Cohen,,scraped,,,(404) 993-2499,https://joelcoheninjurylaw.com,Atlanta,GA,United States,,Active Member in Good Standing,2013-05-31,,20,70,georgia_bar
 Sheronn,Harris,,scraped,,,(404) 346-7009,https://theharrisfirmpc.com,Atlanta,GA,United States,,Active Member in Good Standing,2014-11-05,,20,70,georgia_bar
@@ -6322,7 +6332,6 @@ Benjamin,Bradley,,scraped,Care & Protection Family,,02 8836 3444,,Parramatta,NSW
 Daniel,Byers,,scraped,NSW Aboriginal Land Council,,02 9689 4444,,Parramatta,NSW,United States,,Principal of a law practice (Unsupervised),2012-08-24,,20,35,australia-nsw_bar
 Samuel,Ankomah,,scraped,Retail Employees Superannuation Pty Ltd,,02 9086 6325,,Sydney,NSW,United States,,Corporate Legal Practitioner (Supervised),2010-10-08,,20,35,australia-nsw_bar
 Sarah,Anderson,,scraped,Afterpay Corporate Services Pty Ltd,,03 9018 6800,,Sydney,NSW,United States,,Corporate Legal Practitioner (Unsupervised),2010-08-27,,20,35,australia-nsw_bar
-Maggie,Chang,,scraped,Morrison Partners Limited t/a Morrison Partners,,09 320 3260,,Auckland,NZ,New Zealand,,Barrister & Solicitor (Current),Auckland High Court on 16/03/2012,,20,35,new-zealand_bar
 Michael,Callan,,scraped,Shopper Media Group Pty Ltd,,8416 5601,,North Sydney,NSW,United States,,Corporate Legal Practitioner (Unsupervised),2012-12-07,,20,35,australia-nsw_bar
 Helena,Canaris,,scraped,Federal Court of Australia,,02 9230 8567,,Sydney,NSW,United States,,Government Legal Practitioner (Supervised),2013-12-06,,20,35,australia-nsw_bar
 Michael,Rogovin,,scraped,WeissLaw LLP,,(212) 682-3025,,Atlanta,GA,United States,,Active Member in Good Standing,2017-01-11,,20,35,georgia_bar
@@ -6338,6 +6347,7 @@ Ingrid,Gustafson,,scraped,NEW YORK CITY LAW DEPARTMENT,,(212) 356-0853,,New York
 Erina,Kilpatrick,,scraped,Wollongong City Council,,02 4227 7112,,Wollongong,NSW,United States,,Corporate Legal Practitioner (Unsupervised),2007-08-24,,20,35,australia-nsw_bar
 Deeksha,Kumar,,scraped,UOW Global Enterprises,,02 4270 3388,,University Of Wollongong,NSW,United States,,Corporate Legal Practitioner (Unsupervised),2011-04-08,,20,35,australia-nsw_bar
 Shane,O'Driscoll,,scraped,CMB Financial leasing (Ireland) Limited,,(087) 4079293,,Dublin,IE,Ireland,,Practising,2009,,20,35,ireland_bar
+Kate,Simcock,,scraped,Davey Salmon King's Counsel,,09 977 7902,,Auckland,NZ,New Zealand,,Barrister (Current),Auckland High Court on 11/12/2009,,20,35,new-zealand_bar
 Jennifer,Abdel-Samed,,scraped,,,(404) 242-4614,,Atlanta,GA,United States,,Inactive Member in Good Standing,2008-11-07,,20,25,georgia_bar
 Matthew,Abernethy,,scraped,,,(404) 314-7759,,Atlanta,GA,United States,,Active Member in Good Standing,2012-01-04,,20,25,georgia_bar
 AIDAN FLYNN,SMITH,,scraped,,,(410) 339-6764,,,MD,United States,,Active,12/17/2009,,20,25,maryland_bar
@@ -6717,6 +6727,9 @@ Nathan,Anderson,,scraped,,,(505) 884-0004,,Albuquerque,NM,United States,,Active 
 Nicole,Banks,,scraped,,,(505) 277-5326,,Albuquerque,NM,United States,,Active Attorney,4/27/2012,,20,25,new-mexico_bar
 Robyn,Rose,,scraped,,,(505) 924-3831,,Albuquerque,NM,United States,,Active Attorney,9/22/2015,,20,25,new-mexico_bar
 Victoria,Cheng,,scraped,,,(718) 982-4645,,Staten Island,NY,United States,,Currently registered,2010,,20,25,new-york_bar
+Bret,Blanchard,,scraped,,,(505) 275-0000,,Albuquerque,NM,United States,,Active Attorney,9/27/2007,,20,25,new-mexico_bar
+Allison,Block-Chavez,,scraped,,,(505) 266-8787,,Albuquerque,NM,United States,,Active Attorney,9/25/2014,,20,25,new-mexico_bar
+Christopher,Dodd,,scraped,,,(505) 475-2742,,Albuquerque,NM,United States,,Active Attorney,4/28/2015,,20,25,new-mexico_bar
 Jonathan,Griffith,,scraped,"Northern California Law Group, PC",,(530) 433-0233,https://norcallawgroup.com,,HI,United States,,Pro Hac Vice,,,15,80,hawaii_bar
 Ikuko,Maynor,,scraped,"Sano & Associates, PC",,(800) 950-0586,https://sano-associates.com,,HI,United States,,Active,,,15,80,hawaii_bar
 IV,James Rone Felts,,scraped,"Harmon and Felts, P.A.",,(843) 527-7857,https://harmonandfelts.com,Georgetown,SC,United States,,Active,,,15,80,south-carolina_bar
@@ -7783,6 +7796,7 @@ Yannan,Ding,,scraped,Bridge Law Australia,,0403 480 003,,Brisbane Technology Par
 Daniel,Zingifuaboro,,scraped,Pledge Legal Pty Ltd,,0415 340 852,,,AU-QLD,Australia,,,,,0,35,australia-queensland_bar
 Victoria,Matthews,,scraped,Shannon Clark Tuhtan Pty Ltd,,0481 350 543,,,AU-QLD,Australia,,,,,0,35,australia-queensland_bar
 Danielle,Gill,,scraped,Go To Court Lawyers,,1800 951 291,,,AU-QLD,Australia,,,,,0,35,australia-queensland_bar
+Caleb,Lin,,scraped,Baker Meech,,09 965 5030,,Auckland,NZ,New Zealand,,Barrister & Solicitor (Current),Auckland High Court on 24/11/2023,,0,35,new-zealand_bar
 Margaret,Ash,,scraped,,,330-704-7458,,Columbus,OH,United States,,Inactive,11-17-2025,,0,25,ohio_bar
 Matthew,Balzer,,scraped,,,419-360-3861,,Columbus,OH,United States,,Active,11-17-2025,,0,25,ohio_bar
 DarylGene,Aaron,,scraped,,,832-683-6422,,Houston,TX,United States,,Eligible,,,0,25,texas_bar
@@ -19424,3 +19438,9 @@ Kenneth,Rooney,,scraped,,,(202) 770-7176,,Albuquerque,NM,United States,,Inactive
 Ryan,Parra,,scraped,,,(505) 948-1050,,Albuquerque,NM,United States,,Active Attorney,9/29/2025,,0,25,new-mexico_bar
 Theresa,Parrish,,scraped,,,(505) 206-1462,,Albuquerque,NM,United States,,Inactive Attorney,,,0,25,new-mexico_bar
 Kathy,Casaus,,scraped,,,(505) 259-2831,,Albuquerque,NM,United States,,Inactive Attorney,,,0,25,new-mexico_bar
+Natalie D,Findley-Wolf,,scraped,,,(206) 228-2800,,Seattle,WA,United States,,Active,,,0,25,washington_bar
+Clifford,Blaugrund,,scraped,,,(505) 331-3480,,Albuquerque,NM,United States,,Inactive Attorney,,,0,25,new-mexico_bar
+Candidio,Jr.,,scraped,,,(505) 328-4104,,Albuquerque,NM,United States,,Active Attorney,4/28/2025,,0,25,new-mexico_bar
+Claudia,Armijo,,scraped,,,(505) 681-1455,,Albuquerque,NM,United States,,Inactive Attorney,,,0,25,new-mexico_bar
+Laura Christine,Hill,,scraped,,,(206) 327-6380,,Seattle,WA,United States,,Active,,,0,25,washington_bar
+Douglas,Francis,,scraped,,,(505) 247-2914,,Albuquerque,NM,United States,,Inactive Attorney,,,0,25,new-mexico_bar
