@@ -404,10 +404,7 @@ function main() {
   console.log('═══ REGIONAL FILES (contactable leads by geography) ═══\n');
 
   const regionMap = {
-    'us-east': [],
-    'us-west': [],
-    'us-central': [],
-    'canada': [],
+    'us-canada': [],
     'uk': [],
     'australia': [],
     'europe-asia': [],
@@ -415,16 +412,16 @@ function main() {
 
   for (const lead of contactable) {
     const region = getRegion(lead.state);
-    if (region && regionMap[region]) {
+    if (!region) continue;
+    if (region === 'us-east' || region === 'us-west' || region === 'us-central' || region === 'canada') {
+      regionMap['us-canada'].push(lead);
+    } else if (regionMap[region]) {
       regionMap[region].push(lead);
     }
   }
 
   const regionNames = {
-    'us-east': 'US East Coast',
-    'us-west': 'US West Coast',
-    'us-central': 'US Central',
-    'canada': 'Canada',
+    'us-canada': 'US & Canada',
     'uk': 'United Kingdom',
     'australia': 'Australia',
     'europe-asia': 'Europe & Asia-Pacific',
