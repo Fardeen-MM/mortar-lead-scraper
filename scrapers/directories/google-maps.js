@@ -859,7 +859,12 @@ class GoogleMapsScraper extends BaseScraper {
     }
 
     // Person detection: 2-3 word proper-case names with common first names
-    const cleaned = name.replace(/,?\s*(dr\.?|dds|dmd|md|do|dc|esq\.?|attorney|lawyer|phd|cpa|rn|lmt)/gi, '').trim();
+    // Strip professional credentials — use \b word boundary to avoid matching inside names
+    // (e.g., "rn" in "Stern", "do" in "Condor"). Handle "Dr." prefix separately.
+    const cleaned = name
+      .replace(/^dr\.?\s+/i, '') // Leading "Dr." or "Dr "
+      .replace(/,?\s*\b(dds|dmd|md|do|dc|esq\.?|attorney|lawyer|phd|cpa|rn|lmt)\b\.?/gi, '')
+      .trim();
     const parts = cleaned.split(/\s+/);
     if (parts.length >= 2 && parts.length <= 3) {
       const allProperCase = parts.every(p => /^[A-Z][a-z]/.test(p));
