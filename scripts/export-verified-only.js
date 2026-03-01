@@ -24,7 +24,7 @@ const GENERIC_PREFIXES = new Set([
   'marketing','feedback','service','customerservice','clientservices'
 ]);
 
-const HEADER = 'first_name,last_name,email,email_quality,firm_name,website';
+const HEADER = 'first_name,last_name,email,email_quality,firm_name,title,phone,website,city,state,country,practice_area,bar_status,admission_date,linkedin_url,decision_maker_score,lead_score,primary_source';
 
 function csvEscape(val) {
   if (val === null || val === undefined) return '';
@@ -35,6 +35,20 @@ function csvEscape(val) {
   return s;
 }
 
+function deriveCountry(state) {
+  if (!state) return 'United States';
+  if (CANADA.has(state)) return 'Canada';
+  if (UK_STATES.has(state)) return 'United Kingdom';
+  if (AU_STATES.has(state)) return 'Australia';
+  if (state === 'FR') return 'France';
+  if (state === 'IE') return 'Ireland';
+  if (state === 'IT') return 'Italy';
+  if (state === 'HK') return 'Hong Kong';
+  if (state === 'NZ') return 'New Zealand';
+  if (state === 'SG') return 'Singapore';
+  return 'United States';
+}
+
 function toRow(lead) {
   return [
     csvEscape(lead.first_name),
@@ -42,7 +56,19 @@ function toRow(lead) {
     csvEscape(lead.email),
     'verified',
     csvEscape(lead.firm_name),
-    csvEscape(lead.website)
+    csvEscape(lead.title),
+    csvEscape(lead.phone),
+    csvEscape(lead.website),
+    csvEscape(lead.city),
+    csvEscape(lead.state),
+    csvEscape(deriveCountry(lead.state)),
+    csvEscape(lead.practice_area),
+    csvEscape(lead.bar_status),
+    csvEscape(lead.admission_date),
+    csvEscape(lead.linkedin_url),
+    csvEscape(lead.icp_score || 0),
+    csvEscape(lead.lead_score || 0),
+    csvEscape(lead.primary_source)
   ].join(',');
 }
 
@@ -68,8 +94,9 @@ function main() {
 
   // Get all verified emails (NOT generated_pattern)
   const leads = db.prepare(`
-    SELECT first_name, last_name, email, firm_name, website, state,
-           icp_score, lead_score, email_source, bar_status
+    SELECT first_name, last_name, email, firm_name, title, phone, website,
+           city, state, practice_area, bar_status, admission_date,
+           linkedin_url, icp_score, lead_score, primary_source, email_source
     FROM leads
     WHERE email IS NOT NULL AND email != ''
     AND (email_source IS NULL OR email_source != 'generated_pattern')

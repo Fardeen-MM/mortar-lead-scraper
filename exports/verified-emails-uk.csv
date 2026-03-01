@@ -1,9 +1,9 @@
-first_name,last_name,email,email_quality,firm_name,website
-Ruth Mary,Aberdein,raberdein@acandco.com,verified,Aberdein Considine LLP,https://acandco.com
-Helen Cecilia,Abrams,helen.abrams@brodies.com,verified,Brodies LLP,http://www.brodies.com
-Robert Douglas,Aberdein,rob@simpsonmarwick.com,verified,Simpson & Marwick Legal Limited,http://www.simpsonmarwick.com
-Rebecca Fiona,Ablett,rebecca.ablett@burnesspaull.com,verified,Burness Paull LLP,http://www.burnesspaull.com
-Pria,Achall,pria.achall@kennedyslaw.com,verified,Kennedys Scotland LLP,http://www.kennedyslaw.com
-Christina Balmain,Abbott,christina.abbott@andersonstrathern.co.uk,verified,Anderson Strathern LLP,http://www.andersonstrathern.co.uk
-Philippa Rose,Abernethy,philippaabernethy@lindsays.co.uk,verified,Lindsays LLP,http://www.lindsays.co.uk
-Maryam,Abdel-Razik,maryam.abdel-razik@addleshawgoddard.com,verified,Addleshaw Goddard LLP,https://addleshawgoddard.com
+first_name,last_name,email,email_quality,firm_name,title,phone,website,city,state,country,practice_area,bar_status,admission_date,linkedin_url,decision_maker_score,lead_score,primary_source
+Ruth Mary,Aberdein,raberdein@acandco.com,verified,Aberdein Considine LLP,,01224 589700,https://acandco.com,Edinburgh,UK-SC,United Kingdom,,Practising,14/08/2000,,80,90,scotland_bar
+Helen Cecilia,Abrams,helen.abrams@brodies.com,verified,Brodies LLP,,0131 2283777,http://www.brodies.com,Edinburgh,UK-SC,United Kingdom,,Practising,07/11/2001,,40,90,scotland_bar
+Robert Douglas,Aberdein,rob@simpsonmarwick.com,verified,Simpson & Marwick Legal Limited,,0131 581 5700,http://www.simpsonmarwick.com,Edinburgh,UK-SC,United Kingdom,,Practising,14/03/2005,,30,90,scotland_bar
+Rebecca Fiona,Ablett,rebecca.ablett@burnesspaull.com,verified,Burness Paull LLP,,0141 2484933,http://www.burnesspaull.com,Edinburgh,UK-SC,United Kingdom,,Practising,04/12/2015,,30,90,scotland_bar
+Pria,Achall,pria.achall@kennedyslaw.com,verified,Kennedys Scotland LLP,,0131 2256145,http://www.kennedyslaw.com,Edinburgh,UK-SC,United Kingdom,,Practising,05/09/2013,,30,90,scotland_bar
+Christina Balmain,Abbott,christina.abbott@andersonstrathern.co.uk,verified,Anderson Strathern LLP,,0131 2707700,http://www.andersonstrathern.co.uk,Edinburgh,UK-SC,United Kingdom,,Practising,06/09/2017,,20,90,scotland_bar
+Philippa Rose,Abernethy,philippaabernethy@lindsays.co.uk,verified,Lindsays LLP,,0141 2216551,http://www.lindsays.co.uk,Edinburgh,UK-SC,United Kingdom,,Practising,07/11/2019,,20,90,scotland_bar
+Maryam,Abdel-Razik,maryam.abdel-razik@addleshawgoddard.com,verified,Addleshaw Goddard LLP,,0131 2282400,https://addleshawgoddard.com,Edinburgh,UK-SC,United Kingdom,,Practising,23/03/2022,,10,90,scotland_bar
