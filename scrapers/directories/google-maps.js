@@ -825,9 +825,13 @@ class GoogleMapsScraper extends BaseScraper {
       'group', 'center', 'centre', 'services', 'solutions', 'company',
       'studio', 'agency', 'associates', 'partners', 'practice', 'institute',
       'academy', 'school', 'shop', 'store', 'market', 'restaurant', 'cafe',
-      'bar', 'hotel', 'salon', 'spa', 'gym', 'fitness', 'auto', 'repair',
+      'bar', 'lounge', 'pub', 'grill', 'kitchen', 'bakery', 'diner', 'bistro', 'eatery',
+      'hotel', 'motel', 'inn', 'resort',
+      'salon', 'spa', 'gym', 'fitness', 'yoga', 'pilates', 'crossfit', 'athletic',
+      'auto', 'repair', 'collision', 'body shop', 'detailing',
       'consulting', 'advisors', 'management', 'properties', 'realty', 'real estate',
       'insurance', 'financial', 'accounting', 'tax', 'bookkeeping',
+      'coffee', 'brew', 'roast', 'juice', 'smoothie',
       // Location words (businesses often include these)
       'downtown', 'midtown', 'uptown', 'north', 'south', 'east', 'west',
     ];
@@ -855,18 +859,32 @@ class GoogleMapsScraper extends BaseScraper {
     if (parts.length >= 2 && parts.length <= 3) {
       const allProperCase = parts.every(p => /^[A-Z][a-z]/.test(p));
       if (allProperCase) {
-        // Extra validation: first word should look like a first name (not a business word)
+        // Extra validation: first word must be a known human first name
+        // This prevents "Baker Tilly", "Harbor Cafe", etc. from being parsed as people
         const firstWord = parts[0].toLowerCase();
-        const businessFirstWords = new Set([
-          'all', 'best', 'top', 'premier', 'elite', 'prime', 'royal',
-          'golden', 'silver', 'diamond', 'star', 'bright', 'clean',
-          'fresh', 'green', 'blue', 'red', 'white', 'black', 'great',
-          'super', 'mega', 'pro', 'ace', 'fast', 'quick', 'sure',
-          'total', 'complete', 'perfect', 'ideal', 'classic', 'modern',
-          'urban', 'metro', 'city', 'main', 'home', 'family', 'care',
-          'level', 'evolve', 'alpha', 'summit', 'peak', 'mile', 'high',
+        const COMMON_FIRST = new Set([
+          'james','robert','john','michael','david','william','richard','joseph','thomas','charles',
+          'christopher','daniel','matthew','anthony','mark','steven','paul','andrew','joshua',
+          'kenneth','kevin','brian','george','timothy','ronald','edward','jason','jeffrey','ryan',
+          'jacob','gary','nicholas','eric','jonathan','stephen','larry','justin','scott','brandon',
+          'benjamin','samuel','gregory','frank','alexander','patrick','jack','dennis','jerry',
+          'tyler','aaron','jose','adam','nathan','henry','peter','zachary','douglas',
+          'kyle','noah','carl','keith','roger','arthur','terry','sean','austin',
+          'christian','albert','joe','ethan','jesse','ralph','roy','louis','eugene',
+          'mary','patricia','jennifer','linda','barbara','elizabeth','susan','jessica','sarah','karen',
+          'lisa','nancy','betty','margaret','sandra','ashley','dorothy','kimberly','emily','donna',
+          'michelle','carol','amanda','melissa','deborah','stephanie','rebecca','sharon','laura','cynthia',
+          'kathleen','amy','angela','anna','brenda','pamela','emma','nicole','helen','samantha',
+          'katherine','christine','rachel','janet','catherine','maria','heather','diane',
+          'ruth','julie','olivia','virginia','victoria','kelly','lauren','christina','joan',
+          'sophia','grace','denise','amber','marilyn','danielle','isabella',
+          'diana','natalie','brittany','charlotte','marie','kayla','alexis','alyssa',
+          'mohammed','ahmed','ali','wei','chen','raj','priya','carlos','miguel','antonio','pablo',
+          'marco','luca','hans','lars','sven','ivan','dmitri','yuki','hiroshi','kenji',
+          'alejandro','ricardo','diego','luis','jorge','sofia','elena','lucia','ana','carmen',
+          'fatima','aisha','omar','hassan','ibrahim','chad','brady','hannah','shelby',
         ]);
-        if (businessFirstWords.has(firstWord)) {
+        if (!COMMON_FIRST.has(firstWord)) {
           return { firstName: '', lastName: '', firmName: name };
         }
         return { firstName: parts[0], lastName: parts[parts.length - 1], firmName: '' };
@@ -889,7 +907,9 @@ class GoogleMapsScraper extends BaseScraper {
       'electric', 'electrical', 'consulting', 'accounting', 'tax',
       'insurance', 'financial', 'clinic', 'medical', 'therapy',
       'construction', 'roofing', 'painting', 'landscaping', 'hvac',
-      'veterinary', 'optometry', 'salon', 'studio', 'agency',
+      'veterinary', 'optometry', 'salon', 'studio', 'agency', 'lounge',
+      'yoga', 'pilates', 'fitness', 'gym', 'crossfit', 'athletic',
+      'coffee', 'cafe', 'bakery', 'kitchen', 'grill', 'bar',
       'properties', 'homes', 'group', 'team', 'associates',
     ];
 

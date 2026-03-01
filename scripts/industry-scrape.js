@@ -36,7 +36,7 @@ const { extractDomain, normalizePhone, titleCase } = require('../lib/normalizer'
 const ddg = require('../lib/duckduckgo-scraper');
 const cc = require('../lib/commoncrawl-client');
 const whois = require('../lib/whois-client');
-const { mergeLeads, enrichAll } = require('../lib/industry-enricher');
+const { mergeLeads, enrichAll, isLikelyPersonName } = require('../lib/industry-enricher');
 
 // ─── CLI Args ──────────────────────────────────────────────────────
 
@@ -396,8 +396,18 @@ async function runWhois(leads) {
   log.info('  STEP 3B: WHOIS Domain Owner Lookup');
   log.info('═══════════════════════════════════════════════════════════');
 
-  // Get unique domains
-  const domains = [...new Set(leads.filter(l => l.domain).map(l => l.domain))];
+  // Skip social media / major platform domains (WHOIS data is useless for these)
+  const SKIP_DOMAINS = new Set([
+    'facebook.com', 'fb.com', 'instagram.com', 'twitter.com', 'x.com',
+    'linkedin.com', 'youtube.com', 'tiktok.com', 'pinterest.com',
+    'yelp.com', 'google.com', 'apple.com', 'amazon.com', 'microsoft.com',
+    'squarespace.com', 'wix.com', 'weebly.com', 'wordpress.com', 'godaddy.com',
+    'shopify.com', 'toasttab.com', 'booksy.com', 'mindbodyonline.com',
+    'vagaro.com', 'schedulicity.com', 'acuityscheduling.com',
+  ]);
+
+  // Get unique domains (excluding platform domains)
+  const domains = [...new Set(leads.filter(l => l.domain && !SKIP_DOMAINS.has(l.domain)).map(l => l.domain))];
 
   if (domains.length === 0) {
     log.info('[Step 3B] No domains to look up — skipping');
@@ -431,9 +441,10 @@ async function runWhois(leads) {
     }
 
     // Apply registrant name if lead has no person name
+    // Validate it looks like a real person name (not "Registration Private" etc.)
     if (!lead.first_name && info.registrant_name) {
       const parts = info.registrant_name.split(/\s+/);
-      if (parts.length >= 2) {
+      if (parts.length >= 2 && isLikelyPersonName(parts[0])) {
         lead.first_name = titleCase(parts[0]);
         lead.last_name = titleCase(parts.slice(1).join(' '));
         lead.title = lead.title || 'Owner';
@@ -472,6 +483,14 @@ async function runEnrichAndExport(allLeads, niche) {
 
   // Sort by DM score (decision makers first)
   allLeads.sort((a, b) => (b.dm_score || 0) - (a.dm_score || 0));
+
+  // Sanitize emails: decode URL encoding, strip whitespace
+  for (const lead of allLeads) {
+    if (lead.email) {
+      try { lead.email = decodeURIComponent(lead.email); } catch {}
+      lead.email = lead.email.replace(/^\s+|\s+$/g, '').replace(/[\x00-\x1f]/g, '');
+    }
+  }
 
   // Format for CSV output
   const csvLeads = allLeads.map(lead => ({
