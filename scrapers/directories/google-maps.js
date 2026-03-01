@@ -279,6 +279,11 @@ class GoogleMapsScraper extends BaseScraper {
     const maxCities = options.maxCities || null;
     const isTestMode = !!(options.maxPages);
 
+    // Custom lat/lng/radius support for industry scraper
+    const customLat = options.lat;
+    const customLng = options.lng;
+    const customRadius = options.radius; // in km
+
     // Filter cities
     let cities = [...this._cityEntries];
     if (options.city) {
@@ -308,9 +313,22 @@ class GoogleMapsScraper extends BaseScraper {
         // Dedup set for this city (prevents same business appearing from multiple grid cells)
         const seenInCity = new Set();
 
-        // Get bounding box for geo-grid
-        const bounds = await this._getNominatimBounds(cityEntry.city, cityEntry.country);
-        await sleep(1100); // Nominatim rate limit: 1 req/s
+        // Get bounding box for geo-grid (use custom lat/lng/radius if provided)
+        let bounds;
+        if (customLat && customLng && customRadius) {
+          // Build bounding box from center point + radius
+          const latDelta = customRadius / 111; // 1 deg lat ≈ 111 km
+          const lngDelta = customRadius / (111 * Math.cos(customLat * Math.PI / 180));
+          bounds = {
+            south: customLat - latDelta,
+            north: customLat + latDelta,
+            west: customLng - lngDelta,
+            east: customLng + lngDelta,
+          };
+        } else {
+          bounds = await this._getNominatimBounds(cityEntry.city, cityEntry.country);
+          await sleep(1100); // Nominatim rate limit: 1 req/s
+        }
 
         if (bounds) {
           const allCells = this._generateGridCells(bounds, 2);
@@ -444,6 +462,7 @@ class GoogleMapsScraper extends BaseScraper {
             name: feedItem.name,
             mapsUrl: feedItem.href || '',
             rating: feedItem.rating || '',
+            ratingCount: feedItem.ratingCount || 0,
             category: feedItem.category || '',
             address: detail.address || feedItem.addressSnippet || '',
             phone: detail.phone || '',
@@ -455,6 +474,7 @@ class GoogleMapsScraper extends BaseScraper {
             name: feedItem.name,
             mapsUrl: feedItem.href || '',
             rating: feedItem.rating || '',
+            ratingCount: feedItem.ratingCount || 0,
             category: feedItem.category || '',
             address: feedItem.addressSnippet || '',
             phone: '',
@@ -498,14 +518,21 @@ class GoogleMapsScraper extends BaseScraper {
 
         const href = link.getAttribute('href') || '';
 
-        // Extract rating from within the card
+        // Extract rating and review count from within the card
         let rating = '';
+        let ratingCount = 0;
         const container = link.closest('div') || link;
         const ratingEl = container.querySelector('span[role="img"]');
         if (ratingEl) {
           const ratingLabel = ratingEl.getAttribute('aria-label') || '';
           const match = ratingLabel.match(/([\d.]+)\s*star/i);
           if (match) rating = match[1];
+        }
+        // Look for review count near rating (e.g., "(123)" or "123 reviews")
+        if (container) {
+          const allText = container.textContent || '';
+          const countMatch = allText.match(/\((\d[\d,]*)\)/);
+          if (countMatch) ratingCount = parseInt(countMatch[1].replace(/,/g, ''));
         }
 
         // Extract text content from the card for category and address
@@ -532,7 +559,7 @@ class GoogleMapsScraper extends BaseScraper {
           }
         }
 
-        items.push({ name: ariaLabel, href, rating, category, addressSnippet });
+        items.push({ name: ariaLabel, href, rating, ratingCount, category, addressSnippet });
       }
 
       return items;
@@ -766,6 +793,7 @@ class GoogleMapsScraper extends BaseScraper {
       source: `google_maps${nicheTag}`,
       profile_url: result.mapsUrl || '',
       _rating: result.rating || '',
+      _rating_count: result.ratingCount || 0,
     }, '');
   }
 

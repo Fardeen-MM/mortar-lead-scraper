@@ -96,10 +96,16 @@
         </div>
 
         <div class="form-group" id="city-input-group" style="display:none;">
-          <label for="input-city">City</label>
+          <label for="input-city">City / Location</label>
           <input type="text" id="input-city" class="text-input" placeholder="e.g. Miami, London, Sydney..." autocomplete="off" list="city-suggestions">
           <datalist id="city-suggestions"></datalist>
           <span class="hint-inline">Type any city or leave blank to search all major cities</span>
+        </div>
+
+        <div class="form-group" id="radius-group" style="display:none;">
+          <label for="input-radius">Search Radius: <span id="radius-value">25</span> km</label>
+          <input type="range" id="input-radius" min="5" max="100" value="25" step="5" style="width:100%;">
+          <span class="hint-inline">Area to cover around the city center</span>
         </div>
 
         <div class="form-group">

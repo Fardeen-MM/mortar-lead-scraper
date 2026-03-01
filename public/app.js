@@ -115,6 +115,15 @@ const app = {
       });
     }
 
+    // Radius slider value display
+    const radiusSlider = document.getElementById('input-radius');
+    const radiusValue = document.getElementById('radius-value');
+    if (radiusSlider && radiusValue) {
+      radiusSlider.addEventListener('input', () => {
+        radiusValue.textContent = radiusSlider.value;
+      });
+    }
+
     // Initialize with first state
     this.onStateChange();
   },
@@ -134,6 +143,10 @@ const app = {
     // Show/hide person extraction toggle
     const personExtractGroup = document.getElementById('person-extract-group');
     if (personExtractGroup) personExtractGroup.style.display = isGoogleScraper ? '' : 'none';
+
+    // Show/hide radius slider (for Google scrapers with non-lawyer niche)
+    const radiusGroup = document.getElementById('radius-group');
+    if (radiusGroup) radiusGroup.style.display = isGoogleScraper ? '' : 'none';
 
     // Show/hide practice area (not relevant for Google scrapers)
     const practiceGroup = document.getElementById('practice-group');
@@ -456,6 +469,7 @@ const app = {
       : document.getElementById('select-city').value;
     const niche = isGoogleScraper ? (document.getElementById('input-niche')?.value || '').trim() : '';
     const personExtract = isGoogleScraper && (document.getElementById('toggle-person-extract')?.checked || false);
+    const radius = isGoogleScraper ? parseInt(document.getElementById('input-radius')?.value || '25') : undefined;
 
     if (!state) {
       this.showNotification('Please select a state', 'error');
@@ -528,7 +542,7 @@ const app = {
       const res = await fetch('/api/scrape/start', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ state, practice, city, test, uploadId: this.uploadId, enrich, enrichOptions, waterfall, emailScrape: waterfall.emailCrawl, niche: niche || undefined, personExtract }),
+        body: JSON.stringify({ state, practice, city, test, uploadId: this.uploadId, enrich, enrichOptions, waterfall, emailScrape: waterfall.emailCrawl, niche: niche || undefined, personExtract, radius }),
       });
       const data = await res.json();
 

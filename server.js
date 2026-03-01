@@ -116,7 +116,7 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
 // Start a scrape job
 app.post('/api/scrape/start', (req, res) => {
   try {
-    const { state, practice, city, test, uploadId, enrich, enrichOptions, waterfall, niche, personExtract } = req.body;
+    const { state, practice, city, test, uploadId, enrich, enrichOptions, waterfall, niche, personExtract, radius } = req.body;
 
     if (!state) {
       return res.status(400).json({ error: 'State is required' });
@@ -266,6 +266,102 @@ app.post('/api/scrape/start', (req, res) => {
     res.json({ jobId });
   } catch (err) {
     console.error('[scrape/start] Error:', err.message, err.stack);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Industry Scrape (niche-agnostic, uses Google Maps + DuckDuckGo + enrichment) ---
+app.post('/api/scrape/industry', (req, res) => {
+  try {
+    const { niche, location, radius, test } = req.body;
+
+    if (!niche || !location) {
+      return res.status(400).json({ error: 'niche and location are required' });
+    }
+
+    // Run industry scrape through the existing pipeline using GOOGLE-MAPS scraper
+    const { getRegistry } = require('./lib/registry');
+    const registry = getRegistry();
+
+    if (!registry['GOOGLE-MAPS']) {
+      return res.status(400).json({ error: 'Google Maps scraper not available' });
+    }
+
+    const jobId = `job-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
+
+    const emitter = runPipeline({
+      state: 'GOOGLE-MAPS',
+      city: location.split(',')[0].trim(),
+      test: !!test,
+      emailScrape: true,
+      enrich: false,
+      niche,
+      personExtract: true,
+      waterfall: {
+        masterDbLookup: false,
+        fetchProfiles: false,
+        crossRefMartindale: false,
+        crossRefLawyersCom: false,
+        nameLookups: false,
+        emailCrawl: true,
+      },
+    });
+
+    const job = {
+      id: jobId,
+      state: 'GOOGLE-MAPS',
+      practice: '',
+      city: location,
+      test: !!test,
+      status: 'running',
+      cancelled: false,
+      emitter,
+      leads: [],
+      stats: null,
+      outputFile: null,
+      niche,
+    };
+    jobs.set(jobId, job);
+    console.log(`[job:${jobId}] Industry scrape started — niche=${niche} location=${location} test=${!!test}`);
+
+    // Forward events (same as regular scrape)
+    emitter.on('lead', (data) => { job.leads.push(data.data); broadcast(jobId, { type: 'lead', data: data.data }); });
+    emitter.on('progress', (data) => { broadcast(jobId, { type: 'progress', ...data }); });
+    emitter.on('log', (data) => { broadcast(jobId, { type: 'log', level: data.level, message: data.message }); });
+    emitter.on('enrichment-progress', (data) => { broadcast(jobId, { type: 'enrichment-progress', ...data }); });
+    emitter.on('waterfall-progress', (data) => { broadcast(jobId, { type: 'waterfall-progress', ...data }); });
+    emitter.on('person-extract-progress', (data) => { broadcast(jobId, { type: 'person-extract-progress', ...data }); });
+
+    function scheduleJobCleanup() {
+      setTimeout(() => { jobs.delete(jobId); }, 30 * 60 * 1000);
+    }
+
+    emitter.on('complete', (data) => {
+      job.status = 'complete';
+      job.stats = data.stats;
+      job.outputFile = data.outputFile;
+      console.log(`[job:${jobId}] Industry scrape complete — ${data.stats.netNew} leads`);
+      broadcast(jobId, { type: 'complete', stats: data.stats, jobId });
+      scheduleJobCleanup();
+    });
+
+    emitter.on('cancelled-complete', (data) => {
+      job.status = 'cancelled';
+      job.stats = data.stats;
+      broadcast(jobId, { type: 'cancelled-complete', stats: data.stats, jobId });
+      scheduleJobCleanup();
+    });
+
+    emitter.on('error', (data) => {
+      job.status = 'error';
+      console.error(`[job:${jobId}] Industry scrape error:`, data.message);
+      broadcast(jobId, { type: 'error', message: data.message });
+      scheduleJobCleanup();
+    });
+
+    res.json({ jobId });
+  } catch (err) {
+    console.error('[scrape/industry] Error:', err.message, err.stack);
     res.status(500).json({ error: err.message });
   }
 });
