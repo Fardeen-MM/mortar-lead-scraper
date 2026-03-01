@@ -888,6 +888,12 @@ class GoogleMapsScraper extends BaseScraper {
           'marco','luca','hans','lars','sven','ivan','dmitri','yuki','hiroshi','kenji',
           'alejandro','ricardo','diego','luis','jorge','sofia','elena','lucia','ana','carmen',
           'fatima','aisha','omar','hassan','ibrahim','chad','brady','hannah','shelby',
+          'sebastian','milton','ximena','ingrid','gigi','cesar','rafael','gabriel','fernando',
+          'victor','hector','oscar','ruben','felix','mario','sergio','angel','pedro','raul',
+          'gloria','rosa','teresa','blanca','yolanda','silvia','veronica','adriana','claudia',
+          'marnie','tiffany','tracy','wendy','kristen','megan','courtney','holly','jenna',
+          'derek','troy','blake','spencer','logan','mason','liam','owen','luke','caleb',
+          'dylan','cole','chase','hunter','connor','cameron','garrett','trevor','landon',
         ]);
         if (!COMMON_FIRST.has(firstWord)) {
           return { firstName: '', lastName: '', firmName: name };
@@ -966,6 +972,12 @@ class GoogleMapsScraper extends BaseScraper {
       'diana','natalie','brittany','charlotte','marie','kayla','alexis','alyssa',
       'mohammed','ahmed','ali','carlos','miguel','antonio','pablo','marco','luca',
       'marnie','dena','luisa','holley','pauly','hays',
+      'sebastian','milton','ximena','ingrid','gigi','cesar','rafael','gabriel','fernando',
+      'victor','hector','oscar','ruben','felix','mario','sergio','angel','pedro','raul',
+      'gloria','rosa','teresa','blanca','yolanda','silvia','veronica','adriana','claudia',
+      'tiffany','tracy','wendy','kristen','megan','courtney','holly','jenna','chad','brady','hannah','shelby',
+      'derek','troy','blake','spencer','logan','mason','liam','owen','luke','caleb',
+      'dylan','cole','chase','hunter','connor','cameron','garrett','trevor','landon',
     ]);
 
     const firstName = parts[0];
