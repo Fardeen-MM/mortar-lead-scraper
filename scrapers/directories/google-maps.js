@@ -829,7 +829,7 @@ class GoogleMapsScraper extends BaseScraper {
       'hotel', 'motel', 'inn', 'resort',
       'salon', 'spa', 'gym', 'fitness', 'yoga', 'pilates', 'crossfit', 'athletic',
       'auto', 'repair', 'collision', 'body shop', 'detailing',
-      'consulting', 'advisors', 'management', 'properties', 'realty', 'real estate',
+      'consulting', 'advisors', 'management', 'properties', 'realty', 'real estate', 'realtor',
       'insurance', 'financial', 'accounting', 'tax', 'bookkeeping',
       'coffee', 'brew', 'roast', 'juice', 'smoothie',
       'photo', 'photography', 'photographer', 'videograph', 'production',
@@ -920,6 +920,8 @@ class GoogleMapsScraper extends BaseScraper {
       'pet grooming', 'grooming', 'kennel', 'daycare',
       'auto', 'auto service', 'auto repair', 'auto body', 'mechanic',
       'service', 'services', 'repair', 'shop', 'supply', 'center', 'centre',
+      'realtor', 'real estate agent', 'insurance agent', 'state farm',
+      'allstate', 'keller williams', 'remax', 're/max', 'coldwell banker',
       'properties', 'homes', 'group', 'team', 'associates',
     ];
 
@@ -928,8 +930,8 @@ class GoogleMapsScraper extends BaseScraper {
       const regex = new RegExp(`\\s+${suffix.replace(/\s+/g, '\\s+')}.*$`, 'i');
       personPart = personPart.replace(regex, '').trim();
     }
-    // Also strip " - ", " : ", etc. and everything after (e.g., "Name - Description", "Name: Business")
-    personPart = personPart.replace(/\s*[-:|–—].*$/, '').trim();
+    // Also strip " - ", " : ", " | " etc. and everything after (e.g., "Name - Description", "Name: Business", "Name | Company")
+    personPart = personPart.replace(/\s*[-:|–—\|].*$/, '').trim();
     // Strip "at Keller Williams" etc.
     personPart = personPart.replace(/\s+at\s+.+$/i, '').trim();
 
