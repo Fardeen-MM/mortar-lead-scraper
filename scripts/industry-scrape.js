@@ -294,6 +294,10 @@ async function runWebsiteCrawl(leads) {
         // Extract people
         const extracted = await extractor.extractPeople(lead.website);
         for (const person of extracted) {
+          // Skip entries with single-letter last names (review authors like "Nicholas C.")
+          const lastName = (person.last_name || '').replace(/\./g, '').trim();
+          if (lastName.length <= 1) continue;
+
           people.push({
             first_name: person.first_name || '',
             last_name: person.last_name || '',

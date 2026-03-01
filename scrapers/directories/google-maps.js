@@ -930,8 +930,10 @@ class GoogleMapsScraper extends BaseScraper {
       const regex = new RegExp(`\\s+${suffix.replace(/\s+/g, '\\s+')}.*$`, 'i');
       personPart = personPart.replace(regex, '').trim();
     }
-    // Also strip " - ", " : ", " | " etc. and everything after (e.g., "Name - Description", "Name: Business", "Name | Company")
+    // Also strip " - ", " : ", " | ", " , " etc. and everything after
+    // Handles: "Name - Company", "Name: Business", "Name | Title", "Name, Realtor"
     personPart = personPart.replace(/\s*[-:|–—\|].*$/, '').trim();
+    personPart = personPart.replace(/,\s*(realtor|agent|broker|attorney|esq|pa|cpa|dds|dmd|md|do|dc|llc|inc|ltd).*$/i, '').trim();
     // Strip "at Keller Williams" etc.
     personPart = personPart.replace(/\s+at\s+.+$/i, '').trim();
 
