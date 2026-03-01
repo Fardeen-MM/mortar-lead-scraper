@@ -279,16 +279,37 @@ async function runWebsiteCrawl(leads) {
   const emailFinder = new EmailFinder();
   const people = [];
 
-  try {
+  const subset = withWebsite.slice(0, limit);
+  const RESTART_INTERVAL = 100; // Restart browser every N sites to prevent memory leaks
+  let consecutiveErrors = 0;
+  const MAX_CONSECUTIVE_ERRORS = 5;
+
+  async function initBrowsers() {
     await extractor.init();
     await emailFinder.init();
+  }
 
-    const subset = withWebsite.slice(0, limit);
+  async function closeBrowsers() {
+    await extractor.close().catch(() => {});
+    await emailFinder.close().catch(() => {});
+  }
+
+  try {
+    await initBrowsers();
 
     for (let i = 0; i < subset.length; i++) {
       const lead = subset[i];
       const pctDone = Math.round((i / subset.length) * 100);
       log.info(`[Step 2] [${pctDone}%] Crawling: ${lead.domain} (${lead.firm_name})`);
+
+      // Restart browser periodically to prevent Puppeteer memory/protocol issues
+      if (i > 0 && i % RESTART_INTERVAL === 0) {
+        log.info(`[Step 2] Restarting browser (processed ${i} sites)...`);
+        await closeBrowsers();
+        await new Promise(r => setTimeout(r, 2000));
+        await initBrowsers();
+        consecutiveErrors = 0;
+      }
 
       try {
         // Extract people
@@ -325,15 +346,37 @@ async function runWebsiteCrawl(leads) {
             lead.email_source = 'website';
           }
         }
+        consecutiveErrors = 0;
       } catch (err) {
+        consecutiveErrors++;
         log.warn(`[Step 2] Error crawling ${lead.domain}: ${err.message}`);
+
+        // If browser is dead (protocol error), restart it
+        if (err.message.includes('Protocol') || err.message.includes('Target closed') ||
+            err.message.includes('Session closed') || err.message.includes('detached')) {
+          log.warn(`[Step 2] Browser crashed — restarting...`);
+          await closeBrowsers();
+          await new Promise(r => setTimeout(r, 3000));
+          try {
+            await initBrowsers();
+            consecutiveErrors = 0;
+          } catch (reinitErr) {
+            log.error(`[Step 2] Failed to restart browser: ${reinitErr.message}`);
+            break; // Can't recover — exit the loop with whatever we have
+          }
+        }
+
+        // Too many consecutive errors = something is very wrong
+        if (consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
+          log.error(`[Step 2] ${MAX_CONSECUTIVE_ERRORS} consecutive errors — stopping crawl`);
+          break;
+        }
       }
     }
   } catch (err) {
-    log.error(`[Step 2] Browser error: ${err.message}`);
+    log.error(`[Step 2] Fatal browser error: ${err.message}`);
   } finally {
-    await extractor.close().catch(() => {});
-    await emailFinder.close().catch(() => {});
+    await closeBrowsers();
   }
 
   log.info(`[Step 2] Extracted ${people.length} people from ${limit} websites`);
