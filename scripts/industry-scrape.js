@@ -88,39 +88,55 @@ if (!NICHE || !LOCATION) {
 
 /**
  * Geocode a location string to lat/lng using Nominatim (free, no key).
+ * Retries up to 3 times with 2s delay (Nominatim rate limits to 1 req/sec).
  */
-async function geocode(location) {
+async function geocode(location, retries = 3) {
   const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`;
 
-  return new Promise((resolve, reject) => {
-    const req = https.get(url, {
-      headers: { 'User-Agent': 'MortarLeadScraper/1.0 (contact@mortarmetrics.com)' },
-      timeout: 10000,
-    }, (res) => {
-      let body = '';
-      res.on('data', c => body += c);
-      res.on('end', () => {
-        try {
-          const data = JSON.parse(body);
-          if (data && data[0]) {
-            resolve({
-              lat: parseFloat(data[0].lat),
-              lng: parseFloat(data[0].lon),
-              displayName: data[0].display_name,
-              boundingbox: data[0].boundingbox ? data[0].boundingbox.map(Number) : null,
-            });
-          } else {
-            reject(new Error(`No results found for location: ${location}`));
-          }
-        } catch (err) {
-          reject(new Error(`Failed to parse Nominatim response: ${err.message}`));
-        }
-      });
-    });
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const result = await new Promise((resolve, reject) => {
+        const req = https.get(url, {
+          headers: { 'User-Agent': 'MortarLeadScraper/1.0 (contact@mortarmetrics.com)' },
+          timeout: 10000,
+        }, (res) => {
+          let body = '';
+          res.on('data', c => body += c);
+          res.on('end', () => {
+            if (res.statusCode !== 200) {
+              return reject(new Error(`HTTP ${res.statusCode} from Nominatim`));
+            }
+            try {
+              const data = JSON.parse(body);
+              if (data && data[0]) {
+                resolve({
+                  lat: parseFloat(data[0].lat),
+                  lng: parseFloat(data[0].lon),
+                  displayName: data[0].display_name,
+                  boundingbox: data[0].boundingbox ? data[0].boundingbox.map(Number) : null,
+                });
+              } else {
+                reject(new Error(`No results found for location: ${location}`));
+              }
+            } catch (err) {
+              reject(new Error(`Failed to parse Nominatim response (attempt ${attempt}): ${err.message}`));
+            }
+          });
+        });
 
-    req.on('error', reject);
-    req.on('timeout', () => { req.destroy(); reject(new Error('Geocode timeout')); });
-  });
+        req.on('error', reject);
+        req.on('timeout', () => { req.destroy(); reject(new Error('Geocode timeout')); });
+      });
+      return result;
+    } catch (err) {
+      if (attempt < retries) {
+        log.warn(`Geocode attempt ${attempt} failed: ${err.message} — retrying in 2s...`);
+        await new Promise(r => setTimeout(r, 2000));
+      } else {
+        throw err;
+      }
+    }
+  }
 }
 
 // ─── Step 1: Google Maps Discovery ──────────────────────────────────
@@ -243,7 +259,7 @@ async function runWebsiteCrawl(leads) {
     return { leads, people: [] };
   }
 
-  const limit = TEST_MODE ? Math.min(5, withWebsite.length) : withWebsite.length;
+  const limit = TEST_MODE ? Math.min(10, withWebsite.length) : withWebsite.length;
   log.info(`[Step 2] Crawling ${limit} websites for people + emails...`);
 
   let PersonExtractor, EmailFinder;
@@ -520,6 +536,8 @@ async function main() {
   try {
     geo = await geocode(LOCATION);
     log.info(`Location resolved: ${geo.displayName} (${geo.lat}, ${geo.lng})`);
+    // Wait 1.5s before hitting Nominatim again (Google Maps scraper also uses it)
+    await new Promise(r => setTimeout(r, 1500));
   } catch (err) {
     log.error(`Failed to geocode "${LOCATION}": ${err.message}`);
     process.exit(1);
@@ -553,7 +571,9 @@ async function main() {
   log.info(`═══ Discovery Complete: ${allBusinesses.length} unique businesses ═══`);
 
   if (allBusinesses.length === 0) {
-    log.error('No businesses found. Try a different niche or location.');
+    log.error('No businesses found from any source. Try a different niche or location.');
+    log.info('Tips: Make sure Google Maps is enabled (don\'t use --skip-maps) for best results.');
+    log.info('DuckDuckGo may rate-limit — Google Maps is the primary discovery source.');
     process.exit(1);
   }
 

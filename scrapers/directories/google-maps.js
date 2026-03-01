@@ -803,32 +803,141 @@ class GoogleMapsScraper extends BaseScraper {
   _parseBusinessName(name) {
     const lower = name.toLowerCase();
 
+    // Comprehensive firm/business indicators — catches most business names
     const firmIndicators = [
-      'llp', 'pllc', 'p.c.', 'p.a.', 'llc', 'inc', 'ltd', 'plc',
-      '& associates', 'and associates', 'law firm', 'law office',
-      'law group', 'law center', 'legal', 'attorneys at law',
-      'attorneys-at-law', 'dental', 'clinic', 'group', 'center',
-      'services', 'solutions', 'company', 'corp', 'studio',
+      // Legal suffixes
+      'llp', 'pllc', 'p.c.', 'p.a.', 'llc', 'inc', 'ltd', 'plc', 'corp',
+      '& associates', 'and associates',
+      // Legal
+      'law firm', 'law office', 'law group', 'law center', 'legal',
+      'attorneys at law', 'attorneys-at-law',
+      // Medical/dental
+      'dental', 'dentistry', 'orthodont', 'chiropractic', 'chiropractor',
+      'medical', 'clinic', 'hospital', 'health', 'wellness', 'therapy',
+      'physical therapy', 'dermatology', 'veterinar', 'optometry', 'ophthalmol',
+      'pediatric', 'family practice', 'urgent care', 'pharmacy',
+      // Trades
+      'plumbing', 'plumber', 'electric', 'electrical', 'hvac', 'heating',
+      'cooling', 'roofing', 'construction', 'contracting', 'contractor',
+      'landscap', 'painting', 'flooring', 'remodeling', 'renovation',
+      'pest control', 'cleaning', 'moving', 'storage', 'towing',
+      // Business types
+      'group', 'center', 'centre', 'services', 'solutions', 'company',
+      'studio', 'agency', 'associates', 'partners', 'practice', 'institute',
+      'academy', 'school', 'shop', 'store', 'market', 'restaurant', 'cafe',
+      'bar', 'hotel', 'salon', 'spa', 'gym', 'fitness', 'auto', 'repair',
+      'consulting', 'advisors', 'management', 'properties', 'realty', 'real estate',
+      'insurance', 'financial', 'accounting', 'tax', 'bookkeeping',
+      // Location words (businesses often include these)
+      'downtown', 'midtown', 'uptown', 'north', 'south', 'east', 'west',
     ];
 
     const isFirm = firmIndicators.some(ind => lower.includes(ind)) ||
-      name.includes('&') || name.includes(' and ');
+      name.includes('&') || name.includes(' and ') ||
+      // Numbers in name = business (e.g., "24/7 Plumbing")
+      /\d/.test(name) ||
+      // ALL CAPS = business
+      (name.length > 5 && name === name.toUpperCase());
 
     if (isFirm) {
+      // Even for firms, try to extract person name from "PersonName + BusinessType" patterns
+      // e.g., "Marnie Colehour Real Estate" → first=Marnie, last=Colehour, firm=Marnie Colehour Real Estate
+      const personFromFirm = this._extractPersonFromFirmName(name);
+      if (personFromFirm) {
+        return { firstName: personFromFirm.firstName, lastName: personFromFirm.lastName, firmName: name };
+      }
       return { firstName: '', lastName: '', firmName: name };
     }
 
-    // Simple person detection: 2-3 word proper-case names
-    const cleaned = name.replace(/,?\s*(dr\.?|dds|dmd|md|esq\.?|attorney|lawyer|phd)/gi, '').trim();
+    // Person detection: 2-3 word proper-case names with common first names
+    const cleaned = name.replace(/,?\s*(dr\.?|dds|dmd|md|do|dc|esq\.?|attorney|lawyer|phd|cpa|rn|lmt)/gi, '').trim();
     const parts = cleaned.split(/\s+/);
     if (parts.length >= 2 && parts.length <= 3) {
       const allProperCase = parts.every(p => /^[A-Z][a-z]/.test(p));
       if (allProperCase) {
+        // Extra validation: first word should look like a first name (not a business word)
+        const firstWord = parts[0].toLowerCase();
+        const businessFirstWords = new Set([
+          'all', 'best', 'top', 'premier', 'elite', 'prime', 'royal',
+          'golden', 'silver', 'diamond', 'star', 'bright', 'clean',
+          'fresh', 'green', 'blue', 'red', 'white', 'black', 'great',
+          'super', 'mega', 'pro', 'ace', 'fast', 'quick', 'sure',
+          'total', 'complete', 'perfect', 'ideal', 'classic', 'modern',
+          'urban', 'metro', 'city', 'main', 'home', 'family', 'care',
+          'level', 'evolve', 'alpha', 'summit', 'peak', 'mile', 'high',
+        ]);
+        if (businessFirstWords.has(firstWord)) {
+          return { firstName: '', lastName: '', firmName: name };
+        }
         return { firstName: parts[0], lastName: parts[parts.length - 1], firmName: '' };
       }
     }
 
     return { firstName: '', lastName: '', firmName: name };
+  }
+
+  /**
+   * Try to extract a person name from a firm name like "John Smith Dental"
+   * or "Marnie Colehour Real Estate". Requires the first word to be a common first name.
+   */
+  _extractPersonFromFirmName(name) {
+    // Common patterns: "FirstName LastName + BusinessType"
+    // Strip common business suffixes to isolate potential person name
+    const suffixes = [
+      'real estate', 'realty', 'dental', 'dentistry', 'chiropractic',
+      'law firm', 'law office', 'law group', 'legal', 'plumbing',
+      'electric', 'electrical', 'consulting', 'accounting', 'tax',
+      'insurance', 'financial', 'clinic', 'medical', 'therapy',
+      'construction', 'roofing', 'painting', 'landscaping', 'hvac',
+      'veterinary', 'optometry', 'salon', 'studio', 'agency',
+      'properties', 'homes', 'group', 'team', 'associates',
+    ];
+
+    let personPart = name;
+    for (const suffix of suffixes) {
+      const regex = new RegExp(`\\s+${suffix.replace(/\s+/g, '\\s+')}.*$`, 'i');
+      personPart = personPart.replace(regex, '').trim();
+    }
+    // Also strip " - " and everything after (e.g., "Name - Description")
+    personPart = personPart.replace(/\s*[-|–—].*$/, '').trim();
+    // Strip "at Keller Williams" etc.
+    personPart = personPart.replace(/\s+at\s+.+$/i, '').trim();
+
+    // Clean title prefixes
+    personPart = personPart.replace(/^(dr\.?\s+|dds\s+|dmd\s+)/i, '').trim();
+
+    const parts = personPart.split(/\s+/);
+    if (parts.length < 2 || parts.length > 3) return null;
+
+    // All proper case?
+    if (!parts.every(p => /^[A-Z][a-z]/.test(p))) return null;
+
+    // First word must be a common first name
+    const COMMON_FIRST = new Set([
+      'james','robert','john','michael','david','william','richard','joseph','thomas','charles',
+      'christopher','daniel','matthew','anthony','mark','steven','paul','andrew','joshua',
+      'kenneth','kevin','brian','george','timothy','ronald','edward','jason','jeffrey','ryan',
+      'jacob','gary','nicholas','eric','jonathan','stephen','larry','justin','scott','brandon',
+      'benjamin','samuel','gregory','frank','alexander','patrick','jack','dennis','jerry',
+      'tyler','aaron','jose','adam','nathan','henry','peter','zachary','douglas',
+      'kyle','noah','carl','keith','roger','arthur','terry','sean','austin',
+      'christian','albert','joe','ethan','jesse','ralph','roy','louis','eugene',
+      'mary','patricia','jennifer','linda','barbara','elizabeth','susan','jessica','sarah','karen',
+      'lisa','nancy','betty','margaret','sandra','ashley','dorothy','kimberly','emily','donna',
+      'michelle','carol','amanda','melissa','deborah','stephanie','rebecca','sharon','laura','cynthia',
+      'kathleen','amy','angela','anna','brenda','pamela','emma','nicole','helen','samantha',
+      'katherine','christine','rachel','janet','catherine','maria','heather','diane',
+      'ruth','julie','olivia','virginia','victoria','kelly','lauren','christina','joan',
+      'sophia','grace','denise','amber','marilyn','danielle','isabella',
+      'diana','natalie','brittany','charlotte','marie','kayla','alexis','alyssa',
+      'mohammed','ahmed','ali','carlos','miguel','antonio','pablo','marco','luca',
+      'marnie','dena','luisa','holley','pauly','hays',
+    ]);
+
+    const firstName = parts[0];
+    if (!COMMON_FIRST.has(firstName.toLowerCase())) return null;
+
+    return { firstName: parts[0], lastName: parts[parts.length - 1] };
   }
 
   /**
