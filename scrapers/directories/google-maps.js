@@ -832,6 +832,11 @@ class GoogleMapsScraper extends BaseScraper {
       'consulting', 'advisors', 'management', 'properties', 'realty', 'real estate',
       'insurance', 'financial', 'accounting', 'tax', 'bookkeeping',
       'coffee', 'brew', 'roast', 'juice', 'smoothie',
+      'photo', 'photography', 'photographer', 'videograph', 'production',
+      'tattoo', 'piercing', 'florist', 'flower', 'floral', 'garden',
+      'pet', 'grooming', 'kennel', 'daycare', 'boarding',
+      'tutoring', 'tutor', 'music', 'dance', 'martial arts', 'karate',
+      'printing', 'signage', 'design', 'creative', 'media',
       // Location words (businesses often include these)
       'downtown', 'midtown', 'uptown', 'north', 'south', 'east', 'west',
     ];
@@ -910,6 +915,11 @@ class GoogleMapsScraper extends BaseScraper {
       'veterinary', 'optometry', 'salon', 'studio', 'agency', 'lounge',
       'yoga', 'pilates', 'fitness', 'gym', 'crossfit', 'athletic',
       'coffee', 'cafe', 'bakery', 'kitchen', 'grill', 'bar',
+      'photography', 'photographer', 'photo', 'videography', 'production',
+      'tattoo', 'piercing', 'florist', 'floral', 'flowers',
+      'pet grooming', 'grooming', 'kennel', 'daycare',
+      'auto', 'auto service', 'auto repair', 'auto body', 'mechanic',
+      'service', 'services', 'repair', 'shop', 'supply', 'center', 'centre',
       'properties', 'homes', 'group', 'team', 'associates',
     ];
 
@@ -918,8 +928,8 @@ class GoogleMapsScraper extends BaseScraper {
       const regex = new RegExp(`\\s+${suffix.replace(/\s+/g, '\\s+')}.*$`, 'i');
       personPart = personPart.replace(regex, '').trim();
     }
-    // Also strip " - " and everything after (e.g., "Name - Description")
-    personPart = personPart.replace(/\s*[-|–—].*$/, '').trim();
+    // Also strip " - ", " : ", etc. and everything after (e.g., "Name - Description", "Name: Business")
+    personPart = personPart.replace(/\s*[-:|–—].*$/, '').trim();
     // Strip "at Keller Williams" etc.
     personPart = personPart.replace(/\s+at\s+.+$/i, '').trim();
 
