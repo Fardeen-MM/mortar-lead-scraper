@@ -983,6 +983,15 @@ class GoogleMapsScraper extends BaseScraper {
     const firstName = parts[0];
     if (!COMMON_FIRST.has(firstName.toLowerCase())) return null;
 
+    // Reject if any remaining word is a common non-person word
+    const NON_PERSON_WORDS = new Set([
+      'street', 'avenue', 'road', 'boulevard', 'drive', 'lane', 'place', 'way', 'court',
+      'plaza', 'square', 'park', 'hill', 'heights', 'village', 'crossing', 'commons',
+      'family', 'professional', 'advanced', 'premier', 'elite', 'express', 'mobile',
+      'downtown', 'midtown', 'north', 'south', 'east', 'west', 'central', 'greater',
+    ]);
+    if (parts.some(p => NON_PERSON_WORDS.has(p.toLowerCase()))) return null;
+
     return { firstName: parts[0], lastName: parts[parts.length - 1] };
   }
 

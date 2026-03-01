@@ -488,9 +488,10 @@ async function runEnrichAndExport(allLeads, niche) {
   // Sort by DM score (decision makers first)
   allLeads.sort((a, b) => (b.dm_score || 0) - (a.dm_score || 0));
 
-  // Sanitize emails: decode URL encoding, strip whitespace
+  // Sanitize emails: strip mailto:, decode URL encoding, strip whitespace
   for (const lead of allLeads) {
     if (lead.email) {
+      lead.email = lead.email.replace(/^mailto:/i, '').split('?')[0];
       try { lead.email = decodeURIComponent(lead.email); } catch {}
       lead.email = lead.email.replace(/^\s+|\s+$/g, '').replace(/[\x00-\x1f]/g, '');
     }
