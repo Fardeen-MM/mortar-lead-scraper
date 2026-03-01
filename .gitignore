@@ -10,5 +10,8 @@ data/*.db
 data/*.db-wal
 data/*.db-shm
 .DS_Store
+# Industry scraper output
+output/*.csv
+
 # Allow exports directory (cold email CSVs)
 !exports/

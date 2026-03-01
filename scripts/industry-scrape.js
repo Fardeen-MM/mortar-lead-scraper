@@ -165,6 +165,10 @@ async function runGoogleMaps(niche, location, geo) {
       city: location.split(',')[0].trim(), // Just the city name
       maxPages: TEST_MODE ? 1 : null,
       maxCities: 1,
+      // Pass geocoded lat/lng/radius to avoid redundant Nominatim call
+      lat: geo.lat,
+      lng: geo.lng,
+      radius: RADIUS,
     };
 
     for await (const result of scraper.search('', searchOpts)) {
@@ -585,9 +589,18 @@ async function main() {
     people = crawlResult.people;
   }
 
-  // Merge people into the lead list
-  const allLeads = mergeLeads(allBusinesses, people);
-  log.info(`Total leads after website crawl: ${allLeads.length}`);
+  // Combine businesses + extracted people
+  // People are individual leads (not merged by domain — each person is unique)
+  const allLeads = [...allBusinesses];
+  const seenPeople = new Set();
+  for (const person of people) {
+    // Dedup people by name + domain
+    const personKey = `${(person.first_name || '').toLowerCase()}|${(person.last_name || '').toLowerCase()}|${person.domain || ''}`;
+    if (seenPeople.has(personKey)) continue;
+    seenPeople.add(personKey);
+    allLeads.push(person);
+  }
+  log.info(`Total leads after website crawl: ${allLeads.length} (${allBusinesses.length} businesses + ${allLeads.length - allBusinesses.length} people)`);
 
   // ─── Step 3: Deep Enrichment (parallel) ─────────────────────────
 
