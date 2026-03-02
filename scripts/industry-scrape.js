@@ -344,9 +344,24 @@ async function runWebsiteCrawl(leads) {
         // Extract people
         const extracted = await extractor.extractPeople(lead.website);
         for (const person of extracted) {
+          // Clean up first name — strip titles/articles
+          let firstName = (person.first_name || '').trim();
+          firstName = firstName.replace(/^(mr\.?|mrs\.?|ms\.?|dr\.?|prof\.?|the)\s+/i, '').trim();
+          if (!firstName) continue;
+
           // Skip entries with single-letter last names (review authors like "Nicholas C.")
           const lastName = (person.last_name || '').replace(/\./g, '').trim();
           if (lastName.length <= 1) continue;
+
+          // Skip entries where first name is an article/determiner/heading word (not a real name)
+          const NON_FIRST_NAMES = new Set([
+            'the','a','an','this','that','our','your','my','meet','about','contact',
+            'welcome','hello','hi','call','email','visit','find','join','view','see',
+          ]);
+          if (NON_FIRST_NAMES.has(firstName.toLowerCase())) continue;
+
+          // Update person with cleaned first name
+          person.first_name = firstName;
 
           // Skip entries where last name is a credential/degree abbreviation
           const CREDENTIALS = new Set([
@@ -365,6 +380,10 @@ async function runWebsiteCrawl(leads) {
             'cleaning','roofing','painting','therapy','wellness','salon','studio','agency',
             'service','services','repair','shop','store','center','centre','clinic','group',
             'associates','properties','solutions','company','enterprise','enterprises',
+            'school','academy','institute','university','college','learning','education',
+            'church','temple','synagogue','mosque','foundation','nonprofit','charity',
+            'avenue','avenues','street','road','boulevard','plaza','square',
+            'doctors','doctor','staff','team','faculty','teachers','members','providers',
           ]);
           if (BUSINESS_WORDS.has(lastName.toLowerCase())) continue;
 

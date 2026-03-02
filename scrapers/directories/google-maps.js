@@ -1009,6 +1009,10 @@ class GoogleMapsScraper extends BaseScraper {
       // Business type words
       'enterprise', 'enterprises', 'international', 'global', 'national', 'regional',
       'wholesale', 'retail', 'commercial', 'residential', 'municipal',
+      // Institution/organization words
+      'church', 'temple', 'synagogue', 'mosque', 'chapel', 'cathedral',
+      'school', 'academy', 'institute', 'university', 'college', 'seminary',
+      'foundation', 'charity', 'society', 'association', 'federation', 'council',
     ]);
     if (parts.some(p => NON_PERSON_WORDS.has(p.toLowerCase()))) return null;
 
