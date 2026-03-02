@@ -348,6 +348,26 @@ async function runWebsiteCrawl(leads) {
           const lastName = (person.last_name || '').replace(/\./g, '').trim();
           if (lastName.length <= 1) continue;
 
+          // Skip entries where last name is a credential/degree abbreviation
+          const CREDENTIALS = new Set([
+            'dds','dmd','md','do','dc','esq','phd','cpa','rn','lmt','ra','aia','pe','se',
+            'od','dpt','dpm','barch','march','mba','mfa','bs','ms','ba','ma','bsc','msc',
+            'lcsw','lpcc','lmft','aprn','fnp','pa','ap','rla','asla','leed','faia','ncarb',
+          ]);
+          if (CREDENTIALS.has(lastName.toLowerCase())) continue;
+
+          // Skip entries where last name is a business/industry word (not a real surname)
+          const BUSINESS_WORDS = new Set([
+            'architectural','architecture','construction','engineering','dental','medical',
+            'plumbing','electric','electrical','consulting','accounting','insurance','financial',
+            'photography','landscaping','chiropractic','veterinary','optometry','ophthalmology',
+            'dermatology','orthodontics','pediatrics','realty','fitness','grooming','moving',
+            'cleaning','roofing','painting','therapy','wellness','salon','studio','agency',
+            'service','services','repair','shop','store','center','centre','clinic','group',
+            'associates','properties','solutions','company','enterprise','enterprises',
+          ]);
+          if (BUSINESS_WORDS.has(lastName.toLowerCase())) continue;
+
           people.push({
             first_name: person.first_name || '',
             last_name: person.last_name || '',
@@ -689,6 +709,13 @@ async function main() {
   // People are individual leads (not merged by domain — each person is unique)
   const allLeads = [...allBusinesses];
   const seenPeople = new Set();
+  // Pre-populate seenPeople with names from business leads (avoids duplicating e.g. "William Hammonds" from Maps + website_crawl)
+  for (const biz of allBusinesses) {
+    if (biz.first_name && biz.last_name) {
+      const key = `${biz.first_name.toLowerCase()}|${biz.last_name.toLowerCase()}|${biz.domain || ''}`;
+      seenPeople.add(key);
+    }
+  }
   for (const person of people) {
     // Dedup people by name + domain
     const personKey = `${(person.first_name || '').toLowerCase()}|${(person.last_name || '').toLowerCase()}|${person.domain || ''}`;

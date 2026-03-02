@@ -923,6 +923,7 @@ class GoogleMapsScraper extends BaseScraper {
       'electric', 'electrical', 'consulting', 'accounting', 'tax',
       'insurance', 'financial', 'clinic', 'medical', 'therapy',
       'construction', 'roofing', 'painting', 'landscaping', 'hvac',
+      'architectural', 'architecture', 'architect', 'engineering', 'design',
       'veterinary', 'optometry', 'ophthalmology', 'dermatology', 'cardiology',
       'orthodontics', 'pediatrics', 'radiology', 'neurology', 'oncology',
       'urology', 'gastroenterology', 'endocrinology', 'rheumatology',
@@ -1002,6 +1003,12 @@ class GoogleMapsScraper extends BaseScraper {
       'ophthalmology', 'dermatology', 'cardiology', 'dentistry', 'orthodontics',
       'chiropractic', 'pediatrics', 'radiology', 'neurology', 'oncology',
       'urology', 'gastroenterology', 'endocrinology', 'rheumatology',
+      // Architecture/engineering words
+      'architectural', 'architecture', 'engineering', 'construction', 'development',
+      'building', 'structural', 'mechanical', 'industrial', 'environmental',
+      // Business type words
+      'enterprise', 'enterprises', 'international', 'global', 'national', 'regional',
+      'wholesale', 'retail', 'commercial', 'residential', 'municipal',
     ]);
     if (parts.some(p => NON_PERSON_WORDS.has(p.toLowerCase()))) return null;
 
