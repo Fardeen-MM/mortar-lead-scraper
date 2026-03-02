@@ -65,6 +65,14 @@ const SKIP_WHOIS = hasFlag('skip-whois');
 const SKIP_CRAWL = hasFlag('skip-crawl');
 const SKIP_ENRICH = hasFlag('skip-enrich');
 
+// Parse city/state/country from location string
+// Formats: "Miami, FL" | "Toronto, ON, Canada" | "London, UK" | "Dublin, Ireland"
+const LOCATION_PARTS = LOCATION ? LOCATION.split(',').map(s => s.trim()) : [];
+const LOCATION_CITY = LOCATION_PARTS[0] || '';
+const LOCATION_STATE = LOCATION_PARTS.length === 2 ? LOCATION_PARTS[1] :
+                        LOCATION_PARTS.length >= 3 ? LOCATION_PARTS[1] : '';
+const LOCATION_COUNTRY = LOCATION_PARTS.length >= 3 ? LOCATION_PARTS[LOCATION_PARTS.length - 1] : '';
+
 if (!NICHE || !LOCATION) {
   console.log('Usage: node scripts/industry-scrape.js --niche "dentists" --location "Miami, FL"');
   console.log('');
@@ -621,8 +629,9 @@ async function runEnrichAndExport(allLeads, niche) {
     last_name: lead.last_name || '',
     firm_name: lead.firm_name || '',
     practice_area: '',
-    city: lead.city || '',
-    state: lead.state || '',
+    city: lead.city || LOCATION_CITY,
+    state: lead.state && lead.state !== 'unknown' ? lead.state : LOCATION_STATE,
+    country: lead.country || LOCATION_COUNTRY || '',
     phone: lead.phone || '',
     website: lead.website || '',
     email: lead.email || '',
