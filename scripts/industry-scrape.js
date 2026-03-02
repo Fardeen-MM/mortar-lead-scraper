@@ -58,6 +58,9 @@ const RADIUS = parseInt(getArg('radius') || '25');
 const CONCURRENCY = parseInt(getArg('concurrency') || '3');
 const OUTPUT = getArg('output');
 const TEST_MODE = hasFlag('test');
+const GRID_CELLS = parseInt(getArg('grid') || '0'); // 0 = auto (test=4, full=25)
+const MAX_CRAWL = parseInt(getArg('max-crawl') || '0'); // 0 = auto (test=10, full=75)
+const MAX_MAPS = parseInt(getArg('max-maps') || '0'); // 0 = no limit on Maps results
 const SKIP_MAPS = hasFlag('skip-maps');
 const SKIP_DDG = hasFlag('skip-ddg');
 const SKIP_CC = hasFlag('skip-cc');
@@ -171,13 +174,18 @@ async function runGoogleMaps(niche, location, geo) {
     const searchOpts = {
       niche,
       city: location.split(',')[0].trim(), // Just the city name
-      maxPages: TEST_MODE ? 1 : null,
+      maxPages: TEST_MODE && !GRID_CELLS ? 1 : null,
       maxCities: 1,
       // Pass geocoded lat/lng/radius to avoid redundant Nominatim call
       lat: geo.lat,
       lng: geo.lng,
       radius: RADIUS,
     };
+
+    // Custom grid cell count overrides test/full defaults
+    if (GRID_CELLS > 0) {
+      searchOpts.gridCells = GRID_CELLS;
+    }
 
     for await (const result of scraper.search('', searchOpts)) {
       if (result._cityProgress || result._captcha) continue;
@@ -199,7 +207,9 @@ async function runGoogleMaps(niche, location, geo) {
         _snippet: '',
       });
 
-      if (TEST_MODE && leads.length >= 20) break;
+      // Cap Maps results if --max-maps specified, otherwise use test mode default
+      const mapsLimit = MAX_MAPS > 0 ? MAX_MAPS : (TEST_MODE ? 20 : 0);
+      if (mapsLimit > 0 && leads.length >= mapsLimit) break;
     }
 
     // Close browser
@@ -286,7 +296,8 @@ async function runWebsiteCrawl(leads) {
     return { leads, people: [] };
   }
 
-  const limit = TEST_MODE ? Math.min(10, withWebsite.length) : Math.min(75, withWebsite.length);
+  const autoLimit = TEST_MODE ? 10 : 75;
+  const limit = MAX_CRAWL > 0 ? Math.min(MAX_CRAWL, withWebsite.length) : Math.min(autoLimit, withWebsite.length);
   log.info(`[Step 2] Crawling ${limit} websites for people + emails...`);
 
   let PersonExtractor, EmailFinder;

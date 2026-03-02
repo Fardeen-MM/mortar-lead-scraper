@@ -1,27 +1,29 @@
 #!/usr/bin/env node
 /**
- * BLITZ MODE: Maximum lead volume, minimum time.
+ * OPTIMIZED BATCH SCRAPE: Balanced speed + quality.
  *
- * Strategy: Skip the slow website crawl phase. Just do:
- *   1. Google Maps geo-grid (25 cells — fast, Puppeteer)
- *   2. DuckDuckGo web search (fast, HTTP only)
- *   3. Email pattern generation (instant, no network)
+ * Strategy — "Medium mode":
+ *   1. Google Maps geo-grid (10 cells — 2.5x test, 40% of full)
+ *   2. DuckDuckGo web search (100 results — full)
+ *   3. Website crawl (30 sites — enough for ~50% email rate)
+ *   4. Email pattern generation (for the rest)
+ *   5. Skip CommonCrawl + WHOIS (slow, low-value)
  *
- * This trades email quality (more pattern-generated, fewer website-found)
- * for dramatically higher throughput: ~2 min/city instead of ~5 min/city.
- *
- * Run re-enrich.js afterward to backfill website emails on the best leads.
+ * Expected: ~40-60 leads/city, ~50% email, ~5-8 min/city
  *
  * Usage:
- *   node scripts/batch-blitz.js --concurrency 5
- *   node scripts/batch-blitz.js --concurrency 5 --resume
+ *   node scripts/batch-blitz.js --concurrency 2
+ *   node scripts/batch-blitz.js --concurrency 2 --resume
+ *   node scripts/batch-blitz.js --concurrency 2 --resume --skip-existing
  */
 
 const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-// 250 US cities — every city with 100k+ population
+// ─── City Lists ───────────────────────────────────────────────────────
+
+// 170 US cities
 const US_CITIES = [
   'New York, NY','Los Angeles, CA','Chicago, IL','Houston, TX','Phoenix, AZ',
   'Philadelphia, PA','San Antonio, TX','San Diego, CA','Dallas, TX','San Jose, CA',
@@ -110,10 +112,18 @@ const ALL_LOCATIONS = [
   ...IE_CITIES.map(c => ({ city: c, niche: 'solicitors' })),
 ];
 
+// ─── CLI Args ─────────────────────────────────────────────────────────
+
 const args = process.argv.slice(2);
 const resumeMode = args.includes('--resume');
+const skipExisting = args.includes('--skip-existing');
 const concurrencyIdx = args.indexOf('--concurrency');
-const CONCURRENCY = concurrencyIdx >= 0 ? parseInt(args[concurrencyIdx + 1]) : 3;
+const CONCURRENCY = concurrencyIdx >= 0 ? parseInt(args[concurrencyIdx + 1]) : 2;
+
+// Tuning params — balanced for speed + quality
+const GRID_CELLS = 6;      // 50% more than test (4), fast
+const MAX_CRAWL = 20;      // Crawl 20 websites — good email rate without hogging resources
+const MAX_MAPS = 40;       // Cap Maps results at 40 per city
 
 const logFile = path.join(__dirname, '..', 'output', 'batch-blitz-log.json');
 
@@ -130,18 +140,32 @@ function locationKey(city) {
   return city.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
 }
 
+// Check which cities already have CSV output from previous runs
+function getExistingCities() {
+  const outputDir = path.join(__dirname, '..', 'output');
+  const existing = new Set();
+  try {
+    const files = fs.readdirSync(outputDir);
+    for (const f of files) {
+      if (!f.endsWith('.csv')) continue;
+      // Extract city key from filename: law-firms_new-york-ny_2026-...csv
+      const match = f.match(/^(?:law-firms|solicitors)_(.+?)_\d{4}/);
+      if (match) existing.add(match[1]);
+    }
+  } catch {}
+  return existing;
+}
+
 function runLocation(loc) {
   return new Promise((resolve) => {
     const key = locationKey(loc.city);
-    // --skip-crawl skips the expensive Puppeteer website crawl
-    // --skip-cc skips CommonCrawl (slow HTTP)
-    // --skip-whois skips WHOIS (slow TCP)
-    const cmd = `node scripts/industry-scrape.js --niche "${loc.niche}" --location "${loc.city}" --skip-crawl --skip-cc --skip-whois`;
+    // Balanced mode: 6 grid cells, 20 website crawls, skip CC/WHOIS
+    const cmd = `node scripts/industry-scrape.js --niche "${loc.niche}" --location "${loc.city}" --grid ${GRID_CELLS} --max-crawl ${MAX_CRAWL} --max-maps ${MAX_MAPS} --skip-cc --skip-whois`;
     const startTime = Date.now();
 
     exec(cmd, {
       cwd: path.join(__dirname, '..'),
-      timeout: 15 * 60 * 1000,
+      timeout: 15 * 60 * 1000,  // 15 min timeout
       maxBuffer: 10 * 1024 * 1024,
     }, (err, stdout, stderr) => {
       const elapsed = Math.round((Date.now() - startTime) / 1000);
@@ -172,29 +196,43 @@ async function run() {
   const startTime = Date.now();
   let totalLeads = 0, totalEmails = 0, completed = 0, failed = 0;
 
+  // Check existing CSV files if --skip-existing
+  const existingCities = skipExisting ? getExistingCities() : new Set();
+
   const queue = [];
+  let skipped = 0;
   for (const loc of ALL_LOCATIONS) {
     const key = locationKey(loc.city);
+
+    // Skip if already done in this batch run
     if (resumeMode && progress[key] && progress[key].status === 'done') {
       totalLeads += progress[key].leads || 0;
       totalEmails += progress[key].emails || 0;
       completed++;
       continue;
     }
+
+    // Skip if CSV already exists from a previous run
+    if (skipExisting && existingCities.has(key)) {
+      skipped++;
+      continue;
+    }
+
     queue.push(loc);
   }
 
   console.log(`\n${'═'.repeat(70)}`);
-  console.log(`  BLITZ MODE — ${ALL_LOCATIONS.length} cities (Maps + DDG + patterns)`);
+  console.log(`  OPTIMIZED BATCH — ${ALL_LOCATIONS.length} cities`);
   console.log(`  US: ${US_CITIES.length} | CA: ${CA_CITIES.length} | UK: ${UK_CITIES.length} | AU: ${AU_CITIES.length} | IE: ${IE_CITIES.length}`);
-  console.log(`  Concurrency: ${CONCURRENCY} | ${queue.length} remaining`);
+  console.log(`  Grid: ${GRID_CELLS} cells | Crawl: ${MAX_CRAWL} sites | Maps cap: ${MAX_MAPS}`);
+  console.log(`  Concurrency: ${CONCURRENCY} | ${queue.length} remaining | ${skipped} skipped (existing)`);
   console.log(`${'═'.repeat(70)}\n`);
 
   let queueIdx = 0;
   while (queueIdx < queue.length) {
     const batch = queue.slice(queueIdx, queueIdx + CONCURRENCY);
     const batchNames = batch.map(l => l.city.split(',')[0]).join(' | ');
-    console.log(`  [${completed+1}-${Math.min(completed+CONCURRENCY, ALL_LOCATIONS.length)}] ${batchNames}`);
+    console.log(`  [${completed+1}-${Math.min(completed+batch.length, completed+CONCURRENCY)}] ${batchNames}`);
 
     const results = await Promise.all(batch.map(loc => runLocation(loc)));
 
@@ -203,28 +241,32 @@ async function run() {
         completed++;
         totalLeads += r.leads;
         totalEmails += r.emails;
-        console.log(`    ✓ ${r.city.split(',')[0]}: ${r.leads}L ${r.emails}E ${r.dms}DM ${r.elapsed}s`);
+        const emailPct = r.leads > 0 ? Math.round(r.emails / r.leads * 100) : 0;
+        console.log(`    ✓ ${r.city.split(',')[0]}: ${r.leads}L ${r.emails}E(${emailPct}%) ${r.dms}DM ${r.elapsed}s`);
       } else {
         failed++;
-        console.log(`    ✗ ${r.city.split(',')[0]}: ${r.error.slice(0,60)}`);
+        console.log(`    ✗ ${r.city.split(',')[0]}: ${(r.error || '').slice(0,60)}`);
       }
     }
     queueIdx += CONCURRENCY;
 
+    // Progress summary every 5 batches or at end
     if (queueIdx % (CONCURRENCY * 5) === 0 || queueIdx >= queue.length) {
       const elapsedTotal = Math.round((Date.now() - startTime) / 1000);
       const rate = completed > 0 ? totalLeads / (elapsedTotal / 60) : 0;
+      const emailRate = totalLeads > 0 ? Math.round(totalEmails / totalLeads * 100) : 0;
       const batchesDone = Math.ceil(queueIdx / CONCURRENCY);
       const batchesLeft = Math.ceil((queue.length - queueIdx) / CONCURRENCY);
-      const avgBatchTime = batchesDone > 0 ? elapsedTotal / batchesDone : 120;
+      const avgBatchTime = batchesDone > 0 ? elapsedTotal / batchesDone : 300;
       const etaMin = Math.round(batchesLeft * avgBatchTime / 60);
-      console.log(`  ── ${completed}/${ALL_LOCATIONS.length} | ${totalLeads} leads | ${totalEmails} emails | ${failed} fail | ${Math.round(rate)}/min | ETA ~${etaMin}m ──`);
+      console.log(`  ── ${completed} done | ${totalLeads} leads | ${totalEmails} emails (${emailRate}%) | ${failed} fail | ${Math.round(rate)}/min | ETA ~${etaMin}m ──`);
     }
   }
 
   const totalElapsed = Math.round((Date.now() - startTime) / 1000);
+  const emailRate = totalLeads > 0 ? Math.round(totalEmails / totalLeads * 100) : 0;
   console.log(`\n${'═'.repeat(70)}`);
-  console.log(`  BLITZ COMPLETE: ${completed}/${ALL_LOCATIONS.length} | ${totalLeads} leads | ${totalEmails} emails`);
+  console.log(`  BATCH COMPLETE: ${completed} done | ${totalLeads} leads | ${totalEmails} emails (${emailRate}%)`);
   console.log(`  Time: ${Math.round(totalElapsed / 60)}min | Rate: ${Math.round(totalLeads / (totalElapsed / 60))}/min`);
   console.log(`${'═'.repeat(70)}\n`);
 }
