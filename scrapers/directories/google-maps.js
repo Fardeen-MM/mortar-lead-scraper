@@ -332,8 +332,8 @@ class GoogleMapsScraper extends BaseScraper {
 
         if (bounds) {
           const allCells = this._generateGridCells(bounds, 2);
-          // In test mode: 4 cells. Production: cap at 80 cells (evenly spaced sample for huge cities).
-          const maxGridCells = isTestMode ? Math.min(4, allCells.length) : Math.min(80, allCells.length);
+          // In test mode: 4 cells. Production: cap at 25 cells (balanced coverage vs stability).
+          const maxGridCells = isTestMode ? Math.min(4, allCells.length) : Math.min(25, allCells.length);
           const cells = allCells.length <= maxGridCells
             ? allCells
             : this._sampleEvenly(allCells, maxGridCells);

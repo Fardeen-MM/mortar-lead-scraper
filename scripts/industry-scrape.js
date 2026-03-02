@@ -286,7 +286,7 @@ async function runWebsiteCrawl(leads) {
     return { leads, people: [] };
   }
 
-  const limit = TEST_MODE ? Math.min(10, withWebsite.length) : withWebsite.length;
+  const limit = TEST_MODE ? Math.min(10, withWebsite.length) : Math.min(75, withWebsite.length);
   log.info(`[Step 2] Crawling ${limit} websites for people + emails...`);
 
   let PersonExtractor, EmailFinder;
