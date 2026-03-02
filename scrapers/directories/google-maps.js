@@ -863,7 +863,7 @@ class GoogleMapsScraper extends BaseScraper {
     // (e.g., "rn" in "Stern", "do" in "Condor"). Handle "Dr." prefix separately.
     const cleaned = name
       .replace(/^dr\.?\s+/i, '') // Leading "Dr." or "Dr "
-      .replace(/,?\s*\b(dds|dmd|md|do|dc|esq\.?|attorney|lawyer|phd|cpa|rn|lmt)\b\.?/gi, '')
+      .replace(/,?\s*\b(dds|dmd|md|do|dc|esq\.?|attorney|lawyer|phd|cpa|rn|lmt|barch|march|mba|mfa|bs|ms|ba|ma|bsc|msc|aia|ra|pe|se|lcsw|lpcc|lmft|aprn|fnp|pa-c|od|dpt|dpm)\b\.?/gi, '')
       .trim();
     const parts = cleaned.split(/\s+/);
     if (parts.length >= 2 && parts.length <= 3) {
@@ -923,7 +923,10 @@ class GoogleMapsScraper extends BaseScraper {
       'electric', 'electrical', 'consulting', 'accounting', 'tax',
       'insurance', 'financial', 'clinic', 'medical', 'therapy',
       'construction', 'roofing', 'painting', 'landscaping', 'hvac',
-      'veterinary', 'optometry', 'salon', 'studio', 'agency', 'lounge',
+      'veterinary', 'optometry', 'ophthalmology', 'dermatology', 'cardiology',
+      'orthodontics', 'pediatrics', 'radiology', 'neurology', 'oncology',
+      'urology', 'gastroenterology', 'endocrinology', 'rheumatology',
+      'salon', 'studio', 'agency', 'lounge',
       'yoga', 'pilates', 'fitness', 'gym', 'crossfit', 'athletic',
       'coffee', 'cafe', 'bakery', 'kitchen', 'grill', 'bar',
       'photography', 'photographer', 'photo', 'videography', 'production',
@@ -944,12 +947,13 @@ class GoogleMapsScraper extends BaseScraper {
     // Also strip " - ", " : ", " | ", " , " etc. and everything after
     // Handles: "Name - Company", "Name: Business", "Name | Title", "Name, Realtor"
     personPart = personPart.replace(/\s*[-:|–—\|].*$/, '').trim();
-    personPart = personPart.replace(/,\s*(realtor|agent|broker|attorney|esq|pa|cpa|dds|dmd|md|do|dc|llc|inc|ltd).*$/i, '').trim();
+    personPart = personPart.replace(/,\s*(realtor|agent|broker|attorney|esq|pa|cpa|dds|dmd|md|do|dc|llc|inc|ltd|barch|march|mba|mfa|aia|ra|pe|od|dpt|dpm|lcsw|lpcc|lmft|aprn|fnp|pa-c).*$/i, '').trim();
     // Strip "at Keller Williams" etc.
     personPart = personPart.replace(/\s+at\s+.+$/i, '').trim();
 
-    // Clean title prefixes
+    // Clean title prefixes and trailing credentials
     personPart = personPart.replace(/^(dr\.?\s+|dds\s+|dmd\s+)/i, '').trim();
+    personPart = personPart.replace(/,?\s*\b(dds|dmd|md|do|dc|esq\.?|phd|cpa|rn|lmt|barch|march|mba|mfa|bs|ms|ba|ma|bsc|msc|aia|ra|pe|se|lcsw|lpcc|lmft|aprn|fnp|pa-c|od|dpt|dpm)\b\.?/gi, '').trim();
 
     const parts = personPart.split(/\s+/);
     if (parts.length < 2 || parts.length > 3) return null;
@@ -994,6 +998,10 @@ class GoogleMapsScraper extends BaseScraper {
       'plaza', 'square', 'park', 'hill', 'heights', 'village', 'crossing', 'commons',
       'family', 'professional', 'advanced', 'premier', 'elite', 'express', 'mobile',
       'downtown', 'midtown', 'north', 'south', 'east', 'west', 'central', 'greater',
+      // Medical/dental words that look like last names
+      'ophthalmology', 'dermatology', 'cardiology', 'dentistry', 'orthodontics',
+      'chiropractic', 'pediatrics', 'radiology', 'neurology', 'oncology',
+      'urology', 'gastroenterology', 'endocrinology', 'rheumatology',
     ]);
     if (parts.some(p => NON_PERSON_WORDS.has(p.toLowerCase()))) return null;
 

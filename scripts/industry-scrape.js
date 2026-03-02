@@ -223,23 +223,38 @@ async function runDuckDuckGo(niche, location) {
       },
     });
 
+    // Parse city/state from location string to apply to DDG results
+    const locationParts = location.split(',').map(s => s.trim());
+    const ddgCity = locationParts[0] || '';
+    const ddgState = locationParts[1] || '';
+
     // Convert DDG results to lead format
-    const leads = results.map(r => ({
-      first_name: '',
-      last_name: '',
-      firm_name: r.name || '',
-      city: '',
-      state: '',
-      phone: r.phone || '',
-      website: r.website || r.url || '',
-      email: '',
-      domain: r.domain || '',
-      source: r.source || 'ddg',
-      profile_url: '',
-      _rating: '',
-      _rating_count: 0,
-      _snippet: r.snippet || '',
-    }));
+    const leads = results
+      .filter(r => {
+        // Skip results where the URL is not a business website
+        const url = r.website || r.url || '';
+        if (!url || url.includes('yelp.com') || url.includes('bbb.org')) return true; // directories handled separately
+        // Skip if the "name" looks like a listicle title
+        const name = (r.name || '').toLowerCase();
+        if (/\b(best|top)\s+\d+/.test(name)) return false;
+        return true;
+      })
+      .map(r => ({
+        first_name: '',
+        last_name: '',
+        firm_name: r.name || '',
+        city: ddgCity,
+        state: ddgState,
+        phone: r.phone || '',
+        website: r.website || r.url || '',
+        email: '',
+        domain: r.domain || '',
+        source: r.source || 'ddg',
+        profile_url: '',
+        _rating: '',
+        _rating_count: 0,
+        _snippet: r.snippet || '',
+      }));
 
     log.info(`[Step 1B] DuckDuckGo: ${leads.length} businesses found`);
     return leads;
@@ -280,13 +295,27 @@ async function runWebsiteCrawl(leads) {
   const people = [];
 
   const subset = withWebsite.slice(0, limit);
-  const RESTART_INTERVAL = 100; // Restart browser every N sites to prevent memory leaks
+  const RESTART_INTERVAL = 50; // Restart browser every N sites to prevent memory leaks
   let consecutiveErrors = 0;
   const MAX_CONSECUTIVE_ERRORS = 5;
 
-  async function initBrowsers() {
-    await extractor.init();
-    await emailFinder.init();
+  async function initBrowsers(retries = 3) {
+    for (let attempt = 1; attempt <= retries; attempt++) {
+      try {
+        await extractor.init();
+        await emailFinder.init();
+        return;
+      } catch (err) {
+        log.warn(`[Step 2] Browser init failed (attempt ${attempt}/${retries}): ${err.message}`);
+        await extractor.close().catch(() => {});
+        await emailFinder.close().catch(() => {});
+        if (attempt < retries) {
+          await new Promise(r => setTimeout(r, 3000 * attempt));
+        } else {
+          throw err;
+        }
+      }
+    }
   }
 
   async function closeBrowsers() {
