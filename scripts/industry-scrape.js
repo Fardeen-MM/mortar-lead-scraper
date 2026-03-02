@@ -66,6 +66,7 @@ const SKIP_DDG = hasFlag('skip-ddg');
 const SKIP_CC = hasFlag('skip-cc');
 const SKIP_WHOIS = hasFlag('skip-whois');
 const SKIP_CRAWL = hasFlag('skip-crawl');
+const FAST_CRAWL = hasFlag('fast'); // Use HTTP instead of Puppeteer for email scraping
 const SKIP_ENRICH = hasFlag('skip-enrich');
 
 // Parse city/state/country from location string
@@ -480,6 +481,39 @@ async function runWebsiteCrawl(leads) {
   return { leads, people };
 }
 
+// ─── Step 2B: Fast HTTP Email Scrape (no Puppeteer) ─────────────────
+
+async function runFastEmailScrape(leads) {
+  log.info('');
+  log.info('═══════════════════════════════════════════════════════════');
+  log.info('  STEP 2: Fast HTTP Email Scrape (no browser)');
+  log.info('═══════════════════════════════════════════════════════════');
+
+  const withWebsite = leads.filter(l => l.website && l.domain && !l.email);
+  if (withWebsite.length === 0) {
+    log.warn('[Step 2] No leads needing emails — skipping');
+    return;
+  }
+
+  const { scrapeEmailsBatch } = require('../lib/fast-email-scraper');
+
+  log.info(`[Step 2] Scraping ${withWebsite.length} domains via HTTP (10 parallel)...`);
+  const emailMap = await scrapeEmailsBatch(withWebsite, 10, 3);
+
+  let found = 0;
+  for (const lead of leads) {
+    if (lead.email || !lead.domain) continue;
+    const emails = emailMap.get(lead.domain);
+    if (emails && emails.length > 0) {
+      lead.email = emails[0];
+      lead.email_source = 'website_http';
+      found++;
+    }
+  }
+
+  log.info(`[Step 2] Fast scrape: found emails for ${found}/${withWebsite.length} domains (${emailMap.size} domains had emails)`);
+}
+
 // ─── Step 3A: Common Crawl ──────────────────────────────────────────
 
 async function runCommonCrawl(leads) {
@@ -746,9 +780,12 @@ async function main() {
   // ─── Step 2: Website Crawl + Person Extraction ──────────────────
 
   let people = [];
-  if (!SKIP_CRAWL) {
+  if (!SKIP_CRAWL && !FAST_CRAWL) {
     const crawlResult = await runWebsiteCrawl(allBusinesses);
     people = crawlResult.people;
+  } else if (FAST_CRAWL) {
+    // Fast mode: HTTP-only email scraping, no Puppeteer, no person extraction
+    await runFastEmailScrape(allBusinesses);
   }
 
   // Combine businesses + extracted people
