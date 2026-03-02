@@ -88,17 +88,20 @@ function mergeRows(existing, incoming) {
   return base;
 }
 
+// Check for --lawfirms-only flag
+const LAWFIRMS_ONLY = process.argv.includes('--lawfirms-only');
+
 // Collect all CSV files
-const files = fs.readdirSync(OUTPUT_DIR).filter(f =>
-  f.endsWith('.csv') &&
-  f !== 'ALL-LAWFIRMS-MASTER.csv' &&
-  f !== 'US-LAWFIRMS-MASTER.csv' &&
-  f !== 'CANADA-LAWFIRMS-MASTER.csv' &&
-  f !== 'UK-LAWFIRMS-MASTER.csv' &&
-  f !== 'AUSTRALIA-LAWFIRMS-MASTER.csv' &&
-  f !== 'IRELAND-LAWFIRMS-MASTER.csv' &&
-  !f.startsWith('.')
-);
+const files = fs.readdirSync(OUTPUT_DIR).filter(f => {
+  if (!f.endsWith('.csv')) return false;
+  if (f.includes('-MASTER.csv') || f.includes('-enriched.csv')) return false;
+  if (f.startsWith('.')) return false;
+  if (LAWFIRMS_ONLY) {
+    // Only include law firm / solicitor CSVs
+    return f.startsWith('law-firms_') || f.startsWith('solicitors_') || f.startsWith('lawyers_');
+  }
+  return true;
+});
 
 console.log(`Found ${files.length} CSV files to merge`);
 
@@ -225,22 +228,40 @@ for (const row of unique) {
 fs.writeFileSync(MASTER_FILE, lines.join('\n') + '\n');
 console.log(`\nWritten: ${MASTER_FILE} (${unique.length} leads)`);
 
-// Also write per-region masters by detecting country from state/city
+// Also write per-region masters by detecting country from state/city/country
+const US_STATES = new Set(['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','DC']);
+const CA_PROVINCES = new Set(['ON','BC','AB','QC','MB','SK','NS','NB','NL','PE','NT','YT','NU']);
+const UK_REGIONS = new Set(['UK','UK-SC','UK-EW','UK-NI','ENGLAND','SCOTLAND','WALES']);
+const AU_STATES = new Set(['NSW','VIC','QLD','WA','SA','TAS','ACT','NT']);
+
+// Known UK cities for fallback detection
+const UK_CITIES = new Set(['london','manchester','birmingham','leeds','glasgow','edinburgh','bristol','liverpool','cardiff','nottingham','sheffield','newcastle','newcastle upon tyne','belfast','cambridge','oxford','brighton','bath','york','exeter','aberdeen','dundee','swansea','coventry','leicester','southampton','portsmouth','plymouth','stoke','wolverhampton','derby','norwich','reading','luton','swindon','cheltenham','gloucester','chester','worcester','canterbury','chichester','salisbury','lancaster','durham','inverness','stirling','perth']);
+// Known Canadian cities for fallback detection
+const CA_CITIES = new Set(['toronto','vancouver','calgary','montreal','winnipeg','saskatoon','halifax','fredericton',"st. john's",'charlottetown','yellowknife','whitehorse','ottawa','victoria','edmonton','quebec city','regina','iqaluit','moncton','kitchener','hamilton','london','windsor','sudbury','thunder bay','kelowna','kamloops','red deer','lethbridge','medicine hat','sherbrooke','trois-rivieres','gatineau','laval','longueuil','st. catharines','barrie','guelph','kingston','peterborough','burlington']);
+
 const regions = { US: [], CANADA: [], UK: [], AUSTRALIA: [], IRELAND: [], OTHER: [] };
 for (const row of unique) {
-  const state = (row.state || '').toUpperCase();
-  const city = (row.city || '').toLowerCase();
+  const state = (row.state || '').toUpperCase().trim();
+  const country = (row.country || '').toLowerCase().trim();
+  const city = (row.city || '').toLowerCase().trim();
   const source = (row.source || '').toLowerCase();
 
-  if (/canada|,\s*(on|bc|ab|qc|mb|sk|ns|nb|nl|pe|nt|yt),/i.test(city) || source.includes('canada')) {
+  // Check state codes with CA- prefix (e.g., CA-AB, CA-ON)
+  const isCAPrefix = /^CA-/.test(state);
+  const stateWithoutPrefix = isCAPrefix ? state.replace('CA-', '') : state;
+
+  if (country.includes('canada') || CA_PROVINCES.has(stateWithoutPrefix) || isCAPrefix ||
+      /canada/i.test(city) || CA_CITIES.has(city)) {
     regions.CANADA.push(row);
-  } else if (/uk|united kingdom|england|scotland|wales/i.test(city) || source.includes('solicitor') || source.includes('uk')) {
+  } else if (country.includes('uk') || country.includes('united kingdom') || UK_REGIONS.has(state) ||
+             /\buk\b|united kingdom|england|scotland|wales/i.test(city) ||
+             source.includes('solicitor') || UK_CITIES.has(city)) {
     regions.UK.push(row);
-  } else if (/australia|,\s*(nsw|vic|qld|wa|sa|tas|act|nt),/i.test(city) || source.includes('australia')) {
+  } else if (country.includes('australia') || AU_STATES.has(state) || /australia/i.test(city)) {
     regions.AUSTRALIA.push(row);
-  } else if (/ireland|northern ireland/i.test(city) || source.includes('ireland')) {
+  } else if (country.includes('ireland') || /ireland/i.test(city) || state === 'IE') {
     regions.IRELAND.push(row);
-  } else if (state.length === 2 && /^[A-Z]{2}$/.test(state)) {
+  } else if (US_STATES.has(state)) {
     regions.US.push(row);
   } else {
     regions.OTHER.push(row);
