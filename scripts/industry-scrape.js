@@ -357,6 +357,7 @@ async function runWebsiteCrawl(leads) {
           const NON_FIRST_NAMES = new Set([
             'the','a','an','this','that','our','your','my','meet','about','contact',
             'welcome','hello','hi','call','email','visit','find','join','view','see',
+            'miss','mr','mrs','ms','sir','madam',
           ]);
           if (NON_FIRST_NAMES.has(firstName.toLowerCase())) continue;
 
@@ -384,6 +385,9 @@ async function runWebsiteCrawl(leads) {
             'church','temple','synagogue','mosque','foundation','nonprofit','charity',
             'avenue','avenues','street','road','boulevard','plaza','square',
             'doctors','doctor','staff','team','faculty','teachers','members','providers',
+            'president','director','manager','associate','assistant','teacher','aide',
+            'coordinator','specialist','supervisor','administrator','principal','dean',
+            'partner','founder','owner','ceo','cfo','coo','cto','vp','svp','evp',
           ]);
           if (BUSINESS_WORDS.has(lastName.toLowerCase())) continue;
 
