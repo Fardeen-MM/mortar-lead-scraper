@@ -1,866 +1,392 @@
 #!/usr/bin/env node
 /**
- * Universal Industry Scraper — give it an industry, get leads
+ * Universal Industry Scraper — "Give it an industry, get leads"
  *
- * The single entry point for niche-agnostic business lead generation.
- * Chains together: Google Maps → DuckDuckGo → Website Crawl → Common Crawl → WHOIS → Enrichment → CSV
- *
- * Usage:
+ * One command to scrape any niche across any US location:
  *   node scripts/industry-scrape.js --niche "dentists" --location "Miami, FL"
- *   node scripts/industry-scrape.js --niche "plumbers" --location "London, UK"
- *   node scripts/industry-scrape.js --niche "accountants" --location "Sydney, AU" --radius 50
- *   node scripts/industry-scrape.js --niche "dentists" --location "Miami, FL" --test
- *   node scripts/industry-scrape.js --niche "dentists" --location "Miami, FL" --skip-maps --skip-ddg
+ *   node scripts/industry-scrape.js --niche "plumbers" --location "Texas" --zip-sweep
+ *   node scripts/industry-scrape.js --niche "lawyers" --zip-sweep --max 5000
+ *
+ * Pipeline:
+ *   1. DISCOVER — Google Maps scrape (city or zip-code-by-zip-code)
+ *   2. EXTRACT  — Website crawl for people, emails, phones
+ *   3. ENRICH   — Email waterfall (MS GetCredentialType, SMTP, Spotify, Gravatar)
+ *   4. SCORE    — Decision maker scoring + dedup
+ *   5. EXPORT   — CSV with all contact info
  *
  * Options:
- *   --niche         Business type (required)
- *   --location      City + state/country (required)
- *   --radius        Search radius in km (default 25)
- *   --concurrency   Parallel website crawls (default 3)
- *   --output        Custom CSV output path
- *   --test          Test mode — limits all steps for quick testing
- *   --skip-maps     Skip Google Maps step
- *   --skip-ddg      Skip DuckDuckGo step
- *   --skip-cc       Skip Common Crawl step
- *   --skip-whois    Skip WHOIS step
- *   --skip-crawl    Skip website crawl step
- *   --skip-enrich   Skip enrichment step
+ *   --niche        Business type to search (required)
+ *   --location     City, State or just State (default: all US)
+ *   --zip-sweep    Sweep all zip codes in the state/country
+ *   --max          Max leads to collect (default: unlimited)
+ *   --concurrency  Parallel scrape workers (default: 3)
+ *   --output       Output CSV path
+ *   --enrich       Run email waterfall enrichment (default: true)
+ *   --no-enrich    Skip email enrichment
+ *   --scan-db      Pre-scan pattern DB before enriching
  */
 
-const path = require('path');
-const https = require('https');
 const fs = require('fs');
-const { log } = require('../lib/logger');
-const { writeCSV } = require('../lib/csv-handler');
-const { extractDomain, normalizePhone, titleCase } = require('../lib/normalizer');
-const ddg = require('../lib/duckduckgo-scraper');
-const cc = require('../lib/commoncrawl-client');
-const whois = require('../lib/whois-client');
-const { mergeLeads, enrichAll, isLikelyPersonName } = require('../lib/industry-enricher');
+const path = require('path');
 
-// ─── CLI Args ──────────────────────────────────────────────────────
+// ─── CLI Args ──────────────────────────────────────────────────
 
 const args = process.argv.slice(2);
-
 function getArg(name) {
   const idx = args.indexOf(`--${name}`);
-  if (idx === -1) return undefined;
-  return args[idx + 1];
+  return idx === -1 ? undefined : args[idx + 1];
 }
-
-function hasFlag(name) {
-  return args.includes(`--${name}`);
-}
+function hasFlag(name) { return args.includes(`--${name}`); }
 
 const NICHE = getArg('niche');
-const LOCATION = getArg('location');
-const RADIUS = parseInt(getArg('radius') || '25');
-const CONCURRENCY = parseInt(getArg('concurrency') || '3');
+const LOCATION = getArg('location') || '';
+const ZIP_SWEEP = hasFlag('zip-sweep');
+const MAX_LEADS = parseInt(getArg('max') || '0') || 0;
+const CONCURRENCY = parseInt(getArg('concurrency') || '3') || 3;
 const OUTPUT = getArg('output');
-const TEST_MODE = hasFlag('test');
-const GRID_CELLS = parseInt(getArg('grid') || '0'); // 0 = auto (test=4, full=25)
-const MAX_CRAWL = parseInt(getArg('max-crawl') || '0'); // 0 = auto (test=10, full=75)
-const MAX_MAPS = parseInt(getArg('max-maps') || '0'); // 0 = no limit on Maps results
-const SKIP_MAPS = hasFlag('skip-maps');
-const SKIP_DDG = hasFlag('skip-ddg');
-const SKIP_CC = hasFlag('skip-cc');
-const SKIP_WHOIS = hasFlag('skip-whois');
-const SKIP_CRAWL = hasFlag('skip-crawl');
-const FAST_CRAWL = hasFlag('fast'); // Use HTTP instead of Puppeteer for email scraping
-const SKIP_ENRICH = hasFlag('skip-enrich');
+const DO_ENRICH = !hasFlag('no-enrich');
+const SCAN_DB = hasFlag('scan-db');
 
-// Parse city/state/country from location string
-// Formats: "Miami, FL" | "Toronto, ON, Canada" | "London, UK" | "Dublin, Ireland"
-const LOCATION_PARTS = LOCATION ? LOCATION.split(',').map(s => s.trim()) : [];
-const LOCATION_CITY = LOCATION_PARTS[0] || '';
-const LOCATION_STATE = LOCATION_PARTS.length === 2 ? LOCATION_PARTS[1] :
-                        LOCATION_PARTS.length >= 3 ? LOCATION_PARTS[1] : '';
-const LOCATION_COUNTRY = LOCATION_PARTS.length >= 3 ? LOCATION_PARTS[LOCATION_PARTS.length - 1] : '';
+if (!NICHE) {
+  console.log(`
+  Usage: node scripts/industry-scrape.js --niche <type> [options]
 
-if (!NICHE || !LOCATION) {
-  console.log('Usage: node scripts/industry-scrape.js --niche "dentists" --location "Miami, FL"');
-  console.log('');
-  console.log('Options:');
-  console.log('  --niche         Business type (required)');
-  console.log('  --location      City + state/country (required)');
-  console.log('  --radius        Search radius in km (default 25)');
-  console.log('  --concurrency   Parallel website crawls (default 3)');
-  console.log('  --output        Custom CSV output path');
-  console.log('  --test          Test mode (limits all steps)');
-  console.log('  --skip-maps     Skip Google Maps');
-  console.log('  --skip-ddg      Skip DuckDuckGo');
-  console.log('  --skip-cc       Skip Common Crawl');
-  console.log('  --skip-whois    Skip WHOIS');
-  console.log('  --skip-crawl    Skip website crawl');
-  console.log('  --skip-enrich   Skip enrichment');
+  Examples:
+    node scripts/industry-scrape.js --niche "dentists" --location "Miami, FL"
+    node scripts/industry-scrape.js --niche "plumbers" --location "Texas" --zip-sweep
+    node scripts/industry-scrape.js --niche "personal injury lawyers" --zip-sweep --max 5000
+    node scripts/industry-scrape.js --niche "accountants" --location "New York, NY"
+
+  Options:
+    --niche        Business type (required)
+    --location     City, State (default: major US cities)
+    --zip-sweep    Cover all zip codes in state/country
+    --max          Max leads to collect
+    --concurrency  Parallel workers (default: 3)
+    --output       Output CSV path
+    --no-enrich    Skip email enrichment
+  `);
   process.exit(1);
 }
 
-// ─── Geocode ────────────────────────────────────────────────────────
+// ─── CSV Helpers ───────────────────────────────────────────────
 
-/**
- * Geocode a location string to lat/lng using Nominatim (free, no key).
- * Retries up to 3 times with 2s delay (Nominatim rate limits to 1 req/sec).
- */
-async function geocode(location, retries = 3) {
-  const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`;
-
-  for (let attempt = 1; attempt <= retries; attempt++) {
-    try {
-      const result = await new Promise((resolve, reject) => {
-        const req = https.get(url, {
-          headers: { 'User-Agent': 'MortarLeadScraper/1.0 (contact@mortarmetrics.com)' },
-          timeout: 10000,
-        }, (res) => {
-          let body = '';
-          res.on('data', c => body += c);
-          res.on('end', () => {
-            if (res.statusCode !== 200) {
-              return reject(new Error(`HTTP ${res.statusCode} from Nominatim`));
-            }
-            try {
-              const data = JSON.parse(body);
-              if (data && data[0]) {
-                resolve({
-                  lat: parseFloat(data[0].lat),
-                  lng: parseFloat(data[0].lon),
-                  displayName: data[0].display_name,
-                  boundingbox: data[0].boundingbox ? data[0].boundingbox.map(Number) : null,
-                });
-              } else {
-                reject(new Error(`No results found for location: ${location}`));
-              }
-            } catch (err) {
-              reject(new Error(`Failed to parse Nominatim response (attempt ${attempt}): ${err.message}`));
-            }
-          });
-        });
-
-        req.on('error', reject);
-        req.on('timeout', () => { req.destroy(); reject(new Error('Geocode timeout')); });
-      });
-      return result;
-    } catch (err) {
-      if (attempt < retries) {
-        log.warn(`Geocode attempt ${attempt} failed: ${err.message} — retrying in 2s...`);
-        await new Promise(r => setTimeout(r, 2000));
-      } else {
-        throw err;
-      }
+function writeCSV(filePath, leads) {
+  if (!leads.length) return;
+  const columns = [
+    'first_name', 'last_name', 'firm_name', 'title', 'email', 'email_confidence',
+    'email_source', 'phone', 'website', 'domain', 'city', 'state', 'country',
+    'linkedin_url', 'niche', 'source', 'dm_score',
+  ];
+  for (const lead of leads.slice(0, 10)) {
+    for (const key of Object.keys(lead)) {
+      if (!columns.includes(key)) columns.push(key);
     }
   }
+
+  const header = columns.join(',');
+  const rows = leads.map(lead => {
+    return columns.map(col => {
+      const val = (lead[col] || '').toString();
+      return val.includes(',') || val.includes('"') || val.includes('\n')
+        ? `"${val.replace(/"/g, '""')}"` : val;
+    }).join(',');
+  });
+
+  const dir = path.dirname(filePath);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(filePath, [header, ...rows].join('\n'));
 }
 
-// ─── Step 1: Google Maps Discovery ──────────────────────────────────
+// ─── Main Pipeline ─────────────────────────────────────────────
 
-async function runGoogleMaps(niche, location, geo) {
-  log.info('');
-  log.info('═══════════════════════════════════════════════════════════');
-  log.info('  STEP 1A: Google Maps Discovery');
-  log.info('═══════════════════════════════════════════════════════════');
+async function main() {
+  try { require('dotenv').config({ path: path.join(__dirname, '..', '.env') }); } catch {}
 
-  try {
-    // Dynamic import — Google Maps scraper uses Puppeteer
-    const { getRegistry } = require('../lib/registry');
-    const SCRAPERS = getRegistry();
+  const startTime = Date.now();
+  const locationParts = LOCATION.split(',').map(s => s.trim());
+  const city = locationParts[0] || '';
+  const state = locationParts[1] || locationParts[0] || '';
 
-    if (!SCRAPERS['GOOGLE-MAPS']) {
-      log.warn('[Step 1A] Google Maps scraper not found — skipping');
-      return [];
-    }
+  console.log('\n╔═══════════════════════════════════════════════════════════╗');
+  console.log('║       MORTAR — Universal Industry Scraper                ║');
+  console.log('╚═══════════════════════════════════════════════════════════╝\n');
+  console.log(`  Niche:       ${NICHE}`);
+  console.log(`  Location:    ${LOCATION || 'Major US cities'}`);
+  if (ZIP_SWEEP) {
+    const zipcodes = require('../lib/us-zipcodes');
+    const pts = state ? zipcodes.getSearchPoints({ state: state.length === 2 ? state.toUpperCase() : undefined }) : zipcodes.getSearchPoints();
+    console.log(`  Mode:        ZIP code sweep (${pts.length} search points)`);
+  } else {
+    console.log(`  Mode:        City search`);
+  }
+  console.log(`  Max leads:   ${MAX_LEADS || 'unlimited'}`);
+  console.log(`  Enrichment:  ${DO_ENRICH ? 'ON (email waterfall)' : 'OFF'}`);
+  console.log(`  Concurrency: ${CONCURRENCY}`);
+  console.log('');
 
-    const scraper = SCRAPERS['GOOGLE-MAPS']();
-    const leads = [];
+  // ─── Step 1: DISCOVER — Google Maps Scrape ─────────────────
+  console.log('  ── Step 1: DISCOVER (Google Maps) ─────────────────────');
 
-    const searchOpts = {
-      niche,
-      city: location.split(',')[0].trim(), // Just the city name
-      maxPages: TEST_MODE && !GRID_CELLS ? 1 : null,
-      maxCities: 1,
-      // Pass geocoded lat/lng/radius to avoid redundant Nominatim call
-      lat: geo.lat,
-      lng: geo.lng,
-      radius: RADIUS,
-    };
+  let leads = [];
+  const seen = new Set();
 
-    // Custom grid cell count overrides test/full defaults
-    if (GRID_CELLS > 0) {
-      searchOpts.gridCells = GRID_CELLS;
-    }
-
-    for await (const result of scraper.search('', searchOpts)) {
+  // Helper: collect leads from a single Google Maps search run
+  async function collectFromSearch(gmaps, options, label) {
+    let count = 0;
+    for await (const result of gmaps.search(NICHE, options)) {
       if (result._cityProgress || result._captcha) continue;
 
-      leads.push({
-        first_name: result.first_name || '',
-        last_name: result.last_name || '',
-        firm_name: result.firm_name || '',
-        city: result.city || '',
-        state: result.state || '',
-        phone: result.phone || '',
-        website: result.website || '',
-        email: result.email || '',
-        domain: extractDomain(result.website || ''),
-        source: result.source || 'google_maps',
-        profile_url: result.profile_url || '',
-        _rating: result._rating || '',
-        _rating_count: result._rating_count || 0,
-        _snippet: '',
-      });
+      const key = `${(result.firm_name || '').toLowerCase()}|${(result.city || '').toLowerCase()}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
 
-      // Cap Maps results if --max-maps specified, otherwise use test mode default
-      const mapsLimit = MAX_MAPS > 0 ? MAX_MAPS : (TEST_MODE ? 20 : 0);
-      if (mapsLimit > 0 && leads.length >= mapsLimit) break;
+      if (result.website && !result.domain) {
+        const m = result.website.match(/https?:\/\/(?:www\.)?([^\/\?]+)/);
+        if (m) result.domain = m[1].toLowerCase();
+      }
+
+      result.niche = NICHE;
+      leads.push(result);
+      count++;
+
+      if (leads.length % 50 === 0) {
+        console.log(`    ${leads.length} businesses found...`);
+      }
+
+      if (MAX_LEADS > 0 && leads.length >= MAX_LEADS) return true; // signal done
     }
-
-    // Close browser
-    if (scraper._closeBrowser) {
-      await scraper._closeBrowser();
-    }
-
-    log.info(`[Step 1A] Google Maps: ${leads.length} businesses found`);
-    return leads;
-  } catch (err) {
-    log.error(`[Step 1A] Google Maps error: ${err.message}`);
-    return [];
+    if (label) console.log(`    ${label}: +${count} businesses`);
+    return false;
   }
-}
-
-// ─── Step 1B: DuckDuckGo Discovery ─────────────────────────────────
-
-async function runDuckDuckGo(niche, location) {
-  log.info('');
-  log.info('═══════════════════════════════════════════════════════════');
-  log.info('  STEP 1B: DuckDuckGo Web Search Discovery');
-  log.info('═══════════════════════════════════════════════════════════');
 
   try {
-    const results = await ddg.search(niche, location, {
-      maxResults: TEST_MODE ? 20 : 100,
-      onProgress: (i, total, query) => {
-        log.info(`[Step 1B] Query ${i}/${total}: "${query}"`);
-      },
-    });
+    const gmaps = require('../scrapers/directories/google-maps');
 
-    // Parse city/state from location string to apply to DDG results
-    const locationParts = location.split(',').map(s => s.trim());
-    const ddgCity = locationParts[0] || '';
-    const ddgState = locationParts[1] || '';
+    if (ZIP_SWEEP) {
+      // ─── ZIP Code Sweep Mode ───────────────────────────────
+      const zipcodes = require('../lib/us-zipcodes');
 
-    // Convert DDG results to lead format
-    const leads = results
-      .filter(r => {
-        // Skip results where the URL is not a business website
-        const url = r.website || r.url || '';
-        if (!url || url.includes('yelp.com') || url.includes('bbb.org')) return true; // directories handled separately
-        // Skip if the "name" looks like a listicle title
-        const name = (r.name || '').toLowerCase();
-        if (/\b(best|top)\s+\d+/.test(name)) return false;
-        return true;
-      })
-      .map(r => ({
-        first_name: '',
-        last_name: '',
-        firm_name: r.name || '',
-        city: ddgCity,
-        state: ddgState,
-        phone: r.phone || '',
-        website: r.website || r.url || '',
-        email: '',
-        domain: r.domain || '',
-        source: r.source || 'ddg',
-        profile_url: '',
-        _rating: '',
-        _rating_count: 0,
-        _snippet: r.snippet || '',
-      }));
-
-    log.info(`[Step 1B] DuckDuckGo: ${leads.length} businesses found`);
-    return leads;
-  } catch (err) {
-    log.error(`[Step 1B] DuckDuckGo error: ${err.message}`);
-    return [];
-  }
-}
-
-// ─── Step 2: Website Crawl + Person Extraction ─────────────────────
-
-async function runWebsiteCrawl(leads) {
-  log.info('');
-  log.info('═══════════════════════════════════════════════════════════');
-  log.info('  STEP 2: Website Crawl + Person Extraction');
-  log.info('═══════════════════════════════════════════════════════════');
-
-  const withWebsite = leads.filter(l => l.website && l.domain);
-  if (withWebsite.length === 0) {
-    log.warn('[Step 2] No leads with websites — skipping');
-    return { leads, people: [] };
-  }
-
-  const autoLimit = TEST_MODE ? 10 : 75;
-  const limit = MAX_CRAWL > 0 ? Math.min(MAX_CRAWL, withWebsite.length) : Math.min(autoLimit, withWebsite.length);
-  log.info(`[Step 2] Crawling ${limit} websites for people + emails...`);
-
-  let PersonExtractor, EmailFinder;
-  try {
-    PersonExtractor = require('../lib/person-extractor');
-    EmailFinder = require('../lib/email-finder');
-  } catch (err) {
-    log.error(`[Step 2] Failed to load modules: ${err.message}`);
-    return { leads, people: [] };
-  }
-
-  const extractor = new PersonExtractor();
-  const emailFinder = new EmailFinder();
-  const people = [];
-
-  const subset = withWebsite.slice(0, limit);
-  const RESTART_INTERVAL = 50; // Restart browser every N sites to prevent memory leaks
-  let consecutiveErrors = 0;
-  const MAX_CONSECUTIVE_ERRORS = 5;
-
-  async function initBrowsers(retries = 3) {
-    for (let attempt = 1; attempt <= retries; attempt++) {
-      try {
-        await extractor.init();
-        await emailFinder.init();
-        return;
-      } catch (err) {
-        log.warn(`[Step 2] Browser init failed (attempt ${attempt}/${retries}): ${err.message}`);
-        await extractor.close().catch(() => {});
-        await emailFinder.close().catch(() => {});
-        if (attempt < retries) {
-          await new Promise(r => setTimeout(r, 3000 * attempt));
+      // Resolve state code from location (e.g. "Texas" → "TX", "FL" → "FL")
+      const { US_STATES } = require('../lib/state-metadata');
+      let stateFilter = null;
+      if (state) {
+        // Check if it's already a 2-letter code
+        if (US_STATES[state.toUpperCase()]) {
+          stateFilter = state.toUpperCase();
         } else {
-          throw err;
+          // Try matching by name
+          const entry = Object.entries(US_STATES).find(([, name]) =>
+            name.toLowerCase() === state.toLowerCase()
+          );
+          if (entry) stateFilter = entry[0];
         }
       }
-    }
-  }
 
-  async function closeBrowsers() {
-    await extractor.close().catch(() => {});
-    await emailFinder.close().catch(() => {});
-  }
+      const searchPoints = stateFilter
+        ? zipcodes.getSearchPoints({ state: stateFilter })
+        : zipcodes.getSearchPoints();
 
-  try {
-    await initBrowsers();
+      console.log(`    ZIP sweep: ${searchPoints.length} search points` +
+        (stateFilter ? ` (${stateFilter})` : ' (nationwide)'));
 
-    for (let i = 0; i < subset.length; i++) {
-      const lead = subset[i];
-      const pctDone = Math.round((i / subset.length) * 100);
-      log.info(`[Step 2] [${pctDone}%] Crawling: ${lead.domain} (${lead.firm_name})`);
+      for (let i = 0; i < searchPoints.length; i++) {
+        const pt = searchPoints[i];
+        const options = {
+          niche: NICHE,
+          lat: pt.lat,
+          lng: pt.lng,
+          radius: 25, // 25km radius per prefix
+          maxPages: 3, // limit pages per point to keep speed reasonable
+          maxCities: 1,
+          gridCells: 4, // 4 grid cells per ZIP prefix center
+          personExtract: true,
+        };
 
-      // Restart browser periodically to prevent Puppeteer memory/protocol issues
-      if (i > 0 && i % RESTART_INTERVAL === 0) {
-        log.info(`[Step 2] Restarting browser (processed ${i} sites)...`);
-        await closeBrowsers();
-        await new Promise(r => setTimeout(r, 2000));
-        await initBrowsers();
-        consecutiveErrors = 0;
-      }
+        const label = `[${i + 1}/${searchPoints.length}] ${pt.city}, ${pt.state} (${pt.prefix}xx)`;
+        if (i % 10 === 0) console.log(`    ${label}`);
 
-      try {
-        // Extract people
-        const extracted = await extractor.extractPeople(lead.website);
-        for (const person of extracted) {
-          // Clean up first name — strip titles/articles
-          let firstName = (person.first_name || '').trim();
-          firstName = firstName.replace(/^(mr\.?|mrs\.?|ms\.?|dr\.?|prof\.?|the)\s+/i, '').trim();
-          if (!firstName) continue;
-
-          // Skip entries with single-letter last names (review authors like "Nicholas C.")
-          const lastName = (person.last_name || '').replace(/\./g, '').trim();
-          if (lastName.length <= 1) continue;
-
-          // Skip entries where first name is an article/determiner/heading word (not a real name)
-          const NON_FIRST_NAMES = new Set([
-            'the','a','an','this','that','our','your','my','meet','about','contact',
-            'welcome','hello','hi','call','email','visit','find','join','view','see',
-            'miss','mr','mrs','ms','sir','madam',
-          ]);
-          if (NON_FIRST_NAMES.has(firstName.toLowerCase())) continue;
-
-          // Update person with cleaned first name
-          person.first_name = firstName;
-
-          // Skip entries where last name is a credential/degree abbreviation
-          const CREDENTIALS = new Set([
-            'dds','dmd','md','do','dc','esq','phd','cpa','rn','lmt','ra','aia','pe','se',
-            'od','dpt','dpm','barch','march','mba','mfa','bs','ms','ba','ma','bsc','msc',
-            'lcsw','lpcc','lmft','aprn','fnp','pa','ap','rla','asla','leed','faia','ncarb',
-          ]);
-          if (CREDENTIALS.has(lastName.toLowerCase())) continue;
-
-          // Skip entries where last name is a business/industry word (not a real surname)
-          const BUSINESS_WORDS = new Set([
-            'architectural','architecture','construction','engineering','dental','medical',
-            'plumbing','electric','electrical','consulting','accounting','insurance','financial',
-            'photography','landscaping','chiropractic','veterinary','optometry','ophthalmology',
-            'dermatology','orthodontics','pediatrics','realty','fitness','grooming','moving',
-            'cleaning','roofing','painting','therapy','wellness','salon','studio','agency',
-            'service','services','repair','shop','store','center','centre','clinic','group',
-            'associates','properties','solutions','company','enterprise','enterprises',
-            'school','academy','institute','university','college','learning','education',
-            'church','temple','synagogue','mosque','foundation','nonprofit','charity',
-            'avenue','avenues','street','road','boulevard','plaza','square',
-            'county','city','town','township','village','borough','district',
-            'bridal','collection','jewelry','jewelers','jewellery','diamonds',
-            'gallery','boutique','emporium','warehouse','depot','outlet',
-            'doctors','doctor','staff','team','faculty','teachers','members','providers',
-            'president','director','manager','associate','assistant','teacher','aide',
-            'coordinator','specialist','supervisor','administrator','principal','dean',
-            'partner','founder','owner','ceo','cfo','coo','cto','vp','svp','evp',
-          ]);
-          if (BUSINESS_WORDS.has(lastName.toLowerCase())) continue;
-
-          people.push({
-            first_name: person.first_name || '',
-            last_name: person.last_name || '',
-            title: person.title || '',
-            email: person.email || '',
-            phone: person.phone || '',
-            linkedin_url: person.linkedin_url || '',
-            firm_name: lead.firm_name || '',
-            city: lead.city || '',
-            state: lead.state || '',
-            website: lead.website || '',
-            domain: lead.domain || '',
-            source: 'website_crawl',
-            _rating: lead._rating || '',
-            _rating_count: lead._rating_count || 0,
-            _snippet: lead._snippet || '',
-          });
-        }
-
-        // Find email for the business if none found yet
-        if (!lead.email) {
-          const email = await emailFinder.findEmail(lead.website);
-          if (email) {
-            lead.email = email;
-            lead.email_source = 'website';
-          }
-        }
-        consecutiveErrors = 0;
-      } catch (err) {
-        consecutiveErrors++;
-        log.warn(`[Step 2] Error crawling ${lead.domain}: ${err.message}`);
-
-        // If browser is dead (protocol error), restart it
-        if (err.message.includes('Protocol') || err.message.includes('Target closed') ||
-            err.message.includes('Session closed') || err.message.includes('detached')) {
-          log.warn(`[Step 2] Browser crashed — restarting...`);
-          await closeBrowsers();
-          await new Promise(r => setTimeout(r, 3000));
-          try {
-            await initBrowsers();
-            consecutiveErrors = 0;
-          } catch (reinitErr) {
-            log.error(`[Step 2] Failed to restart browser: ${reinitErr.message}`);
-            break; // Can't recover — exit the loop with whatever we have
-          }
-        }
-
-        // Too many consecutive errors = something is very wrong
-        if (consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
-          log.error(`[Step 2] ${MAX_CONSECUTIVE_ERRORS} consecutive errors — stopping crawl`);
+        const done = await collectFromSearch(gmaps, options, null);
+        if (done) {
+          console.log(`    Reached max leads (${MAX_LEADS})`);
           break;
         }
       }
+
+      console.log(`    ZIP sweep complete: ${leads.length} businesses\n`);
+    } else {
+      // ─── Standard City Mode ────────────────────────────────
+      const options = {
+        niche: NICHE,
+        maxPages: MAX_LEADS > 0 ? Math.ceil(MAX_LEADS / 20) : 999,
+        personExtract: true,
+      };
+
+      if (city) {
+        options.city = city;
+        options.maxCities = 1;
+      }
+
+      await collectFromSearch(gmaps, options, null);
+      console.log(`    Total discovered: ${leads.length} businesses\n`);
     }
   } catch (err) {
-    log.error(`[Step 2] Fatal browser error: ${err.message}`);
-  } finally {
-    await closeBrowsers();
+    console.log(`    Google Maps scrape error: ${err.message}`);
+    console.log('    Continuing with any leads found...\n');
   }
 
-  log.info(`[Step 2] Extracted ${people.length} people from ${limit} websites`);
-  const emailCount = leads.filter(l => l.email).length + people.filter(p => p.email).length;
-  log.info(`[Step 2] Emails found so far: ${emailCount}`);
-
-  return { leads, people };
-}
-
-// ─── Step 2B: Fast HTTP Email Scrape (no Puppeteer) ─────────────────
-
-async function runFastEmailScrape(leads) {
-  log.info('');
-  log.info('═══════════════════════════════════════════════════════════');
-  log.info('  STEP 2: Fast HTTP Email Scrape (no browser)');
-  log.info('═══════════════════════════════════════════════════════════');
-
-  const withWebsite = leads.filter(l => l.website && l.domain && !l.email);
-  if (withWebsite.length === 0) {
-    log.warn('[Step 2] No leads needing emails — skipping');
+  if (leads.length === 0) {
+    console.log('  No leads found. Try a different niche or location.\n');
     return;
   }
 
-  const { scrapeEmailsBatch } = require('../lib/fast-email-scraper');
+  // ─── Step 2: Stats Before Enrichment ───────────────────────
+  const withEmail = leads.filter(l => l.email).length;
+  const withPhone = leads.filter(l => l.phone).length;
+  const withWebsite = leads.filter(l => l.website).length;
+  const withName = leads.filter(l => l.first_name && l.last_name && l.last_name.length > 2).length;
 
-  log.info(`[Step 2] Scraping ${withWebsite.length} domains via HTTP (10 parallel)...`);
-  const emailMap = await scrapeEmailsBatch(withWebsite, 10, 3);
+  console.log('  ── Pre-enrichment Stats ───────────────────────────────');
+  console.log(`    Total leads:   ${leads.length}`);
+  console.log(`    With name:     ${withName} (${Math.round(withName / leads.length * 100)}%)`);
+  console.log(`    With email:    ${withEmail} (${Math.round(withEmail / leads.length * 100)}%)`);
+  console.log(`    With phone:    ${withPhone} (${Math.round(withPhone / leads.length * 100)}%)`);
+  console.log(`    With website:  ${withWebsite} (${Math.round(withWebsite / leads.length * 100)}%)`);
+  console.log('');
 
-  let found = 0;
+  // ─── Step 3: ENRICH — Email Waterfall ──────────────────────
+  if (DO_ENRICH) {
+    console.log('  ── Step 3: ENRICH (Email Waterfall) ──────────────────');
+
+    const { DomainPatternDB } = require('../lib/domain-pattern-db');
+    const { EmailWaterfall } = require('../lib/email-waterfall');
+
+    const patternDB = new DomainPatternDB();
+    console.log(`    Pattern DB: ${patternDB.size} domains cached`);
+
+    // Phase 2: Instant apply from cache
+    const enrichable = leads.filter(l =>
+      !l.email && l.first_name && l.last_name && l.domain && l.last_name.length > 2
+    );
+
+    const applyStart = Date.now();
+    const { enriched, cold } = patternDB.enrichBulk(enrichable);
+    const applyMs = Date.now() - applyStart;
+
+    // Apply cached results
+    const enrichedMap = new Map();
+    for (const e of enriched) {
+      enrichedMap.set(`${e.first_name}|${e.last_name}|${e.domain}`, e);
+    }
+    for (const lead of leads) {
+      if (lead.email) continue;
+      const key = `${lead.first_name}|${lead.last_name}|${lead.domain}`;
+      const found = enrichedMap.get(key);
+      if (found) {
+        lead.email = found.email;
+        lead.email_source = found.source;
+        lead.email_confidence = found.status;
+      }
+    }
+
+    console.log(`    Instant apply: ${enriched.length} emails (${applyMs}ms)`);
+
+    // Scan cold leads with live waterfall
+    if (cold.length > 0) {
+      const waterfall = new EmailWaterfall();
+      patternDB.seedWaterfall(waterfall);
+
+      console.log(`    Verifying ${cold.length} cold leads (concurrency: ${CONCURRENCY})...`);
+      const scanStart = Date.now();
+
+      const results = await waterfall.findEmailsBatch(cold, CONCURRENCY, (found, total) => {
+        if (total % 25 === 0 || total === cold.length) {
+          const elapsed = ((Date.now() - scanStart) / 1000).toFixed(1);
+          const pct = Math.round(found / Math.max(total, 1) * 100);
+          console.log(`    [${total}/${cold.length}] ${found} found (${pct}%) | ${elapsed}s`);
+        }
+      });
+
+      for (let i = 0; i < cold.length; i++) {
+        const r = results[i];
+        if (!r) continue;
+        const lead = cold[i];
+        for (const l of leads) {
+          if (l.first_name === lead.first_name && l.last_name === lead.last_name && l.domain === lead.domain && !l.email) {
+            l.email = r.email;
+            l.email_source = r.source;
+            l.email_confidence = r.status;
+            break;
+          }
+        }
+      }
+
+      patternDB.importFromWaterfall(waterfall);
+    }
+
+    patternDB.close();
+
+    const newEmailCount = leads.filter(l => l.email).length;
+    console.log(`    Email coverage: ${newEmailCount} / ${leads.length} (${Math.round(newEmailCount / leads.length * 100)}%)\n`);
+  }
+
+  // ─── Step 4: SCORE — Decision Maker Scoring ────────────────
+  console.log('  ── Step 4: SCORE ──────────────────────────────────────');
+
   for (const lead of leads) {
-    if (lead.email || !lead.domain) continue;
-    const emails = emailMap.get(lead.domain);
-    if (emails && emails.length > 0) {
-      lead.email = emails[0];
-      lead.email_source = 'website_http';
-      found++;
-    }
+    let score = 0;
+    const title = (lead.title || '').toLowerCase();
+
+    if (/owner|founder|ceo|president|principal|managing/i.test(title)) score += 50;
+    else if (/partner|director|vp|vice president/i.test(title)) score += 40;
+    else if (/manager|supervisor|head of|lead/i.test(title)) score += 30;
+    else if (/senior|sr\.|attorney|lawyer|dentist|doctor/i.test(title)) score += 20;
+    else if (title) score += 10;
+
+    if (lead.email) score += 20;
+    if (lead.phone) score += 10;
+    if (lead.linkedin_url) score += 5;
+    if (lead.website) score += 5;
+
+    lead.dm_score = score;
   }
 
-  log.info(`[Step 2] Fast scrape: found emails for ${found}/${withWebsite.length} domains (${emailMap.size} domains had emails)`);
-}
+  leads.sort((a, b) => (b.dm_score || 0) - (a.dm_score || 0));
 
-// ─── Step 3A: Common Crawl ──────────────────────────────────────────
+  const dmCount = leads.filter(l => (l.dm_score || 0) >= 50).length;
+  console.log(`    Decision makers (score ≥50): ${dmCount}`);
+  console.log(`    Contactable (email+phone):   ${leads.filter(l => l.email && l.phone).length}`);
+  console.log('');
 
-async function runCommonCrawl(leads) {
-  log.info('');
-  log.info('═══════════════════════════════════════════════════════════');
-  log.info('  STEP 3A: Common Crawl Archive Search');
-  log.info('═══════════════════════════════════════════════════════════');
-
-  // Get unique domains from leads that don't have emails
-  const domainsWithoutEmail = [...new Set(
-    leads
-      .filter(l => !l.email && l.domain)
-      .map(l => l.domain)
-  )];
-
-  if (domainsWithoutEmail.length === 0) {
-    log.info('[Step 3A] All leads have emails — skipping Common Crawl');
-    return {};
-  }
-
-  const limit = TEST_MODE ? Math.min(5, domainsWithoutEmail.length) : domainsWithoutEmail.length;
-  const domains = domainsWithoutEmail.slice(0, limit);
-  log.info(`[Step 3A] Searching ${domains.length} domains in Common Crawl...`);
-
-  const emailMap = await cc.batchFindEmails(domains, {
-    onProgress: (i, total, domain) => {
-      if (i % 10 === 0 || i === total) {
-        log.info(`[Step 3A] Progress: ${i}/${total} (${domain})`);
-      }
-    },
-  });
-
-  // Apply found emails back to leads
-  let applied = 0;
-  for (const lead of leads) {
-    if (!lead.email && lead.domain && emailMap.has(lead.domain)) {
-      const emails = emailMap.get(lead.domain);
-      if (emails.length > 0) {
-        lead.email = emails[0];
-        lead.email_source = 'commoncrawl';
-        applied++;
-      }
-    }
-  }
-
-  log.info(`[Step 3A] Common Crawl: ${emailMap.size} domains had emails, ${applied} applied to leads`);
-  return emailMap;
-}
-
-// ─── Step 3B: WHOIS Lookup ──────────────────────────────────────────
-
-async function runWhois(leads) {
-  log.info('');
-  log.info('═══════════════════════════════════════════════════════════');
-  log.info('  STEP 3B: WHOIS Domain Owner Lookup');
-  log.info('═══════════════════════════════════════════════════════════');
-
-  // Skip social media / major platform domains (WHOIS data is useless for these)
-  const SKIP_DOMAINS = new Set([
-    'facebook.com', 'fb.com', 'instagram.com', 'twitter.com', 'x.com',
-    'linkedin.com', 'youtube.com', 'tiktok.com', 'pinterest.com',
-    'yelp.com', 'google.com', 'apple.com', 'amazon.com', 'microsoft.com',
-    'squarespace.com', 'wix.com', 'weebly.com', 'wordpress.com', 'godaddy.com',
-    'shopify.com', 'toasttab.com', 'booksy.com', 'mindbodyonline.com',
-    'vagaro.com', 'schedulicity.com', 'acuityscheduling.com',
-  ]);
-
-  // Get unique domains (excluding platform domains)
-  const domains = [...new Set(leads.filter(l => l.domain && !SKIP_DOMAINS.has(l.domain)).map(l => l.domain))];
-
-  if (domains.length === 0) {
-    log.info('[Step 3B] No domains to look up — skipping');
-    return {};
-  }
-
-  const limit = TEST_MODE ? Math.min(5, domains.length) : Math.min(100, domains.length);
-  const subset = domains.slice(0, limit);
-  log.info(`[Step 3B] Looking up WHOIS for ${subset.length} domains...`);
-
-  const whoisMap = await whois.batchLookup(subset, {
-    onProgress: (i, total, domain) => {
-      if (i % 10 === 0 || i === total) {
-        log.info(`[Step 3B] Progress: ${i}/${total} (${domain})`);
-      }
-    },
-  });
-
-  // Apply WHOIS data to leads
-  let emailsApplied = 0;
-  let namesApplied = 0;
-  for (const lead of leads) {
-    if (!lead.domain || !whoisMap.has(lead.domain)) continue;
-    const info = whoisMap.get(lead.domain);
-
-    // Apply registrant email if lead has none
-    if (!lead.email && info.registrant_email) {
-      lead.email = info.registrant_email;
-      lead.email_source = 'whois';
-      emailsApplied++;
-    }
-
-    // Apply registrant name if lead has no person name
-    // Validate it looks like a real person name (not "Registration Private" etc.)
-    if (!lead.first_name && info.registrant_name) {
-      const parts = info.registrant_name.split(/\s+/);
-      if (parts.length >= 2 && isLikelyPersonName(parts[0])) {
-        lead.first_name = titleCase(parts[0]);
-        lead.last_name = titleCase(parts.slice(1).join(' '));
-        lead.title = lead.title || 'Owner';
-        namesApplied++;
-      }
-    }
-
-    // Apply organization as firm name
-    if (!lead.firm_name && info.organization) {
-      lead.firm_name = info.organization;
-    }
-  }
-
-  log.info(`[Step 3B] WHOIS: ${whoisMap.size} domains had info, ${emailsApplied} emails + ${namesApplied} names applied`);
-  return whoisMap;
-}
-
-// ─── Step 4: Enrich + Score + Export ────────────────────────────────
-
-async function runEnrichAndExport(allLeads, niche) {
-  log.info('');
-  log.info('═══════════════════════════════════════════════════════════');
-  log.info('  STEP 4: Enrich + Score + Export');
-  log.info('═══════════════════════════════════════════════════════════');
-
-  // Run enrichment
-  const enrichStats = enrichAll(allLeads, niche, {
-    onProgress: (i, total, name) => {
-      if (i % 50 === 0 || i === total) {
-        log.info(`[Step 4] Enriching: ${i}/${total}`);
-      }
-    },
-  });
-
-  log.info(`[Step 4] Enrichment: ${enrichStats.titlesInferred} titles, ${enrichStats.specialtiesDetected} specialties, ${enrichStats.linkedInBuilt} LinkedIn, ${enrichStats.emailPatternsGenerated} email patterns`);
-
-  // Sort by DM score (decision makers first)
-  allLeads.sort((a, b) => (b.dm_score || 0) - (a.dm_score || 0));
-
-  // Sanitize emails: strip mailto:, decode URL encoding, strip whitespace
-  for (const lead of allLeads) {
-    if (lead.email) {
-      lead.email = lead.email.replace(/^mailto:/i, '').split('?')[0];
-      try { lead.email = decodeURIComponent(lead.email); } catch {}
-      lead.email = lead.email.replace(/^\s+|\s+$/g, '').replace(/[\x00-\x1f]/g, '');
-    }
-  }
-
-  // Format for CSV output
-  const csvLeads = allLeads.map(lead => ({
-    first_name: lead.first_name || '',
-    last_name: lead.last_name || '',
-    firm_name: lead.firm_name || '',
-    practice_area: '',
-    city: lead.city || LOCATION_CITY,
-    state: lead.state && lead.state !== 'unknown' ? lead.state : LOCATION_STATE,
-    country: lead.country || LOCATION_COUNTRY || '',
-    phone: lead.phone || '',
-    website: lead.website || '',
-    email: lead.email || '',
-    bar_number: '',
-    admission_date: '',
-    bar_status: '',
-    source: lead.source || '',
-    profile_url: lead.profile_url || '',
-    title: lead.title || '',
-    linkedin_url: lead.linkedin_url || '',
-    bio: '',
-    education: '',
-    languages: '',
-    practice_specialties: lead.practice_specialties || '',
-    email_source: lead.email_source || '',
-    phone_source: lead.phone_source || '',
-    website_source: lead.website_source || '',
-  }));
-
-  // Generate output path
-  const nicheSlug = niche.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-  const locationSlug = LOCATION.toLowerCase().replace(/[\s,]+/g, '-').replace(/[^a-z0-9-]/g, '');
+  // ─── Step 5: EXPORT ────────────────────────────────────────
+  const nicheSlug = NICHE.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+  const locationSlug = LOCATION ? LOCATION.replace(/[^a-z0-9]/gi, '-').toLowerCase() : 'us';
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-  const outputPath = OUTPUT || path.join(__dirname, '..', 'output', `${nicheSlug}_${locationSlug}_${timestamp}.csv`);
+  const outputPath = OUTPUT || path.join('output', `${nicheSlug}_${locationSlug}_${timestamp}.csv`);
 
-  // Ensure output directory exists
-  const outputDir = path.dirname(outputPath);
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-  }
-
-  await writeCSV(outputPath, csvLeads);
-  log.info(`[Step 4] CSV written: ${outputPath}`);
-
-  return { outputPath, csvLeads, enrichStats };
-}
-
-// ─── Main Orchestrator ──────────────────────────────────────────────
-
-async function main() {
-  const startTime = Date.now();
-
-  console.log('');
-  console.log('╔═══════════════════════════════════════════════════════════╗');
-  console.log('║          MORTAR — Universal Industry Scraper              ║');
-  console.log('╚═══════════════════════════════════════════════════════════╝');
-  console.log('');
-  console.log(`  Niche:      ${NICHE}`);
-  console.log(`  Location:   ${LOCATION}`);
-  console.log(`  Radius:     ${RADIUS}km`);
-  console.log(`  Test mode:  ${TEST_MODE ? 'YES (limited)' : 'NO (full)'}`);
-  console.log('');
-
-  // Geocode location
-  log.info('Geocoding location...');
-  let geo;
-  try {
-    geo = await geocode(LOCATION);
-    log.info(`Location resolved: ${geo.displayName} (${geo.lat}, ${geo.lng})`);
-    // Wait 1.5s before hitting Nominatim again (Google Maps scraper also uses it)
-    await new Promise(r => setTimeout(r, 1500));
-  } catch (err) {
-    log.error(`Failed to geocode "${LOCATION}": ${err.message}`);
-    process.exit(1);
-  }
-
-  // ─── Step 1: Business Discovery (parallel) ─────────────────────
-
-  const discoveryPromises = [];
-
-  if (!SKIP_MAPS) {
-    discoveryPromises.push(runGoogleMaps(NICHE, LOCATION, geo));
-  }
-
-  if (!SKIP_DDG) {
-    discoveryPromises.push(runDuckDuckGo(NICHE, LOCATION));
-  }
-
-  const discoveryResults = await Promise.all(discoveryPromises);
-
-  // Merge all discovery results
-  let allBusinesses;
-  if (discoveryResults.length > 1) {
-    allBusinesses = mergeLeads(...discoveryResults);
-  } else if (discoveryResults.length === 1) {
-    allBusinesses = discoveryResults[0];
-  } else {
-    allBusinesses = [];
-  }
-
-  log.info('');
-  log.info(`═══ Discovery Complete: ${allBusinesses.length} unique businesses ═══`);
-
-  if (allBusinesses.length === 0) {
-    log.error('No businesses found from any source. Try a different niche or location.');
-    log.info('Tips: Make sure Google Maps is enabled (don\'t use --skip-maps) for best results.');
-    log.info('DuckDuckGo may rate-limit — Google Maps is the primary discovery source.');
-    process.exit(1);
-  }
-
-  // ─── Step 2: Website Crawl + Person Extraction ──────────────────
-
-  let people = [];
-  if (!SKIP_CRAWL && !FAST_CRAWL) {
-    const crawlResult = await runWebsiteCrawl(allBusinesses);
-    people = crawlResult.people;
-  } else if (FAST_CRAWL) {
-    // Fast mode: HTTP-only email scraping, no Puppeteer, no person extraction
-    await runFastEmailScrape(allBusinesses);
-  }
-
-  // Combine businesses + extracted people
-  // People are individual leads (not merged by domain — each person is unique)
-  const allLeads = [...allBusinesses];
-  const seenPeople = new Set();
-  // Pre-populate seenPeople with names from business leads (avoids duplicating e.g. "William Hammonds" from Maps + website_crawl)
-  for (const biz of allBusinesses) {
-    if (biz.first_name && biz.last_name) {
-      const key = `${biz.first_name.toLowerCase()}|${biz.last_name.toLowerCase()}|${biz.domain || ''}`;
-      seenPeople.add(key);
-    }
-  }
-  for (const person of people) {
-    // Dedup people by name + domain
-    const personKey = `${(person.first_name || '').toLowerCase()}|${(person.last_name || '').toLowerCase()}|${person.domain || ''}`;
-    if (seenPeople.has(personKey)) continue;
-    seenPeople.add(personKey);
-    allLeads.push(person);
-  }
-  log.info(`Total leads after website crawl: ${allLeads.length} (${allBusinesses.length} businesses + ${allLeads.length - allBusinesses.length} people)`);
-
-  // ─── Step 3: Deep Enrichment (parallel) ─────────────────────────
-
-  const enrichPromises = [];
-
-  if (!SKIP_CC) {
-    enrichPromises.push(runCommonCrawl(allLeads));
-  }
-
-  if (!SKIP_WHOIS) {
-    enrichPromises.push(runWhois(allLeads));
-  }
-
-  if (enrichPromises.length > 0) {
-    await Promise.all(enrichPromises);
-  }
-
-  // ─── Step 4: Enrich + Score + Export ────────────────────────────
-
-  let result;
-  if (!SKIP_ENRICH) {
-    result = await runEnrichAndExport(allLeads, NICHE);
-  } else {
-    // Just export without enrichment
-    result = await runEnrichAndExport(allLeads, NICHE);
-  }
-
-  // ─── Summary ────────────────────────────────────────────────────
+  writeCSV(outputPath, leads);
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
-  const emailCount = allLeads.filter(l => l.email).length;
-  const phoneCount = allLeads.filter(l => l.phone).length;
-  const websiteCount = allLeads.filter(l => l.website).length;
-  const withName = allLeads.filter(l => l.first_name).length;
-  const dmCount = allLeads.filter(l => (l.dm_score || 0) >= 30).length;
+  const totalEmails = leads.filter(l => l.email).length;
+  const totalPhones = leads.filter(l => l.phone).length;
 
-  console.log('');
   console.log('╔═══════════════════════════════════════════════════════════╗');
-  console.log('║                    SCRAPE COMPLETE                        ║');
+  console.log('║       SCRAPE COMPLETE                                    ║');
   console.log('╠═══════════════════════════════════════════════════════════╣');
-  console.log(`║  Total leads:        ${String(allLeads.length).padStart(6)}                              ║`);
-  console.log(`║  With email:         ${String(emailCount).padStart(6)} (${Math.round(emailCount/allLeads.length*100)}%)                          ║`);
-  console.log(`║  With phone:         ${String(phoneCount).padStart(6)} (${Math.round(phoneCount/allLeads.length*100)}%)                          ║`);
-  console.log(`║  With website:       ${String(websiteCount).padStart(6)} (${Math.round(websiteCount/allLeads.length*100)}%)                          ║`);
-  console.log(`║  With person name:   ${String(withName).padStart(6)} (${Math.round(withName/allLeads.length*100)}%)                          ║`);
-  console.log(`║  Decision makers:    ${String(dmCount).padStart(6)} (DM score >= 30)               ║`);
-  console.log(`║  Time elapsed:       ${elapsed}s                              ║`);
+  console.log(`║  Niche:          ${NICHE.padEnd(40)}║`);
+  console.log(`║  Location:       ${(LOCATION || 'US').padEnd(40)}║`);
+  console.log(`║  Total leads:    ${String(leads.length).padEnd(40)}║`);
+  console.log(`║  With email:     ${String(totalEmails + ' (' + Math.round(totalEmails / leads.length * 100) + '%)').padEnd(40)}║`);
+  console.log(`║  With phone:     ${String(totalPhones + ' (' + Math.round(totalPhones / leads.length * 100) + '%)').padEnd(40)}║`);
+  console.log(`║  Decision makers: ${String(dmCount).padEnd(39)}║`);
+  console.log(`║  Time:           ${String(elapsed + 's').padEnd(40)}║`);
   console.log('╠═══════════════════════════════════════════════════════════╣');
-  console.log(`║  Output: ${result.outputPath}`);
-  console.log('╚═══════════════════════════════════════════════════════════╝');
-  console.log('');
+  console.log(`║  Output: ${outputPath}`);
+  console.log('╚═══════════════════════════════════════════════════════════╝\n');
 }
 
-main().catch(err => {
-  console.error('Fatal error:', err);
+main().catch(e => {
+  console.error('Fatal error:', e.message);
+  console.error(e.stack);
   process.exit(1);
 });
