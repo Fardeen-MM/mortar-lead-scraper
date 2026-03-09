@@ -1,0 +1,164 @@
+
+====================================================================
+  MORTAR -- CAPIC Immigration Consultants Scraper
+====================================================================
+
+  [Phase 1] Fetching CAPIC active members list...
+  Found 3748 active CAPIC members
+
+  [Phase 2] Fetching MyConsultant.ca consultant list...
+  MyConsultant API reports 3703 consultants
+  Parsed 3703 consultant cards
+
+  [Phase 3] Matching CAPIC members to MyConsultant profiles...
+  Matched: 3700/3748 (99%)
+  Unmatched: 48
+
+  Added 6 MyConsultant-only members (not in CAPIC list)
+
+  [Phase 4] Scraping individual MyConsultant profiles...
+  Profiles to scrape: 3706/3706
+  Delay: 2500ms between requests
+  Estimated time: ~154 minutes
+
+  [1.3%] 50/3706 profiles | 42 email, 39 phone, 50 firm | 24/min | ~152min left
+  [2.7%] 100/3706 profiles | 80 email, 75 phone, 100 firm | 23/min | ~150min left
+  [4.0%] 150/3706 profiles | 118 email, 113 phone, 150 firm | 23/min | ~148min left
+  [5.4%] 200/3706 profiles | 159 email, 152 phone, 200 firm | 23/min | ~146min left
+  [6.7%] 250/3706 profiles | 203 email, 195 phone, 250 firm | 23/min | ~144min left
+  [8.1%] 300/3706 profiles | 244 email, 233 phone, 300 firm | 23/min | ~142min left
+  [9.4%] 350/3706 profiles | 285 email, 272 phone, 350 firm | 23/min | ~140min left
+  [10.8%] 400/3706 profiles | 332 email, 316 phone, 400 firm | 23/min | ~138min left
+  [12.1%] 450/3706 profiles | 378 email, 361 phone, 450 firm | 23/min | ~136min left
+  [13.5%] 500/3706 profiles | 420 email, 398 phone, 500 firm | 23/min | ~134min left
+  [14.8%] 550/3706 profiles | 460 email, 438 phone, 550 firm | 23/min | ~132min left
+  [16.2%] 600/3706 profiles | 503 email, 481 phone, 600 firm | 23/min | ~129min left
+  [17.5%] 650/3706 profiles | 546 email, 522 phone, 650 firm | 23/min | ~127min left
+  [18.9%] 700/3706 profiles | 590 email, 565 phone, 700 firm | 23/min | ~125min left
+  [20.2%] 750/3706 profiles | 632 email, 606 phone, 750 firm | 23/min | ~123min left
+  [21.6%] 800/3706 profiles | 677 email, 649 phone, 800 firm | 23/min | ~121min left
+  [22.9%] 850/3706 profiles | 718 email, 688 phone, 850 firm | 23/min | ~119min left
+  [24.3%] 900/3706 profiles | 761 email, 726 phone, 900 firm | 23/min | ~117min left
+  [25.6%] 950/3706 profiles | 808 email, 769 phone, 950 firm | 23/min | ~115min left
+  [27.0%] 1000/3706 profiles | 851 email, 807 phone, 1000 firm | 23/min | ~113min left
+  [28.3%] 1050/3706 profiles | 894 email, 848 phone, 1050 firm | 23/min | ~111min left
+  [29.7%] 1100/3706 profiles | 935 email, 890 phone, 1100 firm | 23/min | ~109min left
+  [31.0%] 1150/3706 profiles | 973 email, 925 phone, 1150 firm | 23/min | ~107min left
+  [32.4%] 1200/3706 profiles | 1012 email, 961 phone, 1200 firm | 23/min | ~104min left
+  [33.7%] 1250/3706 profiles | 1055 email, 1000 phone, 1250 firm | 23/min | ~102min left
+  [35.1%] 1300/3706 profiles | 1095 email, 1038 phone, 1300 firm | 23/min | ~100min left
+  [36.4%] 1350/3706 profiles | 1136 email, 1080 phone, 1350 firm | 23/min | ~98min left
+  [37.8%] 1400/3706 profiles | 1181 email, 1122 phone, 1400 firm | 23/min | ~96min left
+  [39.1%] 1450/3706 profiles | 1222 email, 1161 phone, 1450 firm | 23/min | ~94min left
+  [40.5%] 1500/3706 profiles | 1268 email, 1205 phone, 1500 firm | 23/min | ~92min left
+  [41.8%] 1550/3706 profiles | 1310 email, 1246 phone, 1550 firm | 23/min | ~90min left
+  [43.2%] 1600/3706 profiles | 1351 email, 1287 phone, 1600 firm | 23/min | ~88min left
+  [44.5%] 1650/3706 profiles | 1391 email, 1323 phone, 1650 firm | 23/min | ~86min left
+  [45.9%] 1700/3706 profiles | 1433 email, 1362 phone, 1700 firm | 23/min | ~84min left
+  [47.2%] 1750/3706 profiles | 1471 email, 1396 phone, 1750 firm | 23/min | ~82min left
+  [48.6%] 1800/3706 profiles | 1510 email, 1435 phone, 1800 firm | 23/min | ~79min left
+  [49.9%] 1850/3706 profiles | 1550 email, 1472 phone, 1850 firm | 23/min | ~77min left
+  [51.3%] 1900/3706 profiles | 1596 email, 1514 phone, 1900 firm | 23/min | ~75min left
+  [52.6%] 1950/3706 profiles | 1640 email, 1557 phone, 1950 firm | 23/min | ~73min left
+  [54.0%] 2000/3706 profiles | 1679 email, 1595 phone, 2000 firm | 23/min | ~71min left
+  [55.3%] 2050/3706 profiles | 1720 email, 1636 phone, 2050 firm | 23/min | ~69min left
+  [56.7%] 2100/3706 profiles | 1765 email, 1681 phone, 2100 firm | 23/min | ~67min left
+  [58.0%] 2150/3706 profiles | 1807 email, 1724 phone, 2150 firm | 23/min | ~65min left
+  [59.4%] 2200/3706 profiles | 1850 email, 1766 phone, 2200 firm | 23/min | ~63min left
+  [60.7%] 2250/3706 profiles | 1894 email, 1808 phone, 2250 firm | 23/min | ~61min left
+  [62.1%] 2300/3706 profiles | 1935 email, 1846 phone, 2300 firm | 23/min | ~59min left
+  [63.4%] 2350/3706 profiles | 1982 email, 1893 phone, 2350 firm | 23/min | ~57min left
+  [64.8%] 2400/3706 profiles | 2027 email, 1938 phone, 2400 firm | 23/min | ~54min left
+  [66.1%] 2450/3706 profiles | 2067 email, 1975 phone, 2450 firm | 23/min | ~52min left
+  [67.5%] 2500/3706 profiles | 2110 email, 2016 phone, 2500 firm | 23/min | ~50min left
+  [68.8%] 2550/3706 profiles | 2152 email, 2056 phone, 2550 firm | 23/min | ~48min left
+  [70.2%] 2600/3706 profiles | 2195 email, 2095 phone, 2600 firm | 23/min | ~46min left
+  [71.5%] 2650/3706 profiles | 2237 email, 2133 phone, 2650 firm | 23/min | ~44min left
+  [72.9%] 2700/3706 profiles | 2275 email, 2171 phone, 2700 firm | 23/min | ~42min left
+  [74.2%] 2750/3706 profiles | 2320 email, 2215 phone, 2750 firm | 23/min | ~40min left
+  [75.6%] 2800/3706 profiles | 2359 email, 2251 phone, 2800 firm | 23/min | ~38min left
+  [76.9%] 2850/3706 profiles | 2401 email, 2289 phone, 2850 firm | 23/min | ~36min left
+  [78.3%] 2900/3706 profiles | 2447 email, 2334 phone, 2900 firm | 23/min | ~34min left
+  [79.6%] 2950/3706 profiles | 2490 email, 2372 phone, 2950 firm | 23/min | ~32min left
+  [80.9%] 3000/3706 profiles | 2531 email, 2410 phone, 3000 firm | 23/min | ~29min left
+  [82.3%] 3050/3706 profiles | 2574 email, 2454 phone, 3050 firm | 23/min | ~27min left
+  [83.6%] 3100/3706 profiles | 2613 email, 2494 phone, 3100 firm | 23/min | ~25min left
+  [85.0%] 3150/3706 profiles | 2659 email, 2537 phone, 3150 firm | 23/min | ~23min left
+  [86.3%] 3200/3706 profiles | 2697 email, 2571 phone, 3200 firm | 23/min | ~21min left
+  [87.7%] 3250/3706 profiles | 2741 email, 2613 phone, 3250 firm | 23/min | ~19min left
+  [89.0%] 3300/3706 profiles | 2783 email, 2656 phone, 3300 firm | 23/min | ~17min left
+  [90.4%] 3350/3706 profiles | 2825 email, 2695 phone, 3350 firm | 23/min | ~15min left
+  [91.7%] 3400/3706 profiles | 2866 email, 2736 phone, 3400 firm | 23/min | ~13min left
+  [93.1%] 3450/3706 profiles | 2903 email, 2772 phone, 3450 firm | 23/min | ~11min left
+  [94.4%] 3500/3706 profiles | 2945 email, 2808 phone, 3500 firm | 23/min | ~9min left
+  [95.8%] 3550/3706 profiles | 2985 email, 2846 phone, 3550 firm | 23/min | ~7min left
+  [97.1%] 3600/3706 profiles | 3024 email, 2883 phone, 3600 firm | 23/min | ~4min left
+  [98.5%] 3650/3706 profiles | 3066 email, 2920 phone, 3650 firm | 23/min | ~2min left
+  [99.8%] 3700/3706 profiles | 3113 email, 2963 phone, 3700 firm | 23/min | ~0min left
+  [100.0%] 3706/3706 profiles | 3118 email, 2967 phone, 3706 firm | 23/min | ~0min left
+
+  Profile scraping complete:
+    Scraped: 3706
+    Errors:  0
+    Email:   3118 (84.1%)
+    Phone:   2967 (80.1%)
+    Firm:    3706 (100.0%)
+
+  [Phase 5] Writing output CSV...
+
+====================================================================
+       CAPIC SCRAPE COMPLETE
+====================================================================
+  Total leads:     3754
+  With CICC ID:    3667 (98%)
+  With email:      3118 (83%)
+  With phone:      2967 (79%)
+  With firm:       3706 (99%)
+  With website:    950 (25%)
+  Errors:          0
+  Time:            9540.4s (159min)
+--------------------------------------------------------------------
+  Top provinces:
+    ON                        1573
+    BC                        946
+    AB                        595
+    QC                        255
+    MB                        114
+    SK                        77
+    NS                        58
+    NB                        28
+    NL                        11
+    PE                        7
+  Countries:
+    CA                        3681
+    India                     15
+    United States             12
+    United Arab Emirates      8
+    Hong Kong                 5
+    United Kingdom            3
+    Ghana                     3
+    Mexico                    2
+    Spain                     2
+    Philippines               2
+    Bangladesh                2
+    Pakistan                  2
+    China                     2
+    Kuwait                    1
+    Portugal                  1
+    Turkey                    1
+    Cayman Islands            1
+    Korea, Republic of        1
+    Netherlands               1
+    Paraguay                  1
+    Jamaica                   1
+    Qatar                     1
+    Taiwan                    1
+    Malta                     1
+    Australia                 1
+    Iran, Islamic Republic of 1
+    France                    1
+    Morocco                   1
+--------------------------------------------------------------------
+  Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/canada-capic-immigration-consultants.csv
+====================================================================
+
