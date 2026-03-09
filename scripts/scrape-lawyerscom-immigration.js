@@ -23,6 +23,8 @@
  *   node scripts/scrape-lawyerscom-immigration.js --states CA,TX,NY  # Specific states
  *   node scripts/scrape-lawyerscom-immigration.js --test             # Test (3 states, 3 cities)
  *   node scripts/scrape-lawyerscom-immigration.js --canada           # Canada only
+ *   node scripts/scrape-lawyerscom-immigration.js --resume           # US: skip states already in CSV
+ *   node scripts/scrape-lawyerscom-immigration.js --canada --resume  # Canada: skip provinces already in CSV
  */
 
 const https = require('https');
@@ -66,8 +68,19 @@ for (const [code, slug] of Object.entries(US_STATE_SLUGS)) {
 }
 
 const CA_PROVINCE_SLUGS = {
+  'CA-AB': 'alberta',
   'CA-BC': 'british-columbia',
+  'CA-MB': 'manitoba',
+  'CA-NB': 'new-brunswick',
+  'CA-NL': 'newfoundland-and-labrador',
+  'CA-NS': 'nova-scotia',
+  'CA-NT': 'northwest-territories',
+  'CA-NU': 'nunavut',
   'CA-ON': 'ontario',
+  'CA-PE': 'prince-edward-island',
+  'CA-QC': 'quebec',
+  'CA-SK': 'saskatchewan',
+  'CA-YT': 'yukon-territory',
 };
 
 // Ordered by immigration market size
@@ -83,6 +96,7 @@ const ALL_US_STATES = [
 const args = process.argv.slice(2);
 const testMode = args.includes('--test');
 const canadaMode = args.includes('--canada');
+const resumeMode = args.includes('--resume');
 const statesIdx = args.indexOf('--states');
 const statesFilter = statesIdx >= 0
   ? args[statesIdx + 1].split(',').map(s => s.trim().toUpperCase())
@@ -167,6 +181,42 @@ function parseName(fullName) {
     first_name: parts[0],
     last_name: parts.slice(1).join(' '),
   };
+}
+
+// --- CSV Resume Helpers ---
+
+function parseCSVLine(line) {
+  const fields = [];
+  let field = '';
+  let inQuote = false;
+  for (let j = 0; j < line.length; j++) {
+    const ch = line[j];
+    if (ch === '"') { inQuote = !inQuote; continue; }
+    if (ch === ',' && !inQuote) { fields.push(field); field = ''; continue; }
+    field += ch;
+  }
+  fields.push(field);
+  return fields;
+}
+
+function readExistingStates(csvPath) {
+  const states = new Set();
+  if (!fs.existsSync(csvPath)) return states;
+  const content = fs.readFileSync(csvPath, 'utf8');
+  const lines = content.split('\n').filter(Boolean);
+  // Skip header
+  for (let i = 1; i < lines.length; i++) {
+    const fields = parseCSVLine(lines[i]);
+    const state = fields[9]; // state column
+    if (state) states.add(state);
+  }
+  return states;
+}
+
+function countExistingLines(csvPath) {
+  if (!fs.existsSync(csvPath)) return 0;
+  const content = fs.readFileSync(csvPath, 'utf8');
+  return content.split('\n').filter(Boolean).length - 1; // minus header
 }
 
 // --- Scraping Functions ---
@@ -345,7 +395,7 @@ async function scrapeCityListings(cityUrl, stateCode, cityName, country) {
 async function main() {
   const isCanada = canadaMode;
   console.log(`=== Lawyers.com Immigration Scraper (${isCanada ? 'Canada' : 'US'}) ===`);
-  console.log(`Mode: ${testMode ? 'TEST' : 'FULL'}`);
+  console.log(`Mode: ${testMode ? 'TEST' : 'FULL'}${resumeMode ? ' + RESUME' : ''}`);
 
   let states;
   if (statesFilter) {
@@ -359,7 +409,27 @@ async function main() {
   }
 
   const country = isCanada ? 'CA' : 'US';
-  console.log(`States: ${states.join(', ')}\n`);
+
+  // Resume mode: read existing CSV and skip states already scraped
+  let existingCount = 0;
+  let skippedStates = [];
+  if (resumeMode) {
+    const existingStates = readExistingStates(OUTPUT_FILE);
+    existingCount = countExistingLines(OUTPUT_FILE);
+    const originalCount = states.length;
+    skippedStates = states.filter(s => existingStates.has(s));
+    states = states.filter(s => !existingStates.has(s));
+    console.log(`Resume: ${OUTPUT_FILE}`);
+    console.log(`  Existing leads: ${existingCount}`);
+    console.log(`  States already scraped (${skippedStates.length}): ${skippedStates.join(', ')}`);
+    console.log(`  States remaining (${states.length}): ${states.join(', ')}`);
+    if (states.length === 0) {
+      console.log('\nAll states already scraped. Nothing to do.');
+      return;
+    }
+  }
+
+  console.log(`\nStates to scrape: ${states.join(', ')}\n`);
 
   if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
@@ -373,6 +443,11 @@ async function main() {
 
     const cities = await fetchCityLinks(stateCode, isCanada);
     console.log(`  Found ${cities.length} cities`);
+
+    if (cities.length === 0) {
+      console.log(`  ${stateCode}: no cities found (may not have listings on Lawyers.com)`);
+      continue;
+    }
 
     const maxCities = testMode ? 3 : cities.length;
     let stateFirms = 0;
@@ -404,35 +479,74 @@ async function main() {
     }
 
     console.log(`  ${stateCode}: ${stateFirms} firms (running total: ${allFirms.length})`);
+
+    // In resume mode, flush after each state to avoid data loss
+    if (resumeMode && stateFirms > 0) {
+      const newLines = [];
+      // Only take the firms from this state (last stateFirms entries)
+      const stateFirmsList = allFirms.slice(allFirms.length - stateFirms);
+      for (const firm of stateFirmsList) {
+        newLines.push(csvRow({
+          first_name: '',
+          last_name: '',
+          firm_name: firm.firm_name,
+          title: 'Immigration Law Firm',
+          email: '',
+          phone: '',
+          website: firm.website,
+          domain: firm.domain,
+          city: firm.city,
+          state: firm.state,
+          country: firm.country,
+          niche: 'immigration',
+          source: 'lawyers_com',
+          profile_url: firm.profile_url,
+          rating: firm.rating,
+          attorneys: '',
+        }));
+      }
+      fs.appendFileSync(OUTPUT_FILE, '\n' + newLines.join('\n'), 'utf8');
+      console.log(`  [SAVED] Appended ${stateFirms} firms to ${path.basename(OUTPUT_FILE)}`);
+    }
+
     await sleep(DELAY_MS);
   }
 
-  // Write CSV
-  const csvLines = [CSV_HEADERS.join(',')];
-  for (const firm of allFirms) {
-    csvLines.push(csvRow({
-      first_name: '',
-      last_name: '',
-      firm_name: firm.firm_name,
-      title: 'Immigration Law Firm',
-      email: '',
-      phone: '', // CTN numbers are tracking numbers, not real
-      website: firm.website,
-      domain: firm.domain,
-      city: firm.city,
-      state: firm.state,
-      country: firm.country,
-      niche: 'immigration',
-      source: 'lawyers_com',
-      profile_url: firm.profile_url,
-      rating: firm.rating,
-      attorneys: '',
-    }));
+  // Write CSV (full write for non-resume, summary for resume)
+  if (!resumeMode) {
+    const csvLines = [CSV_HEADERS.join(',')];
+    for (const firm of allFirms) {
+      csvLines.push(csvRow({
+        first_name: '',
+        last_name: '',
+        firm_name: firm.firm_name,
+        title: 'Immigration Law Firm',
+        email: '',
+        phone: '', // CTN numbers are tracking numbers, not real
+        website: firm.website,
+        domain: firm.domain,
+        city: firm.city,
+        state: firm.state,
+        country: firm.country,
+        niche: 'immigration',
+        source: 'lawyers_com',
+        profile_url: firm.profile_url,
+        rating: firm.rating,
+        attorneys: '',
+      }));
+    }
+    fs.writeFileSync(OUTPUT_FILE, csvLines.join('\n'), 'utf8');
   }
 
-  fs.writeFileSync(OUTPUT_FILE, csvLines.join('\n'), 'utf8');
+  const finalCount = resumeMode ? existingCount + allFirms.length : allFirms.length;
   console.log(`\n=== DONE ===`);
-  console.log(`Total firms: ${allFirms.length}`);
+  console.log(`New firms scraped: ${allFirms.length}`);
+  if (resumeMode) {
+    console.log(`Previously existing: ${existingCount}`);
+    console.log(`Total firms in CSV: ${finalCount}`);
+  } else {
+    console.log(`Total firms: ${allFirms.length}`);
+  }
   console.log(`Output: ${OUTPUT_FILE}`);
 
   const withWebsite = allFirms.filter(f => f.website).length;

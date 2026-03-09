@@ -21,6 +21,7 @@
  *   node scripts/scrape-findlaw-immigration.js                    # All 50 states + DC
  *   node scripts/scrape-findlaw-immigration.js --states CA,TX,NY  # Specific states
  *   node scripts/scrape-findlaw-immigration.js --test             # Test mode (3 states, 3 cities each)
+ *   node scripts/scrape-findlaw-immigration.js --append           # Append to existing CSV instead of overwriting
  */
 
 const fs = require('fs');
@@ -169,6 +170,15 @@ function writeCSV(leads, outPath) {
     CSV_COLUMNS.map(col => csvEscape(lead[col] || '')).join(',')
   );
   fs.writeFileSync(outPath, header + '\n' + rows.join('\n') + '\n');
+}
+
+function appendCSV(leads, outPath) {
+  const rows = leads.map(lead =>
+    CSV_COLUMNS.map(col => csvEscape(lead[col] || '')).join(',')
+  );
+  if (rows.length > 0) {
+    fs.appendFileSync(outPath, rows.join('\n') + '\n');
+  }
 }
 
 function log(msg) {
@@ -331,6 +341,7 @@ function itemToLead(item, cityName, stateCode) {
 async function main() {
   const args = process.argv.slice(2);
   const isTest = args.includes('--test');
+  const isAppend = args.includes('--append');
   let statesFilter = null;
 
   const statesArg = args.find(a => a.startsWith('--states='));
@@ -454,7 +465,12 @@ async function main() {
   const outDir = path.join(__dirname, '..', 'output');
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
   const outPath = path.join(outDir, 'us-immigration-lawyers-findlaw.csv');
-  writeCSV(allLeads, outPath);
+  if (isAppend && fs.existsSync(outPath)) {
+    appendCSV(allLeads, outPath);
+    log(`Appended ${allLeads.length} leads to existing CSV`);
+  } else {
+    writeCSV(allLeads, outPath);
+  }
 
   // Stats
   const withPhone = allLeads.filter(l => l.phone).length;

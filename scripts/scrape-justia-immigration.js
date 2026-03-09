@@ -16,6 +16,8 @@
  *   node scripts/scrape-justia-immigration.js                    # All 51 states
  *   node scripts/scrape-justia-immigration.js --states CA,TX,NY  # Specific states
  *   node scripts/scrape-justia-immigration.js --test             # Test mode (3 states, 2 cities each)
+ *   node scripts/scrape-justia-immigration.js --append           # Append to existing CSV (load existing profile URLs for dedup)
+ *   node scripts/scrape-justia-immigration.js --skip-states=CA,NY --append  # Skip already-scraped states + append
  */
 
 const fs = require('fs');
@@ -140,6 +142,57 @@ function writeCSV(leads, outPath) {
     CSV_COLUMNS.map(col => csvEscape(lead[col] || '')).join(',')
   );
   fs.writeFileSync(outPath, header + '\n' + rows.join('\n') + '\n');
+}
+
+function appendCSV(leads, outPath) {
+  const rows = leads.map(lead =>
+    CSV_COLUMNS.map(col => csvEscape(lead[col] || '')).join(',')
+  );
+  fs.appendFileSync(outPath, rows.join('\n') + '\n');
+}
+
+function readExistingProfileUrls(csvPath) {
+  if (!fs.existsSync(csvPath)) return new Set();
+  const content = fs.readFileSync(csvPath, 'utf8');
+  const lines = content.trim().split('\n');
+  const urls = new Set();
+  // profile_url is column index 13 (0-based)
+  for (let i = 1; i < lines.length; i++) {
+    const cols = parseCSVLine(lines[i]);
+    const profileUrl = cols[13]; // profile_url column
+    if (profileUrl) urls.add(profileUrl);
+  }
+  return urls;
+}
+
+function parseCSVLine(line) {
+  const cols = [];
+  let current = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (inQuotes) {
+      if (ch === '"' && line[i + 1] === '"') {
+        current += '"';
+        i++;
+      } else if (ch === '"') {
+        inQuotes = false;
+      } else {
+        current += ch;
+      }
+    } else {
+      if (ch === '"') {
+        inQuotes = true;
+      } else if (ch === ',') {
+        cols.push(current);
+        current = '';
+      } else {
+        current += ch;
+      }
+    }
+  }
+  cols.push(current);
+  return cols;
 }
 
 function log(msg) {
@@ -293,14 +346,24 @@ async function scrapeCityPage(page, stateCode, cityInfo, maxPages = 10) {
 async function main() {
   const args = process.argv.slice(2);
   const isTest = args.includes('--test');
+  const isAppend = args.includes('--append');
   let statesFilter = null;
+  let skipStates = new Set();
 
   const statesArg = args.find(a => a.startsWith('--states='));
   if (statesArg) {
     statesFilter = statesArg.split('=')[1].split(',').map(s => s.trim().toUpperCase());
   }
 
+  const skipArg = args.find(a => a.startsWith('--skip-states='));
+  if (skipArg) {
+    skipArg.split('=')[1].split(',').map(s => s.trim().toUpperCase()).forEach(s => skipStates.add(s));
+  }
+
   let states = statesFilter || ALL_STATES;
+  if (skipStates.size > 0) {
+    states = states.filter(s => !skipStates.has(s));
+  }
   const maxCitiesPerState = isTest ? 2 : 999;
 
   if (isTest && !statesFilter) {
@@ -308,7 +371,8 @@ async function main() {
   }
 
   log(`Justia Immigration Lawyers Scraper`);
-  log(`States: ${states.length} | Test mode: ${isTest} | Max cities/state: ${maxCitiesPerState}`);
+  log(`States: ${states.length} | Test mode: ${isTest} | Append: ${isAppend} | Max cities/state: ${maxCitiesPerState}`);
+  if (skipStates.size > 0) log(`Skipping states: ${[...skipStates].join(', ')}`);
 
   const browser = await puppeteer.launch({
     headless: 'new',
@@ -321,7 +385,7 @@ async function main() {
     ],
   });
 
-  const page = await browser.newPage();
+  let page = await browser.newPage();
   await page.setUserAgent(
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
   );
@@ -346,10 +410,40 @@ async function main() {
     log(`Warmup navigation error (non-fatal): ${err.message}`);
   }
 
+  const outDir = path.join(__dirname, '..', 'output');
+  if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
+  const outPath = path.join(outDir, 'us-immigration-lawyers-justia.csv');
+
   const allLeads = [];
   const seenProfileUrls = new Set();
+
+  // In append mode, load existing profile URLs to avoid duplicates
+  if (isAppend && fs.existsSync(outPath)) {
+    const existingUrls = readExistingProfileUrls(outPath);
+    existingUrls.forEach(u => seenProfileUrls.add(u));
+    log(`Loaded ${existingUrls.size} existing profile URLs for dedup`);
+  }
+
   let totalStatesProcessed = 0;
   let consecutiveBlocks = 0;
+
+  // Helper to create a fresh page with all settings
+  async function createFreshPage() {
+    const newPage = await browser.newPage();
+    await newPage.setUserAgent(
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+    );
+    await newPage.setViewport({ width: 1920, height: 1080 });
+    await newPage.setDefaultNavigationTimeout(NAV_TIMEOUT);
+    return newPage;
+  }
+
+  // Detect detached frame errors
+  function isDetachedFrameError(err) {
+    const msg = err.message || '';
+    return msg.includes('detached Frame') || msg.includes('detached frame') ||
+           msg.includes('Navigating frame was detached') || msg.includes('Target closed');
+  }
 
   for (const stateCode of states) {
     const stateSlug = STATE_SLUGS[stateCode];
@@ -362,15 +456,54 @@ async function main() {
     log(`\n[${'='.repeat(40)}]`);
     log(`State ${totalStatesProcessed}/${states.length}: ${stateCode} (${stateSlug})`);
 
-    // If too many consecutive Cloudflare blocks, pause to let it cool down
+    // If too many consecutive Cloudflare blocks, recreate browser page and pause
     if (consecutiveBlocks >= 3) {
-      log(`  ${consecutiveBlocks} consecutive blocks — pausing 60s to cool down...`);
-      await sleep(60000);
+      log(`  ${consecutiveBlocks} consecutive blocks — recreating page and pausing 30s...`);
+      try { await page.close(); } catch {}
+      page = await createFreshPage();
+      // Warm up the new page
+      try {
+        await page.goto('https://www.justia.com/', { waitUntil: 'networkidle2', timeout: NAV_TIMEOUT });
+        await sleep(3000);
+        await page.goto('https://www.justia.com/lawyers/', { waitUntil: 'networkidle2', timeout: NAV_TIMEOUT });
+        await sleep(2000);
+      } catch (err) {
+        log(`  Warmup error (non-fatal): ${err.message}`);
+      }
+      await sleep(30000);
       consecutiveBlocks = 0;
     }
 
     // 1. Scrape state-level page (gets ~50 featured cards + city links)
-    const { cards: stateCards, cityLinks } = await scrapeStatePage(page, stateCode, stateSlug);
+    let stateCards, cityLinks;
+    try {
+      const result = await scrapeStatePage(page, stateCode, stateSlug);
+      stateCards = result.cards;
+      cityLinks = result.cityLinks;
+    } catch (err) {
+      if (isDetachedFrameError(err)) {
+        log(`  DETACHED FRAME — recreating page...`);
+        try { await page.close(); } catch {}
+        page = await createFreshPage();
+        try {
+          await page.goto('https://www.justia.com/', { waitUntil: 'networkidle2', timeout: NAV_TIMEOUT });
+          await sleep(5000);
+        } catch {}
+        // Retry this state
+        try {
+          const result = await scrapeStatePage(page, stateCode, stateSlug);
+          stateCards = result.cards;
+          cityLinks = result.cityLinks;
+        } catch {
+          stateCards = [];
+          cityLinks = [];
+        }
+      } else {
+        log(`  ERROR: ${err.message}`);
+        stateCards = [];
+        cityLinks = [];
+      }
+    }
 
     if (stateCards.length === 0 && cityLinks.length === 0) {
       consecutiveBlocks++;
@@ -410,13 +543,45 @@ async function main() {
 
     // 2. Scrape city pages
     const citiesToScrape = cityLinks.slice(0, maxCitiesPerState);
+    let consecutiveZeroCities = 0;
+    const MAX_ZERO_CITIES = 10; // Skip remaining cities if 10+ consecutive return 0 new
+
     for (let ci = 0; ci < citiesToScrape.length; ci++) {
+      // Early exit: if many consecutive cities return 0 new, the rest likely will too
+      if (consecutiveZeroCities >= MAX_ZERO_CITIES) {
+        log(`  Skipping remaining ${citiesToScrape.length - ci} cities (${MAX_ZERO_CITIES} consecutive zero-new cities)`);
+        break;
+      }
+
       const cityInfo = citiesToScrape[ci];
       log(`  City ${ci + 1}/${citiesToScrape.length}: ${cityInfo.city}`);
 
       await randomDelay();
 
-      const cityCards = await scrapeCityPage(page, stateCode, cityInfo, isTest ? 2 : 10);
+      let cityCards;
+      try {
+        cityCards = await scrapeCityPage(page, stateCode, cityInfo, isTest ? 2 : 10);
+      } catch (err) {
+        if (isDetachedFrameError(err)) {
+          log(`    DETACHED FRAME on city ${cityInfo.city} — recreating page...`);
+          try { await page.close(); } catch {}
+          page = await createFreshPage();
+          try {
+            await page.goto('https://www.justia.com/', { waitUntil: 'networkidle2', timeout: NAV_TIMEOUT });
+            await sleep(5000);
+          } catch {}
+          // Retry this city
+          try {
+            cityCards = await scrapeCityPage(page, stateCode, cityInfo, isTest ? 2 : 10);
+          } catch {
+            cityCards = [];
+          }
+        } else {
+          log(`    ERROR on city ${cityInfo.city}: ${err.message}`);
+          cityCards = [];
+        }
+      }
+
       let cityNew = 0;
 
       for (const card of cityCards) {
@@ -447,10 +612,24 @@ async function main() {
         stateLeadCount++;
       }
 
-      log(`    ${cityInfo.city}: ${cityCards.length} cards, ${cityNew} new`);
+      if (cityNew === 0) {
+        consecutiveZeroCities++;
+      } else {
+        consecutiveZeroCities = 0;
+      }
+
+      log(`    ${cityInfo.city}: ${(cityCards || []).length} cards, ${cityNew} new`);
     }
 
     log(`  ${stateCode} total: ${stateLeadCount} unique leads`);
+    log(`  Running total: ${allLeads.length} leads`);
+
+    // Periodic save: append leads for this state immediately so progress isn't lost
+    if (isAppend && stateLeadCount > 0) {
+      const stateLeads = allLeads.slice(allLeads.length - stateLeadCount);
+      appendCSV(stateLeads, outPath);
+      log(`  Saved ${stateLeadCount} leads for ${stateCode} to CSV`);
+    }
 
     // Delay between states
     if (totalStatesProcessed < states.length) {
@@ -460,11 +639,10 @@ async function main() {
 
   await browser.close();
 
-  // Write output
-  const outDir = path.join(__dirname, '..', 'output');
-  if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
-  const outPath = path.join(outDir, 'us-immigration-lawyers-justia.csv');
-  writeCSV(allLeads, outPath);
+  // Write output (in append mode, leads are already saved per-state above)
+  if (!isAppend) {
+    writeCSV(allLeads, outPath);
+  }
 
   log(`\n${'='.repeat(60)}`);
   log(`DONE`);
