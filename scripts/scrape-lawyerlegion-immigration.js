@@ -19,6 +19,8 @@
  *   node scripts/scrape-lawyerlegion-immigration.js --states CA,TX,NY   # Specific states
  *   node scripts/scrape-lawyerlegion-immigration.js --all-states        # All 50 states + DC
  *   node scripts/scrape-lawyerlegion-immigration.js --all-states        # Resume auto-detected
+ *   node scripts/scrape-lawyerlegion-immigration.js --enrich --test     # Enrich 10 profiles (test)
+ *   node scripts/scrape-lawyerlegion-immigration.js --enrich            # Enrich all profiles
  */
 
 const fs = require('fs');
@@ -39,11 +41,12 @@ const MAX_PAGES = 10; // safety cap (250 results = 5 pages, but allow more)
 const OUT_DIR = path.join(__dirname, '..', 'output');
 const OUT_FILE = path.join(OUT_DIR, 'us-immigration-lawyers-lawyerlegion.csv');
 const PROGRESS_FILE = path.join(OUT_DIR, 'lawyerlegion-immigration-progress.json');
+const ENRICH_PROGRESS_FILE = path.join(OUT_DIR, 'lawyerlegion-enrich-progress.json');
 
 const CSV_COLUMNS = [
   'first_name', 'last_name', 'firm_name', 'title', 'email', 'phone',
-  'website', 'domain', 'city', 'state', 'country', 'niche',
-  'source', 'profile_url',
+  'fax', 'website', 'domain', 'city', 'state', 'country', 'niche',
+  'source', 'profile_url', 'bar_admissions', 'years_licensed',
 ];
 
 // ── State Database (50 states + DC) ──────────────────────────────────────────
@@ -175,6 +178,27 @@ function extractDomain(url) {
     const u = new URL(url.startsWith('http') ? url : `https://${url}`);
     return u.hostname.replace(/^www\./, '');
   } catch { return ''; }
+}
+
+/**
+ * Check if a URL is a valid lawyer website (not a social media, maps, or platform link).
+ */
+const EXCLUDED_DOMAINS = [
+  'lawyerlegion.com', 'google.com', 'googleapis.com', 'maps.google.com',
+  'facebook.com', 'twitter.com', 'x.com', 'linkedin.com', 'instagram.com',
+  'youtube.com', 'tiktok.com', 'pinterest.com', 'yelp.com', 'avvo.com',
+  'justia.com', 'findlaw.com', 'martindale.com', 'lawyers.com',
+  'superlawyers.com', 'nolo.com',
+];
+
+function isValidWebsite(url) {
+  if (!url) return false;
+  try {
+    const hostname = new URL(url).hostname.toLowerCase().replace(/^www\./, '');
+    return !EXCLUDED_DOMAINS.some(d => hostname === d || hostname.endsWith('.' + d));
+  } catch {
+    return false;
+  }
 }
 
 function normalizeStateCode(stateStr) {
@@ -564,16 +588,483 @@ async function scrapeState(stateInfo, maxPages) {
   return allLeads;
 }
 
+// ── CSV Reader ───────────────────────────────────────────────────────────────
+
+/**
+ * Parse a CSV line handling quoted fields with commas inside.
+ */
+function parseCSVLine(line) {
+  const fields = [];
+  let current = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (inQuotes) {
+      if (ch === '"') {
+        if (i + 1 < line.length && line[i + 1] === '"') {
+          current += '"';
+          i++; // skip escaped quote
+        } else {
+          inQuotes = false;
+        }
+      } else {
+        current += ch;
+      }
+    } else {
+      if (ch === '"') {
+        inQuotes = true;
+      } else if (ch === ',') {
+        fields.push(current);
+        current = '';
+      } else {
+        current += ch;
+      }
+    }
+  }
+  fields.push(current);
+  return fields;
+}
+
+/**
+ * Read existing CSV file into array of lead objects.
+ */
+function readCSV(filePath) {
+  if (!fs.existsSync(filePath)) return [];
+  const content = fs.readFileSync(filePath, 'utf8');
+  const lines = content.split('\n').filter(l => l.trim());
+  if (lines.length < 2) return [];
+
+  const headers = parseCSVLine(lines[0]);
+  const leads = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    const fields = parseCSVLine(lines[i]);
+    const lead = {};
+    for (let j = 0; j < headers.length; j++) {
+      lead[headers[j]] = (fields[j] || '').trim();
+    }
+    // Ensure all CSV_COLUMNS exist
+    for (const col of CSV_COLUMNS) {
+      if (!(col in lead)) lead[col] = '';
+    }
+    leads.push(lead);
+  }
+
+  return leads;
+}
+
+// ── Profile Page Parser ──────────────────────────────────────────────────────
+
+/**
+ * Parse a Lawyer Legion profile page and extract enrichment data.
+ *
+ * Profile pages contain:
+ *   - JS vars: var Firm = "..."; var street_1 = "..."; etc.
+ *   - JSON-LD schema.org with telephone, address
+ *   - #Contact div with Office phone, Fax, address
+ *   - Bar license section with state, status, year
+ *   - About section with "Licensed for X years"
+ *   - Website links
+ */
+function parseProfilePage(html) {
+  const $ = cheerio.load(html);
+  const result = {
+    phone: '',
+    fax: '',
+    email: '',
+    website: '',
+    firm_name: '',
+    bar_admissions: '',
+    years_licensed: '',
+  };
+
+  // 1. Extract from JavaScript variables
+  const firmMatch = html.match(/var\s+Firm\s*=\s*"([^"]*)"/);
+  if (firmMatch && firmMatch[1].trim()) {
+    result.firm_name = decodeHtmlEntities(firmMatch[1].trim());
+  }
+
+  // 2. Extract from JSON-LD schema.org
+  $('script[type="application/ld+json"]').each((_, el) => {
+    try {
+      let parsed = JSON.parse($(el).html());
+      // Handle array of objects (common: [{Person}, {LegalService}])
+      const items = Array.isArray(parsed) ? parsed : [parsed];
+      for (const data of items) {
+        if (data['@type'] === 'LegalService' || data['@type'] === 'Attorney') {
+          if (data.telephone && !result.phone) {
+            result.phone = data.telephone;
+          }
+          if (data.url && !result.website) {
+            if (isValidWebsite(data.url)) {
+              result.website = data.url;
+            }
+          }
+        }
+      }
+    } catch {}
+  });
+
+  // 3. Extract from #Contact section
+  const contactDiv = $('#Contact');
+  if (contactDiv.length) {
+    // Phone & fax from <div class="telnum"> elements
+    contactDiv.find('.telnum').each((_, el) => {
+      const text = $(el).text().trim();
+      const officeMatch = text.match(/Office:\s*([\d\(\)\s\-\.]+)/);
+      if (officeMatch && !result.phone) {
+        result.phone = officeMatch[1].trim();
+      }
+      const faxMatch = text.match(/Fax:\s*([\d\(\)\s\-\.]+)/);
+      if (faxMatch && !result.fax) {
+        result.fax = faxMatch[1].trim();
+      }
+    });
+
+    // Fallback: phone from general contact text
+    if (!result.phone) {
+      const contactText = contactDiv.text();
+      const officeMatch = contactText.match(/Office:\s*([\d\(\)\s\-\.]+)/);
+      if (officeMatch) {
+        result.phone = officeMatch[1].trim();
+      }
+    }
+
+    // Email from mailto: link
+    contactDiv.find('a[href^="mailto:"]').each((_, a) => {
+      const email = $(a).attr('href').replace('mailto:', '').trim();
+      if (email && email.includes('@')) {
+        result.email = email;
+      }
+    });
+
+    // Website from external link in contact section (skip social/message links)
+    contactDiv.find('a[href]').each((_, a) => {
+      const href = $(a).attr('href') || '';
+      if (href.startsWith('http') && !href.startsWith('mailto:') && !result.website && isValidWebsite(href)) {
+        result.website = href;
+      }
+    });
+  }
+
+  // 4. Extract phone from tel: links anywhere on the page
+  if (!result.phone) {
+    $('a[href^="tel:"]').first().each((_, a) => {
+      const phone = $(a).attr('href').replace('tel:', '').trim();
+      if (phone) result.phone = phone;
+    });
+  }
+
+  // 5. Extract website from site-btn or external links
+  if (!result.website) {
+    $('a.site-btn[href]').each((_, a) => {
+      const href = $(a).attr('href') || '';
+      if (href.startsWith('http') && isValidWebsite(href)) {
+        result.website = href;
+      }
+    });
+  }
+
+  // Also check for website in JS: look for window.open or href patterns
+  if (!result.website) {
+    const websiteJsMatch = html.match(/(?:website|url)\s*[:=]\s*["'](https?:\/\/[^"']+)["']/i);
+    if (websiteJsMatch && isValidWebsite(websiteJsMatch[1])) {
+      result.website = websiteJsMatch[1];
+    }
+  }
+
+  // Final validation: clear invalid websites
+  if (result.website && !isValidWebsite(result.website)) {
+    result.website = '';
+  }
+
+  // 6. Extract bar admissions and year
+  // HTML structure: .resume-block contains:
+  //   .rb-img > img[src*="statebars/Alabama.png"]
+  //   .rb-txt > .rb-title > a (state name)
+  //           > .rb-subtxt (status text, e.g. "Active - Member in Good Standing")
+  //           > .rb-subtxt (year, e.g. "2011")
+  const barAdmissions = [];
+  $('.resume-block').each((_, block) => {
+    const $block = $(block);
+    const img = $block.find('img[src*="statebars/"]');
+    if (!img.length) return;
+
+    // State name from the title link or from the image filename
+    let stateName = $block.find('.rb-title a').text().trim();
+    if (!stateName) {
+      const src = img.attr('src') || '';
+      const m = src.match(/statebars\/([^.]+)\.png/);
+      if (m) stateName = m[1].replace(/-/g, ' ');
+    }
+    if (!stateName) return;
+
+    // Status and year from .rb-subtxt divs
+    let status = '';
+    let year = '';
+    $block.find('.rb-subtxt').each((_, sub) => {
+      const text = $(sub).text().trim();
+      if (/^(19|20)\d{2}$/.test(text)) {
+        year = text;
+      } else if (/active|inactive|suspended|retired|deceased/i.test(text)) {
+        status = text;
+      }
+    });
+
+    barAdmissions.push(`${stateName}${year ? ' (' + year + ')' : ''}${status ? ' - ' + status : ''}`);
+  });
+
+  if (barAdmissions.length > 0) {
+    result.bar_admissions = barAdmissions.join('; ');
+  }
+
+  // 7. Extract years licensed from about text
+  const aboutText = $('body').text();
+  const yearsMatch = aboutText.match(/Licensed\s+for\s+(\d+)\s+years?/i);
+  if (yearsMatch) {
+    result.years_licensed = yearsMatch[1];
+  }
+
+  // If no years_licensed from text, compute from earliest bar admission year
+  if (!result.years_licensed && barAdmissions.length > 0) {
+    const years = barAdmissions.map(a => {
+      const m = a.match(/\((\d{4})\)/);
+      return m ? parseInt(m[1], 10) : 0;
+    }).filter(y => y > 0);
+    if (years.length > 0) {
+      const earliest = Math.min(...years);
+      result.years_licensed = String(new Date().getFullYear() - earliest);
+    }
+  }
+
+  // Format phone
+  result.phone = formatPhone(result.phone);
+
+  return result;
+}
+
+// ── Enrichment Phase ─────────────────────────────────────────────────────────
+
+/**
+ * Load enrichment progress (set of visited profile URLs).
+ */
+function loadEnrichProgress() {
+  try {
+    if (fs.existsSync(ENRICH_PROGRESS_FILE)) {
+      const data = JSON.parse(fs.readFileSync(ENRICH_PROGRESS_FILE, 'utf8'));
+      return new Set(data.visitedUrls || []);
+    }
+  } catch {}
+  return new Set();
+}
+
+/**
+ * Save enrichment progress.
+ */
+function saveEnrichProgress(visitedUrls) {
+  fs.writeFileSync(ENRICH_PROGRESS_FILE, JSON.stringify({
+    visitedUrls: Array.from(visitedUrls),
+    count: visitedUrls.size,
+    updatedAt: new Date().toISOString(),
+  }));
+}
+
+/**
+ * Enrich leads by visiting profile pages.
+ * Reads CSV, visits each profile URL, extracts contact data, updates CSV.
+ */
+async function enrichLeads(isTest) {
+  const maxProfiles = isTest ? 10 : Infinity;
+
+  log('');
+  log('='.repeat(60));
+  log('ENRICHMENT PHASE');
+  log(`Reading CSV: ${OUT_FILE}`);
+  log(`Test mode: ${isTest} (max ${isTest ? 10 : 'all'} profiles)`);
+  log('='.repeat(60));
+  log('');
+
+  // Read existing CSV
+  const leads = readCSV(OUT_FILE);
+  if (leads.length === 0) {
+    log('ERROR: No leads found in CSV. Run scraper first.');
+    return;
+  }
+  log(`Loaded ${leads.length} leads from CSV`);
+
+  // Load enrichment progress (resume support)
+  const visitedUrls = loadEnrichProgress();
+  log(`Resume: ${visitedUrls.size} profiles already visited`);
+
+  // Filter to leads that have a profile_url and haven't been visited yet
+  const toEnrich = [];
+  for (let i = 0; i < leads.length; i++) {
+    const lead = leads[i];
+    if (!lead.profile_url) continue;
+    if (visitedUrls.has(lead.profile_url)) continue;
+    toEnrich.push({ index: i, lead });
+  }
+
+  log(`Profiles to enrich: ${toEnrich.length} (skipping ${visitedUrls.size} already visited)`);
+
+  if (toEnrich.length === 0) {
+    log('All profiles already visited. Delete enrich progress file to re-run:');
+    log(`  rm ${ENRICH_PROGRESS_FILE}`);
+    return;
+  }
+
+  const total = Math.min(toEnrich.length, maxProfiles);
+  let enriched = 0;
+  let errors = 0;
+  let newPhones = 0;
+  let newEmails = 0;
+  let newWebsites = 0;
+  let newFirms = 0;
+  let http404s = 0;
+  const startTime = Date.now();
+
+  for (let i = 0; i < total; i++) {
+    const { index, lead } = toEnrich[i];
+    const profileUrl = lead.profile_url;
+
+    const progress = `[${i + 1}/${total}]`;
+    log(`${progress} ${lead.first_name} ${lead.last_name} (${lead.state})`);
+    log(`  URL: ${profileUrl}`);
+
+    try {
+      const { statusCode, body } = await httpGet(profileUrl);
+
+      if (statusCode === 404) {
+        log('  => 404 Not Found (profile removed)');
+        http404s++;
+        visitedUrls.add(profileUrl);
+        continue;
+      }
+
+      if (statusCode !== 200 || !body) {
+        log(`  => HTTP ${statusCode} - skipping`);
+        errors++;
+        continue; // Don't mark as visited so we retry later
+      }
+
+      const data = parseProfilePage(body);
+
+      // Merge enrichment data into lead (only fill empty fields)
+      let updated = false;
+
+      if (data.phone && !lead.phone) {
+        leads[index].phone = data.phone;
+        newPhones++;
+        updated = true;
+      }
+      if (data.email && !lead.email) {
+        leads[index].email = data.email;
+        newEmails++;
+        updated = true;
+      }
+      if (data.website && !lead.website) {
+        leads[index].website = data.website;
+        leads[index].domain = extractDomain(data.website);
+        newWebsites++;
+        updated = true;
+      }
+      if (data.fax) {
+        leads[index].fax = formatPhone(data.fax);
+        updated = true;
+      }
+      if (data.firm_name && !lead.firm_name) {
+        leads[index].firm_name = data.firm_name;
+        newFirms++;
+        updated = true;
+      }
+      if (data.bar_admissions) {
+        leads[index].bar_admissions = data.bar_admissions;
+        updated = true;
+      }
+      if (data.years_licensed) {
+        leads[index].years_licensed = data.years_licensed;
+        updated = true;
+      }
+
+      enriched++;
+      visitedUrls.add(profileUrl);
+
+      const fields = [];
+      if (data.phone) fields.push(`phone: ${data.phone}`);
+      if (data.email) fields.push(`email: ${data.email}`);
+      if (data.website) fields.push(`web: ${extractDomain(data.website)}`);
+      if (data.firm_name) fields.push(`firm: ${data.firm_name.slice(0, 30)}`);
+      if (data.bar_admissions) fields.push(`bar: ${data.bar_admissions.slice(0, 40)}`);
+      if (data.years_licensed) fields.push(`${data.years_licensed}yr`);
+
+      log(`  => ${fields.length > 0 ? fields.join(' | ') : 'no new data'}`);
+
+    } catch (err) {
+      log(`  => ERROR: ${err.message}`);
+      errors++;
+    }
+
+    // Save every 25 profiles
+    if ((i + 1) % 25 === 0 || i === total - 1) {
+      writeCSV(leads, OUT_FILE);
+      saveEnrichProgress(visitedUrls);
+      log(`  [saved: ${i + 1}/${total} profiles, CSV updated]`);
+    }
+
+    // Rate limiting: 2-3 second delay
+    if (i < total - 1) {
+      await randomDelay();
+    }
+  }
+
+  // Final save
+  writeCSV(leads, OUT_FILE);
+  saveEnrichProgress(visitedUrls);
+
+  const elapsed = Math.round((Date.now() - startTime) / 1000);
+  const totalLeads = leads.length;
+  const withPhone = leads.filter(l => l.phone).length;
+  const withEmail = leads.filter(l => l.email).length;
+  const withWebsite = leads.filter(l => l.website).length;
+  const withFirm = leads.filter(l => l.firm_name).length;
+  const withBar = leads.filter(l => l.bar_admissions).length;
+
+  log('');
+  log('='.repeat(60));
+  log('ENRICHMENT COMPLETE');
+  log('='.repeat(60));
+  log(`Time: ${Math.floor(elapsed / 60)}m ${elapsed % 60}s`);
+  log(`Profiles visited: ${enriched} (${errors} errors, ${http404s} 404s)`);
+  log(`New data found:`);
+  log(`  +${newPhones} phones, +${newEmails} emails, +${newWebsites} websites, +${newFirms} firms`);
+  log(`Overall totals (${totalLeads} leads):`);
+  log(`  With phone:     ${withPhone} (${Math.round(withPhone / totalLeads * 100)}%)`);
+  log(`  With email:     ${withEmail} (${Math.round(withEmail / totalLeads * 100)}%)`);
+  log(`  With website:   ${withWebsite} (${Math.round(withWebsite / totalLeads * 100)}%)`);
+  log(`  With firm:      ${withFirm} (${Math.round(withFirm / totalLeads * 100)}%)`);
+  log(`  With bar info:  ${withBar} (${Math.round(withBar / totalLeads * 100)}%)`);
+  log(`Total visited: ${visitedUrls.size}/${totalLeads}`);
+  log(`Output: ${OUT_FILE}`);
+  log('='.repeat(60));
+}
+
 // ── Main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
   const args = process.argv.slice(2);
   const isTest = args.includes('--test');
+  const isEnrich = args.includes('--enrich');
   const isAllStates = args.includes('--all-states');
   const statesArgIdx = args.indexOf('--states');
   const specificStates = statesArgIdx >= 0 && args[statesArgIdx + 1]
     ? args[statesArgIdx + 1].toUpperCase().split(',')
     : null;
+
+  // Enrichment mode: visit profile pages to extract contact details
+  if (isEnrich) {
+    await enrichLeads(isTest);
+    return;
+  }
 
   if (!isTest && !isAllStates && !specificStates) {
     console.log('Lawyer Legion Immigration Lawyers Scraper');
@@ -582,6 +1073,8 @@ async function main() {
     console.log('  node scripts/scrape-lawyerlegion-immigration.js --test              # Test: 3 states, 2 pages each');
     console.log('  node scripts/scrape-lawyerlegion-immigration.js --states CA,TX,NY   # Specific states');
     console.log('  node scripts/scrape-lawyerlegion-immigration.js --all-states        # All 50 states + DC');
+    console.log('  node scripts/scrape-lawyerlegion-immigration.js --enrich --test     # Enrich 10 profiles (test)');
+    console.log('  node scripts/scrape-lawyerlegion-immigration.js --enrich            # Enrich all profiles');
     console.log('');
     console.log('Resume is automatic: completed states are skipped on re-run.');
     process.exit(0);
