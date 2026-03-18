@@ -153,8 +153,14 @@ class HealthpointNzScraper extends BaseScraper {
       source: 'healthpoint_nz',
     };
 
-    // Practice name from h1
-    result.firm_name = ($('h1').first().text() || '').trim();
+    // Practice name from h1 — skip the logo h1 (first one is empty, contains img)
+    $('h1').each((_, el) => {
+      if (result.firm_name) return;
+      const text = $(el).text().trim();
+      if (text && text.length > 1) {
+        result.firm_name = text;
+      }
+    });
 
     // Email from mailto: link
     $('a[href^="mailto:"]').each((_, el) => {
@@ -174,80 +180,61 @@ class HealthpointNzScraper extends BaseScraper {
       }
     });
 
-    // Website — look for external links (not healthpoint.co.nz, not tel/mailto)
+    // Website — look for external links, exclude known non-practice domains
+    const EXCLUDED_DOMAINS = [
+      'healthpoint.co.nz', 'healthpointltd.health', 'google.com', 'maps.google',
+      'facebook.com', 'instagram.com', 'twitter.com', 'youtube.com',
+      'linkedin.com', 'tiktok.com', 'apple.com', 'cactuslab.com',
+      'adobe.com', 'microsoft.com', 'govt.nz', 'health.govt.nz',
+    ];
     $('a[href^="http"]').each((_, el) => {
       if (result.website) return;
       const href = ($(el).attr('href') || '').trim();
-      if (
-        href &&
-        !href.includes('healthpoint.co.nz') &&
-        !href.includes('google.com/maps') &&
-        !href.includes('maps.google') &&
-        !href.includes('facebook.com') &&
-        !href.includes('instagram.com') &&
-        !href.includes('twitter.com') &&
-        !href.includes('youtube.com') &&
-        !href.includes('linkedin.com') &&
-        !href.includes('tiktok.com') &&
-        !href.includes('apple.com/maps')
-      ) {
-        result.website = href;
+      if (!href) return;
+      const lower = href.toLowerCase();
+      if (EXCLUDED_DOMAINS.some(d => lower.includes(d))) return;
+      result.website = href;
+    });
+
+    // Address extraction — use the Google Maps directions link (most structured)
+    // Pattern: daddr=739%20Chapel%20Road%2C%20Dannemora%2C%20Auckland%2C%20Auckland%202016%2C%20New%20Zealand
+    $('a[href*="google.com/maps"]').each((_, el) => {
+      if (result.address && result.city) return;
+      const href = $(el).attr('href') || '';
+      const daddrMatch = href.match(/daddr=([^&]+)/);
+      if (daddrMatch) {
+        const fullAddr = decodeURIComponent(daddrMatch[1]);
+        // Split by comma: "739 Chapel Road, Dannemora, Auckland, Auckland 2016, New Zealand"
+        const parts = fullAddr.split(',').map(s => s.trim());
+        if (parts.length >= 3) {
+          result.address = parts[0]; // Street address
+          // Find the part with postcode (4 digits)
+          for (const part of parts) {
+            const postMatch = part.match(/(\d{4})/);
+            if (postMatch) {
+              result.zip = postMatch[1];
+              // City is the text before the postcode
+              const cityPart = part.replace(/\d{4}/, '').trim();
+              if (cityPart) result.city = cityPart;
+            }
+          }
+          // If no city from postcode part, use second-to-last non-NZ part
+          if (!result.city && parts.length >= 4) {
+            // Usually: street, suburb, region, region postcode, New Zealand
+            // City is typically the 3rd or 2nd part
+            for (let i = parts.length - 2; i >= 1; i--) {
+              const p = parts[i].replace(/\d{4}/, '').trim();
+              if (p && p !== 'New Zealand') {
+                result.city = p;
+                break;
+              }
+            }
+          }
+        }
       }
     });
 
-    // Address extraction — look for address-like content near "Street Address"
-    // The structure is: "Street Address" heading followed by lines with street, suburb, city postcode
-    const fullText = $('body').text();
-
-    // Try structured extraction: after "Street Address" text
-    const streetAddrMatch = fullText.match(/Street Address\s*\n?\s*(.+?)(?:\n\s*(.+?))?(?:\n\s*([A-Za-z\s]+)\s+(\d{4}))?/);
-    if (streetAddrMatch) {
-      result.address = (streetAddrMatch[1] || '').trim();
-      const suburb = (streetAddrMatch[2] || '').trim();
-      const cityAndPost = (streetAddrMatch[3] || '').trim();
-      const postcode = (streetAddrMatch[4] || '').trim();
-
-      if (postcode) {
-        result.zip = postcode;
-        result.city = cityAndPost || suburb;
-      } else if (suburb) {
-        result.city = suburb;
-      }
-    }
-
-    // Fallback: try to find NZ postcode pattern (4 digits) near a city name
-    if (!result.city) {
-      // Look for "CityName NNNN" pattern (NZ postcodes are 4 digits)
-      const cityPostMatch = fullText.match(/(Auckland|Wellington|Christchurch|Hamilton|Tauranga|Dunedin|Napier|Hastings|Palmerston North|Nelson|Rotorua|New Plymouth|Whangarei|Invercargill|Whanganui|Gisborne|Blenheim|Timaru|Taupo|Masterton|Levin|Ashburton|Pukekohe|Tokoroa|Queenstown|Whakatane|Kapiti|Porirua|Upper Hutt|Lower Hutt|Hutt|Manukau|North Shore|Waitakere|Papakura|Howick|Takapuna|Albany|Botany|Mangere|Otara|Papatoetoe|Onehunga|Mt Eden|Ponsonby|Remuera|Epsom|Parnell|Newmarket|Grey Lynn|Kingsland|Mt Albert|Avondale|Henderson|Te Atatu|Ranui|Massey|Kumeu|Helensville|Orewa|Hibiscus Coast|Silverdale|Whangaparaoa|Devonport|Birkenhead|Glenfield|Browns Bay|Milford|Campbells Bay|Mairangi Bay|Murrays Bay|Torbay|Long Bay|East Tamaki|Flat Bush|Dannemora|Pakuranga|Bucklands Beach|Half Moon Bay|Cockle Bay|Beachlands|Maraetai|Clevedon|Karaka|Drury|Ramarama|Bombay|Pokeno|Tuakau|Pukekohe|Waiuku|Patumahoe|Clarks Beach|Kaiaua|Miranda|Thames|Whitianga|Tairua|Whangamata|Pauanui|Coromandel|Cambridge|Te Awamutu|Morrinsville|Matamata|Huntly|Ngaruawahia|Raglan|Te Kuiti|Otorohanga|Waitomo|Putaruru|Mangakino|South Waikato|Waihi|Katikati|Te Puke|Mt Maunganui|Papamoa|Omokoroa|Opotiki|Kawerau|Murupara|Edgecumbe|Awakeri|Taneatua|Ruatoki|Galatea|Reporoa|Wairoa|Havelock North|Waipawa|Waipukurau|Dannevirke|Woodville|Pahiatua|Eketahuna|Carterton|Greytown|Martinborough|Featherston|Paraparaumu|Waikanae|Otaki|Shannon|Foxton|Bulls|Marton|Taihape|Ohakune|Raetihi|Wanganui|Hawera|Stratford|Inglewood|Waitara|Motueka|Richmond|Takaka|Murchison|Westport|Greymouth|Hokitika|Reefton|Rangiora|Kaiapoi|Woodend|Oxford|Amberley|Hanmer Springs|Cheviot|Kaikoura|Darfield|Lincoln|Rolleston|Prebbleton|Lyttelton|Akaroa|Geraldine|Temuka|Fairlie|Twizel|Oamaru|Waimate|Kurow|Palmerston|Wanaka|Cromwell|Alexandra|Clyde|Roxburgh|Balclutha|Milton|Lawrence|Gore|Winton|Riverton|Te Anau|Bluff|Stewart Island|Warkworth|Wellsford|Matakana|Snells Beach|Algies Bay|Sandspit|Leigh|Mangawhai|Kaiwaka|Maungaturoto|Dargaville|Kaikohe|Kerikeri|Paihia|Kaitaia|Rawene|Opononi|Hokianga|Kawakawa)\s+(\d{4})/);
-      if (cityPostMatch) {
-        result.city = cityPostMatch[1].trim();
-        result.zip = cityPostMatch[2];
-      }
-    }
-
-    // Also try simpler pattern: any text + 4-digit NZ postcode at end of a line
-    if (!result.zip) {
-      const postMatch = fullText.match(/([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+(\d{4})\b/);
-      if (postMatch) {
-        if (!result.city) result.city = postMatch[1].trim();
-        result.zip = postMatch[2];
-      }
-    }
-
-    // Try to get address from the map/directions link
-    if (!result.address) {
-      $('a[href*="maps.google"], a[href*="google.com/maps"]').each((_, el) => {
-        if (result.address) return;
-        const href = $(el).attr('href') || '';
-        const daddrMatch = href.match(/daddr=([^&]+)/);
-        if (daddrMatch) {
-          const addr = decodeURIComponent(daddrMatch[1]).replace(/,\s*/g, ', ');
-          result.address = addr;
-        }
-      });
-    }
-
-    // Try the location breadcrumb link for address
+    // Fallback: use the location breadcrumb link for address
     if (!result.address) {
       $('a[href^="/"]').each((_, el) => {
         if (result.address) return;
@@ -256,10 +243,27 @@ class HealthpointNzScraper extends BaseScraper {
         if (/^\/\d+-[a-z]/.test(href)) {
           const text = $(el).text().trim();
           if (text && text.includes(',')) {
-            result.address = text;
+            const parts = text.split(',').map(s => s.trim());
+            result.address = parts[0];
+            if (parts.length >= 3) {
+              result.city = parts[parts.length - 1]; // Last part is usually the city/region
+            } else if (parts.length === 2) {
+              result.city = parts[1];
+            }
           }
         }
       });
+    }
+
+    // Fallback: extract postcode from body text if still missing
+    if (!result.zip) {
+      const fullText = $('body').text();
+      // NZ postcodes: 4 digits, usually after a city name
+      const postMatch = fullText.match(/([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+(\d{4})\b/);
+      if (postMatch) {
+        result.zip = postMatch[2];
+        if (!result.city) result.city = postMatch[1].trim();
+      }
     }
 
     return result;
@@ -272,7 +276,8 @@ class HealthpointNzScraper extends BaseScraper {
    * @param {object} options - Search options
    */
   async *search(practiceArea, options = {}) {
-    const rateLimiter = new RateLimiter();
+    // Healthpoint is a public health directory — use polite but faster rate limiting (1.5-2.5s)
+    const rateLimiter = new RateLimiter({ minDelay: 1500, maxDelay: 2500 });
     const maxPages = options.maxPages || Infinity;
 
     // Determine which categories to scrape
