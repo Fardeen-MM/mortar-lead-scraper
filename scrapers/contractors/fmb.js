@@ -191,13 +191,50 @@ class FMBScraper extends BaseScraper {
   }
 
   /**
+   * Fast HTTP GET with 10-second timeout (shorter than base 15s).
+   */
+  _httpGetFast(url, rateLimiter) {
+    const https = require('https');
+    const http = require('http');
+    return new Promise((resolve, reject) => {
+      const ua = rateLimiter.getUserAgent();
+      const options = {
+        headers: {
+          'User-Agent': ua,
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          'Accept-Language': 'en-GB,en;q=0.9',
+          'Accept-Encoding': 'identity',
+          'Connection': 'keep-alive',
+        },
+        timeout: 10000,
+      };
+      const protocol = url.startsWith('https') ? https : http;
+      const req = protocol.get(url, options, (res) => {
+        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          res.resume();
+          let redirect = res.headers.location;
+          if (redirect.startsWith('/')) {
+            const u = new URL(url);
+            redirect = `${u.protocol}//${u.host}${redirect}`;
+          }
+          return resolve(this._httpGetFast(redirect, rateLimiter));
+        }
+        let data = '';
+        res.on('data', chunk => { data += chunk; });
+        res.on('end', () => resolve({ statusCode: res.statusCode, body: data }));
+      });
+      req.on('error', reject);
+      req.on('timeout', () => { req.destroy(); reject(new Error('Profile request timed out (10s)')); });
+    });
+  }
+
+  /**
    * Fetch a builder profile page and extract website, city, and trades.
    */
   async _fetchProfileDetails(slug, rateLimiter) {
     const url = `${BASE_URL}/builder/${slug}.html`;
     try {
-      await rateLimiter.wait();
-      const response = await this.httpGet(url, rateLimiter);
+      const response = await this._httpGetFast(url, rateLimiter);
       if (response.statusCode !== 200) {
         log.warn(`Profile ${slug} returned ${response.statusCode}`);
         return {};
@@ -263,17 +300,26 @@ class FMBScraper extends BaseScraper {
   }
 
   /**
+   * Simple 1-2s delay for profile fetches (FMB is not rate-limiting aggressive).
+   */
+  _quickDelay() {
+    const ms = 1000 + Math.random() * 1500; // 1-2.5s
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  /**
    * Async generator — yields builder leads from FMB.
    *
    * Strategy:
    * 1. Search by postcode across major UK regions
    * 2. Paginate via loadMore endpoint (10 per page)
-   * 3. Fetch profile pages for website + city
+   * 3. Fetch profile pages for website + city (unless options.skipProfiles)
    * 4. Dedup by slug across postcodes
    */
   async *search(practiceArea, options = {}) {
-    const rateLimiter = new RateLimiter();
+    const rateLimiter = new RateLimiter({ minDelay: 2000, maxDelay: 4000 });
     const maxPages = options.maxPages || Infinity;
+    const skipProfiles = options.skipProfiles || false;
     const seenSlugs = new Set();
 
     // Resolve trade filter
@@ -358,8 +404,12 @@ class FMBScraper extends BaseScraper {
           if (seenSlugs.has(stub.slug)) continue;
           seenSlugs.add(stub.slug);
 
-          // Fetch profile page for website + city
-          const profileDetails = await this._fetchProfileDetails(stub.slug, rateLimiter);
+          // Fetch profile page for website + city (unless skipped)
+          let profileDetails = {};
+          if (!skipProfiles) {
+            await this._quickDelay();
+            profileDetails = await this._fetchProfileDetails(stub.slug, rateLimiter);
+          }
 
           const lead = {
             first_name: '',
