@@ -118,156 +118,114 @@ class RcvsUkScraper extends BaseScraper {
 
   /**
    * Parse listing cards from a county/search results page.
-   * Each practice entry has an h2 with a link, followed by address, phone, email.
+   *
+   * HTML structure:
+   *   h2.item-title > a (practice name + href)
+   *   div.item-address (address text + span.u-nowrap postcode)
+   *   div.item-contact > span.item-contact-tel (phone)
+   *   div.item-contact > a.item-contact-email[href^="mailto:"] (email)
+   *   OR: Cloudflare-protected email via [data-cfemail] / email-protection link
    */
   _parseListings($) {
     const results = [];
-
-    // Find all practice links — they point to /find-a-vet-practice/{slug}/
-    const practiceLinks = $('a[href*="/find-a-vet-practice/"]').filter((_, el) => {
-      const href = $(el).attr('href') || '';
-      // Must be a specific practice page, not the search/county pages
-      return href.match(/\/find-a-vet-practice\/[a-z0-9][\w-]+-[a-z0-9]+\/?$/i) &&
-             !href.includes('by-county') && !href.includes('by-accreditation') &&
-             !href.includes('filter-');
-    });
-
-    // Process each practice link and its surrounding context
     const seen = new Set();
-    practiceLinks.each((_, el) => {
+
+    // Use the known CSS selector for practice title links
+    $('h2.item-title a, a[href*="/find-a-vet-practice/"]').each((_, el) => {
       const $link = $(el);
       const href = $link.attr('href') || '';
       const name = $link.text().trim();
 
-      if (!name || seen.has(href)) return;
+      // Must be a specific practice page
+      if (!name || !href.match(/\/find-a-vet-practice\/[a-z0-9][\w-]+-[a-z0-9]+\/?$/i)) return;
+      if (href.includes('by-county') || href.includes('by-accreditation') || href.includes('filter-')) return;
+      if (seen.has(href)) return;
       seen.add(href);
 
       // Build full profile URL
       let profileUrl = href;
       if (profileUrl.startsWith('/')) {
         profileUrl = BASE_URL + profileUrl;
-      } else if (profileUrl.startsWith('./')) {
-        profileUrl = BASE_URL + '/find-a-vet-practice/' + profileUrl.substring(2);
       }
 
-      // --- Extract postcode from URL slug ---
-      // Slugs end with the postcode: "bath-vets4pets-ltd-bathba2-1es"
-      const slugPostcodeMatch = href.match(/([a-z]{1,2}\d[a-z\d]?)-?(\d[a-z]{2})\/?$/i);
-      let urlPostcode = '';
-      if (slugPostcodeMatch) {
-        urlPostcode = (slugPostcodeMatch[1] + ' ' + slugPostcodeMatch[2]).toUpperCase();
-      }
-
-      // Get the parent container to find address/phone/email
-      // The h2 link and sibling p tags are at the same DOM level
-      let $container = $link.closest('div, li, article, section, tr');
-      if (!$container.length) {
-        // Walk up from the link to find the h2, then use its parent
-        const $heading = $link.closest('h2, h3');
-        if ($heading.length) {
-          $container = $heading.parent();
-        } else {
-          $container = $link.parent().parent().parent();
-        }
-      }
-
-      // Extract the text content near this practice listing
-      const containerText = $container.text().replace(/\s+/g, ' ').trim();
-
-      // --- Phone ---
-      let phone = '';
-      // Look for phone2 class or tel: links near this entry
-      const $phone = $container.find('.phone2, a[href^="tel:"]');
-      if ($phone.length) {
-        phone = $phone.first().text().trim();
-      }
-      if (!phone) {
-        // Try regex on container text
-        const phoneMatch = containerText.match(/(\d{3,5}\s?\d{3,4}\s?\d{3,4})/);
-        if (phoneMatch) phone = phoneMatch[1].trim();
-      }
-
-      // --- Email (Cloudflare protected) ---
-      let email = '';
-      // Look for data-cfemail attribute
-      const $cfEmail = $container.find('[data-cfemail]');
-      if ($cfEmail.length) {
-        const encoded = $cfEmail.attr('data-cfemail');
-        email = this.decodeCloudflareEmail(encoded);
-      }
-      // Also check for email-protection links
-      if (!email) {
-        const $emailLink = $container.find('a[href*="email-protection"]');
-        if ($emailLink.length) {
-          const href2 = $emailLink.attr('href') || '';
-          const cfMatch = href2.match(/email-protection#([a-f0-9]+)/i);
-          if (cfMatch) {
-            email = this.decodeCloudflareEmail(cfMatch[1]);
-          }
-        }
-      }
-      // Check for envelope class
-      if (!email) {
-        const $envelope = $container.find('.envelope, a[href*="mailto:"]');
-        if ($envelope.length) {
-          const mailHref = $envelope.attr('href') || '';
-          if (mailHref.startsWith('mailto:')) {
-            email = mailHref.replace('mailto:', '').trim();
-          } else {
-            const text = $envelope.text().trim();
-            if (text.includes('@')) email = text;
-          }
-        }
-      }
+      // Get parent container — walk up from h2 to the listing wrapper
+      const $heading = $link.closest('h2');
+      let $container = $heading.length ? $heading.parent() : $link.parent().parent().parent();
 
       // --- Address ---
       let address = '';
-      let postcode = urlPostcode;
       let city = '';
+      let postcode = '';
 
-      // Look for address text near the practice name
-      const $paragraphs = $container.find('p');
-      $paragraphs.each((_, p) => {
-        const pText = $(p).text().trim();
-        // Address usually contains a postcode
-        const pcMatch = pText.match(/([A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2})/i);
-        if (pcMatch && !address) {
-          address = pText;
-          postcode = pcMatch[1].toUpperCase().replace(/(\S)(\d)/, '$1$2');
-          // Ensure space in postcode
-          if (postcode.length >= 5 && !postcode.includes(' ')) {
-            postcode = postcode.slice(0, -3) + ' ' + postcode.slice(-3);
-          }
+      // Try .item-address div first
+      const $addr = $container.find('.item-address');
+      if ($addr.length) {
+        address = $addr.text().replace(/\s+/g, ' ').trim();
+        // Postcode from span.u-nowrap
+        const $pc = $addr.find('.u-nowrap, span');
+        if ($pc.length) {
+          postcode = $pc.text().trim().toUpperCase();
         }
-      });
+        // Parse city: address format is "Street, City, County POSTCODE"
+        const addrWithoutPC = address.replace(postcode, '').trim().replace(/,\s*$/, '');
+        const parts = addrWithoutPC.split(',').map(p => p.trim()).filter(Boolean);
+        if (parts.length >= 2) {
+          // City is usually the second-to-last part (before county)
+          // County is last, street is first
+          city = parts.length >= 3 ? parts[parts.length - 2] : parts[parts.length - 1];
+        } else if (parts.length === 1) {
+          city = parts[0];
+        }
+      }
 
-      // Also scan full container text for postcode if not found
+      // Fallback: extract postcode from URL slug
       if (!postcode) {
-        const textPcMatch = containerText.match(/([A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2})/i);
-        if (textPcMatch) {
-          postcode = textPcMatch[1].toUpperCase();
-          if (postcode.length >= 5 && !postcode.includes(' ')) {
-            postcode = postcode.slice(0, -3) + ' ' + postcode.slice(-3);
-          }
+        const slugPcMatch = href.match(/([a-z]{1,2}\d[a-z\d]?)-?(\d[a-z]{2})\/?$/i);
+        if (slugPcMatch) {
+          postcode = (slugPcMatch[1] + ' ' + slugPcMatch[2]).toUpperCase();
         }
       }
 
-      // Parse city from address or container text
-      if (address) {
-        const { city: parsedCity } = this._parseAddressLine(address, postcode);
-        city = parsedCity;
+      // Ensure postcode has a space
+      if (postcode && postcode.length >= 5 && !postcode.includes(' ')) {
+        postcode = postcode.slice(0, -3) + ' ' + postcode.slice(-3);
       }
-      // Fallback: extract city from slug before postcode
-      if (!city && href) {
-        // e.g., /bath-vets4pets-ltd-bathba2-1es/ → try to find city
-        const slugParts = href.replace(/.*\/find-a-vet-practice\//, '').replace(/\/$/, '').split('-');
-        // The text before the postcode portion is often the city
-        if (slugParts.length >= 2) {
-          // Try to match known city name at start or middle of slug
-          const fullSlug = slugParts.join(' ');
-          // Try to extract from container text — look for text after address lines
-          const cityMatch = containerText.match(/(?:^|\s)(London|Bristol|Bath|Manchester|Birmingham|Edinburgh|Glasgow|Cardiff|Belfast|Leeds|Liverpool|Sheffield|Newcastle|Nottingham|Oxford|Cambridge|Brighton|York|Exeter|Plymouth|Southampton|Norwich|Chester|Derby|Leicester|Worcester|Swansea|Aberdeen|Dundee|Inverness)(?:\s|$)/i);
-          if (cityMatch) city = cityMatch[1];
+
+      // --- Phone ---
+      let phone = '';
+      const $phoneTel = $container.find('.item-contact-tel');
+      if ($phoneTel.length) {
+        phone = $phoneTel.text().replace(/\s+/g, ' ').trim();
+      }
+      if (!phone) {
+        // Fallback: any phone-like text
+        const containerText = $container.text();
+        const phoneMatch = containerText.match(/(\d{4,5}\s?\d{3,4}\s?\d{3,4})/);
+        if (phoneMatch) phone = phoneMatch[1].trim();
+      }
+
+      // --- Email ---
+      let email = '';
+      // Try mailto: link first (works when Cloudflare doesn't protect)
+      const $mailto = $container.find('a.item-contact-email[href^="mailto:"], a[href^="mailto:"]');
+      if ($mailto.length) {
+        email = $mailto.attr('href').replace('mailto:', '').split('?')[0].trim();
+      }
+      // Try Cloudflare-protected email
+      if (!email) {
+        const $cfEmail = $container.find('[data-cfemail]');
+        if ($cfEmail.length) {
+          email = this.decodeCloudflareEmail($cfEmail.attr('data-cfemail'));
+        }
+      }
+      if (!email) {
+        const $cfLink = $container.find('a[href*="email-protection"]');
+        if ($cfLink.length) {
+          const cfHref = $cfLink.attr('href') || '';
+          const cfMatch = cfHref.match(/email-protection#([a-f0-9]+)/i);
+          if (cfMatch) {
+            email = this.decodeCloudflareEmail(cfMatch[1]);
+          }
         }
       }
 
@@ -333,13 +291,19 @@ class RcvsUkScraper extends BaseScraper {
 
   /**
    * Normalize UK phone numbers.
+   * Input: "01225 472 960" or "020 7937 8215" or "+44 1225 472960"
+   * Output: "01225 472960" or "020 7937 8215"
    */
   _normalizeUKPhone(phone) {
     if (!phone) return '';
-    let digits = phone.replace(/\D/g, '');
+    // Strip SVG/icon text that might precede the number
+    const cleaned = phone.replace(/phone\d*/i, '').trim();
+    let digits = cleaned.replace(/\D/g, '');
+    // Remove +44 prefix
     if (digits.startsWith('44') && digits.length > 10) {
       digits = '0' + digits.substring(2);
     }
+    // Add leading 0 if missing and exactly 10 digits
     if (!digits.startsWith('0') && digits.length === 10) {
       digits = '0' + digits;
     }
@@ -347,9 +311,12 @@ class RcvsUkScraper extends BaseScraper {
       if (digits.startsWith('020')) {
         return `${digits.substring(0, 3)} ${digits.substring(3, 7)} ${digits.substring(7)}`;
       }
+      if (digits.startsWith('07')) {
+        return `${digits.substring(0, 5)} ${digits.substring(5)}`;
+      }
       return `${digits.substring(0, 5)} ${digits.substring(5)}`;
     }
-    return digits || phone;
+    return digits || cleaned;
   }
 
   /**
