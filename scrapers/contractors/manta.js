@@ -48,6 +48,24 @@ const CATEGORY_SLUGS = {
   'hvac': 'heating-contractors',
   'electrical': 'electrical-contractors',
   'landscaping': 'landscaping-services',
+  // Veterinary
+  'veterinarian': 'veterinarians',
+  'vet': 'veterinarians',
+  'veterinary': 'veterinarians',
+  'animal hospital': 'animal-hospitals',
+  // Therapy / Counseling
+  'therapist': 'counseling-services',
+  'therapy': 'counseling-services',
+  'counseling': 'counseling-services',
+  'psychologist': 'psychologists',
+  'counselor': 'counseling-services',
+  'mental health': 'mental-health-services',
+  // Other healthcare
+  'dentist': 'dentists',
+  'chiropractor': 'chiropractors',
+  'optometrist': 'optometrists',
+  'physical therapy': 'physical-therapists',
+  'massage': 'massage-therapists',
 };
 
 /**

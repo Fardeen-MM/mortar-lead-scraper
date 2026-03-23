@@ -45,6 +45,24 @@ const CATEGORY_SLUGS = {
   'electrical': 'electrician',
   'general contractor': 'general-contractor',
   'landscaping': 'landscape-contractors',
+  // Veterinary
+  'veterinarian': 'veterinarian',
+  'vet': 'veterinarian',
+  'veterinary': 'veterinarian',
+  'animal hospital': 'animal-hospital',
+  // Therapy / Counseling
+  'therapist': 'counseling-services',
+  'therapy': 'counseling-services',
+  'counseling': 'counseling-services',
+  'psychologist': 'psychologist',
+  'counselor': 'counseling-services',
+  'mental health': 'mental-health-services',
+  // Other healthcare
+  'dentist': 'dentist',
+  'chiropractor': 'chiropractor',
+  'optometrist': 'optometrist',
+  'physical therapy': 'physical-therapist',
+  'massage': 'massage-therapist',
 };
 
 /**
