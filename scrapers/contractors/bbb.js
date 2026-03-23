@@ -116,6 +116,13 @@ class BbbScraper extends BaseScraper {
         'electrical': 'Electricians',
         'general contractor': 'General Contractors',
         'landscaping': 'Landscaping',
+        'veterinarian': 'Veterinarians',
+        'therapist': 'Counseling Services',
+        'counseling': 'Counseling Services',
+        'psychologist': 'Psychologists',
+        'dentist': 'Dentists',
+        'chiropractor': 'Chiropractors',
+        'massage': 'Massage Therapists',
       },
       defaultCities: DEFAULT_CITIES.map(c => `${c.city}, ${c.state}`),
     });
