@@ -372,45 +372,125 @@ class CICCScraper extends BaseScraper {
   }
 
   /**
-   * Navigate to the next page of the RadGrid by clicking the next page button.
+   * Navigate to the next page of the RadGrid.
+   * Tries multiple strategies: page number links, Next button, __doPostBack.
    * Returns true if navigation succeeded, false if we're on the last page.
    */
-  async _goToNextPage(page) {
-    const navigated = await page.evaluate(() => {
-      // Look for "Next" button in the RadGrid pager
-      const nextBtns = document.querySelectorAll(
-        '.rgPageNext:not(.rgDisabled), ' +
-        'input[title="Next Page"]:not([disabled]), ' +
-        'button[title="Next Page"]:not([disabled]), ' +
-        'a[title="Next Page"], ' +
-        '.rgArrPart2 button:not([disabled])'
-      );
+  async _goToNextPage(page, currentPage) {
+    const targetPage = (currentPage || 1) + 1;
 
-      for (const btn of nextBtns) {
-        if (!btn.disabled && !btn.classList.contains('rgDisabled')) {
-          btn.click();
-          return true;
+    // ASP.NET RadGrid uses javascript:__doPostBack('eventTarget','') in page link hrefs.
+    // Programmatic .click() on <a href="javascript:..."> doesn't execute the JS.
+    // We need to extract the __doPostBack call and execute it directly.
+    const clickedPageLink = await page.evaluate((target) => {
+      // Strategy 1: Find the page number link and extract its __doPostBack target
+      const pageLinks = document.querySelectorAll('.rgNumPart a');
+      for (const link of pageLinks) {
+        const text = link.textContent.trim();
+        if (text === String(target)) {
+          const href = link.getAttribute('href') || '';
+          const match = href.match(/__doPostBack\('([^']+)'/);
+          if (match && typeof __doPostBack === 'function') {
+            __doPostBack(match[1], '');
+            return 'doPostBack-page';
+          }
+          // Fallback: try clicking
+          link.click();
+          return 'click-page';
         }
       }
+
+      // Strategy 2: "Next Page" submit button
+      const nextBtn = document.querySelector('.rgArrPart2 input[title="Next Page"]:not([disabled])');
+      if (nextBtn) {
+        // The button has onclick="return false;" so we need __doPostBack
+        const name = nextBtn.getAttribute('name');
+        if (name && typeof __doPostBack === 'function') {
+          __doPostBack(name.replace(/\$/g, '$'), '');
+          return 'doPostBack-next';
+        }
+      }
+
+      // Strategy 3: "..." (Next Pages) link
+      const nextPagesLink = document.querySelector('.rgNumPart a[title="Next Pages"]');
+      if (nextPagesLink) {
+        const href = nextPagesLink.getAttribute('href') || '';
+        const match = href.match(/__doPostBack\('([^']+)'/);
+        if (match && typeof __doPostBack === 'function') {
+          __doPostBack(match[1], '');
+          return 'doPostBack-nextpages';
+        }
+      }
+
+      return null;
+    }, targetPage);
+
+    if (!clickedPageLink) {
+      log.info(`[CICC] No pagination control found for page ${targetPage}`);
       return false;
-    });
+    }
 
-    if (!navigated) return false;
+    log.info(`[CICC] Pagination triggered via ${clickedPageLink} → page ${targetPage}`);
 
-    // Wait for the grid to reload via AJAX
+    // For AJAX postbacks, don't wait for full navigation — wait for grid content to change.
+    // Capture current first row text, then poll until it changes (grid refreshed).
     try {
-      await page.waitForFunction(() => {
-        // Wait for loading indicator to appear and disappear
-        const loading = document.querySelector('.raDiv, .rgLoading, .RadAjax_Default');
-        return !loading || loading.style.display === 'none';
-      }, { timeout: 15000 });
-      await new Promise(r => setTimeout(r, 1500));
-      // Verify rows are present
-      await page.waitForSelector('table[id*="ResultsGrid_Grid1"] tr.rgRow, table[id*="ResultsGrid_Grid1"] tr.rgAltRow', { timeout: 15000 });
+      const oldFirstRowText = await page.evaluate(() => {
+        const row = document.querySelector('table[id*="ResultsGrid_Grid1"] tr.rgRow');
+        return row ? row.textContent.trim().substring(0, 80) : '';
+      });
+
+      // Wait for grid to update (poll for content change or loading indicator)
+      let changed = false;
+      for (let i = 0; i < 30; i++) { // 30 x 1s = 30s max
+        await new Promise(r => setTimeout(r, 1000));
+
+        const newFirstRowText = await page.evaluate(() => {
+          const row = document.querySelector('table[id*="ResultsGrid_Grid1"] tr.rgRow, table[id*="ResultsGrid_Grid1"] tr.rgAltRow');
+          return row ? row.textContent.trim().substring(0, 80) : '';
+        });
+
+        if (newFirstRowText && newFirstRowText !== oldFirstRowText) {
+          changed = true;
+          log.info(`[CICC] Grid updated after ${i + 1}s`);
+          break;
+        }
+
+        // Also check if a loading overlay appeared and disappeared
+        const isLoading = await page.evaluate(() => {
+          const overlay = document.querySelector('.raDiv, .rgLoading');
+          return overlay && overlay.style.display !== 'none';
+        });
+        if (isLoading) {
+          // Loading started — wait for it to finish
+          log.info('[CICC] Loading indicator detected, waiting...');
+          await page.waitForFunction(() => {
+            const overlay = document.querySelector('.raDiv, .rgLoading');
+            return !overlay || overlay.style.display === 'none';
+          }, { timeout: 20000 }).catch(() => {});
+          await new Promise(r => setTimeout(r, 1000));
+          changed = true;
+          break;
+        }
+      }
+
+      if (!changed) {
+        // Maybe it did a full postback — check if page reloaded
+        await new Promise(r => setTimeout(r, 3000));
+        const hasRows = await page.$('table[id*="ResultsGrid_Grid1"] tr.rgRow');
+        if (hasRows) {
+          log.info('[CICC] Grid has rows after wait (may have updated)');
+          return true;
+        }
+        log.warn(`[CICC] Grid did not update for page ${targetPage}`);
+        return false;
+      }
+
+      // Extra settle time
+      await new Promise(r => setTimeout(r, 1000));
       return true;
     } catch (err) {
-      log.warn(`[CICC] Next page navigation may have failed: ${err.message}`);
-      // Check if there are still rows (might have loaded despite timeout)
+      log.warn(`[CICC] Pagination wait error for page ${targetPage}: ${err.message}`);
       const hasRows = await page.$('table[id*="ResultsGrid_Grid1"] tr.rgRow');
       return !!hasRows;
     }
@@ -635,10 +715,13 @@ class CICCScraper extends BaseScraper {
 
   /**
    * Main search generator.
-   * Uses Puppeteer to navigate the search page RadGrid, then fetches each profile.
+   *
+   * Strategy: Get profile IDs from page 1 of the search grid, then use letter-based
+   * searches to enumerate all registrants (avoids Telerik RadGrid pagination issues).
+   * For each letter A-Z, searches by last name, extracts grid rows, fetches profiles.
    */
   async *search(practiceArea, options = {}) {
-    const maxPages = options.maxPages || Infinity;
+    const maxProfiles = options.maxPages ? options.maxPages * 50 : Infinity;
     const seenIds = new Set();
     let totalYielded = 0;
     let totalWithEmail = 0;
@@ -647,94 +730,109 @@ class CICCScraper extends BaseScraper {
 
     await this._initBrowser();
 
-    let searchPage = null;
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    const totalLetters = letters.length;
 
     try {
-      // Initialize search page and get all results
-      searchPage = await this._initSearchPage();
+      log.scrape(`[CICC] Starting scrape: searching A-Z by last name`);
 
-      // Get grid info (total results, pages)
-      const gridInfo = await this._getGridInfo(searchPage);
-      log.info(`[CICC] Grid info: ${JSON.stringify(gridInfo)}`);
+      for (let li = 0; li < totalLetters; li++) {
+        if (totalProfilesFetched >= maxProfiles) break;
 
-      const effectiveMaxPages = Math.min(maxPages, gridInfo.totalPages || 999);
-      log.scrape(`[CICC] Starting scrape: ~${gridInfo.totalResults || '?'} registrants, ${effectiveMaxPages} pages max`);
+        const letter = letters[li];
+        yield { _cityProgress: { current: li + 1, total: totalLetters } };
+        log.info(`[CICC] Letter ${letter} (${li + 1}/${totalLetters})...`);
 
-      yield { _cityProgress: { current: 1, total: effectiveMaxPages } };
+        // Open fresh search page for each letter
+        let searchPage = null;
+        try {
+          searchPage = await this.browser.newPage();
+          await searchPage.setViewport({ width: 1280, height: 900 });
+          searchPage.setDefaultNavigationTimeout(60000);
+          searchPage.setDefaultTimeout(30000);
 
-      // Process each page
-      for (let pageNum = 1; pageNum <= effectiveMaxPages; pageNum++) {
-        log.info(`[CICC] Processing page ${pageNum}/${effectiveMaxPages}...`);
-        yield { _cityProgress: { current: pageNum, total: effectiveMaxPages } };
+          await searchPage.goto(SEARCH_URL, { waitUntil: 'networkidle2', timeout: 60000 });
+          await new Promise(r => setTimeout(r, 1500));
 
-        // Extract rows from current grid page
-        const rows = await this._extractGridRows(searchPage);
-        log.info(`[CICC] Page ${pageNum}: ${rows.length} rows extracted`);
+          // Type last name letter into the Last Name field (Input1)
+          const lastNameSelector = 'input[id*="Input1_TextBox1"]';
+          await searchPage.waitForSelector(lastNameSelector, { timeout: 10000 });
+          await searchPage.type(lastNameSelector, letter);
 
-        if (rows.length === 0) {
-          log.warn(`[CICC] Page ${pageNum} has 0 rows — stopping`);
-          break;
-        }
+          // Submit search
+          const submitSelector = 'input[id*="SubmitButton"], input[value="Submit"]';
+          await searchPage.waitForSelector(submitSelector, { timeout: 10000 });
+          await searchPage.click(submitSelector);
 
-        // For each row, fetch the profile page
-        for (const row of rows) {
-          const profileId = row._profileId;
-          const collegeId = row.collegeId;
-          const dedupKey = collegeId || profileId;
-
-          if (!profileId) {
-            log.warn(`[CICC] Row has no profile ID: ${JSON.stringify(row._cells?.slice(0, 3))}`);
+          // Wait for results
+          try {
+            await searchPage.waitForSelector(
+              'table[id*="ResultsGrid_Grid1"] tr.rgRow, table[id*="ResultsGrid_Grid1"] tr.rgAltRow',
+              { timeout: 20000 }
+            );
+          } catch {
+            log.info(`[CICC] No results for letter ${letter}`);
+            await searchPage.close().catch(() => {});
             continue;
           }
 
-          if (dedupKey && seenIds.has(dedupKey)) continue;
-          if (dedupKey) seenIds.add(dedupKey);
+          await new Promise(r => setTimeout(r, 1500));
 
-          // Rate limit between profile fetches (polite but not excessive — no anti-bot)
-          await new Promise(r => setTimeout(r, 300 + Math.random() * 400));
+          // Set page size to 50
+          try { await this._setPageSize(searchPage, 50); } catch { /* use default */ }
 
-          totalProfilesFetched++;
-          const lead = await this._fetchProfile(profileId, {
-            collegeId: collegeId,
-            name: row.name,
-            company: row.company,
-            type: row.type,
-            eligible: row.eligible,
-          });
+          // Get grid info
+          const gridInfo = await this._getGridInfo(searchPage);
+          log.info(`[CICC] Letter ${letter}: ${gridInfo.totalResults || '?'} results`);
 
-          if (lead && (lead.first_name || lead.last_name || lead.firm_name)) {
-            if (lead.email) totalWithEmail++;
-            if (lead.phone) totalWithPhone++;
+          // Extract all rows from page 1 (up to 50)
+          const rows = await this._extractGridRows(searchPage);
+          log.info(`[CICC] Letter ${letter}: ${rows.length} rows on page 1`);
 
-            yield this.transformResult(lead, practiceArea);
-            totalYielded++;
+          // Fetch each profile
+          for (const row of rows) {
+            if (totalProfilesFetched >= maxProfiles) break;
 
-            if (totalYielded % 50 === 0) {
-              log.info(`[CICC] Progress: ${totalYielded} leads (${totalWithEmail} email, ${totalWithPhone} phone) from ${totalProfilesFetched} profiles`);
+            const profileId = row._profileId;
+            const dedupKey = row.collegeId || profileId;
+            if (!profileId || (dedupKey && seenIds.has(dedupKey))) continue;
+            if (dedupKey) seenIds.add(dedupKey);
+
+            await new Promise(r => setTimeout(r, 300 + Math.random() * 400));
+            totalProfilesFetched++;
+
+            const lead = await this._fetchProfile(profileId, {
+              collegeId: row.collegeId,
+              name: row.name,
+              company: row.company,
+              type: row.type,
+              eligible: row.eligible,
+            });
+
+            if (lead && (lead.first_name || lead.last_name || lead.firm_name)) {
+              if (lead.email) totalWithEmail++;
+              if (lead.phone) totalWithPhone++;
+              yield this.transformResult(lead, practiceArea);
+              totalYielded++;
+
+              if (totalYielded % 50 === 0) {
+                log.info(`[CICC] Progress: ${totalYielded} leads (${totalWithEmail} email, ${totalWithPhone} phone)`);
+              }
             }
           }
+        } catch (err) {
+          log.warn(`[CICC] Error on letter ${letter}: ${err.message}`);
+        } finally {
+          if (searchPage) {
+            try { await searchPage.close(); } catch { /* ignore */ }
+          }
         }
 
-        // Navigate to next page (unless we're on the last page)
-        if (pageNum < effectiveMaxPages) {
-          const moved = await this._goToNextPage(searchPage);
-          if (!moved) {
-            log.info(`[CICC] No more pages after page ${pageNum}`);
-            break;
-          }
-          // Small delay after page navigation
-          await new Promise(r => setTimeout(r, 1000));
-        }
+        log.info(`[CICC] Letter ${letter} done: ${totalYielded} total leads so far`);
       }
     } catch (err) {
       log.error(`[CICC] Search error: ${err.message}`);
-      if (err.message.includes('CAPTCHA') || err.message.includes('challenge')) {
-        yield { _captcha: true, city: 'all', reason: err.message };
-      }
     } finally {
-      if (searchPage) {
-        try { await searchPage.close(); } catch (_) { /* ignore */ }
-      }
       await this._closeBrowser();
     }
 
