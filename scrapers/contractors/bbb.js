@@ -51,11 +51,11 @@ const CATEGORY_SLUGS = {
   'veterinary': 'veterinarian',
   'animal hospital': 'animal-hospital',
   // Therapy / Counseling
-  'therapist': 'counseling-services',
-  'therapy': 'counseling-services',
-  'counseling': 'counseling-services',
+  'therapist': 'counseling',
+  'therapy': 'counseling',
+  'counseling': 'counseling',
   'psychologist': 'psychologist',
-  'counselor': 'counseling-services',
+  'counselor': 'counseling',
   'mental health': 'mental-health-services',
   // Other healthcare
   'dentist': 'dentist',
