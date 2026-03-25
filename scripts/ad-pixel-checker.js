@@ -134,7 +134,7 @@ const DETECTORS = {
       /_linkedin_partner_id\s*=/i,
       /linkedin\.com\/px/i,
     ],
-    category: 'paid',
+    category: 'tracking', // Insight tag = tracking, NOT confirmed paid ads
   },
   snapchat: {
     label: 'Snapchat Pixel',
@@ -160,14 +160,20 @@ const DETECTORS = {
     ],
     category: 'paid',
   },
-  microsoft: {
-    label: 'Microsoft/Bing Ads',
+  bing_ads: {
+    label: 'Bing Ads (UET)',
     patterns: [
-      /bat\.bing\.com\/action/i,
-      /uetq\s*=\s*uetq/i,
-      /clarity\.ms\/tag/i,
+      /bat\.bing\.com\/action/i,  // Actual Bing UET tag
+      /uetq\s*=\s*uetq/i,        // UET queue
     ],
     category: 'paid',
+  },
+  microsoft_clarity: {
+    label: 'Microsoft Clarity',
+    patterns: [
+      /clarity\.ms\/tag/i,
+    ],
+    category: 'tracking', // Clarity is FREE analytics, NOT paid ads
   },
 };
 
