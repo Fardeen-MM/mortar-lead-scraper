@@ -24,7 +24,7 @@ const https = require('https');
 const http = require('http');
 
 const HTTP_CONCURRENCY = 50;
-const PUPPETEER_CONCURRENCY = 3;
+const PUPPETEER_CONCURRENCY = 4;
 
 // Pixel patterns
 const META_PIXEL = [/fbq\s*\(/i, /facebook\.com\/tr/i, /connect\.facebook\.net.*fbevents/i];
@@ -161,7 +161,11 @@ async function pass2(rows, nameCol, pass1Results) {
     const p = await browser.newPage();
     await p.setViewport({ width: 1280, height: 800 });
     await p.setRequestInterception(true);
-    p.on('request', req => { ['image', 'font', 'media'].includes(req.resourceType()) ? req.abort() : req.continue(); });
+    p.on('request', req => {
+      const t = req.resourceType();
+      if (['image', 'font', 'media'].includes(t)) req.abort();
+      else req.continue();
+    });
     pages.push(p);
   }
 
@@ -186,8 +190,8 @@ async function pass2(rows, nameCol, pass1Results) {
       const url = `https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=ALL&media_type=all&search_type=keyword_exact_phrase&q=${encodeURIComponent(searchTerm)}`;
 
       try {
-        await page.goto(url, { waitUntil: 'networkidle2', timeout: 15000 });
-        await new Promise(r => setTimeout(r, 1500));
+        await page.goto(url, { waitUntil: 'networkidle2', timeout: 12000 });
+        await new Promise(r => setTimeout(r, 1000));
 
         const result = await page.evaluate(() => {
           const text = document.body.innerText || '';
@@ -202,6 +206,10 @@ async function pass2(rows, nameCol, pass1Results) {
         adResults[rowIdx] = { count: 0, error: true };
       }
       checked++;
+      // Auto-save progress every 50 checks
+      if (checked % 50 === 0) {
+        try { fs.writeFileSync(outputFile.replace('.csv', '-progress.json'), JSON.stringify({ checked, found, adResults })); } catch {}
+      }
     }
   }
 
