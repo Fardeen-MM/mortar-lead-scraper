@@ -29,7 +29,7 @@ const fs = require('fs');
 const https = require('https');
 const http = require('http');
 const dns = require('dns');
-const { execSync } = require('child_process');
+const { execSync, execFileSync } = require('child_process');
 const path = require('path');
 
 const CONCURRENCY = Math.min(parseInt(process.argv[4] || '30', 10), 40); // Cap at 40 to avoid OOM
@@ -78,8 +78,16 @@ const DETECTORS = {
     label: 'GTM', category: 'analytics',
     patterns: [/googletagmanager\.com\/gtm\.js\?id=GTM-/i, /GTM-[A-Z0-9]{6,}/],
   },
-  tiktok: { label: 'TikTok', category: 'paid', patterns: [/analytics\.tiktok\.com\/i18n\/pixel/i, /ttq\.load\s*\(/i] },
-  bing_ads: { label: 'Bing Ads', category: 'paid', patterns: [/bat\.bing\.com\/action/i, /uetq\s*=\s*uetq/i] },
+  tiktok: { label: 'TikTok', category: 'paid', patterns: [/analytics\.tiktok\.com\/i18n\/pixel/i, /ttq\.load\s*\(/i, /TiktokAnalyticsObject/] },
+  bing_ads: { label: 'Bing Ads', category: 'paid', patterns: [/bat\.bing\.com\/action/i, /bat\.bing\.com\/bat\.js/i, /uetq\s*=\s*uetq/i] },
+  // Added from scrutiny agent findings (commonly used by law firms / SMBs)
+  linkedin_ads: { label: 'LinkedIn Ads', category: 'paid', patterns: [/snap\.licdn\.com\/li\.lms-analytics\/insight/i, /_linkedin_data_partner_id/i, /dc\.ads\.linkedin\.com/i, /px\.ads\.linkedin\.com/i] },
+  pinterest: { label: 'Pinterest', category: 'paid', patterns: [/ct\.pinterest\.com/i, /pintrk\s*\(/i] },
+  twitter_ads: { label: 'Twitter/X Ads', category: 'paid', patterns: [/static\.ads-twitter\.com\/uwt/i, /twq\s*\(/i] },
+  snapchat: { label: 'Snapchat', category: 'paid', patterns: [/sc-static\.net\/scevent/i, /snaptr\s*\(/i] },
+  criteo: { label: 'Criteo', category: 'paid', patterns: [/static\.criteo\.net/i, /criteo_q/i] },
+  callrail: { label: 'CallRail', category: 'paid', patterns: [/calltrk\.com/i, /CallTrk/] },
+  hubspot_tracking: { label: 'HubSpot', category: 'tracking', patterns: [/\.hs-scripts\.com\//i, /_hsq/] },
 };
 
 const FB_SKIP = new Set(['sharer','sharer.php','share','share.php','dialog','tr','plugins','pages','groups','events','hashtag','login','help','business','privacy','policy','profile.php','watch','reel','reels','marketplace','gaming','stories','ads','about','legal','terms','settings','notifications','messenger','fundraisers','offers','jobs','bookmarks','flx','l.php','photo.php','video.php']);
@@ -162,14 +170,14 @@ function analyzeWebsite(html) {
     }
   }
 
-  // Composite Meta score
+  // Composite Meta score (calibrated from scrutiny agent review)
   let metaScore = 0;
   const metaSignals = [];
-  if (result.detections.meta_pixel)         { metaScore += 50; metaSignals.push('pixel'); }
-  if (result.detections.meta_capi)          { metaScore += 40; metaSignals.push('capi'); }
-  if (result.detections.meta_domain_verify) { metaScore += 20; metaSignals.push('domain_verify'); }
-  if (result.detections.meta_fbc)           { metaScore += 25; metaSignals.push('fbc'); }
-  if (result.detections.meta_sdk)           { metaScore += 10; metaSignals.push('sdk'); }
+  if (result.detections.meta_pixel)         { metaScore += 65; metaSignals.push('pixel'); }       // Canonical detection
+  if (result.detections.meta_capi)          { metaScore += 55; metaSignals.push('capi'); }        // Server-side = serious advertiser
+  if (result.detections.meta_domain_verify) { metaScore += 10; metaSignals.push('domain_verify'); } // Claimed domain, not ads proof
+  if (result.detections.meta_fbc)           { metaScore += 40; metaSignals.push('fbc'); }         // fbclid = near-definitive paid clicks
+  if (result.detections.meta_sdk)           { metaScore += 10; metaSignals.push('sdk'); }         // SDK for login/share, not ads
   if (result.facebook_page)                 { metaScore += 5;  metaSignals.push('fb_link'); }
   const hasFbUtm = /utm_source=(facebook|fb|meta|ig|instagram)/i.test(html) && /utm_medium=(paid|cpc|cpm|social|paidsocial)/i.test(html);
   if (hasFbUtm) { metaScore += 30; metaSignals.push('fb_utm'); }
@@ -328,7 +336,7 @@ function checkDnsTxt(domain) {
 function checkMetaAds(businessName) {
   try {
     const scriptPath = path.join(__dirname, 'meta-ads-check.py');
-    const out = execSync(`python3 "${scriptPath}" "${businessName.replace(/"/g, '\\"')}"`, {
+    const out = execFileSync('python3', [scriptPath, businessName], {
       timeout: 20000, encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'],
     });
     for (const line of out.split('\n')) {
@@ -360,7 +368,7 @@ fs.writeFileSync('/tmp/google-ads-check.py', PY_SCRIPT);
 
 function checkGoogleAds(businessName) {
   try {
-    const out = execSync(`python3 /tmp/google-ads-check.py "${businessName.replace(/"/g, '\\"')}"`, { timeout: 15000, encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'] });
+    const out = execFileSync('python3', ['/tmp/google-ads-check.py', businessName], { timeout: 15000, encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'] });
     for (const line of out.split('\n')) {
       if (line.startsWith('{')) return JSON.parse(line);
     }
@@ -496,12 +504,12 @@ function findCol(headers, patterns) {
           }
         } catch {}
 
-        // ads.txt check — definitive signal of programmatic advertising
+        // ads.txt check — indicates site SELLS ad inventory (publisher), not that they BUY ads
+        // Useful as a data point but does NOT mean they run Google/Meta ad campaigns
         const adsTxt = await checkAdsTxt(url);
         if (adsTxt.hasAdsTxt) {
-          a.google_confidence = Math.min(a.google_confidence + 30, 100);
-          a.google_signals.push('ads_txt');
-          a.paid.push('Programmatic Ads (ads.txt)');
+          // Don't add to google_confidence — ads.txt is a publisher signal
+          a.meta_signals.push('has_ads_txt');
         }
       }
 
