@@ -405,12 +405,12 @@ function findCol(headers, patterns) {
     while (idx < rows.length) {
       const i = idx++;
       const url = normalizeUrl(rows[i][urlCol]);
-      if (!url) { results[i] = { ...rows[i], _noUrl: true }; continue; }
+      if (!url) { results[i] = { _noUrl: true }; continue; }
 
       const resp = await fetchWithRetry(url);
       checked++;
 
-      if (!resp.ok) { results[i] = { ...rows[i], _error: true }; stats.errors++; continue; }
+      if (!resp.ok) { results[i] = { _error: true }; stats.errors++; continue; }
 
       const a = analyzeWebsite(resp.body);
 
@@ -447,7 +447,7 @@ function findCol(headers, patterns) {
       else if (a.analytics.length > 0 || a.meta_confidence > 0) stats.warm++;
       else stats.cold++;
 
-      results[i] = { ...rows[i], _analysis: a };
+      results[i] = { _analysis: a };
     }
   }
 
@@ -514,55 +514,62 @@ function findCol(headers, patterns) {
   const outHeaders = [...headers, ...addCols];
   let finalHot = 0, finalWarm = 0, finalCold = 0;
 
-  const outRows = results.filter(Boolean).map(r => {
+  // Stream write to avoid holding all output in memory
+  const outStream = fs.createWriteStream(outputFile);
+  outStream.write(outHeaders.join(',') + '\n');
+
+  for (let i = 0; i < rows.length; i++) {
+    const r = results[i];
+    if (!r) continue;
+
     const a = r._analysis;
     const g = r._googleAds;
     let metaAds, googleAds, category;
 
     if (!a) {
-      // No analysis (no URL or error)
       metaAds = ''; googleAds = ''; category = r._error ? 'ERROR' : '';
     } else {
-      // Meta determination
       if (a.meta_confidence >= 50) metaAds = 'YES';
       else if (a.meta_confidence >= 20) metaAds = 'LIKELY';
       else metaAds = 'NO';
 
-      // Google determination — prefer Transparency confirmation
       if (g?.confirmed) googleAds = 'YES';
       else if (a.google_confidence >= 60) googleAds = 'YES';
       else if (a.google_confidence >= 20) googleAds = 'LIKELY';
       else googleAds = 'NO';
 
-      // Category
       if (metaAds === 'YES' || googleAds === 'YES') { category = 'HOT'; finalHot++; }
       else if (metaAds === 'LIKELY' || googleAds === 'LIKELY' || a.analytics.length > 0) { category = 'WARM'; finalWarm++; }
       else { category = 'COLD'; finalCold++; }
     }
 
-    const out = { ...r };
-    // Remove internal fields
-    delete out._analysis; delete out._googleAds; delete out._noUrl; delete out._error;
+    // Build output row from original CSV data + enrichment
+    const enrichment = {
+      meta_ads: metaAds || '',
+      meta_confidence: a?.meta_confidence ?? '',
+      meta_signals: a?.meta_signals?.join('+') || '',
+      google_ads: googleAds || '',
+      google_confidence: a?.google_confidence ?? '',
+      google_signals: a?.google_signals?.join('+') || '',
+      google_ad_count: g?.count || '',
+      google_advertiser: g?.advertiser || '',
+      paid_platforms: a?.paid?.join('; ') || '',
+      has_analytics: a?.analytics?.length > 0 ? 'YES' : 'NO',
+      facebook_page: a?.facebook_page || '',
+      meta_pixel_id: a?.ids?.meta_pixel_id || '',
+      google_ads_id: a?.ids?.google_ads_id || '',
+      lead_category: category || '',
+    };
 
-    out.meta_ads = metaAds;
-    out.meta_confidence = a?.meta_confidence ?? '';
-    out.meta_signals = a?.meta_signals?.join('+') || '';
-    out.google_ads = googleAds;
-    out.google_confidence = a?.google_confidence ?? '';
-    out.google_signals = a?.google_signals?.join('+') || '';
-    out.google_ad_count = g?.count || '';
-    out.google_advertiser = g?.advertiser || '';
-    out.paid_platforms = a?.paid?.join('; ') || '';
-    out.has_analytics = a?.analytics?.length > 0 ? 'YES' : 'NO';
-    out.facebook_page = a?.facebook_page || '';
-    out.meta_pixel_id = a?.ids?.meta_pixel_id || '';
-    out.google_ads_id = a?.ids?.google_ads_id || '';
-    out.lead_category = category;
+    const row = rows[i];
+    const line = outHeaders.map(h => esc(enrichment[h] !== undefined ? enrichment[h] : (row[h] || ''))).join(',');
+    outStream.write(line + '\n');
 
-    return outHeaders.map(h => esc(out[h])).join(',');
-  });
+    // Free memory: clear analysis data
+    results[i] = null;
+  }
 
-  fs.writeFileSync(outputFile, outHeaders.join(',') + '\n' + outRows.join('\n'));
+  outStream.end();
 
   const totalSec = ((Date.now() - t0) / 1000).toFixed(1);
   console.log('╔═══════════════════════════════════════════╗');
