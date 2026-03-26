@@ -29,6 +29,7 @@ const fs = require('fs');
 const https = require('https');
 const http = require('http');
 const dns = require('dns');
+const zlib = require('zlib');
 const { execSync, execFileSync } = require('child_process');
 const path = require('path');
 
@@ -108,7 +109,7 @@ function fetchUrl(url, redirects = 0, ua = null) {
         'User-Agent': ua || USER_AGENTS[0],
         Accept: 'text/html,application/xhtml+xml',
         'Accept-Language': 'en-US,en;q=0.9',
-        'Accept-Encoding': 'identity',
+        'Accept-Encoding': 'gzip, deflate, identity',
       },
       timeout: TIMEOUT, rejectUnauthorized: false,
     }, res => {
@@ -119,9 +120,18 @@ function fetchUrl(url, redirects = 0, ua = null) {
         res.resume();
         return resolve(fetchUrl(r, redirects + 1, ua));
       }
-      let d = ''; let b = 0;
-      res.on('data', c => { b += c.length; if (b <= MAX_BODY) d += c; });
-      res.on('end', () => resolve({ ok: res.statusCode === 200, body: d, status: res.statusCode }));
+      // Handle gzip/deflate compressed responses
+      let stream = res;
+      const encoding = (res.headers['content-encoding'] || '').toLowerCase();
+      if (encoding === 'gzip') stream = res.pipe(zlib.createGunzip());
+      else if (encoding === 'deflate') stream = res.pipe(zlib.createInflate());
+      else if (encoding === 'br') { stream = res; } // Brotli not supported, use raw
+
+      const chunks = [];
+      let b = 0;
+      stream.on('data', c => { b += c.length; if (b <= MAX_BODY) chunks.push(c); });
+      stream.on('end', () => resolve({ ok: res.statusCode === 200, body: Buffer.concat(chunks).toString('utf8'), status: res.statusCode }));
+      stream.on('error', () => resolve({ ok: false }));
       res.on('error', () => resolve({ ok: false }));
     });
     req.on('error', () => resolve({ ok: false }));
