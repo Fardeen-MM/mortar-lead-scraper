@@ -160,6 +160,45 @@ function esc(v) {
     console.log(`  Loaded ${leads.length} leads with ${headers.length} columns`);
   }
 
+  // ── STEP 1.5: Website Discovery (for leads without websites) ──
+  const websiteColCheck = headers.find(h => /^website$/i.test(h) || /^url$/i.test(h) || /^domain$/i.test(h));
+  if (!websiteColCheck) {
+    headers.push('website');
+    leads.forEach(l => { l.website = ''; });
+  }
+  const wCol = websiteColCheck || 'website';
+  const missingWebsite = leads.filter(l => {
+    const w = (l[wCol] || '').trim().toLowerCase();
+    return !w || w === 'false' || w === 'true' || w.length < 4;
+  });
+
+  if (missingWebsite.length > 0 && !hasFlag('skip-website-discovery')) {
+    console.log(`\n  ══ Step 1.5: Website Discovery (${missingWebsite.length} leads without websites) ══`);
+
+    const { findByDomainGuessing } = require('../lib/website-finder');
+    let found = 0;
+
+    for (let i = 0; i < Math.min(missingWebsite.length, maxLeads); i++) {
+      const lead = missingWebsite[i];
+      const name = lead.firm_name || lead.company_name || lead.name || lead.company || '';
+      const city = lead.city || '';
+      if (!name || name.length < 3) continue;
+
+      try {
+        const website = await findByDomainGuessing(name, city);
+        if (website) {
+          lead[wCol] = website;
+          found++;
+        }
+      } catch {}
+
+      if ((i + 1) % 50 === 0) {
+        console.log(`  [${i + 1}/${missingWebsite.length}] ${found} websites found`);
+      }
+    }
+    console.log(`  ✓ Website discovery: ${found} found via domain guessing`);
+  }
+
   // ── STEP 2: Find emails ─────────────────────────────────────
   if (!skipEnrich) {
     console.log(`\n  ══ Step 2: Email Enrichment ══`);
