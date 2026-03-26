@@ -551,10 +551,11 @@ function findCol(headers, patterns) {
   console.log(`  ✓ Pass 1 done: ${checked} scanned in ${pass1Time}s (${(checked / pass1Time).toFixed(1)}/sec)\n`);
 
   // ── PASS 2: Google Ads Transparency ─────────────────────────
-  // Only check leads that have google signals OR no URL (need name-based check)
+  // Check ALL leads with analysis (not just those with Google signals)
+  // This is the ground truth for Google Ads — pixel tag ≠ active campaigns
   const googleCandidates = results.map((r, i) => ({ i, r })).filter(({ r }) => {
-    if (!r || r._noUrl || r._error) return false;
-    return r._analysis?.google_confidence > 0;
+    if (!r || r._noUrl || r._error || !r._analysis) return false;
+    return true; // Check all scanned leads
   });
 
   console.log(`  ══ PASS 2: Google Ads Transparency (${googleCandidates.length} candidates) ══`);
@@ -562,8 +563,9 @@ function findCol(headers, patterns) {
   let gChecked = 0, gFound = 0;
 
   for (const { i, r } of googleCandidates) {
-    // Build best name for search
-    let name = (r[nameCol] || '').trim();
+    // Build best name for search — use rows[i] since results don't have CSV data
+    const row = rows[i];
+    let name = (row[nameCol] || '').trim();
     if (name.includes('facebook.com/')) {
       name = name.replace(/^.*facebook\.com\//i, '').replace(/\/$/, '');
       name = name.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/[-_]/g, ' ').trim();
@@ -572,8 +574,8 @@ function findCol(headers, patterns) {
       name = name.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/[-_]/g, ' ').trim();
     }
     if ((!name || name.length < 3) && firstNameCol && lastNameCol) {
-      const fn = (r[firstNameCol] || '').trim();
-      const ln = (r[lastNameCol] || '').trim();
+      const fn = (row[firstNameCol] || '').trim();
+      const ln = (row[lastNameCol] || '').trim();
       if (fn && ln) name = fn + ' ' + ln;
     }
 
@@ -603,12 +605,13 @@ function findCol(headers, patterns) {
   console.log(`  ✓ Pass 2 done: ${gChecked} checked, ${gFound} confirmed Google Ads\n`);
 
   // ── PASS 3: Meta Ads Confirmation (MetaAdsCollector) ────────
-  // Only check leads with facebook_page extracted but uncertain meta status
+  // Check ALL leads with any Meta signals — pixel installed ≠ active ads
+  // This is the ground truth check that determines ACTIVE vs HAS_PIXEL
   const metaCandidates = results.map((r, i) => ({ i, r })).filter(({ r }) => {
     if (!r || !r._analysis) return false;
     const a = r._analysis;
-    // Check leads where we found a FB page link but pixel signals are weak
-    return a.facebook_page && a.meta_confidence < 50 && a.meta_confidence > 0;
+    // Check any lead with Meta signals OR a Facebook page link
+    return a.meta_confidence > 0 || a.facebook_page;
   });
 
   if (metaCandidates.length > 0) {
@@ -662,17 +665,30 @@ function findCol(headers, patterns) {
     if (!a) {
       metaAds = ''; googleAds = ''; category = r._error ? 'ERROR' : '';
     } else {
-      if (a.meta_confidence >= 50) metaAds = 'YES';
-      else if (a.meta_confidence >= 20) metaAds = 'LIKELY';
+      const m = r._metaAds;
+      const metaConfirmed = m?.confirmed === true;  // MetaAdsCollector found active ads
+      const googleConfirmed = g?.confirmed === true; // Google Transparency found active ads
+
+      // Meta determination: confirmed > pixel signals
+      if (metaConfirmed) metaAds = 'ACTIVE';                    // Confirmed via Ad Library
+      else if (a.meta_confidence >= 50) metaAds = 'HAS_PIXEL';  // Has pixel infrastructure
+      else if (a.meta_confidence >= 20) metaAds = 'LIKELY';     // Weak signals
       else metaAds = 'NO';
 
-      if (g?.confirmed) googleAds = 'YES';
-      else if (a.google_confidence >= 60) googleAds = 'YES';
+      // Google determination: confirmed > pixel signals
+      if (googleConfirmed) googleAds = 'ACTIVE';
+      else if (a.google_confidence >= 60) googleAds = 'HAS_TAG'; // Has AW- tag installed
       else if (a.google_confidence >= 20) googleAds = 'LIKELY';
       else googleAds = 'NO';
 
-      if (metaAds === 'YES' || googleAds === 'YES') { category = 'HOT'; finalHot++; }
-      else if (metaAds === 'LIKELY' || googleAds === 'LIKELY' || a.analytics.length > 0) { category = 'WARM'; finalWarm++; }
+      // Category: HOT = confirmed active ads, WARM = has infrastructure, COLD = nothing
+      const hasConfirmedAds = metaConfirmed || googleConfirmed;
+      const hasInfrastructure = a.meta_confidence >= 50 || a.google_confidence >= 60;
+      const hasWeakSignals = a.meta_confidence > 0 || a.google_confidence > 0 || a.analytics.length > 0;
+
+      if (hasConfirmedAds) { category = 'HOT'; finalHot++; }
+      else if (hasInfrastructure) { category = 'WARM'; finalWarm++; }  // Has pixel but no confirmed active ads
+      else if (hasWeakSignals) { category = 'WARM'; finalWarm++; }
       else { category = 'COLD'; finalCold++; }
     }
 
