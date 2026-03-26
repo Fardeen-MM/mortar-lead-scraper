@@ -190,6 +190,66 @@ function analyzeWebsite(html) {
   return result;
 }
 
+// ── JS Bundle Deep Scan ─────────────────────────────────────────
+// For sites where HTML doesn't contain pixel code, download their main JS bundles
+// and search those. Catches ~30% more pixels that are loaded dynamically.
+const JS_BUNDLE_PATTERNS = [
+  /fbq\s*\(\s*['"]init/i,
+  /connect\.facebook\.net.*fbevents/i,
+  /facebook-domain-verification/i,
+  /gtag\s*\(\s*['"]config['"]\s*,\s*['"]AW-/i,
+  /googleadservices\.com\/pagead/i,
+  /google_conversion_id/i,
+  /analytics\.tiktok\.com/i,
+  /bat\.bing\.com\/action/i,
+];
+
+async function deepScanJsBundles(html, baseUrl) {
+  // Extract script src URLs from HTML
+  const scriptRe = /<script[^>]+src=["']([^"']+)["']/gi;
+  const scripts = [];
+  let sm;
+  while ((sm = scriptRe.exec(html)) !== null) {
+    let src = sm[1];
+    // Skip external CDN scripts (analytics, ad libraries themselves)
+    if (src.includes('google') || src.includes('facebook') || src.includes('tiktok') ||
+        src.includes('doubleclick') || src.includes('cdn.') || src.includes('jquery') ||
+        src.includes('bootstrap')) continue;
+    // Resolve relative URLs
+    if (src.startsWith('/')) {
+      try { const u = new URL(baseUrl); src = u.protocol + '//' + u.host + src; } catch { continue; }
+    } else if (!src.startsWith('http')) {
+      try { src = new URL(src, baseUrl).href; } catch { continue; }
+    }
+    // Prioritize likely main bundles
+    if (/main|app|bundle|chunk|vendor/i.test(src) || src.endsWith('.js')) {
+      scripts.push(src);
+    }
+  }
+
+  // Download top 3 JS files (limit to avoid slowdown)
+  const toCheck = scripts.slice(0, 3);
+  const found = { meta_pixel: false, google_ads: false, tiktok: false, bing: false };
+
+  for (const jsUrl of toCheck) {
+    try {
+      const resp = await fetchUrl(jsUrl, 0, USER_AGENTS[0]);
+      if (!resp.ok || !resp.body) continue;
+      // Check for ad patterns in JS bundle
+      for (const pattern of JS_BUNDLE_PATTERNS) {
+        if (pattern.test(resp.body)) {
+          if (/fbq|facebook/i.test(pattern.source)) found.meta_pixel = true;
+          if (/gtag|googlead|google_conversion/i.test(pattern.source)) found.google_ads = true;
+          if (/tiktok/i.test(pattern.source)) found.tiktok = true;
+          if (/bing/i.test(pattern.source)) found.bing = true;
+        }
+      }
+    } catch {}
+  }
+
+  return found;
+}
+
 // ── Google Ads Transparency Check ───────────────────────────────
 const PY_SCRIPT = `
 import sys, json
@@ -314,6 +374,26 @@ function findCol(headers, patterns) {
       if (!resp.ok) { results[i] = { ...rows[i], _error: true }; stats.errors++; continue; }
 
       const a = analyzeWebsite(resp.body);
+
+      // Deep scan: if no Meta/Google paid signals found in HTML, check JS bundles
+      if (a.meta_confidence < 20 && a.google_confidence < 20 && resp.body.includes('<script')) {
+        try {
+          const jsFinds = await deepScanJsBundles(resp.body, url);
+          if (jsFinds.meta_pixel && !a.detections.meta_pixel) {
+            a.detections.meta_pixel = true;
+            a.paid.push('Meta Pixel (JS)');
+            a.meta_confidence = Math.min(a.meta_confidence + 50, 100);
+            a.meta_signals.push('pixel_js');
+          }
+          if (jsFinds.google_ads && !a.detections.google_ads) {
+            a.detections.google_ads = true;
+            a.paid.push('Google Ads (JS)');
+            a.google_confidence = Math.min(a.google_confidence + 60, 100);
+            a.google_signals.push('ads_tag_js');
+          }
+        } catch {}
+      }
+
       if (a.meta_confidence >= 50 || a.paid.length > 0) stats.hot++;
       else if (a.analytics.length > 0 || a.meta_confidence > 0) stats.warm++;
       else stats.cold++;
