@@ -188,36 +188,61 @@ function esc(v) {
 
     if (withDomain.length > 0) {
       try {
-        const { EmailWaterfall } = require('../lib/email-waterfall');
-        const wf = new EmailWaterfall();
         let found = 0;
+        const eCol = emailCol || 'email';
 
-        for (let i = 0; i < Math.min(withDomain.length, maxLeads); i++) {
-          const lead = withDomain[i];
-          const firstName = lead[firstNameCol] || lead.first_name || '';
-          const lastName = lead[lastNameCol] || lead.last_name || '';
+        // Phase A: For leads WITH first+last name → use email waterfall (Microsoft 365 API)
+        const withNames = withDomain.filter(l => (l[firstNameCol] || l.first_name) && (l[lastNameCol] || l.last_name));
+        if (withNames.length > 0) {
+          console.log(`  Phase A: Email waterfall for ${withNames.length} leads with names...`);
+          const { EmailWaterfall } = require('../lib/email-waterfall');
+          const wf = new EmailWaterfall();
 
-          if (!firstName || !lastName) continue;
+          for (let i = 0; i < Math.min(withNames.length, maxLeads); i++) {
+            const lead = withNames[i];
+            const firstName = lead[firstNameCol] || lead.first_name || '';
+            const lastName = lead[lastNameCol] || lead.last_name || '';
+            let domain = (lead[websiteCol] || lead.website || '').replace(/^https?:\/\/(www\.)?/i, '').replace(/\/.*$/, '');
+            if (!domain || domain === 'false') continue;
 
-          let domain = (lead[websiteCol] || '').replace(/^https?:\/\/(www\.)?/i, '').replace(/\/.*$/, '');
-          if (!domain || domain === 'false') continue;
-
-          try {
-            const result = await wf.findEmail({ first_name: firstName, last_name: lastName, domain });
-            if (result) {
-              lead[emailCol || 'email'] = result.email;
-              lead.email_source = result.source;
-              lead.email_confidence = result.confidence;
-              found++;
-            }
-          } catch {}
-
-          if ((i + 1) % 10 === 0 || i < 3) {
-            console.log(`  [${i + 1}/${withDomain.length}] ${found} emails found`);
+            try {
+              const result = await wf.findEmail({ first_name: firstName, last_name: lastName, domain });
+              if (result) {
+                lead[eCol] = result.email;
+                lead.email_source = result.source;
+                lead.email_confidence = result.confidence;
+                found++;
+              }
+            } catch {}
+            if ((i + 1) % 10 === 0) console.log(`    [${i + 1}/${withNames.length}] ${found} emails found`);
           }
         }
 
-        console.log(`  ✓ Email enrichment: ${found}/${Math.min(withDomain.length, maxLeads)} found (${(found / Math.min(withDomain.length, maxLeads) * 100).toFixed(0)}%)`);
+        // Phase B: For leads WITHOUT names → scrape website for contact emails
+        const withoutNames = withDomain.filter(l => !l[eCol]?.includes('@'));
+        if (withoutNames.length > 0) {
+          console.log(`  Phase B: Website scraping for ${withoutNames.length} leads without names/email...`);
+          const scraper = require('../lib/fast-email-scraper');
+
+          for (let i = 0; i < Math.min(withoutNames.length, maxLeads); i++) {
+            const lead = withoutNames[i];
+            const url = lead[websiteCol] || lead.website || '';
+            if (!url || url === 'false') continue;
+
+            try {
+              const emails = await scraper.scrapeEmails(url.startsWith('http') ? url : 'https://' + url);
+              if (emails && emails.length > 0) {
+                lead[eCol] = emails[0];
+                lead.email_source = 'website_scrape';
+                lead.email_confidence = 70;
+                found++;
+              }
+            } catch {}
+            if ((i + 1) % 10 === 0) console.log(`    [${i + 1}/${withoutNames.length}] ${found} total emails`);
+          }
+        }
+
+        console.log(`  ✓ Email enrichment: ${found} emails found across ${withDomain.length} leads`);
       } catch (e) {
         console.log(`  ✗ Email enrichment failed: ${e.message}`);
       }
