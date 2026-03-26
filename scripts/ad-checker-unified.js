@@ -415,7 +415,8 @@ function normalizeUrl(raw) {
   if (!raw) return null;
   let url = raw.trim();
   // Filter out obvious non-URLs
-  if (url === 'false' || url === 'true' || url === 'null' || url === 'undefined' || url === 'N/A' || url === 'n/a' || url.length < 4) return null;
+  const lower = url.toLowerCase();
+  if (lower === 'false' || lower === 'true' || lower === 'null' || lower === 'undefined' || lower === 'n/a' || lower === 'none' || lower === '' || url.length < 4) return null;
   url = url.replace(/^\/\//, 'https://');
   if (url.startsWith('www.')) url = 'https://' + url;
   if (!url.startsWith('http')) url = 'https://' + url;
