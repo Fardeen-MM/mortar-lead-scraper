@@ -28,6 +28,7 @@
 const fs = require('fs');
 const https = require('https');
 const http = require('http');
+const dns = require('dns');
 const { execSync } = require('child_process');
 const path = require('path');
 
@@ -250,6 +251,44 @@ async function deepScanJsBundles(html, baseUrl) {
   return found;
 }
 
+// ── DNS Marketing Stack Detection ───────────────────────────────
+// Check SPF/TXT records for marketing platform includes.
+// If a domain uses HubSpot, Pardot, Mailchimp, Klaviyo etc. for email marketing,
+// they almost certainly run paid ads to drive traffic to those funnels.
+const MARKETING_SPF_PATTERNS = {
+  'hubspot': { pattern: /hubspot/i, label: 'HubSpot', weight: 15 },
+  'pardot': { pattern: /pardot/i, label: 'Pardot/Salesforce', weight: 15 },
+  'mailchimp': { pattern: /mcsv\.net|mandrillapp|mailchimp/i, label: 'Mailchimp', weight: 10 },
+  'klaviyo': { pattern: /klaviyo/i, label: 'Klaviyo', weight: 15 },
+  'activecampaign': { pattern: /activecampaign/i, label: 'ActiveCampaign', weight: 10 },
+  'sendgrid': { pattern: /sendgrid/i, label: 'SendGrid', weight: 5 },
+  'marketo': { pattern: /marketo/i, label: 'Marketo', weight: 15 },
+  'constantcontact': { pattern: /constantcontact|ctctcdn/i, label: 'Constant Contact', weight: 8 },
+};
+
+function checkDnsTxt(domain) {
+  return new Promise(resolve => {
+    dns.resolveTxt(domain, (err, records) => {
+      if (err) return resolve({ platforms: [], score: 0 });
+      const allTxt = records.map(r => r.join('')).join(' ');
+      const found = [];
+      let score = 0;
+      for (const [key, { pattern, label, weight }] of Object.entries(MARKETING_SPF_PATTERNS)) {
+        if (pattern.test(allTxt)) {
+          found.push(label);
+          score += weight;
+        }
+      }
+      // Check for facebook-domain-verification in TXT records too
+      if (/facebook-domain-verification/i.test(allTxt)) {
+        found.push('FB Domain Verify (DNS)');
+        score += 20;
+      }
+      resolve({ platforms: found, score });
+    });
+  });
+}
+
 // ── Google Ads Transparency Check ───────────────────────────────
 const PY_SCRIPT = `
 import sys, json
@@ -393,6 +432,16 @@ function findCol(headers, patterns) {
           }
         } catch {}
       }
+
+      // DNS marketing stack check: adds marketing platform signals
+      try {
+        const domain = new URL(url).hostname.replace(/^www\./, '');
+        const dnsResult = await checkDnsTxt(domain);
+        if (dnsResult.platforms.length > 0) {
+          a.meta_confidence = Math.min(a.meta_confidence + dnsResult.score, 100);
+          a.meta_signals.push(...dnsResult.platforms.map(p => 'dns:' + p.toLowerCase().replace(/\s+/g, '_')));
+        }
+      } catch {}
 
       if (a.meta_confidence >= 50 || a.paid.length > 0) stats.hot++;
       else if (a.analytics.length > 0 || a.meta_confidence > 0) stats.warm++;
