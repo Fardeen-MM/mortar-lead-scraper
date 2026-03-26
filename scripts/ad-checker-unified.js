@@ -253,7 +253,7 @@ async function deepScanJsBundles(html, baseUrl) {
     let src = sm[1];
     // Skip external CDN scripts (analytics, ad libraries themselves)
     if (src.includes('google') || src.includes('facebook') || src.includes('tiktok') ||
-        src.includes('doubleclick') || src.includes('cdn.') || src.includes('jquery') ||
+        src.includes('doubleclick') || src.includes('jquery') ||
         src.includes('bootstrap')) continue;
     // Resolve relative URLs
     if (src.startsWith('/')) {
