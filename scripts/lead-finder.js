@@ -107,12 +107,42 @@ function esc(v) {
   if (!skipDiscovery) {
     console.log(`\n  ══ Step 1: Discover "${niche}" in "${location}" (max ${maxLeads}) ══`);
 
-    // For now, use our existing Google Maps scraper via the server API
-    // TODO: Integrate gosom/google-maps-scraper or direct Puppeteer
-    console.log('  Discovery not yet implemented as standalone.');
-    console.log('  Use: node scripts/lead-finder.js --input your-leads.csv');
-    console.log('  Or run Google Maps scraper separately first.\n');
-    process.exit(1);
+    if (!process.env.SERPER_API_KEY) {
+      console.log('  ✗ SERPER_API_KEY not set. Get a free key at https://serper.dev');
+      console.log('  Or use: node scripts/lead-finder.js --input your-leads.csv\n');
+      process.exit(1);
+    }
+
+    try {
+      const { SerperSearch } = require('../lib/serper-search');
+      const search = new SerperSearch();
+      const businesses = await search.findBusinesses(niche, location, maxLeads);
+
+      console.log(`  Found ${businesses.length} businesses via Serper Maps API`);
+
+      headers = ['name', 'address', 'phone', 'website', 'rating', 'ratingCount', 'category', 'latitude', 'longitude'];
+      for (const biz of businesses) {
+        leads.push({
+          name: biz.title,
+          address: biz.address,
+          phone: biz.phone,
+          website: biz.website,
+          rating: biz.rating,
+          ratingCount: biz.ratingCount,
+          category: biz.category,
+          latitude: biz.latitude,
+          longitude: biz.longitude,
+        });
+      }
+
+      // Split name into first/last for email finding (best effort)
+      if (!headers.includes('first_name')) headers.push('first_name', 'last_name');
+      // Note: Google Maps returns business names, not owner names
+      // Email finding will use the domain from website instead
+    } catch (e) {
+      console.log(`  ✗ Discovery failed: ${e.message}`);
+      process.exit(1);
+    }
   }
 
   // ── Load existing CSV ───────────────────────────────────────
