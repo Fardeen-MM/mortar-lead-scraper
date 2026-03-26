@@ -32,7 +32,7 @@ const dns = require('dns');
 const { execSync } = require('child_process');
 const path = require('path');
 
-const CONCURRENCY = parseInt(process.argv[4] || '50', 10);
+const CONCURRENCY = Math.min(parseInt(process.argv[4] || '30', 10), 40); // Cap at 40 to avoid OOM
 const TIMEOUT = 8000;
 const MAX_REDIRECTS = 5;
 const MAX_BODY = 500000;
@@ -413,11 +413,13 @@ function findCol(headers, patterns) {
       if (!resp.ok) { results[i] = { _error: true }; stats.errors++; continue; }
 
       const a = analyzeWebsite(resp.body);
+      const htmlForDeepScan = (a.meta_confidence < 20 && a.google_confidence < 20) ? resp.body : null;
+      resp.body = null; // Free HTML from memory immediately
 
       // Deep scan: if no Meta/Google paid signals found in HTML, check JS bundles
-      if (a.meta_confidence < 20 && a.google_confidence < 20 && resp.body.includes('<script')) {
+      if (htmlForDeepScan && htmlForDeepScan.includes('<script')) {
         try {
-          const jsFinds = await deepScanJsBundles(resp.body, url);
+          const jsFinds = await deepScanJsBundles(htmlForDeepScan, url);
           if (jsFinds.meta_pixel && !a.detections.meta_pixel) {
             a.detections.meta_pixel = true;
             a.paid.push('Meta Pixel (JS)');
