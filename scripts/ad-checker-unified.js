@@ -130,7 +130,13 @@ function fetchUrl(url, redirects = 0, ua = null) {
       const chunks = [];
       let b = 0;
       stream.on('data', c => { b += c.length; if (b <= MAX_BODY) chunks.push(c); });
-      stream.on('end', () => resolve({ ok: res.statusCode === 200, body: Buffer.concat(chunks).toString('utf8'), status: res.statusCode }));
+      stream.on('end', () => resolve({
+        ok: res.statusCode === 200,
+        body: Buffer.concat(chunks).toString('utf8'),
+        status: res.statusCode,
+        cookies: (res.headers['set-cookie'] || []).join('; '), // For ad cookie detection
+        csp: res.headers['content-security-policy'] || '',
+      }));
       stream.on('error', () => resolve({ ok: false }));
       res.on('error', () => resolve({ ok: false }));
     });
@@ -155,7 +161,7 @@ async function fetchWithRetry(url) {
 }
 
 // ── Analyze ─────────────────────────────────────────────────────
-function analyzeWebsite(html) {
+function analyzeWebsite(html, cookies = '', csp = '') {
   const result = { detections: {}, ids: {}, paid: [], analytics: [], facebook_page: '' };
 
   for (const [key, det] of Object.entries(DETECTORS)) {
@@ -178,6 +184,21 @@ function analyzeWebsite(html) {
       result.facebook_page = 'facebook.com/' + slug;
       break;
     }
+  }
+
+  // Cookie-based detection (from Set-Cookie response headers — no JS needed)
+  if (cookies) {
+    if (/_fbp=/.test(cookies)) { result.detections.meta_pixel = true; if (!result.paid.includes('Meta Pixel')) result.paid.push('Meta Pixel (cookie)'); }
+    if (/_gcl_aw=/.test(cookies)) { result.detections.google_ads = true; if (!result.paid.includes('Google Ads')) result.paid.push('Google Ads (cookie)'); }
+    if (/_gcl_au=/.test(cookies)) { result.detections.google_ads = true; }
+    if (/_uetsid=/.test(cookies)) { result.detections.bing_ads = true; if (!result.paid.includes('Bing Ads')) result.paid.push('Bing Ads (cookie)'); }
+    if (/_ttp=/.test(cookies)) { result.detections.tiktok = true; if (!result.paid.includes('TikTok')) result.paid.push('TikTok (cookie)'); }
+  }
+
+  // CSP header detection (whitelisted ad domains prove they're expected to load)
+  if (csp) {
+    if (/connect\.facebook\.net/i.test(csp)) { result.detections.meta_pixel = true; }
+    if (/googleadservices\.com/i.test(csp) || /doubleclick\.net/i.test(csp)) { result.detections.google_ads = true; }
   }
 
   // Composite Meta score (calibrated from scrutiny agent review)
@@ -470,7 +491,7 @@ function findCol(headers, patterns) {
 
       if (!resp.ok) { results[i] = { _error: true }; stats.errors++; continue; }
 
-      const a = analyzeWebsite(resp.body);
+      const a = analyzeWebsite(resp.body, resp.cookies || '', resp.csp || '');
       const htmlForDeepScan = (a.meta_confidence < 20 && a.google_confidence < 20) ? resp.body : null;
       resp.body = null; // Free HTML from memory immediately
 
