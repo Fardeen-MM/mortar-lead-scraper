@@ -83,13 +83,24 @@ const DETECTORS = {
 
 const FB_SKIP = new Set(['sharer','sharer.php','share','share.php','dialog','tr','plugins','pages','groups','events','hashtag','login','help','business','privacy','policy','profile.php','watch','reel','reels','marketplace','gaming','stories','ads','about','legal','terms','settings','notifications','messenger','fundraisers','offers','jobs','bookmarks','flx','l.php','photo.php','video.php']);
 
-// ── HTTP Fetch ──────────────────────────────────────────────────
-function fetchUrl(url, redirects = 0) {
+// ── HTTP Fetch with Retry ───────────────────────────────────────
+const USER_AGENTS = [
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+  'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+];
+
+function fetchUrl(url, redirects = 0, ua = null) {
   if (redirects > MAX_REDIRECTS) return Promise.resolve({ ok: false });
   return new Promise(resolve => {
     const proto = url.startsWith('https') ? https : http;
     const req = proto.get(url, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36', Accept: 'text/html', 'Accept-Language': 'en-US', 'Accept-Encoding': 'identity' },
+      headers: {
+        'User-Agent': ua || USER_AGENTS[0],
+        Accept: 'text/html,application/xhtml+xml',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Encoding': 'identity',
+      },
       timeout: TIMEOUT, rejectUnauthorized: false,
     }, res => {
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
@@ -97,16 +108,31 @@ function fetchUrl(url, redirects = 0) {
         if (r.startsWith('/')) { try { const u = new URL(url); r = u.protocol + '//' + u.host + r; } catch { return resolve({ ok: false }); } }
         if (!r.startsWith('http')) r = 'https://' + r;
         res.resume();
-        return resolve(fetchUrl(r, redirects + 1));
+        return resolve(fetchUrl(r, redirects + 1, ua));
       }
       let d = ''; let b = 0;
       res.on('data', c => { b += c.length; if (b <= MAX_BODY) d += c; });
-      res.on('end', () => resolve({ ok: res.statusCode === 200, body: d }));
+      res.on('end', () => resolve({ ok: res.statusCode === 200, body: d, status: res.statusCode }));
       res.on('error', () => resolve({ ok: false }));
     });
     req.on('error', () => resolve({ ok: false }));
-    req.on('timeout', () => { req.destroy(); resolve({ ok: false }); });
+    req.on('timeout', () => { req.destroy(); resolve({ ok: false, error: 'timeout' }); });
   });
+}
+
+// Fetch with one retry using different UA
+async function fetchWithRetry(url) {
+  let resp = await fetchUrl(url);
+  if (!resp.ok) {
+    // Retry once with different user agent
+    resp = await fetchUrl(url, 0, USER_AGENTS[1]);
+  }
+  // If still failing and URL has no www, try with www
+  if (!resp.ok && !url.includes('://www.')) {
+    const wwwUrl = url.replace('://', '://www.');
+    resp = await fetchUrl(wwwUrl, 0, USER_AGENTS[2]);
+  }
+  return resp;
 }
 
 // ── Analyze ─────────────────────────────────────────────────────
@@ -282,7 +308,7 @@ function findCol(headers, patterns) {
       const url = normalizeUrl(rows[i][urlCol]);
       if (!url) { results[i] = { ...rows[i], _noUrl: true }; continue; }
 
-      const resp = await fetchUrl(url);
+      const resp = await fetchWithRetry(url);
       checked++;
 
       if (!resp.ok) { results[i] = { ...rows[i], _error: true }; stats.errors++; continue; }
