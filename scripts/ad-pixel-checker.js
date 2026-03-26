@@ -32,6 +32,7 @@
 const fs = require('fs');
 const https = require('https');
 const http = require('http');
+const zlib = require('zlib');
 const path = require('path');
 
 // ── Config ──────────────────────────────────────────────────────
@@ -251,7 +252,7 @@ function fetchUrl(url, redirects = 0) {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml',
         'Accept-Language': 'en-US,en;q=0.9',
-        'Accept-Encoding': 'identity',
+        'Accept-Encoding': 'gzip, deflate, identity',
       },
       timeout: TIMEOUT,
       rejectUnauthorized: false,
@@ -263,10 +264,17 @@ function fetchUrl(url, redirects = 0) {
         res.resume();
         return resolve(fetchUrl(r, redirects + 1));
       }
-      let d = '';
+      // Handle gzip/deflate
+      let stream = res;
+      const enc = (res.headers['content-encoding'] || '').toLowerCase();
+      if (enc === 'gzip') stream = res.pipe(zlib.createGunzip());
+      else if (enc === 'deflate') stream = res.pipe(zlib.createInflate());
+
+      const chunks = [];
       let b = 0;
-      res.on('data', c => { b += c.length; if (b <= MAX_BODY) d += c; });
-      res.on('end', () => resolve({ ok: res.statusCode === 200, body: d, cookies: (res.headers['set-cookie'] || []).join('; ') }));
+      stream.on('data', c => { b += c.length; if (b <= MAX_BODY) chunks.push(c); });
+      stream.on('end', () => resolve({ ok: res.statusCode === 200, body: Buffer.concat(chunks).toString('utf8'), cookies: (res.headers['set-cookie'] || []).join('; ') }));
+      stream.on('error', () => resolve({ ok: false }));
       res.on('error', () => resolve({ ok: false }));
     });
     req.on('error', () => resolve({ ok: false, error: 'connect' }));
