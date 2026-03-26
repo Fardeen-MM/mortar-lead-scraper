@@ -103,6 +103,9 @@ function checkOne(businessName) {
   });
 
   const nameCol = headers.find(h => /business.?name|firm.?name|company|^name$|charity_name/i.test(h)) || headers[0];
+  const firstNameCol = headers.find(h => /^first.?name$/i.test(h));
+  const lastNameCol = headers.find(h => /^last.?name$/i.test(h));
+  const webCol = headers.find(h => /^website$/i.test(h) || /^url$/i.test(h) || /^domain$/i.test(h));
   const total = Math.min(rows.length, maxLeads);
 
   console.log(`\n  Google Ads Transparency Checker (FREE)`);
@@ -117,10 +120,34 @@ function checkOne(businessName) {
     const row = rows[i];
     let name = (row[nameCol] || '').trim();
 
-    // Skip URLs in name field
-    if (name.includes('http') || name.includes('facebook.com')) {
-      results.push({ ...row, google_ads_active: '', google_ad_count: '', google_advertiser: '', google_check_error: 'invalid_name' });
-      continue;
+    // Handle facebook.com/slug URLs — extract the slug as the name
+    if (name.includes('facebook.com/')) {
+      const slug = name.replace(/^.*facebook\.com\//i, '').replace(/\/$/, '').trim();
+      if (slug && slug.length > 2) {
+        name = slug.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/[-_]/g, ' ').trim();
+      } else {
+        name = '';
+      }
+    }
+    // Handle other URLs/domains
+    else if (name.includes('http') || /\.\w{2,4}$/.test(name)) {
+      name = name.replace(/^https?:\/\/(www\.)?/i, '').replace(/\/.*$/, '').replace(/\.\w+$/, '');
+      name = name.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/[-_]/g, ' ').trim();
+    }
+
+    // If name is empty or too short, try first+last name
+    if ((!name || name.length < 3) && firstNameCol && lastNameCol) {
+      const fn = (row[firstNameCol] || '').trim();
+      const ln = (row[lastNameCol] || '').trim();
+      if (fn && ln) name = fn + ' ' + ln;
+    }
+
+    // If still empty, try extracting from website domain
+    if (!name && webCol) {
+      const web = (row[webCol] || '').replace(/^https?:\/\/(www\.)?/i, '').replace(/\/.*$/, '').replace(/\.\w+$/, '');
+      if (web.length > 2) {
+        name = web.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/[-_]/g, ' ').trim();
+      }
     }
 
     if (!name) {
@@ -130,15 +157,42 @@ function checkOne(businessName) {
 
     const result = checkOne(name);
     checked++;
-    if (result.found && result.ad_count > 0) found++;
+
+    // Validate: does the returned advertiser name actually match our search?
+    // Must be strict to avoid false positives like "Cozen" matching "Paul Cozens"
+    let isValidMatch = false;
+    if (result.found && result.ad_count > 0 && result.advertiser_name) {
+      const searchNorm = name.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
+      const advNorm = result.advertiser_name.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
+
+      // Exact match
+      if (searchNorm === advNorm) {
+        isValidMatch = true;
+      }
+      // One contains the other as whole words (word boundary check)
+      else if (new RegExp('\\b' + searchNorm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b').test(advNorm) ||
+               new RegExp('\\b' + advNorm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b').test(searchNorm)) {
+        isValidMatch = true;
+      }
+      // Word-level match: require EXACT word matches (not substrings)
+      else {
+        const sWords = searchNorm.split(' ').filter(w => w.length > 2);
+        const aWords = new Set(advNorm.split(' '));
+        // Each search word must appear as an EXACT word in advertiser name
+        const matches = sWords.filter(w => aWords.has(w)).length;
+        isValidMatch = sWords.length > 0 && matches / sWords.length >= 0.5;
+      }
+    }
+
+    if (isValidMatch) found++;
 
     results.push({
       ...row,
-      google_ads_active: result.found && result.ad_count > 0 ? 'YES' : 'NO',
-      google_ad_count: result.ad_count || '',
+      google_ads_active: isValidMatch ? 'YES' : 'NO',
+      google_ad_count: isValidMatch ? (result.ad_count || '') : '',
       google_advertiser: result.advertiser_name || '',
-      google_advertiser_id: result.advertiser_id || '',
-      google_check_error: result.error || '',
+      google_advertiser_id: isValidMatch ? (result.advertiser_id || '') : '',
+      google_check_error: result.error || (result.found && !isValidMatch ? 'name_mismatch' : ''),
     });
 
     if (checked % 5 === 0 || checked <= 3) {

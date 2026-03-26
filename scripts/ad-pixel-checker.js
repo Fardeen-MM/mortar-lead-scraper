@@ -54,6 +54,33 @@ const DETECTORS = {
     idField: 'meta_pixel_id',
     category: 'paid',
   },
+  meta_domain_verify: {
+    label: 'Meta Domain Verification',
+    patterns: [
+      /facebook-domain-verification/i,   // <meta name="facebook-domain-verification" content="...">
+    ],
+    idPattern: /facebook-domain-verification['"]\s+content=['"]([a-z0-9]+)['"]/i,
+    idField: 'meta_domain_verify_id',
+    category: 'meta_signal', // Not paid by itself, but strong business ownership signal
+  },
+  meta_fbc: {
+    label: 'Meta Click ID (_fbc/fbclid)',
+    patterns: [
+      /_fbc\b/,                         // _fbc cookie reference in code
+      /fbclid/i,                        // fbclid parameter handling
+      /facebook\.com\/tr\?.*&ev=/i,     // Server-side event tracking
+    ],
+    category: 'meta_signal', // Handling click IDs = they run FB ads that drive traffic
+  },
+  meta_capi: {
+    label: 'Meta Conversions API',
+    patterns: [
+      /graph\.facebook\.com\/v\d+.*\/events/i,  // Conversions API endpoint
+      /facebook.*conversions?\s*api/i,           // References to Conversions API
+      /fb_event_name/i,                          // Server event parameter
+    ],
+    category: 'paid',
+  },
   meta_sdk: {
     label: 'Facebook SDK',
     patterns: [
@@ -259,14 +286,49 @@ function analyzeWebsite(html) {
     }
   }
 
+  // ── Composite Meta Confidence Score ─────────────────────────
+  // Combines multiple signals for high-accuracy Meta ad detection
+  let metaScore = 0;
+  const metaSignals = [];
+  if (result.detections.meta_pixel)        { metaScore += 50; metaSignals.push('pixel'); }
+  if (result.detections.meta_capi)         { metaScore += 40; metaSignals.push('capi'); }
+  if (result.detections.meta_domain_verify){ metaScore += 20; metaSignals.push('domain_verify'); }
+  if (result.detections.meta_fbc)          { metaScore += 25; metaSignals.push('fbc_fbclid'); }
+  if (result.detections.meta_sdk)          { metaScore += 10; metaSignals.push('sdk'); }
+  if (result.facebook_page)                { metaScore += 5;  metaSignals.push('fb_page_link'); }
+
+  // Check for Facebook UTM params in links (utm_source=facebook|fb|meta, utm_medium=paid|cpc|cpm)
+  const hasFbUtm = /utm_source=(facebook|fb|meta|ig|instagram)/i.test(html) &&
+                   /utm_medium=(paid|cpc|cpm|social|paidsocial)/i.test(html);
+  if (hasFbUtm) { metaScore += 30; metaSignals.push('fb_utm'); }
+
+  result.meta_confidence = Math.min(metaScore, 100);
+  result.meta_signals = metaSignals;
+
+  // ── Composite Google Confidence Score ─────────────────────
+  let googleScore = 0;
+  const googleSignals = [];
+  if (result.detections.google_ads)        { googleScore += 60; googleSignals.push('ads_tag'); }
+  if (result.detections.google_remarketing){ googleScore += 40; googleSignals.push('remarketing'); }
+  // Google UTM params
+  const hasGoogleUtm = /utm_source=(google|adwords|gclid)/i.test(html) &&
+                       /utm_medium=(cpc|ppc|paid)/i.test(html);
+  if (hasGoogleUtm) { googleScore += 25; googleSignals.push('google_utm'); }
+  const hasGclid = /gclid/i.test(html);
+  if (hasGclid && !result.detections.google_ads) { googleScore += 20; googleSignals.push('gclid'); }
+
+  result.google_confidence = Math.min(googleScore, 100);
+  result.google_signals = googleSignals;
+
   // Categorize lead
   const hasPaid = result.paid_platforms.length > 0;
+  const hasMetaSignals = metaScore >= 40; // Strong enough meta signals even without pixel
   const hasAnalytics = result.analytics_platforms.length > 0;
 
-  if (hasPaid) {
-    result.lead_category = 'HOT';  // Running paid ads
-  } else if (hasAnalytics) {
-    result.lead_category = 'WARM'; // Has tracking, no paid ads
+  if (hasPaid || hasMetaSignals) {
+    result.lead_category = 'HOT';  // Running paid ads (confirmed or high confidence)
+  } else if (hasAnalytics || metaScore > 0 || googleScore > 0) {
+    result.lead_category = 'WARM'; // Has tracking or weak signals
   } else {
     result.lead_category = 'COLD'; // Nothing
   }
@@ -372,7 +434,7 @@ function findCol(headers, patterns) {
     lastSave = checked;
     try {
       const partial = results.filter(Boolean);
-      const addCols = ['lead_category', 'runs_meta_ads', 'runs_google_ads', 'paid_platforms', 'has_analytics', 'facebook_page', 'meta_pixel_id', 'google_ads_id', 'ga4_id'];
+      const addCols = ['lead_category', 'runs_meta_ads', 'meta_confidence', 'meta_signals', 'runs_google_ads', 'google_confidence', 'google_signals', 'paid_platforms', 'has_analytics', 'facebook_page', 'meta_pixel_id', 'meta_domain_verify_id', 'google_ads_id', 'ga4_id'];
       const outH = [...headers, ...addCols];
       const outR = partial.map(r => outH.map(h => esc(r[h])).join(','));
       fs.writeFileSync(outputFile.replace('.csv', '.partial.csv'), outH.join(',') + '\n' + outR.join('\n'));
@@ -385,7 +447,7 @@ function findCol(headers, patterns) {
       const url = normalizeUrl(rows[i][urlCol]);
 
       if (!url) {
-        results[i] = { ...rows[i], lead_category: '', runs_meta_ads: '', runs_google_ads: '', paid_platforms: '', has_analytics: '', facebook_page: '', meta_pixel_id: '', google_ads_id: '', ga4_id: '', gtm_id: '', scan_error: 'no_url' };
+        results[i] = { ...rows[i], lead_category: '', runs_meta_ads: '', meta_confidence: '', meta_signals: '', runs_google_ads: '', google_confidence: '', google_signals: '', paid_platforms: '', has_analytics: '', facebook_page: '', meta_pixel_id: '', meta_domain_verify_id: '', google_ads_id: '', ga4_id: '', gtm_id: '', scan_error: 'no_url' };
         continue;
       }
 
@@ -393,7 +455,7 @@ function findCol(headers, patterns) {
       checked++;
 
       if (!resp.ok) {
-        results[i] = { ...rows[i], lead_category: 'ERROR', runs_meta_ads: '', runs_google_ads: '', paid_platforms: '', has_analytics: '', facebook_page: '', meta_pixel_id: '', google_ads_id: '', ga4_id: '', gtm_id: '', scan_error: resp.error || 'failed' };
+        results[i] = { ...rows[i], lead_category: 'ERROR', runs_meta_ads: '', meta_confidence: '', meta_signals: '', runs_google_ads: '', google_confidence: '', google_signals: '', paid_platforms: '', has_analytics: '', facebook_page: '', meta_pixel_id: '', meta_domain_verify_id: '', google_ads_id: '', ga4_id: '', gtm_id: '', scan_error: resp.error || 'failed' };
         stats.errors++;
         autoSave();
         continue;
@@ -408,12 +470,17 @@ function findCol(headers, patterns) {
       results[i] = {
         ...rows[i],
         lead_category: analysis.lead_category,
-        runs_meta_ads: analysis.detections.meta_pixel ? 'YES' : 'NO',
+        runs_meta_ads: analysis.detections.meta_pixel || analysis.meta_confidence >= 40 ? 'YES' : 'NO',
+        meta_confidence: analysis.meta_confidence,
+        meta_signals: analysis.meta_signals.join('+') || '',
         runs_google_ads: analysis.detections.google_ads || analysis.detections.google_remarketing ? 'YES' : 'NO',
+        google_confidence: analysis.google_confidence,
+        google_signals: analysis.google_signals.join('+') || '',
         paid_platforms: analysis.paid_platforms.join('; ') || '',
         has_analytics: analysis.analytics_platforms.length > 0 ? 'YES' : 'NO',
         facebook_page: analysis.facebook_page,
         meta_pixel_id: analysis.ids.meta_pixel_id || '',
+        meta_domain_verify_id: analysis.ids.meta_domain_verify_id || '',
         google_ads_id: analysis.ids.google_ads_id || '',
         ga4_id: analysis.ids.ga4_id || '',
         gtm_id: analysis.ids.gtm_id || '',
@@ -427,7 +494,7 @@ function findCol(headers, patterns) {
   clearInterval(ticker);
 
   // ── Write Final CSV ───────────────────────────────────────────
-  const addCols = ['lead_category', 'runs_meta_ads', 'runs_google_ads', 'paid_platforms', 'has_analytics', 'facebook_page', 'meta_pixel_id', 'google_ads_id', 'ga4_id', 'gtm_id', 'scan_error'];
+  const addCols = ['lead_category', 'runs_meta_ads', 'meta_confidence', 'meta_signals', 'runs_google_ads', 'google_confidence', 'google_signals', 'paid_platforms', 'has_analytics', 'facebook_page', 'meta_pixel_id', 'meta_domain_verify_id', 'google_ads_id', 'ga4_id', 'gtm_id', 'scan_error'];
   const outHeaders = [...headers, ...addCols];
   const outRows = results.filter(Boolean).map(r => outHeaders.map(h => esc(r[h])).join(','));
   fs.writeFileSync(outputFile, outHeaders.join(',') + '\n' + outRows.join('\n'));
