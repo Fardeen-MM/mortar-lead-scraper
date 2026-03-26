@@ -240,7 +240,7 @@ function fetchUrl(url, redirects = 0) {
       let d = '';
       let b = 0;
       res.on('data', c => { b += c.length; if (b <= MAX_BODY) d += c; });
-      res.on('end', () => resolve({ ok: res.statusCode === 200, body: d }));
+      res.on('end', () => resolve({ ok: res.statusCode === 200, body: d, cookies: (res.headers['set-cookie'] || []).join('; ') }));
       res.on('error', () => resolve({ ok: false }));
     });
     req.on('error', () => resolve({ ok: false, error: 'connect' }));
@@ -249,7 +249,7 @@ function fetchUrl(url, redirects = 0) {
 }
 
 // ── Analyze HTML ────────────────────────────────────────────────
-function analyzeWebsite(html) {
+function analyzeWebsite(html, cookies = '') {
   const result = {
     detections: {},
     ids: {},
@@ -283,6 +283,18 @@ function analyzeWebsite(html) {
     if (!FB_SKIP.has(slug.toLowerCase()) && !/^\d+$/.test(slug) && slug.length > 2) {
       result.facebook_page = 'facebook.com/' + slug;
       break;
+    }
+  }
+
+  // Cookie-based detection (from Set-Cookie response headers)
+  if (cookies) {
+    if (/_fbp=/.test(cookies) && !result.detections.meta_pixel) {
+      result.detections.meta_pixel = true;
+      result.paid_platforms.push('Meta Pixel (cookie)');
+    }
+    if (/_gcl_aw=/.test(cookies) && !result.detections.google_ads) {
+      result.detections.google_ads = true;
+      result.paid_platforms.push('Google Ads (cookie)');
     }
   }
 
@@ -461,7 +473,7 @@ function findCol(headers, patterns) {
         continue;
       }
 
-      const analysis = analyzeWebsite(resp.body);
+      const analysis = analyzeWebsite(resp.body, resp.cookies || '');
 
       if (analysis.lead_category === 'HOT') stats.hot++;
       else if (analysis.lead_category === 'WARM') stats.warm++;
