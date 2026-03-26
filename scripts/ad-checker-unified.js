@@ -324,6 +324,20 @@ function checkDnsTxt(domain) {
   });
 }
 
+// ── Meta Ads Check (MetaAdsCollector — no browser, no API key) ──
+function checkMetaAds(businessName) {
+  try {
+    const scriptPath = path.join(__dirname, 'meta-ads-check.py');
+    const out = execSync(`python3 "${scriptPath}" "${businessName.replace(/"/g, '\\"')}"`, {
+      timeout: 20000, encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'],
+    });
+    for (const line of out.split('\n')) {
+      if (line.startsWith('{')) return JSON.parse(line);
+    }
+    return { found: false };
+  } catch { return { found: false, error: 'timeout' }; }
+}
+
 // ── Google Ads Transparency Check ───────────────────────────────
 const PY_SCRIPT = `
 import sys, json
@@ -557,8 +571,48 @@ function findCol(headers, patterns) {
 
   console.log(`  ✓ Pass 2 done: ${gChecked} checked, ${gFound} confirmed Google Ads\n`);
 
+  // ── PASS 3: Meta Ads Confirmation (MetaAdsCollector) ────────
+  // Only check leads with facebook_page extracted but uncertain meta status
+  const metaCandidates = results.map((r, i) => ({ i, r })).filter(({ r }) => {
+    if (!r || !r._analysis) return false;
+    const a = r._analysis;
+    // Check leads where we found a FB page link but pixel signals are weak
+    return a.facebook_page && a.meta_confidence < 50 && a.meta_confidence > 0;
+  });
+
+  if (metaCandidates.length > 0) {
+    console.log(`  ══ PASS 3: Meta Ads Confirmation (${metaCandidates.length} candidates) ══`);
+    const t2 = Date.now();
+    let mChecked = 0, mFound = 0;
+
+    for (const { i, r } of metaCandidates) {
+      const a = r._analysis;
+      // Extract business name from FB page slug
+      let searchName = a.facebook_page.replace('facebook.com/', '');
+      searchName = searchName.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/[-_]/g, ' ').trim();
+
+      if (searchName.length < 2) continue;
+
+      const meta = checkMetaAds(searchName);
+      mChecked++;
+
+      if (meta.found && meta.has_active_ads) {
+        mFound++;
+        a.meta_confidence = Math.min(a.meta_confidence + 40, 100);
+        a.meta_signals.push('meta_adlib_confirmed');
+        results[i]._metaAds = { confirmed: true, page_name: meta.page_name, ad_count: meta.ad_count };
+      }
+
+      if (mChecked % 10 === 0) {
+        console.log(`  [${((Date.now() - t2) / 1000).toFixed(0)}s] ${mChecked}/${metaCandidates.length} | 🔥${mFound} confirmed Meta Ads`);
+      }
+    }
+
+    console.log(`  ✓ Pass 3 done: ${mChecked} checked, ${mFound} confirmed Meta Ads\n`);
+  }
+
   // ── Write Final Output ──────────────────────────────────────
-  const addCols = ['meta_ads', 'meta_confidence', 'meta_signals', 'google_ads', 'google_confidence', 'google_signals', 'google_ad_count', 'google_advertiser', 'paid_platforms', 'has_analytics', 'facebook_page', 'meta_pixel_id', 'google_ads_id', 'lead_category'];
+  const addCols = ['meta_ads', 'meta_confidence', 'meta_signals', 'meta_page_name', 'meta_ad_count', 'google_ads', 'google_confidence', 'google_signals', 'google_ad_count', 'google_advertiser', 'paid_platforms', 'has_analytics', 'facebook_page', 'meta_pixel_id', 'google_ads_id', 'lead_category'];
   const outHeaders = [...headers, ...addCols];
   let finalHot = 0, finalWarm = 0, finalCold = 0;
 
@@ -592,10 +646,13 @@ function findCol(headers, patterns) {
     }
 
     // Build output row from original CSV data + enrichment
+    const m = r._metaAds;
     const enrichment = {
       meta_ads: metaAds || '',
       meta_confidence: a?.meta_confidence ?? '',
       meta_signals: a?.meta_signals?.join('+') || '',
+      meta_page_name: m?.page_name || '',
+      meta_ad_count: m?.ad_count || '',
       google_ads: googleAds || '',
       google_confidence: a?.google_confidence ?? '',
       google_signals: a?.google_signals?.join('+') || '',
