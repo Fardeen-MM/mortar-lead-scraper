@@ -288,21 +288,8 @@ async function checkAdsTxt(baseUrl) {
   return { hasAdsTxt: false, lineCount: 0 };
 }
 
-async function checkRobotsTxt(baseUrl) {
-  try {
-    const u = new URL(baseUrl);
-    const robotsUrl = u.protocol + '//' + u.hostname + '/robots.txt';
-    const resp = await fetchUrl(robotsUrl);
-    if (resp.ok && resp.body) {
-      const text = resp.body.toLowerCase();
-      return {
-        allowsAdsBot: text.includes('adsbot-google') && !text.includes('disallow: /\n'),
-        allowsFacebookBot: text.includes('facebookexternalhit') || text.includes('facebookbot'),
-      };
-    }
-  } catch {}
-  return { allowsAdsBot: false, allowsFacebookBot: false };
-}
+// checkRobotsTxt removed — scrutiny found it was dead code (computed but never used in scoring)
+// Also, allowing AdsBot-Google doesn't mean running ads (Google recommends all sites allow it)
 
 // ── DNS Marketing Stack Detection ───────────────────────────────
 // Check SPF/TXT records for marketing platform includes.
@@ -320,7 +307,10 @@ const MARKETING_SPF_PATTERNS = {
 };
 
 function checkDnsTxt(domain) {
-  return new Promise(resolve => {
+  // Timeout DNS lookups at 3 seconds to prevent worker hangs
+  return Promise.race([
+    new Promise(resolve => setTimeout(() => resolve({ platforms: [], score: 0 }), 3000)),
+    new Promise(resolve => {
     dns.resolveTxt(domain, (err, records) => {
       if (err) return resolve({ platforms: [], score: 0 });
       const allTxt = records.map(r => r.join('')).join(' ');
@@ -339,7 +329,8 @@ function checkDnsTxt(domain) {
       }
       resolve({ platforms: found, score });
     });
-  });
+  }),
+  ]);
 }
 
 // ── Meta Ads Check (MetaAdsCollector — no browser, no API key) ──
