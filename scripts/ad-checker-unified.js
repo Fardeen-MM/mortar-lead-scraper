@@ -64,7 +64,7 @@ const DETECTORS = {
   },
   google_ads: {
     label: 'Google Ads', category: 'paid',
-    patterns: [/gtag\s*\(\s*['"]config['"]\s*,\s*['"]AW-\d+/i, /googleadservices\.com\/pagead\/conversion/i, /google_conversion_id\s*=\s*\d+/i, /googleads\.g\.doubleclick\.net/i, /goog_report_conversion/i],
+    patterns: [/gtag\s*\(\s*['"]config['"]\s*,\s*['"]AW-\d+/i, /googleadservices\.com\/pagead\/conversion/i, /google_conversion_id\s*=\s*\d+/i, /googleads\.g\.doubleclick\.net/i, /goog_report_conversion/i, /google_trackConversion/i],
     idPattern: /['"]AW-(\d+)['"]/i, idField: 'google_ads_id',
   },
   google_remarketing: {
