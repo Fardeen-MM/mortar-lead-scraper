@@ -202,6 +202,32 @@ const DETECTORS = {
     ],
     category: 'tracking', // Clarity is FREE analytics, NOT paid ads
   },
+  // Added from scrutiny findings — commonly used by SMBs
+  linkedin_ads: {
+    label: 'LinkedIn Ads',
+    patterns: [
+      /snap\.licdn\.com\/li\.lms-analytics\/insight/i,
+      /_linkedin_data_partner_id/i,
+      /dc\.ads\.linkedin\.com/i,
+    ],
+    category: 'paid',
+  },
+  callrail: {
+    label: 'CallRail',
+    patterns: [
+      /calltrk\.com/i,
+      /CallTrk/,
+    ],
+    category: 'paid',
+  },
+  hubspot_tracking: {
+    label: 'HubSpot',
+    patterns: [
+      /\.hs-scripts\.com\//i,
+      /_hsq/,
+    ],
+    category: 'tracking',
+  },
 };
 
 // Facebook page URL skip list
