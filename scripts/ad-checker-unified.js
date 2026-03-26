@@ -251,6 +251,41 @@ async function deepScanJsBundles(html, baseUrl) {
   return found;
 }
 
+// ── Quick Signal Checks (ads.txt + robots.txt) ─────────────────
+// These are simple HTTP GETs that give DEFINITIVE signals.
+// ads.txt existing = programmatic display advertising
+// robots.txt allowing AdsBot-Google = running Google Ads
+
+async function checkAdsTxt(baseUrl) {
+  try {
+    const u = new URL(baseUrl);
+    const adsTxtUrl = u.protocol + '//' + u.hostname + '/ads.txt';
+    const resp = await fetchUrl(adsTxtUrl);
+    if (resp.ok && resp.body && resp.body.includes(',')) {
+      // ads.txt has comma-separated entries like "google.com, pub-1234, DIRECT"
+      const lines = resp.body.split('\n').filter(l => l.includes(',') && !l.startsWith('#'));
+      return { hasAdsTxt: lines.length > 0, lineCount: lines.length };
+    }
+  } catch {}
+  return { hasAdsTxt: false, lineCount: 0 };
+}
+
+async function checkRobotsTxt(baseUrl) {
+  try {
+    const u = new URL(baseUrl);
+    const robotsUrl = u.protocol + '//' + u.hostname + '/robots.txt';
+    const resp = await fetchUrl(robotsUrl);
+    if (resp.ok && resp.body) {
+      const text = resp.body.toLowerCase();
+      return {
+        allowsAdsBot: text.includes('adsbot-google') && !text.includes('disallow: /\n'),
+        allowsFacebookBot: text.includes('facebookexternalhit') || text.includes('facebookbot'),
+      };
+    }
+  } catch {}
+  return { allowsAdsBot: false, allowsFacebookBot: false };
+}
+
 // ── DNS Marketing Stack Detection ───────────────────────────────
 // Check SPF/TXT records for marketing platform includes.
 // If a domain uses HubSpot, Pardot, Mailchimp, Klaviyo etc. for email marketing,
@@ -435,15 +470,26 @@ function findCol(headers, patterns) {
         } catch {}
       }
 
-      // DNS marketing stack check: adds marketing platform signals
-      try {
-        const domain = new URL(url).hostname.replace(/^www\./, '');
-        const dnsResult = await checkDnsTxt(domain);
-        if (dnsResult.platforms.length > 0) {
-          a.meta_confidence = Math.min(a.meta_confidence + dnsResult.score, 100);
-          a.meta_signals.push(...dnsResult.platforms.map(p => 'dns:' + p.toLowerCase().replace(/\s+/g, '_')));
+      // Extra signal checks — only for uncertain leads (saves time on obvious HOT/COLD)
+      if (a.meta_confidence < 50 && a.google_confidence < 60) {
+        // DNS marketing stack check
+        try {
+          const domain = new URL(url).hostname.replace(/^www\./, '');
+          const dnsResult = await checkDnsTxt(domain);
+          if (dnsResult.platforms.length > 0) {
+            a.meta_confidence = Math.min(a.meta_confidence + dnsResult.score, 100);
+            a.meta_signals.push(...dnsResult.platforms.map(p => 'dns:' + p.toLowerCase().replace(/\s+/g, '_')));
+          }
+        } catch {}
+
+        // ads.txt check — definitive signal of programmatic advertising
+        const adsTxt = await checkAdsTxt(url);
+        if (adsTxt.hasAdsTxt) {
+          a.google_confidence = Math.min(a.google_confidence + 30, 100);
+          a.google_signals.push('ads_txt');
+          a.paid.push('Programmatic Ads (ads.txt)');
         }
-      } catch {}
+      }
 
       if (a.meta_confidence >= 50 || a.paid.length > 0) stats.hot++;
       else if (a.analytics.length > 0 || a.meta_confidence > 0) stats.warm++;
