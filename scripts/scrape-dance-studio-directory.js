@@ -110,6 +110,16 @@ function csvEscape(value) {
 function httpGet(urlString, { attempt = 1, maxAttempts = 4 } = {}) {
   return new Promise((resolve, reject) => {
     const parsed = new URL(urlString);
+    let settled = false;
+    const done = (fn, arg) => {
+      if (settled) return;
+      settled = true;
+      fn(arg);
+    };
+    const hardTimer = setTimeout(() => {
+      try { req.destroy(); } catch (_) {}
+      done(reject, new Error(`hard timeout after ${REQUEST_TIMEOUT_MS + 5000}ms for ${urlString}`));
+    }, REQUEST_TIMEOUT_MS + 5000);
     const req = https.request(
       {
         hostname: parsed.hostname,
@@ -133,7 +143,8 @@ function httpGet(urlString, { attempt = 1, maxAttempts = 4 } = {}) {
         ) {
           const next = new URL(res.headers.location, urlString).toString();
           res.resume();
-          resolve(httpGet(next, { attempt, maxAttempts }));
+          clearTimeout(hardTimer);
+          done(resolve, httpGet(next, { attempt, maxAttempts }));
           return;
         }
         const chunks = [];
@@ -151,11 +162,13 @@ function httpGet(urlString, { attempt = 1, maxAttempts = 4 } = {}) {
             attempt < maxAttempts
           ) {
             const next = new URL(jsRedirect[1], urlString).toString();
-            resolve(httpGet(next, { attempt: attempt + 1, maxAttempts }));
+            clearTimeout(hardTimer);
+            done(resolve, httpGet(next, { attempt: attempt + 1, maxAttempts }));
             return;
           }
+          clearTimeout(hardTimer);
           if (res.statusCode && res.statusCode >= 200 && res.statusCode < 400) {
-            resolve({ body, statusCode: res.statusCode });
+            done(resolve, { body, statusCode: res.statusCode });
           } else if (
             res.statusCode &&
             (res.statusCode === 429 || res.statusCode >= 500) &&
@@ -163,27 +176,28 @@ function httpGet(urlString, { attempt = 1, maxAttempts = 4 } = {}) {
           ) {
             const backoff = 2000 * attempt;
             setTimeout(
-              () => resolve(httpGet(urlString, { attempt: attempt + 1, maxAttempts })),
+              () => done(resolve, httpGet(urlString, { attempt: attempt + 1, maxAttempts })),
               backoff
             );
           } else {
-            reject(new Error(`HTTP ${res.statusCode} for ${urlString}`));
+            done(reject, new Error(`HTTP ${res.statusCode} for ${urlString}`));
           }
         });
       }
     );
     req.on('error', (err) => {
+      clearTimeout(hardTimer);
       if (attempt < maxAttempts) {
         setTimeout(
-          () => resolve(httpGet(urlString, { attempt: attempt + 1, maxAttempts })),
+          () => done(resolve, httpGet(urlString, { attempt: attempt + 1, maxAttempts })),
           2000 * attempt
         );
       } else {
-        reject(err);
+        done(reject, err);
       }
     });
     req.on('timeout', () => {
-      req.destroy(new Error(`timeout after ${REQUEST_TIMEOUT_MS}ms`));
+      try { req.destroy(new Error(`timeout after ${REQUEST_TIMEOUT_MS}ms`)); } catch (_) {}
     });
     req.end();
   });
