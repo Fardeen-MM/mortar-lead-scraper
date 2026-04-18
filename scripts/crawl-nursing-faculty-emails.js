@@ -263,7 +263,31 @@ function extractEmailsFromHtml(html, rootDom) {
     found.set(email, entry);
   }
 
-  return Array.from(found.entries()).map(([email, v]) => ({ email, ...v }));
+  // Post-process: title-case names
+  return Array.from(found.entries()).map(([email, v]) => ({
+    email,
+    firstName: titleCase(v.firstName),
+    lastName: titleCase(v.lastName),
+  }));
+}
+
+function titleCase(s) {
+  if (!s) return '';
+  const cleaned = String(s).trim();
+  if (!cleaned) return '';
+  // Keep known honorifics/suffixes uppercase
+  if (/^(PhD|DNP|MSN|RN|BSN|FNP|FAAN|FACN|MSc|MD)$/i.test(cleaned)) return cleaned.toUpperCase();
+  return cleaned
+    .split(/\s+/)
+    .map((w) => {
+      if (!w) return '';
+      // Preserve hyphens: "Smith-Jones" -> "Smith-Jones"
+      return w
+        .split('-')
+        .map((p) => (p[0] ? p[0].toUpperCase() + p.slice(1).toLowerCase() : p))
+        .join('-');
+    })
+    .join(' ');
 }
 
 function stripTags(html) {

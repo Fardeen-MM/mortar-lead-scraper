@@ -94,6 +94,11 @@ class GoogleMapsScraper extends BaseScraper {
    * Launch Puppeteer browser with stealth plugin.
    */
   async _ensureBrowser() {
+    // If browser exists but is disconnected, clear it so we relaunch
+    if (this._browser && !this._browser.isConnected()) {
+      log.warn('[Google Maps] Browser disconnected — relaunching');
+      this._browser = null;
+    }
     if (this._browser) return;
 
     let puppeteer;
@@ -129,6 +134,12 @@ class GoogleMapsScraper extends BaseScraper {
     }
 
     this._browser = await puppeteer.launch(launchOpts);
+
+    // Auto-clear reference on disconnect so _ensureBrowser relaunches next time
+    this._browser.on('disconnected', () => {
+      log.warn('[Google Maps] Browser disconnected unexpectedly');
+      this._browser = null;
+    });
   }
 
   /**
@@ -291,20 +302,37 @@ class GoogleMapsScraper extends BaseScraper {
         c.city.toLowerCase().includes(options.city.toLowerCase())
       );
       if (cities.length === 0) {
-        cities = [{ city: options.city, stateCode: '', country: 'US' }];
+        // Parse country from city string (e.g. "London, UK" → city="London", country="UK")
+        const countryAliases = {
+          uk: 'UK', gb: 'UK', 'united kingdom': 'UK',
+          us: 'US', usa: 'US', 'united states': 'US',
+          ca: 'CA', canada: 'CA',
+          au: 'AU', australia: 'AU',
+          nz: 'NZ', 'new zealand': 'NZ',
+          ie: 'IE', ireland: 'IE',
+          fr: 'FR', france: 'FR',
+          de: 'DE', germany: 'DE',
+          sg: 'SG', singapore: 'SG',
+          hk: 'HK', 'hong kong': 'HK',
+        };
+        let cityName = options.city.trim();
+        let country = 'US';
+        // Check if last part after comma is a country code/name
+        const parts = cityName.split(',').map(p => p.trim());
+        if (parts.length >= 2) {
+          const lastPart = parts[parts.length - 1].toLowerCase();
+          if (countryAliases[lastPart]) {
+            country = countryAliases[lastPart];
+            cityName = parts.slice(0, -1).join(', ');
+          }
+        }
+        cities = [{ city: cityName, stateCode: '', country }];
       }
     }
 
     if (maxCities) cities = cities.slice(0, maxCities);
 
-    try {
-      await this._ensureBrowser();
-    } catch (err) {
-      log.error(`[Google Maps] Failed to launch browser: ${err.message}`);
-      yield { _captcha: true, city: 'all', reason: `Browser launch failed: ${err.message}` };
-      return;
-    }
-
+    // Browser is launched/closed per-cell to prevent memory accumulation
     try {
       for (let i = 0; i < cities.length; i++) {
         const cityEntry = cities[i];
@@ -351,6 +379,9 @@ class GoogleMapsScraper extends BaseScraper {
             await rateLimiter.wait();
 
             try {
+              // Launch fresh browser for each cell to prevent memory accumulation
+              await this._closeBrowser();
+              await this._ensureBrowser();
               const results = await this._scrapeMapResults(query, options.maxPages, cell);
               let newCount = 0;
 
@@ -369,7 +400,27 @@ class GoogleMapsScraper extends BaseScraper {
 
               log.info(`[Google Maps] ${cellLabel}: ${results.length} results, ${newCount} new (${seenInCity.size} total unique)`);
             } catch (err) {
-              log.warn(`[Google Maps] ${cellLabel} failed: ${err.message}`);
+              // If browser crashed, try once more with a fresh browser
+              log.warn(`[Google Maps] ${cellLabel} failed: ${err.message} — retrying with fresh browser`);
+              await this._closeBrowser();
+              try {
+                await this._ensureBrowser();
+                const results = await this._scrapeMapResults(query, options.maxPages, cell);
+                let newCount = 0;
+                for (const result of results) {
+                  const dedupKey = result.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+                  if (seenInCity.has(dedupKey)) continue;
+                  seenInCity.add(dedupKey);
+                  const lead = this._parseMapResult(result, cityEntry, niche);
+                  if (lead) { yield lead; newCount++; }
+                }
+                log.info(`[Google Maps] ${cellLabel} (retry): ${results.length} results, ${newCount} new (${seenInCity.size} total unique)`);
+              } catch (retryErr) {
+                log.warn(`[Google Maps] ${cellLabel} retry also failed: ${retryErr.message}`);
+              }
+            } finally {
+              // Always close browser after each cell to free memory
+              await this._closeBrowser();
             }
           }
 
