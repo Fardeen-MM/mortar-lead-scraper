@@ -57,6 +57,7 @@ const FILES = [
   { file: 'noomii-coaches.csv', niche: 'coach', country: 'US', source: 'noomii', emailField: 'email' },
   { file: 'noomii-coaches-crawled.csv', niche: 'coach', country: 'US', source: 'noomii_crawled', emailField: 'primary_email' },
   { file: 'noomii-coaches-full-crawled.csv', niche: 'coach', country: 'US', source: 'noomii_full_crawled', emailField: 'primary_email' },
+  { file: 'noomii-crawled-v2.csv', niche: 'coach', country: 'US', source: 'noomii_v2', emailField: 'primary_email' },
   { file: 'therapyden-therapists.csv', niche: 'therapist', country: 'US', source: 'therapyden', emailField: 'email' },
 
   // Financial/accounting
@@ -88,7 +89,8 @@ const FILES = [
   { file: 'martialarts-schools.csv', niche: 'martial arts school', country: 'US', source: 'martial_arts_directory', emailField: 'email' },
   { file: 'overpass-businesses-crawled.csv', niche: 'local business', country: '', source: 'overpass_crawled', emailField: 'primary_email' },
   { file: 'overpass-full-crawled.csv', niche: 'local business', country: '', source: 'overpass_full_crawled', emailField: 'primary_email' },
-  { file: 'overpass-bulk-extras.csv', niche: 'local business', country: '', source: 'osm_overpass_extras', emailField: 'email' },
+  { file: "overpass-retry-crawled.csv", niche: "local business", country: "", source: "overpass_retry", emailField: "primary_email" },
+  { file: "overpass-bulk-extras.csv", niche: 'local business', country: '', source: 'osm_overpass_extras', emailField: 'email' },
 ];
 
 function main() {
