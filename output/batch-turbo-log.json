@@ -1,0 +1,4622 @@
+{
+  "new-york-ny-family-law-attorney": {
+    "status": "done",
+    "city": "New York, NY",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 5,
+    "dms": 1,
+    "elapsed": 102,
+    "timestamp": "2026-03-02T21:15:16.583Z"
+  },
+  "new-york-ny-law-firms": {
+    "status": "done",
+    "city": "New York, NY",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 5,
+    "dms": 0,
+    "elapsed": 116,
+    "timestamp": "2026-03-02T21:15:30.602Z"
+  },
+  "new-york-ny-personal-injury-lawyer": {
+    "status": "done",
+    "city": "New York, NY",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 0,
+    "elapsed": 121,
+    "timestamp": "2026-03-02T21:15:35.786Z"
+  },
+  "new-york-ny-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "New York, NY",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 100,
+    "timestamp": "2026-03-02T21:17:15.564Z"
+  },
+  "new-york-ny-immigration-lawyer": {
+    "status": "done",
+    "city": "New York, NY",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 7,
+    "dms": 0,
+    "elapsed": 107,
+    "timestamp": "2026-03-02T21:17:22.454Z"
+  },
+  "new-york-ny-estate-planning-attorney": {
+    "status": "done",
+    "city": "New York, NY",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 112,
+    "timestamp": "2026-03-02T21:17:27.419Z"
+  },
+  "los-angeles-ca-law-firms": {
+    "status": "done",
+    "city": "Los Angeles, CA",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 13,
+    "dms": 0,
+    "elapsed": 111,
+    "timestamp": "2026-03-02T21:19:18.761Z"
+  },
+  "los-angeles-ca-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Los Angeles, CA",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 0,
+    "elapsed": 120,
+    "timestamp": "2026-03-02T21:19:27.144Z"
+  },
+  "los-angeles-ca-family-law-attorney": {
+    "status": "done",
+    "city": "Los Angeles, CA",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 10,
+    "dms": 2,
+    "elapsed": 123,
+    "timestamp": "2026-03-02T21:19:30.248Z"
+  },
+  "los-angeles-ca-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Los Angeles, CA",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 9,
+    "dms": 2,
+    "elapsed": 105,
+    "timestamp": "2026-03-02T21:21:15.356Z"
+  },
+  "los-angeles-ca-immigration-lawyer": {
+    "status": "done",
+    "city": "Los Angeles, CA",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 115,
+    "timestamp": "2026-03-02T21:21:25.143Z"
+  },
+  "los-angeles-ca-estate-planning-attorney": {
+    "status": "done",
+    "city": "Los Angeles, CA",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 7,
+    "dms": 0,
+    "elapsed": 120,
+    "timestamp": "2026-03-02T21:21:30.065Z"
+  },
+  "chicago-il-law-firms": {
+    "status": "done",
+    "city": "Chicago, IL",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 113,
+    "timestamp": "2026-03-02T21:23:23.258Z"
+  },
+  "chicago-il-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Chicago, IL",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 14,
+    "dms": 0,
+    "elapsed": 117,
+    "timestamp": "2026-03-02T21:23:27.560Z"
+  },
+  "chicago-il-family-law-attorney": {
+    "status": "done",
+    "city": "Chicago, IL",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 120,
+    "timestamp": "2026-03-02T21:23:30.092Z"
+  },
+  "chicago-il-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Chicago, IL",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 7,
+    "dms": 0,
+    "elapsed": 112,
+    "timestamp": "2026-03-02T21:25:22.267Z"
+  },
+  "chicago-il-estate-planning-attorney": {
+    "status": "done",
+    "city": "Chicago, IL",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 115,
+    "timestamp": "2026-03-02T21:25:24.997Z"
+  },
+  "chicago-il-immigration-lawyer": {
+    "status": "done",
+    "city": "Chicago, IL",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 5,
+    "dms": 0,
+    "elapsed": 117,
+    "timestamp": "2026-03-02T21:25:27.321Z"
+  },
+  "houston-tx-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Houston, TX",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 1,
+    "elapsed": 112,
+    "timestamp": "2026-03-02T21:27:19.253Z"
+  },
+  "houston-tx-law-firms": {
+    "status": "done",
+    "city": "Houston, TX",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 8,
+    "dms": 0,
+    "elapsed": 115,
+    "timestamp": "2026-03-02T21:27:22.164Z"
+  },
+  "houston-tx-family-law-attorney": {
+    "status": "done",
+    "city": "Houston, TX",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 14,
+    "dms": 2,
+    "elapsed": 118,
+    "timestamp": "2026-03-02T21:27:24.840Z"
+  },
+  "houston-tx-estate-planning-attorney": {
+    "status": "done",
+    "city": "Houston, TX",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 101,
+    "timestamp": "2026-03-02T21:29:05.814Z"
+  },
+  "houston-tx-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Houston, TX",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 6,
+    "dms": 0,
+    "elapsed": 109,
+    "timestamp": "2026-03-02T21:29:13.375Z"
+  },
+  "houston-tx-immigration-lawyer": {
+    "status": "done",
+    "city": "Houston, TX",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 9,
+    "dms": 1,
+    "elapsed": 117,
+    "timestamp": "2026-03-02T21:29:21.882Z"
+  },
+  "phoenix-az-family-law-attorney": {
+    "status": "done",
+    "city": "Phoenix, AZ",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 13,
+    "dms": 1,
+    "elapsed": 103,
+    "timestamp": "2026-03-02T21:31:04.928Z"
+  },
+  "phoenix-az-law-firms": {
+    "status": "done",
+    "city": "Phoenix, AZ",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 9,
+    "dms": 2,
+    "elapsed": 119,
+    "timestamp": "2026-03-02T21:31:20.411Z"
+  },
+  "phoenix-az-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Phoenix, AZ",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 6,
+    "dms": 1,
+    "elapsed": 122,
+    "timestamp": "2026-03-02T21:31:24.302Z"
+  },
+  "phoenix-az-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Phoenix, AZ",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 104,
+    "timestamp": "2026-03-02T21:33:07.890Z"
+  },
+  "phoenix-az-estate-planning-attorney": {
+    "status": "done",
+    "city": "Phoenix, AZ",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 8,
+    "dms": 2,
+    "elapsed": 126,
+    "timestamp": "2026-03-02T21:33:30.582Z"
+  },
+  "phoenix-az-immigration-lawyer": {
+    "status": "done",
+    "city": "Phoenix, AZ",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 2,
+    "elapsed": 150,
+    "timestamp": "2026-03-02T21:33:54.414Z"
+  },
+  "philadelphia-pa-law-firms": {
+    "status": "done",
+    "city": "Philadelphia, PA",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 122,
+    "timestamp": "2026-03-02T21:35:56.839Z"
+  },
+  "philadelphia-pa-family-law-attorney": {
+    "status": "done",
+    "city": "Philadelphia, PA",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 8,
+    "dms": 1,
+    "elapsed": 128,
+    "timestamp": "2026-03-02T21:36:02.483Z"
+  },
+  "philadelphia-pa-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Philadelphia, PA",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 7,
+    "dms": 0,
+    "elapsed": 131,
+    "timestamp": "2026-03-02T21:36:05.368Z"
+  },
+  "philadelphia-pa-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Philadelphia, PA",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 12,
+    "dms": 1,
+    "elapsed": 103,
+    "timestamp": "2026-03-02T21:37:48.768Z"
+  },
+  "philadelphia-pa-immigration-lawyer": {
+    "status": "done",
+    "city": "Philadelphia, PA",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 3,
+    "elapsed": 110,
+    "timestamp": "2026-03-02T21:37:55.331Z"
+  },
+  "philadelphia-pa-estate-planning-attorney": {
+    "status": "done",
+    "city": "Philadelphia, PA",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 12,
+    "dms": 0,
+    "elapsed": 110,
+    "timestamp": "2026-03-02T21:37:55.638Z"
+  },
+  "san-antonio-tx-family-law-attorney": {
+    "status": "done",
+    "city": "San Antonio, TX",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 4,
+    "dms": 0,
+    "elapsed": 104,
+    "timestamp": "2026-03-02T21:39:40.045Z"
+  },
+  "san-antonio-tx-personal-injury-lawyer": {
+    "status": "done",
+    "city": "San Antonio, TX",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 12,
+    "dms": 1,
+    "elapsed": 112,
+    "timestamp": "2026-03-02T21:39:47.378Z"
+  },
+  "san-antonio-tx-law-firms": {
+    "status": "done",
+    "city": "San Antonio, TX",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 8,
+    "dms": 0,
+    "elapsed": 117,
+    "timestamp": "2026-03-02T21:39:52.148Z"
+  },
+  "san-antonio-tx-immigration-lawyer": {
+    "status": "done",
+    "city": "San Antonio, TX",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 14,
+    "dms": 2,
+    "elapsed": 107,
+    "timestamp": "2026-03-02T21:41:39.488Z"
+  },
+  "san-antonio-tx-estate-planning-attorney": {
+    "status": "done",
+    "city": "San Antonio, TX",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 108,
+    "timestamp": "2026-03-02T21:41:39.944Z"
+  },
+  "san-antonio-tx-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "San Antonio, TX",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 5,
+    "dms": 2,
+    "elapsed": 113,
+    "timestamp": "2026-03-02T21:41:45.073Z"
+  },
+  "san-diego-ca-family-law-attorney": {
+    "status": "done",
+    "city": "San Diego, CA",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 105,
+    "timestamp": "2026-03-02T21:43:29.745Z"
+  },
+  "san-diego-ca-personal-injury-lawyer": {
+    "status": "done",
+    "city": "San Diego, CA",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 120,
+    "timestamp": "2026-03-02T21:43:45.044Z"
+  },
+  "san-diego-ca-law-firms": {
+    "status": "done",
+    "city": "San Diego, CA",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 120,
+    "timestamp": "2026-03-02T21:43:45.426Z"
+  },
+  "san-diego-ca-immigration-lawyer": {
+    "status": "done",
+    "city": "San Diego, CA",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 109,
+    "timestamp": "2026-03-02T21:45:34.439Z"
+  },
+  "san-diego-ca-estate-planning-attorney": {
+    "status": "done",
+    "city": "San Diego, CA",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 12,
+    "dms": 0,
+    "elapsed": 112,
+    "timestamp": "2026-03-02T21:45:37.358Z"
+  },
+  "san-diego-ca-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "San Diego, CA",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 118,
+    "timestamp": "2026-03-02T21:45:43.887Z"
+  },
+  "dallas-tx-law-firms": {
+    "status": "done",
+    "city": "Dallas, TX",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 109,
+    "timestamp": "2026-03-02T21:47:33.007Z"
+  },
+  "dallas-tx-family-law-attorney": {
+    "status": "done",
+    "city": "Dallas, TX",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 5,
+    "dms": 2,
+    "elapsed": 116,
+    "timestamp": "2026-03-02T21:47:40.173Z"
+  },
+  "dallas-tx-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Dallas, TX",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 122,
+    "timestamp": "2026-03-02T21:47:45.796Z"
+  },
+  "dallas-tx-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Dallas, TX",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 6,
+    "dms": 1,
+    "elapsed": 111,
+    "timestamp": "2026-03-02T21:49:36.744Z"
+  },
+  "dallas-tx-estate-planning-attorney": {
+    "status": "done",
+    "city": "Dallas, TX",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 112,
+    "timestamp": "2026-03-02T21:49:38.222Z"
+  },
+  "dallas-tx-immigration-lawyer": {
+    "status": "done",
+    "city": "Dallas, TX",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 5,
+    "dms": 0,
+    "elapsed": 117,
+    "timestamp": "2026-03-02T21:49:42.412Z"
+  },
+  "san-jose-ca-family-law-attorney": {
+    "status": "done",
+    "city": "San Jose, CA",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 112,
+    "timestamp": "2026-03-02T21:51:34.195Z"
+  },
+  "san-jose-ca-law-firms": {
+    "status": "done",
+    "city": "San Jose, CA",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 112,
+    "timestamp": "2026-03-02T21:51:34.441Z"
+  },
+  "san-jose-ca-personal-injury-lawyer": {
+    "status": "done",
+    "city": "San Jose, CA",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 2,
+    "elapsed": 118,
+    "timestamp": "2026-03-02T21:51:40.502Z"
+  },
+  "san-jose-ca-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "San Jose, CA",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 3,
+    "elapsed": 104,
+    "timestamp": "2026-03-02T21:53:24.983Z"
+  },
+  "san-jose-ca-estate-planning-attorney": {
+    "status": "done",
+    "city": "San Jose, CA",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 10,
+    "dms": 4,
+    "elapsed": 109,
+    "timestamp": "2026-03-02T21:53:29.235Z"
+  },
+  "san-jose-ca-immigration-lawyer": {
+    "status": "done",
+    "city": "San Jose, CA",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 131,
+    "timestamp": "2026-03-02T21:53:51.940Z"
+  },
+  "austin-tx-law-firms": {
+    "status": "done",
+    "city": "Austin, TX",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 110,
+    "timestamp": "2026-03-02T21:55:42.117Z"
+  },
+  "austin-tx-family-law-attorney": {
+    "status": "done",
+    "city": "Austin, TX",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 115,
+    "timestamp": "2026-03-02T21:55:46.846Z"
+  },
+  "austin-tx-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Austin, TX",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 7,
+    "dms": 0,
+    "elapsed": 118,
+    "timestamp": "2026-03-02T21:55:50.193Z"
+  },
+  "austin-tx-estate-planning-attorney": {
+    "status": "done",
+    "city": "Austin, TX",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 7,
+    "dms": 0,
+    "elapsed": 100,
+    "timestamp": "2026-03-02T21:57:29.893Z"
+  },
+  "austin-tx-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Austin, TX",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 106,
+    "timestamp": "2026-03-02T21:57:36.419Z"
+  },
+  "austin-tx-immigration-lawyer": {
+    "status": "done",
+    "city": "Austin, TX",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 2,
+    "elapsed": 110,
+    "timestamp": "2026-03-02T21:57:40.598Z"
+  },
+  "jacksonville-fl-law-firms": {
+    "status": "done",
+    "city": "Jacksonville, FL",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 109,
+    "timestamp": "2026-03-02T21:59:29.772Z"
+  },
+  "jacksonville-fl-family-law-attorney": {
+    "status": "done",
+    "city": "Jacksonville, FL",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 7,
+    "dms": 3,
+    "elapsed": 109,
+    "timestamp": "2026-03-02T21:59:29.820Z"
+  },
+  "jacksonville-fl-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Jacksonville, FL",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 0,
+    "elapsed": 121,
+    "timestamp": "2026-03-02T21:59:41.151Z"
+  },
+  "jacksonville-fl-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Jacksonville, FL",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 98,
+    "timestamp": "2026-03-02T22:01:19.003Z"
+  },
+  "jacksonville-fl-estate-planning-attorney": {
+    "status": "done",
+    "city": "Jacksonville, FL",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 8,
+    "dms": 0,
+    "elapsed": 103,
+    "timestamp": "2026-03-02T22:01:24.112Z"
+  },
+  "jacksonville-fl-immigration-lawyer": {
+    "status": "done",
+    "city": "Jacksonville, FL",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 4,
+    "elapsed": 105,
+    "timestamp": "2026-03-02T22:01:26.388Z"
+  },
+  "fort-worth-tx-family-law-attorney": {
+    "status": "done",
+    "city": "Fort Worth, TX",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 7,
+    "dms": 0,
+    "elapsed": 103,
+    "timestamp": "2026-03-02T22:03:09.425Z"
+  },
+  "fort-worth-tx-law-firms": {
+    "status": "done",
+    "city": "Fort Worth, TX",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 108,
+    "timestamp": "2026-03-02T22:03:14.449Z"
+  },
+  "fort-worth-tx-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Fort Worth, TX",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 5,
+    "dms": 0,
+    "elapsed": 118,
+    "timestamp": "2026-03-02T22:03:24.576Z"
+  },
+  "fort-worth-tx-immigration-lawyer": {
+    "status": "done",
+    "city": "Fort Worth, TX",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 117,
+    "timestamp": "2026-03-02T22:05:21.475Z"
+  },
+  "fort-worth-tx-estate-planning-attorney": {
+    "status": "done",
+    "city": "Fort Worth, TX",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 9,
+    "dms": 1,
+    "elapsed": 120,
+    "timestamp": "2026-03-02T22:05:24.549Z"
+  },
+  "fort-worth-tx-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Fort Worth, TX",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 155,
+    "timestamp": "2026-03-02T22:05:59.268Z"
+  },
+  "columbus-oh-law-firms": {
+    "status": "done",
+    "city": "Columbus, OH",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 6,
+    "dms": 1,
+    "elapsed": 101,
+    "timestamp": "2026-03-02T22:07:40.308Z"
+  },
+  "columbus-oh-family-law-attorney": {
+    "status": "done",
+    "city": "Columbus, OH",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 117,
+    "timestamp": "2026-03-02T22:07:56.300Z"
+  },
+  "columbus-oh-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Columbus, OH",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 4,
+    "dms": 1,
+    "elapsed": 121,
+    "timestamp": "2026-03-02T22:08:00.670Z"
+  },
+  "columbus-oh-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Columbus, OH",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 12,
+    "dms": 1,
+    "elapsed": 99,
+    "timestamp": "2026-03-02T22:09:39.630Z"
+  },
+  "columbus-oh-immigration-lawyer": {
+    "status": "done",
+    "city": "Columbus, OH",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 4,
+    "elapsed": 116,
+    "timestamp": "2026-03-02T22:09:56.222Z"
+  },
+  "columbus-oh-estate-planning-attorney": {
+    "status": "done",
+    "city": "Columbus, OH",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 9,
+    "dms": 2,
+    "elapsed": 118,
+    "timestamp": "2026-03-02T22:09:58.932Z"
+  },
+  "charlotte-nc-family-law-attorney": {
+    "status": "done",
+    "city": "Charlotte, NC",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 4,
+    "dms": 4,
+    "elapsed": 99,
+    "timestamp": "2026-03-02T22:11:37.674Z"
+  },
+  "charlotte-nc-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Charlotte, NC",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 115,
+    "timestamp": "2026-03-02T22:11:54.377Z"
+  },
+  "charlotte-nc-law-firms": {
+    "status": "done",
+    "city": "Charlotte, NC",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 7,
+    "dms": 0,
+    "elapsed": 118,
+    "timestamp": "2026-03-02T22:11:56.753Z"
+  },
+  "charlotte-nc-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Charlotte, NC",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 101,
+    "timestamp": "2026-03-02T22:13:38.036Z"
+  },
+  "charlotte-nc-immigration-lawyer": {
+    "status": "done",
+    "city": "Charlotte, NC",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 3,
+    "elapsed": 106,
+    "timestamp": "2026-03-02T22:13:43.196Z"
+  },
+  "charlotte-nc-estate-planning-attorney": {
+    "status": "done",
+    "city": "Charlotte, NC",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 11,
+    "dms": 1,
+    "elapsed": 112,
+    "timestamp": "2026-03-02T22:13:48.666Z"
+  },
+  "indianapolis-in-law-firms": {
+    "status": "done",
+    "city": "Indianapolis, IN",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 7,
+    "dms": 0,
+    "elapsed": 99,
+    "timestamp": "2026-03-02T22:15:27.183Z"
+  },
+  "indianapolis-in-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Indianapolis, IN",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 117,
+    "timestamp": "2026-03-02T22:15:45.786Z"
+  },
+  "indianapolis-in-family-law-attorney": {
+    "status": "done",
+    "city": "Indianapolis, IN",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 123,
+    "timestamp": "2026-03-02T22:15:51.365Z"
+  },
+  "indianapolis-in-immigration-lawyer": {
+    "status": "done",
+    "city": "Indianapolis, IN",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 4,
+    "elapsed": 117,
+    "timestamp": "2026-03-02T22:17:48.086Z"
+  },
+  "indianapolis-in-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Indianapolis, IN",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 5,
+    "dms": 0,
+    "elapsed": 120,
+    "timestamp": "2026-03-02T22:17:51.457Z"
+  },
+  "indianapolis-in-estate-planning-attorney": {
+    "status": "done",
+    "city": "Indianapolis, IN",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 8,
+    "dms": 0,
+    "elapsed": 124,
+    "timestamp": "2026-03-02T22:17:54.907Z"
+  },
+  "san-francisco-ca-family-law-attorney": {
+    "status": "done",
+    "city": "San Francisco, CA",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 11,
+    "dms": 8,
+    "elapsed": 124,
+    "timestamp": "2026-03-02T22:19:59.248Z"
+  },
+  "san-francisco-ca-personal-injury-lawyer": {
+    "status": "done",
+    "city": "San Francisco, CA",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 4,
+    "dms": 1,
+    "elapsed": 337,
+    "timestamp": "2026-03-02T22:23:32.180Z"
+  },
+  "san-francisco-ca-law-firms": {
+    "status": "done",
+    "city": "San Francisco, CA",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 6,
+    "dms": 0,
+    "elapsed": 337,
+    "timestamp": "2026-03-02T22:23:32.196Z"
+  },
+  "san-francisco-ca-estate-planning-attorney": {
+    "status": "done",
+    "city": "San Francisco, CA",
+    "niche": "estate planning attorney",
+    "leads": 28,
+    "emails": 14,
+    "dms": 0,
+    "elapsed": 114,
+    "timestamp": "2026-03-03T15:03:33.991Z"
+  },
+  "san-francisco-ca-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "San Francisco, CA",
+    "niche": "criminal defense lawyer",
+    "leads": 27,
+    "emails": 7,
+    "dms": 3,
+    "elapsed": 121,
+    "timestamp": "2026-03-03T15:01:11.905Z"
+  },
+  "san-francisco-ca-immigration-lawyer": {
+    "status": "done",
+    "city": "San Francisco, CA",
+    "niche": "immigration lawyer",
+    "leads": 26,
+    "emails": 10,
+    "dms": 3,
+    "elapsed": 150,
+    "timestamp": "2026-03-03T15:01:40.182Z"
+  },
+  "seattle-wa-law-firms": {
+    "status": "done",
+    "city": "Seattle, WA",
+    "niche": "law firms",
+    "leads": 29,
+    "emails": 16,
+    "dms": 0,
+    "elapsed": 119,
+    "timestamp": "2026-03-03T15:03:39.678Z"
+  },
+  "seattle-wa-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Seattle, WA",
+    "niche": "personal injury lawyer",
+    "leads": 30,
+    "emails": 13,
+    "dms": 1,
+    "elapsed": 110,
+    "timestamp": "2026-03-03T15:05:29.983Z"
+  },
+  "seattle-wa-family-law-attorney": {
+    "status": "done",
+    "city": "Seattle, WA",
+    "niche": "family law attorney",
+    "leads": 27,
+    "emails": 8,
+    "dms": 2,
+    "elapsed": 128,
+    "timestamp": "2026-03-03T15:05:47.230Z"
+  },
+  "seattle-wa-immigration-lawyer": {
+    "status": "done",
+    "city": "Seattle, WA",
+    "niche": "immigration lawyer",
+    "leads": 24,
+    "emails": 11,
+    "dms": 2,
+    "elapsed": 101,
+    "timestamp": "2026-03-03T15:07:27.784Z"
+  },
+  "seattle-wa-estate-planning-attorney": {
+    "status": "done",
+    "city": "Seattle, WA",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 13,
+    "dms": 0,
+    "elapsed": 146,
+    "timestamp": "2026-03-03T15:09:53.944Z"
+  },
+  "seattle-wa-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Seattle, WA",
+    "niche": "criminal defense lawyer",
+    "leads": 27,
+    "emails": 11,
+    "dms": 4,
+    "elapsed": 94,
+    "timestamp": "2026-03-03T15:07:21.277Z"
+  },
+  "denver-co-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Denver, CO",
+    "niche": "personal injury lawyer",
+    "leads": 27,
+    "emails": 13,
+    "dms": 0,
+    "elapsed": 149,
+    "timestamp": "2026-03-03T15:12:23.310Z"
+  },
+  "denver-co-family-law-attorney": {
+    "status": "done",
+    "city": "Denver, CO",
+    "niche": "family law attorney",
+    "leads": 25,
+    "emails": 6,
+    "dms": 1,
+    "elapsed": 159,
+    "timestamp": "2026-03-03T15:12:32.459Z"
+  },
+  "denver-co-law-firms": {
+    "status": "done",
+    "city": "Denver, CO",
+    "niche": "law firms",
+    "leads": 28,
+    "emails": 13,
+    "dms": 0,
+    "elapsed": 116,
+    "timestamp": "2026-03-03T15:09:23.368Z"
+  },
+  "denver-co-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Denver, CO",
+    "niche": "criminal defense lawyer",
+    "leads": 26,
+    "emails": 11,
+    "dms": 1,
+    "elapsed": 142,
+    "timestamp": "2026-03-03T15:14:54.958Z"
+  },
+  "denver-co-estate-planning-attorney": {
+    "status": "done",
+    "city": "Denver, CO",
+    "niche": "estate planning attorney",
+    "leads": 28,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 136,
+    "timestamp": "2026-03-03T15:17:11.343Z"
+  },
+  "denver-co-immigration-lawyer": {
+    "status": "done",
+    "city": "Denver, CO",
+    "niche": "immigration lawyer",
+    "leads": 26,
+    "emails": 12,
+    "dms": 2,
+    "elapsed": 123,
+    "timestamp": "2026-03-03T15:14:35.836Z"
+  },
+  "nashville-tn-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Nashville, TN",
+    "niche": "personal injury lawyer",
+    "leads": 29,
+    "emails": 13,
+    "dms": 0,
+    "elapsed": 151,
+    "timestamp": "2026-03-03T15:19:42.248Z"
+  },
+  "nashville-tn-law-firms": {
+    "status": "done",
+    "city": "Nashville, TN",
+    "niche": "law firms",
+    "leads": 27,
+    "emails": 17,
+    "dms": 0,
+    "elapsed": 126,
+    "timestamp": "2026-03-03T15:17:00.851Z"
+  },
+  "nashville-tn-family-law-attorney": {
+    "status": "done",
+    "city": "Nashville, TN",
+    "niche": "family law attorney",
+    "leads": 27,
+    "emails": 10,
+    "dms": 2,
+    "elapsed": 149,
+    "timestamp": "2026-03-03T15:19:40.316Z"
+  },
+  "nashville-tn-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Nashville, TN",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 5,
+    "dms": 0,
+    "elapsed": 145,
+    "timestamp": "2026-03-03T15:22:07.044Z"
+  },
+  "nashville-tn-immigration-lawyer": {
+    "status": "done",
+    "city": "Nashville, TN",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 12,
+    "dms": 0,
+    "elapsed": 140,
+    "timestamp": "2026-03-03T15:22:02.393Z"
+  },
+  "nashville-tn-estate-planning-attorney": {
+    "status": "done",
+    "city": "Nashville, TN",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 139,
+    "timestamp": "2026-03-03T15:24:25.635Z"
+  },
+  "oklahoma-city-ok-law-firms": {
+    "status": "done",
+    "city": "Oklahoma City, OK",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 122,
+    "timestamp": "2026-03-03T00:22:29.824Z"
+  },
+  "oklahoma-city-ok-family-law-attorney": {
+    "status": "done",
+    "city": "Oklahoma City, OK",
+    "niche": "family law attorney",
+    "leads": 27,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 140,
+    "timestamp": "2026-03-03T00:22:47.966Z"
+  },
+  "oklahoma-city-ok-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Oklahoma City, OK",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 11,
+    "dms": 1,
+    "elapsed": 153,
+    "timestamp": "2026-03-03T00:23:01.072Z"
+  },
+  "oklahoma-city-ok-immigration-lawyer": {
+    "status": "done",
+    "city": "Oklahoma City, OK",
+    "niche": "immigration lawyer",
+    "leads": 28,
+    "emails": 17,
+    "dms": 3,
+    "elapsed": 122,
+    "timestamp": "2026-03-03T00:25:02.812Z"
+  },
+  "oklahoma-city-ok-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Oklahoma City, OK",
+    "niche": "criminal defense lawyer",
+    "leads": 27,
+    "emails": 18,
+    "dms": 0,
+    "elapsed": 128,
+    "timestamp": "2026-03-03T00:25:09.327Z"
+  },
+  "oklahoma-city-ok-estate-planning-attorney": {
+    "status": "done",
+    "city": "Oklahoma City, OK",
+    "niche": "estate planning attorney",
+    "leads": 28,
+    "emails": 12,
+    "dms": 0,
+    "elapsed": 129,
+    "timestamp": "2026-03-03T00:25:10.020Z"
+  },
+  "el-paso-tx-family-law-attorney": {
+    "status": "done",
+    "city": "El Paso, TX",
+    "niche": "family law attorney",
+    "leads": 26,
+    "emails": 4,
+    "dms": 0,
+    "elapsed": 122,
+    "timestamp": "2026-03-03T00:27:12.475Z"
+  },
+  "el-paso-tx-law-firms": {
+    "status": "done",
+    "city": "El Paso, TX",
+    "niche": "law firms",
+    "leads": 26,
+    "emails": 5,
+    "dms": 0,
+    "elapsed": 177,
+    "timestamp": "2026-03-03T00:28:07.277Z"
+  },
+  "el-paso-tx-personal-injury-lawyer": {
+    "status": "done",
+    "city": "El Paso, TX",
+    "niche": "personal injury lawyer",
+    "leads": 28,
+    "emails": 8,
+    "dms": 0,
+    "elapsed": 180,
+    "timestamp": "2026-03-03T00:28:09.965Z"
+  },
+  "el-paso-tx-estate-planning-attorney": {
+    "status": "done",
+    "city": "El Paso, TX",
+    "niche": "estate planning attorney",
+    "leads": 28,
+    "emails": 13,
+    "dms": 1,
+    "elapsed": 206,
+    "timestamp": "2026-03-03T00:31:36.093Z"
+  },
+  "el-paso-tx-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "El Paso, TX",
+    "niche": "criminal defense lawyer",
+    "leads": 26,
+    "emails": 11,
+    "dms": 2,
+    "elapsed": 215,
+    "timestamp": "2026-03-03T00:31:45.388Z"
+  },
+  "el-paso-tx-immigration-lawyer": {
+    "status": "done",
+    "city": "El Paso, TX",
+    "niche": "immigration lawyer",
+    "leads": 26,
+    "emails": 12,
+    "dms": 3,
+    "elapsed": 217,
+    "timestamp": "2026-03-03T00:31:46.664Z"
+  },
+  "washington-dc-family-law-attorney": {
+    "status": "done",
+    "city": "Washington, DC",
+    "niche": "family law attorney",
+    "leads": 26,
+    "emails": 12,
+    "dms": 6,
+    "elapsed": 131,
+    "timestamp": "2026-03-03T00:33:57.449Z"
+  },
+  "washington-dc-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Washington, DC",
+    "niche": "personal injury lawyer",
+    "leads": 28,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 138,
+    "timestamp": "2026-03-03T00:34:05.117Z"
+  },
+  "washington-dc-law-firms": {
+    "status": "done",
+    "city": "Washington, DC",
+    "niche": "law firms",
+    "leads": 27,
+    "emails": 8,
+    "dms": 1,
+    "elapsed": 139,
+    "timestamp": "2026-03-03T00:34:05.501Z"
+  },
+  "washington-dc-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Washington, DC",
+    "niche": "criminal defense lawyer",
+    "leads": 25,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 97,
+    "timestamp": "2026-03-03T00:35:42.844Z"
+  },
+  "washington-dc-immigration-lawyer": {
+    "status": "done",
+    "city": "Washington, DC",
+    "niche": "immigration lawyer",
+    "leads": 27,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 120,
+    "timestamp": "2026-03-03T00:36:05.860Z"
+  },
+  "washington-dc-estate-planning-attorney": {
+    "status": "done",
+    "city": "Washington, DC",
+    "niche": "estate planning attorney",
+    "leads": 28,
+    "emails": 8,
+    "dms": 1,
+    "elapsed": 125,
+    "timestamp": "2026-03-03T00:36:10.742Z"
+  },
+  "boston-ma-family-law-attorney": {
+    "status": "done",
+    "city": "Boston, MA",
+    "niche": "family law attorney",
+    "leads": 26,
+    "emails": 9,
+    "dms": 3,
+    "elapsed": 118,
+    "timestamp": "2026-03-03T00:38:08.585Z"
+  },
+  "boston-ma-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Boston, MA",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 0,
+    "elapsed": 158,
+    "timestamp": "2026-03-03T00:38:48.473Z"
+  },
+  "boston-ma-law-firms": {
+    "status": "done",
+    "city": "Boston, MA",
+    "niche": "law firms",
+    "leads": 26,
+    "emails": 11,
+    "dms": 1,
+    "elapsed": 160,
+    "timestamp": "2026-03-03T00:38:51.187Z"
+  },
+  "boston-ma-immigration-lawyer": {
+    "status": "done",
+    "city": "Boston, MA",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 123,
+    "timestamp": "2026-03-03T00:40:54.101Z"
+  },
+  "boston-ma-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Boston, MA",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 7,
+    "dms": 0,
+    "elapsed": 150,
+    "timestamp": "2026-03-03T00:41:21.173Z"
+  },
+  "boston-ma-estate-planning-attorney": {
+    "status": "done",
+    "city": "Boston, MA",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 157,
+    "timestamp": "2026-03-03T00:41:28.520Z"
+  },
+  "las-vegas-nv-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Las Vegas, NV",
+    "niche": "personal injury lawyer",
+    "leads": 28,
+    "emails": 17,
+    "dms": 0,
+    "elapsed": 75,
+    "timestamp": "2026-03-03T00:42:43.817Z"
+  },
+  "las-vegas-nv-law-firms": {
+    "status": "done",
+    "city": "Las Vegas, NV",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 12,
+    "dms": 1,
+    "elapsed": 81,
+    "timestamp": "2026-03-03T00:42:49.119Z"
+  },
+  "las-vegas-nv-family-law-attorney": {
+    "status": "done",
+    "city": "Las Vegas, NV",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 6,
+    "dms": 1,
+    "elapsed": 96,
+    "timestamp": "2026-03-03T00:43:04.695Z"
+  },
+  "las-vegas-nv-immigration-lawyer": {
+    "status": "done",
+    "city": "Las Vegas, NV",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 75,
+    "timestamp": "2026-03-03T00:44:19.426Z"
+  },
+  "las-vegas-nv-estate-planning-attorney": {
+    "status": "done",
+    "city": "Las Vegas, NV",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 11,
+    "dms": 1,
+    "elapsed": 96,
+    "timestamp": "2026-03-03T00:44:40.619Z"
+  },
+  "las-vegas-nv-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Las Vegas, NV",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 6,
+    "dms": 1,
+    "elapsed": 100,
+    "timestamp": "2026-03-03T00:44:44.930Z"
+  },
+  "portland-or-family-law-attorney": {
+    "status": "done",
+    "city": "Portland, OR",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 8,
+    "dms": 2,
+    "elapsed": 66,
+    "timestamp": "2026-03-03T00:45:51.296Z"
+  },
+  "portland-or-law-firms": {
+    "status": "done",
+    "city": "Portland, OR",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 74,
+    "timestamp": "2026-03-03T00:45:59.413Z"
+  },
+  "portland-or-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Portland, OR",
+    "niche": "personal injury lawyer",
+    "leads": 29,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 85,
+    "timestamp": "2026-03-03T00:46:09.581Z"
+  },
+  "portland-or-estate-planning-attorney": {
+    "status": "done",
+    "city": "Portland, OR",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 16,
+    "dms": 2,
+    "elapsed": 62,
+    "timestamp": "2026-03-03T00:47:11.740Z"
+  },
+  "portland-or-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Portland, OR",
+    "niche": "criminal defense lawyer",
+    "leads": 26,
+    "emails": 8,
+    "dms": 3,
+    "elapsed": 97,
+    "timestamp": "2026-03-03T00:47:46.903Z"
+  },
+  "portland-or-immigration-lawyer": {
+    "status": "done",
+    "city": "Portland, OR",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 104,
+    "timestamp": "2026-03-03T00:47:53.166Z"
+  },
+  "memphis-tn-law-firms": {
+    "status": "done",
+    "city": "Memphis, TN",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 8,
+    "dms": 0,
+    "elapsed": 104,
+    "timestamp": "2026-03-03T00:49:36.832Z"
+  },
+  "memphis-tn-family-law-attorney": {
+    "status": "done",
+    "city": "Memphis, TN",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 8,
+    "dms": 2,
+    "elapsed": 127,
+    "timestamp": "2026-03-03T00:50:00.512Z"
+  },
+  "memphis-tn-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Memphis, TN",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 0,
+    "elapsed": 148,
+    "timestamp": "2026-03-03T00:50:21.510Z"
+  },
+  "memphis-tn-immigration-lawyer": {
+    "status": "done",
+    "city": "Memphis, TN",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 57,
+    "timestamp": "2026-03-03T00:51:18.325Z"
+  },
+  "memphis-tn-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Memphis, TN",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 6,
+    "dms": 0,
+    "elapsed": 85,
+    "timestamp": "2026-03-03T00:51:46.307Z"
+  },
+  "memphis-tn-estate-planning-attorney": {
+    "status": "done",
+    "city": "Memphis, TN",
+    "niche": "estate planning attorney",
+    "leads": 27,
+    "emails": 11,
+    "dms": 1,
+    "elapsed": 156,
+    "timestamp": "2026-03-03T00:52:57.800Z"
+  },
+  "louisville-ky-law-firms": {
+    "status": "done",
+    "city": "Louisville, KY",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 8,
+    "dms": 0,
+    "elapsed": 101,
+    "timestamp": "2026-03-03T00:54:38.870Z"
+  },
+  "louisville-ky-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Louisville, KY",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 116,
+    "timestamp": "2026-03-03T00:54:53.920Z"
+  },
+  "louisville-ky-family-law-attorney": {
+    "status": "done",
+    "city": "Louisville, KY",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 11,
+    "dms": 3,
+    "elapsed": 142,
+    "timestamp": "2026-03-03T00:55:19.774Z"
+  },
+  "louisville-ky-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Louisville, KY",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 4,
+    "elapsed": 85,
+    "timestamp": "2026-03-03T00:56:44.910Z"
+  },
+  "louisville-ky-estate-planning-attorney": {
+    "status": "done",
+    "city": "Louisville, KY",
+    "niche": "estate planning attorney",
+    "leads": 28,
+    "emails": 13,
+    "dms": 0,
+    "elapsed": 95,
+    "timestamp": "2026-03-03T00:56:54.793Z"
+  },
+  "louisville-ky-immigration-lawyer": {
+    "status": "done",
+    "city": "Louisville, KY",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 11,
+    "dms": 6,
+    "elapsed": 148,
+    "timestamp": "2026-03-03T00:57:48.171Z"
+  },
+  "baltimore-md-family-law-attorney": {
+    "status": "done",
+    "city": "Baltimore, MD",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 4,
+    "dms": 1,
+    "elapsed": 89,
+    "timestamp": "2026-03-03T00:59:16.800Z"
+  },
+  "baltimore-md-law-firms": {
+    "status": "done",
+    "city": "Baltimore, MD",
+    "niche": "law firms",
+    "leads": 21,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 98,
+    "timestamp": "2026-03-03T00:59:26.008Z"
+  },
+  "baltimore-md-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Baltimore, MD",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 0,
+    "elapsed": 149,
+    "timestamp": "2026-03-03T01:00:17.503Z"
+  },
+  "baltimore-md-immigration-lawyer": {
+    "status": "done",
+    "city": "Baltimore, MD",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 13,
+    "dms": 0,
+    "elapsed": 105,
+    "timestamp": "2026-03-03T01:02:02.797Z"
+  },
+  "baltimore-md-estate-planning-attorney": {
+    "status": "done",
+    "city": "Baltimore, MD",
+    "niche": "estate planning attorney",
+    "leads": 27,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 138,
+    "timestamp": "2026-03-03T01:02:35.521Z"
+  },
+  "baltimore-md-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Baltimore, MD",
+    "niche": "criminal defense lawyer",
+    "leads": 27,
+    "emails": 5,
+    "dms": 1,
+    "elapsed": 148,
+    "timestamp": "2026-03-03T01:02:45.110Z"
+  },
+  "milwaukee-wi-family-law-attorney": {
+    "status": "done",
+    "city": "Milwaukee, WI",
+    "niche": "family law attorney",
+    "leads": 27,
+    "emails": 5,
+    "dms": 3,
+    "elapsed": 103,
+    "timestamp": "2026-03-03T01:04:28.162Z"
+  },
+  "milwaukee-wi-law-firms": {
+    "status": "done",
+    "city": "Milwaukee, WI",
+    "niche": "law firms",
+    "leads": 26,
+    "emails": 12,
+    "dms": 0,
+    "elapsed": 121,
+    "timestamp": "2026-03-03T01:04:46.113Z"
+  },
+  "milwaukee-wi-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Milwaukee, WI",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 143,
+    "timestamp": "2026-03-03T01:05:07.631Z"
+  },
+  "milwaukee-wi-immigration-lawyer": {
+    "status": "done",
+    "city": "Milwaukee, WI",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 5,
+    "elapsed": 71,
+    "timestamp": "2026-03-03T01:06:18.414Z"
+  },
+  "milwaukee-wi-estate-planning-attorney": {
+    "status": "done",
+    "city": "Milwaukee, WI",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 9,
+    "dms": 2,
+    "elapsed": 134,
+    "timestamp": "2026-03-03T01:07:21.469Z"
+  },
+  "milwaukee-wi-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Milwaukee, WI",
+    "niche": "criminal defense lawyer",
+    "leads": 27,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 148,
+    "timestamp": "2026-03-03T01:07:35.789Z"
+  },
+  "albuquerque-nm-family-law-attorney": {
+    "status": "done",
+    "city": "Albuquerque, NM",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 8,
+    "dms": 2,
+    "elapsed": 94,
+    "timestamp": "2026-03-03T01:09:09.613Z"
+  },
+  "albuquerque-nm-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Albuquerque, NM",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 0,
+    "elapsed": 109,
+    "timestamp": "2026-03-03T01:09:24.799Z"
+  },
+  "albuquerque-nm-law-firms": {
+    "status": "done",
+    "city": "Albuquerque, NM",
+    "niche": "law firms",
+    "leads": 27,
+    "emails": 12,
+    "dms": 0,
+    "elapsed": 112,
+    "timestamp": "2026-03-03T01:09:27.556Z"
+  },
+  "albuquerque-nm-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Albuquerque, NM",
+    "niche": "criminal defense lawyer",
+    "leads": 27,
+    "emails": 11,
+    "dms": 2,
+    "elapsed": 88,
+    "timestamp": "2026-03-03T01:10:55.545Z"
+  },
+  "albuquerque-nm-immigration-lawyer": {
+    "status": "done",
+    "city": "Albuquerque, NM",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 5,
+    "elapsed": 92,
+    "timestamp": "2026-03-03T01:10:59.832Z"
+  },
+  "albuquerque-nm-estate-planning-attorney": {
+    "status": "done",
+    "city": "Albuquerque, NM",
+    "niche": "estate planning attorney",
+    "leads": 27,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 129,
+    "timestamp": "2026-03-03T01:11:36.435Z"
+  },
+  "tucson-az-law-firms": {
+    "status": "done",
+    "city": "Tucson, AZ",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 15,
+    "dms": 1,
+    "elapsed": 119,
+    "timestamp": "2026-03-03T01:13:35.622Z"
+  },
+  "tucson-az-family-law-attorney": {
+    "status": "done",
+    "city": "Tucson, AZ",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 10,
+    "dms": 2,
+    "elapsed": 125,
+    "timestamp": "2026-03-03T01:13:41.352Z"
+  },
+  "tucson-az-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Tucson, AZ",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 3,
+    "dms": 0,
+    "elapsed": 139,
+    "timestamp": "2026-03-03T01:13:55.316Z"
+  },
+  "tucson-az-estate-planning-attorney": {
+    "status": "done",
+    "city": "Tucson, AZ",
+    "niche": "estate planning attorney",
+    "leads": 27,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 56,
+    "timestamp": "2026-03-03T01:14:51.133Z"
+  },
+  "tucson-az-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Tucson, AZ",
+    "niche": "criminal defense lawyer",
+    "leads": 25,
+    "emails": 10,
+    "dms": 2,
+    "elapsed": 99,
+    "timestamp": "2026-03-03T01:15:33.931Z"
+  },
+  "tucson-az-immigration-lawyer": {
+    "status": "done",
+    "city": "Tucson, AZ",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 9,
+    "dms": 5,
+    "elapsed": 144,
+    "timestamp": "2026-03-03T01:16:19.609Z"
+  },
+  "sacramento-ca-law-firms": {
+    "status": "done",
+    "city": "Sacramento, CA",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 64,
+    "timestamp": "2026-03-03T01:17:23.111Z"
+  },
+  "sacramento-ca-family-law-attorney": {
+    "status": "done",
+    "city": "Sacramento, CA",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 6,
+    "dms": 5,
+    "elapsed": 71,
+    "timestamp": "2026-03-03T01:17:30.734Z"
+  },
+  "sacramento-ca-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Sacramento, CA",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 111,
+    "timestamp": "2026-03-03T01:18:10.788Z"
+  },
+  "sacramento-ca-immigration-lawyer": {
+    "status": "done",
+    "city": "Sacramento, CA",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 6,
+    "dms": 2,
+    "elapsed": 57,
+    "timestamp": "2026-03-03T01:19:07.497Z"
+  },
+  "sacramento-ca-estate-planning-attorney": {
+    "status": "done",
+    "city": "Sacramento, CA",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 12,
+    "dms": 0,
+    "elapsed": 78,
+    "timestamp": "2026-03-03T01:19:28.884Z"
+  },
+  "sacramento-ca-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Sacramento, CA",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 6,
+    "dms": 2,
+    "elapsed": 120,
+    "timestamp": "2026-03-03T01:20:11.138Z"
+  },
+  "atlanta-ga-family-law-attorney": {
+    "status": "done",
+    "city": "Atlanta, GA",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 8,
+    "dms": 1,
+    "elapsed": 90,
+    "timestamp": "2026-03-03T01:21:41.355Z"
+  },
+  "atlanta-ga-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Atlanta, GA",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 1,
+    "elapsed": 128,
+    "timestamp": "2026-03-03T01:22:18.998Z"
+  },
+  "atlanta-ga-law-firms": {
+    "status": "done",
+    "city": "Atlanta, GA",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 7,
+    "dms": 0,
+    "elapsed": 151,
+    "timestamp": "2026-03-03T01:22:42.406Z"
+  },
+  "atlanta-ga-estate-planning-attorney": {
+    "status": "done",
+    "city": "Atlanta, GA",
+    "niche": "estate planning attorney",
+    "leads": 28,
+    "emails": 12,
+    "dms": 1,
+    "elapsed": 80,
+    "timestamp": "2026-03-03T01:24:02.009Z"
+  },
+  "atlanta-ga-immigration-lawyer": {
+    "status": "done",
+    "city": "Atlanta, GA",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 103,
+    "timestamp": "2026-03-03T01:24:25.151Z"
+  },
+  "atlanta-ga-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Atlanta, GA",
+    "niche": "criminal defense lawyer",
+    "leads": 26,
+    "emails": 9,
+    "dms": 1,
+    "elapsed": 110,
+    "timestamp": "2026-03-03T01:24:32.625Z"
+  },
+  "kansas-city-mo-law-firms": {
+    "status": "done",
+    "city": "Kansas City, MO",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 6,
+    "dms": 1,
+    "elapsed": 56,
+    "timestamp": "2026-03-03T01:25:28.158Z"
+  },
+  "kansas-city-mo-family-law-attorney": {
+    "status": "done",
+    "city": "Kansas City, MO",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 10,
+    "dms": 5,
+    "elapsed": 83,
+    "timestamp": "2026-03-03T01:25:55.508Z"
+  },
+  "kansas-city-mo-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Kansas City, MO",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 6,
+    "dms": 1,
+    "elapsed": 116,
+    "timestamp": "2026-03-03T01:26:28.480Z"
+  },
+  "kansas-city-mo-estate-planning-attorney": {
+    "status": "done",
+    "city": "Kansas City, MO",
+    "niche": "estate planning attorney",
+    "leads": 27,
+    "emails": 9,
+    "dms": 3,
+    "elapsed": 121,
+    "timestamp": "2026-03-03T01:28:28.987Z"
+  },
+  "kansas-city-mo-immigration-lawyer": {
+    "status": "done",
+    "city": "Kansas City, MO",
+    "niche": "immigration lawyer",
+    "leads": 27,
+    "emails": 11,
+    "dms": 1,
+    "elapsed": 124,
+    "timestamp": "2026-03-03T01:28:32.556Z"
+  },
+  "kansas-city-mo-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Kansas City, MO",
+    "niche": "criminal defense lawyer",
+    "leads": 27,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 133,
+    "timestamp": "2026-03-03T01:28:41.636Z"
+  },
+  "raleigh-nc-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Raleigh, NC",
+    "niche": "personal injury lawyer",
+    "leads": 28,
+    "emails": 16,
+    "dms": 0,
+    "elapsed": 129,
+    "timestamp": "2026-03-03T01:30:50.293Z"
+  },
+  "raleigh-nc-family-law-attorney": {
+    "status": "done",
+    "city": "Raleigh, NC",
+    "niche": "family law attorney",
+    "leads": 26,
+    "emails": 9,
+    "dms": 1,
+    "elapsed": 132,
+    "timestamp": "2026-03-03T01:30:53.725Z"
+  },
+  "raleigh-nc-law-firms": {
+    "status": "done",
+    "city": "Raleigh, NC",
+    "niche": "law firms",
+    "leads": 26,
+    "emails": 12,
+    "dms": 0,
+    "elapsed": 141,
+    "timestamp": "2026-03-03T01:31:02.820Z"
+  },
+  "raleigh-nc-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Raleigh, NC",
+    "niche": "criminal defense lawyer",
+    "leads": 26,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 97,
+    "timestamp": "2026-03-03T01:32:40.097Z"
+  },
+  "raleigh-nc-estate-planning-attorney": {
+    "status": "done",
+    "city": "Raleigh, NC",
+    "niche": "estate planning attorney",
+    "leads": 29,
+    "emails": 14,
+    "dms": 0,
+    "elapsed": 108,
+    "timestamp": "2026-03-03T01:32:50.460Z"
+  },
+  "raleigh-nc-immigration-lawyer": {
+    "status": "done",
+    "city": "Raleigh, NC",
+    "niche": "immigration lawyer",
+    "leads": 26,
+    "emails": 13,
+    "dms": 2,
+    "elapsed": 136,
+    "timestamp": "2026-03-03T01:33:19.116Z"
+  },
+  "miami-fl-law-firms": {
+    "status": "done",
+    "city": "Miami, FL",
+    "niche": "law firms",
+    "leads": 26,
+    "emails": 13,
+    "dms": 1,
+    "elapsed": 110,
+    "timestamp": "2026-03-03T01:35:09.235Z"
+  },
+  "miami-fl-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Miami, FL",
+    "niche": "personal injury lawyer",
+    "leads": 27,
+    "emails": 15,
+    "dms": 0,
+    "elapsed": 115,
+    "timestamp": "2026-03-03T01:35:14.307Z"
+  },
+  "miami-fl-family-law-attorney": {
+    "status": "done",
+    "city": "Miami, FL",
+    "niche": "family law attorney",
+    "leads": 27,
+    "emails": 5,
+    "dms": 2,
+    "elapsed": 123,
+    "timestamp": "2026-03-03T01:35:22.393Z"
+  },
+  "miami-fl-immigration-lawyer": {
+    "status": "done",
+    "city": "Miami, FL",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 2,
+    "elapsed": 138,
+    "timestamp": "2026-03-03T01:37:40.757Z"
+  },
+  "miami-fl-estate-planning-attorney": {
+    "status": "done",
+    "city": "Miami, FL",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 12,
+    "dms": 1,
+    "elapsed": 141,
+    "timestamp": "2026-03-03T01:37:43.136Z"
+  },
+  "miami-fl-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Miami, FL",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 7,
+    "dms": 2,
+    "elapsed": 156,
+    "timestamp": "2026-03-03T01:37:58.518Z"
+  },
+  "minneapolis-mn-law-firms": {
+    "status": "done",
+    "city": "Minneapolis, MN",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 4,
+    "dms": 0,
+    "elapsed": 91,
+    "timestamp": "2026-03-03T01:39:29.657Z"
+  },
+  "minneapolis-mn-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Minneapolis, MN",
+    "niche": "personal injury lawyer",
+    "leads": 27,
+    "emails": 11,
+    "dms": 1,
+    "elapsed": 95,
+    "timestamp": "2026-03-03T01:39:33.483Z"
+  },
+  "minneapolis-mn-family-law-attorney": {
+    "status": "done",
+    "city": "Minneapolis, MN",
+    "niche": "family law attorney",
+    "leads": 28,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 137,
+    "timestamp": "2026-03-03T01:40:15.429Z"
+  },
+  "minneapolis-mn-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Minneapolis, MN",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 86,
+    "timestamp": "2026-03-03T01:41:41.231Z"
+  },
+  "minneapolis-mn-immigration-lawyer": {
+    "status": "done",
+    "city": "Minneapolis, MN",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 7,
+    "dms": 0,
+    "elapsed": 115,
+    "timestamp": "2026-03-03T01:42:10.393Z"
+  },
+  "minneapolis-mn-estate-planning-attorney": {
+    "status": "done",
+    "city": "Minneapolis, MN",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 124,
+    "timestamp": "2026-03-03T01:42:19.318Z"
+  },
+  "tampa-fl-family-law-attorney": {
+    "status": "done",
+    "city": "Tampa, FL",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 110,
+    "timestamp": "2026-03-03T01:44:09.062Z"
+  },
+  "tampa-fl-law-firms": {
+    "status": "done",
+    "city": "Tampa, FL",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 119,
+    "timestamp": "2026-03-03T01:44:18.725Z"
+  },
+  "tampa-fl-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Tampa, FL",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 2,
+    "elapsed": 128,
+    "timestamp": "2026-03-03T01:44:27.797Z"
+  },
+  "tampa-fl-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Tampa, FL",
+    "niche": "criminal defense lawyer",
+    "leads": 21,
+    "emails": 6,
+    "dms": 2,
+    "elapsed": 71,
+    "timestamp": "2026-03-03T01:45:39.097Z"
+  },
+  "tampa-fl-immigration-lawyer": {
+    "status": "done",
+    "city": "Tampa, FL",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 7,
+    "dms": 0,
+    "elapsed": 90,
+    "timestamp": "2026-03-03T01:45:58.176Z"
+  },
+  "tampa-fl-estate-planning-attorney": {
+    "status": "done",
+    "city": "Tampa, FL",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 6,
+    "dms": 0,
+    "elapsed": 107,
+    "timestamp": "2026-03-03T01:46:15.194Z"
+  },
+  "new-orleans-la-law-firms": {
+    "status": "done",
+    "city": "New Orleans, LA",
+    "niche": "law firms",
+    "leads": 21,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 69,
+    "timestamp": "2026-03-03T01:47:24.326Z"
+  },
+  "new-orleans-la-personal-injury-lawyer": {
+    "status": "done",
+    "city": "New Orleans, LA",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 9,
+    "dms": 1,
+    "elapsed": 92,
+    "timestamp": "2026-03-03T01:47:46.883Z"
+  },
+  "new-orleans-la-family-law-attorney": {
+    "status": "done",
+    "city": "New Orleans, LA",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 9,
+    "dms": 7,
+    "elapsed": 108,
+    "timestamp": "2026-03-03T01:48:03.226Z"
+  },
+  "new-orleans-la-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "New Orleans, LA",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 5,
+    "dms": 1,
+    "elapsed": 63,
+    "timestamp": "2026-03-03T01:49:06.172Z"
+  },
+  "new-orleans-la-estate-planning-attorney": {
+    "status": "done",
+    "city": "New Orleans, LA",
+    "niche": "estate planning attorney",
+    "leads": 28,
+    "emails": 12,
+    "dms": 0,
+    "elapsed": 88,
+    "timestamp": "2026-03-03T01:49:31.717Z"
+  },
+  "new-orleans-la-immigration-lawyer": {
+    "status": "done",
+    "city": "New Orleans, LA",
+    "niche": "immigration lawyer",
+    "leads": 28,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 94,
+    "timestamp": "2026-03-03T01:49:37.490Z"
+  },
+  "cleveland-oh-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Cleveland, OH",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 6,
+    "dms": 0,
+    "elapsed": 124,
+    "timestamp": "2026-03-03T01:51:41.834Z"
+  },
+  "cleveland-oh-law-firms": {
+    "status": "done",
+    "city": "Cleveland, OH",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 131,
+    "timestamp": "2026-03-03T01:51:48.707Z"
+  },
+  "cleveland-oh-family-law-attorney": {
+    "status": "done",
+    "city": "Cleveland, OH",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 7,
+    "dms": 6,
+    "elapsed": 142,
+    "timestamp": "2026-03-03T01:51:59.329Z"
+  },
+  "cleveland-oh-estate-planning-attorney": {
+    "status": "done",
+    "city": "Cleveland, OH",
+    "niche": "estate planning attorney",
+    "leads": 27,
+    "emails": 12,
+    "dms": 0,
+    "elapsed": 55,
+    "timestamp": "2026-03-03T01:52:54.112Z"
+  },
+  "cleveland-oh-immigration-lawyer": {
+    "status": "done",
+    "city": "Cleveland, OH",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 15,
+    "dms": 1,
+    "elapsed": 105,
+    "timestamp": "2026-03-03T01:53:44.654Z"
+  },
+  "cleveland-oh-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Cleveland, OH",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 112,
+    "timestamp": "2026-03-03T01:53:51.234Z"
+  },
+  "pittsburgh-pa-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Pittsburgh, PA",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 4,
+    "dms": 0,
+    "elapsed": 107,
+    "timestamp": "2026-03-03T01:55:37.980Z"
+  },
+  "pittsburgh-pa-family-law-attorney": {
+    "status": "done",
+    "city": "Pittsburgh, PA",
+    "niche": "family law attorney",
+    "leads": 27,
+    "emails": 10,
+    "dms": 2,
+    "elapsed": 109,
+    "timestamp": "2026-03-03T01:55:39.831Z"
+  },
+  "pittsburgh-pa-law-firms": {
+    "status": "done",
+    "city": "Pittsburgh, PA",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 131,
+    "timestamp": "2026-03-03T01:56:02.248Z"
+  },
+  "pittsburgh-pa-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Pittsburgh, PA",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 13,
+    "dms": 3,
+    "elapsed": 72,
+    "timestamp": "2026-03-03T01:57:14.123Z"
+  },
+  "pittsburgh-pa-estate-planning-attorney": {
+    "status": "done",
+    "city": "Pittsburgh, PA",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 147,
+    "timestamp": "2026-03-03T01:58:29.414Z"
+  },
+  "pittsburgh-pa-immigration-lawyer": {
+    "status": "done",
+    "city": "Pittsburgh, PA",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 10,
+    "elapsed": 147,
+    "timestamp": "2026-03-03T01:58:29.576Z"
+  },
+  "cincinnati-oh-family-law-attorney": {
+    "status": "done",
+    "city": "Cincinnati, OH",
+    "niche": "family law attorney",
+    "leads": 28,
+    "emails": 11,
+    "dms": 2,
+    "elapsed": 130,
+    "timestamp": "2026-03-03T02:00:39.226Z"
+  },
+  "cincinnati-oh-law-firms": {
+    "status": "done",
+    "city": "Cincinnati, OH",
+    "niche": "law firms",
+    "leads": 28,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 141,
+    "timestamp": "2026-03-03T02:00:50.732Z"
+  },
+  "cincinnati-oh-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Cincinnati, OH",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 6,
+    "dms": 1,
+    "elapsed": 156,
+    "timestamp": "2026-03-03T02:01:05.206Z"
+  },
+  "cincinnati-oh-immigration-lawyer": {
+    "status": "done",
+    "city": "Cincinnati, OH",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 135,
+    "timestamp": "2026-03-03T02:03:20.480Z"
+  },
+  "cincinnati-oh-estate-planning-attorney": {
+    "status": "done",
+    "city": "Cincinnati, OH",
+    "niche": "estate planning attorney",
+    "leads": 28,
+    "emails": 13,
+    "dms": 0,
+    "elapsed": 140,
+    "timestamp": "2026-03-03T02:03:25.305Z"
+  },
+  "cincinnati-oh-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Cincinnati, OH",
+    "niche": "criminal defense lawyer",
+    "leads": 27,
+    "emails": 8,
+    "dms": 3,
+    "elapsed": 155,
+    "timestamp": "2026-03-03T02:03:40.677Z"
+  },
+  "orlando-fl-law-firms": {
+    "status": "done",
+    "city": "Orlando, FL",
+    "niche": "law firms",
+    "leads": 27,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 100,
+    "timestamp": "2026-03-03T02:05:20.722Z"
+  },
+  "orlando-fl-family-law-attorney": {
+    "status": "done",
+    "city": "Orlando, FL",
+    "niche": "family law attorney",
+    "leads": 26,
+    "emails": 10,
+    "dms": 2,
+    "elapsed": 101,
+    "timestamp": "2026-03-03T02:05:21.401Z"
+  },
+  "orlando-fl-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Orlando, FL",
+    "niche": "personal injury lawyer",
+    "leads": 28,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 143,
+    "timestamp": "2026-03-03T02:06:04.169Z"
+  },
+  "orlando-fl-estate-planning-attorney": {
+    "status": "done",
+    "city": "Orlando, FL",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 147,
+    "timestamp": "2026-03-03T02:08:31.091Z"
+  },
+  "orlando-fl-immigration-lawyer": {
+    "status": "done",
+    "city": "Orlando, FL",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 7,
+    "dms": 0,
+    "elapsed": 155,
+    "timestamp": "2026-03-03T02:08:39.489Z"
+  },
+  "orlando-fl-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Orlando, FL",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 6,
+    "dms": 1,
+    "elapsed": 158,
+    "timestamp": "2026-03-03T02:08:42.381Z"
+  },
+  "salt-lake-city-ut-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Salt Lake City, UT",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 7,
+    "dms": 0,
+    "elapsed": 92,
+    "timestamp": "2026-03-03T02:10:14.306Z"
+  },
+  "salt-lake-city-ut-law-firms": {
+    "status": "done",
+    "city": "Salt Lake City, UT",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 11,
+    "dms": 1,
+    "elapsed": 105,
+    "timestamp": "2026-03-03T02:10:27.403Z"
+  },
+  "salt-lake-city-ut-family-law-attorney": {
+    "status": "done",
+    "city": "Salt Lake City, UT",
+    "niche": "family law attorney",
+    "leads": 29,
+    "emails": 16,
+    "dms": 4,
+    "elapsed": 138,
+    "timestamp": "2026-03-03T02:11:00.856Z"
+  },
+  "salt-lake-city-ut-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Salt Lake City, UT",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 2,
+    "elapsed": 98,
+    "timestamp": "2026-03-03T02:12:38.982Z"
+  },
+  "salt-lake-city-ut-immigration-lawyer": {
+    "status": "done",
+    "city": "Salt Lake City, UT",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 103,
+    "timestamp": "2026-03-03T02:12:43.534Z"
+  },
+  "salt-lake-city-ut-estate-planning-attorney": {
+    "status": "done",
+    "city": "Salt Lake City, UT",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 12,
+    "dms": 1,
+    "elapsed": 105,
+    "timestamp": "2026-03-03T02:12:46.098Z"
+  },
+  "richmond-va-family-law-attorney": {
+    "status": "done",
+    "city": "Richmond, VA",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 6,
+    "dms": 2,
+    "elapsed": 111,
+    "timestamp": "2026-03-03T02:14:36.668Z"
+  },
+  "richmond-va-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Richmond, VA",
+    "niche": "personal injury lawyer",
+    "leads": 28,
+    "emails": 13,
+    "dms": 1,
+    "elapsed": 118,
+    "timestamp": "2026-03-03T02:14:44.412Z"
+  },
+  "richmond-va-law-firms": {
+    "status": "done",
+    "city": "Richmond, VA",
+    "niche": "law firms",
+    "leads": 21,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 118,
+    "timestamp": "2026-03-03T02:14:44.454Z"
+  },
+  "richmond-va-immigration-lawyer": {
+    "status": "done",
+    "city": "Richmond, VA",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 11,
+    "dms": 1,
+    "elapsed": 71,
+    "timestamp": "2026-03-03T02:15:55.788Z"
+  },
+  "richmond-va-estate-planning-attorney": {
+    "status": "done",
+    "city": "Richmond, VA",
+    "niche": "estate planning attorney",
+    "leads": 28,
+    "emails": 11,
+    "dms": 1,
+    "elapsed": 102,
+    "timestamp": "2026-03-03T02:16:26.800Z"
+  },
+  "richmond-va-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Richmond, VA",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 5,
+    "dms": 1,
+    "elapsed": 105,
+    "timestamp": "2026-03-03T02:16:29.203Z"
+  },
+  "birmingham-al-law-firms": {
+    "status": "done",
+    "city": "Birmingham, AL",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 56,
+    "timestamp": "2026-03-03T02:17:25.666Z"
+  },
+  "birmingham-al-family-law-attorney": {
+    "status": "done",
+    "city": "Birmingham, AL",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 10,
+    "dms": 6,
+    "elapsed": 58,
+    "timestamp": "2026-03-03T02:17:27.120Z"
+  },
+  "birmingham-al-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Birmingham, AL",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 77,
+    "timestamp": "2026-03-03T02:17:46.514Z"
+  },
+  "birmingham-al-estate-planning-attorney": {
+    "status": "done",
+    "city": "Birmingham, AL",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 55,
+    "timestamp": "2026-03-03T02:18:41.373Z"
+  },
+  "birmingham-al-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Birmingham, AL",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 57,
+    "timestamp": "2026-03-03T02:18:43.498Z"
+  },
+  "birmingham-al-immigration-lawyer": {
+    "status": "done",
+    "city": "Birmingham, AL",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 9,
+    "dms": 4,
+    "elapsed": 108,
+    "timestamp": "2026-03-03T02:19:34.658Z"
+  },
+  "rochester-ny-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Rochester, NY",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 3,
+    "dms": 2,
+    "elapsed": 117,
+    "timestamp": "2026-03-03T02:21:31.250Z"
+  },
+  "rochester-ny-law-firms": {
+    "status": "done",
+    "city": "Rochester, NY",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 7,
+    "dms": 0,
+    "elapsed": 119,
+    "timestamp": "2026-03-03T02:21:33.701Z"
+  },
+  "rochester-ny-family-law-attorney": {
+    "status": "done",
+    "city": "Rochester, NY",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 5,
+    "dms": 3,
+    "elapsed": 153,
+    "timestamp": "2026-03-03T02:22:08.034Z"
+  },
+  "rochester-ny-immigration-lawyer": {
+    "status": "done",
+    "city": "Rochester, NY",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 6,
+    "elapsed": 132,
+    "timestamp": "2026-03-03T02:24:19.871Z"
+  },
+  "rochester-ny-estate-planning-attorney": {
+    "status": "done",
+    "city": "Rochester, NY",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 12,
+    "dms": 0,
+    "elapsed": 140,
+    "timestamp": "2026-03-03T02:24:27.917Z"
+  },
+  "rochester-ny-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Rochester, NY",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 5,
+    "dms": 4,
+    "elapsed": 145,
+    "timestamp": "2026-03-03T02:24:33.492Z"
+  },
+  "grand-rapids-mi-family-law-attorney": {
+    "status": "done",
+    "city": "Grand Rapids, MI",
+    "niche": "family law attorney",
+    "leads": 28,
+    "emails": 7,
+    "dms": 2,
+    "elapsed": 99,
+    "timestamp": "2026-03-03T02:26:12.771Z"
+  },
+  "grand-rapids-mi-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Grand Rapids, MI",
+    "niche": "personal injury lawyer",
+    "leads": 30,
+    "emails": 11,
+    "dms": 2,
+    "elapsed": 144,
+    "timestamp": "2026-03-03T02:26:57.409Z"
+  },
+  "grand-rapids-mi-law-firms": {
+    "status": "done",
+    "city": "Grand Rapids, MI",
+    "niche": "law firms",
+    "leads": 26,
+    "emails": 8,
+    "dms": 0,
+    "elapsed": 144,
+    "timestamp": "2026-03-03T02:26:57.834Z"
+  },
+  "grand-rapids-mi-immigration-lawyer": {
+    "status": "done",
+    "city": "Grand Rapids, MI",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 6,
+    "dms": 5,
+    "elapsed": 143,
+    "timestamp": "2026-03-03T02:29:20.707Z"
+  },
+  "grand-rapids-mi-estate-planning-attorney": {
+    "status": "done",
+    "city": "Grand Rapids, MI",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 5,
+    "dms": 0,
+    "elapsed": 143,
+    "timestamp": "2026-03-03T02:29:20.724Z"
+  },
+  "grand-rapids-mi-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Grand Rapids, MI",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 6,
+    "dms": 0,
+    "elapsed": 145,
+    "timestamp": "2026-03-03T02:29:22.898Z"
+  },
+  "knoxville-tn-family-law-attorney": {
+    "status": "done",
+    "city": "Knoxville, TN",
+    "niche": "family law attorney",
+    "leads": 27,
+    "emails": 8,
+    "dms": 1,
+    "elapsed": 96,
+    "timestamp": "2026-03-03T02:30:59.319Z"
+  },
+  "knoxville-tn-law-firms": {
+    "status": "done",
+    "city": "Knoxville, TN",
+    "niche": "law firms",
+    "leads": 27,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 109,
+    "timestamp": "2026-03-03T02:31:12.062Z"
+  },
+  "knoxville-tn-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Knoxville, TN",
+    "niche": "personal injury lawyer",
+    "leads": 28,
+    "emails": 12,
+    "dms": 1,
+    "elapsed": 145,
+    "timestamp": "2026-03-03T02:31:47.886Z"
+  },
+  "knoxville-tn-estate-planning-attorney": {
+    "status": "done",
+    "city": "Knoxville, TN",
+    "niche": "estate planning attorney",
+    "leads": 26,
+    "emails": 14,
+    "dms": 1,
+    "elapsed": 118,
+    "timestamp": "2026-03-03T02:33:46.310Z"
+  },
+  "knoxville-tn-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Knoxville, TN",
+    "niche": "criminal defense lawyer",
+    "leads": 27,
+    "emails": 14,
+    "dms": 0,
+    "elapsed": 134,
+    "timestamp": "2026-03-03T02:34:01.542Z"
+  },
+  "knoxville-tn-immigration-lawyer": {
+    "status": "done",
+    "city": "Knoxville, TN",
+    "niche": "immigration lawyer",
+    "leads": 27,
+    "emails": 11,
+    "dms": 3,
+    "elapsed": 138,
+    "timestamp": "2026-03-03T02:34:05.741Z"
+  },
+  "london-uk-family-solicitor": {
+    "status": "done",
+    "city": "London, UK",
+    "niche": "family solicitor",
+    "leads": 20,
+    "emails": 12,
+    "dms": 1,
+    "elapsed": 144,
+    "timestamp": "2026-03-03T02:36:29.467Z"
+  },
+  "london-uk-solicitors": {
+    "status": "done",
+    "city": "London, UK",
+    "niche": "solicitors",
+    "leads": 20,
+    "emails": 15,
+    "dms": 0,
+    "elapsed": 147,
+    "timestamp": "2026-03-03T02:36:32.687Z"
+  },
+  "london-uk-personal-injury-solicitor": {
+    "status": "done",
+    "city": "London, UK",
+    "niche": "personal injury solicitor",
+    "leads": 20,
+    "emails": 7,
+    "dms": 8,
+    "elapsed": 149,
+    "timestamp": "2026-03-03T02:36:34.786Z"
+  },
+  "london-uk-immigration-solicitor": {
+    "status": "done",
+    "city": "London, UK",
+    "niche": "immigration solicitor",
+    "leads": 20,
+    "emails": 15,
+    "dms": 0,
+    "elapsed": 108,
+    "timestamp": "2026-03-03T02:38:23.168Z"
+  },
+  "london-uk-commercial-solicitor": {
+    "status": "done",
+    "city": "London, UK",
+    "niche": "commercial solicitor",
+    "leads": 20,
+    "emails": 17,
+    "dms": 0,
+    "elapsed": 114,
+    "timestamp": "2026-03-03T02:38:29.179Z"
+  },
+  "london-uk-criminal-solicitor": {
+    "status": "done",
+    "city": "London, UK",
+    "niche": "criminal solicitor",
+    "leads": 20,
+    "emails": 16,
+    "dms": 2,
+    "elapsed": 159,
+    "timestamp": "2026-03-03T02:39:14.080Z"
+  },
+  "manchester-uk-solicitors": {
+    "status": "done",
+    "city": "Manchester, UK",
+    "niche": "solicitors",
+    "leads": 27,
+    "emails": 16,
+    "dms": 0,
+    "elapsed": 94,
+    "timestamp": "2026-03-03T02:40:47.696Z"
+  },
+  "manchester-uk-personal-injury-solicitor": {
+    "status": "done",
+    "city": "Manchester, UK",
+    "niche": "personal injury solicitor",
+    "leads": 28,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 113,
+    "timestamp": "2026-03-03T02:41:07.486Z"
+  },
+  "manchester-uk-family-solicitor": {
+    "status": "done",
+    "city": "Manchester, UK",
+    "niche": "family solicitor",
+    "leads": 29,
+    "emails": 17,
+    "dms": 2,
+    "elapsed": 126,
+    "timestamp": "2026-03-03T02:41:20.063Z"
+  },
+  "manchester-uk-criminal-solicitor": {
+    "status": "done",
+    "city": "Manchester, UK",
+    "niche": "criminal solicitor",
+    "leads": 20,
+    "emails": 14,
+    "dms": 4,
+    "elapsed": 111,
+    "timestamp": "2026-03-03T02:43:10.888Z"
+  },
+  "manchester-uk-commercial-solicitor": {
+    "status": "done",
+    "city": "Manchester, UK",
+    "niche": "commercial solicitor",
+    "leads": 20,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 115,
+    "timestamp": "2026-03-03T02:43:15.448Z"
+  },
+  "manchester-uk-immigration-solicitor": {
+    "status": "done",
+    "city": "Manchester, UK",
+    "niche": "immigration solicitor",
+    "leads": 20,
+    "emails": 10,
+    "dms": 3,
+    "elapsed": 120,
+    "timestamp": "2026-03-03T02:43:20.495Z"
+  },
+  "birmingham-uk-family-solicitor": {
+    "status": "done",
+    "city": "Birmingham, UK",
+    "niche": "family solicitor",
+    "leads": 20,
+    "emails": 11,
+    "dms": 2,
+    "elapsed": 67,
+    "timestamp": "2026-03-03T02:44:27.403Z"
+  },
+  "birmingham-uk-solicitors": {
+    "status": "done",
+    "city": "Birmingham, UK",
+    "niche": "solicitors",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 85,
+    "timestamp": "2026-03-03T02:44:45.433Z"
+  },
+  "birmingham-uk-personal-injury-solicitor": {
+    "status": "done",
+    "city": "Birmingham, UK",
+    "niche": "personal injury solicitor",
+    "leads": 20,
+    "emails": 7,
+    "dms": 3,
+    "elapsed": 111,
+    "timestamp": "2026-03-03T02:45:11.838Z"
+  },
+  "birmingham-uk-criminal-solicitor": {
+    "status": "done",
+    "city": "Birmingham, UK",
+    "niche": "criminal solicitor",
+    "leads": 20,
+    "emails": 10,
+    "dms": 2,
+    "elapsed": 100,
+    "timestamp": "2026-03-03T02:46:51.412Z"
+  },
+  "birmingham-uk-commercial-solicitor": {
+    "status": "done",
+    "city": "Birmingham, UK",
+    "niche": "commercial solicitor",
+    "leads": 20,
+    "emails": 13,
+    "dms": 0,
+    "elapsed": 106,
+    "timestamp": "2026-03-03T02:46:57.403Z"
+  },
+  "birmingham-uk-immigration-solicitor": {
+    "status": "done",
+    "city": "Birmingham, UK",
+    "niche": "immigration solicitor",
+    "leads": 26,
+    "emails": 17,
+    "dms": 0,
+    "elapsed": 154,
+    "timestamp": "2026-03-03T02:47:45.849Z"
+  },
+  "leeds-uk-solicitors": {
+    "status": "done",
+    "city": "Leeds, UK",
+    "niche": "solicitors",
+    "leads": 27,
+    "emails": 17,
+    "dms": 1,
+    "elapsed": 59,
+    "timestamp": "2026-03-03T02:48:45.319Z"
+  },
+  "leeds-uk-personal-injury-solicitor": {
+    "status": "done",
+    "city": "Leeds, UK",
+    "niche": "personal injury solicitor",
+    "leads": 20,
+    "emails": 12,
+    "dms": 4,
+    "elapsed": 73,
+    "timestamp": "2026-03-03T02:48:58.780Z"
+  },
+  "leeds-uk-family-solicitor": {
+    "status": "done",
+    "city": "Leeds, UK",
+    "niche": "family solicitor",
+    "leads": 20,
+    "emails": 16,
+    "dms": 3,
+    "elapsed": 73,
+    "timestamp": "2026-03-03T02:48:59.044Z"
+  },
+  "leeds-uk-commercial-solicitor": {
+    "status": "done",
+    "city": "Leeds, UK",
+    "niche": "commercial solicitor",
+    "leads": 20,
+    "emails": 13,
+    "dms": 1,
+    "elapsed": 73,
+    "timestamp": "2026-03-03T02:50:12.222Z"
+  },
+  "leeds-uk-criminal-solicitor": {
+    "status": "done",
+    "city": "Leeds, UK",
+    "niche": "criminal solicitor",
+    "leads": 28,
+    "emails": 21,
+    "dms": 4,
+    "elapsed": 91,
+    "timestamp": "2026-03-03T02:50:30.198Z"
+  },
+  "leeds-uk-immigration-solicitor": {
+    "status": "done",
+    "city": "Leeds, UK",
+    "niche": "immigration solicitor",
+    "leads": 29,
+    "emails": 20,
+    "dms": 3,
+    "elapsed": 154,
+    "timestamp": "2026-03-03T02:51:32.978Z"
+  },
+  "glasgow-uk-solicitors": {
+    "status": "done",
+    "city": "Glasgow, UK",
+    "niche": "solicitors",
+    "leads": 20,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 126,
+    "timestamp": "2026-03-03T02:53:39.020Z"
+  },
+  "glasgow-uk-personal-injury-solicitor": {
+    "status": "done",
+    "city": "Glasgow, UK",
+    "niche": "personal injury solicitor",
+    "leads": 27,
+    "emails": 9,
+    "dms": 2,
+    "elapsed": 140,
+    "timestamp": "2026-03-03T02:53:53.459Z"
+  },
+  "glasgow-uk-family-solicitor": {
+    "status": "done",
+    "city": "Glasgow, UK",
+    "niche": "family solicitor",
+    "leads": 20,
+    "emails": 13,
+    "dms": 2,
+    "elapsed": 143,
+    "timestamp": "2026-03-03T02:53:56.334Z"
+  },
+  "glasgow-uk-commercial-solicitor": {
+    "status": "done",
+    "city": "Glasgow, UK",
+    "niche": "commercial solicitor",
+    "leads": 29,
+    "emails": 16,
+    "dms": 0,
+    "elapsed": 97,
+    "timestamp": "2026-03-03T02:55:32.918Z"
+  },
+  "glasgow-uk-immigration-solicitor": {
+    "status": "done",
+    "city": "Glasgow, UK",
+    "niche": "immigration solicitor",
+    "leads": 20,
+    "emails": 13,
+    "dms": 0,
+    "elapsed": 115,
+    "timestamp": "2026-03-03T02:55:51.327Z"
+  },
+  "glasgow-uk-criminal-solicitor": {
+    "status": "done",
+    "city": "Glasgow, UK",
+    "niche": "criminal solicitor",
+    "leads": 27,
+    "emails": 16,
+    "dms": 0,
+    "elapsed": 155,
+    "timestamp": "2026-03-03T02:56:31.173Z"
+  },
+  "edinburgh-uk-personal-injury-solicitor": {
+    "status": "done",
+    "city": "Edinburgh, UK",
+    "niche": "personal injury solicitor",
+    "leads": 20,
+    "emails": 12,
+    "dms": 2,
+    "elapsed": 97,
+    "timestamp": "2026-03-03T02:58:08.056Z"
+  },
+  "edinburgh-uk-solicitors": {
+    "status": "done",
+    "city": "Edinburgh, UK",
+    "niche": "solicitors",
+    "leads": 26,
+    "emails": 15,
+    "dms": 0,
+    "elapsed": 112,
+    "timestamp": "2026-03-03T02:58:23.394Z"
+  },
+  "edinburgh-uk-family-solicitor": {
+    "status": "done",
+    "city": "Edinburgh, UK",
+    "niche": "family solicitor",
+    "leads": 26,
+    "emails": 20,
+    "dms": 1,
+    "elapsed": 133,
+    "timestamp": "2026-03-03T02:58:44.028Z"
+  },
+  "edinburgh-uk-commercial-solicitor": {
+    "status": "done",
+    "city": "Edinburgh, UK",
+    "niche": "commercial solicitor",
+    "leads": 28,
+    "emails": 19,
+    "dms": 0,
+    "elapsed": 73,
+    "timestamp": "2026-03-03T02:59:56.695Z"
+  },
+  "edinburgh-uk-criminal-solicitor": {
+    "status": "done",
+    "city": "Edinburgh, UK",
+    "niche": "criminal solicitor",
+    "leads": 28,
+    "emails": 18,
+    "dms": 4,
+    "elapsed": 111,
+    "timestamp": "2026-03-03T03:00:35.429Z"
+  },
+  "edinburgh-uk-immigration-solicitor": {
+    "status": "done",
+    "city": "Edinburgh, UK",
+    "niche": "immigration solicitor",
+    "leads": 27,
+    "emails": 16,
+    "dms": 5,
+    "elapsed": 114,
+    "timestamp": "2026-03-03T03:00:37.946Z"
+  },
+  "bristol-uk-solicitors": {
+    "status": "done",
+    "city": "Bristol, UK",
+    "niche": "solicitors",
+    "leads": 26,
+    "emails": 17,
+    "dms": 2,
+    "elapsed": 124,
+    "timestamp": "2026-03-03T03:02:41.772Z"
+  },
+  "bristol-uk-family-solicitor": {
+    "status": "done",
+    "city": "Bristol, UK",
+    "niche": "family solicitor",
+    "leads": 20,
+    "emails": 14,
+    "dms": 6,
+    "elapsed": 145,
+    "timestamp": "2026-03-03T03:03:02.979Z"
+  },
+  "bristol-uk-personal-injury-solicitor": {
+    "status": "done",
+    "city": "Bristol, UK",
+    "niche": "personal injury solicitor",
+    "leads": 27,
+    "emails": 15,
+    "dms": 3,
+    "elapsed": 149,
+    "timestamp": "2026-03-03T03:03:07.220Z"
+  },
+  "bristol-uk-criminal-solicitor": {
+    "status": "done",
+    "city": "Bristol, UK",
+    "niche": "criminal solicitor",
+    "leads": 27,
+    "emails": 16,
+    "dms": 2,
+    "elapsed": 101,
+    "timestamp": "2026-03-03T03:04:47.725Z"
+  },
+  "bristol-uk-immigration-solicitor": {
+    "status": "done",
+    "city": "Bristol, UK",
+    "niche": "immigration solicitor",
+    "leads": 27,
+    "emails": 16,
+    "dms": 2,
+    "elapsed": 126,
+    "timestamp": "2026-03-03T03:05:13.720Z"
+  },
+  "bristol-uk-commercial-solicitor": {
+    "status": "done",
+    "city": "Bristol, UK",
+    "niche": "commercial solicitor",
+    "leads": 29,
+    "emails": 18,
+    "dms": 2,
+    "elapsed": 162,
+    "timestamp": "2026-03-03T03:05:49.599Z"
+  },
+  "liverpool-uk-personal-injury-solicitor": {
+    "status": "done",
+    "city": "Liverpool, UK",
+    "niche": "personal injury solicitor",
+    "leads": 20,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 140,
+    "timestamp": "2026-03-03T03:08:09.313Z"
+  },
+  "liverpool-uk-solicitors": {
+    "status": "done",
+    "city": "Liverpool, UK",
+    "niche": "solicitors",
+    "leads": 20,
+    "emails": 9,
+    "dms": 0,
+    "elapsed": 144,
+    "timestamp": "2026-03-03T03:08:13.521Z"
+  },
+  "liverpool-uk-family-solicitor": {
+    "status": "done",
+    "city": "Liverpool, UK",
+    "niche": "family solicitor",
+    "leads": 20,
+    "emails": 12,
+    "dms": 3,
+    "elapsed": 156,
+    "timestamp": "2026-03-03T03:08:25.162Z"
+  },
+  "liverpool-uk-commercial-solicitor": {
+    "status": "done",
+    "city": "Liverpool, UK",
+    "niche": "commercial solicitor",
+    "leads": 28,
+    "emails": 15,
+    "dms": 0,
+    "elapsed": 137,
+    "timestamp": "2026-03-03T03:10:42.135Z"
+  },
+  "liverpool-uk-criminal-solicitor": {
+    "status": "done",
+    "city": "Liverpool, UK",
+    "niche": "criminal solicitor",
+    "leads": 28,
+    "emails": 18,
+    "dms": 4,
+    "elapsed": 158,
+    "timestamp": "2026-03-03T03:11:03.213Z"
+  },
+  "liverpool-uk-immigration-solicitor": {
+    "status": "done",
+    "city": "Liverpool, UK",
+    "niche": "immigration solicitor",
+    "leads": 24,
+    "emails": 17,
+    "dms": 4,
+    "elapsed": 167,
+    "timestamp": "2026-03-03T03:11:12.072Z"
+  },
+  "cardiff-uk-family-solicitor": {
+    "status": "done",
+    "city": "Cardiff, UK",
+    "niche": "family solicitor",
+    "leads": 27,
+    "emails": 17,
+    "dms": 3,
+    "elapsed": 104,
+    "timestamp": "2026-03-03T03:12:56.352Z"
+  },
+  "cardiff-uk-solicitors": {
+    "status": "done",
+    "city": "Cardiff, UK",
+    "niche": "solicitors",
+    "leads": 26,
+    "emails": 17,
+    "dms": 1,
+    "elapsed": 105,
+    "timestamp": "2026-03-03T03:12:56.576Z"
+  },
+  "cardiff-uk-personal-injury-solicitor": {
+    "status": "done",
+    "city": "Cardiff, UK",
+    "niche": "personal injury solicitor",
+    "leads": 20,
+    "emails": 13,
+    "dms": 3,
+    "elapsed": 148,
+    "timestamp": "2026-03-03T03:13:40.075Z"
+  },
+  "cardiff-uk-commercial-solicitor": {
+    "status": "done",
+    "city": "Cardiff, UK",
+    "niche": "commercial solicitor",
+    "leads": 29,
+    "emails": 20,
+    "dms": 1,
+    "elapsed": 106,
+    "timestamp": "2026-03-03T03:15:25.843Z"
+  },
+  "cardiff-uk-criminal-solicitor": {
+    "status": "done",
+    "city": "Cardiff, UK",
+    "niche": "criminal solicitor",
+    "leads": 27,
+    "emails": 16,
+    "dms": 2,
+    "elapsed": 133,
+    "timestamp": "2026-03-03T03:15:53.427Z"
+  },
+  "cardiff-uk-immigration-solicitor": {
+    "status": "done",
+    "city": "Cardiff, UK",
+    "niche": "immigration solicitor",
+    "leads": 28,
+    "emails": 12,
+    "dms": 3,
+    "elapsed": 185,
+    "timestamp": "2026-03-03T03:16:44.892Z"
+  },
+  "nottingham-uk-solicitors": {
+    "status": "done",
+    "city": "Nottingham, UK",
+    "niche": "solicitors",
+    "leads": 20,
+    "emails": 8,
+    "dms": 2,
+    "elapsed": 100,
+    "timestamp": "2026-03-03T03:18:25.219Z"
+  },
+  "nottingham-uk-family-solicitor": {
+    "status": "done",
+    "city": "Nottingham, UK",
+    "niche": "family solicitor",
+    "leads": 20,
+    "emails": 13,
+    "dms": 2,
+    "elapsed": 103,
+    "timestamp": "2026-03-03T03:18:27.889Z"
+  },
+  "nottingham-uk-personal-injury-solicitor": {
+    "status": "done",
+    "city": "Nottingham, UK",
+    "niche": "personal injury solicitor",
+    "leads": 27,
+    "emails": 14,
+    "dms": 1,
+    "elapsed": 138,
+    "timestamp": "2026-03-03T03:19:02.837Z"
+  },
+  "nottingham-uk-immigration-solicitor": {
+    "status": "done",
+    "city": "Nottingham, UK",
+    "niche": "immigration solicitor",
+    "leads": 27,
+    "emails": 13,
+    "dms": 2,
+    "elapsed": 76,
+    "timestamp": "2026-03-03T03:20:18.574Z"
+  },
+  "nottingham-uk-criminal-solicitor": {
+    "status": "done",
+    "city": "Nottingham, UK",
+    "niche": "criminal solicitor",
+    "leads": 20,
+    "emails": 6,
+    "dms": 2,
+    "elapsed": 104,
+    "timestamp": "2026-03-03T03:20:47.075Z"
+  },
+  "nottingham-uk-commercial-solicitor": {
+    "status": "done",
+    "city": "Nottingham, UK",
+    "niche": "commercial solicitor",
+    "leads": 20,
+    "emails": 7,
+    "dms": 1,
+    "elapsed": 112,
+    "timestamp": "2026-03-03T03:20:55.194Z"
+  },
+  "toronto-on-canada-law-firms": {
+    "status": "done",
+    "city": "Toronto, ON, Canada",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 12,
+    "dms": 2,
+    "elapsed": 73,
+    "timestamp": "2026-03-03T03:22:08.545Z"
+  },
+  "toronto-on-canada-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Toronto, ON, Canada",
+    "niche": "personal injury lawyer",
+    "leads": 29,
+    "emails": 18,
+    "dms": 7,
+    "elapsed": 75,
+    "timestamp": "2026-03-03T03:22:10.646Z"
+  },
+  "toronto-on-canada-family-law-attorney": {
+    "status": "done",
+    "city": "Toronto, ON, Canada",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 13,
+    "dms": 10,
+    "elapsed": 88,
+    "timestamp": "2026-03-03T03:22:23.615Z"
+  },
+  "toronto-on-canada-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Toronto, ON, Canada",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 12,
+    "dms": 0,
+    "elapsed": 104,
+    "timestamp": "2026-03-03T03:24:07.344Z"
+  },
+  "toronto-on-canada-estate-planning-attorney": {
+    "status": "done",
+    "city": "Toronto, ON, Canada",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 15,
+    "dms": 1,
+    "elapsed": 110,
+    "timestamp": "2026-03-03T03:24:13.643Z"
+  },
+  "toronto-on-canada-immigration-lawyer": {
+    "status": "done",
+    "city": "Toronto, ON, Canada",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 14,
+    "dms": 1,
+    "elapsed": 139,
+    "timestamp": "2026-03-03T03:24:42.317Z"
+  },
+  "vancouver-bc-canada-law-firms": {
+    "status": "done",
+    "city": "Vancouver, BC, Canada",
+    "niche": "law firms",
+    "leads": 26,
+    "emails": 13,
+    "dms": 2,
+    "elapsed": 101,
+    "timestamp": "2026-03-03T03:26:23.382Z"
+  },
+  "vancouver-bc-canada-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Vancouver, BC, Canada",
+    "niche": "personal injury lawyer",
+    "leads": 28,
+    "emails": 11,
+    "dms": 2,
+    "elapsed": 101,
+    "timestamp": "2026-03-03T03:26:23.413Z"
+  },
+  "vancouver-bc-canada-family-law-attorney": {
+    "status": "done",
+    "city": "Vancouver, BC, Canada",
+    "niche": "family law attorney",
+    "leads": 27,
+    "emails": 18,
+    "dms": 3,
+    "elapsed": 132,
+    "timestamp": "2026-03-03T03:26:54.635Z"
+  },
+  "vancouver-bc-canada-estate-planning-attorney": {
+    "status": "done",
+    "city": "Vancouver, BC, Canada",
+    "niche": "estate planning attorney",
+    "leads": 28,
+    "emails": 16,
+    "dms": 1,
+    "elapsed": 132,
+    "timestamp": "2026-03-03T03:29:06.668Z"
+  },
+  "vancouver-bc-canada-immigration-lawyer": {
+    "status": "done",
+    "city": "Vancouver, BC, Canada",
+    "niche": "immigration lawyer",
+    "leads": 27,
+    "emails": 17,
+    "dms": 1,
+    "elapsed": 141,
+    "timestamp": "2026-03-03T03:29:15.761Z"
+  },
+  "vancouver-bc-canada-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Vancouver, BC, Canada",
+    "niche": "criminal defense lawyer",
+    "leads": 27,
+    "emails": 21,
+    "dms": 5,
+    "elapsed": 142,
+    "timestamp": "2026-03-03T03:29:17.046Z"
+  },
+  "calgary-ab-canada-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Calgary, AB, Canada",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 153,
+    "timestamp": "2026-03-03T03:31:49.743Z"
+  },
+  "calgary-ab-canada-law-firms": {
+    "status": "done",
+    "city": "Calgary, AB, Canada",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 10,
+    "dms": 1,
+    "elapsed": 154,
+    "timestamp": "2026-03-03T03:31:51.505Z"
+  },
+  "calgary-ab-canada-family-law-attorney": {
+    "status": "done",
+    "city": "Calgary, AB, Canada",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 14,
+    "dms": 3,
+    "elapsed": 156,
+    "timestamp": "2026-03-03T03:31:53.077Z"
+  },
+  "calgary-ab-canada-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Calgary, AB, Canada",
+    "niche": "criminal defense lawyer",
+    "leads": 25,
+    "emails": 14,
+    "dms": 2,
+    "elapsed": 140,
+    "timestamp": "2026-03-03T03:34:12.823Z"
+  },
+  "calgary-ab-canada-estate-planning-attorney": {
+    "status": "done",
+    "city": "Calgary, AB, Canada",
+    "niche": "estate planning attorney",
+    "leads": 27,
+    "emails": 18,
+    "dms": 0,
+    "elapsed": 154,
+    "timestamp": "2026-03-03T03:34:27.548Z"
+  },
+  "calgary-ab-canada-immigration-lawyer": {
+    "status": "done",
+    "city": "Calgary, AB, Canada",
+    "niche": "immigration lawyer",
+    "leads": 25,
+    "emails": 17,
+    "dms": 1,
+    "elapsed": 157,
+    "timestamp": "2026-03-03T03:34:29.877Z"
+  },
+  "montreal-qc-canada-family-law-attorney": {
+    "status": "done",
+    "city": "Montreal, QC, Canada",
+    "niche": "family law attorney",
+    "leads": 27,
+    "emails": 14,
+    "dms": 5,
+    "elapsed": 106,
+    "timestamp": "2026-03-03T03:36:16.251Z"
+  },
+  "montreal-qc-canada-law-firms": {
+    "status": "done",
+    "city": "Montreal, QC, Canada",
+    "niche": "law firms",
+    "leads": 25,
+    "emails": 16,
+    "dms": 0,
+    "elapsed": 125,
+    "timestamp": "2026-03-03T03:36:35.305Z"
+  },
+  "montreal-qc-canada-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Montreal, QC, Canada",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 12,
+    "dms": 0,
+    "elapsed": 126,
+    "timestamp": "2026-03-03T03:36:36.080Z"
+  },
+  "montreal-qc-canada-estate-planning-attorney": {
+    "status": "done",
+    "city": "Montreal, QC, Canada",
+    "niche": "estate planning attorney",
+    "leads": 26,
+    "emails": 14,
+    "dms": 0,
+    "elapsed": 104,
+    "timestamp": "2026-03-03T03:38:20.357Z"
+  },
+  "montreal-qc-canada-immigration-lawyer": {
+    "status": "done",
+    "city": "Montreal, QC, Canada",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 13,
+    "dms": 2,
+    "elapsed": 107,
+    "timestamp": "2026-03-03T03:38:23.165Z"
+  },
+  "montreal-qc-canada-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Montreal, QC, Canada",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 15,
+    "dms": 6,
+    "elapsed": 147,
+    "timestamp": "2026-03-03T03:39:03.209Z"
+  },
+  "ottawa-on-canada-family-law-attorney": {
+    "status": "done",
+    "city": "Ottawa, ON, Canada",
+    "niche": "family law attorney",
+    "leads": 26,
+    "emails": 16,
+    "dms": 6,
+    "elapsed": 107,
+    "timestamp": "2026-03-03T03:40:50.016Z"
+  },
+  "ottawa-on-canada-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Ottawa, ON, Canada",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 11,
+    "dms": 1,
+    "elapsed": 110,
+    "timestamp": "2026-03-03T03:40:53.505Z"
+  },
+  "ottawa-on-canada-law-firms": {
+    "status": "done",
+    "city": "Ottawa, ON, Canada",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 12,
+    "dms": 1,
+    "elapsed": 118,
+    "timestamp": "2026-03-03T03:41:00.868Z"
+  },
+  "ottawa-on-canada-estate-planning-attorney": {
+    "status": "done",
+    "city": "Ottawa, ON, Canada",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 13,
+    "dms": 1,
+    "elapsed": 134,
+    "timestamp": "2026-03-03T03:43:14.570Z"
+  },
+  "ottawa-on-canada-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Ottawa, ON, Canada",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 17,
+    "dms": 6,
+    "elapsed": 142,
+    "timestamp": "2026-03-03T03:43:22.780Z"
+  },
+  "ottawa-on-canada-immigration-lawyer": {
+    "status": "done",
+    "city": "Ottawa, ON, Canada",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 13,
+    "dms": 1,
+    "elapsed": 146,
+    "timestamp": "2026-03-03T03:43:27.019Z"
+  },
+  "edmonton-ab-canada-family-law-attorney": {
+    "status": "done",
+    "city": "Edmonton, AB, Canada",
+    "niche": "family law attorney",
+    "leads": 27,
+    "emails": 18,
+    "dms": 2,
+    "elapsed": 111,
+    "timestamp": "2026-03-03T03:45:18.184Z"
+  },
+  "edmonton-ab-canada-law-firms": {
+    "status": "done",
+    "city": "Edmonton, AB, Canada",
+    "niche": "law firms",
+    "leads": 27,
+    "emails": 14,
+    "dms": 1,
+    "elapsed": 116,
+    "timestamp": "2026-03-03T03:45:22.529Z"
+  },
+  "edmonton-ab-canada-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Edmonton, AB, Canada",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 8,
+    "dms": 1,
+    "elapsed": 148,
+    "timestamp": "2026-03-03T03:45:54.565Z"
+  },
+  "edmonton-ab-canada-immigration-lawyer": {
+    "status": "done",
+    "city": "Edmonton, AB, Canada",
+    "niche": "immigration lawyer",
+    "leads": 26,
+    "emails": 12,
+    "dms": 0,
+    "elapsed": 103,
+    "timestamp": "2026-03-03T03:47:37.551Z"
+  },
+  "edmonton-ab-canada-estate-planning-attorney": {
+    "status": "done",
+    "city": "Edmonton, AB, Canada",
+    "niche": "estate planning attorney",
+    "leads": 25,
+    "emails": 12,
+    "dms": 1,
+    "elapsed": 116,
+    "timestamp": "2026-03-03T03:47:50.305Z"
+  },
+  "edmonton-ab-canada-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Edmonton, AB, Canada",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 11,
+    "dms": 5,
+    "elapsed": 152,
+    "timestamp": "2026-03-03T03:48:26.992Z"
+  },
+  "winnipeg-mb-canada-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Winnipeg, MB, Canada",
+    "niche": "personal injury lawyer",
+    "leads": 28,
+    "emails": 18,
+    "dms": 1,
+    "elapsed": 106,
+    "timestamp": "2026-03-03T03:50:12.619Z"
+  },
+  "winnipeg-mb-canada-family-law-attorney": {
+    "status": "done",
+    "city": "Winnipeg, MB, Canada",
+    "niche": "family law attorney",
+    "leads": 26,
+    "emails": 17,
+    "dms": 1,
+    "elapsed": 112,
+    "timestamp": "2026-03-03T03:50:19.060Z"
+  },
+  "winnipeg-mb-canada-law-firms": {
+    "status": "done",
+    "city": "Winnipeg, MB, Canada",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 13,
+    "dms": 0,
+    "elapsed": 140,
+    "timestamp": "2026-03-03T03:50:46.898Z"
+  },
+  "winnipeg-mb-canada-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Winnipeg, MB, Canada",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 14,
+    "dms": 8,
+    "elapsed": 89,
+    "timestamp": "2026-03-03T03:52:16.341Z"
+  },
+  "winnipeg-mb-canada-immigration-lawyer": {
+    "status": "done",
+    "city": "Winnipeg, MB, Canada",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 16,
+    "dms": 0,
+    "elapsed": 140,
+    "timestamp": "2026-03-03T03:53:06.472Z"
+  },
+  "winnipeg-mb-canada-estate-planning-attorney": {
+    "status": "done",
+    "city": "Winnipeg, MB, Canada",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 9,
+    "dms": 1,
+    "elapsed": 157,
+    "timestamp": "2026-03-03T03:53:23.685Z"
+  },
+  "halifax-ns-canada-family-law-attorney": {
+    "status": "done",
+    "city": "Halifax, NS, Canada",
+    "niche": "family law attorney",
+    "leads": 27,
+    "emails": 17,
+    "dms": 2,
+    "elapsed": 61,
+    "timestamp": "2026-03-03T03:54:24.355Z"
+  },
+  "halifax-ns-canada-law-firms": {
+    "status": "done",
+    "city": "Halifax, NS, Canada",
+    "niche": "law firms",
+    "leads": 27,
+    "emails": 12,
+    "dms": 0,
+    "elapsed": 70,
+    "timestamp": "2026-03-03T03:54:33.511Z"
+  },
+  "halifax-ns-canada-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Halifax, NS, Canada",
+    "niche": "personal injury lawyer",
+    "leads": 26,
+    "emails": 14,
+    "dms": 3,
+    "elapsed": 181,
+    "timestamp": "2026-03-03T03:56:24.945Z"
+  },
+  "halifax-ns-canada-immigration-lawyer": {
+    "status": "done",
+    "city": "Halifax, NS, Canada",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 16,
+    "dms": 3,
+    "elapsed": 145,
+    "timestamp": "2026-03-03T03:58:49.585Z"
+  },
+  "halifax-ns-canada-estate-planning-attorney": {
+    "status": "done",
+    "city": "Halifax, NS, Canada",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 12,
+    "dms": 1,
+    "elapsed": 148,
+    "timestamp": "2026-03-03T03:58:52.987Z"
+  },
+  "halifax-ns-canada-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Halifax, NS, Canada",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 12,
+    "dms": 2,
+    "elapsed": 155,
+    "timestamp": "2026-03-03T03:58:59.502Z"
+  },
+  "sydney-nsw-australia-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Sydney, NSW, Australia",
+    "niche": "personal injury lawyer",
+    "leads": 27,
+    "emails": 21,
+    "dms": 4,
+    "elapsed": 138,
+    "timestamp": "2026-03-03T04:01:17.933Z"
+  },
+  "sydney-nsw-australia-family-law-attorney": {
+    "status": "done",
+    "city": "Sydney, NSW, Australia",
+    "niche": "family law attorney",
+    "leads": 26,
+    "emails": 10,
+    "dms": 2,
+    "elapsed": 142,
+    "timestamp": "2026-03-03T04:01:21.140Z"
+  },
+  "sydney-nsw-australia-law-firms": {
+    "status": "done",
+    "city": "Sydney, NSW, Australia",
+    "niche": "law firms",
+    "leads": 27,
+    "emails": 17,
+    "dms": 1,
+    "elapsed": 144,
+    "timestamp": "2026-03-03T04:01:23.067Z"
+  },
+  "sydney-nsw-australia-estate-planning-attorney": {
+    "status": "done",
+    "city": "Sydney, NSW, Australia",
+    "niche": "estate planning attorney",
+    "leads": 27,
+    "emails": 19,
+    "dms": 1,
+    "elapsed": 157,
+    "timestamp": "2026-03-03T04:03:59.824Z"
+  },
+  "sydney-nsw-australia-immigration-lawyer": {
+    "status": "done",
+    "city": "Sydney, NSW, Australia",
+    "niche": "immigration lawyer",
+    "leads": 28,
+    "emails": 17,
+    "dms": 0,
+    "elapsed": 164,
+    "timestamp": "2026-03-03T04:04:06.966Z"
+  },
+  "sydney-nsw-australia-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Sydney, NSW, Australia",
+    "niche": "criminal defense lawyer",
+    "leads": 27,
+    "emails": 13,
+    "dms": 1,
+    "elapsed": 166,
+    "timestamp": "2026-03-03T04:04:09.175Z"
+  },
+  "melbourne-vic-australia-family-law-attorney": {
+    "status": "done",
+    "city": "Melbourne, VIC, Australia",
+    "niche": "family law attorney",
+    "leads": 25,
+    "emails": 13,
+    "dms": 1,
+    "elapsed": 120,
+    "timestamp": "2026-03-03T04:06:09.572Z"
+  },
+  "melbourne-vic-australia-law-firms": {
+    "status": "done",
+    "city": "Melbourne, VIC, Australia",
+    "niche": "law firms",
+    "leads": 23,
+    "emails": 19,
+    "dms": 2,
+    "elapsed": 127,
+    "timestamp": "2026-03-03T04:06:15.731Z"
+  },
+  "melbourne-vic-australia-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Melbourne, VIC, Australia",
+    "niche": "personal injury lawyer",
+    "leads": 28,
+    "emails": 18,
+    "dms": 0,
+    "elapsed": 133,
+    "timestamp": "2026-03-03T04:06:22.645Z"
+  },
+  "melbourne-vic-australia-estate-planning-attorney": {
+    "status": "done",
+    "city": "Melbourne, VIC, Australia",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 13,
+    "dms": 2,
+    "elapsed": 96,
+    "timestamp": "2026-03-03T04:07:58.606Z"
+  },
+  "melbourne-vic-australia-immigration-lawyer": {
+    "status": "done",
+    "city": "Melbourne, VIC, Australia",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 12,
+    "dms": 1,
+    "elapsed": 125,
+    "timestamp": "2026-03-03T04:08:27.896Z"
+  },
+  "melbourne-vic-australia-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Melbourne, VIC, Australia",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 11,
+    "dms": 6,
+    "elapsed": 166,
+    "timestamp": "2026-03-03T04:09:08.747Z"
+  },
+  "brisbane-qld-australia-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Brisbane, QLD, Australia",
+    "niche": "personal injury lawyer",
+    "leads": 28,
+    "emails": 18,
+    "dms": 2,
+    "elapsed": 103,
+    "timestamp": "2026-03-03T04:10:51.276Z"
+  },
+  "brisbane-qld-australia-family-law-attorney": {
+    "status": "done",
+    "city": "Brisbane, QLD, Australia",
+    "niche": "family law attorney",
+    "leads": 27,
+    "emails": 18,
+    "dms": 2,
+    "elapsed": 114,
+    "timestamp": "2026-03-03T04:11:03.179Z"
+  },
+  "brisbane-qld-australia-law-firms": {
+    "status": "done",
+    "city": "Brisbane, QLD, Australia",
+    "niche": "law firms",
+    "leads": 26,
+    "emails": 18,
+    "dms": 0,
+    "elapsed": 151,
+    "timestamp": "2026-03-03T04:11:39.439Z"
+  },
+  "brisbane-qld-australia-immigration-lawyer": {
+    "status": "done",
+    "city": "Brisbane, QLD, Australia",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 85,
+    "timestamp": "2026-03-03T04:13:04.593Z"
+  },
+  "brisbane-qld-australia-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Brisbane, QLD, Australia",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 16,
+    "dms": 3,
+    "elapsed": 98,
+    "timestamp": "2026-03-03T04:13:17.718Z"
+  },
+  "brisbane-qld-australia-estate-planning-attorney": {
+    "status": "done",
+    "city": "Brisbane, QLD, Australia",
+    "niche": "estate planning attorney",
+    "leads": 28,
+    "emails": 22,
+    "dms": 0,
+    "elapsed": 112,
+    "timestamp": "2026-03-03T04:13:31.680Z"
+  },
+  "perth-wa-australia-family-law-attorney": {
+    "status": "done",
+    "city": "Perth, WA, Australia",
+    "niche": "family law attorney",
+    "leads": 27,
+    "emails": 18,
+    "dms": 1,
+    "elapsed": 81,
+    "timestamp": "2026-03-03T04:14:53.119Z"
+  },
+  "perth-wa-australia-law-firms": {
+    "status": "done",
+    "city": "Perth, WA, Australia",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 13,
+    "dms": 0,
+    "elapsed": 85,
+    "timestamp": "2026-03-03T04:14:57.114Z"
+  },
+  "perth-wa-australia-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Perth, WA, Australia",
+    "niche": "personal injury lawyer",
+    "leads": 28,
+    "emails": 15,
+    "dms": 2,
+    "elapsed": 123,
+    "timestamp": "2026-03-03T04:15:34.752Z"
+  },
+  "perth-wa-australia-immigration-lawyer": {
+    "status": "done",
+    "city": "Perth, WA, Australia",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 12,
+    "dms": 1,
+    "elapsed": 105,
+    "timestamp": "2026-03-03T04:17:19.813Z"
+  },
+  "perth-wa-australia-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Perth, WA, Australia",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 14,
+    "dms": 3,
+    "elapsed": 133,
+    "timestamp": "2026-03-03T04:17:47.485Z"
+  },
+  "perth-wa-australia-estate-planning-attorney": {
+    "status": "done",
+    "city": "Perth, WA, Australia",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 10,
+    "dms": 2,
+    "elapsed": 138,
+    "timestamp": "2026-03-03T04:17:53.047Z"
+  },
+  "adelaide-sa-australia-family-law-attorney": {
+    "status": "done",
+    "city": "Adelaide, SA, Australia",
+    "niche": "family law attorney",
+    "leads": 20,
+    "emails": 15,
+    "dms": 4,
+    "elapsed": 81,
+    "timestamp": "2026-03-03T04:19:13.787Z"
+  },
+  "adelaide-sa-australia-law-firms": {
+    "status": "done",
+    "city": "Adelaide, SA, Australia",
+    "niche": "law firms",
+    "leads": 20,
+    "emails": 14,
+    "dms": 0,
+    "elapsed": 114,
+    "timestamp": "2026-03-03T04:19:47.024Z"
+  },
+  "adelaide-sa-australia-personal-injury-lawyer": {
+    "status": "done",
+    "city": "Adelaide, SA, Australia",
+    "niche": "personal injury lawyer",
+    "leads": 20,
+    "emails": 16,
+    "dms": 6,
+    "elapsed": 120,
+    "timestamp": "2026-03-03T04:19:53.531Z"
+  },
+  "adelaide-sa-australia-estate-planning-attorney": {
+    "status": "done",
+    "city": "Adelaide, SA, Australia",
+    "niche": "estate planning attorney",
+    "leads": 20,
+    "emails": 14,
+    "dms": 1,
+    "elapsed": 67,
+    "timestamp": "2026-03-03T04:21:00.166Z"
+  },
+  "adelaide-sa-australia-immigration-lawyer": {
+    "status": "done",
+    "city": "Adelaide, SA, Australia",
+    "niche": "immigration lawyer",
+    "leads": 20,
+    "emails": 13,
+    "dms": 0,
+    "elapsed": 121,
+    "timestamp": "2026-03-03T04:21:54.696Z"
+  },
+  "adelaide-sa-australia-criminal-defense-lawyer": {
+    "status": "done",
+    "city": "Adelaide, SA, Australia",
+    "niche": "criminal defense lawyer",
+    "leads": 20,
+    "emails": 18,
+    "dms": 3,
+    "elapsed": 136,
+    "timestamp": "2026-03-03T04:22:09.919Z"
+  },
+  "dublin-ireland-family-solicitor": {
+    "status": "done",
+    "city": "Dublin, Ireland",
+    "niche": "family solicitor",
+    "leads": 20,
+    "emails": 15,
+    "dms": 3,
+    "elapsed": 67,
+    "timestamp": "2026-03-03T04:23:17.105Z"
+  },
+  "dublin-ireland-solicitors": {
+    "status": "done",
+    "city": "Dublin, Ireland",
+    "niche": "solicitors",
+    "leads": 20,
+    "emails": 12,
+    "dms": 0,
+    "elapsed": 71,
+    "timestamp": "2026-03-03T04:23:21.411Z"
+  },
+  "dublin-ireland-personal-injury-solicitor": {
+    "status": "done",
+    "city": "Dublin, Ireland",
+    "niche": "personal injury solicitor",
+    "leads": 20,
+    "emails": 13,
+    "dms": 2,
+    "elapsed": 77,
+    "timestamp": "2026-03-03T04:23:26.751Z"
+  },
+  "dublin-ireland-immigration-solicitor": {
+    "status": "done",
+    "city": "Dublin, Ireland",
+    "niche": "immigration solicitor",
+    "leads": 20,
+    "emails": 15,
+    "dms": 2,
+    "elapsed": 67,
+    "timestamp": "2026-03-03T04:24:33.444Z"
+  },
+  "dublin-ireland-criminal-solicitor": {
+    "status": "done",
+    "city": "Dublin, Ireland",
+    "niche": "criminal solicitor",
+    "leads": 20,
+    "emails": 12,
+    "dms": 1,
+    "elapsed": 74,
+    "timestamp": "2026-03-03T04:24:41.075Z"
+  },
+  "dublin-ireland-commercial-solicitor": {
+    "status": "done",
+    "city": "Dublin, Ireland",
+    "niche": "commercial solicitor",
+    "leads": 20,
+    "emails": 15,
+    "dms": 3,
+    "elapsed": 98,
+    "timestamp": "2026-03-03T04:25:05.093Z"
+  },
+  "cork-ireland-personal-injury-solicitor": {
+    "status": "done",
+    "city": "Cork, Ireland",
+    "niche": "personal injury solicitor",
+    "leads": 20,
+    "emails": 13,
+    "dms": 1,
+    "elapsed": 70,
+    "timestamp": "2026-03-03T04:26:14.976Z"
+  },
+  "cork-ireland-family-solicitor": {
+    "status": "done",
+    "city": "Cork, Ireland",
+    "niche": "family solicitor",
+    "leads": 28,
+    "emails": 19,
+    "dms": 1,
+    "elapsed": 99,
+    "timestamp": "2026-03-03T04:26:44.488Z"
+  },
+  "cork-ireland-solicitors": {
+    "status": "done",
+    "city": "Cork, Ireland",
+    "niche": "solicitors",
+    "leads": 20,
+    "emails": 11,
+    "dms": 1,
+    "elapsed": 131,
+    "timestamp": "2026-03-03T04:27:15.913Z"
+  },
+  "cork-ireland-commercial-solicitor": {
+    "status": "done",
+    "city": "Cork, Ireland",
+    "niche": "commercial solicitor",
+    "leads": 20,
+    "emails": 13,
+    "dms": 1,
+    "elapsed": 88,
+    "timestamp": "2026-03-03T04:28:44.174Z"
+  },
+  "cork-ireland-immigration-solicitor": {
+    "status": "done",
+    "city": "Cork, Ireland",
+    "niche": "immigration solicitor",
+    "leads": 20,
+    "emails": 16,
+    "dms": 3,
+    "elapsed": 118,
+    "timestamp": "2026-03-03T04:29:13.711Z"
+  },
+  "cork-ireland-criminal-solicitor": {
+    "status": "done",
+    "city": "Cork, Ireland",
+    "niche": "criminal solicitor",
+    "leads": 15,
+    "emails": 8,
+    "dms": 3,
+    "elapsed": 125,
+    "timestamp": "2026-03-03T04:29:21.164Z"
+  },
+  "galway-ireland-solicitors": {
+    "status": "done",
+    "city": "Galway, Ireland",
+    "niche": "solicitors",
+    "leads": 26,
+    "emails": 17,
+    "dms": 0,
+    "elapsed": 92,
+    "timestamp": "2026-03-03T04:30:53.324Z"
+  },
+  "galway-ireland-personal-injury-solicitor": {
+    "status": "done",
+    "city": "Galway, Ireland",
+    "niche": "personal injury solicitor",
+    "leads": 29,
+    "emails": 18,
+    "dms": 0,
+    "elapsed": 101,
+    "timestamp": "2026-03-03T04:31:02.656Z"
+  },
+  "galway-ireland-family-solicitor": {
+    "status": "done",
+    "city": "Galway, Ireland",
+    "niche": "family solicitor",
+    "leads": 28,
+    "emails": 17,
+    "dms": 1,
+    "elapsed": 109,
+    "timestamp": "2026-03-03T04:31:09.968Z"
+  },
+  "galway-ireland-commercial-solicitor": {
+    "status": "done",
+    "city": "Galway, Ireland",
+    "niche": "commercial solicitor",
+    "leads": 28,
+    "emails": 19,
+    "dms": 0,
+    "elapsed": 89,
+    "timestamp": "2026-03-03T04:32:39.086Z"
+  },
+  "galway-ireland-immigration-solicitor": {
+    "status": "done",
+    "city": "Galway, Ireland",
+    "niche": "immigration solicitor",
+    "leads": 17,
+    "emails": 10,
+    "dms": 0,
+    "elapsed": 99,
+    "timestamp": "2026-03-03T04:32:48.831Z"
+  },
+  "galway-ireland-criminal-solicitor": {
+    "status": "done",
+    "city": "Galway, Ireland",
+    "niche": "criminal solicitor",
+    "leads": 20,
+    "emails": 13,
+    "dms": 0,
+    "elapsed": 127,
+    "timestamp": "2026-03-03T04:33:17.212Z"
+  },
+  "limerick-ireland-solicitors": {
+    "status": "done",
+    "city": "Limerick, Ireland",
+    "niche": "solicitors",
+    "leads": 24,
+    "emails": 11,
+    "dms": 0,
+    "elapsed": 74,
+    "timestamp": "2026-03-03T04:34:31.176Z"
+  },
+  "limerick-ireland-family-solicitor": {
+    "status": "done",
+    "city": "Limerick, Ireland",
+    "niche": "family solicitor",
+    "leads": 28,
+    "emails": 16,
+    "dms": 1,
+    "elapsed": 91,
+    "timestamp": "2026-03-03T04:34:48.109Z"
+  },
+  "limerick-ireland-personal-injury-solicitor": {
+    "status": "done",
+    "city": "Limerick, Ireland",
+    "niche": "personal injury solicitor",
+    "leads": 20,
+    "emails": 10,
+    "dms": 3,
+    "elapsed": 136,
+    "timestamp": "2026-03-03T04:35:32.774Z"
+  },
+  "limerick-ireland-commercial-solicitor": {
+    "status": "done",
+    "city": "Limerick, Ireland",
+    "niche": "commercial solicitor",
+    "leads": 20,
+    "emails": 14,
+    "dms": 0,
+    "elapsed": 130,
+    "timestamp": "2026-03-03T04:37:42.924Z"
+  },
+  "limerick-ireland-immigration-solicitor": {
+    "status": "done",
+    "city": "Limerick, Ireland",
+    "niche": "immigration solicitor",
+    "leads": 8,
+    "emails": 5,
+    "dms": 1,
+    "elapsed": 134,
+    "timestamp": "2026-03-03T04:37:46.444Z"
+  },
+  "limerick-ireland-criminal-solicitor": {
+    "status": "done",
+    "city": "Limerick, Ireland",
+    "niche": "criminal solicitor",
+    "leads": 20,
+    "emails": 10,
+    "dms": 2,
+    "elapsed": 140,
+    "timestamp": "2026-03-03T04:37:52.683Z"
+  }
+}

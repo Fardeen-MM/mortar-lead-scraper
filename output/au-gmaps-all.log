@@ -1,0 +1,309 @@
+=== Starting AU Google Maps scrape: 5 niches ===
+Start time: Mon 23 Mar 2026 22:39:57 EDT
+
+>>> Starting: real estate agent (Mon 23 Mar 2026 22:39:57 EDT)
+=== REAL ESTATE AGENT — 3 cities ===
+
+  [Sydney, Australia] Starting...
+[1s] ℹ [Google Maps] City "Sydney": 2250 grid cells (using 4)
+[1s] ℹ [Google Maps] cell 1/4: @-34.164233,150.271662
+[48s] ℹ [Google Maps] cell 1/4: 20 results, 20 new (20 total unique)
+[48s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[48s] ℹ [Google Maps] cell 2/4: @-33.966034,150.53176
+[93s] ℹ [Google Maps] cell 2/4: 20 results, 0 new (20 total unique)
+[93s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[93s] ℹ [Google Maps] cell 3/4: @-33.767836,150.813533
+[139s] ℹ [Google Maps] cell 3/4: 20 results, 15 new (35 total unique)
+[139s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[139s] ℹ [Google Maps] cell 4/4: @-33.569638,151.073631
+[186s] ℹ [Google Maps] cell 4/4: 20 results, 1 new (36 total unique)
+[186s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[186s] ℹ [Google Maps] City "Sydney" complete: 36 unique businesses
+  [Sydney, Australia] Done in 186s — 36 total leads
+
+  [Melbourne, Australia] Starting...
+[187s] ℹ [Google Maps] City "Melbourne": 4697 grid cells (using 4)
+[187s] ℹ [Google Maps] cell 1/4: @-38.490361,144.455475
+[1136s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[1136s] ℹ [Google Maps] cell 1/4: 20 results, 19 new (19 total unique)
+[1136s] ℹ [Google Maps] cell 2/4: @-38.220091,144.889621
+[1153s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[1153s] ℹ [Google Maps] cell 2/4: 20 results, 0 new (19 total unique)
+[1153s] ℹ [Google Maps] cell 3/4: @-37.94982,145.323767
+[1200s] ℹ [Google Maps] cell 3/4: 20 results, 3 new (22 total unique)
+[1200s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[1200s] ℹ [Google Maps] cell 4/4: @-37.67955,145.757913
+[1249s] ℹ [Google Maps] cell 4/4: 20 results, 2 new (24 total unique)
+[1249s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[1249s] ℹ [Google Maps] City "Melbourne" complete: 24 unique businesses
+  [Melbourne, Australia] Done in 1063s — 60 total leads
+
+  [Brisbane, Australia] Starting...
+[1250s] ℹ [Google Maps] City "Brisbane": 3648 grid cells (using 4)
+[1250s] ℹ [Google Maps] cell 1/4: @-27.929596,152.392865
+[1298s] ℹ [Google Maps] cell 1/4: 19 results, 19 new (19 total unique)
+[1298s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[1298s] ℹ [Google Maps] cell 2/4: @-27.641308,152.392865
+[1348s] ℹ [Google Maps] cell 2/4: 19 results, 1 new (20 total unique)
+[1348s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[1348s] ℹ [Google Maps] cell 3/4: @-27.353019,152.392865
+[2299s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[2300s] ℹ [Google Maps] cell 3/4: 19 results, 2 new (22 total unique)
+[2300s] ℹ [Google Maps] cell 4/4: @-27.064731,152.392865
+[2321s] ℹ [Google Maps] cell 4/4: 20 results, 1 new (23 total unique)
+[2321s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[2321s] ℹ [Google Maps] City "Brisbane" complete: 23 unique businesses
+  [Brisbane, Australia] Done in 1072s — 83 total leads
+
+  SUMMARY: 83 leads | 68 phones | 67 websites | 0 emails
+  Written: /Users/fardeenchoudhury/mortar-lead-scraper/output/gmaps-au-real-estate-agent.csv
+>>> Finished: real estate agent (Mon 23 Mar 2026 23:18:38 EDT)
+
+
+>>> Starting: dentist (Mon 23 Mar 2026 23:18:43 EDT)
+=== DENTIST — 3 cities ===
+
+  [Sydney, Australia] Starting...
+[2s] ℹ [Google Maps] City "Sydney": 2250 grid cells (using 4)
+[2s] ℹ [Google Maps] cell 1/4: @-34.164233,150.271662
+[43s] ℹ [Google Maps] cell 1/4: 14 results, 14 new (14 total unique)
+[43s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[43s] ℹ [Google Maps] cell 2/4: @-33.966034,150.53176
+[83s] ℹ [Google Maps] cell 2/4: 14 results, 0 new (14 total unique)
+[83s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[83s] ℹ [Google Maps] cell 3/4: @-33.767836,150.813533
+[119s] ℹ [Google Maps] cell 3/4: 14 results, 4 new (18 total unique)
+[119s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[119s] ℹ [Google Maps] cell 4/4: @-33.569638,151.073631
+[154s] ℹ [Google Maps] cell 4/4: 13 results, 2 new (20 total unique)
+[154s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[154s] ℹ [Google Maps] City "Sydney" complete: 20 unique businesses
+  [Sydney, Australia] Done in 154s — 20 total leads
+
+  [Melbourne, Australia] Starting...
+[156s] ℹ [Google Maps] City "Melbourne": 4697 grid cells (using 4)
+[156s] ℹ [Google Maps] cell 1/4: @-38.490361,144.455475
+[194s] ℹ [Google Maps] cell 1/4: 14 results, 14 new (14 total unique)
+[194s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[194s] ℹ [Google Maps] cell 2/4: @-38.220091,144.889621
+[1201s] ℹ [Google Maps] cell 2/4: 14 results, 0 new (14 total unique)
+[1201s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[1201s] ℹ [Google Maps] cell 3/4: @-37.94982,145.323767
+[1235s] ℹ [Google Maps] cell 3/4: 14 results, 1 new (15 total unique)
+[1235s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[1235s] ℹ [Google Maps] cell 4/4: @-37.67955,145.757913
+[2180s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[2180s] ℹ [Google Maps] cell 4/4: 14 results, 0 new (15 total unique)
+[2180s] ℹ [Google Maps] City "Melbourne" complete: 15 unique businesses
+  [Melbourne, Australia] Done in 2026s — 35 total leads
+
+  [Brisbane, Australia] Starting...
+[2182s] ℹ [Google Maps] City "Brisbane": 3648 grid cells (using 4)
+[2182s] ℹ [Google Maps] cell 1/4: @-27.929596,152.392865
+[2217s] ℹ [Google Maps] cell 1/4: 14 results, 14 new (14 total unique)
+[2217s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[2217s] ℹ [Google Maps] cell 2/4: @-27.641308,152.392865
+[2255s] ℹ [Google Maps] cell 2/4: 14 results, 1 new (15 total unique)
+[2255s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[2255s] ℹ [Google Maps] cell 3/4: @-27.353019,152.392865
+[2291s] ℹ [Google Maps] cell 3/4: 14 results, 1 new (16 total unique)
+[2291s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[2292s] ℹ [Google Maps] cell 4/4: @-27.064731,152.392865
+[2325s] ℹ [Google Maps] cell 4/4: 13 results, 0 new (16 total unique)
+[2325s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[2325s] ℹ [Google Maps] City "Brisbane" complete: 16 unique businesses
+  [Brisbane, Australia] Done in 145s — 51 total leads
+
+  SUMMARY: 51 leads | 50 phones | 50 websites | 0 emails
+  Written: /Users/fardeenchoudhury/mortar-lead-scraper/output/gmaps-au-dentist.csv
+>>> Finished: dentist (Mon 23 Mar 2026 23:57:28 EDT)
+
+
+>>> Starting: physiotherapist (Mon 23 Mar 2026 23:57:33 EDT)
+=== PHYSIOTHERAPIST — 3 cities ===
+
+  [Sydney, Australia] Starting...
+[1s] ℹ [Google Maps] City "Sydney": 2250 grid cells (using 4)
+[1s] ℹ [Google Maps] cell 1/4: @-34.164233,150.271662
+[43s] ℹ [Google Maps] cell 1/4: 20 results, 19 new (19 total unique)
+[43s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[43s] ℹ [Google Maps] cell 2/4: @-33.966034,150.53176
+[85s] ℹ [Google Maps] cell 2/4: 20 results, 2 new (21 total unique)
+[85s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[85s] ℹ [Google Maps] cell 3/4: @-33.767836,150.813533
+[108s] ℹ [Google Maps] cell 3/4: 20 results, 11 new (32 total unique)
+[109s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[109s] ℹ [Google Maps] cell 4/4: @-33.569638,151.073631
+[153s] ℹ [Google Maps] cell 4/4: 20 results, 0 new (32 total unique)
+[153s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[153s] ℹ [Google Maps] City "Sydney" complete: 32 unique businesses
+  [Sydney, Australia] Done in 153s — 32 total leads
+
+  [Melbourne, Australia] Starting...
+[155s] ℹ [Google Maps] City "Melbourne": 4697 grid cells (using 4)
+[155s] ℹ [Google Maps] cell 1/4: @-38.490361,144.455475
+[165s] ⚠ [Google Maps] cell 1/4 failed: Protocol error (Target.setAutoAttach): Target closed — retrying with fresh browser
+[197s] ℹ [Google Maps] cell 1/4 (retry): 14 results, 14 new (14 total unique)
+[197s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[197s] ℹ [Google Maps] cell 2/4: @-38.220091,144.889621
+[237s] ℹ [Google Maps] cell 2/4: 14 results, 0 new (14 total unique)
+[238s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[238s] ℹ [Google Maps] cell 3/4: @-37.94982,145.323767
+[303s] ℹ [Google Maps] cell 3/4: 14 results, 0 new (14 total unique)
+[303s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[303s] ℹ [Google Maps] cell 4/4: @-37.67955,145.757913
+[364s] ℹ [Google Maps] cell 4/4: 14 results, 0 new (14 total unique)
+[365s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[365s] ℹ [Google Maps] City "Melbourne" complete: 14 unique businesses
+  [Melbourne, Australia] Done in 212s — 46 total leads
+
+  [Brisbane, Australia] Starting...
+[367s] ℹ [Google Maps] City "Brisbane": 3648 grid cells (using 4)
+[367s] ℹ [Google Maps] cell 1/4: @-27.929596,152.392865
+[417s] ℹ [Google Maps] cell 1/4: 20 results, 20 new (20 total unique)
+[417s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[417s] ℹ [Google Maps] cell 2/4: @-27.641308,152.392865
+[465s] ℹ [Google Maps] cell 2/4: 20 results, 2 new (22 total unique)
+[465s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[465s] ℹ [Google Maps] cell 3/4: @-27.353019,152.392865
+[514s] ℹ [Google Maps] cell 3/4: 20 results, 2 new (24 total unique)
+[514s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[514s] ℹ [Google Maps] cell 4/4: @-27.064731,152.392865
+[534s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[534s] ℹ [Google Maps] cell 4/4: 20 results, 1 new (25 total unique)
+[534s] ℹ [Google Maps] City "Brisbane" complete: 25 unique businesses
+  [Brisbane, Australia] Done in 169s — 71 total leads
+
+  SUMMARY: 71 leads | 70 phones | 69 websites | 0 emails
+  Written: /Users/fardeenchoudhury/mortar-lead-scraper/output/gmaps-au-physiotherapist.csv
+>>> Finished: physiotherapist (Tue 24 Mar 2026 00:06:28 EDT)
+
+
+>>> Starting: accountant (Tue 24 Mar 2026 00:06:33 EDT)
+=== ACCOUNTANT — 3 cities ===
+
+  [Sydney, Australia] Starting...
+[1s] ℹ [Google Maps] City "Sydney": 2250 grid cells (using 4)
+[1s] ℹ [Google Maps] cell 1/4: @-34.164233,150.271662
+[49s] ℹ [Google Maps] cell 1/4: 18 results, 18 new (18 total unique)
+[49s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[49s] ℹ [Google Maps] cell 2/4: @-33.966034,150.53176
+[110s] ℹ [Google Maps] cell 2/4: 19 results, 2 new (20 total unique)
+[110s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[111s] ℹ [Google Maps] cell 3/4: @-33.767836,150.813533
+[179s] ℹ [Google Maps] cell 3/4: 19 results, 8 new (28 total unique)
+[179s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[179s] ℹ [Google Maps] cell 4/4: @-33.569638,151.073631
+[249s] ℹ [Google Maps] cell 4/4: 18 results, 0 new (28 total unique)
+[249s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[250s] ℹ [Google Maps] City "Sydney" complete: 28 unique businesses
+  [Sydney, Australia] Done in 250s — 28 total leads
+
+  [Melbourne, Australia] Starting...
+[252s] ℹ [Google Maps] City "Melbourne": 4697 grid cells (using 4)
+[252s] ℹ [Google Maps] cell 1/4: @-38.490361,144.455475
+[317s] ℹ [Google Maps] cell 1/4: 20 results, 20 new (20 total unique)
+[317s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[317s] ℹ [Google Maps] cell 2/4: @-38.220091,144.889621
+[361s] ℹ [Google Maps] cell 2/4: 20 results, 1 new (21 total unique)
+[361s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[361s] ℹ [Google Maps] cell 3/4: @-37.94982,145.323767
+[448s] ℹ [Google Maps] cell 3/4: 20 results, 0 new (21 total unique)
+[448s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[448s] ℹ [Google Maps] cell 4/4: @-37.67955,145.757913
+[525s] ℹ [Google Maps] cell 4/4: 20 results, 0 new (21 total unique)
+[525s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[525s] ℹ [Google Maps] City "Melbourne" complete: 21 unique businesses
+  [Melbourne, Australia] Done in 275s — 49 total leads
+
+  [Brisbane, Australia] Starting...
+[527s] ℹ [Google Maps] City "Brisbane": 3648 grid cells (using 4)
+[527s] ℹ [Google Maps] cell 1/4: @-27.929596,152.392865
+[602s] ℹ [Google Maps] cell 1/4: 19 results, 19 new (19 total unique)
+[602s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[602s] ℹ [Google Maps] cell 2/4: @-27.641308,152.392865
+[669s] ℹ [Google Maps] cell 2/4: 19 results, 0 new (19 total unique)
+[669s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[669s] ℹ [Google Maps] cell 3/4: @-27.353019,152.392865
+[724s] ℹ [Google Maps] cell 3/4: 18 results, 0 new (19 total unique)
+[724s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[725s] ℹ [Google Maps] cell 4/4: @-27.064731,152.392865
+[792s] ℹ [Google Maps] cell 4/4: 19 results, 2 new (21 total unique)
+[792s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[792s] ℹ [Google Maps] City "Brisbane" complete: 21 unique businesses
+  [Brisbane, Australia] Done in 268s — 70 total leads
+
+  SUMMARY: 70 leads | 67 phones | 68 websites | 0 emails
+  Written: /Users/fardeenchoudhury/mortar-lead-scraper/output/gmaps-au-accountant.csv
+>>> Finished: accountant (Tue 24 Mar 2026 00:19:47 EDT)
+
+
+>>> Starting: plumber (Tue 24 Mar 2026 00:19:53 EDT)
+=== PLUMBER — 3 cities ===
+
+  [Sydney, Australia] Starting...
+[2s] ℹ [Google Maps] City "Sydney": 2250 grid cells (using 4)
+[2s] ℹ [Google Maps] cell 1/4: @-34.164233,150.271662
+[73s] ℹ [Google Maps] cell 1/4: 20 results, 20 new (20 total unique)
+[73s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[74s] ℹ [Google Maps] cell 2/4: @-33.966034,150.53176
+[149s] ℹ [Google Maps] cell 2/4: 20 results, 3 new (23 total unique)
+[149s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[150s] ℹ [Google Maps] cell 3/4: @-33.767836,150.813533
+[212s] ℹ [Google Maps] cell 3/4: 20 results, 19 new (42 total unique)
+[212s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[212s] ℹ [Google Maps] cell 4/4: @-33.569638,151.073631
+[267s] ℹ [Google Maps] cell 4/4: 20 results, 1 new (43 total unique)
+[267s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[267s] ℹ [Google Maps] City "Sydney" complete: 43 unique businesses
+  [Sydney, Australia] Done in 267s — 43 total leads
+
+  [Melbourne, Australia] Starting...
+[269s] ℹ [Google Maps] City "Melbourne": 4697 grid cells (using 4)
+[269s] ℹ [Google Maps] cell 1/4: @-38.490361,144.455475
+[295s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[296s] ℹ [Google Maps] cell 1/4: 20 results, 20 new (20 total unique)
+[296s] ℹ [Google Maps] cell 2/4: @-38.220091,144.889621
+[354s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[354s] ℹ [Google Maps] cell 2/4: 20 results, 0 new (20 total unique)
+[354s] ℹ [Google Maps] cell 3/4: @-37.94982,145.323767
+[414s] ℹ [Google Maps] cell 3/4: 20 results, 7 new (27 total unique)
+[414s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[414s] ℹ [Google Maps] cell 4/4: @-37.67955,145.757913
+[469s] ℹ [Google Maps] cell 4/4: 20 results, 2 new (29 total unique)
+[469s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[469s] ℹ [Google Maps] City "Melbourne" complete: 29 unique businesses
+  [Melbourne, Australia] Done in 201s — 72 total leads
+
+  [Brisbane, Australia] Starting...
+[470s] ℹ [Google Maps] City "Brisbane": 3648 grid cells (using 4)
+[470s] ℹ [Google Maps] cell 1/4: @-27.929596,152.392865
+[529s] ℹ [Google Maps] cell 1/4: 20 results, 20 new (20 total unique)
+[529s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[529s] ℹ [Google Maps] cell 2/4: @-27.641308,152.392865
+[576s] ℹ [Google Maps] cell 2/4: 20 results, 1 new (21 total unique)
+[576s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[577s] ℹ [Google Maps] cell 3/4: @-27.353019,152.392865
+[601s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[602s] ℹ [Google Maps] cell 3/4: 20 results, 1 new (22 total unique)
+[602s] ℹ [Google Maps] cell 4/4: @-27.064731,152.392865
+[657s] ℹ [Google Maps] cell 4/4: 20 results, 0 new (22 total unique)
+[657s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[657s] ℹ [Google Maps] City "Brisbane" complete: 22 unique businesses
+  [Brisbane, Australia] Done in 188s — 94 total leads
+
+  SUMMARY: 94 leads | 77 phones | 75 websites | 0 emails
+  Written: /Users/fardeenchoudhury/mortar-lead-scraper/output/gmaps-au-plumber.csv
+>>> Finished: plumber (Tue 24 Mar 2026 00:30:51 EDT)
+
+
+=== ALL NICHES COMPLETE ===
+End time: Tue 24 Mar 2026 00:30:56 EDT
+
+Generated CSVs:
+-rw-r--r--  1 fardeenchoudhury  staff  23918 24 Mar 00:19 output/gmaps-au-accountant.csv
+-rw-r--r--  1 fardeenchoudhury  staff  18044 23 Mar 23:57 output/gmaps-au-dentist.csv
+-rw-r--r--  1 fardeenchoudhury  staff  21782 23 Mar 21:29 output/gmaps-au-lawyer.csv
+-rw-r--r--  1 fardeenchoudhury  staff  24974 24 Mar 00:06 output/gmaps-au-physiotherapist.csv
+-rw-r--r--  1 fardeenchoudhury  staff  32214 24 Mar 00:30 output/gmaps-au-plumber.csv
+-rw-r--r--  1 fardeenchoudhury  staff  26963 23 Mar 23:18 output/gmaps-au-real-estate-agent.csv

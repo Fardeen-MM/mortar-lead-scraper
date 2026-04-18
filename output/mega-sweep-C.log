@@ -1,0 +1,1635 @@
+=== Bulk find-leads ===
+Cities: 277
+Niches: spousal sponsorship lawyer | Express Entry consultant | H1B lawyer | deportation defense attorney | asylum lawyer | EB-5 lawyer | skilled worker visa UK | 482 visa agent | appeals immigration lawyer | citizenship application lawyer
+Max per query: 25
+Delay between queries: 30s
+Output: output/mega-immigration-sweep-C.csv
+State: output/mega-immigration-sweep-C.state.json
+Total queries: 2770
+
+
+[1/2770] spousal sponsorship lawyer Toronto, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 17 domains, 0 emails
+
+[2/2770] Express Entry consultant Toronto, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 32 domains, 0 emails
+
+[3/2770] H1B lawyer Toronto, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 47 domains, 0 emails
+
+[4/2770] deportation defense attorney Toronto, ON
+  Found 24 domains (via multi-engine)
+  0 verified emails
+  Totals: 65 domains, 0 emails
+
+[5/2770] asylum lawyer Toronto, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 20 domains (via multi-engine)
+  0 verified emails
+  Totals: 77 domains, 0 emails
+
+[6/2770] EB-5 lawyer Toronto, ON
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 89 domains, 0 emails
+
+[7/2770] skilled worker visa UK Toronto, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 108 domains, 0 emails
+
+[8/2770] 482 visa agent Toronto, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 122 domains, 0 emails
+
+[9/2770] appeals immigration lawyer Toronto, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 126 domains, 0 emails
+
+[10/2770] citizenship application lawyer Toronto, ON
+[292s] ℹ [DDG] Rate limited on "citizenship application lawyer Toronto, ON" — waiting 30s (attempt 1/3)...
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 134 domains, 0 emails
+
+[11/2770] spousal sponsorship lawyer Mississauga, ON
+[multi-search] brave rate-limited — backing off 60s
+[355s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Mississauga, ON" — waiting 30s (attempt 1/3)...
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 142 domains, 0 emails
+
+[12/2770] Express Entry consultant Mississauga, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 155 domains, 0 emails
+
+[13/2770] H1B lawyer Mississauga, ON
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 165 domains, 0 emails
+
+[14/2770] deportation defense attorney Mississauga, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 174 domains, 0 emails
+
+[15/2770] asylum lawyer Mississauga, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 179 domains, 0 emails
+
+[16/2770] EB-5 lawyer Mississauga, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 189 domains, 0 emails
+
+[17/2770] skilled worker visa UK Mississauga, ON
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 202 domains, 0 emails
+
+[18/2770] 482 visa agent Mississauga, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 218 domains, 0 emails
+
+[19/2770] appeals immigration lawyer Mississauga, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 222 domains, 0 emails
+
+[20/2770] citizenship application lawyer Mississauga, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 20 domains (via multi-engine)
+  0 verified emails
+  Totals: 227 domains, 0 emails
+
+[21/2770] spousal sponsorship lawyer Brampton, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 232 domains, 0 emails
+
+[22/2770] Express Entry consultant Brampton, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 244 domains, 0 emails
+
+[23/2770] H1B lawyer Brampton, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 250 domains, 0 emails
+
+[24/2770] deportation defense attorney Brampton, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 257 domains, 0 emails
+
+[25/2770] asylum lawyer Brampton, ON
+  Found 20 domains (via multi-engine)
+  0 verified emails
+  Totals: 262 domains, 0 emails
+
+[26/2770] EB-5 lawyer Brampton, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 265 domains, 0 emails
+
+[27/2770] skilled worker visa UK Brampton, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 267 domains, 0 emails
+
+[28/2770] 482 visa agent Brampton, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 282 domains, 0 emails
+
+[29/2770] appeals immigration lawyer Brampton, ON
+[970s] ℹ [DDG] Rate limited on "appeals immigration lawyer Brampton, ON" — waiting 30s (attempt 1/3)...
+[1000s] ℹ [DDG] Rate limited on "appeals immigration lawyer Brampton, ON" — waiting 60s (attempt 2/3)...
+[1060s] ⚠ [DDG] Search failed for "appeals immigration lawyer Brampton, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 286 domains, 0 emails
+
+[30/2770] citizenship application lawyer Brampton, ON
+[multi-search] brave rate-limited — backing off 60s
+[1092s] ℹ [DDG] Rate limited on "citizenship application lawyer Brampton, ON" — waiting 30s (attempt 1/3)...
+[1123s] ℹ [DDG] Rate limited on "citizenship application lawyer Brampton, ON" — waiting 60s (attempt 2/3)...
+[1183s] ⚠ [DDG] Search failed for "citizenship application lawyer Brampton, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 288 domains, 0 emails
+
+[31/2770] spousal sponsorship lawyer Markham, ON
+[multi-search] brave rate-limited — backing off 60s
+[1215s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Markham, ON" — waiting 30s (attempt 1/3)...
+[1245s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Markham, ON" — waiting 60s (attempt 2/3)...
+[1305s] ⚠ [DDG] Search failed for "spousal sponsorship lawyer Markham, ON": HTTP 202
+  Found 5 domains (via multi-engine)
+  0 verified emails
+  Totals: 288 domains, 0 emails
+
+[32/2770] Express Entry consultant Markham, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 297 domains, 0 emails
+
+[33/2770] H1B lawyer Markham, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 303 domains, 0 emails
+
+[34/2770] deportation defense attorney Markham, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 307 domains, 0 emails
+
+[35/2770] asylum lawyer Markham, ON
+  Found 20 domains (via multi-engine)
+  0 verified emails
+  Totals: 309 domains, 0 emails
+
+[36/2770] EB-5 lawyer Markham, ON
+[multi-search] brave rate-limited — backing off 60s
+[1465s] ℹ [DDG] Rate limited on "EB-5 lawyer Markham, ON" — waiting 30s (attempt 1/3)...
+[1495s] ℹ [DDG] Rate limited on "EB-5 lawyer Markham, ON" — waiting 60s (attempt 2/3)...
+[1555s] ⚠ [DDG] Search failed for "EB-5 lawyer Markham, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 310 domains, 0 emails
+
+[37/2770] skilled worker visa UK Markham, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 313 domains, 0 emails
+
+[38/2770] 482 visa agent Markham, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 7 domains (via multi-engine)
+  0 verified emails
+  Totals: 315 domains, 0 emails
+
+[39/2770] appeals immigration lawyer Markham, ON
+[1652s] ℹ [DDG] Rate limited on "appeals immigration lawyer Markham, ON" — waiting 30s (attempt 1/3)...
+[1682s] ℹ [DDG] Rate limited on "appeals immigration lawyer Markham, ON" — waiting 60s (attempt 2/3)...
+[1743s] ⚠ [DDG] Search failed for "appeals immigration lawyer Markham, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[1743s] ℹ [DDG] Rate limited on "appeals immigration lawyer Markham, ON" — waiting 30s (attempt 1/3)...
+[1773s] ℹ [DDG] Rate limited on "appeals immigration lawyer Markham, ON" — waiting 60s (attempt 2/3)...
+[1834s] ⚠ [DDG] Search failed for "appeals immigration lawyer Markham, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 315 domains, 0 emails
+
+[40/2770] citizenship application lawyer Markham, ON
+[multi-search] brave rate-limited — backing off 60s
+[1865s] ℹ [DDG] Rate limited on "citizenship application lawyer Markham, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 317 domains, 0 emails
+
+[41/2770] spousal sponsorship lawyer Hamilton, ON
+[multi-search] brave rate-limited — backing off 60s
+[1928s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Hamilton, ON" — waiting 30s (attempt 1/3)...
+[1958s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Hamilton, ON" — waiting 60s (attempt 2/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 322 domains, 0 emails
+
+[42/2770] Express Entry consultant Hamilton, ON
+[multi-search] brave rate-limited — backing off 60s
+[2050s] ℹ [DDG] Rate limited on "Express Entry consultant Hamilton, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 324 domains, 0 emails
+
+[43/2770] H1B lawyer Hamilton, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 328 domains, 0 emails
+
+[44/2770] deportation defense attorney Hamilton, ON
+[2145s] ℹ [DDG] Rate limited on "deportation defense attorney Hamilton, ON" — waiting 30s (attempt 1/3)...
+[2176s] ℹ [DDG] Rate limited on "deportation defense attorney Hamilton, ON" — waiting 60s (attempt 2/3)...
+[2236s] ⚠ [DDG] Search failed for "deportation defense attorney Hamilton, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 334 domains, 0 emails
+
+[45/2770] asylum lawyer Hamilton, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 335 domains, 0 emails
+
+[46/2770] EB-5 lawyer Hamilton, ON
+  Found 25 domains (via multi-engine)
+  0 verified emails
+  Totals: 353 domains, 0 emails
+
+[47/2770] skilled worker visa UK Hamilton, ON
+[multi-search] brave rate-limited — backing off 60s
+[2332s] ℹ [DDG] Rate limited on "skilled worker visa UK Hamilton, ON" — waiting 30s (attempt 1/3)...
+[2362s] ℹ [DDG] Rate limited on "skilled worker visa UK Hamilton, ON" — waiting 60s (attempt 2/3)...
+[2422s] ⚠ [DDG] Search failed for "skilled worker visa UK Hamilton, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[multi-search] mojeek rate-limited — backing off 60s
+  Found 5 domains (via multi-engine)
+  0 verified emails
+  Totals: 353 domains, 0 emails
+
+[48/2770] 482 visa agent Hamilton, ON
+[2454s] ℹ [DDG] Rate limited on "482 visa agent Hamilton, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+[2487s] ℹ [DDG] Rate limited on "482 visa agent Hamilton, ON" — waiting 30s (attempt 1/3)...
+[2517s] ℹ [DDG] Rate limited on "482 visa agent Hamilton, ON" — waiting 60s (attempt 2/3)...
+[2577s] ⚠ [DDG] Search failed for "482 visa agent Hamilton, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 358 domains, 0 emails
+
+[49/2770] appeals immigration lawyer Hamilton, ON
+[multi-search] brave rate-limited — backing off 60s
+[2608s] ℹ [DDG] Rate limited on "appeals immigration lawyer Hamilton, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 360 domains, 0 emails
+
+[50/2770] citizenship application lawyer Hamilton, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 361 domains, 0 emails
+
+[51/2770] spousal sponsorship lawyer Ottawa, ON
+[2704s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Ottawa, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 367 domains, 0 emails
+
+[52/2770] Express Entry consultant Ottawa, ON
+[multi-search] brave rate-limited — backing off 60s
+[2766s] ℹ [DDG] Rate limited on "Express Entry consultant Ottawa, ON" — waiting 30s (attempt 1/3)...
+[2796s] ℹ [DDG] Rate limited on "Express Entry consultant Ottawa, ON" — waiting 60s (attempt 2/3)...
+[2856s] ⚠ [DDG] Search failed for "Express Entry consultant Ottawa, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[2857s] ℹ [DDG] Rate limited on "Express Entry consultant Ottawa, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 371 domains, 0 emails
+
+[53/2770] H1B lawyer Ottawa, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 377 domains, 0 emails
+
+[54/2770] deportation defense attorney Ottawa, ON
+[2951s] ℹ [DDG] Rate limited on "deportation defense attorney Ottawa, ON" — waiting 30s (attempt 1/3)...
+[2981s] ℹ [DDG] Rate limited on "deportation defense attorney Ottawa, ON" — waiting 60s (attempt 2/3)...
+[3041s] ⚠ [DDG] Search failed for "deportation defense attorney Ottawa, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[3042s] ℹ [DDG] Rate limited on "deportation defense attorney Ottawa, ON" — waiting 30s (attempt 1/3)...
+[3072s] ℹ [DDG] Rate limited on "deportation defense attorney Ottawa, ON" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 379 domains, 0 emails
+
+[55/2770] asylum lawyer Ottawa, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 382 domains, 0 emails
+
+[56/2770] EB-5 lawyer Ottawa, ON
+[3196s] ℹ [DDG] Rate limited on "EB-5 lawyer Ottawa, ON" — waiting 30s (attempt 1/3)...
+[3226s] ℹ [DDG] Rate limited on "EB-5 lawyer Ottawa, ON" — waiting 60s (attempt 2/3)...
+[3287s] ⚠ [DDG] Search failed for "EB-5 lawyer Ottawa, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[3287s] ℹ [DDG] Rate limited on "EB-5 lawyer Ottawa, ON" — waiting 30s (attempt 1/3)...
+[3317s] ℹ [DDG] Rate limited on "EB-5 lawyer Ottawa, ON" — waiting 60s (attempt 2/3)...
+[3378s] ⚠ [DDG] Search failed for "EB-5 lawyer Ottawa, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 382 domains, 0 emails
+
+[57/2770] skilled worker visa UK Ottawa, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 383 domains, 0 emails
+
+[58/2770] 482 visa agent Ottawa, ON
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 389 domains, 0 emails
+
+[59/2770] appeals immigration lawyer Ottawa, ON
+[multi-search] brave rate-limited — backing off 60s
+[3473s] ℹ [DDG] Rate limited on "appeals immigration lawyer Ottawa, ON" — waiting 30s (attempt 1/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 391 domains, 0 emails
+
+[60/2770] citizenship application lawyer Ottawa, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 393 domains, 0 emails
+
+[61/2770] spousal sponsorship lawyer Vaughan, ON
+[3569s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Vaughan, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 393 domains, 0 emails
+
+[62/2770] Express Entry consultant Vaughan, ON
+[3632s] ℹ [DDG] Rate limited on "Express Entry consultant Vaughan, ON" — waiting 30s (attempt 1/3)...
+[3662s] ℹ [DDG] Rate limited on "Express Entry consultant Vaughan, ON" — waiting 60s (attempt 2/3)...
+[3722s] ⚠ [DDG] Search failed for "Express Entry consultant Vaughan, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 395 domains, 0 emails
+
+[63/2770] H1B lawyer Vaughan, ON
+[3755s] ℹ [DDG] Rate limited on "H1B lawyer Vaughan, ON" — waiting 30s (attempt 1/3)...
+[3785s] ℹ [DDG] Rate limited on "H1B lawyer Vaughan, ON" — waiting 60s (attempt 2/3)...
+[3845s] ⚠ [DDG] Search failed for "H1B lawyer Vaughan, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[3846s] ℹ [DDG] Rate limited on "H1B lawyer Vaughan, ON" — waiting 30s (attempt 1/3)...
+[3876s] ℹ [DDG] Rate limited on "H1B lawyer Vaughan, ON" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 396 domains, 0 emails
+
+[64/2770] deportation defense attorney Vaughan, ON
+[multi-search] brave rate-limited — backing off 60s
+[3967s] ℹ [DDG] Rate limited on "deportation defense attorney Vaughan, ON" — waiting 30s (attempt 1/3)...
+[3998s] ℹ [DDG] Rate limited on "deportation defense attorney Vaughan, ON" — waiting 60s (attempt 2/3)...
+[4058s] ⚠ [DDG] Search failed for "deportation defense attorney Vaughan, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[4058s] ℹ [DDG] Rate limited on "deportation defense attorney Vaughan, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 396 domains, 0 emails
+
+[65/2770] asylum lawyer Vaughan, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 397 domains, 0 emails
+
+[66/2770] EB-5 lawyer Vaughan, ON
+[4152s] ℹ [DDG] Rate limited on "EB-5 lawyer Vaughan, ON" — waiting 30s (attempt 1/3)...
+[4183s] ℹ [DDG] Rate limited on "EB-5 lawyer Vaughan, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+[4244s] ℹ [DDG] Rate limited on "EB-5 lawyer Vaughan, ON" — waiting 30s (attempt 1/3)...
+[4274s] ℹ [DDG] Rate limited on "EB-5 lawyer Vaughan, ON" — waiting 60s (attempt 2/3)...
+[4334s] ⚠ [DDG] Search failed for "EB-5 lawyer Vaughan, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 399 domains, 0 emails
+
+[67/2770] skilled worker visa UK Vaughan, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 401 domains, 0 emails
+
+[68/2770] 482 visa agent Vaughan, ON
+[4398s] ℹ [DDG] Rate limited on "482 visa agent Vaughan, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+[4430s] ℹ [DDG] Rate limited on "482 visa agent Vaughan, ON" — waiting 30s (attempt 1/3)...
+[4460s] ℹ [DDG] Rate limited on "482 visa agent Vaughan, ON" — waiting 60s (attempt 2/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 403 domains, 0 emails
+
+[69/2770] appeals immigration lawyer Vaughan, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 403 domains, 0 emails
+
+[70/2770] citizenship application lawyer Vaughan, ON
+[4584s] ⚠ [DDG] Search failed for "citizenship application lawyer Vaughan, ON": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 404 domains, 0 emails
+
+[71/2770] spousal sponsorship lawyer London, ON
+[multi-search] brave rate-limited — backing off 60s
+[4616s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer London, ON" — waiting 30s (attempt 1/3)...
+[4648s] ⚠ [DDG] Search failed for "spousal sponsorship lawyer London, ON": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 405 domains, 0 emails
+
+[72/2770] Express Entry consultant London, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 409 domains, 0 emails
+
+[73/2770] H1B lawyer London, ON
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 412 domains, 0 emails
+
+[74/2770] deportation defense attorney London, ON
+[multi-search] brave rate-limited — backing off 60s
+[4745s] ⚠ [DDG] Search failed for "deportation defense attorney London, ON": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 412 domains, 0 emails
+
+[75/2770] asylum lawyer London, ON
+[4775s] ℹ [DDG] Rate limited on "asylum lawyer London, ON" — waiting 30s (attempt 1/3)...
+[4806s] ℹ [DDG] Rate limited on "asylum lawyer London, ON" — waiting 60s (attempt 2/3)...
+[4866s] ⚠ [DDG] Search failed for "asylum lawyer London, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[4866s] ℹ [DDG] Rate limited on "asylum lawyer London, ON" — waiting 30s (attempt 1/3)...
+[4897s] ⚠ [DDG] Search failed for "asylum lawyer London, ON": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 412 domains, 0 emails
+
+[76/2770] EB-5 lawyer London, ON
+[multi-search] brave rate-limited — backing off 60s
+[4929s] ⚠ [DDG] Search failed for "EB-5 lawyer London, ON": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 415 domains, 0 emails
+
+[77/2770] skilled worker visa UK London, ON
+[4960s] ⚠ [DDG] Search failed for "skilled worker visa UK London, ON": HTTP 403
+[4961s] ℹ [DDG] Rate limited on "skilled worker visa UK London, ON" — waiting 30s (attempt 1/3)...
+[4991s] ℹ [DDG] Rate limited on "skilled worker visa UK London, ON" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 420 domains, 0 emails
+
+[78/2770] 482 visa agent London, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 422 domains, 0 emails
+
+[79/2770] appeals immigration lawyer London, ON
+[5115s] ℹ [DDG] Rate limited on "appeals immigration lawyer London, ON" — waiting 30s (attempt 1/3)...
+[5145s] ℹ [DDG] Rate limited on "appeals immigration lawyer London, ON" — waiting 60s (attempt 2/3)...
+[5205s] ⚠ [DDG] Search failed for "appeals immigration lawyer London, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[5206s] ℹ [DDG] Rate limited on "appeals immigration lawyer London, ON" — waiting 30s (attempt 1/3)...
+[5236s] ℹ [DDG] Rate limited on "appeals immigration lawyer London, ON" — waiting 60s (attempt 2/3)...
+[5296s] ⚠ [DDG] Search failed for "appeals immigration lawyer London, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 422 domains, 0 emails
+
+[80/2770] citizenship application lawyer London, ON
+[multi-search] brave rate-limited — backing off 60s
+[5327s] ℹ [DDG] Rate limited on "citizenship application lawyer London, ON" — waiting 30s (attempt 1/3)...
+[5357s] ℹ [DDG] Rate limited on "citizenship application lawyer London, ON" — waiting 60s (attempt 2/3)...
+[5418s] ⚠ [DDG] Search failed for "citizenship application lawyer London, ON": HTTP 403
+[multi-search] brave rate-limited — backing off 60s
+[5419s] ⚠ [DDG] Search failed for "citizenship application lawyer London, ON": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 422 domains, 0 emails
+
+[81/2770] spousal sponsorship lawyer Windsor, ON
+[5450s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Windsor, ON" — waiting 30s (attempt 1/3)...
+[5480s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Windsor, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 425 domains, 0 emails
+
+[82/2770] Express Entry consultant Windsor, ON
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 429 domains, 0 emails
+
+[83/2770] H1B lawyer Windsor, ON
+[multi-search] brave rate-limited — backing off 60s
+[5807s] ℹ [DDG] Rate limited on "H1B lawyer Windsor, ON" — waiting 30s (attempt 1/3)...
+[5837s] ℹ [DDG] Rate limited on "H1B lawyer Windsor, ON" — waiting 60s (attempt 2/3)...
+[6494s] ⚠ [DDG] Search failed for "H1B lawyer Windsor, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[6495s] ℹ [DDG] Rate limited on "H1B lawyer Windsor, ON" — waiting 30s (attempt 1/3)...
+[6525s] ℹ [DDG] Rate limited on "H1B lawyer Windsor, ON" — waiting 60s (attempt 2/3)...
+[6585s] ⚠ [DDG] Search failed for "H1B lawyer Windsor, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 429 domains, 0 emails
+
+[84/2770] deportation defense attorney Windsor, ON
+[multi-search] brave rate-limited — backing off 60s
+[6616s] ℹ [DDG] Rate limited on "deportation defense attorney Windsor, ON" — waiting 30s (attempt 1/3)...
+[6646s] ℹ [DDG] Rate limited on "deportation defense attorney Windsor, ON" — waiting 60s (attempt 2/3)...
+[6706s] ⚠ [DDG] Search failed for "deportation defense attorney Windsor, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 433 domains, 0 emails
+
+[85/2770] asylum lawyer Windsor, ON
+[6737s] ℹ [DDG] Rate limited on "asylum lawyer Windsor, ON" — waiting 30s (attempt 1/3)...
+[6768s] ℹ [DDG] Rate limited on "asylum lawyer Windsor, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 436 domains, 0 emails
+
+[86/2770] EB-5 lawyer Windsor, ON
+[6861s] ℹ [DDG] Rate limited on "EB-5 lawyer Windsor, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 437 domains, 0 emails
+
+[87/2770] skilled worker visa UK Windsor, ON
+[6924s] ℹ [DDG] Rate limited on "skilled worker visa UK Windsor, ON" — waiting 30s (attempt 1/3)...
+[6955s] ℹ [DDG] Rate limited on "skilled worker visa UK Windsor, ON" — waiting 60s (attempt 2/3)...
+[7015s] ⚠ [DDG] Search failed for "skilled worker visa UK Windsor, ON": HTTP 202
+  Found 6 domains (via multi-engine)
+  0 verified emails
+  Totals: 437 domains, 0 emails
+
+[88/2770] 482 visa agent Windsor, ON
+[multi-search] brave rate-limited — backing off 60s
+[7046s] ℹ [DDG] Rate limited on "482 visa agent Windsor, ON" — waiting 30s (attempt 1/3)...
+[7076s] ℹ [DDG] Rate limited on "482 visa agent Windsor, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 440 domains, 0 emails
+
+[89/2770] appeals immigration lawyer Windsor, ON
+[7169s] ℹ [DDG] Rate limited on "appeals immigration lawyer Windsor, ON" — waiting 30s (attempt 1/3)...
+[7199s] ℹ [DDG] Rate limited on "appeals immigration lawyer Windsor, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 441 domains, 0 emails
+
+[90/2770] citizenship application lawyer Windsor, ON
+[7293s] ℹ [DDG] Rate limited on "citizenship application lawyer Windsor, ON" — waiting 30s (attempt 1/3)...
+[7323s] ℹ [DDG] Rate limited on "citizenship application lawyer Windsor, ON" — waiting 60s (attempt 2/3)...
+[7383s] ⚠ [DDG] Search failed for "citizenship application lawyer Windsor, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 443 domains, 0 emails
+
+[91/2770] spousal sponsorship lawyer Kitchener, ON
+[multi-search] brave rate-limited — backing off 60s
+[7415s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Kitchener, ON" — waiting 30s (attempt 1/3)...
+[7445s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Kitchener, ON" — waiting 60s (attempt 2/3)...
+[7505s] ⚠ [DDG] Search failed for "spousal sponsorship lawyer Kitchener, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 446 domains, 0 emails
+
+[92/2770] Express Entry consultant Kitchener, ON
+[multi-search] brave rate-limited — backing off 60s
+[7536s] ℹ [DDG] Rate limited on "Express Entry consultant Kitchener, ON" — waiting 30s (attempt 1/3)...
+[7566s] ℹ [DDG] Rate limited on "Express Entry consultant Kitchener, ON" — waiting 60s (attempt 2/3)...
+[7626s] ⚠ [DDG] Search failed for "Express Entry consultant Kitchener, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[7627s] ℹ [DDG] Rate limited on "Express Entry consultant Kitchener, ON" — waiting 30s (attempt 1/3)...
+[7657s] ℹ [DDG] Rate limited on "Express Entry consultant Kitchener, ON" — waiting 60s (attempt 2/3)...
+[7717s] ⚠ [DDG] Search failed for "Express Entry consultant Kitchener, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 446 domains, 0 emails
+
+[93/2770] H1B lawyer Kitchener, ON
+[multi-search] brave rate-limited — backing off 60s
+[7748s] ℹ [DDG] Rate limited on "H1B lawyer Kitchener, ON" — waiting 30s (attempt 1/3)...
+[7778s] ℹ [DDG] Rate limited on "H1B lawyer Kitchener, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 446 domains, 0 emails
+
+[94/2770] deportation defense attorney Kitchener, ON
+[7871s] ℹ [DDG] Rate limited on "deportation defense attorney Kitchener, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 448 domains, 0 emails
+
+[95/2770] asylum lawyer Kitchener, ON
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 449 domains, 0 emails
+
+[96/2770] EB-5 lawyer Kitchener, ON
+[multi-search] brave rate-limited — backing off 60s
+[7966s] ℹ [DDG] Rate limited on "EB-5 lawyer Kitchener, ON" — waiting 30s (attempt 1/3)...
+[7996s] ℹ [DDG] Rate limited on "EB-5 lawyer Kitchener, ON" — waiting 60s (attempt 2/3)...
+[8057s] ⚠ [DDG] Search failed for "EB-5 lawyer Kitchener, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[8057s] ℹ [DDG] Rate limited on "EB-5 lawyer Kitchener, ON" — waiting 30s (attempt 1/3)...
+[8088s] ℹ [DDG] Rate limited on "EB-5 lawyer Kitchener, ON" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 449 domains, 0 emails
+
+[97/2770] skilled worker visa UK Kitchener, ON
+[multi-search] brave rate-limited — backing off 60s
+[8180s] ℹ [DDG] Rate limited on "skilled worker visa UK Kitchener, ON" — waiting 30s (attempt 1/3)...
+[8210s] ℹ [DDG] Rate limited on "skilled worker visa UK Kitchener, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 449 domains, 0 emails
+
+[98/2770] 482 visa agent Kitchener, ON
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 452 domains, 0 emails
+
+[99/2770] appeals immigration lawyer Kitchener, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 452 domains, 0 emails
+
+[100/2770] citizenship application lawyer Kitchener, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 454 domains, 0 emails
+
+[101/2770] spousal sponsorship lawyer Waterloo, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 454 domains, 0 emails
+
+[102/2770] Express Entry consultant Waterloo, ON
+[8432s] ℹ [DDG] Rate limited on "Express Entry consultant Waterloo, ON" — waiting 30s (attempt 1/3)...
+[8462s] ℹ [DDG] Rate limited on "Express Entry consultant Waterloo, ON" — waiting 60s (attempt 2/3)...
+[8523s] ⚠ [DDG] Search failed for "Express Entry consultant Waterloo, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[8523s] ℹ [DDG] Rate limited on "Express Entry consultant Waterloo, ON" — waiting 30s (attempt 1/3)...
+[8553s] ℹ [DDG] Rate limited on "Express Entry consultant Waterloo, ON" — waiting 60s (attempt 2/3)...
+[8614s] ⚠ [DDG] Search failed for "Express Entry consultant Waterloo, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 454 domains, 0 emails
+
+[103/2770] H1B lawyer Waterloo, ON
+[multi-search] brave rate-limited — backing off 60s
+[8644s] ℹ [DDG] Rate limited on "H1B lawyer Waterloo, ON" — waiting 30s (attempt 1/3)...
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 455 domains, 0 emails
+
+[104/2770] deportation defense attorney Waterloo, ON
+[multi-search] brave rate-limited — backing off 60s
+[8708s] ℹ [DDG] Rate limited on "deportation defense attorney Waterloo, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 457 domains, 0 emails
+
+[105/2770] asylum lawyer Waterloo, ON
+[multi-search] brave rate-limited — backing off 60s
+[8770s] ℹ [DDG] Rate limited on "asylum lawyer Waterloo, ON" — waiting 30s (attempt 1/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 458 domains, 0 emails
+
+[106/2770] EB-5 lawyer Waterloo, ON
+[multi-search] brave rate-limited — backing off 60s
+[8832s] ℹ [DDG] Rate limited on "EB-5 lawyer Waterloo, ON" — waiting 30s (attempt 1/3)...
+[8864s] ℹ [DDG] Rate limited on "EB-5 lawyer Waterloo, ON" — waiting 30s (attempt 1/3)...
+[8894s] ℹ [DDG] Rate limited on "EB-5 lawyer Waterloo, ON" — waiting 60s (attempt 2/3)...
+[8954s] ⚠ [DDG] Search failed for "EB-5 lawyer Waterloo, ON": HTTP 202
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 458 domains, 0 emails
+
+[107/2770] skilled worker visa UK Waterloo, ON
+[multi-search] brave rate-limited — backing off 60s
+[8985s] ℹ [DDG] Rate limited on "skilled worker visa UK Waterloo, ON" — waiting 30s (attempt 1/3)...
+[9016s] ℹ [DDG] Rate limited on "skilled worker visa UK Waterloo, ON" — waiting 60s (attempt 2/3)...
+[9076s] ⚠ [DDG] Search failed for "skilled worker visa UK Waterloo, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 7 domains (via multi-engine)
+  0 verified emails
+  Totals: 458 domains, 0 emails
+
+[108/2770] 482 visa agent Waterloo, ON
+[9108s] ℹ [DDG] Rate limited on "482 visa agent Waterloo, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 462 domains, 0 emails
+
+[109/2770] appeals immigration lawyer Waterloo, ON
+[9171s] ℹ [DDG] Rate limited on "appeals immigration lawyer Waterloo, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 462 domains, 0 emails
+
+[110/2770] citizenship application lawyer Waterloo, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 463 domains, 0 emails
+
+[111/2770] spousal sponsorship lawyer Oshawa, ON
+[multi-search] brave rate-limited — backing off 60s
+[9267s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Oshawa, ON" — waiting 30s (attempt 1/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 466 domains, 0 emails
+
+[112/2770] Express Entry consultant Oshawa, ON
+[multi-search] brave rate-limited — backing off 60s
+[9329s] ℹ [DDG] Rate limited on "Express Entry consultant Oshawa, ON" — waiting 30s (attempt 1/3)...
+[9359s] ℹ [DDG] Rate limited on "Express Entry consultant Oshawa, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 467 domains, 0 emails
+
+[113/2770] H1B lawyer Oshawa, ON
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 468 domains, 0 emails
+
+[114/2770] deportation defense attorney Oshawa, ON
+[multi-search] brave rate-limited — backing off 60s
+[9485s] ℹ [DDG] Rate limited on "deportation defense attorney Oshawa, ON" — waiting 30s (attempt 1/3)...
+[9515s] ℹ [DDG] Rate limited on "deportation defense attorney Oshawa, ON" — waiting 60s (attempt 2/3)...
+[9575s] ⚠ [DDG] Search failed for "deportation defense attorney Oshawa, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[9576s] ℹ [DDG] Rate limited on "deportation defense attorney Oshawa, ON" — waiting 30s (attempt 1/3)...
+[9606s] ℹ [DDG] Rate limited on "deportation defense attorney Oshawa, ON" — waiting 60s (attempt 2/3)...
+[9666s] ⚠ [DDG] Search failed for "deportation defense attorney Oshawa, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 468 domains, 0 emails
+
+[115/2770] asylum lawyer Oshawa, ON
+[multi-search] brave rate-limited — backing off 60s
+[9698s] ℹ [DDG] Rate limited on "asylum lawyer Oshawa, ON" — waiting 30s (attempt 1/3)...
+[9728s] ℹ [DDG] Rate limited on "asylum lawyer Oshawa, ON" — waiting 60s (attempt 2/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 468 domains, 0 emails
+
+[116/2770] EB-5 lawyer Oshawa, ON
+[multi-search] brave rate-limited — backing off 60s
+[9819s] ℹ [DDG] Rate limited on "EB-5 lawyer Oshawa, ON" — waiting 30s (attempt 1/3)...
+[9850s] ℹ [DDG] Rate limited on "EB-5 lawyer Oshawa, ON" — waiting 60s (attempt 2/3)...
+[9910s] ⚠ [DDG] Search failed for "EB-5 lawyer Oshawa, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[9910s] ℹ [DDG] Rate limited on "EB-5 lawyer Oshawa, ON" — waiting 30s (attempt 1/3)...
+[9941s] ℹ [DDG] Rate limited on "EB-5 lawyer Oshawa, ON" — waiting 60s (attempt 2/3)...
+[10001s] ⚠ [DDG] Search failed for "EB-5 lawyer Oshawa, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 468 domains, 0 emails
+
+[117/2770] skilled worker visa UK Oshawa, ON
+[multi-search] brave rate-limited — backing off 60s
+[10032s] ℹ [DDG] Rate limited on "skilled worker visa UK Oshawa, ON" — waiting 30s (attempt 1/3)...
+[10063s] ℹ [DDG] Rate limited on "skilled worker visa UK Oshawa, ON" — waiting 30s (attempt 1/3)...
+[10093s] ℹ [DDG] Rate limited on "skilled worker visa UK Oshawa, ON" — waiting 60s (attempt 2/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 469 domains, 0 emails
+
+[118/2770] 482 visa agent Oshawa, ON
+[10185s] ℹ [DDG] Rate limited on "482 visa agent Oshawa, ON" — waiting 30s (attempt 1/3)...
+  Found 23 domains (via multi-engine)
+  0 verified emails
+  Totals: 475 domains, 0 emails
+
+[119/2770] appeals immigration lawyer Oshawa, ON
+[multi-search] brave rate-limited — backing off 60s
+[10248s] ℹ [DDG] Rate limited on "appeals immigration lawyer Oshawa, ON" — waiting 30s (attempt 1/3)...
+[10279s] ⚠ [DDG] Search failed for "appeals immigration lawyer Oshawa, ON": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 475 domains, 0 emails
+
+[120/2770] citizenship application lawyer Oshawa, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 475 domains, 0 emails
+
+[121/2770] spousal sponsorship lawyer Burlington, ON
+[10343s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Burlington, ON" — waiting 30s (attempt 1/3)...
+[10373s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Burlington, ON" — waiting 60s (attempt 2/3)...
+[10434s] ⚠ [DDG] Search failed for "spousal sponsorship lawyer Burlington, ON": HTTP 403
+[multi-search] brave rate-limited — backing off 60s
+[10435s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Burlington, ON" — waiting 30s (attempt 1/3)...
+[10465s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Burlington, ON" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 476 domains, 0 emails
+
+[122/2770] Express Entry consultant Burlington, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 479 domains, 0 emails
+
+[123/2770] H1B lawyer Burlington, ON
+[10590s] ℹ [DDG] Rate limited on "H1B lawyer Burlington, ON" — waiting 30s (attempt 1/3)...
+[10620s] ℹ [DDG] Rate limited on "H1B lawyer Burlington, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 481 domains, 0 emails
+
+[124/2770] deportation defense attorney Burlington, ON
+[10713s] ℹ [DDG] Rate limited on "deportation defense attorney Burlington, ON" — waiting 30s (attempt 1/3)...
+[10743s] ℹ [DDG] Rate limited on "deportation defense attorney Burlington, ON" — waiting 60s (attempt 2/3)...
+[10803s] ⚠ [DDG] Search failed for "deportation defense attorney Burlington, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[10804s] ℹ [DDG] Rate limited on "deportation defense attorney Burlington, ON" — waiting 30s (attempt 1/3)...
+[10834s] ℹ [DDG] Rate limited on "deportation defense attorney Burlington, ON" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 481 domains, 0 emails
+
+[125/2770] asylum lawyer Burlington, ON
+[multi-search] brave rate-limited — backing off 60s
+[10927s] ℹ [DDG] Rate limited on "asylum lawyer Burlington, ON" — waiting 30s (attempt 1/3)...
+[10957s] ℹ [DDG] Rate limited on "asylum lawyer Burlington, ON" — waiting 60s (attempt 2/3)...
+[11018s] ⚠ [DDG] Search failed for "asylum lawyer Burlington, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 482 domains, 0 emails
+
+[126/2770] EB-5 lawyer Burlington, ON
+[multi-search] brave rate-limited — backing off 60s
+[11048s] ℹ [DDG] Rate limited on "EB-5 lawyer Burlington, ON" — waiting 30s (attempt 1/3)...
+[11079s] ℹ [DDG] Rate limited on "EB-5 lawyer Burlington, ON" — waiting 60s (attempt 2/3)...
+[11139s] ⚠ [DDG] Search failed for "EB-5 lawyer Burlington, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 484 domains, 0 emails
+
+[127/2770] skilled worker visa UK Burlington, ON
+[11172s] ℹ [DDG] Rate limited on "skilled worker visa UK Burlington, ON" — waiting 30s (attempt 1/3)...
+[11202s] ℹ [DDG] Rate limited on "skilled worker visa UK Burlington, ON" — waiting 60s (attempt 2/3)...
+[11262s] ⚠ [DDG] Search failed for "skilled worker visa UK Burlington, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 485 domains, 0 emails
+
+[128/2770] 482 visa agent Burlington, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 487 domains, 0 emails
+
+[129/2770] appeals immigration lawyer Burlington, ON
+[11326s] ℹ [DDG] Rate limited on "appeals immigration lawyer Burlington, ON" — waiting 30s (attempt 1/3)...
+[11356s] ℹ [DDG] Rate limited on "appeals immigration lawyer Burlington, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+[11418s] ℹ [DDG] Rate limited on "appeals immigration lawyer Burlington, ON" — waiting 30s (attempt 1/3)...
+[11448s] ℹ [DDG] Rate limited on "appeals immigration lawyer Burlington, ON" — waiting 60s (attempt 2/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 487 domains, 0 emails
+
+[130/2770] citizenship application lawyer Burlington, ON
+[multi-search] brave rate-limited — backing off 60s
+[11539s] ℹ [DDG] Rate limited on "citizenship application lawyer Burlington, ON" — waiting 30s (attempt 1/3)...
+[11570s] ℹ [DDG] Rate limited on "citizenship application lawyer Burlington, ON" — waiting 60s (attempt 2/3)...
+[11630s] ⚠ [DDG] Search failed for "citizenship application lawyer Burlington, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[11630s] ℹ [DDG] Rate limited on "citizenship application lawyer Burlington, ON" — waiting 30s (attempt 1/3)...
+[11661s] ℹ [DDG] Rate limited on "citizenship application lawyer Burlington, ON" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 487 domains, 0 emails
+
+[131/2770] spousal sponsorship lawyer Oakville, ON
+[multi-search] brave rate-limited — backing off 60s
+[11753s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Oakville, ON" — waiting 30s (attempt 1/3)...
+[11783s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Oakville, ON" — waiting 60s (attempt 2/3)...
+[11844s] ⚠ [DDG] Search failed for "spousal sponsorship lawyer Oakville, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 487 domains, 0 emails
+
+[132/2770] Express Entry consultant Oakville, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 492 domains, 0 emails
+
+[133/2770] H1B lawyer Oakville, ON
+[11907s] ℹ [DDG] Rate limited on "H1B lawyer Oakville, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 495 domains, 0 emails
+
+[134/2770] deportation defense attorney Oakville, ON
+[11970s] ℹ [DDG] Rate limited on "deportation defense attorney Oakville, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 495 domains, 0 emails
+
+[135/2770] asylum lawyer Oakville, ON
+[12033s] ℹ [DDG] Rate limited on "asylum lawyer Oakville, ON" — waiting 30s (attempt 1/3)...
+[12063s] ℹ [DDG] Rate limited on "asylum lawyer Oakville, ON" — waiting 60s (attempt 2/3)...
+[12123s] ⚠ [DDG] Search failed for "asylum lawyer Oakville, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[12124s] ℹ [DDG] Rate limited on "asylum lawyer Oakville, ON" — waiting 30s (attempt 1/3)...
+[12154s] ℹ [DDG] Rate limited on "asylum lawyer Oakville, ON" — waiting 60s (attempt 2/3)...
+[12214s] ⚠ [DDG] Search failed for "asylum lawyer Oakville, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 495 domains, 0 emails
+
+[136/2770] EB-5 lawyer Oakville, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 497 domains, 0 emails
+
+[137/2770] skilled worker visa UK Oakville, ON
+[12277s] ℹ [DDG] Rate limited on "skilled worker visa UK Oakville, ON" — waiting 30s (attempt 1/3)...
+[12307s] ℹ [DDG] Rate limited on "skilled worker visa UK Oakville, ON" — waiting 60s (attempt 2/3)...
+[12367s] ⚠ [DDG] Search failed for "skilled worker visa UK Oakville, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 497 domains, 0 emails
+
+[138/2770] 482 visa agent Oakville, ON
+[12400s] ℹ [DDG] Rate limited on "482 visa agent Oakville, ON" — waiting 30s (attempt 1/3)...
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 498 domains, 0 emails
+
+[139/2770] appeals immigration lawyer Oakville, ON
+[multi-search] brave rate-limited — backing off 60s
+[12462s] ℹ [DDG] Rate limited on "appeals immigration lawyer Oakville, ON" — waiting 30s (attempt 1/3)...
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 498 domains, 0 emails
+
+[140/2770] citizenship application lawyer Oakville, ON
+[multi-search] brave rate-limited — backing off 60s
+[12525s] ℹ [DDG] Rate limited on "citizenship application lawyer Oakville, ON" — waiting 30s (attempt 1/3)...
+[12555s] ℹ [DDG] Rate limited on "citizenship application lawyer Oakville, ON" — waiting 60s (attempt 2/3)...
+[12615s] ⚠ [DDG] Search failed for "citizenship application lawyer Oakville, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[12616s] ℹ [DDG] Rate limited on "citizenship application lawyer Oakville, ON" — waiting 30s (attempt 1/3)...
+[12646s] ℹ [DDG] Rate limited on "citizenship application lawyer Oakville, ON" — waiting 60s (attempt 2/3)...
+[12706s] ⚠ [DDG] Search failed for "citizenship application lawyer Oakville, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 498 domains, 0 emails
+
+[141/2770] spousal sponsorship lawyer Richmond Hill, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 501 domains, 0 emails
+
+[142/2770] Express Entry consultant Richmond Hill, ON
+[12769s] ℹ [DDG] Rate limited on "Express Entry consultant Richmond Hill, ON" — waiting 30s (attempt 1/3)...
+[12799s] ℹ [DDG] Rate limited on "Express Entry consultant Richmond Hill, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 503 domains, 0 emails
+
+[143/2770] H1B lawyer Richmond Hill, ON
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 503 domains, 0 emails
+
+[144/2770] deportation defense attorney Richmond Hill, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 508 domains, 0 emails
+
+[145/2770] asylum lawyer Richmond Hill, ON
+[12958s] ℹ [DDG] Rate limited on "asylum lawyer Richmond Hill, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 509 domains, 0 emails
+
+[146/2770] EB-5 lawyer Richmond Hill, ON
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 515 domains, 0 emails
+
+[147/2770] skilled worker visa UK Richmond Hill, ON
+[multi-search] brave rate-limited — backing off 60s
+[13053s] ℹ [DDG] Rate limited on "skilled worker visa UK Richmond Hill, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 517 domains, 0 emails
+
+[148/2770] 482 visa agent Richmond Hill, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 20 domains (via multi-engine)
+  0 verified emails
+  Totals: 524 domains, 0 emails
+
+[149/2770] appeals immigration lawyer Richmond Hill, ON
+[13149s] ℹ [DDG] Rate limited on "appeals immigration lawyer Richmond Hill, ON" — waiting 30s (attempt 1/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 524 domains, 0 emails
+
+[150/2770] citizenship application lawyer Richmond Hill, ON
+[multi-search] brave rate-limited — backing off 60s
+[13211s] ℹ [DDG] Rate limited on "citizenship application lawyer Richmond Hill, ON" — waiting 30s (attempt 1/3)...
+[13241s] ℹ [DDG] Rate limited on "citizenship application lawyer Richmond Hill, ON" — waiting 60s (attempt 2/3)...
+[13301s] ⚠ [DDG] Search failed for "citizenship application lawyer Richmond Hill, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 524 domains, 0 emails
+
+[151/2770] spousal sponsorship lawyer Ajax, ON
+[13333s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Ajax, ON" — waiting 30s (attempt 1/3)...
+[13363s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Ajax, ON" — waiting 60s (attempt 2/3)...
+[13424s] ⚠ [DDG] Search failed for "spousal sponsorship lawyer Ajax, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[13424s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Ajax, ON" — waiting 30s (attempt 1/3)...
+[13454s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Ajax, ON" — waiting 60s (attempt 2/3)...
+[13515s] ⚠ [DDG] Search failed for "spousal sponsorship lawyer Ajax, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 524 domains, 0 emails
+
+[152/2770] Express Entry consultant Ajax, ON
+[multi-search] brave rate-limited — backing off 60s
+[13545s] ℹ [DDG] Rate limited on "Express Entry consultant Ajax, ON" — waiting 30s (attempt 1/3)...
+[13576s] ℹ [DDG] Rate limited on "Express Entry consultant Ajax, ON" — waiting 60s (attempt 2/3)...
+[13636s] ⚠ [DDG] Search failed for "Express Entry consultant Ajax, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 527 domains, 0 emails
+
+[153/2770] H1B lawyer Ajax, ON
+[13668s] ℹ [DDG] Rate limited on "H1B lawyer Ajax, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 530 domains, 0 emails
+
+[154/2770] deportation defense attorney Ajax, ON
+[13731s] ℹ [DDG] Rate limited on "deportation defense attorney Ajax, ON" — waiting 30s (attempt 1/3)...
+[13761s] ℹ [DDG] Rate limited on "deportation defense attorney Ajax, ON" — waiting 60s (attempt 2/3)...
+[13821s] ⚠ [DDG] Search failed for "deportation defense attorney Ajax, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[13822s] ℹ [DDG] Rate limited on "deportation defense attorney Ajax, ON" — waiting 30s (attempt 1/3)...
+[13852s] ℹ [DDG] Rate limited on "deportation defense attorney Ajax, ON" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 531 domains, 0 emails
+
+[155/2770] asylum lawyer Ajax, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 531 domains, 0 emails
+
+[156/2770] EB-5 lawyer Ajax, ON
+[13976s] ℹ [DDG] Rate limited on "EB-5 lawyer Ajax, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 532 domains, 0 emails
+
+[157/2770] skilled worker visa UK Ajax, ON
+[14038s] ℹ [DDG] Rate limited on "skilled worker visa UK Ajax, ON" — waiting 30s (attempt 1/3)...
+[14069s] ℹ [DDG] Rate limited on "skilled worker visa UK Ajax, ON" — waiting 60s (attempt 2/3)...
+[14129s] ⚠ [DDG] Search failed for "skilled worker visa UK Ajax, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[14129s] ℹ [DDG] Rate limited on "skilled worker visa UK Ajax, ON" — waiting 30s (attempt 1/3)...
+[14160s] ℹ [DDG] Rate limited on "skilled worker visa UK Ajax, ON" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 534 domains, 0 emails
+
+[158/2770] 482 visa agent Ajax, ON
+[multi-search] brave rate-limited — backing off 60s
+[14252s] ℹ [DDG] Rate limited on "482 visa agent Ajax, ON" — waiting 30s (attempt 1/3)...
+[14282s] ℹ [DDG] Rate limited on "482 visa agent Ajax, ON" — waiting 60s (attempt 2/3)...
+[14342s] ⚠ [DDG] Search failed for "482 visa agent Ajax, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 535 domains, 0 emails
+
+[159/2770] appeals immigration lawyer Ajax, ON
+[multi-search] brave rate-limited — backing off 60s
+[14373s] ℹ [DDG] Rate limited on "appeals immigration lawyer Ajax, ON" — waiting 30s (attempt 1/3)...
+[14403s] ℹ [DDG] Rate limited on "appeals immigration lawyer Ajax, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+[14465s] ℹ [DDG] Rate limited on "appeals immigration lawyer Ajax, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 535 domains, 0 emails
+
+[160/2770] citizenship application lawyer Ajax, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 535 domains, 0 emails
+
+[161/2770] spousal sponsorship lawyer Whitby, ON
+[14559s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Whitby, ON" — waiting 30s (attempt 1/3)...
+[14589s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Whitby, ON" — waiting 60s (attempt 2/3)...
+[14650s] ⚠ [DDG] Search failed for "spousal sponsorship lawyer Whitby, ON": HTTP 403
+[multi-search] brave rate-limited — backing off 60s
+[14651s] ⚠ [DDG] Search failed for "spousal sponsorship lawyer Whitby, ON": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 535 domains, 0 emails
+
+[162/2770] Express Entry consultant Whitby, ON
+[14681s] ℹ [DDG] Rate limited on "Express Entry consultant Whitby, ON" — waiting 30s (attempt 1/3)...
+[14712s] ℹ [DDG] Rate limited on "Express Entry consultant Whitby, ON" — waiting 60s (attempt 2/3)...
+[14772s] ⚠ [DDG] Search failed for "Express Entry consultant Whitby, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[14773s] ℹ [DDG] Rate limited on "Express Entry consultant Whitby, ON" — waiting 30s (attempt 1/3)...
+[14803s] ℹ [DDG] Rate limited on "Express Entry consultant Whitby, ON" — waiting 60s (attempt 2/3)...
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 536 domains, 0 emails
+
+[163/2770] H1B lawyer Whitby, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 539 domains, 0 emails
+
+[164/2770] deportation defense attorney Whitby, ON
+[14928s] ⚠ [DDG] Search failed for "deportation defense attorney Whitby, ON": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 542 domains, 0 emails
+
+[165/2770] asylum lawyer Whitby, ON
+[multi-search] brave rate-limited — backing off 60s
+[14960s] ⚠ [DDG] Search failed for "asylum lawyer Whitby, ON": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 542 domains, 0 emails
+
+[166/2770] EB-5 lawyer Whitby, ON
+[14992s] ⚠ [DDG] Search failed for "EB-5 lawyer Whitby, ON": HTTP 403
+[14992s] ⚠ [DDG] Search failed for "EB-5 lawyer Whitby, ON": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 542 domains, 0 emails
+
+[167/2770] skilled worker visa UK Whitby, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 543 domains, 0 emails
+
+[168/2770] 482 visa agent Whitby, ON
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 544 domains, 0 emails
+
+[169/2770] appeals immigration lawyer Whitby, ON
+[multi-search] brave rate-limited — backing off 60s
+[15088s] ℹ [DDG] Rate limited on "appeals immigration lawyer Whitby, ON" — waiting 30s (attempt 1/3)...
+[15118s] ℹ [DDG] Rate limited on "appeals immigration lawyer Whitby, ON" — waiting 60s (attempt 2/3)...
+[15179s] ⚠ [DDG] Search failed for "appeals immigration lawyer Whitby, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[15179s] ℹ [DDG] Rate limited on "appeals immigration lawyer Whitby, ON" — waiting 30s (attempt 1/3)...
+[15209s] ℹ [DDG] Rate limited on "appeals immigration lawyer Whitby, ON" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 544 domains, 0 emails
+
+[170/2770] citizenship application lawyer Whitby, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 544 domains, 0 emails
+
+[171/2770] spousal sponsorship lawyer Barrie, ON
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 545 domains, 0 emails
+
+[172/2770] Express Entry consultant Barrie, ON
+[multi-search] brave rate-limited — backing off 60s
+[15367s] ℹ [DDG] Rate limited on "Express Entry consultant Barrie, ON" — waiting 30s (attempt 1/3)...
+[15397s] ℹ [DDG] Rate limited on "Express Entry consultant Barrie, ON" — waiting 60s (attempt 2/3)...
+[15457s] ⚠ [DDG] Search failed for "Express Entry consultant Barrie, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[15458s] ℹ [DDG] Rate limited on "Express Entry consultant Barrie, ON" — waiting 30s (attempt 1/3)...
+[15488s] ℹ [DDG] Rate limited on "Express Entry consultant Barrie, ON" — waiting 60s (attempt 2/3)...
+[15548s] ⚠ [DDG] Search failed for "Express Entry consultant Barrie, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 545 domains, 0 emails
+
+[173/2770] H1B lawyer Barrie, ON
+[multi-search] brave rate-limited — backing off 60s
+[15580s] ℹ [DDG] Rate limited on "H1B lawyer Barrie, ON" — waiting 30s (attempt 1/3)...
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 549 domains, 0 emails
+
+[174/2770] deportation defense attorney Barrie, ON
+[multi-search] brave rate-limited — backing off 60s
+[15642s] ℹ [DDG] Rate limited on "deportation defense attorney Barrie, ON" — waiting 30s (attempt 1/3)...
+[15672s] ℹ [DDG] Rate limited on "deportation defense attorney Barrie, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 553 domains, 0 emails
+
+[175/2770] asylum lawyer Barrie, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 553 domains, 0 emails
+
+[176/2770] EB-5 lawyer Barrie, ON
+[multi-search] brave rate-limited — backing off 60s
+[15797s] ℹ [DDG] Rate limited on "EB-5 lawyer Barrie, ON" — waiting 30s (attempt 1/3)...
+[15828s] ℹ [DDG] Rate limited on "EB-5 lawyer Barrie, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 555 domains, 0 emails
+
+[177/2770] skilled worker visa UK Barrie, ON
+[15920s] ℹ [DDG] Rate limited on "skilled worker visa UK Barrie, ON" — waiting 30s (attempt 1/3)...
+[15951s] ℹ [DDG] Rate limited on "skilled worker visa UK Barrie, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+[16012s] ℹ [DDG] Rate limited on "skilled worker visa UK Barrie, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 557 domains, 0 emails
+
+[178/2770] 482 visa agent Barrie, ON
+[multi-search] brave rate-limited — backing off 60s
+[16074s] ℹ [DDG] Rate limited on "482 visa agent Barrie, ON" — waiting 30s (attempt 1/3)...
+[16104s] ℹ [DDG] Rate limited on "482 visa agent Barrie, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 561 domains, 0 emails
+
+[179/2770] appeals immigration lawyer Barrie, ON
+[16197s] ℹ [DDG] Rate limited on "appeals immigration lawyer Barrie, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 562 domains, 0 emails
+
+[180/2770] citizenship application lawyer Barrie, ON
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 562 domains, 0 emails
+
+[181/2770] spousal sponsorship lawyer Guelph, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 563 domains, 0 emails
+
+[182/2770] Express Entry consultant Guelph, ON
+[16325s] ℹ [DDG] Rate limited on "Express Entry consultant Guelph, ON" — waiting 30s (attempt 1/3)...
+[16356s] ℹ [DDG] Rate limited on "Express Entry consultant Guelph, ON" — waiting 60s (attempt 2/3)...
+[16416s] ⚠ [DDG] Search failed for "Express Entry consultant Guelph, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 565 domains, 0 emails
+
+[183/2770] H1B lawyer Guelph, ON
+[16447s] ℹ [DDG] Rate limited on "H1B lawyer Guelph, ON" — waiting 30s (attempt 1/3)...
+[16477s] ℹ [DDG] Rate limited on "H1B lawyer Guelph, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 565 domains, 0 emails
+
+[184/2770] deportation defense attorney Guelph, ON
+[16570s] ℹ [DDG] Rate limited on "deportation defense attorney Guelph, ON" — waiting 30s (attempt 1/3)...
+[16600s] ℹ [DDG] Rate limited on "deportation defense attorney Guelph, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 569 domains, 0 emails
+
+[185/2770] asylum lawyer Guelph, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 569 domains, 0 emails
+
+[186/2770] EB-5 lawyer Guelph, ON
+[multi-search] brave rate-limited — backing off 60s
+[16726s] ℹ [DDG] Rate limited on "EB-5 lawyer Guelph, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 569 domains, 0 emails
+
+[187/2770] skilled worker visa UK Guelph, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 570 domains, 0 emails
+
+[188/2770] 482 visa agent Guelph, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 571 domains, 0 emails
+
+[189/2770] appeals immigration lawyer Guelph, ON
+[multi-search] brave rate-limited — backing off 60s
+[16853s] ℹ [DDG] Rate limited on "appeals immigration lawyer Guelph, ON" — waiting 30s (attempt 1/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 571 domains, 0 emails
+
+[190/2770] citizenship application lawyer Guelph, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 573 domains, 0 emails
+
+[191/2770] spousal sponsorship lawyer Kingston, ON
+[16948s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Kingston, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 574 domains, 0 emails
+
+[192/2770] Express Entry consultant Kingston, ON
+[17012s] ℹ [DDG] Rate limited on "Express Entry consultant Kingston, ON" — waiting 30s (attempt 1/3)...
+[17042s] ℹ [DDG] Rate limited on "Express Entry consultant Kingston, ON" — waiting 60s (attempt 2/3)...
+[17102s] ⚠ [DDG] Search failed for "Express Entry consultant Kingston, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 579 domains, 0 emails
+
+[193/2770] H1B lawyer Kingston, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 581 domains, 0 emails
+
+[194/2770] deportation defense attorney Kingston, ON
+[17165s] ℹ [DDG] Rate limited on "deportation defense attorney Kingston, ON" — waiting 30s (attempt 1/3)...
+[17196s] ℹ [DDG] Rate limited on "deportation defense attorney Kingston, ON" — waiting 60s (attempt 2/3)...
+[17256s] ⚠ [DDG] Search failed for "deportation defense attorney Kingston, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[17256s] ℹ [DDG] Rate limited on "deportation defense attorney Kingston, ON" — waiting 30s (attempt 1/3)...
+[17287s] ⚠ [DDG] Search failed for "deportation defense attorney Kingston, ON": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 581 domains, 0 emails
+
+[195/2770] asylum lawyer Kingston, ON
+[multi-search] brave rate-limited — backing off 60s
+[17319s] ℹ [DDG] Rate limited on "asylum lawyer Kingston, ON" — waiting 30s (attempt 1/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 581 domains, 0 emails
+
+[196/2770] EB-5 lawyer Kingston, ON
+[multi-search] brave rate-limited — backing off 60s
+[17381s] ⚠ [DDG] Search failed for "EB-5 lawyer Kingston, ON": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 581 domains, 0 emails
+
+[197/2770] skilled worker visa UK Kingston, ON
+[17412s] ℹ [DDG] Rate limited on "skilled worker visa UK Kingston, ON" — waiting 30s (attempt 1/3)...
+[17442s] ℹ [DDG] Rate limited on "skilled worker visa UK Kingston, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+[17504s] ℹ [DDG] Rate limited on "skilled worker visa UK Kingston, ON" — waiting 30s (attempt 1/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 581 domains, 0 emails
+
+[198/2770] 482 visa agent Kingston, ON
+[multi-search] brave rate-limited — backing off 60s
+[17566s] ℹ [DDG] Rate limited on "482 visa agent Kingston, ON" — waiting 30s (attempt 1/3)...
+[17598s] ⚠ [DDG] Search failed for "482 visa agent Kingston, ON": HTTP 403
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 581 domains, 0 emails
+
+[199/2770] appeals immigration lawyer Kingston, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 581 domains, 0 emails
+
+[200/2770] citizenship application lawyer Kingston, ON
+[17662s] ⚠ [DDG] Search failed for "citizenship application lawyer Kingston, ON": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 581 domains, 0 emails
+
+[201/2770] spousal sponsorship lawyer Sudbury, ON
+[multi-search] brave rate-limited — backing off 60s
+[17694s] ⚠ [DDG] Search failed for "spousal sponsorship lawyer Sudbury, ON": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 581 domains, 0 emails
+
+[202/2770] Express Entry consultant Sudbury, ON
+[17725s] ℹ [DDG] Rate limited on "Express Entry consultant Sudbury, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+[17757s] ⚠ [DDG] Search failed for "Express Entry consultant Sudbury, ON": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 584 domains, 0 emails
+
+[203/2770] H1B lawyer Sudbury, ON
+[17788s] ⚠ [DDG] Search failed for "H1B lawyer Sudbury, ON": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 585 domains, 0 emails
+
+[204/2770] deportation defense attorney Sudbury, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 587 domains, 0 emails
+
+[205/2770] asylum lawyer Sudbury, ON
+[17853s] ⚠ [DDG] Search failed for "asylum lawyer Sudbury, ON": HTTP 403
+[17853s] ℹ [DDG] Rate limited on "asylum lawyer Sudbury, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 588 domains, 0 emails
+
+[206/2770] EB-5 lawyer Sudbury, ON
+[multi-search] brave rate-limited — backing off 60s
+[17914s] ℹ [DDG] Rate limited on "EB-5 lawyer Sudbury, ON" — waiting 30s (attempt 1/3)...
+[17946s] ℹ [DDG] Rate limited on "EB-5 lawyer Sudbury, ON" — waiting 30s (attempt 1/3)...
+[17976s] ℹ [DDG] Rate limited on "EB-5 lawyer Sudbury, ON" — waiting 60s (attempt 2/3)...
+[18036s] ⚠ [DDG] Search failed for "EB-5 lawyer Sudbury, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 588 domains, 0 emails
+
+[207/2770] skilled worker visa UK Sudbury, ON
+[multi-search] brave rate-limited — backing off 60s
+[18067s] ℹ [DDG] Rate limited on "skilled worker visa UK Sudbury, ON" — waiting 30s (attempt 1/3)...
+[18097s] ℹ [DDG] Rate limited on "skilled worker visa UK Sudbury, ON" — waiting 60s (attempt 2/3)...
+[18157s] ⚠ [DDG] Search failed for "skilled worker visa UK Sudbury, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 7 domains (via multi-engine)
+  0 verified emails
+  Totals: 588 domains, 0 emails
+
+[208/2770] 482 visa agent Sudbury, ON
+[18189s] ℹ [DDG] Rate limited on "482 visa agent Sudbury, ON" — waiting 30s (attempt 1/3)...
+[18220s] ℹ [DDG] Rate limited on "482 visa agent Sudbury, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+[18306s] ℹ [DDG] Rate limited on "482 visa agent Sudbury, ON" — waiting 30s (attempt 1/3)...
+[18336s] ℹ [DDG] Rate limited on "482 visa agent Sudbury, ON" — waiting 60s (attempt 2/3)...
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 590 domains, 0 emails
+
+[209/2770] appeals immigration lawyer Sudbury, ON
+[multi-search] brave rate-limited — backing off 60s
+[18428s] ℹ [DDG] Rate limited on "appeals immigration lawyer Sudbury, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 590 domains, 0 emails
+
+[210/2770] citizenship application lawyer Sudbury, ON
+[multi-search] brave rate-limited — backing off 60s
+[18492s] ℹ [DDG] Rate limited on "citizenship application lawyer Sudbury, ON" — waiting 30s (attempt 1/3)...
+[18522s] ℹ [DDG] Rate limited on "citizenship application lawyer Sudbury, ON" — waiting 60s (attempt 2/3)...
+[18582s] ⚠ [DDG] Search failed for "citizenship application lawyer Sudbury, ON": HTTP 202
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 590 domains, 0 emails
+
+[211/2770] spousal sponsorship lawyer Thunder Bay, ON
+[multi-search] brave rate-limited — backing off 60s
+[18613s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Thunder Bay, ON" — waiting 30s (attempt 1/3)...
+[18643s] ℹ [DDG] Rate limited on "spousal sponsorship lawyer Thunder Bay, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 591 domains, 0 emails
+
+[212/2770] Express Entry consultant Thunder Bay, ON
+[18736s] ℹ [DDG] Rate limited on "Express Entry consultant Thunder Bay, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 594 domains, 0 emails
+
+[213/2770] H1B lawyer Thunder Bay, ON
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 595 domains, 0 emails
+
+[214/2770] deportation defense attorney Thunder Bay, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 598 domains, 0 emails
+
+[215/2770] asylum lawyer Thunder Bay, ON
+[18868s] ℹ [DDG] Rate limited on "asylum lawyer Thunder Bay, ON" — waiting 30s (attempt 1/3)...
+[18898s] ℹ [DDG] Rate limited on "asylum lawyer Thunder Bay, ON" — waiting 60s (attempt 2/3)...
+[18958s] ⚠ [DDG] Search failed for "asylum lawyer Thunder Bay, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 598 domains, 0 emails
+
+[216/2770] EB-5 lawyer Thunder Bay, ON
+[multi-search] brave rate-limited — backing off 60s
+[18989s] ℹ [DDG] Rate limited on "EB-5 lawyer Thunder Bay, ON" — waiting 30s (attempt 1/3)...

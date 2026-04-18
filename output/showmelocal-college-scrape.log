@@ -1,0 +1,19 @@
+[23:34:43] ============================================================
+[23:34:43] ShowMeLocal.com College Admissions Consultants Scraper
+[23:34:43] ============================================================
+[23:34:43] States: 51 | Searches remaining: 1473
+[23:34:43] Category slugs: 6 | Search terms: 5
+[23:34:43] Max pages per search: 10 | Test: false
+[23:34:43] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/college-consultants-showmelocal.csv
+[23:34:43] Progress: /Users/fardeenchoudhury/mortar-lead-scraper/output/showmelocal-college-progress.json
+[23:34:43] 
+[23:34:43] Warming up: fetching homepage for cookies...
+[23:34:43]   Cookies established: 1 cookies
+[23:34:48] [1/1473] CATEGORY "educational-consultant" in AL (Birmingham)
+[23:34:48]   CAPTCHA detected — ShowMeLocal blocked this request
+[23:34:53] [2/1473] CATEGORY "educational-consultant" in AL (Huntsville)
+[23:34:53]   CAPTCHA detected — ShowMeLocal blocked this request
+[23:34:57] [3/1473] CATEGORY "educational-consultant" in AL (Mobile)
+[23:34:57]   CAPTCHA detected — ShowMeLocal blocked this request
+[23:35:01] [4/1473] CATEGORY "educational-consultant" in AL (Montgomery)
+[23:35:02]   CAPTCHA detected — ShowMeLocal blocked this request

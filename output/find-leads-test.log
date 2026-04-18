@@ -1,0 +1,31 @@
+=== find-leads: "immigration consultant" in "Miami FL" (target 50) ===
+Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/find-leads_immigration-consultant_miami-fl.csv
+
+[Stage 1] Discovery (DuckDuckGo)
+  [DDG 1/4] immigration consultant in Miami FL
+[0s] ℹ [DDG] Searching: "immigration consultant in Miami FL"
+  [DDG 2/4] site:yelp.com "immigration consultant" "Miami FL"
+[13s] ℹ [DDG] Searching: "site:yelp.com "immigration consultant" "Miami FL""
+  [DDG 3/4] site:bbb.org "immigration consultant" "Miami FL"
+[22s] ℹ [DDG] Searching: "site:bbb.org "immigration consultant" "Miami FL""
+  [DDG 4/4] "immigration consultant" "Miami FL" phone email
+[32s] ℹ [DDG] Searching: ""immigration consultant" "Miami FL" phone email"
+[32s] ℹ [DDG] Rate limited on ""immigration consultant" "Miami FL" phone email" — waiting 8s (attempt 1/3)...
+[40s] ℹ [DDG] Rate limited on ""immigration consultant" "Miami FL" phone email" — waiting 16s (attempt 2/3)...
+[56s] ⚠ [DDG] Search failed for ""immigration consultant" "Miami FL" phone email": HTTP 202
+[56s] ℹ [DDG] Found 7 businesses for "immigration consultant" in "Miami FL"
+  [Stage 1] 7 unique domains in 56s
+
+[Stage 2] Skipped (--no-people). Using generic email (info@, contact@) per domain.
+
+[Stage 3] Email waterfall on 7 candidates
+  [7/7] verified=1 catchall=0 not_found=6 (3m 4s)
+  [Stage 3] 1 verified, 0 catch-all, 6 not found in 3m 4s
+
+=== DONE ===
+Time:         4m 0s
+Businesses:   7
+People:       7
+With email:   1
+Verified(70+): 1
+CSV:          /Users/fardeenchoudhury/mortar-lead-scraper/output/find-leads_immigration-consultant_miami-fl.csv

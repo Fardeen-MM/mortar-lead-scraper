@@ -1,0 +1,152 @@
+=== Immigration Podcast Host Harvester ===
+Mode: FULL
+Keywords: 28, Countries: 15
+
+=== Phase 1: iTunes Search (28 keywords × 15 countries) ===
+  [10/420] immigration (ph): 100 results, 214 unique feeds so far
+  [20/420] visa (nz): 98 results, 319 unique feeds so far
+  [30/420] visa (hk): 98 results, 320 unique feeds so far
+  [40/420] green card (ph): 14 results, 332 unique feeds so far
+  [50/420] citizenship (nz): 98 results, 423 unique feeds so far
+  [60/420] citizenship (hk): 98 results, 423 unique feeds so far
+  [70/420] move to canada (ph): 9 results, 431 unique feeds so far
+  [80/420] move to usa (nz): 99 results, 549 unique feeds so far
+  [90/420] move to usa (hk): 99 results, 551 unique feeds so far
+  [100/420] move to uk (ph): 5 results, 578 unique feeds so far
+  [110/420] move to australia (nz): 8 results, 585 unique feeds so far
+  [120/420] move to australia (hk): 8 results, 585 unique feeds so far
+  [130/420] express entry (ph): 1 results, 586 unique feeds so far
+  [140/420] permanent residency (nz): 99 results, 697 unique feeds so far
+  [150/420] permanent residency (hk): 99 results, 697 unique feeds so far
+  [160/420] PR canada (ph): 97 results, 788 unique feeds so far
+  [170/420] study abroad (nz): 70 results, 857 unique feeds so far
+  [180/420] study abroad (hk): 70 results, 857 unique feeds so far
+  [190/420] international student (ph): 91 results, 943 unique feeds so far
+  [200/420] study in canada (nz): 10 results, 952 unique feeds so far
+  [210/420] study in canada (hk): 10 results, 952 unique feeds so far
+  [220/420] migrate (ph): 100 results, 1115 unique feeds so far
+  [230/420] migration (nz): 100 results, 1133 unique feeds so far
+  [240/420] migration (hk): 100 results, 1134 unique feeds so far
+  [250/420] expat life (ph): 25 results, 1158 unique feeds so far
+  [260/420] work visa (nz): 3 results, 1170 unique feeds so far
+  [270/420] work visa (hk): 3 results, 1171 unique feeds so far
+  [280/420] H1B (ph): 7 results, 1177 unique feeds so far
+  ERROR H1B/sg: read EADDRNOTAVAIL
+  ERROR H1B/hk: getaddrinfo ENOTFOUND itunes.apple.com
+  ERROR skilled worker visa/us: getaddrinfo ENOTFOUND itunes.apple.com
+  [290/420] skilled worker visa (nz): 94 results, 1260 unique feeds so far
+  ERROR skilled worker visa/ie: read EADDRNOTAVAIL
+  [300/420] skilled worker visa (hk): 94 results, 1261 unique feeds so far
+  [310/420] IELTS (ph): 98 results, 1368 unique feeds so far
+  [320/420] TOEFL (nz): 16 results, 1382 unique feeds so far
+  [330/420] TOEFL (hk): 16 results, 1382 unique feeds so far
+  [340/420] language test (ph): 51 results, 1425 unique feeds so far
+  [350/420] NCLEX (nz): 22 results, 1446 unique feeds so far
+  [360/420] NCLEX (hk): 22 results, 1446 unique feeds so far
+  [370/420] nursing abroad (ph): 95 results, 1529 unique feeds so far
+  [380/420] credential evaluation (nz): 95 results, 1615 unique feeds so far
+  [390/420] credential evaluation (hk): 95 results, 1615 unique feeds so far
+  [400/420] digital nomad (ph): 98 results, 1711 unique feeds so far
+  [410/420] living abroad (nz): 31 results, 1732 unique feeds so far
+  [420/420] living abroad (hk): 31 results, 1732 unique feeds so far
+
+Phase 1 complete: 1732 unique podcast feeds discovered
+Saved feed list to /Users/fardeenchoudhury/mortar-lead-scraper/output/immigration-podcast-feeds.json
+
+=== Phase 2: Parsing 1732 RSS feeds ===
+  [25/1732] emails=16 errors=1 rate=125/min ~819s left
+  [50/1732] emails=38 errors=1 rate=86/min ~1173s left
+  [75/1732] emails=60 errors=1 rate=88/min ~1130s left
+  [100/1732] emails=79 errors=1 rate=94/min ~1042s left
+  [125/1732] emails=100 errors=1 rate=88/min ~1096s left
+  [150/1732] emails=122 errors=1 rate=95/min ~999s left
+  [175/1732] emails=145 errors=1 rate=101/min ~925s left
+  [200/1732] emails=168 errors=1 rate=103/min ~892s left
+  [225/1732] emails=191 errors=1 rate=105/min ~861s left
+  [250/1732] emails=212 errors=1 rate=106/min ~839s left
+  [275/1732] emails=233 errors=1 rate=107/min ~817s left
+  [300/1732] emails=254 errors=3 rate=108/min ~796s left
+  [325/1732] emails=278 errors=3 rate=110/min ~767s left
+  [350/1732] emails=299 errors=3 rate=107/min ~775s left
+  [375/1732] emails=318 errors=5 rate=109/min ~747s left
+  [400/1732] emails=339 errors=7 rate=104/min ~768s left
+  [425/1732] emails=362 errors=7 rate=106/min ~740s left
+  [450/1732] emails=386 errors=7 rate=105/min ~733s left
+  [475/1732] emails=409 errors=7 rate=103/min ~732s left
+  [500/1732] emails=430 errors=7 rate=98/min ~754s left
+  [525/1732] emails=450 errors=7 rate=98/min ~739s left
+  [550/1732] emails=469 errors=7 rate=98/min ~724s left
+  [575/1732] emails=488 errors=7 rate=98/min ~708s left
+  [600/1732] emails=510 errors=7 rate=97/min ~700s left
+  [625/1732] emails=534 errors=7 rate=94/min ~707s left
+  [650/1732] emails=555 errors=7 rate=92/min ~706s left
+  [675/1732] emails=577 errors=8 rate=82/min ~773s left
+  [700/1732] emails=594 errors=9 rate=82/min ~755s left
+  [725/1732] emails=612 errors=9 rate=82/min ~737s left
+  [750/1732] emails=632 errors=9 rate=83/min ~710s left
+  [775/1732] emails=651 errors=9 rate=83/min ~692s left
+  [800/1732] emails=671 errors=9 rate=84/min ~666s left
+  [825/1732] emails=693 errors=9 rate=84/min ~648s left
+  [850/1732] emails=715 errors=9 rate=85/min ~623s left
+  [875/1732] emails=735 errors=9 rate=85/min ~605s left
+  [900/1732] emails=759 errors=9 rate=86/min ~580s left
+  [925/1732] emails=779 errors=9 rate=86/min ~563s left
+  [950/1732] emails=800 errors=10 rate=85/min ~552s left
+  [975/1732] emails=817 errors=10 rate=86/min ~528s left
+  [1000/1732] emails=839 errors=10 rate=86/min ~511s left
+  [1025/1732] emails=858 errors=10 rate=86/min ~493s left
+  [1050/1732] emails=877 errors=11 rate=86/min ~476s left
+  [1075/1732] emails=897 errors=11 rate=86/min ~458s left
+  [1100/1732] emails=918 errors=11 rate=87/min ~436s left
+  [1125/1732] emails=942 errors=11 rate=87/min ~419s left
+  [1150/1732] emails=964 errors=12 rate=87/min ~401s left
+  [1175/1732] emails=984 errors=13 rate=87/min ~384s left
+  [1200/1732] emails=1001 errors=14 rate=87/min ~367s left
+  [1225/1732] emails=1021 errors=14 rate=87/min ~350s left
+  [1250/1732] emails=1036 errors=16 rate=88/min ~329s left
+  [1275/1732] emails=1056 errors=18 rate=85/min ~323s left
+  [1300/1732] emails=1077 errors=18 rate=86/min ~301s left
+  [1325/1732] emails=1100 errors=18 rate=87/min ~281s left
+  [1350/1732] emails=1124 errors=19 rate=87/min ~263s left
+  [1375/1732] emails=1148 errors=19 rate=88/min ~243s left
+  [1400/1732] emails=1169 errors=20 rate=88/min ~226s left
+  [1425/1732] emails=1192 errors=22 rate=87/min ~212s left
+  [1450/1732] emails=1216 errors=23 rate=86/min ~197s left
+  [1475/1732] emails=1233 errors=23 rate=86/min ~179s left
+  [1500/1732] emails=1250 errors=24 rate=86/min ~162s left
+  [1525/1732] emails=1271 errors=25 rate=86/min ~144s left
+  [1550/1732] emails=1290 errors=25 rate=86/min ~127s left
+  [1575/1732] emails=1307 errors=25 rate=86/min ~110s left
+  [1600/1732] emails=1327 errors=25 rate=86/min ~92s left
+  [1625/1732] emails=1345 errors=25 rate=86/min ~75s left
+  [1650/1732] emails=1364 errors=25 rate=86/min ~57s left
+  [1675/1732] emails=1384 errors=25 rate=86/min ~40s left
+  [1700/1732] emails=1406 errors=27 rate=87/min ~22s left
+  [1725/1732] emails=1427 errors=27 rate=87/min ~5s left
+  [1732/1732] emails=1434 errors=27 rate=87/min ~0s left
+
+Phase 2 complete: 1434 emails from 1732 feeds (27 errors)
+
+=== RESULTS ===
+Total feeds:   1732
+With email:    1434 (83%)
+Unique domains: 457
+
+Top keywords by lead count:
+  immigration: 185
+  migrate: 134
+  move to usa: 103
+  IELTS: 96
+  permanent residency: 93
+  visa: 89
+  digital nomad: 78
+  citizenship: 76
+  international student: 73
+  PR canada: 68
+  credential evaluation: 64
+  study abroad: 62
+  nursing abroad: 62
+  skilled worker visa: 59
+  language test: 38
+
+Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/immigration-podcast-hosts.csv

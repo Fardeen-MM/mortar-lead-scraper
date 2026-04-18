@@ -1,0 +1,13 @@
+{
+  "new-york-ny": {
+    "status": "done",
+    "city": "New York, NY",
+    "leads": 72,
+    "emails": 51,
+    "phones": 49,
+    "persons": 32,
+    "decisionMakers": 20,
+    "elapsed": 2413,
+    "timestamp": "2026-03-02T17:53:00.779Z"
+  }
+}

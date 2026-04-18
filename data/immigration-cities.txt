@@ -1,0 +1,63 @@
+# Top 50 immigration-destination cities worldwide
+# Canada
+Toronto, ON
+Vancouver, BC
+Calgary, AB
+Montreal, QC
+Edmonton, AB
+Ottawa, ON
+Winnipeg, MB
+Mississauga, ON
+Brampton, ON
+Surrey, BC
+Hamilton, ON
+Saskatoon, SK
+Halifax, NS
+London, ON
+Markham, ON
+
+# United States
+New York, NY
+Los Angeles, CA
+Chicago, IL
+Houston, TX
+Miami, FL
+San Francisco, CA
+Boston, MA
+Seattle, WA
+Washington, DC
+Atlanta, GA
+Dallas, TX
+Philadelphia, PA
+San Diego, CA
+Phoenix, AZ
+Austin, TX
+Denver, CO
+San Jose, CA
+Minneapolis, MN
+
+# United Kingdom
+London, UK
+Manchester, UK
+Birmingham, UK
+Glasgow, Scotland
+Edinburgh, Scotland
+Leeds, UK
+Bristol, UK
+Liverpool, UK
+
+# Australia
+Sydney, NSW
+Melbourne, VIC
+Brisbane, QLD
+Perth, WA
+Adelaide, SA
+Gold Coast, QLD
+
+# Other destinations
+Dublin, Ireland
+Auckland, New Zealand
+Wellington, New Zealand
+Dubai, UAE
+Singapore
+Hong Kong

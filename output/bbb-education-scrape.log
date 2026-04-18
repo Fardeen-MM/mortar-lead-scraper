@@ -1,0 +1,2445 @@
+[19:23:03] BBB.org Education Services Scraper
+[19:23:03] Categories: 186 (51 US states + 11 CA provinces x 3 categories)
+[19:23:03] Remaining: 186 | Existing leads: 0
+[19:23:03] Max pages per category: 15
+[19:23:03] Profile enrichment: YES
+[19:23:03] Delays: 3-5s between requests
+[19:23:03] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/education-services-bbb.csv
+[19:23:03] 
+[19:23:03] [1/186] US/AK educational-consultant
+[19:23:04]   10 total results (up to 1 pages)
+[19:23:04]   Page 1: 7 listings, 7 new
+[19:23:04]   Subtotal: 7 listings, 7 new
+[19:23:07] [2/186] US/AL educational-consultant
+[19:23:08]   76 total results (up to 6 pages)
+[19:23:08]   Page 1: 15 listings, 15 new
+[19:23:13]   Page 2: 15 listings, 15 new
+[19:23:18]   Page 3: 15 listings, 14 new
+[19:23:23]   Page 4: 15 listings, 9 new
+[19:23:28]   Page 5: 15 listings, 12 new
+[19:23:32]   Page 6: 1 listings, 0 new
+[19:23:32]   Subtotal: 76 listings, 65 new
+[19:23:36] [3/186] US/AR educational-consultant
+[19:23:37]   23 total results (up to 2 pages)
+[19:23:37]   Page 1: 12 listings, 12 new
+[19:23:41]   Page 2: 7 listings, 5 new
+[19:23:41]   Subtotal: 19 listings, 17 new
+[19:23:45] [4/186] US/AZ educational-consultant
+[19:23:46]   197 total results (up to 14 pages)
+[19:23:46]   Page 1: 14 listings, 14 new
+[19:23:49]   Page 2: 14 listings, 10 new
+[19:23:54]   Page 3: 15 listings, 14 new
+[19:23:59]   Page 4: 15 listings, 15 new
+[19:24:04]   Page 5: 15 listings, 15 new
+[19:24:08]   Page 6: 14 listings, 13 new
+[19:24:13]   Page 7: 14 listings, 13 new
+[19:24:17]   Page 8: 15 listings, 15 new
+[19:24:22]   Page 9: 15 listings, 14 new
+[19:24:26]   Page 10: 15 listings, 5 new
+[19:24:30]   Page 11: 14 listings, 0 new
+[19:24:35]   Page 12: 15 listings, 3 new
+[19:24:41]   Page 13: 14 listings, 11 new
+[19:24:46]   Page 14: 2 listings, 1 new
+[19:24:46]   Subtotal: 191 listings, 143 new
+[19:24:50] [5/186] US/CA educational-consultant
+[19:24:51]   547 total results (up to 15 pages)
+[19:24:51]   Page 1: 14 listings, 14 new
+[19:24:56]   Page 2: 15 listings, 14 new
+[19:25:00]   Page 3: 15 listings, 13 new
+[19:25:04]   Page 4: 14 listings, 12 new
+[19:25:08]   Page 5: 15 listings, 14 new
+[19:25:13]   Page 6: 14 listings, 14 new
+[19:25:18]   Page 7: 15 listings, 14 new
+[19:25:23]   Page 8: 13 listings, 12 new
+[19:25:27]   Page 9: 14 listings, 14 new
+[19:25:32]   Page 10: 14 listings, 14 new
+[19:25:37]   Page 11: 14 listings, 13 new
+[19:25:42]   Page 12: 14 listings, 14 new
+[19:25:47]   Page 13: 15 listings, 14 new
+[19:25:51]   Page 14: 13 listings, 11 new
+[19:25:56]   Page 15: 16 listings, 15 new
+[19:25:56]   Subtotal: 215 listings, 202 new
+[19:25:56]   [Progress saved: 434 leads]
+[19:26:00] [6/186] US/CO educational-consultant
+[19:26:01]   110 total results (up to 8 pages)
+[19:26:01]   Page 1: 14 listings, 14 new
+[19:26:06]   Page 2: 14 listings, 14 new
+[19:26:11]   Page 3: 15 listings, 15 new
+[19:26:16]   Page 4: 14 listings, 14 new
+[19:26:21]   Page 5: 14 listings, 13 new
+[19:26:26]   Page 6: 14 listings, 1 new
+[19:26:30]   Page 7: 13 listings, 2 new
+[19:26:35]   Page 8: 5 listings, 5 new
+[19:26:35]   Subtotal: 103 listings, 78 new
+[19:26:40] [7/186] US/CT educational-consultant
+[19:26:40]   56 total results (up to 4 pages)
+[19:26:40]   Page 1: 13 listings, 13 new
+[19:26:45]   Page 2: 14 listings, 13 new
+[19:26:50]   Page 3: 15 listings, 14 new
+[19:26:54]   Page 4: 11 listings, 8 new
+[19:26:54]   Subtotal: 53 listings, 48 new
+[19:26:59] [8/186] US/DC educational-consultant
+[19:26:59]   25 total results (up to 2 pages)
+[19:26:59]   Page 1: 13 listings, 13 new
+[19:27:04]   Page 2: 11 listings, 9 new
+[19:27:04]   Subtotal: 24 listings, 22 new
+[19:27:07] [9/186] US/DE educational-consultant
+[19:27:08]   34 total results (up to 3 pages)
+[19:27:08]   Page 1: 13 listings, 13 new
+[19:27:16]   Page 2: 12 listings, 9 new
+[19:27:22]   Page 3: 4 listings, 0 new
+[19:27:22]   Subtotal: 29 listings, 22 new
+[19:27:26] [10/186] US/FL educational-consultant
+[19:27:27]   284 total results (up to 15 pages)
+[19:27:27]   Page 1: 15 listings, 15 new
+[19:27:32]   Page 2: 15 listings, 14 new
+[19:27:36]   Page 3: 15 listings, 12 new
+[19:27:40]   Page 4: 16 listings, 10 new
+[19:27:43]   Page 5: 15 listings, 15 new
+[19:27:48]   Page 6: 13 listings, 13 new
+[19:27:53]   Page 7: 15 listings, 14 new
+[19:27:57]   Page 8: 14 listings, 13 new
+[19:28:01]   Page 9: 15 listings, 14 new
+[19:28:06]   Page 10: 15 listings, 15 new
+[19:28:10]   Page 11: 14 listings, 14 new
+[19:28:15]   Page 12: 13 listings, 11 new
+[19:28:20]   Page 13: 13 listings, 12 new
+[19:28:24]   Page 14: 14 listings, 12 new
+[19:28:29]   Page 15: 14 listings, 0 new
+[19:28:29]   Subtotal: 216 listings, 184 new
+[19:28:29]   [Progress saved: 788 leads]
+[19:28:33] [11/186] US/GA educational-consultant
+[19:28:34]   226 total results (up to 15 pages)
+[19:28:34]   Page 1: 12 listings, 12 new
+[19:28:37]   Page 2: 15 listings, 11 new
+[19:28:41]   Page 3: 15 listings, 15 new
+[19:28:46]   Page 4: 15 listings, 15 new
+[19:28:50]   Page 5: 15 listings, 14 new
+[19:28:54]   Page 6: 16 listings, 16 new
+[19:28:59]   Page 7: 13 listings, 11 new
+[19:29:04]   Page 8: 15 listings, 15 new
+[19:29:09]   Page 9: 15 listings, 14 new
+[19:29:14]   Page 10: 16 listings, 15 new
+[19:29:19]   Page 11: 14 listings, 11 new
+[19:29:26]   Page 12: 14 listings, 9 new
+[19:29:30]   Page 13: 14 listings, 11 new
+[19:29:34]   Page 14: 15 listings, 2 new
+[19:29:40]   Page 15: 14 listings, 10 new
+[19:29:40]   Subtotal: 218 listings, 181 new
+[19:29:44] [12/186] US/HI educational-consultant
+[19:29:45]   51 total results (up to 4 pages)
+[19:29:45]   Page 1: 13 listings, 13 new
+[19:29:49]   Page 2: 13 listings, 11 new
+[19:29:53]   Page 3: 13 listings, 2 new
+[19:29:58]   Page 4: 6 listings, 6 new
+[19:29:58]   Subtotal: 45 listings, 32 new
+[19:30:01] [13/186] US/IA educational-consultant
+[19:30:02]   3 total results (up to 1 pages)
+[19:30:02]   Page 1: 4 listings, 3 new
+[19:30:02]   Subtotal: 4 listings, 3 new
+[19:30:06] [14/186] US/ID educational-consultant
+[19:30:07]   24 total results (up to 2 pages)
+[19:30:07]   Page 1: 14 listings, 13 new
+[19:30:10]   Page 2: 9 listings, 5 new
+[19:30:10]   Subtotal: 23 listings, 18 new
+[19:30:15] [15/186] US/IL educational-consultant
+[19:30:16]   194 total results (up to 13 pages)
+[19:30:16]   Page 1: 15 listings, 14 new
+[19:30:20]   Page 2: 16 listings, 8 new
+[19:30:24]   Page 3: 14 listings, 14 new
+[19:30:28]   Page 4: 14 listings, 14 new
+[19:30:32]   Page 5: 13 listings, 12 new
+[19:30:37]   Page 6: 14 listings, 12 new
+[19:30:42]   Page 7: 15 listings, 14 new
+[19:30:47]   Page 8: 15 listings, 13 new
+[19:30:51]   Page 9: 14 listings, 13 new
+[19:30:55]   Page 10: 14 listings, 1 new
+[19:31:01]   Page 11: 15 listings, 11 new
+[19:31:07]   Page 12: 15 listings, 1 new
+[19:31:12]   Page 13: 13 listings, 7 new
+[19:31:12]   Subtotal: 187 listings, 134 new
+[19:31:12]   [Progress saved: 1156 leads]
+[19:31:15] [16/186] US/IN educational-consultant
+[19:31:16]   57 total results (up to 4 pages)
+[19:31:16]   Page 1: 15 listings, 14 new
+[19:31:21]   Page 2: 13 listings, 13 new
+[19:31:25]   Page 3: 15 listings, 14 new
+[19:31:29]   Page 4: 12 listings, 0 new
+[19:31:29]   Subtotal: 55 listings, 41 new
+[19:31:33] [17/186] US/KS educational-consultant
+[19:31:34]   22 total results (up to 2 pages)
+[19:31:34]   Page 1: 16 listings, 15 new
+[19:31:39]   Page 2: 6 listings, 3 new
+[19:31:39]   Subtotal: 22 listings, 18 new
+[19:31:43] [18/186] US/KY educational-consultant
+[19:31:44]   23 total results (up to 2 pages)
+[19:31:44]   Page 1: 16 listings, 15 new
+[19:31:48]   Page 2: 8 listings, 1 new
+[19:31:48]   Subtotal: 24 listings, 16 new
+[19:31:51] [19/186] US/LA educational-consultant
+[19:31:51]   32 total results (up to 3 pages)
+[19:31:51]   Page 1: 14 listings, 13 new
+[19:31:56]   Page 2: 14 listings, 12 new
+[19:32:01]   Page 3: 2 listings, 0 new
+[19:32:01]   Subtotal: 30 listings, 25 new
+[19:32:04] [20/186] US/MA educational-consultant
+[19:32:05]   281 total results (up to 15 pages)
+[19:32:05]   Page 1: 13 listings, 12 new
+[19:32:10]   Page 2: 15 listings, 14 new
+[19:32:14]   Page 3: 15 listings, 15 new
+[19:32:17]   Page 4: 13 listings, 13 new
+[19:32:22]   Page 5: 14 listings, 14 new
+[19:32:26]   Page 6: 14 listings, 14 new
+[19:32:31]   Page 7: 14 listings, 14 new
+[19:32:36]   Page 8: 15 listings, 15 new
+[19:32:40]   Page 9: 13 listings, 12 new
+[19:32:45]   Page 10: 15 listings, 13 new
+[19:32:49]   Page 11: 11 listings, 7 new
+[19:32:54]   Page 12: 15 listings, 14 new
+[19:32:57]   Page 13: 15 listings, 11 new
+[19:33:02]   Page 14: 15 listings, 0 new
+[19:33:08]   Page 15: 15 listings, 14 new
+[19:33:08]   Subtotal: 212 listings, 182 new
+[19:33:08]   [Progress saved: 1438 leads]
+[19:33:12] [21/186] US/MD educational-consultant
+[19:33:13]   110 total results (up to 8 pages)
+[19:33:13]   Page 1: 10 listings, 10 new
+[19:33:19]   Page 2: 12 listings, 12 new
+[19:33:22]   Page 3: 13 listings, 11 new
+[19:33:27]   Page 4: 14 listings, 12 new
+[19:33:31]   Page 5: 14 listings, 10 new
+[19:33:36]   Page 6: 12 listings, 6 new
+[19:33:41]   Page 7: 15 listings, 2 new
+[19:33:45]   Page 8: 5 listings, 5 new
+[19:33:45]   Subtotal: 95 listings, 68 new
+[19:33:49] [22/186] US/ME educational-consultant
+[19:33:49]   25 total results (up to 2 pages)
+[19:33:49]   Page 1: 15 listings, 15 new
+[19:33:54]   Page 2: 10 listings, 4 new
+[19:33:54]   Subtotal: 25 listings, 19 new
+[19:33:57] [23/186] US/MI educational-consultant
+[19:33:58]   85 total results (up to 6 pages)
+[19:33:58]   Page 1: 14 listings, 13 new
+[19:34:03]   Page 2: 15 listings, 15 new
+[19:34:08]   Page 3: 15 listings, 15 new
+[19:34:11]   Page 4: 14 listings, 14 new
+[19:34:16]   Page 5: 15 listings, 14 new
+[19:34:20]   Page 6: 10 listings, 7 new
+[19:34:20]   Subtotal: 83 listings, 78 new
+[19:34:25] [24/186] US/MN educational-consultant
+[19:34:25]   110 total results (up to 8 pages)
+[19:34:25]   Page 1: 13 listings, 12 new
+[19:34:31]   Page 2: 13 listings, 12 new
+[19:34:36]   Page 3: 15 listings, 15 new
+[19:34:56]   Page 4: 14 listings, 11 new
+[19:35:00]   Page 5: 14 listings, 11 new
+[19:35:04]   Page 6: 14 listings, 11 new
+[19:35:08]   Page 7: 13 listings, 10 new
+[19:35:13]   Page 8: 5 listings, 0 new
+[19:35:13]   Subtotal: 101 listings, 82 new
+[19:35:16] [25/186] US/MO educational-consultant
+[19:35:17]   81 total results (up to 6 pages)
+[19:35:17]   Page 1: 16 listings, 15 new
+[19:39:27]   Request error: read EADDRNOTAVAIL, retrying...
+[19:56:04]   Request error: getaddrinfo ENOTFOUND www.bbb.org, retrying...
+[19:56:09]   Request error: getaddrinfo ENOTFOUND www.bbb.org, retrying...
+[19:56:17]   Page 2: 13 listings, 12 new
+[19:56:22]   Page 3: 14 listings, 13 new
+[19:56:28]   Page 4: 15 listings, 10 new
+[19:56:31]   Page 5: 14 listings, 6 new
+[19:56:36]   Page 6: 6 listings, 5 new
+[19:56:36]   Subtotal: 78 listings, 61 new
+[19:56:38]   [Progress saved: 1746 leads]
+[19:57:04] [26/186] US/MS educational-consultant
+[19:57:05]   32 total results (up to 3 pages)
+[19:57:05]   Page 1: 14 listings, 14 new
+[19:57:09]   Page 2: 15 listings, 13 new
+[19:57:12]   Page 3: 2 listings, 0 new
+[19:57:12]   Subtotal: 31 listings, 27 new
+[19:57:16] [27/186] US/MT educational-consultant
+[19:57:17]   18 total results (up to 2 pages)
+[19:57:17]   Page 1: 12 listings, 11 new
+[19:59:30]   Page 2: 2 listings, 0 new
+[19:59:30]   Subtotal: 14 listings, 11 new
+[19:59:33] [28/186] US/NC educational-consultant
+[19:59:34]   174 total results (up to 12 pages)
+[19:59:34]   Page 1: 13 listings, 13 new
+[19:59:39]   Page 2: 13 listings, 13 new
+[19:59:46]   Page 3: 15 listings, 14 new
+[19:59:50]   Page 4: 15 listings, 15 new
+[19:59:54]   Page 5: 15 listings, 12 new
+[19:59:58]   Page 6: 13 listings, 11 new
+[20:00:02]   Page 7: 15 listings, 13 new
+[20:00:07]   Page 8: 14 listings, 10 new
+[20:00:11]   Page 9: 15 listings, 0 new
+[20:00:16]   Page 10: 13 listings, 0 new
+[20:00:21]   Page 11: 15 listings, 13 new
+[20:00:26]   Page 12: 8 listings, 6 new
+[20:00:26]   Subtotal: 164 listings, 120 new
+[20:00:30] [29/186] US/ND educational-consultant
+[20:00:31]   11 total results (up to 1 pages)
+[20:00:31]   Page 1: 11 listings, 10 new
+[20:00:31]   Subtotal: 11 listings, 10 new
+[20:00:34] [30/186] US/NE educational-consultant
+[20:00:35]   44 total results (up to 3 pages)
+[20:00:35]   Page 1: 14 listings, 13 new
+[20:00:39]   Page 2: 14 listings, 13 new
+[20:00:44]   Page 3: 14 listings, 2 new
+[20:00:44]   Subtotal: 42 listings, 28 new
+[20:00:44]   [Progress saved: 1942 leads]
+[20:00:48] [31/186] US/NH educational-consultant
+[20:00:49]   25 total results (up to 2 pages)
+[20:00:49]   Page 1: 14 listings, 14 new
+[20:00:53]   Page 2: 8 listings, 7 new
+[20:00:53]   Subtotal: 22 listings, 21 new
+[20:00:56] [32/186] US/NJ educational-consultant
+[20:00:57]   63 total results (up to 5 pages)
+[20:00:57]   Page 1: 14 listings, 13 new
+[20:01:02]   Page 2: 14 listings, 14 new
+[20:01:06]   Page 3: 16 listings, 14 new
+[20:01:10]   Page 4: 16 listings, 3 new
+[20:01:15]   Page 5: 3 listings, 0 new
+[20:01:15]   Subtotal: 63 listings, 44 new
+[20:01:19] [33/186] US/NM educational-consultant
+[20:01:20]   25 total results (up to 2 pages)
+[20:01:20]   Page 1: 14 listings, 14 new
+[20:01:24]   Page 2: 9 listings, 5 new
+[20:01:24]   Subtotal: 23 listings, 19 new
+[20:01:28] [34/186] US/NV educational-consultant
+[20:01:28]   42 total results (up to 3 pages)
+[20:01:28]   Page 1: 13 listings, 13 new
+[20:01:32]   Page 2: 15 listings, 15 new
+[20:01:38]   Page 3: 12 listings, 11 new
+[20:01:38]   Subtotal: 40 listings, 39 new
+[20:01:41] [35/186] US/NY educational-consultant
+[20:01:42]   201 total results (up to 14 pages)
+[20:01:42]   Page 1: 14 listings, 13 new
+[20:01:47]   Page 2: 15 listings, 6 new
+[20:01:51]   Page 3: 14 listings, 14 new
+[20:01:56]   Page 4: 15 listings, 14 new
+[20:02:00]   Page 5: 15 listings, 15 new
+[20:02:05]   Page 6: 15 listings, 13 new
+[20:02:10]   Page 7: 14 listings, 12 new
+[20:02:14]   Page 8: 15 listings, 13 new
+[20:02:18]   Page 9: 15 listings, 12 new
+[20:02:23]   Page 10: 16 listings, 5 new
+[20:02:28]   Page 11: 11 listings, 8 new
+[20:02:33]   Page 12: 14 listings, 10 new
+[20:02:37]   Page 13: 15 listings, 14 new
+[20:02:41]   Page 14: 7 listings, 0 new
+[20:02:41]   Subtotal: 195 listings, 149 new
+[20:02:41]   [Progress saved: 2214 leads]
+[20:02:46] [36/186] US/OH educational-consultant
+[20:02:46]   174 total results (up to 12 pages)
+[20:02:46]   Page 1: 15 listings, 15 new
+[20:02:51]   Page 2: 16 listings, 13 new
+[20:02:55]   Page 3: 15 listings, 15 new
+[20:02:59]   Page 4: 14 listings, 13 new
+[20:03:03]   Page 5: 15 listings, 14 new
+[20:03:07]   Page 6: 14 listings, 13 new
+[20:03:11]   Page 7: 15 listings, 14 new
+[20:03:16]   Page 8: 15 listings, 12 new
+[20:03:19]   Page 9: 13 listings, 11 new
+[20:03:23]   Page 10: 15 listings, 14 new
+[20:03:28]   Page 11: 15 listings, 0 new
+[20:03:32]   Page 12: 8 listings, 0 new
+[20:03:32]   Subtotal: 170 listings, 134 new
+[20:03:35] [37/186] US/OK educational-consultant
+[20:03:36]   24 total results (up to 2 pages)
+[20:03:36]   Page 1: 16 listings, 15 new
+[20:03:41]   Page 2: 9 listings, 5 new
+[20:03:41]   Subtotal: 25 listings, 20 new
+[20:03:45] [38/186] US/OR educational-consultant
+[20:03:46]   70 total results (up to 5 pages)
+[20:03:46]   Page 1: 13 listings, 12 new
+[20:03:51]   Page 2: 13 listings, 12 new
+[20:03:56]   Page 3: 14 listings, 13 new
+[20:04:01]   Page 4: 14 listings, 3 new
+[20:04:05]   Page 5: 8 listings, 2 new
+[20:04:05]   Subtotal: 62 listings, 42 new
+[20:04:10] [39/186] US/PA educational-consultant
+[20:04:10]   86 total results (up to 6 pages)
+[20:04:10]   Page 1: 14 listings, 14 new
+[20:04:15]   Page 2: 15 listings, 15 new
+[20:04:20]   Page 3: 15 listings, 10 new
+[20:04:24]   Page 4: 14 listings, 13 new
+[20:04:30]   Page 5: 14 listings, 13 new
+[20:04:34]   Page 6: 11 listings, 9 new
+[20:04:34]   Subtotal: 83 listings, 74 new
+[20:04:38] [40/186] US/RI educational-consultant
+[20:04:38]   5 total results (up to 1 pages)
+[20:04:38]   Page 1: 5 listings, 5 new
+[20:04:38]   Subtotal: 5 listings, 5 new
+[20:04:38]   [Progress saved: 2489 leads]
+[20:04:43] [41/186] US/SC educational-consultant
+[20:04:43]   38 total results (up to 3 pages)
+[20:04:43]   Page 1: 15 listings, 15 new
+[20:04:48]   Page 2: 13 listings, 12 new
+[20:04:53]   Page 3: 8 listings, 1 new
+[20:04:53]   Subtotal: 36 listings, 28 new
+[20:04:56] [42/186] US/SD educational-consultant
+[20:04:57]   2 total results (up to 1 pages)
+[20:04:57]   Page 1: 2 listings, 2 new
+[20:04:57]   Subtotal: 2 listings, 2 new
+[20:05:01] [43/186] US/TN educational-consultant
+[20:05:02]   69 total results (up to 5 pages)
+[20:05:02]   Page 1: 13 listings, 12 new
+[20:05:06]   Page 2: 15 listings, 14 new
+[20:05:09]   Page 3: 15 listings, 15 new
+[20:05:13]   Page 4: 15 listings, 8 new
+[20:05:18]   Page 5: 9 listings, 0 new
+[20:05:18]   Subtotal: 67 listings, 49 new
+[20:05:21] [44/186] US/TX educational-consultant
+[20:05:22]   313 total results (up to 15 pages)
+[20:05:22]   Page 1: 14 listings, 12 new
+[20:05:26]   Page 2: 16 listings, 14 new
+[20:05:30]   Page 3: 15 listings, 10 new
+[20:05:34]   Page 4: 13 listings, 5 new
+[20:05:38]   Page 5: 15 listings, 15 new
+[20:05:42]   Page 6: 15 listings, 15 new
+[20:05:45]   Page 7: 15 listings, 15 new
+[20:05:50]   Page 8: 15 listings, 14 new
+[20:05:56]   Page 9: 13 listings, 12 new
+[20:06:00]   Page 10: 15 listings, 13 new
+[20:06:05]   Page 11: 15 listings, 14 new
+[20:06:10]   Page 12: 15 listings, 13 new
+[20:06:14]   Page 13: 15 listings, 13 new
+[20:06:19]   Page 14: 15 listings, 13 new
+[20:06:23]   Page 15: 14 listings, 11 new
+[20:06:23]   Subtotal: 220 listings, 189 new
+[20:06:27] [45/186] US/UT educational-consultant
+[20:06:27]   50 total results (up to 4 pages)
+[20:06:27]   Page 1: 15 listings, 14 new
+[20:06:32]   Page 2: 15 listings, 13 new
+[20:06:36]   Page 3: 12 listings, 10 new
+[20:06:41]   Page 4: 5 listings, 0 new
+[20:06:41]   Subtotal: 47 listings, 37 new
+[20:06:41]   [Progress saved: 2794 leads]
+[20:06:46] [46/186] US/VA educational-consultant
+[20:06:46]   107 total results (up to 8 pages)
+[20:06:46]   Page 1: 15 listings, 14 new
+[20:06:50]   Page 2: 14 listings, 13 new
+[20:06:54]   Page 3: 15 listings, 14 new
+[20:06:58]   Page 4: 15 listings, 11 new
+[20:07:02]   Page 5: 16 listings, 13 new
+[20:07:07]   Page 6: 15 listings, 14 new
+[20:07:11]   Page 7: 15 listings, 11 new
+[20:07:16]   Page 8: 2 listings, 0 new
+[20:07:16]   Subtotal: 107 listings, 90 new
+[20:07:19] [47/186] US/VT educational-consultant
+[20:07:19]   25 total results (up to 2 pages)
+[20:07:19]   Page 1: 14 listings, 14 new
+[20:07:25]   Page 2: 10 listings, 1 new
+[20:07:25]   Subtotal: 24 listings, 15 new
+[20:07:29] [48/186] US/WA educational-consultant
+[20:07:29]   123 total results (up to 9 pages)
+[20:07:29]   Page 1: 15 listings, 14 new
+[20:07:33]   Page 2: 13 listings, 13 new
+[20:07:37]   Page 3: 14 listings, 13 new
+[20:07:42]   Page 4: 15 listings, 13 new
+[20:07:46]   Page 5: 14 listings, 13 new
+[20:07:50]   Page 6: 15 listings, 7 new
+[20:07:55]   Page 7: 15 listings, 0 new
+[20:07:59]   Page 8: 14 listings, 6 new
+[20:08:04]   Page 9: 3 listings, 0 new
+[20:08:04]   Subtotal: 118 listings, 79 new
+[20:08:08] [49/186] US/WI educational-consultant
+[20:08:09]   63 total results (up to 5 pages)
+[20:08:09]   Page 1: 13 listings, 12 new
+[20:08:14]   Page 2: 16 listings, 13 new
+[20:08:18]   Page 3: 14 listings, 12 new
+[20:08:24]   Page 4: 13 listings, 9 new
+[20:08:28]   Page 5: 3 listings, 3 new
+[20:08:28]   Subtotal: 59 listings, 49 new
+[20:08:32] [50/186] US/WV educational-consultant
+[20:08:32]   1 total results (up to 1 pages)
+[20:08:32]   Page 1: 1 listings, 0 new
+[20:08:32]   [Progress saved: 3027 leads]
+[20:08:36] [51/186] US/WY educational-consultant
+[20:08:37]   2 total results (up to 1 pages)
+[20:08:37]   Page 1: 2 listings, 2 new
+[20:08:37]   Subtotal: 2 listings, 2 new
+[20:08:40] [52/186] CA/AB educational-consultant
+[20:08:41]   134 total results (up to 9 pages)
+[20:08:41]   Page 1: 13 listings, 13 new
+[20:08:46]   Page 2: 15 listings, 8 new
+[20:08:50]   Page 3: 13 listings, 13 new
+[20:08:56]   Page 4: 14 listings, 14 new
+[20:09:00]   Page 5: 14 listings, 14 new
+[20:09:05]   Page 6: 15 listings, 13 new
+[20:09:09]   Page 7: 15 listings, 3 new
+[20:09:12]   Page 8: 14 listings, 0 new
+[20:09:16]   Page 9: 13 listings, 9 new
+[20:09:16]   Subtotal: 126 listings, 87 new
+[20:09:20] [53/186] CA/BC educational-consultant
+[20:09:20]   78 total results (up to 6 pages)
+[20:09:20]   Page 1: 15 listings, 15 new
+[20:09:25]   Page 2: 15 listings, 15 new
+[20:09:29]   Page 3: 15 listings, 13 new
+[20:09:32]   Page 4: 15 listings, 15 new
+[20:09:37]   Page 5: 14 listings, 12 new
+[20:09:42]   Page 6: 3 listings, 3 new
+[20:09:42]   Subtotal: 77 listings, 73 new
+[20:09:47] [54/186] CA/MB educational-consultant
+[20:09:47]   11 total results (up to 1 pages)
+[20:09:47]   Page 1: 11 listings, 11 new
+[20:09:47]   Subtotal: 11 listings, 11 new
+[20:09:50] [55/186] CA/NB educational-consultant
+[20:09:51]   3 total results (up to 1 pages)
+[20:09:51]   Page 1: 3 listings, 3 new
+[20:09:51]   Subtotal: 3 listings, 3 new
+[20:09:51]   [Progress saved: 3203 leads]
+[20:09:55] [56/186] CA/NL educational-consultant
+[20:09:55]   10 total results (up to 1 pages)
+[20:09:55]   Page 1: 8 listings, 8 new
+[20:09:55]   Subtotal: 8 listings, 8 new
+[20:09:59] [57/186] CA/NS educational-consultant
+[20:09:59]   6 total results (up to 1 pages)
+[20:09:59]   Page 1: 6 listings, 5 new
+[20:09:59]   Subtotal: 6 listings, 5 new
+[20:10:04] [58/186] CA/NT educational-consultant
+[20:10:05]   No results
+[20:10:08] [59/186] CA/NU educational-consultant
+[20:10:09]   No results
+[20:10:14] [60/186] CA/ON educational-consultant
+[20:10:14]   73 total results (up to 5 pages)
+[20:10:14]   Page 1: 14 listings, 14 new
+[20:10:18]   Page 2: 15 listings, 15 new
+[20:10:23]   Page 3: 14 listings, 13 new
+[20:10:26]   Page 4: 15 listings, 10 new
+[20:10:31]   Page 5: 11 listings, 0 new
+[20:10:31]   Subtotal: 69 listings, 52 new
+[20:10:31]   [Progress saved: 3268 leads]
+[20:10:34]   Timeout, retrying...
+[20:10:35] [61/186] CA/PE educational-consultant
+[20:10:36]   No results
+[20:10:38]   Timeout, retrying...
+[20:10:40] [62/186] CA/SK educational-consultant
+[20:10:41]   9 total results (up to 1 pages)
+[20:10:41]   Page 1: 9 listings, 9 new
+[20:10:41]   Subtotal: 9 listings, 9 new
+[20:10:45] [63/186] US/AK tutoring
+[20:10:46]   11 total results (up to 1 pages)
+[20:10:46]   Page 1: 9 listings, 7 new
+[20:10:46]   Subtotal: 9 listings, 7 new
+[20:10:51] [64/186] US/AL tutoring
+[20:10:52]   61 total results (up to 5 pages)
+[20:10:52]   Page 1: 14 listings, 10 new
+[20:10:56]   Page 2: 15 listings, 13 new
+[20:11:00]   Page 3: 15 listings, 8 new
+[20:11:04]   Page 4: 14 listings, 5 new
+[20:11:06]   Timeout, retrying...
+[20:11:09]   Timeout, retrying...
+[20:11:09]   Page 5: 1 listings, 1 new
+[20:11:09]   Subtotal: 59 listings, 37 new
+[20:11:13] [65/186] US/AR tutoring
+[20:11:13]   Timeout, retrying...
+[20:11:14]   28 total results (up to 2 pages)
+[20:11:14]   Page 1: 13 listings, 13 new
+[20:11:18]   Page 2: 11 listings, 9 new
+[20:11:18]   Subtotal: 24 listings, 22 new
+[20:11:18]   [Progress saved: 3343 leads]
+[20:11:23] [66/186] US/AZ tutoring
+[20:11:23]   124 total results (up to 9 pages)
+[20:11:23]   Page 1: 14 listings, 11 new
+[20:11:28]   Page 2: 15 listings, 9 new
+[20:11:31]   Page 3: 14 listings, 9 new
+[20:11:37]   Page 4: 14 listings, 5 new
+[20:11:41]   Timeout, retrying...
+[20:11:42]   Page 5: 14 listings, 13 new
+[20:11:44]   Timeout, retrying...
+[20:11:47]   Page 6: 13 listings, 4 new
+[20:11:49]   Timeout, retrying...
+[20:11:50]   Page 7: 15 listings, 2 new
+[20:11:56]   Page 8: 14 listings, 0 new
+[20:12:00]   Page 9: 3 listings, 0 new
+[20:12:00]   Subtotal: 116 listings, 53 new
+[20:12:04] [67/186] US/CA tutoring
+[20:12:04]   729 total results (up to 15 pages)
+[20:12:04]   Page 1: 15 listings, 12 new
+[20:12:08]   Page 2: 14 listings, 9 new
+[20:12:12]   Page 3: 14 listings, 7 new
+[20:12:16]   Timeout, retrying...
+[20:12:16]   Page 4: 15 listings, 15 new
+[20:12:22]   Page 5: 15 listings, 15 new
+[20:12:27]   Page 6: 15 listings, 15 new
+[20:12:31]   Page 7: 14 listings, 13 new
+[20:12:35]   Page 8: 15 listings, 14 new
+[20:12:40]   Page 9: 15 listings, 15 new
+[20:12:43]   Page 10: 14 listings, 14 new
+[20:12:48]   Page 11: 13 listings, 12 new
+[20:12:53]   Page 12: 12 listings, 11 new
+[20:12:59]   Page 13: 14 listings, 14 new
+[20:13:02]   Page 14: 14 listings, 11 new
+[20:13:06]   Page 15: 12 listings, 10 new
+[20:13:06]   Subtotal: 211 listings, 187 new
+[20:13:09] [68/186] US/CO tutoring
+[20:13:10]   107 total results (up to 8 pages)
+[20:13:10]   Page 1: 14 listings, 10 new
+[20:13:15]   Page 2: 15 listings, 15 new
+[20:13:20]   Page 3: 15 listings, 14 new
+[20:13:24]   Page 4: 14 listings, 14 new
+[20:13:30]   Page 5: 14 listings, 12 new
+[20:13:34]   Page 6: 14 listings, 2 new
+[20:13:39]   Page 7: 14 listings, 11 new
+[20:13:43]   Page 8: 2 listings, 0 new
+[20:13:43]   Subtotal: 102 listings, 78 new
+[20:13:48] [69/186] US/CT tutoring
+[20:13:49]   42 total results (up to 3 pages)
+[20:13:49]   Page 1: 14 listings, 10 new
+[20:13:52]   Page 2: 14 listings, 11 new
+[20:13:57]   Page 3: 13 listings, 8 new
+[20:13:57]   Subtotal: 41 listings, 29 new
+[20:14:00] [70/186] US/DC tutoring
+[20:14:01]   11 total results (up to 1 pages)
+[20:14:01]   Page 1: 11 listings, 6 new
+[20:14:01]   Subtotal: 11 listings, 6 new
+[20:14:01]   [Progress saved: 3696 leads]
+[20:14:06] [71/186] US/DE tutoring
+[20:14:06]   23 total results (up to 2 pages)
+[20:14:06]   Page 1: 13 listings, 7 new
+[20:14:10]   Page 2: 7 listings, 4 new
+[20:14:10]   Subtotal: 20 listings, 11 new
+[20:14:15] [72/186] US/FL tutoring
+[20:14:15]   311 total results (up to 15 pages)
+[20:14:15]   Page 1: 13 listings, 11 new
+[20:14:20]   Page 2: 14 listings, 6 new
+[20:14:24]   Page 3: 14 listings, 10 new
+[20:14:29]   Page 4: 15 listings, 15 new
+[20:14:33]   Page 5: 14 listings, 12 new
+[20:14:37]   Page 6: 16 listings, 15 new
+[20:14:41]   Page 7: 15 listings, 13 new
+[20:14:46]   Page 8: 15 listings, 13 new
+[20:14:51]   Page 9: 14 listings, 13 new
+[20:14:56]   Page 10: 14 listings, 0 new
+[20:15:00]   Page 11: 15 listings, 13 new
+[20:15:05]   Page 12: 15 listings, 11 new
+[20:15:09]   Page 13: 15 listings, 7 new
+[20:15:14]   Page 14: 15 listings, 1 new
+[20:15:18]   Page 15: 15 listings, 15 new
+[20:15:18]   Subtotal: 219 listings, 155 new
+[20:15:22] [73/186] US/GA tutoring
+[20:15:22]   213 total results (up to 15 pages)
+[20:15:22]   Page 1: 15 listings, 13 new
+[20:15:27]   Page 2: 15 listings, 10 new
+[20:15:30]   Page 3: 14 listings, 11 new
+[20:15:36]   Page 4: 15 listings, 11 new
+[20:15:39]   Page 5: 15 listings, 13 new
+[20:15:44]   Page 6: 15 listings, 14 new
+[20:15:48]   Page 7: 14 listings, 9 new
+[20:15:53]   Page 8: 15 listings, 13 new
+[20:15:57]   Page 9: 15 listings, 12 new
+[20:16:02]   Page 10: 15 listings, 12 new
+[20:16:09]   Page 11: 14 listings, 0 new
+[20:16:12]   Page 12: 15 listings, 1 new
+[20:16:17]   Page 13: 15 listings, 8 new
+[20:16:21]   Page 14: 15 listings, 1 new
+[20:16:25]   Page 15: 3 listings, 0 new
+[20:16:25]   Subtotal: 210 listings, 128 new
+[20:16:30] [74/186] US/HI tutoring
+[20:16:30]   38 total results (up to 3 pages)
+[20:16:30]   Page 1: 13 listings, 12 new
+[20:16:34]   Page 2: 12 listings, 2 new
+[20:16:38]   Page 3: 8 listings, 4 new
+[20:16:38]   Subtotal: 33 listings, 18 new
+[20:16:43] [75/186] US/IA tutoring
+[20:16:44]   15 total results (up to 1 pages)
+[20:16:44]   Page 1: 11 listings, 11 new
+[20:16:44]   Subtotal: 11 listings, 11 new
+[20:16:44]   [Progress saved: 4019 leads]
+[20:16:47] [76/186] US/ID tutoring
+[20:16:48]   20 total results (up to 2 pages)
+[20:16:48]   Page 1: 13 listings, 11 new
+[20:16:51]   Page 2: 5 listings, 4 new
+[20:16:51]   Subtotal: 18 listings, 15 new
+[20:16:56] [77/186] US/IL tutoring
+[20:16:57]   236 total results (up to 15 pages)
+[20:16:57]   Page 1: 14 listings, 12 new
+[20:17:02]   Page 2: 15 listings, 14 new
+[20:17:07]   Page 3: 15 listings, 12 new
+[20:17:12]   Page 4: 14 listings, 14 new
+[20:17:15]   Page 5: 15 listings, 14 new
+[20:17:19]   Page 6: 14 listings, 10 new
+[20:17:25]   Page 7: 15 listings, 5 new
+[20:17:30]   Page 8: 15 listings, 3 new
+[20:17:35]   Page 9: 14 listings, 14 new
+[20:17:38]   Page 10: 14 listings, 0 new
+[20:17:43]   Page 11: 16 listings, 13 new
+[20:17:47]   Page 12: 15 listings, 0 new
+[20:17:52]   Page 13: 15 listings, 14 new
+[20:17:56]   Page 14: 14 listings, 4 new
+[20:18:00]   Page 15: 13 listings, 6 new
+[20:18:00]   Subtotal: 218 listings, 135 new
+[20:18:04] [78/186] US/IN tutoring
+[20:18:05]   56 total results (up to 4 pages)
+[20:18:05]   Page 1: 15 listings, 12 new
+[20:18:10]   Page 2: 15 listings, 13 new
+[20:18:13]   Page 3: 13 listings, 10 new
+[20:18:17]   Page 4: 12 listings, 1 new
+[20:18:17]   Subtotal: 55 listings, 36 new
+[20:18:21] [79/186] US/KS tutoring
+[20:18:21]   15 total results (up to 1 pages)
+[20:18:21]   Page 1: 12 listings, 11 new
+[20:18:21]   Subtotal: 12 listings, 11 new
+[20:18:25] [80/186] US/KY tutoring
+[20:18:25]   31 total results (up to 3 pages)
+[20:18:25]   Page 1: 15 listings, 15 new
+[20:18:30]   Page 2: 14 listings, 8 new
+[20:18:35]   Page 3: 1 listings, 1 new
+[20:18:35]   Subtotal: 30 listings, 24 new
+[20:18:35]   [Progress saved: 4240 leads]
+[20:18:40] [81/186] US/LA tutoring
+[20:18:40]   60 total results (up to 4 pages)
+[20:18:40]   Page 1: 14 listings, 13 new
+[20:18:45]   Page 2: 16 listings, 15 new
+[20:18:50]   Page 3: 14 listings, 11 new
+[20:18:55]   Page 4: 14 listings, 8 new
+[20:18:55]   Subtotal: 58 listings, 47 new
+[20:18:58] [82/186] US/MA tutoring
+[20:18:59]   152 total results (up to 11 pages)
+[20:18:59]   Page 1: 13 listings, 9 new
+[20:19:03]   Page 2: 15 listings, 15 new
+[20:19:08]   Page 3: 13 listings, 13 new
+[20:19:12]   Page 4: 15 listings, 2 new
+[20:19:16]   Page 5: 13 listings, 0 new
+[20:19:20]   Page 6: 14 listings, 11 new
+[20:19:25]   Page 7: 14 listings, 12 new
+[20:19:30]   Page 8: 15 listings, 14 new
+[20:19:35]   Page 9: 14 listings, 13 new
+[20:19:39]   Page 10: 14 listings, 0 new
+[20:19:44]   Page 11: 1 listings, 0 new
+[20:19:44]   Subtotal: 141 listings, 89 new
+[20:19:49] [83/186] US/MD tutoring
+[20:19:49]   100 total results (up to 7 pages)
+[20:19:49]   Page 1: 9 listings, 8 new
+[20:19:54]   Page 2: 12 listings, 8 new
+[20:19:59]   Page 3: 15 listings, 14 new
+[20:20:03]   Page 4: 13 listings, 10 new
+[20:20:07]   Page 5: 15 listings, 14 new
+[20:20:12]   Page 6: 13 listings, 11 new
+[20:20:18]   Page 7: 10 listings, 0 new
+[20:20:18]   Subtotal: 87 listings, 65 new
+[20:20:22] [84/186] US/ME tutoring
+[20:20:23]   13 total results (up to 1 pages)
+[20:20:23]   Page 1: 12 listings, 12 new
+[20:20:23]   Subtotal: 12 listings, 12 new
+[20:20:28] [85/186] US/MI tutoring
+[20:20:28]   99 total results (up to 7 pages)
+[20:20:28]   Page 1: 12 listings, 8 new
+[20:20:32]   Page 2: 15 listings, 15 new
+[20:20:36]   Page 3: 13 listings, 6 new
+[20:20:40]   Page 4: 13 listings, 10 new
+[20:20:44]   Page 5: 16 listings, 8 new
+[20:20:49]   Page 6: 13 listings, 11 new
+[20:20:53]   Page 7: 9 listings, 9 new
+[20:20:53]   Subtotal: 91 listings, 67 new
+[20:20:53]   [Progress saved: 4520 leads]
+[20:20:58] [86/186] US/MN tutoring
+[20:20:58]   89 total results (up to 6 pages)
+[20:20:58]   Page 1: 10 listings, 6 new
+[20:21:03]   Page 2: 12 listings, 11 new
+[20:21:08]   Page 3: 14 listings, 9 new
+[20:21:13]   Page 4: 12 listings, 9 new
+[20:21:18]   Page 5: 14 listings, 10 new
+[20:21:22]   Page 6: 12 listings, 3 new
+[20:21:22]   Subtotal: 74 listings, 48 new
+[20:21:25] [87/186] US/MO tutoring
+[20:21:26]   81 total results (up to 6 pages)
+[20:21:26]   Page 1: 15 listings, 13 new
+[20:21:31]   Page 2: 14 listings, 11 new
+[20:21:35]   Page 3: 11 listings, 8 new
+[20:21:39]   Page 4: 14 listings, 3 new
+[20:21:45]   Page 5: 13 listings, 9 new
+[20:21:50]   Page 6: 3 listings, 0 new
+[20:21:50]   Subtotal: 70 listings, 44 new
+[20:21:55] [88/186] US/MS tutoring
+[20:21:56]   53 total results (up to 4 pages)
+[20:21:56]   Page 1: 14 listings, 11 new
+[20:22:00]   Page 2: 15 listings, 3 new
+[20:22:05]   Page 3: 15 listings, 7 new
+[20:22:10]   Page 4: 7 listings, 5 new
+[20:22:10]   Subtotal: 51 listings, 26 new
+[20:22:14] [89/186] US/MT tutoring
+[20:22:15]   7 total results (up to 1 pages)
+[20:22:15]   Page 1: 6 listings, 4 new
+[20:22:15]   Subtotal: 6 listings, 4 new
+[20:22:19] [90/186] US/NC tutoring
+[20:22:19]   160 total results (up to 11 pages)
+[20:22:19]   Page 1: 10 listings, 8 new
+[20:22:24]   Page 2: 15 listings, 14 new
+[20:22:28]   Page 3: 15 listings, 15 new
+[20:22:33]   Page 4: 14 listings, 12 new
+[20:22:38]   Page 5: 15 listings, 15 new
+[20:22:42]   Page 6: 15 listings, 13 new
+[20:22:46]   Page 7: 15 listings, 15 new
+[20:22:50]   Page 8: 15 listings, 12 new
+[20:22:54]   Page 9: 15 listings, 0 new
+[20:22:59]   Page 10: 15 listings, 0 new
+[20:23:04]   Page 11: 10 listings, 8 new
+[20:23:04]   Subtotal: 154 listings, 112 new
+[20:23:04]   [Progress saved: 4754 leads]
+[20:23:08] [91/186] US/ND tutoring
+[20:23:09]   7 total results (up to 1 pages)
+[20:23:09]   Page 1: 6 listings, 6 new
+[20:23:09]   Subtotal: 6 listings, 6 new
+[20:23:13] [92/186] US/NE tutoring
+[20:23:13]   27 total results (up to 2 pages)
+[20:23:13]   Page 1: 13 listings, 12 new
+[20:23:18]   Page 2: 10 listings, 6 new
+[20:23:18]   Subtotal: 23 listings, 18 new
+[20:23:21] [93/186] US/NH tutoring
+[20:23:21]   17 total results (up to 2 pages)
+[20:23:21]   Page 1: 13 listings, 8 new
+[20:23:25]   Page 2: 2 listings, 0 new
+[20:23:25]   Subtotal: 15 listings, 8 new
+[20:23:29] [94/186] US/NJ tutoring
+[20:23:30]   89 total results (up to 6 pages)
+[20:23:30]   Page 1: 13 listings, 11 new
+[20:23:33]   Page 2: 15 listings, 13 new
+[20:23:37]   Page 3: 13 listings, 8 new
+[20:23:42]   Page 4: 15 listings, 1 new
+[20:23:46]   Page 5: 13 listings, 6 new
+[20:23:50]   Page 6: 15 listings, 7 new
+[20:23:50]   Subtotal: 84 listings, 46 new
+[20:23:55] [95/186] US/NM tutoring
+[20:23:55]   7 total results (up to 1 pages)
+[20:23:55]   Page 1: 6 listings, 6 new
+[20:23:55]   Subtotal: 6 listings, 6 new
+[20:23:55]   [Progress saved: 4838 leads]
+[20:24:00] [96/186] US/NV tutoring
+[20:24:00]   38 total results (up to 3 pages)
+[20:24:00]   Page 1: 15 listings, 15 new
+[20:24:05]   Page 2: 11 listings, 10 new
+[20:24:08]   Page 3: 5 listings, 0 new
+[20:24:08]   Subtotal: 31 listings, 25 new
+[20:24:12] [97/186] US/NY tutoring
+[20:24:12]   221 total results (up to 15 pages)
+[20:24:12]   Page 1: 12 listings, 6 new
+[20:24:17]   Page 2: 15 listings, 13 new
+[20:24:21]   Page 3: 15 listings, 15 new
+[20:24:26]   Page 4: 14 listings, 12 new
+[20:24:29]   Page 5: 14 listings, 14 new
+[20:24:34]   Page 6: 15 listings, 11 new
+[20:24:38]   Page 7: 14 listings, 11 new
+[20:24:43]   Page 8: 15 listings, 3 new
+[20:24:47]   Page 9: 15 listings, 13 new
+[20:24:52]   Page 10: 13 listings, 9 new
+[20:24:57]   Page 11: 15 listings, 10 new
+[20:25:02]   Page 12: 14 listings, 3 new
+[20:25:07]   Page 13: 14 listings, 9 new
+[20:25:11]   Page 14: 14 listings, 0 new
+[20:25:15]   Page 15: 10 listings, 8 new
+[20:25:15]   Subtotal: 209 listings, 137 new
+[20:25:20] [98/186] US/OH tutoring
+[20:25:20]   173 total results (up to 12 pages)
+[20:25:20]   Page 1: 12 listings, 9 new
+[20:25:26]   Page 2: 15 listings, 14 new
+[20:25:30]   Page 3: 15 listings, 13 new
+[20:25:35]   Page 4: 16 listings, 15 new
+[20:25:39]   Page 5: 15 listings, 15 new
+[20:25:43]   Page 6: 16 listings, 13 new
+[20:25:49]   Page 7: 16 listings, 0 new
+[20:25:53]   Page 8: 13 listings, 10 new
+[20:25:59]   Page 9: 15 listings, 12 new
+[20:26:03]   Page 10: 16 listings, 12 new
+[20:26:07]   Page 11: 14 listings, 0 new
+[20:26:12]   Page 12: 8 listings, 6 new
+[20:26:12]   Subtotal: 171 listings, 119 new
+[20:26:15] [99/186] US/OK tutoring
+[20:26:16]   38 total results (up to 3 pages)
+[20:26:16]   Page 1: 14 listings, 13 new
+[20:26:21]   Page 2: 14 listings, 12 new
+[20:26:24]   Page 3: 7 listings, 1 new
+[20:26:24]   Subtotal: 35 listings, 26 new
+[20:26:29] [100/186] US/OR tutoring
+[20:26:30]   56 total results (up to 4 pages)
+[20:26:30]   Page 1: 13 listings, 10 new
+[20:26:34]   Page 2: 14 listings, 7 new
+[20:26:39]   Page 3: 14 listings, 4 new
+[20:26:42]   Page 4: 11 listings, 0 new
+[20:26:42]   Subtotal: 52 listings, 21 new
+[20:26:42]   [Progress saved: 5166 leads]
+[20:26:46] [101/186] US/PA tutoring
+[20:26:46]   111 total results (up to 8 pages)
+[20:26:46]   Page 1: 14 listings, 11 new
+[20:26:50]   Page 2: 14 listings, 13 new
+[20:26:56]   Page 3: 15 listings, 14 new
+[20:26:59]   Page 4: 15 listings, 15 new
+[20:27:04]   Page 5: 14 listings, 0 new
+[20:27:07]   Page 6: 15 listings, 0 new
+[20:27:12]   Page 7: 15 listings, 11 new
+[20:27:16]   Page 8: 6 listings, 4 new
+[20:27:16]   Subtotal: 108 listings, 68 new
+[20:27:20] [102/186] US/RI tutoring
+[20:27:21]   10 total results (up to 1 pages)
+[20:27:21]   Page 1: 9 listings, 9 new
+[20:27:21]   Subtotal: 9 listings, 9 new
+[20:27:24] [103/186] US/SC tutoring
+[20:27:25]   36 total results (up to 3 pages)
+[20:27:25]   Page 1: 14 listings, 12 new
+[20:27:30]   Page 2: 13 listings, 9 new
+[20:27:34]   Page 3: 5 listings, 0 new
+[20:27:34]   Subtotal: 32 listings, 21 new
+[20:27:38] [104/186] US/SD tutoring
+[20:27:39]   3 total results (up to 1 pages)
+[20:27:39]   Page 1: 3 listings, 2 new
+[20:27:39]   Subtotal: 3 listings, 2 new
+[20:27:42] [105/186] US/TN tutoring
+[20:27:43]   120 total results (up to 8 pages)
+[20:27:43]   Page 1: 14 listings, 8 new
+[20:27:46]   Page 2: 15 listings, 13 new
+[20:27:51]   Page 3: 14 listings, 11 new
+[20:27:56]   Page 4: 15 listings, 5 new
+[20:28:01]   Page 5: 15 listings, 13 new
+[20:28:04]   Page 6: 14 listings, 4 new
+[20:28:08]   Page 7: 15 listings, 12 new
+[20:28:13]   Page 8: 13 listings, 6 new
+[20:28:13]   Subtotal: 115 listings, 72 new
+[20:28:13]   [Progress saved: 5338 leads]
+[20:28:17] [106/186] US/TX tutoring
+[20:28:18]   418 total results (up to 15 pages)
+[20:28:18]   Page 1: 13 listings, 10 new
+[20:28:23]   Page 2: 14 listings, 8 new
+[20:28:28]   Page 3: 14 listings, 14 new
+[20:28:33]   Page 4: 15 listings, 14 new
+[20:28:37]   Page 5: 15 listings, 14 new
+[20:28:42]   Page 6: 15 listings, 13 new
+[20:28:47]   Page 7: 15 listings, 15 new
+[20:28:51]   Page 8: 15 listings, 14 new
+[20:28:55]   Page 9: 15 listings, 12 new
+[20:29:00]   Page 10: 14 listings, 11 new
+[20:29:05]   Page 11: 15 listings, 6 new
+[20:29:10]   Page 12: 15 listings, 14 new
+[20:29:15]   Page 13: 15 listings, 6 new
+[20:29:19]   Page 14: 15 listings, 13 new
+[20:29:24]   Page 15: 15 listings, 0 new
+[20:29:24]   Subtotal: 220 listings, 164 new
+[20:29:29] [107/186] US/UT tutoring
+[20:29:30]   22 total results (up to 2 pages)
+[20:29:30]   Page 1: 12 listings, 10 new
+[20:29:35]   Page 2: 7 listings, 5 new
+[20:29:35]   Subtotal: 19 listings, 15 new
+[20:29:39] [108/186] US/VA tutoring
+[20:29:39]   121 total results (up to 9 pages)
+[20:29:39]   Page 1: 14 listings, 10 new
+[20:29:44]   Page 2: 15 listings, 13 new
+[20:29:48]   Page 3: 13 listings, 12 new
+[20:29:53]   Page 4: 14 listings, 14 new
+[20:29:58]   Page 5: 15 listings, 9 new
+[20:30:01]   Page 6: 14 listings, 8 new
+[20:30:05]   Page 7: 15 listings, 12 new
+[20:30:10]   Page 8: 15 listings, 4 new
+[20:30:15]   Page 9: 1 listings, 0 new
+[20:30:15]   Subtotal: 116 listings, 82 new
+[20:30:19] [109/186] US/VT tutoring
+[20:30:19]   13 total results (up to 1 pages)
+[20:30:19]   Page 1: 13 listings, 13 new
+[20:30:19]   Subtotal: 13 listings, 13 new
+[20:30:23] [110/186] US/WA tutoring
+[20:30:23]   137 total results (up to 10 pages)
+[20:30:23]   Page 1: 15 listings, 9 new
+[20:30:29]   Page 2: 13 listings, 11 new
+[20:30:33]   Page 3: 14 listings, 11 new
+[20:30:38]   Page 4: 16 listings, 3 new
+[20:30:43]   Page 5: 15 listings, 14 new
+[20:30:48]   Page 6: 15 listings, 2 new
+[20:30:52]   Page 7: 13 listings, 10 new
+[20:30:57]   Page 8: 15 listings, 1 new
+[20:31:03]   Page 9: 15 listings, 14 new
+[20:31:08]   Page 10: 2 listings, 0 new
+[20:31:08]   Subtotal: 133 listings, 75 new
+[20:31:08]   [Progress saved: 5687 leads]
+[20:31:12] [111/186] US/WI tutoring
+[20:31:12]   46 total results (up to 4 pages)
+[20:31:12]   Page 1: 12 listings, 11 new
+[20:31:16]   Page 2: 15 listings, 12 new
+[20:31:21]   Page 3: 15 listings, 2 new
+[20:31:25]   Page 4: 1 listings, 1 new
+[20:31:25]   Subtotal: 43 listings, 26 new
+[20:31:30] [112/186] US/WV tutoring
+[20:31:30]   2 total results (up to 1 pages)
+[20:31:30]   Page 1: 2 listings, 2 new
+[20:31:30]   Subtotal: 2 listings, 2 new
+[20:31:35] [113/186] US/WY tutoring
+[20:31:36]   2 total results (up to 1 pages)
+[20:31:36]   Page 1: 2 listings, 2 new
+[20:31:36]   Subtotal: 2 listings, 2 new
+[20:31:40] [114/186] CA/AB tutoring
+[20:31:40]   106 total results (up to 8 pages)
+[20:31:40]   Page 1: 13 listings, 8 new
+[20:31:44]   Page 2: 15 listings, 14 new
+[20:31:48]   Page 3: 15 listings, 13 new
+[20:31:53]   Page 4: 15 listings, 1 new
+[20:31:57]   Page 5: 15 listings, 0 new
+[20:32:01]   Page 6: 13 listings, 8 new
+[20:32:06]   Page 7: 14 listings, 9 new
+[20:32:11]   Page 8: 1 listings, 0 new
+[20:32:11]   Subtotal: 101 listings, 53 new
+[20:32:15] [115/186] CA/BC tutoring
+[20:32:16]   159 total results (up to 11 pages)
+[20:32:16]   Page 1: 15 listings, 13 new
+[20:32:20]   Page 2: 15 listings, 15 new
+[20:32:25]   Page 3: 14 listings, 12 new
+[20:32:29]   Page 4: 15 listings, 14 new
+[20:32:34]   Page 5: 14 listings, 13 new
+[20:32:38]   Page 6: 15 listings, 1 new
+[20:32:41]   Page 7: 15 listings, 11 new
+[20:32:47]   Page 8: 15 listings, 11 new
+[20:32:51]   Page 9: 15 listings, 12 new
+[20:32:55]   Page 10: 15 listings, 1 new
+[20:32:59]   Page 11: 8 listings, 6 new
+[20:32:59]   Subtotal: 156 listings, 109 new
+[20:32:59]   [Progress saved: 5879 leads]
+[20:33:02] [116/186] CA/MB tutoring
+[20:33:03]   6 total results (up to 1 pages)
+[20:33:03]   Page 1: 7 listings, 6 new
+[20:33:03]   Subtotal: 7 listings, 6 new
+[20:33:07] [117/186] CA/NB tutoring
+[20:33:08]   No results
+[20:33:13] [118/186] CA/NL tutoring
+[20:33:13]   2 total results (up to 1 pages)
+[20:33:13]   Page 1: 2 listings, 2 new
+[20:33:13]   Subtotal: 2 listings, 2 new
+[20:33:17] [119/186] CA/NS tutoring
+[20:33:17]   7 total results (up to 1 pages)
+[20:33:17]   Page 1: 7 listings, 7 new
+[20:33:17]   Subtotal: 7 listings, 7 new
+[20:33:21] [120/186] CA/NT tutoring
+[20:33:22]   No results
+[20:33:22]   [Progress saved: 5894 leads]
+[20:33:26] [121/186] CA/NU tutoring
+[20:33:26]   No results
+[20:33:29] [122/186] CA/ON tutoring
+[20:33:30]   179 total results (up to 12 pages)
+[20:33:30]   Page 1: 15 listings, 12 new
+[20:33:35]   Page 2: 15 listings, 15 new
+[20:33:37]   Timeout, retrying...
+[20:33:39]   Page 3: 15 listings, 15 new
+[20:33:42]   Page 4: 14 listings, 12 new
+[20:33:46]   Page 5: 16 listings, 14 new
+[20:33:50]   Page 6: 14 listings, 13 new
+[20:33:51]   Timeout, retrying...
+[20:33:54]   Page 7: 14 listings, 14 new
+[20:33:56]   Timeout, retrying...
+[20:33:59]   Page 8: 14 listings, 5 new
+[20:34:03]   Page 9: 14 listings, 12 new
+[20:34:07]   Page 10: 14 listings, 2 new
+[20:34:12]   Page 11: 14 listings, 9 new
+[20:34:12]   Timeout, retrying...
+[20:34:17]   Page 12: 13 listings, 5 new
+[20:34:17]   Subtotal: 172 listings, 128 new
+[20:34:21] [123/186] CA/PE tutoring
+[20:34:22]   No results
+[20:34:25] [124/186] CA/SK tutoring
+[20:34:25]   8 total results (up to 1 pages)
+[20:34:25]   Page 1: 8 listings, 5 new
+[20:34:25]   Subtotal: 8 listings, 5 new
+[20:34:26]   Timeout, retrying...
+[20:34:29] [125/186] US/AK language-school
+[20:34:30]   1 total results (up to 1 pages)
+[20:34:30]   Page 1: 1 listings, 0 new
+[20:34:30]   [Progress saved: 6027 leads]
+[20:34:31]   Timeout, retrying...
+[20:34:33] [126/186] US/AL language-school
+[20:34:33]   3 total results (up to 1 pages)
+[20:34:33]   Page 1: 3 listings, 3 new
+[20:34:33]   Subtotal: 3 listings, 3 new
+[20:34:38] [127/186] US/AR language-school
+[20:34:38]   3 total results (up to 1 pages)
+[20:34:38]   Page 1: 2 listings, 2 new
+[20:34:38]   Subtotal: 2 listings, 2 new
+[20:34:42] [128/186] US/AZ language-school
+[20:34:43]   19 total results (up to 2 pages)
+[20:34:43]   Page 1: 15 listings, 10 new
+[20:34:47]   Page 2: 4 listings, 2 new
+[20:34:47]   Subtotal: 19 listings, 12 new
+[20:34:48]   Timeout, retrying...
+[20:34:50] [129/186] US/CA language-school
+[20:34:51]   99 total results (up to 7 pages)
+[20:34:51]   Page 1: 12 listings, 11 new
+[20:34:51]   Timeout, retrying...
+[20:34:55]   Page 2: 13 listings, 12 new
+[20:35:00]   Page 3: 14 listings, 8 new
+[20:35:02]   Timeout, retrying...
+[20:35:05]   Page 4: 14 listings, 11 new
+[20:35:06]   Timeout, retrying...
+[20:35:09]   Page 5: 13 listings, 7 new
+[20:35:13]   Page 6: 13 listings, 10 new
+[20:35:17]   Page 7: 9 listings, 9 new
+[20:35:17]   Subtotal: 88 listings, 68 new
+[20:35:21] [130/186] US/CO language-school
+[20:35:22]   19 total results (up to 2 pages)
+[20:35:22]   Page 1: 15 listings, 15 new
+[20:35:25]   Page 2: 4 listings, 3 new
+[20:35:25]   Subtotal: 19 listings, 18 new
+[20:35:25]   [Progress saved: 6130 leads]
+[20:35:26]   Timeout, retrying...
+[20:35:29] [131/186] US/CT language-school
+[20:35:29]   4 total results (up to 1 pages)
+[20:35:29]   Page 1: 4 listings, 4 new
+[20:35:29]   Subtotal: 4 listings, 4 new
+[20:35:34] [132/186] US/DC language-school
+[20:35:35]   16 total results (up to 2 pages)
+[20:35:35]   Page 1: 15 listings, 15 new
+[20:35:40]   Page 2: 1 listings, 1 new
+[20:35:40]   Subtotal: 16 listings, 16 new
+[20:35:44] [133/186] US/DE language-school
+[20:35:45]   1 total results (up to 1 pages)
+[20:35:45]   Page 1: 1 listings, 0 new
+[20:35:49] [134/186] US/FL language-school
+[20:35:49]   62 total results (up to 5 pages)
+[20:35:49]   Page 1: 13 listings, 11 new
+[20:35:55]   Page 2: 15 listings, 13 new
+[20:35:59]   Page 3: 11 listings, 10 new
+[20:36:02]   Timeout, retrying...
+[20:36:04]   Page 4: 15 listings, 10 new
+[20:36:09]   Page 5: 2 listings, 1 new
+[20:36:09]   Subtotal: 56 listings, 45 new
+[20:36:13] [135/186] US/GA language-school
+[20:36:14]   24 total results (up to 2 pages)
+[20:36:14]   Page 1: 15 listings, 13 new
+[20:36:18]   Page 2: 9 listings, 8 new
+[20:36:18]   Subtotal: 24 listings, 21 new
+[20:36:18]   [Progress saved: 6216 leads]
+[20:36:23] [136/186] US/HI language-school
+[20:36:23]   15 total results (up to 1 pages)
+[20:36:23]   Page 1: 13 listings, 12 new
+[20:36:23]   Subtotal: 13 listings, 12 new
+[20:36:27] [137/186] US/IA language-school
+[20:36:28]   1 total results (up to 1 pages)
+[20:36:28]   Page 1: 1 listings, 1 new
+[20:36:28]   Subtotal: 1 listings, 1 new
+[20:36:31] [138/186] US/ID language-school
+[20:36:31]   No results
+[20:36:36] [139/186] US/IL language-school
+[20:36:37]   38 total results (up to 3 pages)
+[20:36:37]   Page 1: 15 listings, 13 new
+[20:36:42]   Page 2: 15 listings, 13 new
+[20:36:47]   Page 3: 7 listings, 3 new
+[20:36:47]   Subtotal: 37 listings, 29 new
+[20:36:52] [140/186] US/IN language-school
+[20:36:52]   9 total results (up to 1 pages)
+[20:36:52]   Page 1: 7 listings, 6 new
+[20:36:52]   Subtotal: 7 listings, 6 new
+[20:36:52]   [Progress saved: 6264 leads]
+[20:36:57] [141/186] US/KS language-school
+[20:36:58]   2 total results (up to 1 pages)
+[20:36:58]   Page 1: 2 listings, 1 new
+[20:36:58]   Subtotal: 2 listings, 1 new
+[20:37:01]   Timeout, retrying...
+[20:37:02] [142/186] US/KY language-school
+[20:37:02]   3 total results (up to 1 pages)
+[20:37:02]   Page 1: 2 listings, 2 new
+[20:37:02]   Subtotal: 2 listings, 2 new
+[20:37:07] [143/186] US/LA language-school
+[20:37:08]   1 total results (up to 1 pages)
+[20:37:08]   Page 1: 1 listings, 0 new
+[20:37:11] [144/186] US/MA language-school
+[20:37:12]   47 total results (up to 4 pages)
+[20:37:12]   Page 1: 13 listings, 10 new
+[20:37:16]   Page 2: 15 listings, 7 new
+[20:37:21]   Page 3: 15 listings, 15 new
+[20:37:26]   Page 4: 2 listings, 2 new
+[20:37:26]   Subtotal: 45 listings, 34 new
+[20:37:29] [145/186] US/MD language-school
+[20:37:29]   17 total results (up to 2 pages)
+[20:37:29]   Page 1: 15 listings, 10 new
+[20:37:34]   Page 2: 2 listings, 2 new
+[20:37:34]   Subtotal: 17 listings, 12 new
+[20:37:34]   [Progress saved: 6313 leads]
+[20:37:36]   Timeout, retrying...
+[20:37:39] [146/186] US/ME language-school
+[20:37:39]   3 total results (up to 1 pages)
+[20:37:39]   Page 1: 3 listings, 3 new
+[20:37:39]   Subtotal: 3 listings, 3 new
+[20:37:43] [147/186] US/MI language-school
+[20:37:44]   17 total results (up to 2 pages)
+[20:37:44]   Page 1: 14 listings, 13 new
+[20:37:48]   Page 2: 2 listings, 2 new
+[20:37:48]   Subtotal: 16 listings, 15 new
+[20:37:53] [148/186] US/MN language-school
+[20:37:53]   12 total results (up to 1 pages)
+[20:37:53]   Page 1: 9 listings, 9 new
+[20:37:53]   Subtotal: 9 listings, 9 new
+[20:37:57] [149/186] US/MO language-school
+[20:37:58]   10 total results (up to 1 pages)
+[20:37:58]   Page 1: 8 listings, 6 new
+[20:37:58]   Subtotal: 8 listings, 6 new
+[20:38:01] [150/186] US/MS language-school
+[20:38:02]   No results
+[20:38:02]   [Progress saved: 6346 leads]
+[20:38:05] [151/186] US/MT language-school
+[20:38:06]   3 total results (up to 1 pages)
+[20:38:06]   Page 1: 3 listings, 3 new
+[20:38:06]   Subtotal: 3 listings, 3 new
+[20:38:10] [152/186] US/NC language-school
+[20:38:10]   36 total results (up to 3 pages)
+[20:38:10]   Page 1: 15 listings, 14 new
+[20:38:11]   Timeout, retrying...
+[20:38:16]   Page 2: 13 listings, 11 new
+[20:38:20]   Page 3: 6 listings, 5 new
+[20:38:20]   Subtotal: 34 listings, 30 new
+[20:38:23] [153/186] US/ND language-school
+[20:38:23]   No results
+[20:38:28] [154/186] US/NE language-school
+[20:38:28]   3 total results (up to 1 pages)
+[20:38:28]   Page 1: 3 listings, 3 new
+[20:38:28]   Subtotal: 3 listings, 3 new
+[20:38:31] [155/186] US/NH language-school
+[20:38:31]   Timeout, retrying...
+[20:38:32]   2 total results (up to 1 pages)
+[20:38:32]   Page 1: 2 listings, 2 new
+[20:38:32]   Subtotal: 2 listings, 2 new
+[20:38:32]   [Progress saved: 6384 leads]
+[20:38:37] [156/186] US/NJ language-school
+[20:38:37]   10 total results (up to 1 pages)
+[20:38:37]   Page 1: 10 listings, 8 new
+[20:38:37]   Subtotal: 10 listings, 8 new
+[20:38:41] [157/186] US/NM language-school
+[20:38:41]   2 total results (up to 1 pages)
+[20:38:41]   Page 1: 2 listings, 2 new
+[20:38:41]   Subtotal: 2 listings, 2 new
+[20:38:45] [158/186] US/NV language-school
+[20:38:45]   3 total results (up to 1 pages)
+[20:38:45]   Page 1: 4 listings, 2 new
+[20:38:45]   Subtotal: 4 listings, 2 new
+[20:38:49] [159/186] US/NY language-school
+[20:38:50]   65 total results (up to 5 pages)
+[20:38:50]   Page 1: 14 listings, 13 new
+[20:38:53]   Timeout, retrying...
+[20:38:54]   Page 2: 12 listings, 12 new
+[20:38:58]   Page 3: 13 listings, 6 new
+[20:39:03]   Page 4: 13 listings, 10 new
+[20:39:06]   Timeout, retrying...
+[20:39:07]   Page 5: 5 listings, 1 new
+[20:39:07]   Subtotal: 57 listings, 42 new
+[20:39:11] [160/186] US/OH language-school
+[20:39:11]   23 total results (up to 2 pages)
+[20:39:11]   Page 1: 13 listings, 13 new
+[20:39:15]   Page 2: 8 listings, 7 new
+[20:39:15]   Subtotal: 21 listings, 20 new
+[20:39:15]   [Progress saved: 6458 leads]
+[20:39:20] [161/186] US/OK language-school
+[20:39:20]   4 total results (up to 1 pages)
+[20:39:20]   Page 1: 2 listings, 2 new
+[20:39:20]   Subtotal: 2 listings, 2 new
+[20:39:24] [162/186] US/OR language-school
+[20:39:25]   12 total results (up to 1 pages)
+[20:39:25]   Page 1: 9 listings, 8 new
+[20:39:25]   Subtotal: 9 listings, 8 new
+[20:39:28]   Timeout, retrying...
+[20:39:28] [163/186] US/PA language-school
+[20:39:29]   6 total results (up to 1 pages)
+[20:39:29]   Page 1: 6 listings, 6 new
+[20:39:29]   Subtotal: 6 listings, 6 new
+[20:39:32] [164/186] US/RI language-school
+[20:39:33]   2 total results (up to 1 pages)
+[20:39:33]   Page 1: 2 listings, 2 new
+[20:39:33]   Subtotal: 2 listings, 2 new
+[20:39:37] [165/186] US/SC language-school
+[20:39:37]   1 total results (up to 1 pages)
+[20:39:37]   Page 1: 1 listings, 1 new
+[20:39:37]   Subtotal: 1 listings, 1 new
+[20:39:37]   [Progress saved: 6477 leads]
+[20:39:42] [166/186] US/SD language-school
+[20:39:42]   Timeout, retrying...
+[20:39:43]   No results
+[20:39:46] [167/186] US/TN language-school
+[20:39:47]   11 total results (up to 1 pages)
+[20:39:47]   Page 1: 9 listings, 9 new
+[20:39:47]   Subtotal: 9 listings, 9 new
+[20:39:52] [168/186] US/TX language-school
+[20:39:52]   51 total results (up to 4 pages)
+[20:39:52]   Page 1: 15 listings, 15 new
+[20:39:56]   Page 2: 14 listings, 1 new
+[20:40:01]   Page 3: 14 listings, 13 new
+[20:40:03]   Timeout, retrying...
+[20:40:06]   Page 4: 6 listings, 5 new
+[20:40:06]   Subtotal: 49 listings, 34 new
+[20:40:11] [169/186] US/UT language-school
+[20:40:11]   8 total results (up to 1 pages)
+[20:40:11]   Page 1: 7 listings, 7 new
+[20:40:11]   Subtotal: 7 listings, 7 new
+[20:40:12]   Timeout, retrying...
+[20:40:14] [170/186] US/VA language-school
+[20:40:15]   27 total results (up to 2 pages)
+[20:40:15]   Page 1: 14 listings, 11 new
+[20:40:19]   Page 2: 11 listings, 7 new
+[20:40:19]   Subtotal: 25 listings, 18 new
+[20:40:19]   [Progress saved: 6545 leads]
+[20:40:23] [171/186] US/VT language-school
+[20:40:23]   No results
+[20:40:27] [172/186] US/WA language-school
+[20:40:28]   27 total results (up to 2 pages)
+[20:40:28]   Page 1: 14 listings, 13 new
+[20:40:32]   Page 2: 12 listings, 10 new
+[20:40:32]   Subtotal: 26 listings, 23 new
+[20:40:35] [173/186] US/WI language-school
+[20:40:36]   12 total results (up to 1 pages)
+[20:40:36]   Page 1: 7 listings, 7 new
+[20:40:36]   Subtotal: 7 listings, 7 new
+[20:40:41] [174/186] US/WV language-school
+[20:40:41]   No results
+[20:40:46] [175/186] US/WY language-school
+[20:40:47]   No results
+[20:40:47]   [Progress saved: 6575 leads]
+[20:40:47]   Timeout, retrying...
+[20:40:50] [176/186] CA/AB language-school
+[20:40:51]   31 total results (up to 3 pages)
+[20:40:51]   Page 1: 14 listings, 9 new
+[20:40:53]   Timeout, retrying...
+[20:40:55]   Page 2: 15 listings, 12 new
+[20:41:00]   Page 3: 1 listings, 1 new
+[20:41:00]   Subtotal: 30 listings, 22 new
+[20:41:05] [177/186] CA/BC language-school
+[20:41:05]   103 total results (up to 7 pages)
+[20:41:05]   Page 1: 15 listings, 15 new
+[20:41:10]   Page 2: 15 listings, 13 new
+[20:41:11]   Timeout, retrying...
+[20:41:14]   Page 3: 15 listings, 7 new
+[20:41:16]   Timeout, retrying...
+[20:41:18]   Page 4: 14 listings, 8 new
+[20:41:23]   Page 5: 14 listings, 14 new
+[20:41:23]   Timeout, retrying...
+[20:41:28]   Page 6: 15 listings, 13 new
+[20:41:28]   Timeout, retrying...
+[20:41:32]   Page 7: 13 listings, 13 new
+[20:41:32]   Subtotal: 101 listings, 83 new
+[20:41:36] [178/186] CA/MB language-school
+[20:41:36]   No results
+[20:41:40] [179/186] CA/NB language-school
+[20:41:41]   1 total results (up to 1 pages)
+[20:41:41]   Page 1: 1 listings, 1 new
+[20:41:41]   Subtotal: 1 listings, 1 new
+[20:41:46] [180/186] CA/NL language-school
+[20:41:46]   Timeout, retrying...
+[20:41:46]   No results
+[20:41:46]   [Progress saved: 6681 leads]
+[20:41:50] [181/186] CA/NS language-school
+[20:41:51]   6 total results (up to 1 pages)
+[20:41:51]   Page 1: 5 listings, 4 new
+[20:41:51]   Subtotal: 5 listings, 4 new
+[20:41:51]   Timeout, retrying...
+[20:41:55] [182/186] CA/NT language-school
+[20:41:56]   No results
+[20:41:59] [183/186] CA/NU language-school
+[20:42:00]   No results
+[20:42:03]   Timeout, retrying...
+[20:42:05] [184/186] CA/ON language-school
+[20:42:05]   70 total results (up to 5 pages)
+[20:42:05]   Page 1: 15 listings, 13 new
+[20:42:06]   Timeout, retrying...
+[20:42:09]   Page 2: 15 listings, 8 new
+[20:42:14]   Page 3: 15 listings, 9 new
+[20:42:16]   Timeout, retrying...
+[20:42:18]   Page 4: 15 listings, 11 new
+[20:42:21]   Timeout, retrying...
+[20:42:23]   Page 5: 9 listings, 7 new
+[20:42:23]   Subtotal: 69 listings, 48 new
+[20:42:26]   Timeout, retrying...
+[20:42:26]   Timeout, retrying...
+[20:42:28] [185/186] CA/PE language-school
+[20:42:28]   No results
+[20:42:28]   [Progress saved: 6733 leads]
+[20:42:29]   Timeout, retrying...
+[20:42:33] [186/186] CA/SK language-school
+[20:42:34]   No results
+[20:42:38] 
+[20:42:38] Category scraping complete: 6733 unique leads
+[20:42:38] 
+=== Profile Enrichment Phase: 6603 profiles to fetch ===
+[20:42:38]   [1/6603] Enriching... (0 websites, 0 emails found)
+[20:42:41]   Timeout, retrying...
+[20:42:51]   Timeout, retrying...
+[20:42:58]   Timeout, retrying...
+[20:43:01]   Timeout, retrying...
+[20:43:03]   Timeout, retrying...
+[20:43:04]   Timeout, retrying...
+[20:43:08]   Timeout, retrying...
+[20:43:16]   Timeout, retrying...
+[20:43:26]   Timeout, retrying...
+[20:43:33]   Timeout, retrying...
+[20:43:36]   Timeout, retrying...
+[20:43:38]   Timeout, retrying...
+[20:43:39]   Timeout, retrying...
+[20:43:43]   Timeout, retrying...
+[20:44:08]   Timeout, retrying...
+[20:44:14]   Timeout, retrying...
+[20:44:14]   Timeout, retrying...
+[20:44:18]   Timeout, retrying...
+[20:44:26]   [25/6603] Enriching... (24 websites, 0 emails found)
+[20:44:49]   Timeout, retrying...
+[20:45:05]   Timeout, retrying...
+[20:45:24]   Timeout, retrying...
+[20:45:40]   Timeout, retrying...
+[20:46:15]   Timeout, retrying...
+[20:46:25]   [50/6603] Enriching... (49 websites, 0 emails found)
+[20:46:26]   [Progress saved: 50 profiles enriched]
+[20:46:55]   Timeout, retrying...
+[20:47:29]   Timeout, retrying...
+[20:47:30]   Timeout, retrying...
+[20:48:04]   Timeout, retrying...
+[20:48:04]   Timeout, retrying...
+[20:48:06]   Timeout, retrying...
+[20:48:27]   [75/6603] Enriching... (74 websites, 0 emails found)
+[20:48:39]   Timeout, retrying...
+[20:48:39]   Timeout, retrying...
+[20:48:47]   Timeout, retrying...
+[20:48:52]   Timeout, retrying...
+[20:49:15]   Timeout, retrying...
+[20:49:22]   Timeout, retrying...
+[20:49:28]   Timeout, retrying...
+[20:49:44]   Timeout, retrying...
+[20:49:57]   Timeout, retrying...
+[20:50:03]   Timeout, retrying...
+[20:50:19]   Timeout, retrying...
+[20:50:23]   [100/6603] Enriching... (99 websites, 0 emails found)
+[20:50:24]   [Progress saved: 100 profiles enriched]
+[20:50:54]   Timeout, retrying...
+[20:52:17]   [125/6603] Enriching... (124 websites, 0 emails found)
+[20:54:13]   [150/6603] Enriching... (149 websites, 0 emails found)
+[20:54:14]   [Progress saved: 150 profiles enriched]
+[20:55:20]   Timeout, retrying...
+[20:55:45]   Timeout, retrying...
+[20:55:55]   Timeout, retrying...
+[20:56:12]   [175/6603] Enriching... (174 websites, 0 emails found)
+[20:56:20]   Timeout, retrying...
+[20:56:31]   Timeout, retrying...
+[20:56:55]   Timeout, retrying...
+[20:57:42]   Timeout, retrying...
+[20:58:07]   [200/6603] Enriching... (199 websites, 0 emails found)
+[20:58:08]   [Progress saved: 200 profiles enriched]
+[20:58:17]   Timeout, retrying...
+[20:58:52]   Timeout, retrying...
+[21:00:10]   [225/6603] Enriching... (224 websites, 0 emails found)
+[21:02:06]   [250/6603] Enriching... (249 websites, 0 emails found)
+[21:02:07]   [Progress saved: 250 profiles enriched]
+[21:03:44]   Timeout, retrying...
+[21:03:59]   [275/6603] Enriching... (274 websites, 0 emails found)
+[21:04:19]   Timeout, retrying...
+[21:04:54]   Timeout, retrying...
+[21:05:54]   [300/6603] Enriching... (299 websites, 0 emails found)
+[21:05:55]   [Progress saved: 300 profiles enriched]
+[21:06:19]   Timeout, retrying...
+[21:06:55]   Timeout, retrying...
+[21:07:07]   Timeout, retrying...
+[21:07:24]   Timeout, retrying...
+[21:07:30]   Timeout, retrying...
+[21:07:43]   Timeout, retrying...
+[21:07:59]   [325/6603] Enriching... (324 websites, 0 emails found)
+[21:07:59]   Timeout, retrying...
+[21:08:18]   Timeout, retrying...
+[21:08:35]   Timeout, retrying...
+[21:08:54]   Timeout, retrying...
+[21:09:29]   Timeout, retrying...
+[21:09:52]   [350/6603] Enriching... (349 websites, 0 emails found)
+[21:09:52]   [Progress saved: 350 profiles enriched]
+[21:10:05]   Timeout, retrying...
+[21:10:12]   Timeout, retrying...
+[21:10:47]   Timeout, retrying...
+[21:11:22]   Timeout, retrying...
+[21:11:44]   [375/6603] Enriching... (374 websites, 0 emails found)
+[21:12:24]   Timeout, retrying...
+[21:12:29]   Timeout, retrying...
+[21:12:52]   Timeout, retrying...
+[21:12:59]   Timeout, retrying...
+[21:13:04]   Timeout, retrying...
+[21:13:14]   Timeout, retrying...
+[21:13:27]   Timeout, retrying...
+[21:13:34]   Timeout, retrying...
+[21:13:39]   Timeout, retrying...
+[21:13:41]   [400/6603] Enriching... (399 websites, 0 emails found)
+[21:13:42]   [Progress saved: 400 profiles enriched]
+[21:13:49]   Timeout, retrying...
+[21:14:02]   Timeout, retrying...
+[21:14:23]   Timeout, retrying...
+[21:14:25]   Timeout, retrying...
+[21:14:38]   Timeout, retrying...
+[21:14:58]   Timeout, retrying...
+[21:15:13]   Timeout, retrying...
+[21:15:33]   Timeout, retrying...
+[21:15:45]   [425/6603] Enriching... (424 websites, 0 emails found)
+[21:15:49]   Timeout, retrying...
+[21:15:52]   Timeout, retrying...
+[21:16:27]   Timeout, retrying...
+[21:17:02]   Timeout, retrying...
+[21:17:47]   [450/6603] Enriching... (449 websites, 0 emails found)
+[21:17:48]   [Progress saved: 450 profiles enriched]
+[21:19:46]   [475/6603] Enriching... (474 websites, 0 emails found)
+[21:21:44]   [500/6603] Enriching... (499 websites, 0 emails found)
+[21:21:45]   [Progress saved: 500 profiles enriched]
+[21:23:37]   [525/6603] Enriching... (524 websites, 0 emails found)
+[21:25:32]   [550/6603] Enriching... (549 websites, 0 emails found)
+[21:25:33]   [Progress saved: 550 profiles enriched]
+[21:27:32]   [575/6603] Enriching... (574 websites, 0 emails found)
+[21:29:28]   [600/6603] Enriching... (599 websites, 0 emails found)
+[21:29:29]   [Progress saved: 600 profiles enriched]
+[21:31:23]   [625/6603] Enriching... (624 websites, 0 emails found)
+[21:32:53]   Timeout, retrying...
+[21:33:18]   [650/6603] Enriching... (649 websites, 0 emails found)
+[21:33:18]   [Progress saved: 650 profiles enriched]
+[21:33:28]   Timeout, retrying...
+[21:34:03]   Timeout, retrying...
+[21:35:05]   [675/6603] Enriching... (674 websites, 0 emails found)
+[21:37:00]   [700/6603] Enriching... (699 websites, 0 emails found)
+[21:37:00]   [Progress saved: 700 profiles enriched]
+[21:37:05]   Timeout, retrying...
+[21:37:41]   Timeout, retrying...
+[21:38:16]   Timeout, retrying...
+[21:38:51]   [725/6603] Enriching... (724 websites, 0 emails found)
+[21:40:48]   [750/6603] Enriching... (749 websites, 0 emails found)
+[21:40:49]   [Progress saved: 750 profiles enriched]
+[21:42:45]   [775/6603] Enriching... (774 websites, 0 emails found)
+[21:44:13]   Timeout, retrying...
+[21:44:47]   [800/6603] Enriching... (799 websites, 0 emails found)
+[21:44:47]   Timeout, retrying...
+[21:44:47]   [Progress saved: 800 profiles enriched]
+[21:44:48]   Timeout, retrying...
+[21:45:22]   Timeout, retrying...
+[21:45:24]   Timeout, retrying...
+[21:45:39]   Timeout, retrying...
+[21:45:57]   Timeout, retrying...
+[21:46:14]   Timeout, retrying...
+[21:46:39]   [825/6603] Enriching... (824 websites, 0 emails found)
+[21:46:49]   Timeout, retrying...
+[21:46:55]   Timeout, retrying...
+[21:47:30]   Timeout, retrying...
+[21:48:05]   Timeout, retrying...
+[21:48:36]   [850/6603] Enriching... (849 websites, 0 emails found)
+[21:48:36]   [Progress saved: 850 profiles enriched]
+[21:49:56]   Timeout, retrying...
+[21:50:30]   [875/6603] Enriching... (874 websites, 0 emails found)
+[21:50:31]   Timeout, retrying...
+[21:51:07]   Timeout, retrying...
+[21:52:27]   [900/6603] Enriching... (899 websites, 0 emails found)
+[21:52:28]   [Progress saved: 900 profiles enriched]
+[21:52:29]   Timeout, retrying...
+[21:53:04]   Timeout, retrying...
+[21:53:40]   Timeout, retrying...
+[21:54:18]   [925/6603] Enriching... (924 websites, 0 emails found)
+[21:56:16]   [950/6603] Enriching... (949 websites, 0 emails found)
+[21:56:16]   [Progress saved: 950 profiles enriched]
+[21:58:10]   [975/6603] Enriching... (974 websites, 0 emails found)
+[21:59:36]   Timeout, retrying...
+[22:00:06]   [1000/6603] Enriching... (999 websites, 0 emails found)
+[22:00:07]   [Progress saved: 1000 profiles enriched]
+[22:00:11]   Timeout, retrying...
+[22:00:46]   Timeout, retrying...
+[22:01:35]   Timeout, retrying...
+[22:02:06]   [1025/6603] Enriching... (1024 websites, 0 emails found)
+[22:02:10]   Timeout, retrying...
+[22:02:45]   Timeout, retrying...
+[22:03:33]   Timeout, retrying...
+[22:04:02]   [1050/6603] Enriching... (1049 websites, 0 emails found)
+[22:04:03]   [Progress saved: 1050 profiles enriched]
+[22:04:08]   Timeout, retrying...
+[22:04:43]   Timeout, retrying...
+[22:05:54]   [1075/6603] Enriching... (1074 websites, 0 emails found)
+[22:07:48]   [1100/6603] Enriching... (1099 websites, 0 emails found)
+[22:07:48]   [Progress saved: 1100 profiles enriched]
+[22:08:23]   Timeout, retrying...
+[22:08:38]   Timeout, retrying...
+[22:08:57]   Timeout, retrying...
+[22:08:58]   Timeout, retrying...
+[22:09:13]   Timeout, retrying...
+[22:09:32]   Timeout, retrying...
+[22:09:33]   Timeout, retrying...
+[22:09:48]   Timeout, retrying...
+[22:09:49]   [1125/6603] Enriching... (1124 websites, 0 emails found)
+[22:10:07]   Timeout, retrying...
+[22:10:39]   Timeout, retrying...
+[22:11:14]   Timeout, retrying...
+[22:11:49]   [1150/6603] Enriching... (1149 websites, 0 emails found)
+[22:11:49]   Timeout, retrying...
+[22:11:50]   [Progress saved: 1150 profiles enriched]
+[22:13:42]   [1175/6603] Enriching... (1174 websites, 0 emails found)
+[22:13:45]   Timeout, retrying...
+[22:13:50]   Timeout, retrying...
+[22:14:20]   Timeout, retrying...
+[22:14:21]   Timeout, retrying...
+[22:14:25]   Timeout, retrying...
+[22:14:55]   Timeout, retrying...
+[22:14:56]   Timeout, retrying...
+[22:15:00]   Timeout, retrying...
+[22:15:32]   Timeout, retrying...
+[22:15:37]   [1200/6603] Enriching... (1198 websites, 0 emails found)
+[22:15:37]   [Progress saved: 1200 profiles enriched]
+[22:17:35]   [1225/6603] Enriching... (1223 websites, 0 emails found)
+[22:19:30]   [1250/6603] Enriching... (1248 websites, 0 emails found)
+[22:19:31]   [Progress saved: 1250 profiles enriched]
+[22:19:50]   Timeout, retrying...
+[22:20:19]   Timeout, retrying...
+[22:20:25]   Timeout, retrying...
+[22:20:54]   Timeout, retrying...
+[22:21:00]   Timeout, retrying...
+[22:21:28]   [1275/6603] Enriching... (1273 websites, 0 emails found)
+[22:21:29]   Timeout, retrying...
+[22:23:27]   [1300/6603] Enriching... (1298 websites, 0 emails found)
+[22:23:27]   [Progress saved: 1300 profiles enriched]
+[22:25:23]   [1325/6603] Enriching... (1323 websites, 0 emails found)
+[22:27:19]   [1350/6603] Enriching... (1348 websites, 0 emails found)
+[22:27:19]   [Progress saved: 1350 profiles enriched]
+[22:29:12]   [1375/6603] Enriching... (1373 websites, 0 emails found)
+[22:30:36]   Timeout, retrying...
+[22:31:01]   Timeout, retrying...
+[22:31:11]   [1400/6603] Enriching... (1398 websites, 0 emails found)
+[22:31:11]   [Progress saved: 1400 profiles enriched]
+[22:31:11]   Timeout, retrying...
+[22:31:36]   Timeout, retrying...
+[22:31:47]   Timeout, retrying...
+[22:32:11]   Timeout, retrying...
+[22:33:13]   [1425/6603] Enriching... (1423 websites, 0 emails found)
+[22:35:06]   [1450/6603] Enriching... (1448 websites, 0 emails found)
+[22:35:07]   [Progress saved: 1450 profiles enriched]
+[22:37:01]   [1475/6603] Enriching... (1473 websites, 0 emails found)
+[22:39:02]   [1500/6603] Enriching... (1498 websites, 0 emails found)
+[22:39:02]   [Progress saved: 1500 profiles enriched]
+[22:40:50]   [1525/6603] Enriching... (1523 websites, 0 emails found)
+[22:41:17]   Timeout, retrying...
+[22:41:52]   Timeout, retrying...
+[22:42:27]   Timeout, retrying...
+[22:42:43]   [1550/6603] Enriching... (1548 websites, 0 emails found)
+[22:42:44]   [Progress saved: 1550 profiles enriched]
+[22:42:52]   Timeout, retrying...
+[22:43:27]   Timeout, retrying...
+[22:43:40]   Timeout, retrying...
+[22:44:02]   Timeout, retrying...
+[22:44:15]   Timeout, retrying...
+[22:44:36]   Timeout, retrying...
+[22:44:44]   [1575/6603] Enriching... (1573 websites, 0 emails found)
+[22:44:50]   Timeout, retrying...
+[22:45:11]   Timeout, retrying...
+[22:45:46]   Timeout, retrying...
+[22:46:39]   [1600/6603] Enriching... (1598 websites, 0 emails found)
+[22:46:40]   [Progress saved: 1600 profiles enriched]
+[22:48:37]   [1625/6603] Enriching... (1623 websites, 0 emails found)
+[22:49:35]   Timeout, retrying...
+[22:50:11]   Timeout, retrying...
+[22:50:35]   [1650/6603] Enriching... (1648 websites, 0 emails found)
+[22:50:36]   [Progress saved: 1650 profiles enriched]
+[22:50:46]   Timeout, retrying...
+[22:51:44]   Timeout, retrying...
+[22:52:19]   Timeout, retrying...
+[22:52:30]   Timeout, retrying...
+[22:52:33]   [1675/6603] Enriching... (1673 websites, 0 emails found)
+[22:52:42]   Timeout, retrying...
+[22:52:54]   Timeout, retrying...
+[22:53:06]   Timeout, retrying...
+[22:53:17]   Timeout, retrying...
+[22:53:41]   Timeout, retrying...
+[22:53:52]   Timeout, retrying...
+[22:54:26]   [1700/6603] Enriching... (1698 websites, 0 emails found)
+[22:54:26]   [Progress saved: 1700 profiles enriched]
+[22:56:24]   [1725/6603] Enriching... (1723 websites, 0 emails found)
+[22:56:28]   Timeout, retrying...
+[22:56:58]   Timeout, retrying...
+[22:57:03]   Timeout, retrying...
+[22:57:33]   Timeout, retrying...
+[22:57:39]   Timeout, retrying...
+[22:58:08]   Timeout, retrying...
+[22:58:19]   [1750/6603] Enriching... (1748 websites, 0 emails found)
+[22:58:19]   [Progress saved: 1750 profiles enriched]
+[22:58:24]   Timeout, retrying...
+[22:58:59]   Timeout, retrying...
+[22:59:34]   Timeout, retrying...
+[23:00:12]   [1775/6603] Enriching... (1773 websites, 0 emails found)
+[23:01:53]   Timeout, retrying...
+[23:02:11]   [1800/6603] Enriching... (1798 websites, 0 emails found)
+[23:02:12]   [Progress saved: 1800 profiles enriched]
+[23:02:28]   Timeout, retrying...
+[23:03:03]   Timeout, retrying...
+[23:03:05]   Timeout, retrying...
+[23:03:40]   Timeout, retrying...
+[23:04:05]   [1825/6603] Enriching... (1823 websites, 0 emails found)
+[23:04:15]   Timeout, retrying...
+[23:05:01]   Timeout, retrying...
+[23:05:30]   Timeout, retrying...
+[23:05:36]   Timeout, retrying...
+[23:06:01]   [1850/6603] Enriching... (1848 websites, 0 emails found)
+[23:06:01]   [Progress saved: 1850 profiles enriched]
+[23:06:05]   Timeout, retrying...
+[23:06:07]   Timeout, retrying...
+[23:06:11]   Timeout, retrying...
+[23:06:40]   Timeout, retrying...
+[23:06:42]   Timeout, retrying...
+[23:07:18]   Timeout, retrying...
+[23:07:56]   [1875/6603] Enriching... (1873 websites, 0 emails found)
+[23:08:52]   Timeout, retrying...
+[23:09:11]   Timeout, retrying...
+[23:09:27]   Timeout, retrying...
+[23:09:46]   Timeout, retrying...
+[23:09:49]   [1900/6603] Enriching... (1898 websites, 0 emails found)
+[23:09:50]   [Progress saved: 1900 profiles enriched]
+[23:10:03]   Timeout, retrying...
+[23:10:21]   Timeout, retrying...
+[23:11:43]   [1925/6603] Enriching... (1923 websites, 0 emails found)
+[23:11:55]   Timeout, retrying...
+[23:12:30]   Timeout, retrying...
+[23:13:05]   Timeout, retrying...
+[23:13:34]   [1950/6603] Enriching... (1948 websites, 0 emails found)
+[23:13:35]   [Progress saved: 1950 profiles enriched]
+[23:14:05]   Timeout, retrying...
+[23:14:18]   Timeout, retrying...
+[23:14:40]   Timeout, retrying...
+[23:14:53]   Timeout, retrying...
+[23:15:11]   Timeout, retrying...
+[23:15:15]   Timeout, retrying...
+[23:15:15]   Timeout, retrying...
+[23:15:24]   [1975/6603] Enriching... (1973 websites, 0 emails found)
+[23:15:29]   Timeout, retrying...
+[23:15:46]   Timeout, retrying...
+[23:15:50]   Timeout, retrying...
+[23:16:21]   Timeout, retrying...
+[23:16:25]   Timeout, retrying...
+[23:17:20]   [2000/6603] Enriching... (1998 websites, 0 emails found)
+[23:17:21]   [Progress saved: 2000 profiles enriched]
+[23:18:40]   Timeout, retrying...
+[23:19:16]   Timeout, retrying...
+[23:19:17]   [2025/6603] Enriching... (2023 websites, 0 emails found)
+[23:19:51]   Timeout, retrying...
+[23:21:16]   [2050/6603] Enriching... (2048 websites, 0 emails found)
+[23:21:17]   [Progress saved: 2050 profiles enriched]
+[23:23:13]   [2075/6603] Enriching... (2073 websites, 0 emails found)
+[23:25:10]   [2100/6603] Enriching... (2098 websites, 0 emails found)
+[23:25:10]   [Progress saved: 2100 profiles enriched]
+[23:27:06]   [2125/6603] Enriching... (2123 websites, 0 emails found)
+[23:28:57]   [2150/6603] Enriching... (2148 websites, 0 emails found)
+[23:28:57]   [Progress saved: 2150 profiles enriched]
+[23:29:18]   Timeout, retrying...
+[23:29:53]   Timeout, retrying...
+[23:30:28]   Timeout, retrying...
+[23:30:52]   [2175/6603] Enriching... (2173 websites, 0 emails found)
+[23:32:50]   [2200/6603] Enriching... (2198 websites, 0 emails found)
+[23:32:50]   [Progress saved: 2200 profiles enriched]
+[23:33:49]   Timeout, retrying...
+[23:34:18]   Timeout, retrying...
+[23:34:24]   Timeout, retrying...
+[23:34:46]   [2225/6603] Enriching... (2223 websites, 0 emails found)
+[23:34:53]   Timeout, retrying...
+[23:34:54]   Timeout, retrying...
+[23:34:59]   Timeout, retrying...
+[23:35:28]   Timeout, retrying...
+[23:35:29]   Timeout, retrying...
+[23:36:04]   Timeout, retrying...
+[23:36:44]   [2250/6603] Enriching... (2248 websites, 0 emails found)
+[23:36:45]   [Progress saved: 2250 profiles enriched]
+[23:37:34]   Timeout, retrying...
+[23:37:44]   Timeout, retrying...
+[23:38:09]   Timeout, retrying...
+[23:38:17]   Timeout, retrying...
+[23:38:19]   Timeout, retrying...
+[23:38:42]   [2275/6603] Enriching... (2273 websites, 0 emails found)
+[23:38:44]   Timeout, retrying...
+[23:38:52]   Timeout, retrying...
+[23:38:54]   Timeout, retrying...
+[23:39:12]   Timeout, retrying...
+[23:39:27]   Timeout, retrying...
+[23:39:47]   Timeout, retrying...
+[23:39:54]   Timeout, retrying...
+[23:40:23]   Timeout, retrying...
+[23:40:29]   Timeout, retrying...
+[23:40:40]   [2300/6603] Enriching... (2298 websites, 0 emails found)
+[23:40:40]   [Progress saved: 2300 profiles enriched]
+[23:41:05]   Timeout, retrying...
+[23:42:38]   [2325/6603] Enriching... (2323 websites, 0 emails found)
+[23:43:36]   Timeout, retrying...
+[23:44:11]   Timeout, retrying...
+[23:44:34]   [2350/6603] Enriching... (2348 websites, 0 emails found)
+[23:44:34]   [Progress saved: 2350 profiles enriched]
+[23:44:45]   Timeout, retrying...
+[23:44:46]   Timeout, retrying...
+[23:45:20]   Timeout, retrying...
+[23:45:55]   Timeout, retrying...
+[23:46:29]   [2375/6603] Enriching... (2373 websites, 0 emails found)
+[23:47:12]   Timeout, retrying...
+[23:47:35]   Timeout, retrying...
+[23:47:48]   Timeout, retrying...
+[23:48:11]   Timeout, retrying...
+[23:48:23]   Timeout, retrying...
+[23:48:26]   [2400/6603] Enriching... (2398 websites, 0 emails found)
+[23:48:27]   [Progress saved: 2400 profiles enriched]
+[23:48:46]   Timeout, retrying...
+[23:50:23]   [2425/6603] Enriching... (2423 websites, 0 emails found)
+[23:52:06]   Timeout, retrying...
+[23:52:16]   [2450/6603] Enriching... (2448 websites, 0 emails found)
+[23:52:17]   [Progress saved: 2450 profiles enriched]
+[23:52:41]   Timeout, retrying...
+[23:53:16]   Timeout, retrying...
+[23:54:11]   [2475/6603] Enriching... (2473 websites, 0 emails found)
+[23:56:07]   [2500/6603] Enriching... (2498 websites, 0 emails found)
+[23:56:08]   [Progress saved: 2500 profiles enriched]
+[23:58:02]   [2525/6603] Enriching... (2523 websites, 0 emails found)
+[23:58:48]   Timeout, retrying...
+[23:59:23]   Timeout, retrying...
+[23:59:58]   Timeout, retrying...
+[00:00:01]   [2550/6603] Enriching... (2548 websites, 0 emails found)
+[00:00:02]   [Progress saved: 2550 profiles enriched]
+[00:00:03]   Timeout, retrying...
+[00:00:38]   Timeout, retrying...
+[00:01:14]   Timeout, retrying...
+[00:01:38]   Timeout, retrying...
+[00:01:59]   [2575/6603] Enriching... (2573 websites, 0 emails found)
+[00:02:13]   Timeout, retrying...
+[00:02:29]   Timeout, retrying...
+[00:02:48]   Timeout, retrying...
+[00:03:04]   Timeout, retrying...
+[00:03:39]   Timeout, retrying...
+[00:03:57]   [2600/6603] Enriching... (2598 websites, 0 emails found)
+[00:03:58]   [Progress saved: 2600 profiles enriched]
+[00:05:42]   Timeout, retrying...
+[00:05:58]   [2625/6603] Enriching... (2623 websites, 0 emails found)
+[00:05:59]   Timeout, retrying...
+[00:06:17]   Timeout, retrying...
+[00:06:22]   Timeout, retrying...
+[00:06:34]   Timeout, retrying...
+[00:06:52]   Timeout, retrying...
+[00:06:57]   Timeout, retrying...
+[00:07:09]   Timeout, retrying...
+[00:07:32]   Timeout, retrying...
+[00:07:53]   [2650/6603] Enriching... (2648 websites, 0 emails found)
+[00:07:54]   [Progress saved: 2650 profiles enriched]
+[00:09:12]   Timeout, retrying...
+[00:09:47]   Timeout, retrying...
+[00:09:53]   [2675/6603] Enriching... (2673 websites, 0 emails found)
+[00:09:58]   Timeout, retrying...
+[00:10:02]   Timeout, retrying...
+[00:10:19]   Timeout, retrying...
+[00:10:22]   Timeout, retrying...
+[00:10:33]   Timeout, retrying...
+[00:10:37]   Timeout, retrying...
+[00:10:54]   Timeout, retrying...
+[00:11:08]   Timeout, retrying...
+[00:11:13]   Timeout, retrying...
+[00:11:29]   Timeout, retrying...
+[00:11:47]   [2700/6603] Enriching... (2698 websites, 0 emails found)
+[00:11:47]   [Progress saved: 2700 profiles enriched]
+[00:13:46]   [2725/6603] Enriching... (2723 websites, 0 emails found)
+[00:14:21]   Timeout, retrying...
+[00:14:56]   Timeout, retrying...
+[00:15:01]   Timeout, retrying...
+[00:15:32]   Timeout, retrying...
+[00:15:36]   Timeout, retrying...
+[00:15:47]   [2750/6603] Enriching... (2748 websites, 0 emails found)
+[00:15:48]   [Progress saved: 2750 profiles enriched]
+[00:16:11]   Timeout, retrying...
+[00:17:44]   [2775/6603] Enriching... (2773 websites, 0 emails found)
+[00:17:56]   Timeout, retrying...
+[00:18:31]   Timeout, retrying...
+[00:19:06]   Timeout, retrying...
+[00:19:41]   [2800/6603] Enriching... (2798 websites, 0 emails found)
+[00:19:42]   [Progress saved: 2800 profiles enriched]
+[00:19:57]   Timeout, retrying...
+[00:20:32]   Timeout, retrying...
+[00:21:07]   Timeout, retrying...
+[00:21:40]   [2825/6603] Enriching... (2823 websites, 0 emails found)
+[00:22:38]   Timeout, retrying...
+[00:23:13]   Timeout, retrying...
+[00:23:39]   [2850/6603] Enriching... (2848 websites, 0 emails found)
+[00:23:40]   [Progress saved: 2850 profiles enriched]
+[00:23:49]   Timeout, retrying...
+[00:24:01]   Timeout, retrying...
+[00:24:36]   Timeout, retrying...
+[00:25:11]   Timeout, retrying...
+[00:25:38]   [2875/6603] Enriching... (2873 websites, 0 emails found)
+[00:26:43]   Timeout, retrying...
+[00:27:05]   Timeout, retrying...
+[00:27:17]   Timeout, retrying...
+[00:27:17]   Request error: socket hang up, retrying...
+[00:27:18]   Timeout, retrying...
+[00:27:40]   Timeout, retrying...
+[00:27:54]   Timeout, retrying...
+[00:28:11]   [2900/6603] Enriching... (2898 websites, 0 emails found)
+[00:28:11]   [Progress saved: 2900 profiles enriched]
+[00:28:15]   Timeout, retrying...
+[00:30:14]   [2925/6603] Enriching... (2923 websites, 0 emails found)
+[00:32:16]   [2950/6603] Enriching... (2948 websites, 0 emails found)
+[00:32:17]   [Progress saved: 2950 profiles enriched]
+[00:34:12]   [2975/6603] Enriching... (2973 websites, 0 emails found)
+[00:36:14]   [3000/6603] Enriching... (2998 websites, 0 emails found)
+[00:36:15]   [Progress saved: 3000 profiles enriched]
+[00:36:27]   Timeout, retrying...
+[00:37:02]   Timeout, retrying...
+[00:37:32]   Timeout, retrying...
+[00:37:37]   Timeout, retrying...
+[00:38:07]   Timeout, retrying...
+[00:38:10]   [3025/6603] Enriching... (3023 websites, 0 emails found)
+[00:38:42]   Timeout, retrying...
+[00:39:14]   Timeout, retrying...
+[00:39:23]   Timeout, retrying...
+[00:39:49]   Timeout, retrying...
+[00:39:59]   Timeout, retrying...
+[00:40:03]   [3050/6603] Enriching... (3048 websites, 0 emails found)
+[00:40:03]   [Progress saved: 3050 profiles enriched]
+[00:40:25]   Timeout, retrying...
+[00:40:34]   Timeout, retrying...
+[00:41:14]   Timeout, retrying...
+[00:41:49]   Timeout, retrying...
+[00:42:00]   [3075/6603] Enriching... (3073 websites, 0 emails found)
+[00:42:25]   Timeout, retrying...
+[00:43:51]   [3100/6603] Enriching... (3098 websites, 0 emails found)
+[00:43:52]   [Progress saved: 3100 profiles enriched]
+[00:44:31]   Timeout, retrying...
+[00:45:06]   Timeout, retrying...
+[00:45:08]   Timeout, retrying...
+[00:45:41]   Timeout, retrying...
+[00:45:43]   Timeout, retrying...
+[00:45:49]   [3125/6603] Enriching... (3123 websites, 0 emails found)
+[00:46:18]   Timeout, retrying...
+[00:47:44]   [3150/6603] Enriching... (3148 websites, 0 emails found)
+[00:47:45]   [Progress saved: 3150 profiles enriched]
+[00:48:39]   Timeout, retrying...
+[00:49:08]   Timeout, retrying...
+[00:49:14]   Timeout, retrying...
+[00:49:43]   [3175/6603] Enriching... (3173 websites, 0 emails found)
+[00:49:43]   Timeout, retrying...
+[00:49:50]   Timeout, retrying...
+[00:50:18]   Timeout, retrying...
+[00:51:05]   Timeout, retrying...
+[00:51:37]   [3200/6603] Enriching... (3198 websites, 0 emails found)
+[00:51:38]   [Progress saved: 3200 profiles enriched]
+[00:51:40]   Timeout, retrying...
+[00:52:15]   Timeout, retrying...
+[00:52:35]   Timeout, retrying...
+[00:53:10]   Timeout, retrying...
+[00:53:26]   Timeout, retrying...
+[00:53:26]   [3225/6603] Enriching... (3223 websites, 0 emails found)
+[00:53:45]   Timeout, retrying...
+[00:54:01]   Timeout, retrying...
+[00:54:02]   Timeout, retrying...
+[00:54:07]   Timeout, retrying...
+[00:54:37]   Timeout, retrying...
+[00:54:37]   Timeout, retrying...
+[00:54:42]   Timeout, retrying...
+[00:55:12]   Timeout, retrying...
+[00:55:17]   Timeout, retrying...
+[00:55:21]   [3250/6603] Enriching... (3248 websites, 0 emails found)
+[00:55:22]   [Progress saved: 3250 profiles enriched]
+[00:57:15]   [3275/6603] Enriching... (3273 websites, 0 emails found)
+[00:58:22]   Timeout, retrying...
+[00:58:57]   Timeout, retrying...
+[00:59:09]   [3300/6603] Enriching... (3298 websites, 0 emails found)
+[00:59:10]   [Progress saved: 3300 profiles enriched]
+[00:59:33]   Timeout, retrying...
+[01:01:03]   [3325/6603] Enriching... (3323 websites, 0 emails found)
+[01:01:04]   Timeout, retrying...
+[01:01:34]   Timeout, retrying...
+[01:01:40]   Timeout, retrying...
+[01:02:09]   Timeout, retrying...
+[01:02:15]   Timeout, retrying...
+[01:02:44]   Timeout, retrying...
+[01:03:01]   [3350/6603] Enriching... (3348 websites, 0 emails found)
+[01:03:01]   [Progress saved: 3350 profiles enriched]
+[01:05:02]   [3375/6603] Enriching... (3373 websites, 0 emails found)
+[01:07:00]   [3400/6603] Enriching... (3398 websites, 0 emails found)
+[01:07:01]   [Progress saved: 3400 profiles enriched]
+[01:07:12]   Timeout, retrying...
+[01:07:16]   Timeout, retrying...
+[01:07:25]   Timeout, retrying...
+[01:07:47]   Timeout, retrying...
+[01:07:51]   Timeout, retrying...
+[01:08:00]   Timeout, retrying...
+[01:08:22]   Timeout, retrying...
+[01:08:26]   Timeout, retrying...
+[01:08:35]   Timeout, retrying...
+[01:08:52]   Timeout, retrying...
+[01:08:53]   [3425/6603] Enriching... (3423 websites, 0 emails found)
+[01:09:01]   Timeout, retrying...
+[01:09:27]   Timeout, retrying...
+[01:09:36]   Timeout, retrying...
+[01:10:02]   Timeout, retrying...
+[01:10:11]   Timeout, retrying...
+[01:10:47]   [3450/6603] Enriching... (3448 websites, 0 emails found)
+[01:10:48]   [Progress saved: 3450 profiles enriched]
+[01:11:47]   Timeout, retrying...
+[01:12:10]   Timeout, retrying...
+[01:12:22]   Timeout, retrying...
+[01:12:44]   [3475/6603] Enriching... (3473 websites, 0 emails found)
+[01:12:45]   Timeout, retrying...
+[01:12:57]   Timeout, retrying...
+[01:13:20]   Timeout, retrying...
+[01:14:33]   [3500/6603] Enriching... (3498 websites, 0 emails found)
+[01:14:34]   [Progress saved: 3500 profiles enriched]
+[01:16:27]   [3525/6603] Enriching... (3523 websites, 0 emails found)
+[01:18:31]   [3550/6603] Enriching... (3548 websites, 0 emails found)
+[01:18:32]   [Progress saved: 3550 profiles enriched]
+[01:19:42]   Timeout, retrying...
+[01:20:17]   Timeout, retrying...
+[01:20:27]   [3575/6603] Enriching... (3573 websites, 0 emails found)
+[01:20:48]   Timeout, retrying...
+[01:20:52]   Timeout, retrying...
+[01:21:23]   Timeout, retrying...
+[01:21:58]   Timeout, retrying...
+[01:22:28]   [3600/6603] Enriching... (3598 websites, 0 emails found)
+[01:22:29]   [Progress saved: 3600 profiles enriched]
+[01:23:58]   Timeout, retrying...
+[01:24:03]   Timeout, retrying...
+[01:24:21]   [3625/6603] Enriching... (3623 websites, 0 emails found)
+[01:24:33]   Timeout, retrying...
+[01:24:38]   Timeout, retrying...
+[01:25:08]   Timeout, retrying...
+[01:25:13]   Timeout, retrying...
+[01:25:37]   Timeout, retrying...
+[01:26:03]   Timeout, retrying...
+[01:26:12]   Timeout, retrying...
+[01:26:15]   [3650/6603] Enriching... (3648 websites, 0 emails found)
+[01:26:15]   [Progress saved: 3650 profiles enriched]
+[01:26:38]   Timeout, retrying...
+[01:26:47]   Timeout, retrying...
+[01:27:14]   Timeout, retrying...
+[01:28:12]   [3675/6603] Enriching... (3673 websites, 0 emails found)
+[01:28:23]   Timeout, retrying...
+[01:28:58]   Timeout, retrying...
+[01:29:33]   Timeout, retrying...
+[01:30:06]   [3700/6603] Enriching... (3698 websites, 0 emails found)
+[01:30:07]   [Progress saved: 3700 profiles enriched]
+[01:30:09]   Timeout, retrying...
+[01:30:44]   Timeout, retrying...
+[01:31:19]   Timeout, retrying...
+[01:31:28]   Timeout, retrying...
+[01:32:03]   Timeout, retrying...
+[01:32:04]   [3725/6603] Enriching... (3723 websites, 0 emails found)
+[01:32:38]   Timeout, retrying...
+[01:33:55]   [3750/6603] Enriching... (3748 websites, 0 emails found)
+[01:33:56]   [Progress saved: 3750 profiles enriched]
+[01:35:53]   [3775/6603] Enriching... (3773 websites, 0 emails found)
+[01:37:45]   [3800/6603] Enriching... (3798 websites, 0 emails found)
+[01:37:46]   [Progress saved: 3800 profiles enriched]
+[01:39:44]   [3825/6603] Enriching... (3823 websites, 0 emails found)
+[01:40:37]   Timeout, retrying...
+[01:41:12]   Timeout, retrying...
+[01:41:34]   [3850/6603] Enriching... (3848 websites, 0 emails found)
+[01:41:35]   [Progress saved: 3850 profiles enriched]
+[01:41:47]   Timeout, retrying...
+[01:43:27]   [3875/6603] Enriching... (3873 websites, 0 emails found)
+[01:45:23]   [3900/6603] Enriching... (3898 websites, 0 emails found)
+[01:45:24]   [Progress saved: 3900 profiles enriched]
+[01:46:08]   Timeout, retrying...
+[01:46:43]   Timeout, retrying...
+[01:47:13]   [3925/6603] Enriching... (3923 websites, 0 emails found)
+[01:47:19]   Timeout, retrying...
+[01:49:01]   [3950/6603] Enriching... (3948 websites, 0 emails found)
+[01:49:01]   [Progress saved: 3950 profiles enriched]
+[01:50:58]   [3975/6603] Enriching... (3973 websites, 0 emails found)
+[01:52:50]   [4000/6603] Enriching... (3998 websites, 0 emails found)
+[01:52:51]   [Progress saved: 4000 profiles enriched]
+[01:54:36]   Timeout, retrying...
+[01:54:48]   [4025/6603] Enriching... (4023 websites, 0 emails found)
+[01:55:11]   Timeout, retrying...
+[01:55:47]   Timeout, retrying...
+[01:56:09]   Timeout, retrying...
+[01:56:38]   [4050/6603] Enriching... (4048 websites, 0 emails found)
+[01:56:39]   [Progress saved: 4050 profiles enriched]
+[01:56:44]   Timeout, retrying...
+[01:57:19]   Timeout, retrying...
+[01:58:29]   [4075/6603] Enriching... (4073 websites, 0 emails found)
+[01:59:12]   Timeout, retrying...
+[01:59:46]   Timeout, retrying...
+[01:59:47]   Timeout, retrying...
+[02:00:21]   Timeout, retrying...
+[02:00:22]   Timeout, retrying...
+[02:00:29]   [4100/6603] Enriching... (4098 websites, 0 emails found)
+[02:00:30]   [Progress saved: 4100 profiles enriched]
+[02:00:56]   Timeout, retrying...
+[02:01:08]   Timeout, retrying...
+[02:01:43]   Timeout, retrying...
+[02:02:18]   Timeout, retrying...
+[02:02:20]   [4125/6603] Enriching... (4123 websites, 0 emails found)
+[02:03:32]   Timeout, retrying...
+[02:04:08]   Timeout, retrying...
+[02:04:14]   [4150/6603] Enriching... (4148 websites, 0 emails found)
+[02:04:14]   Timeout, retrying...
+[02:04:15]   [Progress saved: 4150 profiles enriched]
+[02:04:43]   Timeout, retrying...
+[02:04:49]   Timeout, retrying...
+[02:05:06]   Timeout, retrying...
+[02:05:24]   Timeout, retrying...
+[02:05:41]   Timeout, retrying...
+[02:06:08]   [4175/6603] Enriching... (4173 websites, 0 emails found)
+[02:06:16]   Timeout, retrying...
+[02:08:01]   [4200/6603] Enriching... (4198 websites, 0 emails found)
+[02:08:02]   [Progress saved: 4200 profiles enriched]
+[02:09:11]   Timeout, retrying...
+[02:09:46]   Timeout, retrying...
+[02:09:59]   [4225/6603] Enriching... (4223 websites, 0 emails found)
+[02:10:19]   Timeout, retrying...
+[02:10:21]   Timeout, retrying...
+[02:10:54]   Timeout, retrying...
+[02:11:30]   Timeout, retrying...
+[02:11:55]   [4250/6603] Enriching... (4248 websites, 0 emails found)
+[02:11:55]   [Progress saved: 4250 profiles enriched]
+[02:12:06]   Timeout, retrying...
+[02:12:41]   Timeout, retrying...
+[02:13:16]   Timeout, retrying...
+[02:13:52]   [4275/6603] Enriching... (4273 websites, 0 emails found)
+[02:15:07]   Timeout, retrying...
+[02:15:42]   Timeout, retrying...
+[02:15:47]   [4300/6603] Enriching... (4298 websites, 0 emails found)
+[02:15:47]   [Progress saved: 4300 profiles enriched]
+[02:16:17]   Timeout, retrying...
+[02:16:32]   Timeout, retrying...
+[02:17:07]   Timeout, retrying...
+[02:17:42]   Timeout, retrying...
+[02:17:44]   [4325/6603] Enriching... (4323 websites, 0 emails found)
+[02:18:10]   Timeout, retrying...
+[02:18:27]   Timeout, retrying...
+[02:18:45]   Timeout, retrying...
+[02:19:02]   Timeout, retrying...
+[02:19:20]   Timeout, retrying...
+[02:19:36]   [4350/6603] Enriching... (4348 websites, 0 emails found)
+[02:19:37]   [Progress saved: 4350 profiles enriched]
+[02:19:37]   Timeout, retrying...
+[02:21:23]   Timeout, retrying...
+[02:21:31]   [4375/6603] Enriching... (4373 websites, 0 emails found)
+[02:21:58]   Timeout, retrying...
+[02:22:33]   Timeout, retrying...
+[02:23:31]   [4400/6603] Enriching... (4398 websites, 0 emails found)
+[02:23:31]   [Progress saved: 4400 profiles enriched]
+[02:24:06]   Timeout, retrying...
+[02:24:42]   Timeout, retrying...
+[02:25:17]   Timeout, retrying...
+[02:25:31]   [4425/6603] Enriching... (4423 websites, 0 emails found)
+[02:27:22]   [4450/6603] Enriching... (4448 websites, 0 emails found)
+[02:27:22]   [Progress saved: 4450 profiles enriched]
+[02:27:48]   Timeout, retrying...
+[02:28:23]   Timeout, retrying...
+[02:28:25]   Timeout, retrying...
+[02:28:58]   Timeout, retrying...
+[02:29:00]   Timeout, retrying...
+[02:29:14]   [4475/6603] Enriching... (4473 websites, 0 emails found)
+[02:29:35]   Timeout, retrying...
+[02:29:38]   Timeout, retrying...
+[02:30:11]   Timeout, retrying...
+[02:30:13]   Timeout, retrying...
+[02:30:47]   Timeout, retrying...
+[02:30:49]   Timeout, retrying...
+[02:31:12]   [4500/6603] Enriching... (4498 websites, 0 emails found)
+[02:31:13]   [Progress saved: 4500 profiles enriched]
+[02:31:22]   Timeout, retrying...
+[02:33:10]   [4525/6603] Enriching... (4523 websites, 0 emails found)
+[02:33:20]   Timeout, retrying...
+[02:33:55]   Timeout, retrying...
+[02:34:31]   Timeout, retrying...
+[02:35:17]   [4550/6603] Enriching... (4548 websites, 0 emails found)
+[02:35:18]   [Progress saved: 4550 profiles enriched]
+[02:36:46]   Timeout, retrying...
+[02:37:08]   [4575/6603] Enriching... (4573 websites, 0 emails found)
+[02:37:21]   Timeout, retrying...
+[02:37:56]   Timeout, retrying...
+[02:38:42]   Timeout, retrying...
+[02:39:04]   [4600/6603] Enriching... (4598 websites, 0 emails found)
+[02:39:04]   [Progress saved: 4600 profiles enriched]
+[02:39:17]   Timeout, retrying...
+[02:39:52]   Timeout, retrying...
+[02:40:57]   [4625/6603] Enriching... (4623 websites, 0 emails found)
+[02:42:50]   [4650/6603] Enriching... (4648 websites, 0 emails found)
+[02:42:51]   [Progress saved: 4650 profiles enriched]
+[02:44:47]   [4675/6603] Enriching... (4673 websites, 0 emails found)
+[02:45:30]   Timeout, retrying...
+[02:46:05]   Timeout, retrying...
+[02:46:36]   [4700/6603] Enriching... (4697 websites, 0 emails found)
+[02:46:37]   [Progress saved: 4700 profiles enriched]
+[02:46:40]   Timeout, retrying...
+[02:48:28]   [4725/6603] Enriching... (4722 websites, 0 emails found)
+[02:50:03]   Timeout, retrying...
+[02:50:24]   [4750/6603] Enriching... (4747 websites, 0 emails found)
+[02:50:25]   [Progress saved: 4750 profiles enriched]
+[02:50:39]   Timeout, retrying...
+[02:51:14]   Timeout, retrying...
+[02:52:22]   [4775/6603] Enriching... (4772 websites, 0 emails found)
+[02:54:16]   [4800/6603] Enriching... (4797 websites, 0 emails found)
+[02:54:17]   [Progress saved: 4800 profiles enriched]
+[02:55:05]   Timeout, retrying...
+[02:55:40]   Timeout, retrying...
+[02:56:11]   [4825/6603] Enriching... (4822 websites, 0 emails found)
+[02:56:15]   Timeout, retrying...
+[02:58:01]   [4850/6603] Enriching... (4847 websites, 0 emails found)
+[02:58:02]   [Progress saved: 4850 profiles enriched]
+[02:58:05]   Timeout, retrying...
+[02:58:40]   Timeout, retrying...
+[02:59:15]   Timeout, retrying...
+[02:59:54]   [4875/6603] Enriching... (4872 websites, 0 emails found)
+[03:01:48]   [4900/6603] Enriching... (4897 websites, 0 emails found)
+[03:01:48]   [Progress saved: 4900 profiles enriched]
+[03:03:35]   Timeout, retrying...
+[03:03:39]   [4925/6603] Enriching... (4922 websites, 0 emails found)
+[03:04:10]   Timeout, retrying...
+[03:04:46]   Timeout, retrying...
+[03:05:06]   Timeout, retrying...
+[03:05:37]   [4950/6603] Enriching... (4947 websites, 0 emails found)
+[03:05:37]   [Progress saved: 4950 profiles enriched]
+[03:05:41]   Timeout, retrying...
+[03:06:16]   Timeout, retrying...
+[03:07:23]   [4975/6603] Enriching... (4972 websites, 0 emails found)
+[03:07:49]   Timeout, retrying...
+[03:08:24]   Timeout, retrying...
+[03:08:59]   Timeout, retrying...
+[03:09:24]   [5000/6603] Enriching... (4997 websites, 0 emails found)
+[03:09:25]   [Progress saved: 5000 profiles enriched]
+[03:11:19]   [5025/6603] Enriching... (5022 websites, 0 emails found)
+[03:13:13]   [5050/6603] Enriching... (5047 websites, 0 emails found)
+[03:13:14]   [Progress saved: 5050 profiles enriched]
+[03:14:36]   Timeout, retrying...
+[03:14:51]   Timeout, retrying...
+[03:14:56]   Timeout, retrying...
+[03:15:11]   [5075/6603] Enriching... (5072 websites, 0 emails found)
+[03:15:12]   Timeout, retrying...
+[03:15:26]   Timeout, retrying...
+[03:15:32]   Timeout, retrying...
+[03:15:47]   Timeout, retrying...
+[03:16:02]   Timeout, retrying...
+[03:16:07]   Timeout, retrying...
+[03:17:00]   Timeout, retrying...
+[03:17:04]   [5100/6603] Enriching... (5097 websites, 0 emails found)
+[03:17:04]   [Progress saved: 5100 profiles enriched]
+[03:17:35]   Timeout, retrying...
+[03:17:48]   Timeout, retrying...
+[03:18:10]   Timeout, retrying...
+[03:18:23]   Timeout, retrying...
+[03:18:56]   [5125/6603] Enriching... (5122 websites, 0 emails found)
+[03:18:59]   Timeout, retrying...
+[03:20:15]   Timeout, retrying...
+[03:20:50]   [5150/6603] Enriching... (5147 websites, 0 emails found)
+[03:20:50]   Timeout, retrying...
+[03:20:51]   [Progress saved: 5150 profiles enriched]
+[03:21:26]   Timeout, retrying...
+[03:22:44]   Timeout, retrying...
+[03:22:46]   [5175/6603] Enriching... (5172 websites, 0 emails found)
+[03:23:19]   Timeout, retrying...
+[03:23:48]   Timeout, retrying...
+[03:23:54]   Timeout, retrying...
+[03:24:23]   Timeout, retrying...
+[03:24:43]   [5200/6603] Enriching... (5197 websites, 0 emails found)
+[03:24:43]   [Progress saved: 5200 profiles enriched]
+[03:24:58]   Timeout, retrying...
+[03:26:24]   Timeout, retrying...
+[03:26:40]   [5225/6603] Enriching... (5222 websites, 0 emails found)
+[03:26:42]   Timeout, retrying...
+[03:26:59]   Timeout, retrying...
+[03:27:17]   Timeout, retrying...
+[03:27:34]   Timeout, retrying...
+[03:27:34]   Timeout, retrying...
+[03:27:53]   Timeout, retrying...
+[03:28:09]   Timeout, retrying...
+[03:28:10]   Timeout, retrying...
+[03:28:25]   Timeout, retrying...
+[03:28:37]   [5250/6603] Enriching... (5247 websites, 0 emails found)
+[03:28:38]   [Progress saved: 5250 profiles enriched]
+[03:28:44]   Timeout, retrying...
+[03:28:46]   Timeout, retrying...
+[03:29:00]   Timeout, retrying...
+[03:29:21]   Timeout, retrying...
+[03:29:33]   Timeout, retrying...
+[03:29:35]   Timeout, retrying...
+[03:30:08]   Timeout, retrying...
+[03:30:28]   [5275/6603] Enriching... (5272 websites, 0 emails found)
+[03:30:43]   Timeout, retrying...
+[03:32:22]   Timeout, retrying...
+[03:32:38]   [5300/6603] Enriching... (5297 websites, 0 emails found)
+[03:32:38]   [Progress saved: 5300 profiles enriched]
+[03:32:58]   Timeout, retrying...
+[03:33:33]   Timeout, retrying...
+[03:33:41]   Timeout, retrying...
+[03:34:16]   Timeout, retrying...
+[03:34:38]   [5325/6603] Enriching... (5322 websites, 0 emails found)
+[03:34:51]   Timeout, retrying...
+[03:35:22]   Timeout, retrying...
+[03:35:57]   Timeout, retrying...
+[03:36:31]   [5350/6603] Enriching... (5347 websites, 0 emails found)
+[03:36:31]   [Progress saved: 5350 profiles enriched]
+[03:36:33]   Timeout, retrying...
+[03:37:06]   Timeout, retrying...
+[03:37:42]   Timeout, retrying...
+[03:38:05]   Timeout, retrying...
+[03:38:17]   Timeout, retrying...
+[03:38:26]   [5375/6603] Enriching... (5372 websites, 0 emails found)
+[03:38:40]   Timeout, retrying...
+[03:39:16]   Timeout, retrying...
+[03:39:53]   Timeout, retrying...
+[03:40:24]   [5400/6603] Enriching... (5397 websites, 0 emails found)
+[03:40:24]   [Progress saved: 5400 profiles enriched]
+[03:40:29]   Timeout, retrying...
+[03:41:04]   Timeout, retrying...
+[03:41:05]   Timeout, retrying...
+[03:41:41]   Timeout, retrying...
+[03:42:08]   Timeout, retrying...
+[03:42:13]   [5425/6603] Enriching... (5422 websites, 0 emails found)
+[03:42:16]   Timeout, retrying...
+[03:42:18]   Timeout, retrying...
+[03:42:43]   Timeout, retrying...
+[03:42:53]   Timeout, retrying...
+[03:43:19]   Timeout, retrying...
+[03:43:28]   Timeout, retrying...
+[03:43:46]   Timeout, retrying...
+[03:43:59]   Timeout, retrying...
+[03:44:21]   Timeout, retrying...
+[03:44:27]   [5450/6603] Enriching... (5447 websites, 0 emails found)
+[03:44:28]   [Progress saved: 5450 profiles enriched]
+[03:44:35]   Timeout, retrying...
+[03:44:56]   Timeout, retrying...
+[03:45:10]   Timeout, retrying...
+[03:46:25]   [5475/6603] Enriching... (5472 websites, 0 emails found)
+[03:48:00]   Timeout, retrying...
+[03:48:20]   [5500/6603] Enriching... (5497 websites, 0 emails found)
+[03:48:21]   [Progress saved: 5500 profiles enriched]
+[03:48:22]   Timeout, retrying...
+[03:48:35]   Timeout, retrying...
+[03:48:57]   Timeout, retrying...
+[03:49:10]   Timeout, retrying...
+[03:49:28]   Timeout, retrying...
+[03:49:32]   Timeout, retrying...
+[03:50:03]   Timeout, retrying...
+[03:50:12]   [5525/6603] Enriching... (5522 websites, 0 emails found)
+[03:50:39]   Timeout, retrying...
+[03:51:50]   Timeout, retrying...
+[03:52:09]   [5550/6603] Enriching... (5547 websites, 0 emails found)
+[03:52:10]   [Progress saved: 5550 profiles enriched]
+[03:52:25]   Timeout, retrying...
+[03:53:01]   Timeout, retrying...
+[03:54:05]   Timeout, retrying...
+[03:54:07]   [5575/6603] Enriching... (5572 websites, 0 emails found)
+[03:54:40]   Timeout, retrying...
+[03:55:13]   Timeout, retrying...
+[03:55:15]   Timeout, retrying...
+[03:55:18]   Timeout, retrying...
+[03:55:45]   Timeout, retrying...
+[03:55:49]   Timeout, retrying...
+[03:55:53]   Timeout, retrying...
+[03:56:00]   [5600/6603] Enriching... (5597 websites, 0 emails found)
+[03:56:01]   [Progress saved: 5600 profiles enriched]
+[03:56:20]   Timeout, retrying...
+[03:56:24]   Timeout, retrying...
+[03:56:28]   Timeout, retrying...
+[03:56:55]   Timeout, retrying...
+[03:57:03]   Timeout, retrying...
+[03:57:29]   Timeout, retrying...
+[03:57:33]   Timeout, retrying...
+[03:57:38]   Timeout, retrying...
+[03:57:56]   [5625/6603] Enriching... (5622 websites, 0 emails found)
+[03:58:04]   Timeout, retrying...
+[03:58:08]   Timeout, retrying...
+[03:58:13]   Timeout, retrying...
+[03:58:40]   Timeout, retrying...
+[03:58:43]   Timeout, retrying...
+[03:59:46]   [5650/6603] Enriching... (5647 websites, 0 emails found)
+[03:59:47]   [Progress saved: 5650 profiles enriched]
+[04:01:41]   [5675/6603] Enriching... (5672 websites, 0 emails found)
+[04:03:34]   [5700/6603] Enriching... (5697 websites, 0 emails found)
+[04:03:35]   [Progress saved: 5700 profiles enriched]
+[04:05:25]   [5725/6603] Enriching... (5722 websites, 0 emails found)
+[04:07:20]   [5750/6603] Enriching... (5747 websites, 0 emails found)
+[04:07:21]   [Progress saved: 5750 profiles enriched]
+[04:09:15]   [5775/6603] Enriching... (5772 websites, 0 emails found)
+[04:09:36]   Timeout, retrying...
+[04:10:11]   Timeout, retrying...
+[04:10:46]   Timeout, retrying...
+[04:11:06]   [5800/6603] Enriching... (5797 websites, 0 emails found)
+[04:11:07]   [Progress saved: 5800 profiles enriched]
+[04:12:19]   Timeout, retrying...
+[04:12:55]   Timeout, retrying...
+[04:13:03]   [5825/6603] Enriching... (5822 websites, 0 emails found)
+[04:13:30]   Timeout, retrying...
+[04:14:58]   [5850/6603] Enriching... (5847 websites, 0 emails found)
+[04:14:59]   [Progress saved: 5850 profiles enriched]
+[04:16:50]   [5875/6603] Enriching... (5872 websites, 0 emails found)
+[04:18:49]   [5900/6603] Enriching... (5897 websites, 0 emails found)
+[04:18:50]   [Progress saved: 5900 profiles enriched]
+[04:18:59]   Timeout, retrying...
+[04:19:34]   Timeout, retrying...
+[04:20:09]   Timeout, retrying...
+[04:20:42]   [5925/6603] Enriching... (5922 websites, 0 emails found)
+[04:22:29]   [5950/6603] Enriching... (5947 websites, 0 emails found)
+[04:22:29]   [Progress saved: 5950 profiles enriched]
+[04:24:44]   [5975/6603] Enriching... (5972 websites, 0 emails found)
+[04:24:50]   Timeout, retrying...
+[04:25:25]   Timeout, retrying...
+[04:26:00]   Timeout, retrying...
+[04:26:50]   [6000/6603] Enriching... (5997 websites, 0 emails found)
+[04:26:51]   [Progress saved: 6000 profiles enriched]
+[04:28:35]   Timeout, retrying...
+[04:28:40]   [6025/6603] Enriching... (6022 websites, 0 emails found)
+[04:29:10]   Timeout, retrying...
+[04:29:46]   Timeout, retrying...
+[04:30:38]   [6050/6603] Enriching... (6047 websites, 0 emails found)
+[04:30:38]   [Progress saved: 6050 profiles enriched]
+[04:32:33]   [6075/6603] Enriching... (6072 websites, 0 emails found)
+[04:34:22]   [6100/6603] Enriching... (6097 websites, 0 emails found)
+[04:34:23]   [Progress saved: 6100 profiles enriched]
+[04:36:20]   [6125/6603] Enriching... (6122 websites, 0 emails found)
+[04:38:16]   [6150/6603] Enriching... (6147 websites, 0 emails found)
+[04:38:17]   [Progress saved: 6150 profiles enriched]
+[04:38:31]   Timeout, retrying...
+[04:39:06]   Timeout, retrying...
+[04:39:42]   Timeout, retrying...
+[04:40:15]   [6175/6603] Enriching... (6172 websites, 0 emails found)
+[04:42:11]   [6200/6603] Enriching... (6197 websites, 0 emails found)
+[04:42:12]   [Progress saved: 6200 profiles enriched]
+[04:42:32]   Timeout, retrying...
+[04:43:07]   Timeout, retrying...
+[04:43:43]   Timeout, retrying...
+[04:44:07]   [6225/6603] Enriching... (6222 websites, 0 emails found)
+[04:46:03]   [6250/6603] Enriching... (6247 websites, 0 emails found)
+[04:46:04]   [Progress saved: 6250 profiles enriched]
+[04:48:00]   [6275/6603] Enriching... (6272 websites, 0 emails found)
+[04:48:21]   Timeout, retrying...
+[04:48:57]   Timeout, retrying...
+[04:48:57]   Request error: read ETIMEDOUT, retrying...
+[04:48:57]   Request error: read ETIMEDOUT, retrying...
+[04:49:32]   Timeout, retrying...
+[04:49:32]   Timeout, retrying...
+[04:50:07]   [6300/6603] Enriching... (6297 websites, 0 emails found)
+[04:50:07]   Timeout, retrying...
+[04:50:08]   [Progress saved: 6300 profiles enriched]
+[04:50:33]   Timeout, retrying...
+[04:51:08]   Timeout, retrying...
+[04:51:26]   Timeout, retrying...
+[04:51:41]   Timeout, retrying...
+[04:51:43]   Timeout, retrying...
+[04:52:01]   Timeout, retrying...
+[04:52:06]   [6325/6603] Enriching... (6322 websites, 0 emails found)
+[04:52:16]   Timeout, retrying...
+[04:52:36]   Timeout, retrying...
+[04:52:51]   Timeout, retrying...
+[04:54:08]   [6350/6603] Enriching... (6347 websites, 0 emails found)
+[04:54:09]   [Progress saved: 6350 profiles enriched]
+[04:56:14]   [6375/6603] Enriching... (6372 websites, 0 emails found)
+[04:58:08]   [6400/6603] Enriching... (6397 websites, 0 emails found)
+[04:58:09]   [Progress saved: 6400 profiles enriched]
+[04:59:27]   Timeout, retrying...
+[05:00:02]   Timeout, retrying...
+[05:00:06]   [6425/6603] Enriching... (6422 websites, 0 emails found)
+[05:00:37]   Timeout, retrying...
+[05:02:01]   [6450/6603] Enriching... (6447 websites, 0 emails found)
+[05:02:01]   [Progress saved: 6450 profiles enriched]
+[05:02:26]   Timeout, retrying...
+[05:03:01]   Timeout, retrying...
+[05:03:36]   Timeout, retrying...
+[05:03:50]   [6475/6603] Enriching... (6472 websites, 0 emails found)
+[05:05:48]   [6500/6603] Enriching... (6497 websites, 0 emails found)
+[05:05:54]   [Progress saved: 6500 profiles enriched]
+[05:07:43]   [6525/6603] Enriching... (6522 websites, 0 emails found)
+[05:09:40]   [6550/6603] Enriching... (6547 websites, 0 emails found)
+[05:09:41]   [Progress saved: 6550 profiles enriched]
+[05:11:05]   Timeout, retrying...
+[05:11:33]   [6575/6603] Enriching... (6572 websites, 0 emails found)
+[05:11:40]   Timeout, retrying...
+[05:12:15]   Timeout, retrying...
+[05:13:32]   [6600/6603] Enriching... (6597 websites, 0 emails found)
+[05:13:33]   [Progress saved: 6600 profiles enriched]
+[05:13:51] Profile enrichment done: 6603 fetched, 2 errors, 6601 websites, 0 emails
+[05:13:51] 
+[05:13:51] ============================================================
+[05:13:51] DONE
+[05:13:51] Categories scraped: 186
+[05:13:51] Pages scraped: 738
+[05:13:51] No-result categories: 20
+[05:13:51] Errors: 0
+[05:13:51] 
+[05:13:51] Total unique leads: 6733 (6017 US, 716 CA)
+[05:13:51] With phone: 6728
+[05:13:51] With website: 6601
+[05:13:51] With email: 0
+[05:13:51] With parsed name: 4434
+[05:13:51] BBB Accredited: 6598
+[05:13:51] Unique states/provinces: 59
+[05:13:51] Unique cities: 2057
+[05:13:51] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/education-services-bbb.csv

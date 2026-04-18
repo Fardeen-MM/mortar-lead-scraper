@@ -1,0 +1,40 @@
+=== HTTP Website Email Crawler ===
+Input:       output/icef-ias-global-agents.csv
+Output:      output/icef-with-emails.csv
+Concurrency: 15
+Paths:       / /contact /contact-us /about /about-us
+Rows: 2216 of 2216
+  [1.1%] 25/2216, emails=17, 3.3/s, ETA 664s
+  [2.3%] 50/2216, emails=37, 3.2/s, ETA 677s
+  [3.4%] 75/2216, emails=56, 3.1/s, ETA 691s
+  [4.5%] 100/2216, emails=77, 3.0/s, ETA 705s
+  [5.6%] 125/2216, emails=94, 2.8/s, ETA 747s
+  [6.8%] 150/2216, emails=113, 2.9/s, ETA 712s
+  [7.9%] 175/2216, emails=135, 2.8/s, ETA 729s
+  [9.0%] 200/2216, emails=156, 2.7/s, ETA 747s
+  [10.2%] 225/2216, emails=176, 2.4/s, ETA 830s
+  [11.3%] 250/2216, emails=198, 2.4/s, ETA 819s
+  [12.4%] 275/2216, emails=218, 2.3/s, ETA 844s
+  [13.5%] 300/2216, emails=240, 2.2/s, ETA 871s
+  [14.7%] 325/2216, emails=261, 2.0/s, ETA 946s
+  [15.8%] 350/2216, emails=282, 1.8/s, ETA 1037s
+  [16.9%] 375/2216, emails=298, 1.7/s, ETA 1083s
+  [18.1%] 400/2216, emails=313, 1.8/s, ETA 1009s
+  [19.2%] 425/2216, emails=333, 1.7/s, ETA 1054s
+  [20.3%] 450/2216, emails=348, 1.6/s, ETA 1104s
+  [21.4%] 475/2216, emails=367, 1.6/s, ETA 1088s
+  [22.6%] 500/2216, emails=390, 1.6/s, ETA 1073s
+  [23.7%] 525/2216, emails=410, 1.6/s, ETA 1057s
+  [24.8%] 550/2216, emails=431, 1.5/s, ETA 1111s
+  [25.9%] 575/2216, emails=449, 1.4/s, ETA 1172s
+  [27.1%] 600/2216, emails=468, 1.4/s, ETA 1154s
+  [28.2%] 625/2216, emails=486, 1.4/s, ETA 1136s
+  [29.3%] 650/2216, emails=507, 1.3/s, ETA 1205s
+  [30.5%] 675/2216, emails=521, 1.2/s, ETA 1284s
+  [31.6%] 700/2216, emails=542, 1.1/s, ETA 1378s
+  [32.7%] 725/2216, emails=556, 1.0/s, ETA 1491s
+  [33.8%] 750/2216, emails=572, 1.0/s, ETA 1466s
+  [35.0%] 775/2216, emails=591, 0.9/s, ETA 1601s
+  [36.1%] 800/2216, emails=611, 0.8/s, ETA 1770s
+  [37.2%] 825/2216, emails=629, 0.7/s, ETA 1987s
+  [38.4%] 850/2216, emails=647, 0.7/s, ETA 1951s

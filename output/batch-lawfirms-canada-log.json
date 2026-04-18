@@ -1,0 +1,173 @@
+{
+  "ON": {
+    "status": "done",
+    "leads": 61,
+    "emails": 42,
+    "phones": 33,
+    "persons": 36,
+    "decisionMakers": 9,
+    "elapsed": 214,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/law-firms_toronto-on-canada_2026-03-02T04-43-18.csv",
+    "timestamp": "2026-03-02T04:43:18.985Z"
+  },
+  "BC": {
+    "status": "done",
+    "leads": 31,
+    "emails": 10,
+    "phones": 20,
+    "persons": 5,
+    "decisionMakers": 4,
+    "elapsed": 253,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/law-firms_vancouver-bc-canada_2026-03-02T04-43-58.csv",
+    "timestamp": "2026-03-02T04:43:58.227Z"
+  },
+  "AB": {
+    "status": "done",
+    "leads": 45,
+    "emails": 22,
+    "phones": 20,
+    "persons": 18,
+    "decisionMakers": 2,
+    "elapsed": 282,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/law-firms_calgary-ab-canada_2026-03-02T04-44-27.csv",
+    "timestamp": "2026-03-02T04:44:27.198Z"
+  },
+  "MB": {
+    "status": "done",
+    "leads": 64,
+    "emails": 39,
+    "phones": 20,
+    "persons": 44,
+    "decisionMakers": 2,
+    "elapsed": 276,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/law-firms_winnipeg-mb-canada_2026-03-02T04-49-02.csv",
+    "timestamp": "2026-03-02T04:49:02.960Z"
+  },
+  "QC": {
+    "status": "done",
+    "leads": 27,
+    "emails": 14,
+    "phones": 20,
+    "persons": 7,
+    "decisionMakers": 3,
+    "elapsed": 304,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/law-firms_montreal-qc-canada_2026-03-02T04-49-31.csv",
+    "timestamp": "2026-03-02T04:49:31.411Z"
+  },
+  "SK": {
+    "status": "done",
+    "leads": 60,
+    "emails": 47,
+    "phones": 47,
+    "persons": 40,
+    "decisionMakers": 12,
+    "elapsed": 331,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/law-firms_saskatoon-sk-canada_2026-03-02T04-49-58.csv",
+    "timestamp": "2026-03-02T04:49:58.583Z"
+  },
+  "NL": {
+    "status": "done",
+    "leads": 78,
+    "emails": 44,
+    "phones": 20,
+    "persons": 50,
+    "decisionMakers": 30,
+    "elapsed": 213,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/law-firms_st-johns-nl-canada_2026-03-02T04-53-31.csv",
+    "timestamp": "2026-03-02T04:53:31.612Z"
+  },
+  "NB": {
+    "status": "done",
+    "leads": 42,
+    "emails": 24,
+    "phones": 20,
+    "persons": 15,
+    "decisionMakers": 3,
+    "elapsed": 233,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/law-firms_fredericton-nb-canada_2026-03-02T04-53-52.csv",
+    "timestamp": "2026-03-02T04:53:52.061Z"
+  },
+  "NS": {
+    "status": "done",
+    "leads": 44,
+    "emails": 22,
+    "phones": 27,
+    "persons": 17,
+    "decisionMakers": 0,
+    "elapsed": 324,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/law-firms_halifax-ns-canada_2026-03-02T04-55-22.csv",
+    "timestamp": "2026-03-02T04:55:22.165Z"
+  },
+  "PE": {
+    "status": "done",
+    "leads": 117,
+    "emails": 98,
+    "phones": 38,
+    "persons": 98,
+    "decisionMakers": 25,
+    "elapsed": 266,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/law-firms_charlottetown-pe-canada_2026-03-02T04-59-48.csv",
+    "timestamp": "2026-03-02T04:59:48.617Z"
+  },
+  "YT": {
+    "status": "done",
+    "leads": 27,
+    "emails": 12,
+    "phones": 20,
+    "persons": 7,
+    "decisionMakers": 4,
+    "elapsed": 269,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/law-firms_whitehorse-yt-canada_2026-03-02T04-59-50.csv",
+    "timestamp": "2026-03-02T04:59:50.770Z"
+  },
+  "NT": {
+    "status": "done",
+    "leads": 32,
+    "emails": 17,
+    "phones": 25,
+    "persons": 13,
+    "decisionMakers": 8,
+    "elapsed": 330,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/law-firms_yellowknife-nt-canada_2026-03-02T05-00-52.csv",
+    "timestamp": "2026-03-02T05:00:52.060Z"
+  },
+  "BC-VIC": {
+    "status": "failed",
+    "error": "Command failed: node scripts/industry-scrape.js --niche \"law firms\" --location \"Victoria, BC, Canada\" --test\n",
+    "elapsed": 24,
+    "timestamp": "2026-03-02T05:01:16.517Z"
+  },
+  "ON-OTT": {
+    "status": "done",
+    "leads": 33,
+    "emails": 22,
+    "phones": 24,
+    "persons": 14,
+    "decisionMakers": 7,
+    "elapsed": 264,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/law-firms_ottawa-on-canada_2026-03-02T05-05-16.csv",
+    "timestamp": "2026-03-02T05:05:16.387Z"
+  },
+  "AB-EDM": {
+    "status": "done",
+    "leads": 42,
+    "emails": 22,
+    "phones": 20,
+    "persons": 23,
+    "decisionMakers": 4,
+    "elapsed": 279,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/law-firms_edmonton-ab-canada_2026-03-02T05-05-31.csv",
+    "timestamp": "2026-03-02T05:05:31.514Z"
+  },
+  "QC-QUE": {
+    "status": "done",
+    "leads": 21,
+    "emails": 8,
+    "phones": 20,
+    "persons": 2,
+    "decisionMakers": 4,
+    "elapsed": 214,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/law-firms_quebec-city-qc-canada_2026-03-02T05-09-05.csv",
+    "timestamp": "2026-03-02T05:09:05.638Z"
+  }
+}

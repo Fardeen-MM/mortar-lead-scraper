@@ -1,0 +1,258 @@
+[22:34:07] College Admissions Consultants — Multi-Directory Scraper
+[22:34:07] Mode: FULL
+[22:34:07] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/college-admissions-consultants-directories.csv
+[22:34:07] 
+[22:34:07] 
+=== HECA Member Directory ===
+[22:34:07] Scraping 26 letter pages...
+[22:34:07]   [HECA] Letter A: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=A
+[22:34:07]     Found 34 members
+[22:34:10]   [HECA] Letter B: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=B
+[22:34:10]     Found 88 members
+[22:34:13]   [HECA] Letter C: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=C
+[22:34:14]     Found 84 members
+[22:34:17]   [HECA] Letter D: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=D
+[22:34:17]     Found 30 members
+[22:34:20]   [HECA] Letter E: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=E
+[22:34:21]     Found 16 members
+[22:34:23]   [HECA] Letter F: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=F
+[22:34:23]     Found 35 members
+[22:34:25]   [HECA] Letter G: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=G
+[22:34:26]     Found 40 members
+[22:34:28]   [HECA] Letter H: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=H
+[22:34:28]     Found 60 members
+[22:34:31]   [HECA] Letter I: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=I
+[22:34:31]     Found 3 members
+[22:34:34]   [HECA] Letter J: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=J
+[22:34:34]     Found 17 members
+[22:34:37]   [HECA] Letter K: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=K
+[22:34:38]     Found 43 members
+[22:34:41]   [HECA] Letter L: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=L
+[22:34:41]     Found 65 members
+[22:34:44]   [HECA] Letter M: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=M
+[22:34:44]     Found 98 members
+[22:34:47]   [HECA] Letter N: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=N
+[22:34:47]     Found 17 members
+[22:34:50]   [HECA] Letter O: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=O
+[22:34:50]     Found 13 members
+[22:34:53]   [HECA] Letter P: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=P
+[22:34:54]     Found 42 members
+[22:34:56]   [HECA] Letter Q: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=Q
+[22:34:56]     Found 4 members
+[22:34:59]   [HECA] Letter R: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=R
+[22:34:59]     Found 53 members
+[22:35:01]   [HECA] Letter S: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=S
+[22:35:02]     Found 90 members
+[22:35:05]   [HECA] Letter T: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=T
+[22:35:06]     Found 30 members
+[22:35:08]   [HECA] Letter U: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=U
+[22:35:08]     Found 3 members
+[22:35:10]   [HECA] Letter V: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=V
+[22:35:11]     Found 15 members
+[22:35:14]   [HECA] Letter W: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=W
+[22:35:14]     Found 40 members
+[22:35:16]   [HECA] Letter X: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=X
+[22:35:16]     Found 1 members
+[22:35:18]   [HECA] Letter Y: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=Y
+[22:35:18]     Found 7 members
+[22:35:21]   [HECA] Letter Z: https://association.hecalive.org/heca-member-directory/FindStartsWith?term=Z
+[22:35:21]     Found 10 members
+[22:35:24]   HECA total: 938 leads
+[22:35:24] 
+  >> HECA: 938 found, 938 unique added
+[22:35:24] 
+=== HECA Detail Page Enrichment ===
+[22:35:24] Enriching up to 200 members...
+[22:36:17]   Enriched 20/200 detail pages
+[22:37:20]   Enriched 40/200 detail pages
+[22:38:19]   Enriched 60/200 detail pages
+[22:39:27]   Enriched 80/200 detail pages
+[22:40:23]   Enriched 100/200 detail pages
+[22:41:23]   Enriched 120/200 detail pages
+[22:42:22]   Enriched 140/200 detail pages
+[22:43:18]   Enriched 160/200 detail pages
+[22:44:16]   Enriched 180/200 detail pages
+[22:45:17]   Enriched 200/200 detail pages
+[22:45:20]   Enriched 200 detail pages
+[22:45:20] 
+=== NACAC Independent Member Directory ===
+[22:45:20] Scraping page 1 (Salesforce GET only)...
+[22:45:27]   Found 10 members on page 1
+[22:45:27]   NACAC total: 10 leads
+[22:45:27] 
+  >> NACAC: 10 found, 10 unique added
+[22:45:27] 
+=== Top College Admissions Consultants Rankings ===
+[22:45:27] Processing 20 ranked firms...
+[22:45:27]   [TopRankings] Deans of Admissions: https://www.topcollegeadmissionsconsultants.com/deans-of-admissions-review
+[22:45:28]     Added: Deans of Admissions (New York, NY)
+[22:45:30]   [TopRankings] Prepory: https://www.topcollegeadmissionsconsultants.com/prepory-review
+[22:45:30]     Added: Prepory (Miami, FL)
+[22:45:33]   [TopRankings] InGenius Prep: https://www.topcollegeadmissionsconsultants.com/ingenius-prep-review
+[22:45:33]     Added: InGenius Prep (New Haven, CT)
+[22:45:36]   [TopRankings] Signet Education: https://www.topcollegeadmissionsconsultants.com/signet-education-review
+[22:45:36]     Added: Signet Education (Boston, MA)
+[22:45:39]   [TopRankings] AcceptU: https://www.topcollegeadmissionsconsultants.com/acceptu-review
+[22:45:39]     Added: AcceptU (Newton, MA)
+[22:45:41]   [TopRankings] HelloCollege: https://www.topcollegeadmissionsconsultants.com/hello-college-review
+[22:45:42]     Added: HelloCollege (Oak Brook, IL)
+[22:45:45]   [TopRankings] Ivy Scholars: https://www.topcollegeadmissionsconsultants.com/ivy-scholars-review
+[22:45:45]     Added: Ivy Scholars (Houston, TX)
+[22:45:48]   [TopRankings] PrepScholar: https://www.topcollegeadmissionsconsultants.com/prepscholar-review
+[22:45:48]     Added: PrepScholar (Cambridge, MA)
+[22:45:50]   [TopRankings] IvyWise: https://www.topcollegeadmissionsconsultants.com/ivywise-review
+[22:45:50]     Added: IvyWise (New York, NY)
+[22:45:53]   [TopRankings] Solomon Admissions Consulting: https://www.topcollegeadmissionsconsultants.com/solomon-admissions-consulting-review
+[22:45:53]     Added: Solomon Admissions Consulting (New York, NY)
+[22:45:56]   [TopRankings] CollegeAdvisor.com: https://www.topcollegeadmissionsconsultants.com/collegeadvisor-review
+[22:45:56]     Added: CollegeAdvisor.com (New York, NY)
+[22:45:59]   [TopRankings] College Coach: https://www.topcollegeadmissionsconsultants.com/college-coach-review
+[22:45:59]     Added: College Coach (Newton, MA)
+[22:46:02]   [TopRankings] College Transitions: https://www.topcollegeadmissionsconsultants.com/college-transitions-review
+[22:46:02]     Added: College Transitions (Charlotte, NC)
+[22:46:05]   [TopRankings] Crimson Education: https://www.topcollegeadmissionsconsultants.com/crimson-education-review
+[22:46:05]     Added: Crimson Education (New York, NY)
+[22:46:09]   [TopRankings] College Zoom: https://www.topcollegeadmissionsconsultants.com/collegezoom-review
+[22:46:09]     Added: College Zoom (Santa Monica, CA)
+[22:46:11]   [TopRankings] Marks Education: https://www.topcollegeadmissionsconsultants.com/marks-education-review
+[22:46:12]     Added: Marks Education (Bethesda, MD)
+[22:46:15]   [TopRankings] Preminente: https://www.topcollegeadmissionsconsultants.com/preminente-review
+[22:46:15]     Added: Preminente (New York, NY)
+[22:46:18]   [TopRankings] Spark Admissions: https://www.topcollegeadmissionsconsultants.com/spark-admissions-review
+[22:46:18]     Added: Spark Admissions (Brookline, MA)
+[22:46:20]   [TopRankings] TopTier Admissions: https://www.topcollegeadmissionsconsultants.com/top-tier-admissions-review
+[22:46:20]     Added: TopTier Admissions (Concord, MA)
+[22:46:22]   [TopRankings] Admissionado: https://www.topcollegeadmissionsconsultants.com/admissionado-review
+[22:46:22]     Added: Admissionado (Chicago, IL)
+[22:46:26]   TopRankings total: 20 leads
+[22:46:26] 
+  >> TopRankings: 20 found, 20 unique added
+[22:46:26] 
+=== Consulting Firm Team Pages ===
+[22:46:26] Scraping 10 firm team pages...
+[22:46:26]   [FirmTeam] IvyWise: https://www.ivywise.com/team/
+[22:46:26]     Found 20 team members
+[22:46:30]   [FirmTeam] Accepted: https://www.accepted.com/about/team/
+[22:46:30]     Found 15 team members
+[22:46:33]   [FirmTeam] Collegewise: https://collegewise.com/our-counselors/
+[22:46:34]     Found 4 team members
+[22:46:37]   [FirmTeam] Compass Education Group: https://www.compassprep.com/about/
+[22:46:38]     HTTP 404 - skipping
+[22:46:38]   [FirmTeam] PrepMaven: https://prepmaven.com/about/
+[22:46:38]     Found 0 team members
+[22:46:41]   [FirmTeam] Applerouth: https://www.applerouth.com/about/
+[22:46:41]     HTTP 404 - skipping
+[22:46:41]   [FirmTeam] College Essay Guy: https://www.collegeessayguy.com/about
+[22:46:41]     Found 0 team members
+[22:46:44]   [FirmTeam] Spark Admissions: https://www.sparkadmissions.com/about/
+[22:46:45]     HTTP 404 - skipping
+[22:46:45]   [FirmTeam] College Transitions: https://www.collegetransitions.com/about/
+[22:46:47]     Found 2 team members
+[22:46:50]   [FirmTeam] Marks Education: https://www.markseducation.com/about
+[22:46:50]     Found 0 team members
+[22:46:53]   Firm team pages total: 41 leads
+[22:46:53] 
+  >> FirmTeamPages: 41 found, 23 unique added
+[22:46:53] 
+=== Additional Consulting Firms ===
+[22:46:53] Processing 15 firms...
+[22:46:53]   [Firms] Ivy Coach: https://www.ivycoach.com
+[22:46:54]     Added: Ivy Coach (phone: (827) 165-0913)
+[22:46:57]   [Firms] Empowerly: https://empowerly.com
+[22:46:57]     Added: Empowerly (phone: (800) 491-6920) (email: info@empowerly.com)
+[22:47:01]   [Firms] Command Education: https://www.commandeducation.com
+[22:47:01]     Added: Command Education (phone: (212) 368-1000)
+[22:47:03]   [Firms] ScholarGrade: https://www.scholargrade.com
+[22:47:04]   Timeout, retrying...
+[22:47:04]   Rate limited (403), waiting 5s...
+[22:47:08]   Timeout, retrying...
+[22:47:09]   Rate limited (403), waiting 10s...
+[22:47:11]   Timeout, retrying...
+[22:47:11]   Timeout, retrying...
+[22:47:16]   Timeout, retrying...
+[22:47:16]   Timeout, retrying...
+[22:47:16]   Timeout, retrying...
+[22:47:19]   Rate limited (403), waiting 15s...
+[22:47:34]   Timeout, retrying...
+[22:47:34]     Added: ScholarGrade
+[22:47:36]   [Firms] Top Tier Admissions: https://www.toptieradmissions.com
+[22:47:36]     Added: Top Tier Admissions (phone: (781) 530-7088)
+[22:47:37]   Timeout, retrying...
+[22:47:37]   Rate limited (403), waiting 10s...
+[22:47:40]   [Firms] Magellan College Counseling: https://www.magellancounseling.com
+[22:47:41]   Timeout, retrying...
+[22:47:41]     Added: Magellan College Counseling (phone: (877) 562-4443)
+[22:47:44]   Timeout, retrying...
+[22:47:44]   Timeout, retrying...
+[22:47:44]   Timeout, retrying...
+[22:47:45]   [Firms] Great College Advice: https://greatcollegeadvice.com
+[22:47:45]     Added: Great College Advice (phone: (720) 279-7577) (email: office@greatcollegeadvice.com)
+[22:47:47]   Rate limited (403), waiting 15s...
+[22:47:48]   [Firms] College Kickstart: https://www.collegekickstart.com
+[22:47:48]     Added: College Kickstart
+[22:47:49]   Timeout, retrying...
+[22:47:49]   Timeout, retrying...
+[22:47:50]   Timeout, retrying...
+[22:47:50]   Timeout, retrying...
+[22:47:51]   [Firms] Door2Door College Counseling: https://www.door2doorcollegecounseling.com
+[22:47:51]   Request error: getaddrinfo ENOTFOUND www.door2doorcollegecounseling.com, retrying...
+[22:47:54]   Request error: getaddrinfo ENOTFOUND www.door2doorcollegecounseling.com, retrying...
+[22:47:57]   Request error: getaddrinfo ENOTFOUND www.door2doorcollegecounseling.com, retrying...
+[22:48:00]     ERROR: getaddrinfo ENOTFOUND www.door2doorcollegecounseling.com
+[22:48:03]   [Firms] AdmissionSight: https://admissionsight.com
+[22:48:04]     Added: AdmissionSight (phone: (650) 338-8226)
+[22:48:06]   Timeout, retrying...
+[22:48:06]   [Firms] Veritas Prep: https://www.veritasprep.com
+[22:48:07]   Timeout, retrying...
+[22:48:07]     Added: Veritas Prep (phone: (888) 888-0446)
+[22:48:10]   [Firms] SupertutorTV: https://supertutortv.com
+[22:48:10]   Timeout, retrying...
+[22:48:10]   Rate limited (403), waiting 15s...
+[22:48:11]   Timeout, retrying...
+[22:48:12]     Added: SupertutorTV
+[22:48:15]   Timeout, retrying...
+[22:48:15]   [Firms] Bright Horizons College Coach: https://getintocollege.com
+[22:48:15]     Added: Bright Horizons College Coach (phone: (877) 402-6224)
+[22:48:17]   Timeout, retrying...
+[22:48:17]   Timeout, retrying...
+[22:48:17]   Timeout, retrying...
+[22:48:17]   Timeout, retrying...
+[22:48:17]   [Firms] Kaplan College Prep: https://www.kaptest.com
+[22:48:18]     Added: Kaplan College Prep (phone: (800) 527-8378)
+[22:48:21]   [Firms] Princeton Review: https://www.princetonreview.com
+[22:48:21]     Added: Princeton Review (phone: (877) 532-7630)
+[22:48:22]   Timeout, retrying...
+[22:48:22]   Timeout, retrying...
+[22:48:22]   Timeout, retrying...
+[22:48:23]   Timeout, retrying...
+[22:48:23]   Additional firms total: 15 leads
+[22:48:23] 
+  >> AdditionalFirms: 15 found, 15 unique added
+[22:48:23] 
+[22:48:23] ============================================================
+[22:48:23] FINAL RESULTS
+[22:48:23] ============================================================
+[22:48:23] Total unique leads: 1006
+[22:48:23] With full name: 956
+[22:48:23] Firm-only records: 35
+[22:48:23] With email: 12
+[22:48:23] With phone: 920
+[22:48:23] With website: 670
+[22:48:23] 
+[22:48:23] Source breakdown:
+[22:48:23]   HECA: 938 found, 938 unique
+[22:48:23]   NACAC: 10 found, 10 unique
+[22:48:23]   TopRankings: 20 found, 20 unique
+[22:48:23]   FirmTeamPages: 41 found, 23 unique
+[22:48:23]   AdditionalFirms: 15 found, 15 unique
+[22:48:23] 
+[22:48:23] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/college-admissions-consultants-directories.csv
+[22:48:24]   Timeout, retrying...
+[22:48:37]   Timeout, retrying...
+[22:48:39]   Timeout, retrying...
+[22:48:40]   Timeout, retrying...
+[22:48:45]   Timeout, retrying...
+[22:49:10]   Timeout, retrying...
+[22:49:13]   Timeout, retrying...
+[22:49:19]   Timeout, retrying...
+[22:49:43]   Timeout, retrying...

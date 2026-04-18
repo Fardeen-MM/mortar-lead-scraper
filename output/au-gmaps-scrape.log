@@ -1,0 +1,53 @@
+
+============================================================
+=== REAL ESTATE AGENT — Starting (3 cities) ===
+============================================================
+
+  [Sydney, Australia] Starting...
+[2s] ℹ [Google Maps] City "Sydney": 2250 grid cells (using 4)
+[2s] ℹ [Google Maps] cell 1/4: @-34.164233,150.271662
+[4s] ⚠ [Google Maps] Browser disconnected unexpectedly
+  Child process for real estate agent exited with code null
+
+  REAL ESTATE AGENT SUMMARY: 0 leads | 0 phones | 0 websites | 0 emails
+
+============================================================
+=== DENTIST — Starting (3 cities) ===
+============================================================
+
+  [Sydney, Australia] Starting...
+[2s] ℹ [Google Maps] City "Sydney": 2250 grid cells (using 4)
+[2s] ℹ [Google Maps] cell 1/4: @-34.164233,150.271662
+[8s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[8s] ⚠ [Google Maps] cell 1/4 browser crashed — relaunching and retrying
+[13s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[13s] ⚠ [Google Maps] cell 1/4 retry also failed: Attempted to use detached Frame 'A87643DFE26FC03F5F74500943DACBBA'.
+[13s] ℹ [Google Maps] cell 2/4: @-33.966034,150.53176
+[47s] ℹ [Google Maps] cell 2/4: 14 results, 14 new (14 total unique)
+[47s] ℹ [Google Maps] cell 3/4: @-33.767836,150.813533
+[84s] ℹ [Google Maps] cell 3/4: 14 results, 5 new (19 total unique)
+[84s] ℹ [Google Maps] cell 4/4: @-33.569638,151.073631
+[122s] ℹ [Google Maps] cell 4/4: 14 results, 2 new (21 total unique)
+[122s] ℹ [Google Maps] City "Sydney" complete: 21 unique businesses
+[122s] ⚠ [Google Maps] Browser disconnected unexpectedly
+  [Sydney, Australia] Done in 122s — running total: 21 leads
+
+  [Melbourne, Australia] Starting...
+[124s] ℹ [Google Maps] City "Melbourne": 4697 grid cells (using 4)
+[124s] ℹ [Google Maps] cell 1/4: @-38.490361,144.455475
+[171s] ℹ [Google Maps] cell 1/4: 14 results, 14 new (14 total unique)
+[171s] ℹ [Google Maps] cell 2/4: @-38.220091,144.889621
+[201s] ⚠ [Google Maps] Browser disconnected unexpectedly
+[201s] ℹ [Google Maps] cell 2/4: 14 results, 0 new (14 total unique)
+[201s] ℹ [Google Maps] cell 3/4: @-37.94982,145.323767
+  Child process for dentist exited with code null
+
+  DENTIST SUMMARY: 0 leads | 0 phones | 0 websites | 0 emails
+
+============================================================
+=== PHYSIOTHERAPIST — Starting (3 cities) ===
+============================================================
+
+  [Sydney, Australia] Starting...
+[3s] ℹ [Google Maps] City "Sydney": 2250 grid cells (using 4)
+[3s] ℹ [Google Maps] cell 1/4: @-34.164233,150.271662

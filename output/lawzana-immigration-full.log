@@ -1,0 +1,973 @@
+[04:33:43] Lawzana Immigration Lawyer Scraper
+[04:33:43] Mode: FULL
+[04:33:43] Countries: ALL
+[04:33:43] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/immigration-lawyers-lawzana.csv
+[04:33:43] 
+[04:33:43] 
+[04:33:43] === UNITED STATES ===
+[04:33:43] States to scrape: 51
+[04:33:43] [US 1/51 AL] alabama
+[04:33:43]   [US 1/51 AL] Page 1...
+[04:33:44]   Found 3 firms, 3 sub-city pages
+[04:33:47]     [1/3] Crumbley-Blackwell-Price Attorneys (Huntsville) | (256) 539-4464 | questions@crumbleylaw.com | crumbleylaw.com
+[04:33:51]     [2/3] Border Crossing Law Firm, P.C. (Helena) | (406) 594-2004 | Attorney@bordercrossinglaw.com | bordercrossinglaw.com
+[04:33:54]     [3/3] Littler (Birmingham) | (205) 421-4700 | cpowell@littler.com | littler.com
+[04:33:56]   [US 1/51 AL city 1/3] birmingham-alabama
+[04:33:56]   [US 1/51 AL city 1/3] Page 1...
+[04:34:01]     [2/2] Baker, Donelson, Bearman, Caldwell & Berkowitz, PC (Birmingham) | (205) 328-0480 | bakerdonelson@bakerdonelson.com | bakerdonelson.com
+[04:34:04]   [US 1/51 AL city 2/3] helena-alabama
+[04:34:04]   [US 1/51 AL city 2/3] Page 1...
+[04:34:08]   [US 1/51 AL city 3/3] huntsville-alabama
+[04:34:08]   [US 1/51 AL city 3/3] Page 1...
+[04:34:12] [US 2/51 AK] alaska
+[04:34:12]   [US 2/51 AK] Page 1...
+[04:34:13]   Found 6 firms, 2 sub-city pages
+[04:34:16]     [1/6] Davis Wright Tremaine LLP (Anchorage) | (907) 257-5300 | scottbroadwell@dwt.com | dwt.com
+[04:34:20]     [2/6] Alaska Immigration Law Center (Anchorage) | (907) 562-4000 | Josearguta76@gmail.com | visamerica.com
+[04:34:24]     [3/6] Dorsey & Whitney LLP (Anchorage) | (907) 276-4557 | mcleod.jill@dorsey.com | dorsey.com
+[04:34:28]     [4/6] McQuillan & Hohman Law (Anchorage) | (907) 562-4000 | update@mcquillanhohman.com | mcquillanhohman.com
+[04:34:32]     [5/6] Polaris Law Group, P.C. (North Pole) | (907) 885-6619 | info@polarislawgroupak.com | polarislawgroupak.com
+[04:34:35]     [6/6] Alaska Immigration Lawyers Nations Law Group (Anchorage) | (907) 770-0909 | detained@nationslawak.com | nationslawak.com
+[04:34:38]   [US 2/51 AK city 1/2] anchorage
+[04:34:38]   [US 2/51 AK city 1/2] Page 1...
+[04:34:41]   [US 2/51 AK city 2/2] north-pole
+[04:34:41]   [US 2/51 AK city 2/2] Page 1...
+[04:34:44] [US 3/51 AZ] arizona
+[04:34:44]   [US 3/51 AZ] Page 1...
+[04:34:45]   Found 0 firms, 0 sub-city pages
+[04:34:47] [US 4/51 AR] arkansas
+[04:34:47]   [US 4/51 AR] Page 1...
+[04:34:48]   Found 6 firms, 5 sub-city pages
+[04:34:52]     [1/6] Hall Booth Smith, P.C. (Little Rock) | (501) 214-3499 | marketing@hallboothsmith.com | hallboothsmith.com
+[04:34:55]     [2/6] Maduabum Law Firm LLC (Newark) | (973) 732-1490 | feedback@maduabumlaw.com | maduabumlaw.com
+[04:34:58]     [3/6] Murad Law Firm PLLC (Little Rock) | (501) 380-7007 | murad@muradfirm.com | muradfirm.com
+[04:35:01]     [4/6] Rodnick, Piraino & Ingber PLLC (Warren) | (586) 574-0020 | office@rpi.law | rpi.law
+[04:35:05]     [5/6] Law Office of Thomas Fagerberg (Austin) | (512) 610-1090 | tcswede@gmail.com | fagerberglaw.com
+[04:35:08]     [6/6] Law Offices of Jonathan Dunten (Oakland) | (510) 645-5900 | contact@duntenlaw.com | duntenlaw.com
+[04:35:11]   [US 4/51 AR city 1/5] austin-arkansas
+[04:35:11]   [US 4/51 AR city 1/5] Page 1...
+[04:35:15]   [US 4/51 AR city 2/5] little-rock-arkansas
+[04:35:15]   [US 4/51 AR city 2/5] Page 1...
+[04:35:18]   [US 4/51 AR city 3/5] newark-arkansas
+[04:35:18]   [US 4/51 AR city 3/5] Page 1...
+[04:35:22]   [US 4/51 AR city 4/5] oakland-arkansas
+[04:35:22]   [US 4/51 AR city 4/5] Page 1...
+[04:35:26]   [US 4/51 AR city 5/5] warren-arkansas
+[04:35:26]   [US 4/51 AR city 5/5] Page 1...
+[04:35:30] [US 5/51 CA] california
+[04:35:30]   [US 5/51 CA] Page 1...
+[04:35:34]   [US 5/51 CA] Page 2...
+[04:35:38]   [US 5/51 CA] Page 3...
+[04:35:42]   [US 5/51 CA] Page 4...
+[04:35:43]   Found 32 firms, 24 sub-city pages
+[04:35:46]     [1/32] Newmen Law (Santa Ana) | (888) 345-0343 | office@newmenlaw.com | newmenlaw.com
+[04:35:50]     [2/32] The Law Office Of Zhang - Immigration Lawyer San Francisco, H 1B Visa, O-1 Visa, E-2, N-400, Marriage Based Green Card (San Francisco) | (415) 745-3640 | ezhang@zlawglobal.com | zlawglobal.com
+[04:35:53]     [3/32] Law Offices of Jacob J. Sapochnick (San Diego) | (619) 819-9204 | info@h1b.biz | h1b.biz
+[04:35:56]     [4/32] Warren Law Firm (San Francisco) | (415) 362-2906 | angela@warrenlawfirm.net | warrenlawfirm.net
+[04:36:00]     [5/32] Liu Law (City of Industry) | (909) 468-2165 | office@theliulawfirm.com | theliulawfirm.com
+[04:36:04]     [6/32] Law Offices of Rudolph Baker & Associates (San Diego) | (619) 235-0010 | jbr@rudolphbaker.com | rudolphbaker.com
+[04:36:07]     [7/32] Law Office of Thomas P. Hogan (Modesto) | (209) 492-9335 | frontdesk@tomhoganlaw.com | tomhoganlaw.com
+[04:36:10]     [8/32] WR Immigration (Santa Monica) | (310) 570-4088 | acacker@wolfsdorf.com | wolfsdorf.com
+[04:36:14]     [9/32] Fatone Law (Modesto) | (209) 857-8300 | andrea@fatonelaw.com | fatonelaw.com
+[04:36:17]     [10/32] Law Office of Xiaomin Hu, P.C. (Newport Beach) | (949) 502-0873 | xhu@huimmigration.com | huimmigration.com
+[04:36:20]     [11/32] The Grande Law Firm (Torrance) | (310) 713-2334 | info@thegrandelawfirm.com | thegrandelawfirm.com
+[04:36:24]     [12/32] Law Office of Rodolfo Marquez, APC (Santa Maria) | (805) 457-3800 | info@mqzlaw.com | mqzlaw.com
+[04:36:27]     [13/32] Fontes Law Group Santa Ana (Santa Ana) | (951) 355-7110 | info@fonteslawgroup.com | fonteslawgroup.com
+[04:36:31]     [14/32] P&N Law Firm (Chino) | (909) 222-6961 | info@pnlawca.com | pnlawca.com
+[04:36:34]     [15/32] The Cruz Law Office, APC (San Diego) | (619) 717-2233 | recruiting@thecruzlawoffice.com | thecruzlawoffice.com
+[04:36:38]     [16/32] Bueno Law Corp (San Rafael) | (415) 754-0036 | contact@buenolaw.net | buenoimmigration.com
+[04:36:42]     [17/32] Law Office of Bhupinder Gill (Santa Clara) | (408) 940-6065 | info@lawyergill.com | lawyergill.com
+[04:36:45]     [18/32] Garmo & Garmo, LLP (La Mesa) | (619) 441-2500 | freddy@garmolaw.com | garmolaw.com
+[04:36:48]     [19/32] The Law Office of Harry Dhillon (Modesto) | (209) 214-8815 | Harry@harrydhillonlaw.com | harrydhillonlaw.com
+[04:36:52]     [20/32] The Law Office of Giovanna Gallo (Chula Vista) | (619) 460-8900 | giovanna.gallo@ggallolegal.com | ggallolegal.com
+[04:36:56]     [21/32] Santos Lloyd Law Firm, PC (Newport Beach) | (949) 316-0078 | info@santoslloydlaw.com | santoslloydlaw.com
+[04:36:59]     [22/32] The Law Offices Of Edgar Lombera (Redlands) | (909) 915-0181 | lomberalaw@gmail.com | lomberalaw.com
+[04:37:03]     [23/32] The Law Firm L.C. (San Diego) | (619) 816-1001 | family@familylawlawyersd.com | familylawlawyersd.com
+[04:37:07]     [24/32] Kingston, Martinez & Hogan LLP (Santa Barbara) | (805) 963-9585 | Kingston@Kmhimmigration.com | kmhimmigration.com
+[04:37:10]     [25/32] Borhani Law (Calabasas) | (818) 359-6306 | info@borhanilawgroup.com | borhanilawgroup.com
+[04:37:15]     [26/32] Demidchik Law Firm 安娜律师楼 (City of Industry) (City of Industry) | (626) 317-0033 | contact@dcklawfirm.com | demidchiklawfirm.com
+[04:37:19]     [27/32] Law Offices of Michael Anthony Hernandez (San Diego) | (619) 341-3149 | michael@defenseattorneysd.com | defenseattorneysd.com
+[04:37:22]     [28/32] Public Law Center (Santa Ana) | (714) 541-1010 | info@publiclawcenter.org | publiclawcenter.org
+[04:37:27]     [29/32] Law Office of Fady Eskandar (Anaheim) | (714) 729-3303 | info@immigrationattorneyhelp.com | immigrationattorneyhelp.com
+[04:37:30]     [30/32] Law Offices of David Chesley, Criminal Defense Attorney - Victorville (Victorville) | (760) 553-9474 | davidschesley@gmail.com | no website
+[04:37:34]     [31/32] Law Office of Juan A. Laguna (Santa Ana) | (714) 836-5889 | Help@JuanLagunaEsq.com | juanlagunaesq.com
+[04:37:36]     [32/32] Castillo & Montes Attorneys At Law (Indio) | (760) 863-4800 | info@castillolaw.us | castillolaw.us
+[04:37:38]   [US 5/51 CA city 1/24] anaheim
+[04:37:38]   [US 5/51 CA city 1/24] Page 1...
+[04:37:42]   [US 5/51 CA city 2/24] calabasas
+[04:37:42]   [US 5/51 CA city 2/24] Page 1...
+[04:37:46]   [US 5/51 CA city 3/24] chino-california
+[04:37:46]   [US 5/51 CA city 3/24] Page 1...
+[04:37:49]   [US 5/51 CA city 4/24] chula-vista
+[04:37:49]   [US 5/51 CA city 4/24] Page 1...
+[04:37:53]   [US 5/51 CA city 5/24] city-of-industry
+[04:37:53]   [US 5/51 CA city 5/24] Page 1...
+[04:37:56]   [US 5/51 CA city 6/24] costa-mesa
+[04:37:56]   [US 5/51 CA city 6/24] Page 1...
+[04:38:00]   [US 5/51 CA city 7/24] fresno-california
+[04:38:00]   [US 5/51 CA city 7/24] Page 1...
+[04:38:04]     [1/1] Davies & Associates, LLC (Fresno) | (212) 537-9196 | midavies@usimmigrationadvisor.com | usimmigrationadvisor.com
+[04:38:08]   [US 5/51 CA city 8/24] indio
+[04:38:08]   [US 5/51 CA city 8/24] Page 1...
+[04:38:11]   [US 5/51 CA city 9/24] la-mesa-california
+[04:38:11]   [US 5/51 CA city 9/24] Page 1...
+[04:38:15]   [US 5/51 CA city 10/24] los-angeles-california
+[04:38:15]   [US 5/51 CA city 10/24] Page 1...
+[04:38:20]     [2/2] Skadden, Arps, Slate, Meagher & Flom LLP (Los Angeles) | (213) 687-5000 | info@skadden.com | skadden.com
+[04:38:22]   [US 5/51 CA city 11/24] modesto
+[04:38:22]   [US 5/51 CA city 11/24] Page 1...
+[04:38:26]   [US 5/51 CA city 12/24] newport-beach
+[04:38:26]   [US 5/51 CA city 12/24] Page 1...
+[04:38:30]   [US 5/51 CA city 13/24] palo-alto
+[04:38:30]   [US 5/51 CA city 13/24] Page 1...
+[04:38:34]   [US 5/51 CA city 14/24] redlands
+[04:38:34]   [US 5/51 CA city 14/24] Page 1...
+[04:38:38]   [US 5/51 CA city 15/24] san-diego-california
+[04:38:38]   [US 5/51 CA city 15/24] Page 1...
+[04:38:41]   [US 5/51 CA city 16/24] san-francisco-california
+[04:38:41]   [US 5/51 CA city 16/24] Page 1...
+[04:38:44]   [US 5/51 CA city 17/24] san-rafael-california
+[04:38:44]   [US 5/51 CA city 17/24] Page 1...
+[04:38:48]   [US 5/51 CA city 18/24] santa-ana-california
+[04:38:48]   [US 5/51 CA city 18/24] Page 1...
+[04:38:51]   [US 5/51 CA city 19/24] santa-barbara-california
+[04:38:51]   [US 5/51 CA city 19/24] Page 1...
+[04:38:54]   [US 5/51 CA city 20/24] santa-clara-california
+[04:38:54]   [US 5/51 CA city 20/24] Page 1...
+[04:38:58]   [US 5/51 CA city 21/24] santa-maria-california
+[04:38:58]   [US 5/51 CA city 21/24] Page 1...
+[04:39:01]   [US 5/51 CA city 22/24] santa-monica
+[04:39:01]   [US 5/51 CA city 22/24] Page 1...
+[04:39:04]   [US 5/51 CA city 23/24] torrance-california
+[04:39:04]   [US 5/51 CA city 23/24] Page 1...
+[04:39:07]   [US 5/51 CA city 24/24] victorville
+[04:39:07]   [US 5/51 CA city 24/24] Page 1...
+[04:39:08]   [Progress: 50 US leads so far]
+[04:39:11] [US 6/51 CO] colorado
+[04:39:11]   [US 6/51 CO] Page 1...
+[04:39:12]   Found 2 firms, 6 sub-city pages
+[04:39:15]     [1/2] Caplan & Earnest (Boulder) | (303) 443-8010 | wahlstrand@celaw.com | celaw.com
+[04:39:18]     [2/2] Feltman Law Firm (Cimarron) | (620) 855-4851 | info@feltmanlaw.com | feltmanlaw.com
+[04:39:21]   [US 6/51 CO city 1/6] boulder-colorado
+[04:39:21]   [US 6/51 CO city 1/6] Page 1...
+[04:39:24]   [US 6/51 CO city 2/6] cimarron-colorado
+[04:39:24]   [US 6/51 CO city 2/6] Page 1...
+[04:39:28]   [US 6/51 CO city 3/6] denver-colorado
+[04:39:28]   [US 6/51 CO city 3/6] Page 1...
+[04:39:31]   [US 6/51 CO city 4/6] fort-collins
+[04:39:31]   [US 6/51 CO city 4/6] Page 1...
+[04:39:35]     [1/1] Cline Williams Wright Johnson & Oldfather, L.L.P. (Fort Collins) | (970) 221-2637 | lamare@clinewilliams.com | clinewilliams.com
+[04:39:38]   [US 6/51 CO city 5/6] greenwood-village
+[04:39:38]   [US 6/51 CO city 5/6] Page 1...
+[04:39:42]     [1/1] Chancey-Kanavos (Greenwood Village) | (303) 377-2338 | matthew@barringerlawfirm.com | cklplawfirm.com
+[04:39:46]   [US 6/51 CO city 6/6] holyoke-colorado
+[04:39:46]   [US 6/51 CO city 6/6] Page 1...
+[04:39:49] [US 7/51 CT] connecticut
+[04:39:49]   [US 7/51 CT] Page 1...
+[04:39:49]   Found 0 firms, 0 sub-city pages
+[04:39:53] [US 8/51 DE] delaware
+[04:39:53]   [US 8/51 DE] Page 1...
+[04:39:53]   Found 0 firms, 1 sub-city pages
+[04:39:57]   [US 8/51 DE city 1/1] wilmington-delaware
+[04:39:57]   [US 8/51 DE city 1/1] Page 1...
+[04:39:59] [US 9/51 DC] district-of-columbia
+[04:39:59]   [US 9/51 DC] Page 1...
+[04:40:00]   Found 0 firms, 1 sub-city pages
+[04:40:02]   [US 9/51 DC city 1/1] washington-district-of-columbia
+[04:40:02]   [US 9/51 DC city 1/1] Page 1...
+[04:40:07]     [1/5] Pierce Atwood LLP (Washington) | (202) 530-6420 | mail@pierceatwood.com | pierceatwood.com
+[04:40:10]     [2/5] Phillips Lytle LLP (Washington) | (202) 617-2700 | info@phillipslytle.com | phillipslytle.com
+[04:40:14] [US 10/51 FL] florida
+[04:40:14]   [US 10/51 FL] Page 1...
+[04:40:17]   [US 10/51 FL] Page 2...
+[04:40:21]   [US 10/51 FL] Page 3...
+[04:40:21]   Found 21 firms, 12 sub-city pages
+[04:40:24]     [1/21] The Alagiri Immigration Law Firm (San Mateo) | (650) 507-4881 | hello@alagirilaw.com | alagirilaw.com
+[04:40:27]     [2/21] Quijano & Associates (Panama City) | (507) 269-2641 | quijano@quijano.com | quijano.com
+[04:40:30]     [3/21] Ardila Law Firm (Tampa) | (813) 422-5913 | customer@ardilalaw.com | ardilalaw.com
+[04:40:34]     [4/21] Lacayo Law Firm, P.A. (Miami) | (786) 671-4878 | glacayo@lacayolawfirm.com | lacayolawfirm.com
+[04:40:37]     [5/21] Morgan & Morgan (Panama City) | (507) 265-7777 | customerservice@morimor.com | morimor.com
+[04:40:40]     [6/21] Ayala Law PA - Business Law Firm (Miami) | (305) 570-2208 | eayala@ayalalawpa.com | lawayala.com
+[04:40:44]     [7/21] Smith & Eulo Law Firm: Criminal Defense Lawyers (Miami) | (786) 206-1296 | +Criminal+Defense+Lawyers/@28.5514739 | smithandeulo.com
+[04:40:47]     [8/21] Guillen Law Firm (Miramar) | (305) 454-0761 | Info@guillen.law | guillen.law
+[04:40:50]     [9/21] Gerstein & Gerstein (Fort Lauderdale) | (954) 947-6060 | info@usaimmigrationlaw.com | usaimmigrationlaw.com
+[04:40:54]     [10/21] NDM LAW FIRM & ASSOCIATES (Panama City) | (507) 830-2656 | info@ndm.com.pa | ndm.com.pa
+[04:40:57]     [11/21] Piquet Law Firm (Miami) | (786) 558-8054 | info@piquetlawfirm.com | piquetlawfirm.com
+[04:41:00]     [12/21] VIA Lawyers, PLLC. (Miami) | (305) 425-1565 | office@vialawyers.com | no website
+[04:41:03]     [13/21] Jauregui Law (Hialeah) | (305) 822-2901 | reception@jaureguilaw.com | jaureguilaw.com
+[04:41:06]     [14/21] Elizee Law Firm (Miami) | (305) 371-8846 | info@elizeelawfirm.com | elizeelawfirm.com
+[04:41:09]     [15/21] Willis & Davidow, LLC (Naples) | (239) 465-0531 | cwidener@willisdavidow.com | willisdavidow.com
+[04:41:12]     [16/21] Galindo, Arias & Lopez (Panama City) | (507) 303-0303 | gala@gala.com.pa | gala.com.pa
+[04:41:15]     [17/21] The Senter Law Firm, PC (Bristol) | (423) 764-5255 | office@senterlaw.com | senterlaw.com
+[04:41:19]     [18/21] The Joli Law Firm (Miami) | (305) 722-2828 | info@jolilaw.com | jolilaw.com
+[04:41:23]     [19/21] Icaza, Gonzalez - Ruiz & Aleman (IGRA) (Panama City) | (507) 205-6000 | igranet@icazalaw.com | icazalaw.com
+[04:41:27]     [20/21] English Lucas Priest & Owsley, LLP (Bowling Green) | (270) 781-6500 | kmaier@elpolaw.com | injury.elpolaw.com
+[04:41:31]     [21/21] Revilla Law Firm, P.A. (Miami) | (305) 858-2323 | aarocha@immigrationmiami.com | immigrationmiami.com
+[04:41:33]   [US 10/51 FL city 1/12] bowling-green-florida
+[04:41:33]   [US 10/51 FL city 1/12] Page 1...
+[04:41:36]   [US 10/51 FL city 2/12] bristol-florida
+[04:41:36]   [US 10/51 FL city 2/12] Page 1...
+[04:41:40]   [US 10/51 FL city 3/12] fort-lauderdale
+[04:41:40]   [US 10/51 FL city 3/12] Page 1...
+[04:41:43]   [US 10/51 FL city 4/12] hialeah
+[04:41:43]   [US 10/51 FL city 4/12] Page 1...
+[04:41:46]   [US 10/51 FL city 5/12] miami-florida
+[04:41:46]   [US 10/51 FL city 5/12] Page 1...
+[04:41:49]   [US 10/51 FL city 6/12] miramar-florida
+[04:41:49]   [US 10/51 FL city 6/12] Page 1...
+[04:41:52]   [US 10/51 FL city 7/12] naples-florida
+[04:41:52]   [US 10/51 FL city 7/12] Page 1...
+[04:41:55]   [US 10/51 FL city 8/12] orlando-florida
+[04:41:55]   [US 10/51 FL city 8/12] Page 1...
+[04:41:59]   [US 10/51 FL city 9/12] panama-city-florida
+[04:41:59]   [US 10/51 FL city 9/12] Page 1...
+[04:42:02]   [US 10/51 FL city 10/12] san-mateo-florida
+[04:42:02]   [US 10/51 FL city 10/12] Page 1...
+[04:42:06]   [US 10/51 FL city 11/12] tallahassee
+[04:42:06]   [US 10/51 FL city 11/12] Page 1...
+[04:42:10]   [US 10/51 FL city 12/12] tampa-florida
+[04:42:10]   [US 10/51 FL city 12/12] Page 1...
+[04:42:10]   [Progress: 77 US leads so far]
+[04:42:13] [US 11/51 GA] georgia
+[04:42:13]   [US 11/51 GA] Page 1...
+[04:42:13]   Found 10 firms, 6 sub-city pages
+[04:42:16]     [1/10] Law Office of Natalia Kolyada (Boston) | (617) 755-5678 | info@kolyadalaw.com | kolyadalaw.com
+[04:42:20]     [2/10] George McCranie Law Firm (Douglas) | (912) 217-6813 | mccranielaw@hotmail.com | mccranielawfirm.com
+[04:42:23]     [3/10] Law Office Of Frank Fernandez, Esq. (Boston) | (617) 393-0250 | frank@thefernandezfirm.com | thefernandezfirm.com
+[04:42:26]     [4/10] SHEV Law Group - Dallas (Dallas) | (214) 915-8835 | info@shevlawgroup.com | shevlawgroup.com
+[04:42:29]     [5/10] Ahmad Law Office, PLLC (Lexington) | (859) 259-2021 | FIRM@AHMADLAW.COM | wael1007.wixsite.com
+[04:42:33]     [6/10] Law Office of MJ Lee (Boston) | (313) 312-0077 | info@mjleelawoffice.com | lawofficeofmjlee.com
+[04:42:36]     [7/10] Antonini & Cohen Immigration Law Group, LLC. (Atlanta) | (404) 850-9394 | info@antoniniandcohen.com | antoniniandcohen.com
+[04:42:38]     [8/10] Law Office of Matthew W Peterson (Boston) | (617) 295-7500 | info@mwpetersonlaw.com | mwpetersonlaw.com
+[04:42:41]     [10/10] Schulze Law (Boston) | (857) 300-5300 | 857.300.5300|help@schulzelaw.com | schulzelaw.com
+[04:42:44]   [US 11/51 GA city 1/6] atlanta-georgia
+[04:42:44]   [US 11/51 GA city 1/6] Page 1...
+[04:42:49]     [1/3] Jones Day (Atlanta) | (404) 521-3939 | jromera@jonesday.com | jonesday.com
+[04:42:51]   [US 11/51 GA city 2/6] boston-georgia
+[04:42:51]   [US 11/51 GA city 2/6] Page 1...
+[04:42:54]   [US 11/51 GA city 3/6] dallas-georgia
+[04:42:54]   [US 11/51 GA city 3/6] Page 1...
+[04:42:58]   [US 11/51 GA city 4/6] douglas-georgia
+[04:42:58]   [US 11/51 GA city 4/6] Page 1...
+[04:43:02]   [US 11/51 GA city 5/6] lexington-georgia
+[04:43:02]   [US 11/51 GA city 5/6] Page 1...
+[04:43:05]   [US 11/51 GA city 6/6] macon-georgia
+[04:43:05]   [US 11/51 GA city 6/6] Page 1...
+[04:43:09] [US 12/51 HI] hawaii
+[04:43:09]   [US 12/51 HI] Page 1...
+[04:43:09]   Found 2 firms, 2 sub-city pages
+[04:43:13]     [1/2] Aloha Immigration Law Firm (Honolulu) | (808) 626-5020 | contact@worldwidemigrationpartners.com | alohaimmigration.com
+[04:43:17]     [2/2] Maui Immigration Law, LLC (Wailuku) | (808) 244-5858 | admin@immigrationlawmaui.com | immigrationlawmaui.com
+[04:43:19]   [US 12/51 HI city 1/2] honolulu
+[04:43:19]   [US 12/51 HI city 1/2] Page 1...
+[04:43:22]   [US 12/51 HI city 2/2] wailuku
+[04:43:22]   [US 12/51 HI city 2/2] Page 1...
+[04:43:26] [US 13/51 ID] idaho
+[04:43:26]   [US 13/51 ID] Page 1...
+[04:43:27]   Found 0 firms, 0 sub-city pages
+[04:43:30] [US 14/51 IL] illinois
+[04:43:30]   [US 14/51 IL] Page 1...
+[04:43:31]   Found 9 firms, 7 sub-city pages
+[04:43:34]     [1/9] Vijay Dinakar Law Firm (San Jose) | (408) 275-2307 | info@vijaylaw.com | vijaylaw.com
+[04:43:38]     [2/9] Zara Law Group (Woodridge) | (708) 365-8411 | info@zaralawgroup.com | zaralawgroup.com
+[04:43:41]     [3/9] Marsal Avila Law Group (Oak Brook) | (773) 762-2500 | contactmalg@tma-law.com | marsalavilalaw.com
+[04:43:44]     [4/9] The Minton Law Firm, P.C. (Schaumburg) | (847) 874-7278 | minton@mintonlawfirm.com | mintonlawfirm.com
+[04:43:47]     [5/9] Ezeldin Law Firm (Palos Hills) | (708) 237-3802 | info@ezeldinlaw.com | ezeldinlaw.com
+[04:43:49]     [6/9] The Duron Law Firm PC (Chicago) | (773) 697-7650 | a.duron@duronlaw.com | duronlaw.com
+[04:43:52]     [7/9] Law Office of Gabriel S. Law (San Jose) | (408) 982-3036 | gabe@gsllawoffice.com | gsllawoffice.com
+[04:43:55]     [8/9] Garza Law Office, PLLC (Edinburg) | (956) 329-1304 | office@doraalicia.com | doraalicia.com
+[04:43:58]     [9/9] Kamala Law Corporation (San Jose) | (408) 752-5436 | contact@kamalalaw.com | kamalalaw.com
+[04:44:01]   [US 14/51 IL city 1/7] chicago
+[04:44:01]   [US 14/51 IL city 1/7] Page 1...
+[04:44:05]   [US 14/51 IL city 2/7] edinburg-illinois
+[04:44:05]   [US 14/51 IL city 2/7] Page 1...
+[04:44:09]   [US 14/51 IL city 3/7] oak-brook
+[04:44:09]   [US 14/51 IL city 3/7] Page 1...
+[04:44:12]   [US 14/51 IL city 4/7] palos-hills
+[04:44:12]   [US 14/51 IL city 4/7] Page 1...
+[04:44:16]   [US 14/51 IL city 5/7] san-jose-illinois
+[04:44:16]   [US 14/51 IL city 5/7] Page 1...
+[04:44:19]   [US 14/51 IL city 6/7] schaumburg
+[04:44:19]   [US 14/51 IL city 6/7] Page 1...
+[04:44:23]   [US 14/51 IL city 7/7] woodridge-illinois
+[04:44:23]   [US 14/51 IL city 7/7] Page 1...
+[04:44:26] [US 15/51 IN] indiana
+[04:44:26]   [US 15/51 IN] Page 1...
+[04:44:27]   Found 1 firms, 1 sub-city pages
+[04:44:30]     [1/1] Ignacio G. Martinez Law Firm ABOGADO DE ACCIDENTES (Brownsville) | (956) 542-2264 | ignacio@texas-mexicoattorneys.com | texas-mexicoattorneys.com
+[04:44:34]   [US 15/51 IN city 1/1] brownsville-indiana
+[04:44:34]   [US 15/51 IN city 1/1] Page 1...
+[04:44:34]   [Progress: 99 US leads so far]
+[04:44:37] [US 16/51 IA] iowa
+[04:44:37]   [US 16/51 IA] Page 1...
+[04:44:38]   Found 0 firms, 0 sub-city pages
+[04:44:40] [US 17/51 KS] kansas
+[04:44:40]   [US 17/51 KS] Page 1...
+[04:44:41]   Found 5 firms, 4 sub-city pages
+[04:44:44]     [1/5] Akcok Law Office (Burlingame) | (415) 936-3706 | info@callutku.com | callutku.com
+[04:44:47]     [2/5] Stephen Bandar Law Office (Burlington) | (617) 417-1145 | info@stephenbandarlaw.com | stephenbandarlaw.com
+[04:44:51]     [3/5] Law Offices of Vincent M. Miceli & Associates, Ltd. (Bartlett) | (630) 529-2020 | vmmlaw2020@gmail.com | law2020.net
+[04:44:54]     [4/5] Law Offices of Jamie B. Naini (Bartlett) | (901) 377-9700 | help@nainilaw.com | nainilaw.com
+[04:44:58]     [5/5] Law Offices Of Sara J. Frankel & Associates, PC (Fall River) | (508) 730-1451 | mail@sjfrankellaw.com | sjfrankellaw.com
+[04:45:01]   [US 17/51 KS city 1/4] bartlett-kansas
+[04:45:01]   [US 17/51 KS city 1/4] Page 1...
+[04:45:04]   [US 17/51 KS city 2/4] burlingame-kansas
+[04:45:04]   [US 17/51 KS city 2/4] Page 1...
+[04:45:08]   [US 17/51 KS city 3/4] burlington-kansas
+[04:45:08]   [US 17/51 KS city 3/4] Page 1...
+[04:45:12]   [US 17/51 KS city 4/4] fall-river-kansas
+[04:45:12]   [US 17/51 KS city 4/4] Page 1...
+[04:45:15] [US 18/51 KY] kentucky
+[04:45:15]   [US 18/51 KY] Page 1...
+[04:45:16]   Found 3 firms, 3 sub-city pages
+[04:45:19]     [1/3] The Claro Law Firm (White Plains) | (917) 300-3334 | eclaroesq@lawredress.com | lawredress.com
+[04:45:22]     [2/3] Stoll Keenon Ogden PLLC (Louisville) | (502) 333-6000 | info@skofirm.com | skofirm.com
+[04:45:26]     [3/3] ELPO Law (Bowling Green) | (270) 781-6500 | inquiry@elpolaw.com | elpolaw.com
+[04:45:29]   [US 18/51 KY city 1/3] bowling-green-kentucky
+[04:45:29]   [US 18/51 KY city 1/3] Page 1...
+[04:45:32]   [US 18/51 KY city 2/3] louisville-kentucky
+[04:45:32]   [US 18/51 KY city 2/3] Page 1...
+[04:45:36]   [US 18/51 KY city 3/3] white-plains-kentucky
+[04:45:36]   [US 18/51 KY city 3/3] Page 1...
+[04:45:40] [US 19/51 LA] louisiana
+[04:45:40]   [US 19/51 LA] Page 1...
+[04:45:40]   Found 0 firms, 0 sub-city pages
+[04:45:44] [US 20/51 ME] maine
+[04:45:44]   [US 20/51 ME] Page 1...
+[04:45:45]   Found 2 firms, 2 sub-city pages
+[04:45:47]     [1/2] Preti, Flaherty, Beliveau & Pachios, Chartered, LLP (Portland) | (207) 791-3000 | dvanslyke@preti.com | preti.com
+[04:45:50]   [US 20/51 ME city 1/2] augusta-maine
+[04:45:50]   [US 20/51 ME city 1/2] Page 1...
+[04:45:54]   [US 20/51 ME city 2/2] portland-maine
+[04:45:54]   [US 20/51 ME city 2/2] Page 1...
+[04:45:55]   [Progress: 108 US leads so far]
+[04:45:58] [US 21/51 MD] maryland
+[04:45:58]   [US 21/51 MD] Page 1...
+[04:45:59]   Found 6 firms, 4 sub-city pages
+[04:46:02]     [1/6] Rose Immigration Law Firm (Brentwood) | (615) 321-2256 | lroselaw@roseimmigration.com | roseimmigration.com
+[04:46:06]     [2/6] Saladze Law Firm P.C. (Brooklyn) | (718) 305-1606 | info@saladzelaw.com | saladzelaw.com
+[04:46:09]     [3/6] Fancher Law Firm, PLLC (Brentwood) | (615) 349-1107 | fancherlawfirmpllc@gmail.com | fancherlawoffice.com
+[04:46:12]     [4/6] Wright, Constable & Skeen (Towson) | (410) 659-1391 | jdellinger@wcslaw.com | wcslaw.com
+[04:46:16]     [5/6] Melgar Law Firm (Brentwood) | (631) 538-0008 | info@dmelgarlaw.com | dmelgarlaw.com
+[04:46:20]     [6/6] The Ottley Law Firm, PC (Brooklyn) | (718) 221-2162 | office@theottleylawfirm.com | theottleylawfirm.com
+[04:46:23]   [US 21/51 MD city 1/4] baltimore-maryland
+[04:46:23]   [US 21/51 MD city 1/4] Page 1...
+[04:46:26]   [US 21/51 MD city 2/4] brentwood-maryland
+[04:46:26]   [US 21/51 MD city 2/4] Page 1...
+[04:46:31]   [US 21/51 MD city 3/4] brooklyn-maryland
+[04:46:31]   [US 21/51 MD city 3/4] Page 1...
+[04:46:34]   [US 21/51 MD city 4/4] towson
+[04:46:34]   [US 21/51 MD city 4/4] Page 1...
+[04:46:37] [US 22/51 MA] massachusetts
+[04:46:37]   [US 22/51 MA] Page 1...
+[04:46:38]   Found 3 firms, 8 sub-city pages
+[04:46:41]     [1/3] Fletcher Tilton PC. (Worcester) | (508) 459-8000 | arisch@fletchertilton.com | fletchertilton.com
+[04:46:45]     [2/3] Jabour Law Firm (Woburn) | (781) 787-2676 | exemplo@meusite.com | jabourlaw.com
+[04:46:48]   [US 22/51 MA city 1/8] boston-massachusetts
+[04:46:48]   [US 22/51 MA city 1/8] Page 1...
+[04:46:51]   [US 22/51 MA city 2/8] centerville-massachusetts
+[04:46:51]   [US 22/51 MA city 2/8] Page 1...
+[04:46:55]   [US 22/51 MA city 3/8] framingham
+[04:46:55]   [US 22/51 MA city 3/8] Page 1...
+[04:46:59]   [US 22/51 MA city 4/8] hudson-massachusetts
+[04:46:59]   [US 22/51 MA city 4/8] Page 1...
+[04:47:02]   [US 22/51 MA city 5/8] medfield
+[04:47:02]   [US 22/51 MA city 5/8] Page 1...
+[04:47:05]   [US 22/51 MA city 6/8] new-bedford
+[04:47:05]   [US 22/51 MA city 6/8] Page 1...
+[04:47:08]   [US 22/51 MA city 7/8] woburn
+[04:47:08]   [US 22/51 MA city 7/8] Page 1...
+[04:47:12]   [US 22/51 MA city 8/8] worcester-massachusetts
+[04:47:12]   [US 22/51 MA city 8/8] Page 1...
+[04:47:16] [US 23/51 MI] michigan
+[04:47:16]   [US 23/51 MI] Page 1...
+[04:47:17]   Found 0 firms, 0 sub-city pages
+[04:47:20] [US 24/51 MN] minnesota
+[04:47:20]   [US 24/51 MN] Page 1...
+[04:47:21]   Found 4 firms, 4 sub-city pages
+[04:47:24]     [1/4] The Law Office of Alexander Paykin, P.C. (New York Mills) | (212) 858-9112 | contact@paykinlaw.net | paykinlaw.net
+[04:47:26]     [2/4] The Nolivos Law Firm (New York Mills) | (212) 335-0403 | info@nolivoslaw.com | nolivoslaw.com
+[04:47:30]     [3/4] Galowitz • Olson PLLC. (Lake Elmo) | (651) 777-6960 | info@galowitzolson.com | galowitzolson.com
+[04:47:33]     [4/4] LAW OFFICE OF ROBERTO SERRATO, PC (Atwater) | (209) 683-4455 | rserratolaw@rserratolaw.com | drserratolaw.com
+[04:47:36]   [US 24/51 MN city 1/4] atwater-minnesota
+[04:47:36]   [US 24/51 MN city 1/4] Page 1...
+[04:47:39]   [US 24/51 MN city 2/4] lake-elmo
+[04:47:39]   [US 24/51 MN city 2/4] Page 1...
+[04:47:43]   [US 24/51 MN city 3/4] minneapolis-minnesota
+[04:47:43]   [US 24/51 MN city 3/4] Page 1...
+[04:47:46]   [US 24/51 MN city 4/4] new-york-mills
+[04:47:46]   [US 24/51 MN city 4/4] Page 1...
+[04:47:50] [US 25/51 MS] mississippi
+[04:47:50]   [US 25/51 MS] Page 1...
+[04:47:50]   Found 1 firms, 2 sub-city pages
+[04:47:54]     [1/1] LAW OFFICES OF BRIAN D. LERNER, A Professional Corporation (Long Beach) | (562) 495-0554 | blerner@californiaimmigration.us | californiaimmigration.us
+[04:47:56]   [US 25/51 MS city 1/2] jackson-mississippi
+[04:47:56]   [US 25/51 MS city 1/2] Page 1...
+[04:48:00]   [US 25/51 MS city 2/2] long-beach-mississippi
+[04:48:00]   [US 25/51 MS city 2/2] Page 1...
+[04:48:01]   [Progress: 121 US leads so far]
+[04:48:04] [US 26/51 MO] missouri
+[04:48:04]   [US 26/51 MO] Page 1...
+[04:48:08]   [US 26/51 MO] Page 2...
+[04:48:11]   [US 26/51 MO] Page 3...
+[04:48:12]   Found 30 firms, 3 sub-city pages
+[04:48:15]     [1/30] Gregg S. Harrison Law Firm PLLC (Houston) | (281) 929-0110 | gregg@greggharrison.com | greggharrison.com
+[04:48:18]     [2/30] Orange Law | Personal Injury Lawyer Houston (Houston) | (713) 885-9787 | contact@orangelaw.us | orangelaw.us
+[04:48:22]     [3/30] Quijano Law Firm, PLLC (Houston) | (832) 622-1890 | info@quijanolawfirm.com | quijanolawfirm.com
+[04:48:26]     [4/30] Truong Law Firm, PLLC (Houston) | (713) 561-5595 | info@truonglegal.com | truonglegal.com
+[04:48:29]     [5/30] The Law Office Of Elsa Soto, PLLC (Houston) | (832) 800-3572 | info@sotolawteam.com | sotolawteam.com
+[04:48:32]     [6/30] G. Mesa Law Firm, P.C. (Houston) | (713) 923-1331 | lawofficeofginomesa@yahoo.com | ginomesalaw.com
+[04:48:36]     [7/30] Lamb & Turner, PLLC (Houston) | (346) 662-2397 | contact@lambimmigration.com | lambimmigration.com
+[04:48:40]     [8/30] Al Kola Law Office (Wheaton) | (630) 407-0200 | contact@alkolalaw.com | alkolalaw.com
+[04:48:43]     [9/30] Montes & Guevara Attorneys at Law, PLLC (Houston) | (833) 768-9529 | Lawyers@SoTexasLawyers.com | no website
+[04:48:46]     [10/30] Pinto-Leon Law Firm, PC (Houston) | (713) 338-2879 | info@pintoleon.com | pintoleon.com
+[04:48:49]     [11/30] Small Law PLLC (Pontiac) | (248) 798-8903 | SmallLawPLLC@Gmail.Com | michigansmalllaw.com
+[04:48:52]     [12/30] The Law Office of Gogo U.K. Owor & Associates, PLLC (Houston) | (713) 778-8000 | attorney@gogolaw.net | gogolaw.net
+[04:48:55]     [13/30] Goldberg Law Office (Houston) | (713) 942-0600 | sara@lawgoldberg.com2 | lawgoldberg.com
+[04:48:58]     [14/30] Alonso Legal Group, PLLC HOUSTON (Houston) | (832) 428-5566 | abigail@adlegalgroup.com | adlegalgroup.com
+[04:49:02]     [15/30] Ismail Law Firm PLLC (Houston) | (832) 493-9805 | ummehani@ismaillawfirm.com | ismaillawfirm.com
+[04:49:05]     [16/30] Global Partners Law Firm (Houston) | (346) 442-8426 | contacto@globalpartnerslaw.com | globalpartnerslaw.com
+[04:49:08]     [17/30] The Rodriguez Law Group, PLLC. Abogado Andres Rodriguez (Houston) | (832) 953-5003 | IamAttorneyRodriguez@gmail.com | abogadoinmigracion.org
+[04:49:12]     [18/30] Premium Law Firm, PLLC (Houston) | (713) 730-2900 | unwaneri@premlaw.net | premlaw.net
+[04:49:16]     [19/30] Law Offices of Udo Ezeamama (Houston) | (832) 323-9245 | paralegal1@attorneyudo.com | attorneyudo.com
+[04:49:19]     [20/30] Calderon Legal Group (Houston) | (832) 261-5500 | will@calderonlegalgroup.com | calderonlegalgroup.com
+[04:49:22]     [21/30] De Luna Law Offices, P.C. (Houston) | (713) 589-5269 | inquiry@delunafirm.com | delunafirm.com
+[04:49:26]     [22/30] GOINS LAW (Houston) | (713) 338-2262 | anymail@mail.com | goinslaw.com
+[04:49:28]     [23/30] Hector P Sanchez Attys At Law (Houston) | (713) 641-4550 | info@hectorsanchezlaw.com | hectorsanchezlaw.com
+[04:49:32]     [24/30] Pham & Nguyen Law Group, P.C. (Houston) | (713) 789-8010 | KPham@PhamNguyenLaw.com | phamnguyenlaw.com
+[04:49:36]     [25/30] The Roque Law Firm (Houston) | (832) 266-3582 | sararoquelaw@gmail.com | roque-law-firm.com
+[04:49:39]     [26/30] The Daniels Legal Group P.L.L.C. (Houston) | (866) 524-3315 | Info@attorneydaniels.com | attorneydaniels.com
+[04:49:42]     [27/30] The Law Office of Anuj A. Shah, P.C. (Houston) | (713) 975-1128 | info@shah-law.com | shah-law.com
+[04:49:46]     [28/30] Zaidi Law Firm P.C. (Houston) | (713) 777-2902 | info@immigrationsavior.com | immigrationsavior.com
+[04:49:49]     [29/30] The Law Offices of Nomani And Nomani (Houston) | (832) 303-2417 | info@nomanilawyer.com | nomanilaw.com
+[04:49:52]     [30/30] Luis F. Hess, PLLC (Houston) | (281) 377-0830 | info@luishesslaw.com | luishesslaw.com
+[04:49:54]   [US 26/51 MO city 1/3] houston-missouri
+[04:49:54]   [US 26/51 MO city 1/3] Page 1...
+[04:49:58]   [US 26/51 MO city 1/3] Page 2...
+[04:50:02]   [US 26/51 MO city 1/3] Page 3...
+[04:50:05]   [US 26/51 MO city 2/3] pontiac-missouri
+[04:50:05]   [US 26/51 MO city 2/3] Page 1...
+[04:50:09]   [US 26/51 MO city 3/3] wheaton-missouri
+[04:50:09]   [US 26/51 MO city 3/3] Page 1...
+[04:50:13] [US 27/51 MT] montana
+[04:50:13]   [US 27/51 MT] Page 1...
+[04:50:14]   Found 1 firms, 6 sub-city pages
+[04:50:17]     [1/1] Crowley Fleck (Missoula) | (406) 523-3600 | bcory@crowleyfleck.com | crowleyfleck.com
+[04:50:19]   [US 27/51 MT city 1/6] billings-montana
+[04:50:19]   [US 27/51 MT city 1/6] Page 1...
+[04:50:22]   [US 27/51 MT city 2/6] bozeman
+[04:50:22]   [US 27/51 MT city 2/6] Page 1...
+[04:50:26]   [US 27/51 MT city 3/6] butte-montana
+[04:50:26]   [US 27/51 MT city 3/6] Page 1...
+[04:50:29]   [US 27/51 MT city 4/6] helena-montana
+[04:50:29]   [US 27/51 MT city 4/6] Page 1...
+[04:50:31]   [US 27/51 MT city 5/6] kalispell
+[04:50:31]   [US 27/51 MT city 5/6] Page 1...
+[04:50:34]   [US 27/51 MT city 6/6] missoula
+[04:50:34]   [US 27/51 MT city 6/6] Page 1...
+[04:50:38] [US 28/51 NE] nebraska
+[04:50:38]   [US 28/51 NE] Page 1...
+[04:50:39]   Found 3 firms, 3 sub-city pages
+[04:50:43]     [1/3] Fitzgerald Schorr PC (Omaha) | (402) 342-1000 | Fitzlaw@fitzlaw.com | fitzlaw.com
+[04:50:47]     [2/3] Koley Jessen (Omaha) | (402) 390-9500 | info@koleyjessen.com | koleyjessen.com
+[04:50:49]   [US 28/51 NE city 1/3] aurora-nebraska
+[04:50:49]   [US 28/51 NE city 1/3] Page 1...
+[04:50:53]   [US 28/51 NE city 2/3] lincoln-nebraska
+[04:50:53]   [US 28/51 NE city 2/3] Page 1...
+[04:50:56]   [US 28/51 NE city 3/3] omaha-nebraska
+[04:50:56]   [US 28/51 NE city 3/3] Page 1...
+[04:51:00] [US 29/51 NV] nevada
+[04:51:00]   [US 29/51 NV] Page 1...
+[04:51:00]   Found 1 firms, 1 sub-city pages
+[04:51:04]     [1/1] Hayoon Kane Law Firm (Las Vegas) | (702) 463-7630 | greencard@hklaw.us | no website
+[04:51:06]   [US 29/51 NV city 1/1] las-vegas-nevada
+[04:51:06]   [US 29/51 NV city 1/1] Page 1...
+[04:51:09] [US 30/51 NH] new-hampshire
+[04:51:09]   [US 30/51 NH] Page 1...
+[04:51:10]   Found 0 firms, 1 sub-city pages
+[04:51:13]   [US 30/51 NH city 1/1] portsmouth-new-hampshire
+[04:51:13]   [US 30/51 NH city 1/1] Page 1...
+[04:51:13]   [Progress: 155 US leads so far]
+[04:51:16] [US 31/51 NJ] new-jersey
+[04:51:16]   [US 31/51 NJ] Page 1...
+[04:51:17]   Found 1 firms, 1 sub-city pages
+[04:51:21]     [1/1] Song Law Firm | 뉴욕,뉴저지 한인 이민 변호사, 뉴욕, 뉴저지 교통 사고 변호사, 파산 변호사, 소송 변호사 (Fort Lee) | (201) 461-0031 | mail@songlawfirm.com | songlawfirm.com
+[04:51:23]   [US 31/51 NJ city 1/1] fort-lee-new-jersey
+[04:51:23]   [US 31/51 NJ city 1/1] Page 1...
+[04:51:26] [US 32/51 NM] new-mexico
+[04:51:26]   [US 32/51 NM] Page 1...
+[04:51:27]   Found 8 firms, 1 sub-city pages
+[04:51:30]     [1/8] The Law Office of Kristina Krilchev, Krilchev & Associates, PC (Las Vegas) | (888) 822-5558 | legal@krilchev.com | krilchev.com
+[04:51:33]     [2/8] Chong Law Group, LLC (Las Vegas) | (702) 478-7112 | jwc@chonglawgroup.com | chonglawgroup.com
+[04:51:36]     [3/8] De Castroverde Law - Criminal & Immigration (Las Vegas) | (702) 825-7986 | info@decastroverdelaw.com | decastroverdelaw.com
+[04:51:40]     [4/8] John Park Law (Las Vegas) | (702) 857-7879 | john@johnparklawfirm.com | johnparklawfirm.com
+[04:51:43]     [5/8] Alikhan Law Office (Las Vegas) | (702) 374-6619 | info@alikhanlaw.com | alikhanlaw.com
+[04:51:45]     [6/8] American Liberty Law Group (Las Vegas) | (702) 843-6823 | info@americanlibertylg.com | americanlibertylg.com
+[04:51:49]     [7/8] GWP IMMIGRATION LAW (Las Vegas) | (702) 737-7717 | info@gwp.law | gwp.law
+[04:51:53]     [8/8] Law Offices of Eric K. Chen (Las Vegas) | (702) 638-8886 | info@ericchenlaw.com | ericchenlaw.com
+[04:51:55]   [US 32/51 NM city 1/1] las-vegas-new-mexico
+[04:51:55]   [US 32/51 NM city 1/1] Page 1...
+[04:51:59] [US 33/51 NY] new-york
+[04:51:59]   [US 33/51 NY] Page 1...
+[04:52:03]   [US 33/51 NY] Page 2...
+[04:52:03]   Found 14 firms, 13 sub-city pages
+[04:52:06]     [2/14] Malik Law Firm, P.C (New York City) | (646) 901-7746 | info@maliklawimmigration.com | maliklawimmigration.com
+[04:52:10]     [3/14] Arandia Law Firm (New York City) | (212) 586-0500 | info@arandialawfirm.com | arandialawfirm.com
+[04:52:13]     [4/14] Queens Family Lawyers & Divorce Lawyers / Solomos & Storms, PLLC (Queens) | (718) 278-5900 | jimmy@solomosstorms.com | solomosstorms.com
+[04:52:16]     [5/14] Priya Mathon Law Firm, PLLC. (Bellerose) | (718) 480-6077 | pmathon@mathonlaw.com | mathonlaw.com
+[04:52:20]     [6/14] Jagan Law Firm, PLLC (New York City) | (718) 848-4616 | info@jaganlaw.com | jaganlaw.com
+[04:52:24]     [7/14] The Shapiro Law Firm, LLC (New York City) | (212) 444-8064 | contact@theshapirolawyers.com | no website
+[04:52:28]     [8/14] McGuire, Peláez, Bennett & Belcastro, P.C. Attorneys at Law (Central Islip) | (631) 348-1702 | chris@mpblaw.net | central-islip-lawyer.com
+[04:52:31]     [9/14] Igunbor & Igunbor Law Firm, PLLC (Poughkeepsie) | (845) 337-4260 | info@igunborlaw.com | igunborlaw.com
+[04:52:34]     [10/14] Law Firm of Masood Syed, P.C. (Valley Stream) | (516) 962-9574 | info@syedlawfirm.com | masoodlawgroup.com
+[04:52:37]     [11/14] Vasiliou Law (Astoria) | (347) 967-6141 | kally@svlawpartners.com | svlawpartners.com
+[04:52:40]     [12/14] Pagan Lopez Law Office (Long Island City) | (646) 216-8881 | info@paganlopezlaw.com | paganlopezlaw.com
+[04:52:43]     [14/14] Law Office of Michael C. Viscosi, Esq. (Johnstown) | (518) 762-0011 | michael@viscosilaw.com | viscosilaw.com
+[04:52:45]   [US 33/51 NY city 1/13] albany-new-york
+[04:52:45]   [US 33/51 NY city 1/13] Page 1...
+[04:52:49]   [US 33/51 NY city 2/13] astoria-new-york
+[04:52:49]   [US 33/51 NY city 2/13] Page 1...
+[04:52:52]   [US 33/51 NY city 3/13] bellerose
+[04:52:52]   [US 33/51 NY city 3/13] Page 1...
+[04:52:55]   [US 33/51 NY city 4/13] buffalo-new-york
+[04:52:55]   [US 33/51 NY city 4/13] Page 1...
+[04:52:59]   [US 33/51 NY city 5/13] central-islip
+[04:52:59]   [US 33/51 NY city 5/13] Page 1...
+[04:53:03]   [US 33/51 NY city 6/13] garden-city-new-york
+[04:53:03]   [US 33/51 NY city 6/13] Page 1...
+[04:53:06]   [US 33/51 NY city 7/13] johnstown-new-york
+[04:53:06]   [US 33/51 NY city 7/13] Page 1...
+[04:53:10]   [US 33/51 NY city 8/13] long-island-city
+[04:53:10]   [US 33/51 NY city 8/13] Page 1...
+[04:53:13]   [US 33/51 NY city 9/13] new-york-city
+[04:53:13]   [US 33/51 NY city 9/13] Page 1...
+[04:53:17]     [2/10] Global Esquire Law Firm (New York City) | (929) 204-8205 | info@globalesquire.com | globalesquire.com
+[04:53:20]     [10/10] Stabit Advocates (New York City) | +250 789 366 274 | info@stabitadvocates.com | stabitadvocates.com
+[04:53:23]   [US 33/51 NY city 10/13] poughkeepsie
+[04:53:23]   [US 33/51 NY city 10/13] Page 1...
+[04:53:27]   [US 33/51 NY city 11/13] queens
+[04:53:27]   [US 33/51 NY city 11/13] Page 1...
+[04:53:30]   [US 33/51 NY city 12/13] rochester-new-york
+[04:53:30]   [US 33/51 NY city 12/13] Page 1...
+[04:53:34]   [US 33/51 NY city 13/13] valley-stream
+[04:53:34]   [US 33/51 NY city 13/13] Page 1...
+[04:53:38] [US 34/51 NC] north-carolina
+[04:53:38]   [US 34/51 NC] Page 1...
+[04:53:39]   Found 3 firms, 2 sub-city pages
+[04:53:42]     [1/3] The Atkinson Law Firm (Winston-Salem) | (336) 631-9987 | info@mtalaw.com | mtalaw.com
+[04:53:45]     [2/3] Greenwood Law (Winston-Salem) | (336) 920-7415 | office@dwg-law.com | dwg-law.com
+[04:53:49]     [3/3] Sivaraman Immigration Law (Carrboro) | (919) 619-2119 | heather@sivisalaw.com | sivisalaw.com
+[04:53:52]   [US 34/51 NC city 1/2] carrboro
+[04:53:52]   [US 34/51 NC city 1/2] Page 1...
+[04:53:55]   [US 34/51 NC city 2/2] winston-salem
+[04:53:55]   [US 34/51 NC city 2/2] Page 1...
+[04:53:59] [US 35/51 ND] north-dakota
+[04:53:59]   [US 35/51 ND] Page 1...
+[04:53:59]   Found 0 firms, 2 sub-city pages
+[04:54:01]   [US 35/51 ND city 1/2] bismarck-north-dakota
+[04:54:01]   [US 35/51 ND city 1/2] Page 1...
+[04:54:05]   [US 35/51 ND city 2/2] williston-north-dakota
+[04:54:05]   [US 35/51 ND city 2/2] Page 1...
+[04:54:06]   [Progress: 181 US leads so far]
+[04:54:09] [US 36/51 OH] ohio
+[04:54:09]   [US 36/51 OH] Page 1...
+[04:54:10]   Found 3 firms, 2 sub-city pages
+[04:54:14]     [1/3] Sykes & Associates Law Firm (Spring Valley) | (845) 406-1386 | vince@sykesandassociates.com | sykesandassociates.com
+[04:54:17]     [2/3] Kannan Law Firm, Inc. (Spring Valley) | (619) 746-8879 | Alexander@San-Diego-Abogado.com | san-diego-abogado.com
+[04:54:21]     [3/3] Ferrara Law Offices (Roseville) | (586) 773-7767 | consult@ferrlaw.com | ferraralawoffices.com
+[04:54:24]   [US 36/51 OH city 1/2] roseville-ohio
+[04:54:24]   [US 36/51 OH city 1/2] Page 1...
+[04:54:28]   [US 36/51 OH city 2/2] spring-valley-ohio
+[04:54:28]   [US 36/51 OH city 2/2] Page 1...
+[04:54:32] [US 37/51 OK] oklahoma
+[04:54:32]   [US 37/51 OK] Page 1...
+[04:54:32]   Found 0 firms, 0 sub-city pages
+[04:54:36] [US 38/51 OR] oregon
+[04:54:36]   [US 38/51 OR] Page 1...
+[04:54:36]   Found 0 firms, 0 sub-city pages
+[04:54:40] [US 39/51 PA] pennsylvania
+[04:54:40]   [US 39/51 PA] Page 1...
+[04:54:40]   Found 0 firms, 0 sub-city pages
+[04:54:43] [US 40/51 RI] rhode-island
+[04:54:43]   [US 40/51 RI] Page 1...
+[04:54:43]   Found 0 firms, 1 sub-city pages
+[04:54:46]   [US 40/51 RI city 1/1] providence-rhode-island
+[04:54:46]   [US 40/51 RI city 1/1] Page 1...
+[04:54:46]   [Progress: 184 US leads so far]
+[04:54:49] [US 41/51 SC] south-carolina
+[04:54:49]   [US 41/51 SC] Page 1...
+[04:54:49]   Found 0 firms, 1 sub-city pages
+[04:54:52]   [US 41/51 SC city 1/1] columbia-south-carolina
+[04:54:52]   [US 41/51 SC city 1/1] Page 1...
+[04:54:56] [US 42/51 SD] south-dakota
+[04:54:56]   [US 42/51 SD] Page 1...
+[04:54:56]   Found 0 firms, 0 sub-city pages
+[04:54:59] [US 43/51 TN] tennessee
+[04:54:59]   [US 43/51 TN] Page 1...
+[04:55:00]   Found 0 firms, 0 sub-city pages
+[04:55:02] [US 44/51 TX] texas
+[04:55:02]   [US 44/51 TX] Page 1...
+[04:55:06]   [US 44/51 TX] Page 2...
+[04:55:10]   [US 44/51 TX] Page 3...
+[04:55:14]   [US 44/51 TX] Page 4...
+[04:55:17]   [US 44/51 TX] Page 5...
+[04:55:18]   Found 45 firms, 8 sub-city pages
+[04:55:21]     [1/45] Elida Pineda Law Firm PLLC (Houston) | (832) 713-8329 | elida@epinedalawfirm.com | epinedalawfirm.com
+[04:55:24]     [2/45] De Lara Law Firm, PLLC (Houston) | (832) 588-5725 | info@delaralawfirm.com | delaralawfirm.com
+[04:55:28]     [3/45] Suday Law (Houston) | (346) 490-4520 | Jesus@sudaylaw.com | sudaylaw.com
+[04:55:31]     [4/45] Herrera Law Firm Immigration Lawyer Houston Abogado de inmigración (Houston) | (832) 533-2228 | admin@herrerafirm.com | herrerafirm.com
+[04:55:35]     [5/45] Sethi Law Group (Orange) | (714) 921-5226 | mikes@sethilawgroup.com | sethilawgroup.com
+[04:55:39]     [6/45] The Law Offices of Garcia and Ramirez, P.C. (Houston) | (888) 983-6447 | info@garciaramirez.com | garciaramirez.com
+[04:55:41]     [7/45] Law Office of David Nguyen, PC (Houston) | (281) 777-1236 | inbox@lawofficehouston.com | lawofficehouston.com
+[04:55:44]     [8/45] Jabber Law Firm, PLLC - Immigration Attorney (Houston) | (346) 779-7239 | tjabber@jabberlawfirm.com | jabberlaw.net
+[04:55:48]     [9/45] Sweeney Law, Inc. (Fresno) | (559) 440-6067 | justin@jsweeneylaw.com | jsweeneylaw.com
+[04:55:52]     [10/45] Abbasi Immigration Law Firm - Immigration Lawyer Houston (Houston) | (281) 872-6707 | info@abbasiimmigrationlaw.com | abbasiimmigrationlaw.com
+[04:55:55]     [11/45] Lazaro Salazar Law, Inc. (Fresno) | (559) 498-0828 | info@lazarosalazarlaw.com | lazarosalazarlaw.com
+[04:55:58]     [12/45] Enrique Ramirez Law, PC (Houston) | (713) 987-7705 | info@enriqueramirezlaw.com | enriqueramirezlaw.com
+[04:56:02]     [13/45] Sullo & Sullo, LLP (Houston) | (713) 839-9026 | info@sullolaw.com | sullolaw.com
+[04:56:05]     [14/45] Aaron G. Christensen, Attorney at Law PLLC (Houston) | (346) 423-2375 | info@agcfirm.com | elabogadoaaron.com
+[04:56:08]     [15/45] Gomez Law Firm (Houston) | (713) 868-5528 | info@gomezlawfirm.com | gomezlawfirm.com
+[04:56:12]     [16/45] Alonso & Alonso Attorneys at Law, PLLC (Houston) | (855) 663-4763 | info@alonsoalonsolaw.com | alonsoandalonsolaw.com
+[04:56:16]     [17/45] Jessica Y. Rodriguez Law Firm, PLLC. (Houston) | (832) 767-0725 | JRodriguezLaw@me.com | resultadosparaindocumentados.com
+[04:56:19]     [18/45] Law Offices of Robert R Flores, PLLC (McAllen) | (956) 329-1099 | info@rrfloreslaw.com | rrfloreslaw.com
+[04:56:22]     [19/45] Kelso Law, PLLC (Dallas) | (214) 764-9777 | liz@kelsolegal.com | kelsolegal.com
+[04:56:25]     [20/45] Andrew T. Thomas, Attorneys at Law (Houston) | (346) 318-0045 | info@attlaw.com | attlaw.com
+[04:56:28]     [21/45] Zavala Texas Law (Houston) | (832) 819-3723 | Charles@ZavalaTexasLaw.com | zavalatexaslaw.com
+[04:56:31]     [22/45] Kamal Law Firm, PLLC (Houston) | (713) 597-4632 | info@kamallawfirm.com | kamallawfirm.com
+[04:56:35]     [23/45] Castillo-Atkinson Law Firm (Houston) | (713) 789-0660 | info@castilloatkinsonlaw.com | castilloatkinsonlaw.com
+[04:56:38]     [24/45] Villalobos Law Firm (McAllen) | (956) 682-3939 | mailbox@villaloboslawfirm.com | villaloboslawfirm.com
+[04:56:41]     [25/45] Balderrama Law Firm, PLLC. (Amarillo) | (806) 340-7774 | Office@balderramalaw.Com | balderramalaw.com
+[04:56:45]     [26/45] Valley Immigration Law Group, Inc. (Fresno) | (559) 256-9800 | vilglaw@yahoo.com | vilglaw.net
+[04:56:48]     [27/45] Law Office of Zelene Zaleta, PLLC (McAllen) | (956) 513-6767 | info@abogadazaleta.com | abogadazaleta.com
+[04:56:52]     [28/45] Rotimi Areola Law Office (Houston) | (713) 271-5200 | info@rotimiareolalawoffice.com | rotimiareolalawoffice.com
+[04:56:55]     [29/45] Shakya Immigration Law, PLLC (Houston) | (281) 766-0055 | admin@silawpllc.com | silawpllc.com
+[04:56:59]     [30/45] Pasifika Immigration Law Group, LLP (Fresno) | (559) 441-9400 | leah@pasifikalaw.com | pasifikalaw.com
+[04:57:02]     [31/45] The Bains Law Offices Fresno Family Lawyer (Fresno) | (559) 282-8924 | iqbal@bainslawoffices.com | bainslawoffices.com
+[04:57:06]     [32/45] Meneses Law (Houston) | (855) 636-3737 | info@meneses.law | meneses.law
+[04:57:08]     [33/45] The Vu Law Firm (Houston) | (832) 564-3529 | info@thevulawfirm.com | vuinjury.com
+[04:57:12]     [34/45] Law Office of Shelle-Ann Simon, PLLC (Houston) | (281) 606-5362 | info@shellesimonlaw.com | shellesimonlaw.com
+[04:57:15]     [35/45] Law Office of Damaris A. Chavez (Houston) | (713) 979-4999 | info@lawofficeofdac.com | lawofficeofdac.com
+[04:57:19]     [36/45] Nguyen Legal Group, P.C. (Houston) | (713) 647-9900 | info@nguyenlegalgroup.com | nguyenlegalgroup.com
+[04:57:23]     [37/45] Duggan Law Office Co. LPA (Bryan) | (419) 636-2999 | bryanohio@gmail.com | dugganlawoffice.com
+[04:57:26]     [38/45] Cook & Olson, Immigration Attorneys (Fresno) | (559) 558-5118 | info@unifylaw.com | unifylaw.com
+[04:57:30]     [39/45] Davis & Associates | Houston (Houston) | (832) 583-1699 | sheilabratton354@gmail.com | gldlaw.com
+[04:57:34]     [40/45] Emigrando USA / John Dutton Law PLLC (Houston) | (713) 359-9302 | Info@houston-immigration.com | emigrandousa.com
+[04:57:37]     [41/45] J Castro Law Group (Henderson) | (702) 514-1001 | jasonc@jcastrolawgroup.com | jcastrolawgroup.com
+[04:57:39]     [42/45] EL Garza & Associates (Houston) | (832) 986-1717 | elgarzalawfirm@gmail.com | houstonlawattorneys.com
+[04:57:43]     [43/45] Samavati & Samavati Law Firm (Houston) | (443) 427-9586 | info@samavatilaw.com | samavatilaw.com
+[04:57:46]     [44/45] Clason Immigration Law Firm (Fresno) | (559) 821-4679 | jeremy@clasonimmigration.com | clasonimmigration.com
+[04:57:49]     [45/45] Alex Martinez Law Firm- Personal Injury & Immigration Attorneys (McAllen) | (956) 540-2255 | gethelp@alexmartinezlaw.com | elgallodelaley.com
+[04:57:52]   [US 44/51 TX city 1/8] amarillo
+[04:57:52]   [US 44/51 TX city 1/8] Page 1...
+[04:57:56]   [US 44/51 TX city 2/8] bryan-texas
+[04:57:56]   [US 44/51 TX city 2/8] Page 1...
+[04:58:00]   [US 44/51 TX city 3/8] dallas-texas
+[04:58:00]   [US 44/51 TX city 3/8] Page 1...
+[04:58:04]   [US 44/51 TX city 4/8] fresno-texas
+[04:58:04]   [US 44/51 TX city 4/8] Page 1...
+[04:58:08]   [US 44/51 TX city 5/8] henderson-texas
+[04:58:08]   [US 44/51 TX city 5/8] Page 1...
+[04:58:11]   [US 44/51 TX city 6/8] houston-texas
+[04:58:11]   [US 44/51 TX city 6/8] Page 1...
+[04:58:14]   [US 44/51 TX city 6/8] Page 2...
+[04:58:17]   [US 44/51 TX city 6/8] Page 3...
+[04:58:21]   [US 44/51 TX city 6/8] Page 4...
+[04:58:25]     [14/32] International Legal Counseling Attorneys at Law (Houston) | (713) 454-2365 | eamedrano@ilcattorneys.com | ilcattorneys.com
+[04:58:28]   [US 44/51 TX city 7/8] mcallen
+[04:58:28]   [US 44/51 TX city 7/8] Page 1...
+[04:58:31]   [US 44/51 TX city 8/8] orange-texas
+[04:58:31]   [US 44/51 TX city 8/8] Page 1...
+[04:58:35] [US 45/51 UT] utah
+[04:58:35]   [US 45/51 UT] Page 1...
+[04:58:36]   Found 0 firms, 1 sub-city pages
+[04:58:39]   [US 45/51 UT city 1/1] salt-lake-city
+[04:58:39]   [US 45/51 UT city 1/1] Page 1...
+[04:58:39]   [Progress: 230 US leads so far]
+[04:58:43] [US 46/51 VT] vermont
+[04:58:43]   [US 46/51 VT] Page 1...
+[04:58:44]   Found 3 firms, 1 sub-city pages
+[04:58:47]     [1/3] Greater Bakersfield Legal Assistance, Inc (Bakersfield) | (661) 325-5943 | nkmullican@gbla.org | gbla.org
+[04:58:51]     [2/3] Law Office of Sarah Rich (Bakersfield) | (661) 371-4350 | bkdueu.edulnkfy@kfesclut.govmfnkp | apps.calbar.ca.gov
+[04:58:54]     [3/3] The Jurado Firm (Bakersfield) | (800) 570-5101 | info@thejuradofirm.com | thejuradofirm.com
+[04:58:56]   [US 46/51 VT city 1/1] bakersfield-vermont
+[04:58:56]   [US 46/51 VT city 1/1] Page 1...
+[04:59:00] [US 47/51 VA] virginia
+[04:59:00]   [US 47/51 VA] Page 1...
+[04:59:01]   Found 0 firms, 1 sub-city pages
+[04:59:04]   [US 47/51 VA city 1/1] falls-church
+[04:59:04]   [US 47/51 VA city 1/1] Page 1...
+[04:59:07] [US 48/51 WA] washington
+[04:59:07]   [US 48/51 WA] Page 1...
+[04:59:08]   Found 0 firms, 1 sub-city pages
+[04:59:11]   [US 48/51 WA city 1/1] seattle
+[04:59:11]   [US 48/51 WA city 1/1] Page 1...
+[04:59:14] [US 49/51 WV] west-virginia
+[04:59:14]   [US 49/51 WV] Page 1...
+[04:59:15]   Found 1 firms, 1 sub-city pages
+[04:59:18]     [1/1] Law Offices of Mehrani, PLLC (Immigration Law) (Troy) | (248) 878-3219 | info@mehranilaw.com | mehranilaw.com
+[04:59:21]   [US 49/51 WV city 1/1] troy-west-virginia
+[04:59:21]   [US 49/51 WV city 1/1] Page 1...
+[04:59:25] [US 50/51 WI] wisconsin
+[04:59:25]   [US 50/51 WI] Page 1...
+[04:59:26]   Found 0 firms, 0 sub-city pages
+[04:59:26]   [Progress: 234 US leads so far]
+[04:59:29] [US 51/51 WY] wyoming
+[04:59:29]   [US 51/51 WY] Page 1...
+[04:59:30]   Found 0 firms, 3 sub-city pages
+[04:59:32]   [US 51/51 WY city 1/3] casper
+[04:59:32]   [US 51/51 WY city 1/3] Page 1...
+[04:59:35]   [US 51/51 WY city 2/3] cheyenne-wyoming
+[04:59:35]   [US 51/51 WY city 2/3] Page 1...
+[04:59:39]   [US 51/51 WY city 3/3] sheridan-wyoming
+[04:59:39]   [US 51/51 WY city 3/3] Page 1...
+[04:59:42] [US National] Scraping national listing...
+[04:59:42]   [US National] Page 1...
+[04:59:46]   [US National] Page 2...
+[04:59:50]   [US National] Page 3...
+[04:59:55]   [US National] Page 4...
+[04:59:58]   [US National] Page 5...
+[05:00:01]   [US National] Page 6...
+[05:00:05]   [US National] Page 7...
+[05:00:10]   [US National] Page 8...
+[05:00:14]   [US National] Page 9...
+[05:00:17]   [US National] Page 10...
+[05:00:22]     [9/100] Santana Law Firm, PLLC (Antioch) | (615) 540-1106 | marlen@msantanalaw.com | msantanalaw.com
+[05:00:25]     [22/100] Law Office of Randy Samona PC (Sterling Heights) | (586) 999-5161 | randy@samonalaw.com | samonalaw.com
+[05:00:28]     [25/100] The Boora Law Group P.L.C. (Temperance) | (734) 790-3909 | booralaw@gmail.com | booralawgroup.com
+[05:00:31]     [31/100] Avanti Law Group (Wyoming) | (616) 257-6807 | info@avantilaw.com | avantilaw.com
+[05:00:34]     [73/100] ALFA - Alexandre Law Firm & Associates (Flushing) | (718) 305-1660 | info@alexandrelaw.com | alexandrelaw.com
+[05:00:38]     [94/100] Kirsch Daskas Law Group PLLC (Bloomfield Township) | (248) 951-9056 | christina@kdlawgroup.com | kdlawgroup.com
+[05:00:42]     [100/100] Law Offices of Kevin M. Wilhelmi (Farmington Hills) | (248) 932-8776 | contact@kmwlawoffices.com | kmwlawoffices.com
+[05:00:42]   National page added 7 new leads
+[05:00:42] US TOTAL: 241 leads
+[05:00:42] [Progress saved: 241 leads]
+[05:00:42] 
+[05:00:42] === UNITED KINGDOM ===
+[05:00:42] Cities to scrape: 43
+[05:00:42] [UK 1/43 London] london-england
+[05:00:42]   [UK 1/43 London] Page 1...
+[05:00:45]   [UK 1/43 London] Page 2...
+[05:00:46]   Found 11 firms
+[05:00:49]     [1/11] Bond Adams Solicitors (London) | 0116 285 8080 | lawyers@bondadams.com | bondadams.com
+[05:00:53]     [2/11] DV Solicitors | Best Law Firm in Bedford (London) | 0012 343 5024 | info@dvsolicitors.com | dvsolicitors.com
+[05:00:57]     [3/11] Duncan Lewis Solicitors Limited (London) | 0333 772 0409 | contact@duncanlewis.com | duncanlewis.co.uk
+[05:01:01]     [4/11] Axis Solicitors Ltd (London) | 020 7550 6166 | Contact@axis.lawyer | axis.lawyer
+[05:01:04]     [5/11] A Y & J Solicitors (London) | 020 7404 7933 | nicholasblake009@gmail.com | ayjsolicitors.com
+[05:01:07]     [6/11] Immigration Advice Service (London) | 0020 381 3524 | info@iasservices.org.uk | iasservices.org.uk
+[05:01:11]     [7/11] RLegal Solicitors (London) | 020 7038 3980 | info@rlegal.com | rlegal.com
+[05:01:15]     [8/11] Lawlex Solicitors (London) | 020 3432 7706 | info@lawlex.co.uk | lawlex.co.uk
+[05:01:18]     [9/11] Carter Thomas Solicitors (London) | 020 7959 2653 | info@carterthomas.co.uk | carterthomas.co.uk
+[05:01:22]     [10/11] GDB Legal Solutions (London) | 020 8242 6386 | info@gdblegal.co.uk | gdblegal.co.uk
+[05:01:25]     [11/11] Marsans Gitlin Baker (London) | 020 7499 0620 | email@mgb.law | mgb.law
+[05:01:28] [UK 2/43 Birmingham] birmingham-birmingham
+[05:01:28]   [UK 2/43 Birmingham] Page 1...
+[05:01:29]   Found 7 firms
+[05:01:33]     [1/7] Knightsbridge Solicitors (Birmingham) | 0121 798 0123 | support@knightsbridgesolicitors.co.uk | knightsbridgesolicitors.co.uk
+[05:01:36]     [2/7] Murria Solicitors (Birmingham) | 0333 800 0033 | law@murria.co.uk | murria.co.uk
+[05:01:39]     [3/7] Sydney Mitchell Solicitors and Estate Agents (Birmingham) | 0808 166 8827 | enquiries@sydneymitchell.co.uk | sydneymitchell.co.uk
+[05:01:43]     [4/7] Cartwright King Solicitors (Birmingham) | 0121 270 1988 | info@cartwrightking.co.uk | cartwrightking.co.uk
+[05:01:46]     [7/7] Blackfriars Law Solicitors (Birmingham) | 0121 247 9491 | info@blackfriarslaw.co.uk | blackfriarslaw.co.uk
+[05:01:48] [UK 3/43 Manchester] manchester-manchester
+[05:01:48]   [UK 3/43 Manchester] Page 1...
+[05:01:49]   Found 2 firms
+[05:01:53]     [1/2] R & A Solicitors (Manchester) | 0161 721 4545 | info@rasolicitors.co.uk | rasolicitors.co.uk
+[05:01:55] [UK 4/43 Leeds] leeds-kent
+[05:01:55]   [UK 4/43 Leeds] Page 1...
+[05:01:56]   Found 5 firms
+[05:01:59]     [1/5] Levi Solicitors LLP (Leeds) | 0800 988 7756 | info@levisolicitors.co.uk | levisolicitors.co.uk
+[05:02:03]     [2/5] Whiterose Blackmans Solicitors LLP (Leeds) | 0113 216 5507 | info@whiteroseblackmans.co.uk | whiteroseblackmans.co.uk
+[05:02:05]     [5/5] Harris And Green Solicitors (Leeds) | 0113 270 7002 | info@harrisandgreensolicitors.co.uk | harrisandgreensolicitors.co.uk
+[05:02:08] [UK 5/43 Glasgow] glasgow-city-scotland
+[05:02:08]   [UK 5/43 Glasgow] Page 1...
+[05:02:08]   Found 4 firms
+[05:02:12]     [1/4] Alexander Boyd LLB, Dip. LP Immigration Lawyer, Solicitor (Glasgow) | 0141 237 3137 | info@abimmigrationlaw.co.uk | abimmigrationlaw.co.uk
+[05:02:15]     [2/4] Latta & Co Solicitors (Glasgow) | 0141 222 2185 | info@lattalaw.co.uk | lattalaw.co.uk
+[05:02:18]     [3/4] Katani & Co Solicitors (Glasgow) | 0141 221 7788 | reception@kataniandco.com | kataniandco.com
+[05:02:22]     [4/4] Maguire Solicitors (Glasgow) | 0141 331 2885 | enquiries@maguiresolicitors.co.uk | maguiresolicitors.co.uk
+[05:02:24] [UK 6/43 Edinburgh] edinburgh-edinburgh
+[05:02:24]   [UK 6/43 Edinburgh] Page 1...
+[05:02:25]   Found 2 firms
+[05:02:29]     [1/2] Drummond Miller LLP (Edinburgh) | 0131 226 5151 | edinburghenquiries@drummondmiller.co.uk | drummondmiller.co.uk
+[05:02:33]     [2/2] John Pryde and Company (Edinburgh) | 0131 220 2160 | admin@johnpryde.co.uk | edinburghdefencelawyers.co.uk
+[05:02:36] [UK 7/43 Bristol] bristol-bristol
+[05:02:36]   [UK 7/43 Bristol] Page 1...
+[05:02:37]   Found 2 firms
+[05:02:40]     [1/2] Albany Solicitors (Bristol) | 0117 915 4541 | Info@albanysolicitors.co.uk | albanysolicitors.co.uk
+[05:02:44]     [2/2] BS SINGH & CO LLP Solicitors (Bristol) | 0117 935 4500 | info@bssinghsolicitors.co.uk | bssinghsolicitors.co.uk
+[05:02:47] [UK 8/43 Sheffield] sheffield-sheffield
+[05:02:47]   [UK 8/43 Sheffield] Page 1...
+[05:02:48]   Found 2 firms
+[05:02:52]     [1/2] Trent Law (Solicitors) - Sheffield (Sheffield) | 0114 299 9111 | sheffield@trentlaw.co.uk | trentlaw.co.uk
+[05:02:55] [UK 9/43 Newcastle upon Tyne] newcastle-upon-tyne
+[05:02:55]   [UK 9/43 Newcastle upon Tyne] Page 1...
+[05:02:55]   Found 1 firms
+[05:02:58]     [1/1] David Gray Solicitors LLP (Newcastle upon Tyne) | 0191 232 9547 | lawyers@davidgray.co.uk | davidgray.co.uk
+[05:03:01] [UK 10/43 Nottingham] nottingham-nottingham
+[05:03:01]   [UK 10/43 Nottingham] Page 1...
+[05:03:02]   Found 6 firms
+[05:03:05]     [1/6] Trent Law (Solicitors) (Nottingham) | 0115 871 6123 | nottingham@trentlaw.co.uk | trentlaw.co.uk
+[05:03:09]     [2/6] AM Law Solicitors (Nottingham) | 0115 845 6583 | contact@amlawsolicitors.co.uk | amlawsolicitors.co.uk
+[05:03:13]     [3/6] Burton & Burton Solicitors (Nottingham) | 0333 444 2500 | enquiries@burtonandburton.co.uk | burtonandburton.co.uk
+[05:03:17]     [4/6] OTB Legal (Nottingham) | 0330 111 6682 | hello@otb.legal | otb.legal
+[05:03:21]     [6/6] HRM Solicitors (Nottingham) | 0115 648 4888 | info@hrmsolicitors.co.uk | hrmsolicitors.co.uk
+[05:03:21]   [Progress: 35 UK leads so far]
+[05:03:24] [UK 11/43 Cardiff] cardiff-cardiff
+[05:03:24]   [UK 11/43 Cardiff] Page 1...
+[05:03:24]   Found 2 firms
+[05:03:27] [UK 12/43 Belfast] belfast-belfast
+[05:03:27]   [UK 12/43 Belfast] Page 1...
+[05:03:27]   Found 2 firms
+[05:03:31]     [1/2] Phoenix Law Solicitors (Belfast) | 028 9032 8383 | info@phoenix-law.org | phoenix-law.org
+[05:03:35]     [2/2] McKeowns Solicitors (Belfast) | 028 9026 9989 | 328info@mckeowns.com | mckeowns.com
+[05:03:37] [UK 13/43 Leicester] leicester-leicester
+[05:03:37]   [UK 13/43 Leicester] Page 1...
+[05:03:38]   Found 6 firms
+[05:03:41]     [1/6] Kalsi Solicitors - Leicester (Leicester) | 0800 368 8939 | help@kalsisolicitors.com | kalsisolicitors.com
+[05:03:45]     [3/6] Bright Legal Solicitors (Leicester) | 0116 262 7857 | info@brightlegal.co.uk | brightlegal.co.uk
+[05:03:48]     [6/6] Crystal Law Solicitors (Leicester) | 0116 255 1650 | enquiries@crystallaw.co.uk | crystallaw.co.uk
+[05:03:50] [UK 14/43 Coventry] coventry-coventry
+[05:03:50]   [UK 14/43 Coventry] Page 1...
+[05:03:51]   Found 1 firms
+[05:03:53] [UK 15/43 Bradford] bradford-bradford
+[05:03:53]   [UK 15/43 Bradford] Page 1...
+[05:03:54]   Found 1 firms
+[05:03:56] [UK 16/43 Brighton] brighton-brighton-and-hove
+[05:03:56]   [UK 16/43 Brighton] Page 1...
+[05:03:57]   Found 1 firms
+[05:04:00] [UK 17/43 Bournemouth] bournemouth
+[05:04:00]   [UK 17/43 Bournemouth] Page 1...
+[05:04:01]   Found 1 firms
+[05:04:04]     [1/1] ABC Above & Beyond - Visa, Immigration & Naturalisation (Bournemouth) | 0770 732 4416 | info.abcabove@gmail.com | abcabove.com
+[05:04:06] [UK 18/43 Portsmouth] portsmouth-portsmouth
+[05:04:06]   [UK 18/43 Portsmouth] Page 1...
+[05:04:07]   Found 1 firms
+[05:04:10]     [1/1] Biscoes Solicitors - Portsmouth (Portsmouth) | 023 9266 0261 | info@biscoes-law.co.uk | biscoes-law.co.uk
+[05:04:13] [UK 19/43 Southampton] southampton-southampton
+[05:04:13]   [UK 19/43 Southampton] Page 1...
+[05:04:14]   Found 3 firms
+[05:04:17]     [1/3] Leonard Solicitors LLP (Southampton) | 023 8023 4433 | info@leonardsolicitors.co.uk | leonardsolicitors.co.uk
+[05:04:21]     [2/3] Paris Smith LLP (Southampton) | 023 8048 2482 | info@parissmith.co.uk | parissmith.co.uk
+[05:04:25]     [3/3] Y-Axis - Immigration Lawyers & Visa Agents (Southampton) | 0125 322 6009 | 1253226009info@y-axis.co.ukwww.y-axis.co.uk | y-axis.co.uk
+[05:04:27] [UK 20/43 Derby] derby-derby
+[05:04:27]   [UK 20/43 Derby] Page 1...
+[05:04:28]   Found 2 firms
+[05:04:31]     [1/2] Beightons Solicitors T/A (Derby) | 0133 234 6430 | mail@beightonslegal.co.uk | beightonslegal.co.uk
+[05:04:31]   [Progress: 46 UK leads so far]
+[05:04:34] [UK 21/43 Peterborough] peterborough-peterborough
+[05:04:34]   [UK 21/43 Peterborough] Page 1...
+[05:04:35]   Found 1 firms
+[05:04:37] [UK 22/43 Oxford] oxford-oxfordshire
+[05:04:37]   [UK 22/43 Oxford] Page 1...
+[05:04:38]   Found 1 firms
+[05:04:40] [UK 23/43 Reading] reading-reading
+[05:04:40]   [UK 23/43 Reading] Page 1...
+[05:04:41]   Found 1 firms
+[05:04:44] [UK 24/43 Luton] luton
+[05:04:44]   [UK 24/43 Luton] Page 1...
+[05:04:44]   Found 1 firms
+[05:04:47] [UK 25/43 Stoke-on-Trent] stoke-on-trent
+[05:04:47]   [UK 25/43 Stoke-on-Trent] Page 1...
+[05:04:47]   Found 4 firms
+[05:04:51]     [1/4] SMK Solicitors (Stoke-on-Trent) | 0178 221 3666 | info@smksolicitors.co.uk | smksolicitors.co.uk
+[05:04:55]     [2/4] MH Solicitors LLP (Stoke On Trent) (Stoke-on-Trent) | 0178 284 7755 | info@mhsolicitors.com | mhsolicitors.com
+[05:04:58]     [3/4] Lexadeen Solicitors | Immigration Solicitors Stoke-on-Trent (Stoke-on-Trent) | 0178 221 2903 | enquiries@lexadeen.co.uk | lexadeen.co.uk
+[05:05:02]     [4/4] ZR Visas, UK (Stoke-on-Trent) | 0178 297 7899 | info@zrvisas.com | zrvisas.com
+[05:05:04] [UK 26/43 Chester] chester-cheshire
+[05:05:04]   [UK 26/43 Chester] Page 1...
+[05:05:05]   Found 1 firms
+[05:05:09]     [1/1] Intime Solicitors | Immigration Solicitors UK Chester (Chester) | 0124 442 1549 | info@intimesolicitors.co.uk | intimeimmigration.co.uk
+[05:05:12] [UK 27/43 Chelmsford] chelmsford-essex
+[05:05:12]   [UK 27/43 Chelmsford] Page 1...
+[05:05:12]   Found 1 firms
+[05:05:14] [UK 28/43 Maidstone] maidstone-kent
+[05:05:14]   [UK 28/43 Maidstone] Page 1...
+[05:05:15]   Found 1 firms
+[05:05:18] [UK 29/43 Aberdeen] aberdeen-aberdeen-city
+[05:05:18]   [UK 29/43 Aberdeen] Page 1...
+[05:05:19]   Found 1 firms
+[05:05:22]     [1/1] Vikas Sharma Solicitors Ltd (Aberdeen) | 0122 443 3301 | vikas@vikas-sharma.co.uk | vikas-sharma.co.uk
+[05:05:25] [UK 30/43 Inverness] inverness-highland
+[05:05:25]   [UK 30/43 Inverness] Page 1...
+[05:05:26]   Found 1 firms
+[05:05:29]     [1/1] A Fraser & Co (Inverness) | 0146 322 9917 | info@afrasersolicitors.com | afrasersolicitors.com
+[05:05:29]   [Progress: 53 UK leads so far]
+[05:05:32] [UK 31/43 Doncaster] doncaster-doncaster
+[05:05:32]   [UK 31/43 Doncaster] Page 1...
+[05:05:32]   Found 1 firms
+[05:05:36]     [1/1] Compass Immigration (Doncaster) | 0130 245 6502 | info@compassimmigration.co.uk | compassimmigration.co.uk
+[05:05:39] [UK 32/43 Oldham] oldham-oldham
+[05:05:39]   [UK 32/43 Oldham] Page 1...
+[05:05:39]   Found 1 firms
+[05:05:42] [UK 33/43 Gateshead] gateshead
+[05:05:42]   [UK 33/43 Gateshead] Page 1...
+[05:05:43]   Found 1 firms
+[05:05:46]     [1/1] Iris Law Firm (Gateshead) | 0191 477 0055 | info@irislawfirm.com | irislawfirm.com
+[05:05:48] [UK 34/43 East Ham] east-ham
+[05:05:48]   [UK 34/43 East Ham] Page 1...
+[05:05:49]   Found 1 firms
+[05:05:51] [UK 35/43 Mayfair] mayfair
+[05:05:51]   [UK 35/43 Mayfair] Page 1...
+[05:05:52]   Found 1 firms
+[05:05:55] [UK 36/43 Brierley Hill] brierley-hill
+[05:05:55]   [UK 36/43 Brierley Hill] Page 1...
+[05:05:56]   Found 1 firms
+[05:05:58] [UK 37/43 Bedford] bedford-bedford
+[05:05:58]   [UK 37/43 Bedford] Page 1...
+[05:05:59]   Found 2 firms
+[05:06:02] [UK 38/43 Weymouth] weymouth-dorset
+[05:06:02]   [UK 38/43 Weymouth] Page 1...
+[05:06:02]   Found 1 firms
+[05:06:05] [UK 39/43 Chesterfield] chesterfield-derbyshire
+[05:06:05]   [UK 39/43 Chesterfield] Page 1...
+[05:06:05]   Found 1 firms
+[05:06:09]     [1/1] Derbyshire Law Centre (Chesterfield) | 0124 655 0674 | nikki.tugby@derbyshirelawcentre.org.uk | derbyshirelawcentre.org.uk
+[05:06:12] [UK 40/43 Royal Leamington Spa] royal-leamington-spa
+[05:06:12]   [UK 40/43 Royal Leamington Spa] Page 1...
+[05:06:13]   Found 1 firms
+[05:06:13]   [Progress: 56 UK leads so far]
+[05:06:16] [UK 41/43 High Wycombe] high-wycombe-buckinghamshire
+[05:06:16]   [UK 41/43 High Wycombe] Page 1...
+[05:06:16]   Found 1 firms
+[05:06:20] [UK 42/43 Andover] andover-hampshire
+[05:06:20]   [UK 42/43 Andover] Page 1...
+[05:06:20]   Found 1 firms
+[05:06:24] [UK 43/43 London Colney] london-colney
+[05:06:24]   [UK 43/43 London Colney] Page 1...
+[05:06:24]   Found 1 firms
+[05:06:27] [UK National] Scraping national listing...
+[05:06:27]   [UK National] Page 1...
+[05:06:31]   [UK National] Page 2...
+[05:06:36]   [UK National] Page 3...
+[05:06:40]   [UK National] Page 4...
+[05:06:44]   [UK National] Page 5...
+[05:06:48]   [UK National] Page 6...
+[05:06:49]   National page added 0 new leads
+[05:06:49] UK TOTAL: 56 leads
+[05:06:49] 
+[05:06:49] ============================================================
+[05:06:49] DONE
+[05:06:49] Total unique leads: 297
+[05:06:49] With phone: 297
+[05:06:49] With email: 297
+[05:06:49] With website: 292
+[05:06:49] Unique cities: 133
+[05:06:49] By country:
+[05:06:49]   US: 241
+[05:06:49]   UK: 56
+[05:06:49] Top states/regions:
+[05:06:49]   US-TX: 46
+[05:06:49]   UK-England: 46
+[05:06:49]   US-CA: 34
+[05:06:49]   US-MO: 30
+[05:06:49]   US-FL: 21
+[05:06:49]   US-NY: 14
+[05:06:49]   US-GA: 10
+[05:06:49]   US-IL: 9
+[05:06:49]   US-NM: 8
+[05:06:49]   UK-Scotland: 8
+[05:06:49]   US-AK: 6
+[05:06:49]   US-AR: 6
+[05:06:49]   US-MD: 6
+[05:06:49]   US-KS: 5
+[05:06:49]   US-MI: 5
+[05:06:49] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/immigration-lawyers-lawzana.csv

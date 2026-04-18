@@ -1,0 +1,369 @@
+[02:13:07] 
+[02:13:07] ============================================================
+[02:13:07] Lawyer Legion Immigration Lawyers Scraper
+[02:13:07] States: 51 total | Remaining: 51 | Test: false
+[02:13:07] Max pages per state: 10
+[02:13:07] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/us-immigration-lawyers-lawyerlegion.csv
+[02:13:07] ============================================================
+[02:13:07] 
+[02:13:07] [1/51] Alabama (AL)
+[02:13:07]   Page 1/?: https://lawyers.lawyerlegion.com/alabama/immigration-law
+[02:13:08]     Total: 16 lawyers across 1 page(s)
+[02:13:08]     Parsed 16 lawyers from page 1
+[02:13:08]   => 16 found, 16 new, 0 skipped (dupes/empty)
+[02:13:11] [2/51] Alaska (AK)
+[02:13:11]   Page 1/?: https://lawyers.lawyerlegion.com/alaska/immigration-law
+[02:13:11]     Total: 7 lawyers across 1 page(s)
+[02:13:11]     Parsed 7 lawyers from page 1
+[02:13:11]   => 7 found, 7 new, 0 skipped (dupes/empty)
+[02:13:14] [3/51] Arizona (AZ)
+[02:13:14]   Page 1/?: https://lawyers.lawyerlegion.com/arizona/immigration-law
+[02:13:15]     Total: 217 lawyers across 5 page(s)
+[02:13:15]     Parsed 50 lawyers from page 1
+[02:13:18]   Page 2/5: https://lawyers.lawyerlegion.com/arizona/immigration-law?page=2
+[02:13:20]     Parsed 50 lawyers from page 2
+[02:13:22]   Page 3/5: https://lawyers.lawyerlegion.com/arizona/immigration-law?page=3
+[02:13:23]     Parsed 50 lawyers from page 3
+[02:13:25]   Page 4/5: https://lawyers.lawyerlegion.com/arizona/immigration-law?page=4
+[02:13:26]     Parsed 50 lawyers from page 4
+[02:13:28]   Page 5/5: https://lawyers.lawyerlegion.com/arizona/immigration-law?page=5
+[02:13:29]     Parsed 17 lawyers from page 5
+[02:13:29]   => 217 found, 216 new, 1 skipped (dupes/empty)
+[02:13:32] [4/51] Arkansas (AR)
+[02:13:32]   Page 1/?: https://lawyers.lawyerlegion.com/arkansas/immigration-law
+[02:13:33]     Total: 6 lawyers across 1 page(s)
+[02:13:33]     Parsed 6 lawyers from page 1
+[02:13:33]   => 6 found, 6 new, 0 skipped (dupes/empty)
+[02:13:35] [5/51] California (CA)
+[02:13:35]   Page 1/?: https://lawyers.lawyerlegion.com/california/immigration-law
+[02:13:36]     Total: 250 lawyers across 5 page(s)
+[02:13:36]     Parsed 50 lawyers from page 1
+[02:13:39]   Page 2/5: https://lawyers.lawyerlegion.com/california/immigration-law?page=2
+[02:13:40]     Parsed 50 lawyers from page 2
+[02:13:42]   Page 3/5: https://lawyers.lawyerlegion.com/california/immigration-law?page=3
+[02:13:43]     Parsed 50 lawyers from page 3
+[02:13:45]   Page 4/5: https://lawyers.lawyerlegion.com/california/immigration-law?page=4
+[02:13:50]     Parsed 50 lawyers from page 4
+[02:13:54]   Page 5/5: https://lawyers.lawyerlegion.com/california/immigration-law?page=5
+[02:13:55]     Parsed 50 lawyers from page 5
+[02:13:55]   => 250 found, 250 new, 0 skipped (dupes/empty)
+[02:13:58] [6/51] Colorado (CO)
+[02:13:58]   Page 1/?: https://lawyers.lawyerlegion.com/colorado/immigration-law
+[02:13:58]     Total: 75 lawyers across 2 page(s)
+[02:13:58]     Parsed 50 lawyers from page 1
+[02:14:01]   Page 2/2: https://lawyers.lawyerlegion.com/colorado/immigration-law?page=2
+[02:14:02]     Parsed 25 lawyers from page 2
+[02:14:02]   => 75 found, 75 new, 0 skipped (dupes/empty)
+[02:14:05] [7/51] Connecticut (CT)
+[02:14:05]   Page 1/?: https://lawyers.lawyerlegion.com/connecticut/immigration-law
+[02:14:06]     Total: 20 lawyers across 1 page(s)
+[02:14:06]     Parsed 20 lawyers from page 1
+[02:14:06]   => 20 found, 20 new, 0 skipped (dupes/empty)
+[02:14:08] [8/51] Delaware (DE)
+[02:14:08]   Page 1/?: https://lawyers.lawyerlegion.com/delaware/immigration-law
+[02:14:08]     Total: 4 lawyers across 1 page(s)
+[02:14:08]     Parsed 4 lawyers from page 1
+[02:14:08]   => 4 found, 4 new, 0 skipped (dupes/empty)
+[02:14:11] [9/51] District of Columbia (DC)
+[02:14:11]   Page 1/?: https://lawyers.lawyerlegion.com/district-of-columbia/immigration-law
+[02:14:12]     Total: 58 lawyers across 2 page(s)
+[02:14:12]     Parsed 50 lawyers from page 1
+[02:14:14]   Page 2/2: https://lawyers.lawyerlegion.com/district-of-columbia/immigration-law?page=2
+[02:14:14]     Parsed 8 lawyers from page 2
+[02:14:14]   => 58 found, 57 new, 1 skipped (dupes/empty)
+[02:14:16] [10/51] Florida (FL)
+[02:14:16]   Page 1/?: https://lawyers.lawyerlegion.com/florida/immigration-law
+[02:14:17]     Total: 250 lawyers across 5 page(s)
+[02:14:17]     Parsed 50 lawyers from page 1
+[02:14:20]   Page 2/5: https://lawyers.lawyerlegion.com/florida/immigration-law?page=2
+[02:14:21]     Parsed 50 lawyers from page 2
+[02:14:23]   Page 3/5: https://lawyers.lawyerlegion.com/florida/immigration-law?page=3
+[02:14:24]     Parsed 50 lawyers from page 3
+[02:14:26]   Page 4/5: https://lawyers.lawyerlegion.com/florida/immigration-law?page=4
+[02:14:27]     Parsed 50 lawyers from page 4
+[02:14:29]   Page 5/5: https://lawyers.lawyerlegion.com/florida/immigration-law?page=5
+[02:14:30]     Parsed 50 lawyers from page 5
+[02:14:30]   => 250 found, 249 new, 1 skipped (dupes/empty)
+[02:14:33] [11/51] Georgia (GA)
+[02:14:33]   Page 1/?: https://lawyers.lawyerlegion.com/georgia/immigration-law
+[02:14:34]     Total: 250 lawyers across 5 page(s)
+[02:14:34]     Parsed 50 lawyers from page 1
+[02:14:37]   Page 2/5: https://lawyers.lawyerlegion.com/georgia/immigration-law?page=2
+[02:14:38]     Parsed 50 lawyers from page 2
+[02:14:40]   Page 3/5: https://lawyers.lawyerlegion.com/georgia/immigration-law?page=3
+[02:14:41]     Parsed 50 lawyers from page 3
+[02:14:45]   Page 4/5: https://lawyers.lawyerlegion.com/georgia/immigration-law?page=4
+[02:14:45]     Parsed 50 lawyers from page 4
+[02:14:49]   Page 5/5: https://lawyers.lawyerlegion.com/georgia/immigration-law?page=5
+[02:14:51]     Parsed 50 lawyers from page 5
+[02:14:51]   => 250 found, 249 new, 1 skipped (dupes/empty)
+[02:14:54] [12/51] Hawaii (HI)
+[02:14:54]   Page 1/?: https://lawyers.lawyerlegion.com/hawaii/immigration-law
+[02:14:54]     Total: 4 lawyers across 1 page(s)
+[02:14:54]     Parsed 4 lawyers from page 1
+[02:14:54]   => 4 found, 4 new, 0 skipped (dupes/empty)
+[02:14:57] [13/51] Idaho (ID)
+[02:14:57]   Page 1/?: https://lawyers.lawyerlegion.com/idaho/immigration-law
+[02:14:57]     Total: 6 lawyers across 1 page(s)
+[02:14:57]     Parsed 6 lawyers from page 1
+[02:14:57]   => 6 found, 6 new, 0 skipped (dupes/empty)
+[02:15:00] [14/51] Illinois (IL)
+[02:15:00]   Page 1/?: https://lawyers.lawyerlegion.com/illinois/immigration-law
+[02:15:01]     Total: 98 lawyers across 2 page(s)
+[02:15:01]     Parsed 50 lawyers from page 1
+[02:15:04]   Page 2/2: https://lawyers.lawyerlegion.com/illinois/immigration-law?page=2
+[02:15:04]     Parsed 48 lawyers from page 2
+[02:15:04]   => 98 found, 97 new, 1 skipped (dupes/empty)
+[02:15:07] [15/51] Indiana (IN)
+[02:15:07]   Page 1/?: https://lawyers.lawyerlegion.com/indiana/immigration-law
+[02:15:08]     Total: 17 lawyers across 1 page(s)
+[02:15:08]     Parsed 17 lawyers from page 1
+[02:15:08]   => 17 found, 17 new, 0 skipped (dupes/empty)
+[02:15:11] [16/51] Iowa (IA)
+[02:15:11]   Page 1/?: https://lawyers.lawyerlegion.com/iowa/immigration-law
+[02:15:11]     Total: 5 lawyers across 1 page(s)
+[02:15:11]     Parsed 5 lawyers from page 1
+[02:15:11]   => 5 found, 5 new, 0 skipped (dupes/empty)
+[02:15:14] [17/51] Kansas (KS)
+[02:15:14]   Page 1/?: https://lawyers.lawyerlegion.com/kansas/immigration-law
+[02:15:14]     Total: 9 lawyers across 1 page(s)
+[02:15:14]     Parsed 9 lawyers from page 1
+[02:15:14]   => 9 found, 9 new, 0 skipped (dupes/empty)
+[02:15:18] [18/51] Kentucky (KY)
+[02:15:18]   Page 1/?: https://lawyers.lawyerlegion.com/kentucky/immigration-law
+[02:15:18]     Total: 8 lawyers across 1 page(s)
+[02:15:18]     Parsed 8 lawyers from page 1
+[02:15:18]   => 8 found, 8 new, 0 skipped (dupes/empty)
+[02:15:20] [19/51] Louisiana (LA)
+[02:15:20]   Page 1/?: https://lawyers.lawyerlegion.com/louisiana/immigration-law
+[02:15:21]     Total: 33 lawyers across 1 page(s)
+[02:15:21]     Parsed 33 lawyers from page 1
+[02:15:21]   => 33 found, 32 new, 1 skipped (dupes/empty)
+[02:15:23] [20/51] Maine (ME)
+[02:15:23]   Page 1/?: https://lawyers.lawyerlegion.com/maine/immigration-law
+[02:15:23]     Total: 7 lawyers across 1 page(s)
+[02:15:23]     Parsed 7 lawyers from page 1
+[02:15:23]   => 7 found, 7 new, 0 skipped (dupes/empty)
+[02:15:26] [21/51] Maryland (MD)
+[02:15:26]   Page 1/?: https://lawyers.lawyerlegion.com/maryland/immigration-law
+[02:15:27]     Total: 61 lawyers across 2 page(s)
+[02:15:27]     Parsed 50 lawyers from page 1
+[02:15:30]   Page 2/2: https://lawyers.lawyerlegion.com/maryland/immigration-law?page=2
+[02:15:31]     Parsed 11 lawyers from page 2
+[02:15:31]   => 61 found, 61 new, 0 skipped (dupes/empty)
+[02:15:33] [22/51] Massachusetts (MA)
+[02:15:33]   Page 1/?: https://lawyers.lawyerlegion.com/massachusetts/immigration-law
+[02:15:34]     Total: 68 lawyers across 2 page(s)
+[02:15:34]     Parsed 50 lawyers from page 1
+[02:15:37]   Page 2/2: https://lawyers.lawyerlegion.com/massachusetts/immigration-law?page=2
+[02:15:38]     Parsed 19 lawyers from page 2
+[02:15:38]   => 69 found, 67 new, 2 skipped (dupes/empty)
+[02:15:41] [23/51] Michigan (MI)
+[02:15:41]   Page 1/?: https://lawyers.lawyerlegion.com/michigan/immigration-law
+[02:15:42]     Total: 240 lawyers across 5 page(s)
+[02:15:42]     Parsed 50 lawyers from page 1
+[02:15:44]   Page 2/5: https://lawyers.lawyerlegion.com/michigan/immigration-law?page=2
+[02:15:45]     Parsed 50 lawyers from page 2
+[02:15:48]   Page 3/5: https://lawyers.lawyerlegion.com/michigan/immigration-law?page=3
+[02:15:48]     Parsed 50 lawyers from page 3
+[02:15:51]   Page 4/5: https://lawyers.lawyerlegion.com/michigan/immigration-law?page=4
+[02:15:54]     Parsed 50 lawyers from page 4
+[02:15:56]   Page 5/5: https://lawyers.lawyerlegion.com/michigan/immigration-law?page=5
+[02:15:57]     Parsed 40 lawyers from page 5
+[02:15:57]   => 240 found, 240 new, 0 skipped (dupes/empty)
+[02:15:59] [24/51] Minnesota (MN)
+[02:15:59]   Page 1/?: https://lawyers.lawyerlegion.com/minnesota/immigration-law
+[02:16:00]     Total: 113 lawyers across 3 page(s)
+[02:16:00]     Parsed 50 lawyers from page 1
+[02:16:03]   Page 2/3: https://lawyers.lawyerlegion.com/minnesota/immigration-law?page=2
+[02:16:04]     Parsed 50 lawyers from page 2
+[02:16:06]   Page 3/3: https://lawyers.lawyerlegion.com/minnesota/immigration-law?page=3
+[02:16:07]     Parsed 13 lawyers from page 3
+[02:16:07]   => 113 found, 111 new, 2 skipped (dupes/empty)
+[02:16:10] [25/51] Mississippi (MS)
+[02:16:10]   Page 1/?: https://lawyers.lawyerlegion.com/mississippi/immigration-law
+[02:16:11]     Total: 5 lawyers across 1 page(s)
+[02:16:11]     Parsed 5 lawyers from page 1
+[02:16:11]   => 5 found, 5 new, 0 skipped (dupes/empty)
+[02:16:13] [26/51] Missouri (MO)
+[02:16:13]   Page 1/?: https://lawyers.lawyerlegion.com/missouri/immigration-law
+[02:16:13]     Total: 24 lawyers across 1 page(s)
+[02:16:13]     Parsed 24 lawyers from page 1
+[02:16:13]   => 24 found, 24 new, 0 skipped (dupes/empty)
+[02:16:17] [27/51] Montana (MT)
+[02:16:17]   Page 1/?: https://lawyers.lawyerlegion.com/montana/immigration-law
+[02:16:17]     Total: 2 lawyers across 1 page(s)
+[02:16:17]     Parsed 2 lawyers from page 1
+[02:16:17]   => 2 found, 2 new, 0 skipped (dupes/empty)
+[02:16:20] [28/51] Nebraska (NE)
+[02:16:20]   Page 1/?: https://lawyers.lawyerlegion.com/nebraska/immigration-law
+[02:16:20]     Total: 8 lawyers across 1 page(s)
+[02:16:20]     Parsed 8 lawyers from page 1
+[02:16:20]   => 8 found, 8 new, 0 skipped (dupes/empty)
+[02:16:23] [29/51] Nevada (NV)
+[02:16:23]   Page 1/?: https://lawyers.lawyerlegion.com/nevada/immigration-law
+[02:16:24]     Total: 25 lawyers across 1 page(s)
+[02:16:24]     Parsed 25 lawyers from page 1
+[02:16:24]   => 25 found, 25 new, 0 skipped (dupes/empty)
+[02:16:26] [30/51] New Hampshire (NH)
+[02:16:26]   Page 1/?: https://lawyers.lawyerlegion.com/new-hampshire/immigration-law
+[02:16:26]     Total: 6 lawyers across 1 page(s)
+[02:16:26]     Parsed 6 lawyers from page 1
+[02:16:26]   => 6 found, 6 new, 0 skipped (dupes/empty)
+[02:16:29] [31/51] New Jersey (NJ)
+[02:16:29]   Page 1/?: https://lawyers.lawyerlegion.com/new-jersey/immigration-law
+[02:16:30]     Total: 84 lawyers across 2 page(s)
+[02:16:30]     Parsed 50 lawyers from page 1
+[02:16:32]   Page 2/2: https://lawyers.lawyerlegion.com/new-jersey/immigration-law?page=2
+[02:16:34]     Parsed 34 lawyers from page 2
+[02:16:34]   => 84 found, 80 new, 4 skipped (dupes/empty)
+[02:16:37] [32/51] New Mexico (NM)
+[02:16:37]   Page 1/?: https://lawyers.lawyerlegion.com/new-mexico/immigration-law
+[02:16:37]     Total: 17 lawyers across 1 page(s)
+[02:16:37]     Parsed 17 lawyers from page 1
+[02:16:37]   => 17 found, 17 new, 0 skipped (dupes/empty)
+[02:16:39] [33/51] New York (NY)
+[02:16:39]   Page 1/?: https://lawyers.lawyerlegion.com/new-york/immigration-law
+[02:16:40]     Total: 250 lawyers across 5 page(s)
+[02:16:40]     Parsed 50 lawyers from page 1
+[02:16:43]   Page 2/5: https://lawyers.lawyerlegion.com/new-york/immigration-law?page=2
+[02:16:46]     Parsed 50 lawyers from page 2
+[02:16:48]   Page 3/5: https://lawyers.lawyerlegion.com/new-york/immigration-law?page=3
+[02:16:49]     Parsed 50 lawyers from page 3
+[02:16:51]   Page 4/5: https://lawyers.lawyerlegion.com/new-york/immigration-law?page=4
+[02:16:53]     Parsed 50 lawyers from page 4
+[02:16:56]   Page 5/5: https://lawyers.lawyerlegion.com/new-york/immigration-law?page=5
+[02:16:57]     Parsed 50 lawyers from page 5
+[02:16:57]   => 250 found, 250 new, 0 skipped (dupes/empty)
+[02:16:59] [34/51] North Carolina (NC)
+[02:16:59]   Page 1/?: https://lawyers.lawyerlegion.com/north-carolina/immigration-law
+[02:17:00]     Total: 109 lawyers across 3 page(s)
+[02:17:00]     Parsed 50 lawyers from page 1
+[02:17:03]   Page 2/3: https://lawyers.lawyerlegion.com/north-carolina/immigration-law?page=2
+[02:17:04]     Parsed 50 lawyers from page 2
+[02:17:06]   Page 3/3: https://lawyers.lawyerlegion.com/north-carolina/immigration-law?page=3
+[02:17:07]     Parsed 9 lawyers from page 3
+[02:17:07]   => 109 found, 109 new, 0 skipped (dupes/empty)
+[02:17:10] [35/51] North Dakota (ND)
+[02:17:10]   Page 1/?: https://lawyers.lawyerlegion.com/north-dakota/immigration-law
+[02:17:10]     Total: 2 lawyers across 1 page(s)
+[02:17:10]     Parsed 2 lawyers from page 1
+[02:17:10]   => 2 found, 2 new, 0 skipped (dupes/empty)
+[02:17:13] [36/51] Ohio (OH)
+[02:17:13]   Page 1/?: https://lawyers.lawyerlegion.com/ohio/immigration-law
+[02:17:14]     Total: 53 lawyers across 2 page(s)
+[02:17:14]     Parsed 50 lawyers from page 1
+[02:17:17]   Page 2/2: https://lawyers.lawyerlegion.com/ohio/immigration-law?page=2
+[02:17:17]     Parsed 3 lawyers from page 2
+[02:17:17]   => 53 found, 53 new, 0 skipped (dupes/empty)
+[02:17:19] [37/51] Oklahoma (OK)
+[02:17:19]   Page 1/?: https://lawyers.lawyerlegion.com/oklahoma/immigration-law
+[02:17:20]     Total: 20 lawyers across 1 page(s)
+[02:17:20]     Parsed 20 lawyers from page 1
+[02:17:20]   => 20 found, 19 new, 1 skipped (dupes/empty)
+[02:17:22] [38/51] Oregon (OR)
+[02:17:22]   Page 1/?: https://lawyers.lawyerlegion.com/oregon/immigration-law
+[02:17:23]     Total: 40 lawyers across 1 page(s)
+[02:17:23]     Parsed 40 lawyers from page 1
+[02:17:23]   => 40 found, 40 new, 0 skipped (dupes/empty)
+[02:17:26] [39/51] Pennsylvania (PA)
+[02:17:26]   Page 1/?: https://lawyers.lawyerlegion.com/pennsylvania/immigration-law
+[02:17:27]     Total: 73 lawyers across 2 page(s)
+[02:17:27]     Parsed 50 lawyers from page 1
+[02:17:30]   Page 2/2: https://lawyers.lawyerlegion.com/pennsylvania/immigration-law?page=2
+[02:17:30]     Parsed 23 lawyers from page 2
+[02:17:30]   => 73 found, 73 new, 0 skipped (dupes/empty)
+[02:17:34] [40/51] Rhode Island (RI)
+[02:17:34]   Page 1/?: https://lawyers.lawyerlegion.com/rhode-island/immigration-law
+[02:17:34]     Total: 8 lawyers across 1 page(s)
+[02:17:34]     Parsed 8 lawyers from page 1
+[02:17:34]   => 8 found, 8 new, 0 skipped (dupes/empty)
+[02:17:36] [41/51] South Carolina (SC)
+[02:17:36]   Page 1/?: https://lawyers.lawyerlegion.com/south-carolina/immigration-law
+[02:17:37]     Total: 16 lawyers across 1 page(s)
+[02:17:37]     Parsed 16 lawyers from page 1
+[02:17:37]   => 16 found, 16 new, 0 skipped (dupes/empty)
+[02:17:39] [42/51] South Dakota (SD)
+[02:17:39]   Page 1/?: https://lawyers.lawyerlegion.com/south-dakota/immigration-law
+[02:17:40]     Total: 1 lawyers across 1 page(s)
+[02:17:40]     Parsed 1 lawyers from page 1
+[02:17:40]   => 1 found, 1 new, 0 skipped (dupes/empty)
+[02:17:43] [43/51] Tennessee (TN)
+[02:17:43]   Page 1/?: https://lawyers.lawyerlegion.com/tennessee/immigration-law
+[02:17:43]     Total: 30 lawyers across 1 page(s)
+[02:17:43]     Parsed 30 lawyers from page 1
+[02:17:43]   => 30 found, 30 new, 0 skipped (dupes/empty)
+[02:17:45] [44/51] Texas (TX)
+[02:17:45]   Page 1/?: https://lawyers.lawyerlegion.com/texas/immigration-law
+[02:17:46]     Total: 250 lawyers across 5 page(s)
+[02:17:46]     Parsed 50 lawyers from page 1
+[02:17:50]   Page 2/5: https://lawyers.lawyerlegion.com/texas/immigration-law?page=2
+[02:17:51]     Parsed 50 lawyers from page 2
+[02:17:54]   Page 3/5: https://lawyers.lawyerlegion.com/texas/immigration-law?page=3
+[02:17:58]     Parsed 50 lawyers from page 3
+[02:18:02]   Page 4/5: https://lawyers.lawyerlegion.com/texas/immigration-law?page=4
+[02:18:05]     Parsed 50 lawyers from page 4
+[02:18:08]   Page 5/5: https://lawyers.lawyerlegion.com/texas/immigration-law?page=5
+[02:18:13]     Parsed 50 lawyers from page 5
+[02:18:13]   => 250 found, 247 new, 3 skipped (dupes/empty)
+[02:18:16] [45/51] Utah (UT)
+[02:18:16]   Page 1/?: https://lawyers.lawyerlegion.com/utah/immigration-law
+[02:18:17]     Total: 18 lawyers across 1 page(s)
+[02:18:17]     Parsed 18 lawyers from page 1
+[02:18:17]   => 18 found, 17 new, 1 skipped (dupes/empty)
+[02:18:19] [46/51] Vermont (VT)
+[02:18:19]   Page 1/?: https://lawyers.lawyerlegion.com/vermont/immigration-law
+[02:18:20]     Total: 3 lawyers across 1 page(s)
+[02:18:20]     Parsed 3 lawyers from page 1
+[02:18:20]   => 3 found, 3 new, 0 skipped (dupes/empty)
+[02:18:23] [47/51] Virginia (VA)
+[02:18:23]   Page 1/?: https://lawyers.lawyerlegion.com/virginia/immigration-law
+[02:18:24]     Total: 71 lawyers across 2 page(s)
+[02:18:24]     Parsed 50 lawyers from page 1
+[02:18:26]   Page 2/2: https://lawyers.lawyerlegion.com/virginia/immigration-law?page=2
+[02:18:27]     Parsed 21 lawyers from page 2
+[02:18:27]   => 71 found, 71 new, 0 skipped (dupes/empty)
+[02:18:29] [48/51] Washington (WA)
+[02:18:29]   Page 1/?: https://lawyers.lawyerlegion.com/washington/immigration-law
+[02:18:30]     Total: 250 lawyers across 5 page(s)
+[02:18:30]     Parsed 50 lawyers from page 1
+[02:18:33]   Page 2/5: https://lawyers.lawyerlegion.com/washington/immigration-law?page=2
+[02:18:34]     Parsed 50 lawyers from page 2
+[02:18:37]   Page 3/5: https://lawyers.lawyerlegion.com/washington/immigration-law?page=3
+[02:18:38]     Parsed 50 lawyers from page 3
+[02:18:42]   Page 4/5: https://lawyers.lawyerlegion.com/washington/immigration-law?page=4
+[02:18:44]     Parsed 50 lawyers from page 4
+[02:18:46]   Page 5/5: https://lawyers.lawyerlegion.com/washington/immigration-law?page=5
+[02:18:48]     Parsed 50 lawyers from page 5
+[02:18:48]   => 250 found, 249 new, 1 skipped (dupes/empty)
+[02:18:51] [49/51] West Virginia (WV)
+[02:18:51]   Page 1/?: https://lawyers.lawyerlegion.com/west-virginia/immigration-law
+[02:18:51]     Total: 2 lawyers across 1 page(s)
+[02:18:51]     Parsed 2 lawyers from page 1
+[02:18:51]   => 2 found, 2 new, 0 skipped (dupes/empty)
+[02:18:54] [50/51] Wisconsin (WI)
+[02:18:54]   Page 1/?: https://lawyers.lawyerlegion.com/wisconsin/immigration-law
+[02:18:55]     Total: 18 lawyers across 1 page(s)
+[02:18:55]     Parsed 18 lawyers from page 1
+[02:18:55]   => 18 found, 18 new, 0 skipped (dupes/empty)
+[02:18:58] [51/51] Wyoming (WY)
+[02:18:58]   Page 1/?: https://lawyers.lawyerlegion.com/wyoming/immigration-law
+[02:18:59]     Total: 1 lawyers across 1 page(s)
+[02:18:59]     Parsed 1 lawyers from page 1
+[02:18:59]   => 1 found, 1 new, 0 skipped (dupes/empty)
+[02:18:59] 
+[02:18:59] ============================================================
+[02:18:59] SCRAPE COMPLETE
+[02:18:59] ============================================================
+[02:18:59] States processed: 51 (0 errors, 0 empty)
+[02:18:59] Total unique leads: 3189
+[02:18:59]   With phone:   10 (0%)
+[02:18:59]   With website:  10 (0%)
+[02:18:59]   With domain:   10
+[02:18:59]   With firm:     2958
+[02:18:59]   Unique states: 51
+[02:18:59]   Unique cities: 804
+[02:18:59] Duplicates skipped: 20
+[02:18:59] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/us-immigration-lawyers-lawyerlegion.csv
+[02:18:59] ============================================================
+[02:18:59] Progress file cleaned up (complete run).

@@ -1,0 +1,2177 @@
+=== Bulk find-leads ===
+Cities: 277
+Niches: immigration consultant | immigration lawyer | visa lawyer | immigration attorney | immigration law firm | migration agent
+Max per query: 25
+Delay between queries: 18s
+Output: output/mega-immigration-sweep.csv
+State: output/mega-immigration-sweep.state.json
+Total queries: 1662
+
+Loaded 0 existing domains
+
+[1/1662] immigration consultant Toronto, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 18 domains, 0 emails
+
+[2/1662] immigration lawyer Toronto, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 33 domains, 0 emails
+
+[3/1662] visa lawyer Toronto, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 44 domains, 0 emails
+
+[4/1662] immigration attorney Toronto, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 47 domains, 0 emails
+
+[5/1662] immigration law firm Toronto, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 53 domains, 0 emails
+
+[6/1662] migration agent Toronto, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 20 domains (via multi-engine)
+  0 verified emails
+  Totals: 63 domains, 0 emails
+
+[7/1662] immigration consultant Mississauga, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 76 domains, 0 emails
+
+[8/1662] immigration lawyer Mississauga, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 86 domains, 0 emails
+
+[9/1662] visa lawyer Mississauga, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 95 domains, 0 emails
+
+[10/1662] immigration attorney Mississauga, ON
+  Found 23 domains (via multi-engine)
+  0 verified emails
+  Totals: 100 domains, 0 emails
+
+[11/1662] immigration law firm Mississauga, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 101 domains, 0 emails
+
+[12/1662] migration agent Mississauga, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 107 domains, 0 emails
+
+[13/1662] immigration consultant Brampton, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 118 domains, 0 emails
+
+[14/1662] immigration lawyer Brampton, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 124 domains, 0 emails
+
+[15/1662] visa lawyer Brampton, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 131 domains, 0 emails
+
+[16/1662] immigration attorney Brampton, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 135 domains, 0 emails
+
+[17/1662] immigration law firm Brampton, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 137 domains, 0 emails
+
+[18/1662] migration agent Brampton, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 146 domains, 0 emails
+
+[19/1662] immigration consultant Markham, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 155 domains, 0 emails
+
+[20/1662] immigration lawyer Markham, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 161 domains, 0 emails
+
+[21/1662] visa lawyer Markham, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 161 domains, 0 emails
+
+[22/1662] immigration attorney Markham, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 162 domains, 0 emails
+
+[23/1662] immigration law firm Markham, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 163 domains, 0 emails
+
+[24/1662] migration agent Markham, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 165 domains, 0 emails
+
+[25/1662] immigration consultant Hamilton, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 175 domains, 0 emails
+
+[26/1662] immigration lawyer Hamilton, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 182 domains, 0 emails
+
+[27/1662] visa lawyer Hamilton, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 186 domains, 0 emails
+
+[28/1662] immigration attorney Hamilton, ON
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 188 domains, 0 emails
+
+[29/1662] immigration law firm Hamilton, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 189 domains, 0 emails
+
+[30/1662] migration agent Hamilton, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 192 domains, 0 emails
+
+[31/1662] immigration consultant Ottawa, ON
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 199 domains, 0 emails
+
+[32/1662] immigration lawyer Ottawa, ON
+  Found 20 domains (via multi-engine)
+  0 verified emails
+  Totals: 214 domains, 0 emails
+
+[33/1662] visa lawyer Ottawa, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 217 domains, 0 emails
+
+[34/1662] immigration attorney Ottawa, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 222 domains, 0 emails
+
+[35/1662] immigration law firm Ottawa, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 20 domains (via multi-engine)
+  0 verified emails
+  Totals: 226 domains, 0 emails
+
+[36/1662] migration agent Ottawa, ON
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 232 domains, 0 emails
+
+[37/1662] immigration consultant Vaughan, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 238 domains, 0 emails
+
+[38/1662] immigration lawyer Vaughan, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 242 domains, 0 emails
+
+[39/1662] visa lawyer Vaughan, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 245 domains, 0 emails
+
+[40/1662] immigration attorney Vaughan, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 248 domains, 0 emails
+
+[41/1662] immigration law firm Vaughan, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 251 domains, 0 emails
+
+[42/1662] migration agent Vaughan, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 255 domains, 0 emails
+
+[43/1662] immigration consultant London, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 265 domains, 0 emails
+
+[44/1662] immigration lawyer London, ON
+  Found 24 domains (via multi-engine)
+  0 verified emails
+  Totals: 283 domains, 0 emails
+
+[45/1662] visa lawyer London, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 291 domains, 0 emails
+
+[46/1662] immigration attorney London, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 298 domains, 0 emails
+
+[47/1662] immigration law firm London, ON
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 298 domains, 0 emails
+
+[48/1662] migration agent London, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 307 domains, 0 emails
+
+[49/1662] immigration consultant Windsor, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 317 domains, 0 emails
+
+[50/1662] immigration lawyer Windsor, ON
+  Found 22 domains (via multi-engine)
+  0 verified emails
+  Totals: 327 domains, 0 emails
+
+[51/1662] visa lawyer Windsor, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 329 domains, 0 emails
+
+[52/1662] immigration attorney Windsor, ON
+  Found 22 domains (via multi-engine)
+  0 verified emails
+  Totals: 330 domains, 0 emails
+
+[53/1662] immigration law firm Windsor, ON
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 330 domains, 0 emails
+
+[54/1662] migration agent Windsor, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 331 domains, 0 emails
+
+[55/1662] immigration consultant Kitchener, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 337 domains, 0 emails
+
+[56/1662] immigration lawyer Kitchener, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 341 domains, 0 emails
+
+[57/1662] visa lawyer Kitchener, ON
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 341 domains, 0 emails
+
+[58/1662] immigration attorney Kitchener, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 343 domains, 0 emails
+
+[59/1662] immigration law firm Kitchener, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 343 domains, 0 emails
+
+[60/1662] migration agent Kitchener, ON
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 345 domains, 0 emails
+
+[61/1662] immigration consultant Waterloo, ON
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 353 domains, 0 emails
+
+[62/1662] immigration lawyer Waterloo, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 357 domains, 0 emails
+
+[63/1662] visa lawyer Waterloo, ON
+  Found 22 domains (via multi-engine)
+  0 verified emails
+  Totals: 361 domains, 0 emails
+
+[64/1662] immigration attorney Waterloo, ON
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 363 domains, 0 emails
+
+[65/1662] immigration law firm Waterloo, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 363 domains, 0 emails
+
+[66/1662] migration agent Waterloo, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 372 domains, 0 emails
+
+[67/1662] immigration consultant Oshawa, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 378 domains, 0 emails
+
+[68/1662] immigration lawyer Oshawa, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 379 domains, 0 emails
+
+[69/1662] visa lawyer Oshawa, ON
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 380 domains, 0 emails
+
+[70/1662] immigration attorney Oshawa, ON
+  Found 21 domains (via multi-engine)
+  0 verified emails
+  Totals: 382 domains, 0 emails
+
+[71/1662] immigration law firm Oshawa, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 386 domains, 0 emails
+
+[72/1662] migration agent Oshawa, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 20 domains (via multi-engine)
+  0 verified emails
+  Totals: 396 domains, 0 emails
+
+[73/1662] immigration consultant Burlington, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 402 domains, 0 emails
+
+[74/1662] immigration lawyer Burlington, ON
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 404 domains, 0 emails
+
+[75/1662] visa lawyer Burlington, ON
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 405 domains, 0 emails
+
+[76/1662] immigration attorney Burlington, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 405 domains, 0 emails
+
+[77/1662] immigration law firm Burlington, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 407 domains, 0 emails
+
+[78/1662] migration agent Burlington, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 413 domains, 0 emails
+
+[79/1662] immigration consultant Oakville, ON
+[1554s] ℹ [DDG] Rate limited on "immigration consultant Oakville, ON" — waiting 30s (attempt 1/3)...
+[1586s] ℹ [DDG] Rate limited on "immigration consultant Oakville, ON" — waiting 60s (attempt 2/3)...
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 418 domains, 0 emails
+
+[80/1662] immigration lawyer Oakville, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 421 domains, 0 emails
+
+[81/1662] visa lawyer Oakville, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 425 domains, 0 emails
+
+[82/1662] immigration attorney Oakville, ON
+[1706s] ℹ [DDG] Rate limited on "immigration attorney Oakville, ON" — waiting 30s (attempt 1/3)...
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 425 domains, 0 emails
+
+[83/1662] immigration law firm Oakville, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 427 domains, 0 emails
+
+[84/1662] migration agent Oakville, ON
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 436 domains, 0 emails
+
+[85/1662] immigration consultant Richmond Hill, ON
+[1796s] ℹ [DDG] Rate limited on "immigration consultant Richmond Hill, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 441 domains, 0 emails
+
+[86/1662] immigration lawyer Richmond Hill, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 442 domains, 0 emails
+
+[87/1662] visa lawyer Richmond Hill, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 442 domains, 0 emails
+
+[88/1662] immigration attorney Richmond Hill, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 445 domains, 0 emails
+
+[89/1662] immigration law firm Richmond Hill, ON
+[1908s] ℹ [DDG] Rate limited on "immigration law firm Richmond Hill, ON" — waiting 30s (attempt 1/3)...
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 446 domains, 0 emails
+
+[90/1662] migration agent Richmond Hill, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 20 domains (via multi-engine)
+  0 verified emails
+  Totals: 452 domains, 0 emails
+
+[91/1662] immigration consultant Ajax, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 461 domains, 0 emails
+
+[92/1662] immigration lawyer Ajax, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 466 domains, 0 emails
+
+[93/1662] visa lawyer Ajax, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 468 domains, 0 emails
+
+[94/1662] immigration attorney Ajax, ON
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 468 domains, 0 emails
+
+[95/1662] immigration law firm Ajax, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 469 domains, 0 emails
+
+[96/1662] migration agent Ajax, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 477 domains, 0 emails
+
+[97/1662] immigration consultant Whitby, ON
+[2102s] ℹ [DDG] Rate limited on "immigration consultant Whitby, ON" — waiting 30s (attempt 1/3)...
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 478 domains, 0 emails
+
+[98/1662] immigration lawyer Whitby, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 482 domains, 0 emails
+
+[99/1662] visa lawyer Whitby, ON
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 485 domains, 0 emails
+
+[100/1662] immigration attorney Whitby, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 486 domains, 0 emails
+
+[101/1662] immigration law firm Whitby, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 486 domains, 0 emails
+
+[102/1662] migration agent Whitby, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 495 domains, 0 emails
+
+[103/1662] immigration consultant Barrie, ON
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 499 domains, 0 emails
+
+[104/1662] immigration lawyer Barrie, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 500 domains, 0 emails
+
+[105/1662] visa lawyer Barrie, ON
+[2298s] ℹ [DDG] Rate limited on "visa lawyer Barrie, ON" — waiting 30s (attempt 1/3)...
+[2329s] ℹ [DDG] Rate limited on "visa lawyer Barrie, ON" — waiting 60s (attempt 2/3)...
+[2389s] ⚠ [DDG] Search failed for "visa lawyer Barrie, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 8 domains (via multi-engine)
+  0 verified emails
+  Totals: 501 domains, 0 emails
+
+[106/1662] immigration attorney Barrie, ON
+[2408s] ℹ [DDG] Rate limited on "immigration attorney Barrie, ON" — waiting 30s (attempt 1/3)...
+[2439s] ℹ [DDG] Rate limited on "immigration attorney Barrie, ON" — waiting 60s (attempt 2/3)...
+[2499s] ⚠ [DDG] Search failed for "immigration attorney Barrie, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 7 domains (via multi-engine)
+  0 verified emails
+  Totals: 501 domains, 0 emails
+
+[107/1662] immigration law firm Barrie, ON
+[2519s] ℹ [DDG] Rate limited on "immigration law firm Barrie, ON" — waiting 30s (attempt 1/3)...
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 502 domains, 0 emails
+
+[108/1662] migration agent Barrie, ON
+[2570s] ℹ [DDG] Rate limited on "migration agent Barrie, ON" — waiting 30s (attempt 1/3)...
+[2601s] ℹ [DDG] Rate limited on "migration agent Barrie, ON" — waiting 60s (attempt 2/3)...
+  Found 21 domains (via multi-engine)
+  0 verified emails
+  Totals: 514 domains, 0 emails
+
+[109/1662] immigration consultant Guelph, ON
+[2684s] ℹ [DDG] Rate limited on "immigration consultant Guelph, ON" — waiting 30s (attempt 1/3)...
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 519 domains, 0 emails
+
+[110/1662] immigration lawyer Guelph, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 521 domains, 0 emails
+
+[111/1662] visa lawyer Guelph, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 521 domains, 0 emails
+
+[112/1662] immigration attorney Guelph, ON
+[2775s] ℹ [DDG] Rate limited on "immigration attorney Guelph, ON" — waiting 30s (attempt 1/3)...
+[2805s] ℹ [DDG] Rate limited on "immigration attorney Guelph, ON" — waiting 60s (attempt 2/3)...
+[2866s] ⚠ [DDG] Search failed for "immigration attorney Guelph, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[2866s] ℹ [DDG] Rate limited on "immigration attorney Guelph, ON" — waiting 30s (attempt 1/3)...
+[2897s] ℹ [DDG] Rate limited on "immigration attorney Guelph, ON" — waiting 60s (attempt 2/3)...
+[2957s] ⚠ [DDG] Search failed for "immigration attorney Guelph, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 521 domains, 0 emails
+
+[113/1662] immigration law firm Guelph, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 521 domains, 0 emails
+
+[114/1662] migration agent Guelph, ON
+[2996s] ℹ [DDG] Rate limited on "migration agent Guelph, ON" — waiting 30s (attempt 1/3)...
+[3026s] ℹ [DDG] Rate limited on "migration agent Guelph, ON" — waiting 60s (attempt 2/3)...
+[3087s] ⚠ [DDG] Search failed for "migration agent Guelph, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[3087s] ℹ [DDG] Rate limited on "migration agent Guelph, ON" — waiting 30s (attempt 1/3)...
+[3118s] ℹ [DDG] Rate limited on "migration agent Guelph, ON" — waiting 60s (attempt 2/3)...
+[3178s] ⚠ [DDG] Search failed for "migration agent Guelph, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 521 domains, 0 emails
+
+[115/1662] immigration consultant Kingston, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 526 domains, 0 emails
+
+[116/1662] immigration lawyer Kingston, ON
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 528 domains, 0 emails
+
+[117/1662] visa lawyer Kingston, ON
+[3238s] ℹ [DDG] Rate limited on "visa lawyer Kingston, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 528 domains, 0 emails
+
+[118/1662] immigration attorney Kingston, ON
+[3288s] ℹ [DDG] Rate limited on "immigration attorney Kingston, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 528 domains, 0 emails
+
+[119/1662] immigration law firm Kingston, ON
+[multi-search] brave rate-limited — backing off 60s
+[3340s] ℹ [DDG] Rate limited on "immigration law firm Kingston, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 528 domains, 0 emails
+
+[120/1662] migration agent Kingston, ON
+[3391s] ℹ [DDG] Rate limited on "migration agent Kingston, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 528 domains, 0 emails
+
+[121/1662] immigration consultant Sudbury, ON
+[multi-search] brave rate-limited — backing off 60s
+[3441s] ℹ [DDG] Rate limited on "immigration consultant Sudbury, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 531 domains, 0 emails
+
+[122/1662] immigration lawyer Sudbury, ON
+[3491s] ℹ [DDG] Rate limited on "immigration lawyer Sudbury, ON" — waiting 30s (attempt 1/3)...
+[3521s] ℹ [DDG] Rate limited on "immigration lawyer Sudbury, ON" — waiting 60s (attempt 2/3)...
+[3581s] ⚠ [DDG] Search failed for "immigration lawyer Sudbury, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[3583s] ℹ [DDG] Rate limited on "immigration lawyer Sudbury, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 532 domains, 0 emails
+
+[123/1662] visa lawyer Sudbury, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 535 domains, 0 emails
+
+[124/1662] immigration attorney Sudbury, ON
+[multi-search] brave rate-limited — backing off 60s
+[3653s] ℹ [DDG] Rate limited on "immigration attorney Sudbury, ON" — waiting 30s (attempt 1/3)...
+[3684s] ℹ [DDG] Rate limited on "immigration attorney Sudbury, ON" — waiting 60s (attempt 2/3)...
+[3744s] ⚠ [DDG] Search failed for "immigration attorney Sudbury, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 535 domains, 0 emails
+
+[125/1662] immigration law firm Sudbury, ON
+[multi-search] brave rate-limited — backing off 60s
+[3768s] ℹ [DDG] Rate limited on "immigration law firm Sudbury, ON" — waiting 30s (attempt 1/3)...
+[3799s] ℹ [DDG] Rate limited on "immigration law firm Sudbury, ON" — waiting 60s (attempt 2/3)...
+[3859s] ⚠ [DDG] Search failed for "immigration law firm Sudbury, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[3860s] ℹ [DDG] Rate limited on "immigration law firm Sudbury, ON" — waiting 30s (attempt 1/3)...
+[3890s] ℹ [DDG] Rate limited on "immigration law firm Sudbury, ON" — waiting 60s (attempt 2/3)...
+[3950s] ⚠ [DDG] Search failed for "immigration law firm Sudbury, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 535 domains, 0 emails
+
+[126/1662] migration agent Sudbury, ON
+[multi-search] brave rate-limited — backing off 60s
+[3969s] ℹ [DDG] Rate limited on "migration agent Sudbury, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 537 domains, 0 emails
+
+[127/1662] immigration consultant Thunder Bay, ON
+[4020s] ℹ [DDG] Rate limited on "immigration consultant Thunder Bay, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 540 domains, 0 emails
+
+[128/1662] immigration lawyer Thunder Bay, ON
+[4071s] ℹ [DDG] Rate limited on "immigration lawyer Thunder Bay, ON" — waiting 30s (attempt 1/3)...
+[4101s] ℹ [DDG] Rate limited on "immigration lawyer Thunder Bay, ON" — waiting 60s (attempt 2/3)...
+[4161s] ⚠ [DDG] Search failed for "immigration lawyer Thunder Bay, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 541 domains, 0 emails
+
+[129/1662] visa lawyer Thunder Bay, ON
+[4183s] ℹ [DDG] Rate limited on "visa lawyer Thunder Bay, ON" — waiting 30s (attempt 1/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 541 domains, 0 emails
+
+[130/1662] immigration attorney Thunder Bay, ON
+[multi-search] brave rate-limited — backing off 60s
+[4232s] ℹ [DDG] Rate limited on "immigration attorney Thunder Bay, ON" — waiting 30s (attempt 1/3)...
+[4264s] ℹ [DDG] Rate limited on "immigration attorney Thunder Bay, ON" — waiting 30s (attempt 1/3)...
+[4294s] ℹ [DDG] Rate limited on "immigration attorney Thunder Bay, ON" — waiting 60s (attempt 2/3)...
+[4354s] ⚠ [DDG] Search failed for "immigration attorney Thunder Bay, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 542 domains, 0 emails
+
+[131/1662] immigration law firm Thunder Bay, ON
+[multi-search] brave rate-limited — backing off 60s
+[4373s] ℹ [DDG] Rate limited on "immigration law firm Thunder Bay, ON" — waiting 30s (attempt 1/3)...
+[4403s] ℹ [DDG] Rate limited on "immigration law firm Thunder Bay, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 543 domains, 0 emails
+
+[132/1662] migration agent Thunder Bay, ON
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 544 domains, 0 emails
+
+[133/1662] immigration consultant Niagara Falls, ON
+[4505s] ℹ [DDG] Rate limited on "immigration consultant Niagara Falls, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 545 domains, 0 emails
+
+[134/1662] immigration lawyer Niagara Falls, ON
+[multi-search] brave rate-limited — backing off 60s
+[4555s] ℹ [DDG] Rate limited on "immigration lawyer Niagara Falls, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 546 domains, 0 emails
+
+[135/1662] visa lawyer Niagara Falls, ON
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 546 domains, 0 emails
+
+[136/1662] immigration attorney Niagara Falls, ON
+[multi-search] brave rate-limited — backing off 60s
+[4628s] ℹ [DDG] Rate limited on "immigration attorney Niagara Falls, ON" — waiting 30s (attempt 1/3)...
+[4658s] ℹ [DDG] Rate limited on "immigration attorney Niagara Falls, ON" — waiting 60s (attempt 2/3)...
+[4719s] ⚠ [DDG] Search failed for "immigration attorney Niagara Falls, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 546 domains, 0 emails
+
+[137/1662] immigration law firm Niagara Falls, ON
+[multi-search] brave rate-limited — backing off 60s
+[4737s] ℹ [DDG] Rate limited on "immigration law firm Niagara Falls, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 547 domains, 0 emails
+
+[138/1662] migration agent Niagara Falls, ON
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 547 domains, 0 emails
+
+[139/1662] immigration consultant St. Catharines, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 548 domains, 0 emails
+
+[140/1662] immigration lawyer St. Catharines, ON
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 548 domains, 0 emails
+
+[141/1662] visa lawyer St. Catharines, ON
+[4850s] ℹ [DDG] Rate limited on "visa lawyer St. Catharines, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+[4881s] ℹ [DDG] Rate limited on "visa lawyer St. Catharines, ON" — waiting 30s (attempt 1/3)...
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 550 domains, 0 emails
+
+[142/1662] immigration attorney St. Catharines, ON
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 550 domains, 0 emails
+
+[143/1662] immigration law firm St. Catharines, ON
+[multi-search] brave rate-limited — backing off 60s
+[4951s] ℹ [DDG] Rate limited on "immigration law firm St. Catharines, ON" — waiting 30s (attempt 1/3)...
+[4981s] ℹ [DDG] Rate limited on "immigration law firm St. Catharines, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 553 domains, 0 emails
+
+[144/1662] migration agent St. Catharines, ON
+[5063s] ℹ [DDG] Rate limited on "migration agent St. Catharines, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 554 domains, 0 emails
+
+[145/1662] immigration consultant Montreal, QC
+[multi-search] brave rate-limited — backing off 60s
+[5113s] ℹ [DDG] Rate limited on "immigration consultant Montreal, QC" — waiting 30s (attempt 1/3)...
+[5143s] ℹ [DDG] Rate limited on "immigration consultant Montreal, QC" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 562 domains, 0 emails
+
+[146/1662] immigration lawyer Montreal, QC
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 568 domains, 0 emails
+
+[147/1662] visa lawyer Montreal, QC
+[5245s] ℹ [DDG] Rate limited on "visa lawyer Montreal, QC" — waiting 30s (attempt 1/3)...
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 573 domains, 0 emails
+
+[148/1662] immigration attorney Montreal, QC
+[multi-search] brave rate-limited — backing off 60s
+[5295s] ℹ [DDG] Rate limited on "immigration attorney Montreal, QC" — waiting 30s (attempt 1/3)...
+[5325s] ℹ [DDG] Rate limited on "immigration attorney Montreal, QC" — waiting 60s (attempt 2/3)...
+[5385s] ⚠ [DDG] Search failed for "immigration attorney Montreal, QC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[5386s] ℹ [DDG] Rate limited on "immigration attorney Montreal, QC" — waiting 30s (attempt 1/3)...
+[5416s] ℹ [DDG] Rate limited on "immigration attorney Montreal, QC" — waiting 60s (attempt 2/3)...
+[5477s] ⚠ [DDG] Search failed for "immigration attorney Montreal, QC": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 573 domains, 0 emails
+
+[149/1662] immigration law firm Montreal, QC
+[multi-search] brave rate-limited — backing off 60s
+[5495s] ℹ [DDG] Rate limited on "immigration law firm Montreal, QC" — waiting 30s (attempt 1/3)...
+[5525s] ℹ [DDG] Rate limited on "immigration law firm Montreal, QC" — waiting 60s (attempt 2/3)...
+[5586s] ⚠ [DDG] Search failed for "immigration law firm Montreal, QC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[5586s] ℹ [DDG] Rate limited on "immigration law firm Montreal, QC" — waiting 30s (attempt 1/3)...
+[5617s] ℹ [DDG] Rate limited on "immigration law firm Montreal, QC" — waiting 60s (attempt 2/3)...
+[5677s] ⚠ [DDG] Search failed for "immigration law firm Montreal, QC": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 573 domains, 0 emails
+
+[150/1662] migration agent Montreal, QC
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 575 domains, 0 emails
+
+[151/1662] immigration consultant Laval, QC
+[5717s] ℹ [DDG] Rate limited on "immigration consultant Laval, QC" — waiting 30s (attempt 1/3)...
+[5747s] ℹ [DDG] Rate limited on "immigration consultant Laval, QC" — waiting 60s (attempt 2/3)...
+[5808s] ⚠ [DDG] Search failed for "immigration consultant Laval, QC": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 578 domains, 0 emails
+
+[152/1662] immigration lawyer Laval, QC
+[multi-search] brave rate-limited — backing off 60s
+[5827s] ⚠ [DDG] Search failed for "immigration lawyer Laval, QC": HTTP 403
+[5827s] ℹ [DDG] Rate limited on "immigration lawyer Laval, QC" — waiting 30s (attempt 1/3)...
+[5858s] ⚠ [DDG] Search failed for "immigration lawyer Laval, QC": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 578 domains, 0 emails
+
+[153/1662] visa lawyer Laval, QC
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 582 domains, 0 emails
+
+[154/1662] immigration attorney Laval, QC
+[multi-search] brave rate-limited — backing off 60s
+[5897s] ⚠ [DDG] Search failed for "immigration attorney Laval, QC": HTTP 403
+[5898s] ℹ [DDG] Rate limited on "immigration attorney Laval, QC" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 582 domains, 0 emails
+
+[155/1662] immigration law firm Laval, QC
+[5947s] ℹ [DDG] Rate limited on "immigration law firm Laval, QC" — waiting 30s (attempt 1/3)...
+[5977s] ℹ [DDG] Rate limited on "immigration law firm Laval, QC" — waiting 60s (attempt 2/3)...
+[6038s] ⚠ [DDG] Search failed for "immigration law firm Laval, QC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[6038s] ℹ [DDG] Rate limited on "immigration law firm Laval, QC" — waiting 30s (attempt 1/3)...
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 584 domains, 0 emails
+
+[156/1662] migration agent Laval, QC
+[6088s] ℹ [DDG] Rate limited on "migration agent Laval, QC" — waiting 30s (attempt 1/3)...
+[6118s] ℹ [DDG] Rate limited on "migration agent Laval, QC" — waiting 60s (attempt 2/3)...
+[6179s] ⚠ [DDG] Search failed for "migration agent Laval, QC": HTTP 403
+[multi-search] brave rate-limited — backing off 60s
+[6180s] ⚠ [DDG] Search failed for "migration agent Laval, QC": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 584 domains, 0 emails
+
+[157/1662] immigration consultant Quebec City, QC
+[6199s] ℹ [DDG] Rate limited on "immigration consultant Quebec City, QC" — waiting 30s (attempt 1/3)...
+[6229s] ⚠ [DDG] Search failed for "immigration consultant Quebec City, QC": HTTP 403
+[6230s] ℹ [DDG] Rate limited on "immigration consultant Quebec City, QC" — waiting 30s (attempt 1/3)...
+[6260s] ℹ [DDG] Rate limited on "immigration consultant Quebec City, QC" — waiting 60s (attempt 2/3)...
+[6321s] ⚠ [DDG] Search failed for "immigration consultant Quebec City, QC": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 584 domains, 0 emails
+
+[158/1662] immigration lawyer Quebec City, QC
+[multi-search] brave rate-limited — backing off 60s
+[6339s] ℹ [DDG] Rate limited on "immigration lawyer Quebec City, QC" — waiting 30s (attempt 1/3)...
+[6370s] ℹ [DDG] Rate limited on "immigration lawyer Quebec City, QC" — waiting 60s (attempt 2/3)...
+[6430s] ⚠ [DDG] Search failed for "immigration lawyer Quebec City, QC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 586 domains, 0 emails
+
+[159/1662] visa lawyer Quebec City, QC
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 587 domains, 0 emails
+
+[160/1662] immigration attorney Quebec City, QC
+[6471s] ℹ [DDG] Rate limited on "immigration attorney Quebec City, QC" — waiting 30s (attempt 1/3)...
+[6501s] ℹ [DDG] Rate limited on "immigration attorney Quebec City, QC" — waiting 60s (attempt 2/3)...
+[6561s] ⚠ [DDG] Search failed for "immigration attorney Quebec City, QC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[6562s] ℹ [DDG] Rate limited on "immigration attorney Quebec City, QC" — waiting 30s (attempt 1/3)...
+[6592s] ℹ [DDG] Rate limited on "immigration attorney Quebec City, QC" — waiting 60s (attempt 2/3)...
+[6652s] ⚠ [DDG] Search failed for "immigration attorney Quebec City, QC": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 587 domains, 0 emails
+
+[161/1662] immigration law firm Quebec City, QC
+[multi-search] brave rate-limited — backing off 60s
+[6671s] ℹ [DDG] Rate limited on "immigration law firm Quebec City, QC" — waiting 30s (attempt 1/3)...
+[6701s] ℹ [DDG] Rate limited on "immigration law firm Quebec City, QC" — waiting 60s (attempt 2/3)...
+[6762s] ⚠ [DDG] Search failed for "immigration law firm Quebec City, QC": HTTP 403
+[multi-search] brave rate-limited — backing off 60s
+[6763s] ℹ [DDG] Rate limited on "immigration law firm Quebec City, QC" — waiting 30s (attempt 1/3)...
+[6794s] ⚠ [DDG] Search failed for "immigration law firm Quebec City, QC": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 587 domains, 0 emails
+
+[162/1662] migration agent Quebec City, QC
+[6812s] ℹ [DDG] Rate limited on "migration agent Quebec City, QC" — waiting 30s (attempt 1/3)...
+[6843s] ℹ [DDG] Rate limited on "migration agent Quebec City, QC" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+[7105s] ℹ [DDG] Rate limited on "migration agent Quebec City, QC" — waiting 30s (attempt 1/3)...
+[7135s] ℹ [DDG] Rate limited on "migration agent Quebec City, QC" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 590 domains, 0 emails
+
+[163/1662] immigration consultant Gatineau, QC
+[multi-search] brave rate-limited — backing off 60s
+[7808s] ℹ [DDG] Rate limited on "immigration consultant Gatineau, QC" — waiting 30s (attempt 1/3)...
+[7838s] ℹ [DDG] Rate limited on "immigration consultant Gatineau, QC" — waiting 60s (attempt 2/3)...
+[7898s] ⚠ [DDG] Search failed for "immigration consultant Gatineau, QC": HTTP 202
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 597 domains, 0 emails
+
+[164/1662] immigration lawyer Gatineau, QC
+[7918s] ℹ [DDG] Rate limited on "immigration lawyer Gatineau, QC" — waiting 30s (attempt 1/3)...
+[7948s] ℹ [DDG] Rate limited on "immigration lawyer Gatineau, QC" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 601 domains, 0 emails
+
+[165/1662] visa lawyer Gatineau, QC
+[8029s] ℹ [DDG] Rate limited on "visa lawyer Gatineau, QC" — waiting 30s (attempt 1/3)...
+[8059s] ℹ [DDG] Rate limited on "visa lawyer Gatineau, QC" — waiting 60s (attempt 2/3)...
+[8119s] ⚠ [DDG] Search failed for "visa lawyer Gatineau, QC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[8120s] ℹ [DDG] Rate limited on "visa lawyer Gatineau, QC" — waiting 30s (attempt 1/3)...
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 602 domains, 0 emails
+
+[166/1662] immigration attorney Gatineau, QC
+[8170s] ℹ [DDG] Rate limited on "immigration attorney Gatineau, QC" — waiting 30s (attempt 1/3)...
+[8201s] ℹ [DDG] Rate limited on "immigration attorney Gatineau, QC" — waiting 60s (attempt 2/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 602 domains, 0 emails
+
+[167/1662] immigration law firm Gatineau, QC
+[multi-search] brave rate-limited — backing off 60s
+[8280s] ℹ [DDG] Rate limited on "immigration law firm Gatineau, QC" — waiting 30s (attempt 1/3)...
+[8310s] ℹ [DDG] Rate limited on "immigration law firm Gatineau, QC" — waiting 60s (attempt 2/3)...
+[8370s] ⚠ [DDG] Search failed for "immigration law firm Gatineau, QC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[8371s] ℹ [DDG] Rate limited on "immigration law firm Gatineau, QC" — waiting 30s (attempt 1/3)...
+[8401s] ℹ [DDG] Rate limited on "immigration law firm Gatineau, QC" — waiting 60s (attempt 2/3)...
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 603 domains, 0 emails
+
+[168/1662] migration agent Gatineau, QC
+[multi-search] brave rate-limited — backing off 60s
+[8481s] ℹ [DDG] Rate limited on "migration agent Gatineau, QC" — waiting 30s (attempt 1/3)...
+[8511s] ℹ [DDG] Rate limited on "migration agent Gatineau, QC" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 606 domains, 0 emails
+
+[169/1662] immigration consultant Longueuil, QC
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 612 domains, 0 emails
+
+[170/1662] immigration lawyer Longueuil, QC
+  Found 8 domains (via multi-engine)
+  0 verified emails
+  Totals: 612 domains, 0 emails
+
+[171/1662] visa lawyer Longueuil, QC
+[8632s] ℹ [DDG] Rate limited on "visa lawyer Longueuil, QC" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+[8664s] ℹ [DDG] Rate limited on "visa lawyer Longueuil, QC" — waiting 30s (attempt 1/3)...
+[8694s] ℹ [DDG] Rate limited on "visa lawyer Longueuil, QC" — waiting 60s (attempt 2/3)...
+[8754s] ⚠ [DDG] Search failed for "visa lawyer Longueuil, QC": HTTP 202
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 613 domains, 0 emails
+
+[172/1662] immigration attorney Longueuil, QC
+[multi-search] brave rate-limited — backing off 60s
+[8773s] ℹ [DDG] Rate limited on "immigration attorney Longueuil, QC" — waiting 30s (attempt 1/3)...
+[8803s] ℹ [DDG] Rate limited on "immigration attorney Longueuil, QC" — waiting 60s (attempt 2/3)...
+[8863s] ⚠ [DDG] Search failed for "immigration attorney Longueuil, QC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[8864s] ℹ [DDG] Rate limited on "immigration attorney Longueuil, QC" — waiting 30s (attempt 1/3)...
+[8894s] ℹ [DDG] Rate limited on "immigration attorney Longueuil, QC" — waiting 60s (attempt 2/3)...
+[8954s] ⚠ [DDG] Search failed for "immigration attorney Longueuil, QC": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 613 domains, 0 emails
+
+[173/1662] immigration law firm Longueuil, QC
+[multi-search] brave rate-limited — backing off 60s
+[8973s] ℹ [DDG] Rate limited on "immigration law firm Longueuil, QC" — waiting 30s (attempt 1/3)...
+[9003s] ℹ [DDG] Rate limited on "immigration law firm Longueuil, QC" — waiting 60s (attempt 2/3)...
+[9063s] ⚠ [DDG] Search failed for "immigration law firm Longueuil, QC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[9064s] ℹ [DDG] Rate limited on "immigration law firm Longueuil, QC" — waiting 30s (attempt 1/3)...
+[9094s] ℹ [DDG] Rate limited on "immigration law firm Longueuil, QC" — waiting 60s (attempt 2/3)...
+[9154s] ⚠ [DDG] Search failed for "immigration law firm Longueuil, QC": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 613 domains, 0 emails
+
+[174/1662] migration agent Longueuil, QC
+[multi-search] brave rate-limited — backing off 60s
+[9174s] ℹ [DDG] Rate limited on "migration agent Longueuil, QC" — waiting 30s (attempt 1/3)...
+[9204s] ℹ [DDG] Rate limited on "migration agent Longueuil, QC" — waiting 60s (attempt 2/3)...
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 615 domains, 0 emails
+
+[175/1662] immigration consultant Sherbrooke, QC
+[multi-search] brave rate-limited — backing off 60s
+[9284s] ℹ [DDG] Rate limited on "immigration consultant Sherbrooke, QC" — waiting 30s (attempt 1/3)...
+[9314s] ℹ [DDG] Rate limited on "immigration consultant Sherbrooke, QC" — waiting 60s (attempt 2/3)...
+[9374s] ⚠ [DDG] Search failed for "immigration consultant Sherbrooke, QC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[9375s] ℹ [DDG] Rate limited on "immigration consultant Sherbrooke, QC" — waiting 30s (attempt 1/3)...
+[9405s] ℹ [DDG] Rate limited on "immigration consultant Sherbrooke, QC" — waiting 60s (attempt 2/3)...
+[9466s] ⚠ [DDG] Search failed for "immigration consultant Sherbrooke, QC": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 615 domains, 0 emails
+
+[176/1662] immigration lawyer Sherbrooke, QC
+[multi-search] brave rate-limited — backing off 60s
+[9484s] ℹ [DDG] Rate limited on "immigration lawyer Sherbrooke, QC" — waiting 30s (attempt 1/3)...
+[9515s] ℹ [DDG] Rate limited on "immigration lawyer Sherbrooke, QC" — waiting 60s (attempt 2/3)...
+[9575s] ⚠ [DDG] Search failed for "immigration lawyer Sherbrooke, QC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[9576s] ℹ [DDG] Rate limited on "immigration lawyer Sherbrooke, QC" — waiting 30s (attempt 1/3)...
+[9606s] ℹ [DDG] Rate limited on "immigration lawyer Sherbrooke, QC" — waiting 60s (attempt 2/3)...
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 616 domains, 0 emails
+
+[177/1662] visa lawyer Sherbrooke, QC
+[multi-search] brave rate-limited — backing off 60s
+[9685s] ℹ [DDG] Rate limited on "visa lawyer Sherbrooke, QC" — waiting 30s (attempt 1/3)...
+[9717s] ℹ [DDG] Rate limited on "visa lawyer Sherbrooke, QC" — waiting 30s (attempt 1/3)...
+[9747s] ℹ [DDG] Rate limited on "visa lawyer Sherbrooke, QC" — waiting 60s (attempt 2/3)...
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 618 domains, 0 emails
+
+[178/1662] immigration attorney Sherbrooke, QC
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 623 domains, 0 emails
+
+[179/1662] immigration law firm Sherbrooke, QC
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 623 domains, 0 emails
+
+[180/1662] migration agent Sherbrooke, QC
+[9867s] ℹ [DDG] Rate limited on "migration agent Sherbrooke, QC" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 625 domains, 0 emails
+
+[181/1662] immigration consultant Vancouver, BC
+[9918s] ℹ [DDG] Rate limited on "immigration consultant Vancouver, BC" — waiting 30s (attempt 1/3)...
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 633 domains, 0 emails
+
+[182/1662] immigration lawyer Vancouver, BC
+[multi-search] brave rate-limited — backing off 60s
+[9969s] ℹ [DDG] Rate limited on "immigration lawyer Vancouver, BC" — waiting 30s (attempt 1/3)...
+[9999s] ℹ [DDG] Rate limited on "immigration lawyer Vancouver, BC" — waiting 60s (attempt 2/3)...
+[10059s] ⚠ [DDG] Search failed for "immigration lawyer Vancouver, BC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[10060s] ℹ [DDG] Rate limited on "immigration lawyer Vancouver, BC" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 640 domains, 0 emails
+
+[183/1662] visa lawyer Vancouver, BC
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 643 domains, 0 emails
+
+[184/1662] immigration attorney Vancouver, BC
+[multi-search] brave rate-limited — backing off 60s
+[10130s] ℹ [DDG] Rate limited on "immigration attorney Vancouver, BC" — waiting 30s (attempt 1/3)...
+[10160s] ℹ [DDG] Rate limited on "immigration attorney Vancouver, BC" — waiting 60s (attempt 2/3)...
+[10220s] ⚠ [DDG] Search failed for "immigration attorney Vancouver, BC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[10221s] ℹ [DDG] Rate limited on "immigration attorney Vancouver, BC" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 643 domains, 0 emails
+
+[185/1662] immigration law firm Vancouver, BC
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 644 domains, 0 emails
+
+[186/1662] migration agent Vancouver, BC
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 646 domains, 0 emails
+
+[187/1662] immigration consultant Surrey, BC
+[10312s] ℹ [DDG] Rate limited on "immigration consultant Surrey, BC" — waiting 30s (attempt 1/3)...
+[10342s] ℹ [DDG] Rate limited on "immigration consultant Surrey, BC" — waiting 60s (attempt 2/3)...
+[10402s] ⚠ [DDG] Search failed for "immigration consultant Surrey, BC": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 653 domains, 0 emails
+
+[188/1662] immigration lawyer Surrey, BC
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 658 domains, 0 emails
+
+[189/1662] visa lawyer Surrey, BC
+[10441s] ℹ [DDG] Rate limited on "visa lawyer Surrey, BC" — waiting 30s (attempt 1/3)...
+[10471s] ℹ [DDG] Rate limited on "visa lawyer Surrey, BC" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 663 domains, 0 emails
+
+[190/1662] immigration attorney Surrey, BC
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 666 domains, 0 emails
+
+[191/1662] immigration law firm Surrey, BC
+[10573s] ℹ [DDG] Rate limited on "immigration law firm Surrey, BC" — waiting 30s (attempt 1/3)...
+[10604s] ℹ [DDG] Rate limited on "immigration law firm Surrey, BC" — waiting 60s (attempt 2/3)...
+[10664s] ⚠ [DDG] Search failed for "immigration law firm Surrey, BC": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 668 domains, 0 emails
+
+[192/1662] migration agent Surrey, BC
+[multi-search] brave rate-limited — backing off 60s
+[10683s] ℹ [DDG] Rate limited on "migration agent Surrey, BC" — waiting 30s (attempt 1/3)...
+[10713s] ℹ [DDG] Rate limited on "migration agent Surrey, BC" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 673 domains, 0 emails
+
+[193/1662] immigration consultant Burnaby, BC
+[10795s] ℹ [DDG] Rate limited on "immigration consultant Burnaby, BC" — waiting 30s (attempt 1/3)...
+[10825s] ℹ [DDG] Rate limited on "immigration consultant Burnaby, BC" — waiting 60s (attempt 2/3)...
+[10885s] ⚠ [DDG] Search failed for "immigration consultant Burnaby, BC": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 678 domains, 0 emails
+
+[194/1662] immigration lawyer Burnaby, BC
+[multi-search] brave rate-limited — backing off 60s
+[10904s] ℹ [DDG] Rate limited on "immigration lawyer Burnaby, BC" — waiting 30s (attempt 1/3)...
+[10934s] ℹ [DDG] Rate limited on "immigration lawyer Burnaby, BC" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+[10996s] ℹ [DDG] Rate limited on "immigration lawyer Burnaby, BC" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 679 domains, 0 emails
+
+[195/1662] visa lawyer Burnaby, BC
+[11045s] ℹ [DDG] Rate limited on "visa lawyer Burnaby, BC" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 681 domains, 0 emails
+
+[196/1662] immigration attorney Burnaby, BC
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 681 domains, 0 emails
+
+[197/1662] immigration law firm Burnaby, BC
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 681 domains, 0 emails
+
+[198/1662] migration agent Burnaby, BC
+[multi-search] brave rate-limited — backing off 60s
+[11138s] ℹ [DDG] Rate limited on "migration agent Burnaby, BC" — waiting 30s (attempt 1/3)...
+[11168s] ℹ [DDG] Rate limited on "migration agent Burnaby, BC" — waiting 60s (attempt 2/3)...
+[11229s] ⚠ [DDG] Search failed for "migration agent Burnaby, BC": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 682 domains, 0 emails
+
+[199/1662] immigration consultant Richmond, BC
+[multi-search] brave rate-limited — backing off 60s
+[11247s] ℹ [DDG] Rate limited on "immigration consultant Richmond, BC" — waiting 30s (attempt 1/3)...
+[11278s] ℹ [DDG] Rate limited on "immigration consultant Richmond, BC" — waiting 60s (attempt 2/3)...
+[11338s] ⚠ [DDG] Search failed for "immigration consultant Richmond, BC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[11338s] ℹ [DDG] Rate limited on "immigration consultant Richmond, BC" — waiting 30s (attempt 1/3)...
+[11369s] ℹ [DDG] Rate limited on "immigration consultant Richmond, BC" — waiting 60s (attempt 2/3)...
+[11429s] ⚠ [DDG] Search failed for "immigration consultant Richmond, BC": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 682 domains, 0 emails
+
+[200/1662] immigration lawyer Richmond, BC
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 683 domains, 0 emails
+
+[201/1662] visa lawyer Richmond, BC
+[11472s] ⚠ [DDG] Search failed for "visa lawyer Richmond, BC": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 686 domains, 0 emails
+
+[202/1662] immigration attorney Richmond, BC
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 686 domains, 0 emails
+
+[203/1662] immigration law firm Richmond, BC
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 687 domains, 0 emails
+
+[204/1662] migration agent Richmond, BC
+[11532s] ⚠ [DDG] Search failed for "migration agent Richmond, BC": HTTP 403
+[11533s] ⚠ [DDG] Search failed for "migration agent Richmond, BC": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 687 domains, 0 emails
+
+[205/1662] immigration consultant Coquitlam, BC
+[11552s] ℹ [DDG] Rate limited on "immigration consultant Coquitlam, BC" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+[11583s] ℹ [DDG] Rate limited on "immigration consultant Coquitlam, BC" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 688 domains, 0 emails
+
+[206/1662] immigration lawyer Coquitlam, BC
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 690 domains, 0 emails
+
+[207/1662] visa lawyer Coquitlam, BC
+[multi-search] brave rate-limited — backing off 60s
+[11654s] ⚠ [DDG] Search failed for "visa lawyer Coquitlam, BC": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 690 domains, 0 emails
+
+[208/1662] immigration attorney Coquitlam, BC
+[11673s] ℹ [DDG] Rate limited on "immigration attorney Coquitlam, BC" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 690 domains, 0 emails
+
+[209/1662] immigration law firm Coquitlam, BC
+[multi-search] brave rate-limited — backing off 60s
+[11726s] ℹ [DDG] Rate limited on "immigration law firm Coquitlam, BC" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 692 domains, 0 emails
+
+[210/1662] migration agent Coquitlam, BC
+[11777s] ℹ [DDG] Rate limited on "migration agent Coquitlam, BC" — waiting 30s (attempt 1/3)...
+[11807s] ℹ [DDG] Rate limited on "migration agent Coquitlam, BC" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 692 domains, 0 emails
+
+[211/1662] immigration consultant Victoria, BC
+[11888s] ℹ [DDG] Rate limited on "immigration consultant Victoria, BC" — waiting 30s (attempt 1/3)...
+[11920s] ℹ [DDG] Rate limited on "immigration consultant Victoria, BC" — waiting 30s (attempt 1/3)...
+[11951s] ℹ [DDG] Rate limited on "immigration consultant Victoria, BC" — waiting 60s (attempt 2/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 695 domains, 0 emails
+
+[212/1662] immigration lawyer Victoria, BC
+[multi-search] brave rate-limited — backing off 60s
+[12030s] ℹ [DDG] Rate limited on "immigration lawyer Victoria, BC" — waiting 30s (attempt 1/3)...
+[12060s] ℹ [DDG] Rate limited on "immigration lawyer Victoria, BC" — waiting 60s (attempt 2/3)...
+[12120s] ⚠ [DDG] Search failed for "immigration lawyer Victoria, BC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[12121s] ℹ [DDG] Rate limited on "immigration lawyer Victoria, BC" — waiting 30s (attempt 1/3)...
+[12151s] ℹ [DDG] Rate limited on "immigration lawyer Victoria, BC" — waiting 60s (attempt 2/3)...
+[12212s] ⚠ [DDG] Search failed for "immigration lawyer Victoria, BC": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 695 domains, 0 emails
+
+[213/1662] visa lawyer Victoria, BC
+[multi-search] brave rate-limited — backing off 60s
+[12230s] ℹ [DDG] Rate limited on "visa lawyer Victoria, BC" — waiting 30s (attempt 1/3)...
+[12262s] ℹ [DDG] Rate limited on "visa lawyer Victoria, BC" — waiting 30s (attempt 1/3)...
+[12293s] ℹ [DDG] Rate limited on "visa lawyer Victoria, BC" — waiting 60s (attempt 2/3)...
+[12353s] ⚠ [DDG] Search failed for "visa lawyer Victoria, BC": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 698 domains, 0 emails
+
+[214/1662] immigration attorney Victoria, BC
+[multi-search] brave rate-limited — backing off 60s
+[12372s] ℹ [DDG] Rate limited on "immigration attorney Victoria, BC" — waiting 30s (attempt 1/3)...
+[12402s] ℹ [DDG] Rate limited on "immigration attorney Victoria, BC" — waiting 60s (attempt 2/3)...
+[12463s] ⚠ [DDG] Search failed for "immigration attorney Victoria, BC": HTTP 202
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 704 domains, 0 emails
+
+[215/1662] immigration law firm Victoria, BC
+[multi-search] brave rate-limited — backing off 60s
+[12482s] ℹ [DDG] Rate limited on "immigration law firm Victoria, BC" — waiting 30s (attempt 1/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 705 domains, 0 emails
+
+[216/1662] migration agent Victoria, BC
+[12532s] ℹ [DDG] Rate limited on "migration agent Victoria, BC" — waiting 30s (attempt 1/3)...
+[12562s] ℹ [DDG] Rate limited on "migration agent Victoria, BC" — waiting 60s (attempt 2/3)...
+[12622s] ⚠ [DDG] Search failed for "migration agent Victoria, BC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 705 domains, 0 emails
+
+[217/1662] immigration consultant Langley, BC
+[12643s] ℹ [DDG] Rate limited on "immigration consultant Langley, BC" — waiting 30s (attempt 1/3)...
+[12673s] ℹ [DDG] Rate limited on "immigration consultant Langley, BC" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 708 domains, 0 emails
+
+[218/1662] immigration lawyer Langley, BC
+[12756s] ℹ [DDG] Rate limited on "immigration lawyer Langley, BC" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 711 domains, 0 emails
+
+[219/1662] visa lawyer Langley, BC
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 713 domains, 0 emails
+
+[220/1662] immigration attorney Langley, BC
+[12826s] ℹ [DDG] Rate limited on "immigration attorney Langley, BC" — waiting 30s (attempt 1/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 714 domains, 0 emails
+
+[221/1662] immigration law firm Langley, BC
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 715 domains, 0 emails
+
+[222/1662] migration agent Langley, BC
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 716 domains, 0 emails
+
+[223/1662] immigration consultant Delta, BC
+[12918s] ℹ [DDG] Rate limited on "immigration consultant Delta, BC" — waiting 30s (attempt 1/3)...
+[12948s] ℹ [DDG] Rate limited on "immigration consultant Delta, BC" — waiting 60s (attempt 2/3)...
+[13008s] ⚠ [DDG] Search failed for "immigration consultant Delta, BC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[13009s] ℹ [DDG] Rate limited on "immigration consultant Delta, BC" — waiting 30s (attempt 1/3)...
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 720 domains, 0 emails
+
+[224/1662] immigration lawyer Delta, BC
+[13058s] ℹ [DDG] Rate limited on "immigration lawyer Delta, BC" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 721 domains, 0 emails
+
+[225/1662] visa lawyer Delta, BC
+[13109s] ℹ [DDG] Rate limited on "visa lawyer Delta, BC" — waiting 30s (attempt 1/3)...
+[13139s] ℹ [DDG] Rate limited on "visa lawyer Delta, BC" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 721 domains, 0 emails
+
+[226/1662] immigration attorney Delta, BC
+[13221s] ℹ [DDG] Rate limited on "immigration attorney Delta, BC" — waiting 30s (attempt 1/3)...
+[13251s] ℹ [DDG] Rate limited on "immigration attorney Delta, BC" — waiting 60s (attempt 2/3)...
+[13311s] ⚠ [DDG] Search failed for "immigration attorney Delta, BC": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 722 domains, 0 emails
+
+[227/1662] immigration law firm Delta, BC
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 723 domains, 0 emails
+
+[228/1662] migration agent Delta, BC
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 724 domains, 0 emails
+
+[229/1662] immigration consultant Kelowna, BC
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 732 domains, 0 emails
+
+[230/1662] immigration lawyer Kelowna, BC
+[multi-search] brave rate-limited — backing off 60s
+[13391s] ℹ [DDG] Rate limited on "immigration lawyer Kelowna, BC" — waiting 30s (attempt 1/3)...
+[13421s] ℹ [DDG] Rate limited on "immigration lawyer Kelowna, BC" — waiting 60s (attempt 2/3)...
+[13482s] ⚠ [DDG] Search failed for "immigration lawyer Kelowna, BC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[13482s] ℹ [DDG] Rate limited on "immigration lawyer Kelowna, BC" — waiting 30s (attempt 1/3)...
+[13512s] ℹ [DDG] Rate limited on "immigration lawyer Kelowna, BC" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 735 domains, 0 emails
+
+[231/1662] visa lawyer Kelowna, BC
+[multi-search] brave rate-limited — backing off 60s
+[13592s] ℹ [DDG] Rate limited on "visa lawyer Kelowna, BC" — waiting 30s (attempt 1/3)...
+[13622s] ℹ [DDG] Rate limited on "visa lawyer Kelowna, BC" — waiting 60s (attempt 2/3)...
+[13682s] ⚠ [DDG] Search failed for "visa lawyer Kelowna, BC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[13683s] ℹ [DDG] Rate limited on "visa lawyer Kelowna, BC" — waiting 30s (attempt 1/3)...
+[13713s] ℹ [DDG] Rate limited on "visa lawyer Kelowna, BC" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 735 domains, 0 emails
+
+[232/1662] immigration attorney Kelowna, BC
+[multi-search] brave rate-limited — backing off 60s
+[13793s] ℹ [DDG] Rate limited on "immigration attorney Kelowna, BC" — waiting 30s (attempt 1/3)...
+[13823s] ℹ [DDG] Rate limited on "immigration attorney Kelowna, BC" — waiting 60s (attempt 2/3)...
+[13884s] ⚠ [DDG] Search failed for "immigration attorney Kelowna, BC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[13884s] ℹ [DDG] Rate limited on "immigration attorney Kelowna, BC" — waiting 30s (attempt 1/3)...
+[13914s] ℹ [DDG] Rate limited on "immigration attorney Kelowna, BC" — waiting 60s (attempt 2/3)...
+[13975s] ⚠ [DDG] Search failed for "immigration attorney Kelowna, BC": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 735 domains, 0 emails
+
+[233/1662] immigration law firm Kelowna, BC
+[multi-search] brave rate-limited — backing off 60s
+[13993s] ℹ [DDG] Rate limited on "immigration law firm Kelowna, BC" — waiting 30s (attempt 1/3)...
+[14024s] ℹ [DDG] Rate limited on "immigration law firm Kelowna, BC" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+[14085s] ℹ [DDG] Rate limited on "immigration law firm Kelowna, BC" — waiting 30s (attempt 1/3)...
+[14115s] ℹ [DDG] Rate limited on "immigration law firm Kelowna, BC" — waiting 60s (attempt 2/3)...
+[14175s] ⚠ [DDG] Search failed for "immigration law firm Kelowna, BC": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 735 domains, 0 emails
+
+[234/1662] migration agent Kelowna, BC
+[multi-search] brave rate-limited — backing off 60s
+[14194s] ℹ [DDG] Rate limited on "migration agent Kelowna, BC" — waiting 30s (attempt 1/3)...
+[14224s] ℹ [DDG] Rate limited on "migration agent Kelowna, BC" — waiting 60s (attempt 2/3)...
+[14285s] ⚠ [DDG] Search failed for "migration agent Kelowna, BC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[14285s] ℹ [DDG] Rate limited on "migration agent Kelowna, BC" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 735 domains, 0 emails
+
+[235/1662] immigration consultant Abbotsford, BC
+[14335s] ℹ [DDG] Rate limited on "immigration consultant Abbotsford, BC" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+[14366s] ℹ [DDG] Rate limited on "immigration consultant Abbotsford, BC" — waiting 30s (attempt 1/3)...
+[14396s] ℹ [DDG] Rate limited on "immigration consultant Abbotsford, BC" — waiting 60s (attempt 2/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 741 domains, 0 emails
+
+[236/1662] immigration lawyer Abbotsford, BC
+[multi-search] brave rate-limited — backing off 60s
+[14477s] ℹ [DDG] Rate limited on "immigration lawyer Abbotsford, BC" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 742 domains, 0 emails
+
+[237/1662] visa lawyer Abbotsford, BC
+[14527s] ℹ [DDG] Rate limited on "visa lawyer Abbotsford, BC" — waiting 30s (attempt 1/3)...
+[14558s] ℹ [DDG] Rate limited on "visa lawyer Abbotsford, BC" — waiting 60s (attempt 2/3)...
+[14618s] ⚠ [DDG] Search failed for "visa lawyer Abbotsford, BC": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 742 domains, 0 emails
+
+[238/1662] immigration attorney Abbotsford, BC
+[multi-search] brave rate-limited — backing off 60s
+[14637s] ℹ [DDG] Rate limited on "immigration attorney Abbotsford, BC" — waiting 30s (attempt 1/3)...
+[14668s] ℹ [DDG] Rate limited on "immigration attorney Abbotsford, BC" — waiting 30s (attempt 1/3)...
+[14699s] ⚠ [DDG] Search failed for "immigration attorney Abbotsford, BC": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 743 domains, 0 emails
+
+[239/1662] immigration law firm Abbotsford, BC
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 744 domains, 0 emails
+
+[240/1662] migration agent Abbotsford, BC
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 744 domains, 0 emails
+
+[241/1662] immigration consultant Kamloops, BC
+[14758s] ℹ [DDG] Rate limited on "immigration consultant Kamloops, BC" — waiting 30s (attempt 1/3)...
+[14788s] ℹ [DDG] Rate limited on "immigration consultant Kamloops, BC" — waiting 60s (attempt 2/3)...
+[14848s] ⚠ [DDG] Search failed for "immigration consultant Kamloops, BC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[14849s] ℹ [DDG] Rate limited on "immigration consultant Kamloops, BC" — waiting 30s (attempt 1/3)...
+[14879s] ℹ [DDG] Rate limited on "immigration consultant Kamloops, BC" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 749 domains, 0 emails
+
+[242/1662] immigration lawyer Kamloops, BC
+[multi-search] brave rate-limited — backing off 60s
+[14960s] ℹ [DDG] Rate limited on "immigration lawyer Kamloops, BC" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 750 domains, 0 emails
+
+[243/1662] visa lawyer Kamloops, BC
+[15009s] ℹ [DDG] Rate limited on "visa lawyer Kamloops, BC" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+[15041s] ℹ [DDG] Rate limited on "visa lawyer Kamloops, BC" — waiting 30s (attempt 1/3)...
+[15071s] ℹ [DDG] Rate limited on "visa lawyer Kamloops, BC" — waiting 60s (attempt 2/3)...
+[15131s] ⚠ [DDG] Search failed for "visa lawyer Kamloops, BC": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 750 domains, 0 emails
+
+[244/1662] immigration attorney Kamloops, BC
+[15151s] ℹ [DDG] Rate limited on "immigration attorney Kamloops, BC" — waiting 30s (attempt 1/3)...
+[15181s] ℹ [DDG] Rate limited on "immigration attorney Kamloops, BC" — waiting 60s (attempt 2/3)...
+  Found 23 domains (via multi-engine)
+  0 verified emails
+  Totals: 756 domains, 0 emails
+
+[245/1662] immigration law firm Kamloops, BC
+[multi-search] brave rate-limited — backing off 60s
+[15260s] ℹ [DDG] Rate limited on "immigration law firm Kamloops, BC" — waiting 30s (attempt 1/3)...
+[15291s] ℹ [DDG] Rate limited on "immigration law firm Kamloops, BC" — waiting 60s (attempt 2/3)...
+[15351s] ⚠ [DDG] Search failed for "immigration law firm Kamloops, BC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[15351s] ℹ [DDG] Rate limited on "immigration law firm Kamloops, BC" — waiting 30s (attempt 1/3)...
+[15382s] ℹ [DDG] Rate limited on "immigration law firm Kamloops, BC" — waiting 60s (attempt 2/3)...
+[15442s] ⚠ [DDG] Search failed for "immigration law firm Kamloops, BC": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 756 domains, 0 emails
+
+[246/1662] migration agent Kamloops, BC
+[multi-search] brave rate-limited — backing off 60s
+[15461s] ℹ [DDG] Rate limited on "migration agent Kamloops, BC" — waiting 30s (attempt 1/3)...
+[15491s] ℹ [DDG] Rate limited on "migration agent Kamloops, BC" — waiting 60s (attempt 2/3)...
+[15551s] ⚠ [DDG] Search failed for "migration agent Kamloops, BC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[15552s] ℹ [DDG] Rate limited on "migration agent Kamloops, BC" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 756 domains, 0 emails
+
+[247/1662] immigration consultant Calgary, AB
+[15601s] ℹ [DDG] Rate limited on "immigration consultant Calgary, AB" — waiting 30s (attempt 1/3)...
+[15631s] ℹ [DDG] Rate limited on "immigration consultant Calgary, AB" — waiting 60s (attempt 2/3)...
+[15691s] ⚠ [DDG] Search failed for "immigration consultant Calgary, AB": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[15692s] ℹ [DDG] Rate limited on "immigration consultant Calgary, AB" — waiting 30s (attempt 1/3)...
+[15722s] ℹ [DDG] Rate limited on "immigration consultant Calgary, AB" — waiting 60s (attempt 2/3)...
+[15783s] ⚠ [DDG] Search failed for "immigration consultant Calgary, AB": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 756 domains, 0 emails
+
+[248/1662] immigration lawyer Calgary, AB
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 766 domains, 0 emails
+
+[249/1662] visa lawyer Calgary, AB
+[15822s] ℹ [DDG] Rate limited on "visa lawyer Calgary, AB" — waiting 30s (attempt 1/3)...
+[15853s] ⚠ [DDG] Search failed for "visa lawyer Calgary, AB": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 769 domains, 0 emails
+
+[250/1662] immigration attorney Calgary, AB
+[multi-search] brave rate-limited — backing off 60s
+[15873s] ℹ [DDG] Rate limited on "immigration attorney Calgary, AB" — waiting 30s (attempt 1/3)...
+[15903s] ⚠ [DDG] Search failed for "immigration attorney Calgary, AB": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 770 domains, 0 emails
+
+[251/1662] immigration law firm Calgary, AB
+[15923s] ℹ [DDG] Rate limited on "immigration law firm Calgary, AB" — waiting 30s (attempt 1/3)...
+[15953s] ℹ [DDG] Rate limited on "immigration law firm Calgary, AB" — waiting 60s (attempt 2/3)...
+[16014s] ⚠ [DDG] Search failed for "immigration law firm Calgary, AB": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[16014s] ℹ [DDG] Rate limited on "immigration law firm Calgary, AB" — waiting 30s (attempt 1/3)...
+[16044s] ℹ [DDG] Rate limited on "immigration law firm Calgary, AB" — waiting 60s (attempt 2/3)...
+[16105s] ⚠ [DDG] Search failed for "immigration law firm Calgary, AB": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 770 domains, 0 emails
+
+[252/1662] migration agent Calgary, AB
+[multi-search] brave rate-limited — backing off 60s
+[16123s] ℹ [DDG] Rate limited on "migration agent Calgary, AB" — waiting 30s (attempt 1/3)...
+[16153s] ℹ [DDG] Rate limited on "migration agent Calgary, AB" — waiting 60s (attempt 2/3)...
+[16214s] ⚠ [DDG] Search failed for "migration agent Calgary, AB": HTTP 403
+[multi-search] brave rate-limited — backing off 60s
+[16215s] ⚠ [DDG] Search failed for "migration agent Calgary, AB": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 770 domains, 0 emails
+
+[253/1662] immigration consultant Edmonton, AB
+[16234s] ⚠ [DDG] Search failed for "immigration consultant Edmonton, AB": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 777 domains, 0 emails
+
+[254/1662] immigration lawyer Edmonton, AB
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 784 domains, 0 emails
+
+[255/1662] visa lawyer Edmonton, AB
+[multi-search] brave rate-limited — backing off 60s
+[16276s] ⚠ [DDG] Search failed for "visa lawyer Edmonton, AB": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 786 domains, 0 emails
+
+[256/1662] immigration attorney Edmonton, AB
+[16295s] ℹ [DDG] Rate limited on "immigration attorney Edmonton, AB" — waiting 30s (attempt 1/3)...
+[16325s] ⚠ [DDG] Search failed for "immigration attorney Edmonton, AB": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 786 domains, 0 emails
+
+[257/1662] immigration law firm Edmonton, AB
+[multi-search] brave rate-limited — backing off 60s
+[16345s] ℹ [DDG] Rate limited on "immigration law firm Edmonton, AB" — waiting 30s (attempt 1/3)...
+[16377s] ℹ [DDG] Rate limited on "immigration law firm Edmonton, AB" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 787 domains, 0 emails
+
+[258/1662] migration agent Edmonton, AB
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 792 domains, 0 emails
+
+[259/1662] immigration consultant Red Deer, AB
+[16447s] ℹ [DDG] Rate limited on "immigration consultant Red Deer, AB" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 796 domains, 0 emails
+
+[260/1662] immigration lawyer Red Deer, AB
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 800 domains, 0 emails
+
+[261/1662] visa lawyer Red Deer, AB
+[16518s] ℹ [DDG] Rate limited on "visa lawyer Red Deer, AB" — waiting 30s (attempt 1/3)...
+[16548s] ℹ [DDG] Rate limited on "visa lawyer Red Deer, AB" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+[16609s] ℹ [DDG] Rate limited on "visa lawyer Red Deer, AB" — waiting 30s (attempt 1/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 802 domains, 0 emails
+
+[262/1662] immigration attorney Red Deer, AB
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 802 domains, 0 emails
+
+[263/1662] immigration law firm Red Deer, AB
+[multi-search] brave rate-limited — backing off 60s
+[16680s] ℹ [DDG] Rate limited on "immigration law firm Red Deer, AB" — waiting 30s (attempt 1/3)...
+[16710s] ℹ [DDG] Rate limited on "immigration law firm Red Deer, AB" — waiting 60s (attempt 2/3)...
+[16770s] ⚠ [DDG] Search failed for "immigration law firm Red Deer, AB": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[16771s] ℹ [DDG] Rate limited on "immigration law firm Red Deer, AB" — waiting 30s (attempt 1/3)...
+[16801s] ℹ [DDG] Rate limited on "immigration law firm Red Deer, AB" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 802 domains, 0 emails
+
+[264/1662] migration agent Red Deer, AB
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 803 domains, 0 emails
+
+[265/1662] immigration consultant Lethbridge, AB
+[16901s] ℹ [DDG] Rate limited on "immigration consultant Lethbridge, AB" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 806 domains, 0 emails
+
+[266/1662] immigration lawyer Lethbridge, AB
+[multi-search] brave rate-limited — backing off 60s
+[16952s] ℹ [DDG] Rate limited on "immigration lawyer Lethbridge, AB" — waiting 30s (attempt 1/3)...
+[16983s] ℹ [DDG] Rate limited on "immigration lawyer Lethbridge, AB" — waiting 60s (attempt 2/3)...
+[17043s] ⚠ [DDG] Search failed for "immigration lawyer Lethbridge, AB": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 807 domains, 0 emails
+
+[267/1662] visa lawyer Lethbridge, AB
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 808 domains, 0 emails
+
+[268/1662] immigration attorney Lethbridge, AB
+[17082s] ℹ [DDG] Rate limited on "immigration attorney Lethbridge, AB" — waiting 30s (attempt 1/3)...
+[17112s] ℹ [DDG] Rate limited on "immigration attorney Lethbridge, AB" — waiting 60s (attempt 2/3)...
+[17172s] ⚠ [DDG] Search failed for "immigration attorney Lethbridge, AB": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[17173s] ℹ [DDG] Rate limited on "immigration attorney Lethbridge, AB" — waiting 30s (attempt 1/3)...
+[17203s] ℹ [DDG] Rate limited on "immigration attorney Lethbridge, AB" — waiting 60s (attempt 2/3)...
+[17263s] ⚠ [DDG] Search failed for "immigration attorney Lethbridge, AB": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 808 domains, 0 emails
+
+[269/1662] immigration law firm Lethbridge, AB
+[multi-search] brave rate-limited — backing off 60s
+[17283s] ℹ [DDG] Rate limited on "immigration law firm Lethbridge, AB" — waiting 30s (attempt 1/3)...
+[17313s] ℹ [DDG] Rate limited on "immigration law firm Lethbridge, AB" — waiting 60s (attempt 2/3)...
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 812 domains, 0 emails
+
+[270/1662] migration agent Lethbridge, AB
+[multi-search] brave rate-limited — backing off 60s
+[17392s] ℹ [DDG] Rate limited on "migration agent Lethbridge, AB" — waiting 30s (attempt 1/3)...
+[17423s] ℹ [DDG] Rate limited on "migration agent Lethbridge, AB" — waiting 60s (attempt 2/3)...
+[17483s] ⚠ [DDG] Search failed for "migration agent Lethbridge, AB": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[17483s] ℹ [DDG] Rate limited on "migration agent Lethbridge, AB" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 812 domains, 0 emails
+
+[271/1662] immigration consultant Winnipeg, MB
+[17533s] ℹ [DDG] Rate limited on "immigration consultant Winnipeg, MB" — waiting 30s (attempt 1/3)...
+[17563s] ℹ [DDG] Rate limited on "immigration consultant Winnipeg, MB" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 822 domains, 0 emails
+
+[272/1662] immigration lawyer Winnipeg, MB
+[17643s] ℹ [DDG] Rate limited on "immigration lawyer Winnipeg, MB" — waiting 30s (attempt 1/3)...
+[17674s] ℹ [DDG] Rate limited on "immigration lawyer Winnipeg, MB" — waiting 60s (attempt 2/3)...
+[17734s] ⚠ [DDG] Search failed for "immigration lawyer Winnipeg, MB": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[17735s] ℹ [DDG] Rate limited on "immigration lawyer Winnipeg, MB" — waiting 30s (attempt 1/3)...
+[17765s] ℹ [DDG] Rate limited on "immigration lawyer Winnipeg, MB" — waiting 60s (attempt 2/3)...
+[17825s] ⚠ [DDG] Search failed for "immigration lawyer Winnipeg, MB": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 822 domains, 0 emails
+
+[273/1662] visa lawyer Winnipeg, MB
+[multi-search] brave rate-limited — backing off 60s
+[17844s] ℹ [DDG] Rate limited on "visa lawyer Winnipeg, MB" — waiting 30s (attempt 1/3)...
+[17874s] ℹ [DDG] Rate limited on "visa lawyer Winnipeg, MB" — waiting 60s (attempt 2/3)...
+[17935s] ⚠ [DDG] Search failed for "visa lawyer Winnipeg, MB": HTTP 202
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 826 domains, 0 emails
+
+[274/1662] immigration attorney Winnipeg, MB
+[multi-search] brave rate-limited — backing off 60s
+[17953s] ℹ [DDG] Rate limited on "immigration attorney Winnipeg, MB" — waiting 30s (attempt 1/3)...
+[17984s] ℹ [DDG] Rate limited on "immigration attorney Winnipeg, MB" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 828 domains, 0 emails
+
+[275/1662] immigration law firm Winnipeg, MB
+[18066s] ℹ [DDG] Rate limited on "immigration law firm Winnipeg, MB" — waiting 30s (attempt 1/3)...
+[18096s] ℹ [DDG] Rate limited on "immigration law firm Winnipeg, MB" — waiting 60s (attempt 2/3)...
+[18156s] ⚠ [DDG] Search failed for "immigration law firm Winnipeg, MB": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 830 domains, 0 emails
+
+[276/1662] migration agent Winnipeg, MB
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 833 domains, 0 emails
+
+[277/1662] immigration consultant Regina, SK
+[18195s] ℹ [DDG] Rate limited on "immigration consultant Regina, SK" — waiting 30s (attempt 1/3)...
+[18226s] ℹ [DDG] Rate limited on "immigration consultant Regina, SK" — waiting 30s (attempt 1/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 838 domains, 0 emails
+
+[278/1662] immigration lawyer Regina, SK
+[multi-search] brave rate-limited — backing off 60s
+[18276s] ℹ [DDG] Rate limited on "immigration lawyer Regina, SK" — waiting 30s (attempt 1/3)...
+[18306s] ℹ [DDG] Rate limited on "immigration lawyer Regina, SK" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 841 domains, 0 emails
+
+[279/1662] visa lawyer Regina, SK
+[18387s] ℹ [DDG] Rate limited on "visa lawyer Regina, SK" — waiting 30s (attempt 1/3)...
+[18417s] ℹ [DDG] Rate limited on "visa lawyer Regina, SK" — waiting 60s (attempt 2/3)...
+[18477s] ⚠ [DDG] Search failed for "visa lawyer Regina, SK": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 841 domains, 0 emails
+
+[280/1662] immigration attorney Regina, SK
+[18498s] ℹ [DDG] Rate limited on "immigration attorney Regina, SK" — waiting 30s (attempt 1/3)...
+[18528s] ℹ [DDG] Rate limited on "immigration attorney Regina, SK" — waiting 60s (attempt 2/3)...
+[18589s] ⚠ [DDG] Search failed for "immigration attorney Regina, SK": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 841 domains, 0 emails
+
+[281/1662] immigration law firm Regina, SK
+[multi-search] brave rate-limited — backing off 60s
+[18607s] ℹ [DDG] Rate limited on "immigration law firm Regina, SK" — waiting 30s (attempt 1/3)...
+[18638s] ⚠ [DDG] Search failed for "immigration law firm Regina, SK": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 841 domains, 0 emails
+
+[282/1662] migration agent Regina, SK
+[18658s] ⚠ [DDG] Search failed for "migration agent Regina, SK": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 843 domains, 0 emails
+
+[283/1662] immigration consultant Saskatoon, SK
+[multi-search] brave rate-limited — backing off 60s
+[18678s] ℹ [DDG] Rate limited on "immigration consultant Saskatoon, SK" — waiting 30s (attempt 1/3)...
+[18710s] ⚠ [DDG] Search failed for "immigration consultant Saskatoon, SK": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 850 domains, 0 emails
+
+[284/1662] immigration lawyer Saskatoon, SK
+[18729s] ⚠ [DDG] Search failed for "immigration lawyer Saskatoon, SK": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 853 domains, 0 emails
+
+[285/1662] visa lawyer Saskatoon, SK
+[multi-search] brave rate-limited — backing off 60s
+[18748s] ℹ [DDG] Rate limited on "visa lawyer Saskatoon, SK" — waiting 30s (attempt 1/3)...
+[18779s] ℹ [DDG] Rate limited on "visa lawyer Saskatoon, SK" — waiting 60s (attempt 2/3)...
+  Found 20 domains (via multi-engine)
+  0 verified emails
+  Totals: 857 domains, 0 emails
+
+[286/1662] immigration attorney Saskatoon, SK
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 857 domains, 0 emails
+
+[287/1662] immigration law firm Saskatoon, SK
+[18881s] ℹ [DDG] Rate limited on "immigration law firm Saskatoon, SK" — waiting 30s (attempt 1/3)...
+[18911s] ℹ [DDG] Rate limited on "immigration law firm Saskatoon, SK" — waiting 60s (attempt 2/3)...
+[18971s] ⚠ [DDG] Search failed for "immigration law firm Saskatoon, SK": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 857 domains, 0 emails
+
+[288/1662] migration agent Saskatoon, SK
+[multi-search] brave rate-limited — backing off 60s
+[18990s] ℹ [DDG] Rate limited on "migration agent Saskatoon, SK" — waiting 30s (attempt 1/3)...
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 858 domains, 0 emails
+
+[289/1662] immigration consultant Halifax, NS
+[19041s] ⚠ [DDG] Search failed for "immigration consultant Halifax, NS": HTTP 403
+[19041s] ℹ [DDG] Rate limited on "immigration consultant Halifax, NS" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 862 domains, 0 emails
+
+[290/1662] immigration lawyer Halifax, NS
+[multi-search] brave rate-limited — backing off 60s
+[19092s] ℹ [DDG] Rate limited on "immigration lawyer Halifax, NS" — waiting 30s (attempt 1/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 864 domains, 0 emails
+
+[291/1662] visa lawyer Halifax, NS
+[19141s] ℹ [DDG] Rate limited on "visa lawyer Halifax, NS" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 867 domains, 0 emails
+
+[292/1662] immigration attorney Halifax, NS
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 868 domains, 0 emails
+
+[293/1662] immigration law firm Halifax, NS
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 873 domains, 0 emails
+
+[294/1662] migration agent Halifax, NS
+[multi-search] brave rate-limited — backing off 60s
+[19234s] ℹ [DDG] Rate limited on "migration agent Halifax, NS" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 874 domains, 0 emails
+
+[295/1662] immigration consultant St. John's, NL
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 880 domains, 0 emails
+
+[296/1662] immigration lawyer St. John's, NL
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 880 domains, 0 emails
+
+[297/1662] visa lawyer St. John's, NL
+[19323s] ℹ [DDG] Rate limited on "visa lawyer St. John's, NL" — waiting 30s (attempt 1/3)...
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 881 domains, 0 emails
+
+[298/1662] immigration attorney St. John's, NL
+[multi-search] brave rate-limited — backing off 60s
+[19375s] ℹ [DDG] Rate limited on "immigration attorney St. John's, NL" — waiting 30s (attempt 1/3)...
+[19405s] ℹ [DDG] Rate limited on "immigration attorney St. John's, NL" — waiting 60s (attempt 2/3)...
+[19465s] ⚠ [DDG] Search failed for "immigration attorney St. John's, NL": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 881 domains, 0 emails
+
+[299/1662] immigration law firm St. John's, NL
+[multi-search] brave rate-limited — backing off 60s
+[19484s] ℹ [DDG] Rate limited on "immigration law firm St. John's, NL" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 882 domains, 0 emails
+
+[300/1662] migration agent St. John's, NL
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 883 domains, 0 emails
+
+[301/1662] immigration consultant Moncton, NB
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 887 domains, 0 emails
+
+[302/1662] immigration lawyer Moncton, NB
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 887 domains, 0 emails
+
+[303/1662] visa lawyer Moncton, NB
+[19598s] ℹ [DDG] Rate limited on "visa lawyer Moncton, NB" — waiting 30s (attempt 1/3)...
+[19645s] ℹ [DDG] Rate limited on "visa lawyer Moncton, NB" — waiting 60s (attempt 2/3)...
+[19706s] ⚠ [DDG] Search failed for "visa lawyer Moncton, NB": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 888 domains, 0 emails
+
+[304/1662] immigration attorney Moncton, NB
+[multi-search] brave rate-limited — backing off 60s
+[19724s] ℹ [DDG] Rate limited on "immigration attorney Moncton, NB" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 888 domains, 0 emails
+
+[305/1662] immigration law firm Moncton, NB
+[19775s] ℹ [DDG] Rate limited on "immigration law firm Moncton, NB" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 888 domains, 0 emails
+
+[306/1662] migration agent Moncton, NB
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 889 domains, 0 emails
+
+[307/1662] immigration consultant Fredericton, NB
+[19846s] ℹ [DDG] Rate limited on "immigration consultant Fredericton, NB" — waiting 30s (attempt 1/3)...
+[19877s] ℹ [DDG] Rate limited on "immigration consultant Fredericton, NB" — waiting 60s (attempt 2/3)...
+[19937s] ⚠ [DDG] Search failed for "immigration consultant Fredericton, NB": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[19938s] ℹ [DDG] Rate limited on "immigration consultant Fredericton, NB" — waiting 30s (attempt 1/3)...
+[19968s] ℹ [DDG] Rate limited on "immigration consultant Fredericton, NB" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 890 domains, 0 emails
+
+[308/1662] immigration lawyer Fredericton, NB
+[multi-search] brave rate-limited — backing off 60s
+[20047s] ℹ [DDG] Rate limited on "immigration lawyer Fredericton, NB" — waiting 30s (attempt 1/3)...
+[20078s] ℹ [DDG] Rate limited on "immigration lawyer Fredericton, NB" — waiting 60s (attempt 2/3)...
+[20138s] ⚠ [DDG] Search failed for "immigration lawyer Fredericton, NB": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 891 domains, 0 emails
+
+[309/1662] visa lawyer Fredericton, NB
+[20158s] ℹ [DDG] Rate limited on "visa lawyer Fredericton, NB" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 891 domains, 0 emails
+
+[310/1662] immigration attorney Fredericton, NB
+[multi-search] brave rate-limited — backing off 60s
+[20209s] ℹ [DDG] Rate limited on "immigration attorney Fredericton, NB" — waiting 30s (attempt 1/3)...
+[20239s] ℹ [DDG] Rate limited on "immigration attorney Fredericton, NB" — waiting 60s (attempt 2/3)...
+[20299s] ⚠ [DDG] Search failed for "immigration attorney Fredericton, NB": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[20300s] ℹ [DDG] Rate limited on "immigration attorney Fredericton, NB" — waiting 30s (attempt 1/3)...
+[20330s] ℹ [DDG] Rate limited on "immigration attorney Fredericton, NB" — waiting 60s (attempt 2/3)...

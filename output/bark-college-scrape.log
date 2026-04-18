@@ -1,0 +1,69 @@
+[23:31:48] Bark.com College Consultants / Education Scraper
+[23:31:48] Categories: tutoring, college-counselor, educational-consultant, sat-act-tutor, academic-tutoring
+[23:31:48] Countries: UK, US, CA | Test: false
+[23:31:48] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/college-consultants-bark.csv
+[23:31:48] 
+[23:31:54] 
+============================================================
+[23:31:54] COUNTRY: UK (gb)
+[23:31:54] ============================================================
+[23:31:54] Discovering cities for UK across 5 categories
+[23:31:54]   Trying category "tutoring" at https://www.bark.com/en/gb/tutoring/
+[23:31:58]     Found 0 city URLs for "tutoring"
+[23:32:02]   Trying category "college-counselor" at https://www.bark.com/en/gb/college-counselor/
+[23:32:04]     404 - category "college-counselor" not found for UK
+[23:32:07]   Trying category "educational-consultant" at https://www.bark.com/en/gb/educational-consultant/
+[23:32:09]     404 - category "educational-consultant" not found for UK
+[23:32:14]   Trying category "sat-act-tutor" at https://www.bark.com/en/gb/sat-act-tutor/
+[23:32:16]     404 - category "sat-act-tutor" not found for UK
+[23:32:19]   Trying category "academic-tutoring" at https://www.bark.com/en/gb/academic-tutoring/
+[23:32:21]     404 - category "academic-tutoring" not found for UK
+[23:32:25]   Total unique city URLs for UK: 0
+[23:32:29]   No cities found for UK, skipping
+[23:32:29] 
+============================================================
+[23:32:29] COUNTRY: US (us)
+[23:32:29] ============================================================
+[23:32:29] Discovering cities for US across 5 categories
+[23:32:29]   Trying category "tutoring" at https://www.bark.com/en/us/tutoring/
+[23:32:32]     Found 0 city URLs for "tutoring"
+[23:32:36]   Trying category "college-counselor" at https://www.bark.com/en/us/college-counselor/
+[23:32:38]     404 - category "college-counselor" not found for US
+[23:32:43]   Trying category "educational-consultant" at https://www.bark.com/en/us/educational-consultant/
+[23:32:45]     404 - category "educational-consultant" not found for US
+[23:32:49]   Trying category "sat-act-tutor" at https://www.bark.com/en/us/sat-act-tutor/
+[23:32:51]     404 - category "sat-act-tutor" not found for US
+[23:32:55]   Trying category "academic-tutoring" at https://www.bark.com/en/us/academic-tutoring/
+[23:32:57]     404 - category "academic-tutoring" not found for US
+[23:33:00]   Total unique city URLs for US: 0
+[23:33:05]   No cities found for US, skipping
+[23:33:05] 
+============================================================
+[23:33:05] COUNTRY: CA (ca)
+[23:33:05] ============================================================
+[23:33:05] Discovering cities for CA across 5 categories
+[23:33:05]   Trying category "tutoring" at https://www.bark.com/en/ca/tutoring/
+[23:33:08]     Found 0 city URLs for "tutoring"
+[23:33:13]   Trying category "college-counselor" at https://www.bark.com/en/ca/college-counselor/
+[23:33:15]     404 - category "college-counselor" not found for CA
+[23:33:18]   Trying category "educational-consultant" at https://www.bark.com/en/ca/educational-consultant/
+[23:33:20]     404 - category "educational-consultant" not found for CA
+[23:33:23]   Trying category "sat-act-tutor" at https://www.bark.com/en/ca/sat-act-tutor/
+[23:33:24]     404 - category "sat-act-tutor" not found for CA
+[23:33:28]   Trying category "academic-tutoring" at https://www.bark.com/en/ca/academic-tutoring/
+[23:33:29]     404 - category "academic-tutoring" not found for CA
+[23:33:33]   Total unique city URLs for CA: 0
+[23:33:37]   No cities found for CA, skipping
+[23:33:37] 
+[23:33:37] ============================================================
+[23:33:37] DONE
+[23:33:37] Cities scraped: 0 (0 empty, 0 errors)
+[23:33:37] Total unique leads: 0
+[23:33:37] With email: 0
+[23:33:37] With phone: 0
+[23:33:37] With website: 0
+[23:33:37] With parsed name: 0
+[23:33:37] Unique countries: 0
+[23:33:37] Unique cities: 0
+[23:33:37] By country: {}
+[23:33:37] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/college-consultants-bark.csv

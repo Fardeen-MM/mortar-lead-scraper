@@ -1,0 +1,32 @@
+=== HTTP Website Email Crawler ===
+Input:       output/bulk-leads-immigration-consultant.csv
+Output:      output/bulk-leads-immigration-crawled.csv
+Concurrency: 15
+Paths:       / /contact /contact-us /about /about-us
+Rows: 677 of 677
+  [3.7%] 25/677, emails=13, 5.9/s, ETA 111s
+  [7.4%] 50/677, emails=32, 4.8/s, ETA 131s
+  [11.1%] 75/677, emails=54, 3.7/s, ETA 163s
+  [14.8%] 100/677, emails=77, 3.4/s, ETA 170s
+  [18.5%] 125/677, emails=96, 3.0/s, ETA 184s
+  [22.2%] 150/677, emails=109, 2.9/s, ETA 182s
+  [25.8%] 175/677, emails=123, 3.0/s, ETA 167s
+  [29.5%] 200/677, emails=138, 3.0/s, ETA 159s
+  [33.2%] 225/677, emails=151, 3.0/s, ETA 151s
+  [36.9%] 250/677, emails=167, 3.0/s, ETA 142s
+  [40.6%] 275/677, emails=181, 3.1/s, ETA 130s
+  [44.3%] 300/677, emails=197, 3.1/s, ETA 122s
+  [48.0%] 325/677, emails=213, 3.1/s, ETA 114s
+  [51.7%] 350/677, emails=228, 3.1/s, ETA 105s
+  [55.4%] 375/677, emails=242, 3.0/s, ETA 101s
+  [59.1%] 400/677, emails=255, 2.9/s, ETA 96s
+  [62.8%] 425/677, emails=271, 2.8/s, ETA 90s
+  [66.5%] 450/677, emails=291, 2.7/s, ETA 84s
+  [70.2%] 475/677, emails=307, 2.7/s, ETA 75s
+  [73.9%] 500/677, emails=323, 2.7/s, ETA 66s
+  [77.5%] 525/677, emails=339, 2.5/s, ETA 61s
+  [81.2%] 550/677, emails=361, 2.4/s, ETA 53s
+  [84.9%] 575/677, emails=380, 2.2/s, ETA 46s
+  [88.6%] 600/677, emails=398, 2.1/s, ETA 37s
+  [92.3%] 625/677, emails=415, 2.0/s, ETA 26s
+  [96.0%] 650/677, emails=435, 1.9/s, ETA 14s

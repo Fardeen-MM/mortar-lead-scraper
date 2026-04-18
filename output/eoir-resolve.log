@@ -1,0 +1,58 @@
+=== Org Domain Resolver ===
+Input:       output/eoir-immigration-reps.csv
+Output:      output/eoir-with-domains.csv
+Firm column: organization
+Concurrency: 40
+Rows needing domain: 2952 of 5217
+Unique orgs: 2229
+  [2.2%] 50/2229, found=30, 135.9/s, ETA 16s
+  [4.5%] 100/2229, found=51, 110.6/s, ETA 19s
+  [6.7%] 150/2229, found=80, 122.7/s, ETA 17s
+  [9.0%] 200/2229, found=102, 120.3/s, ETA 17s
+  [11.2%] 250/2229, found=124, 119.4/s, ETA 17s
+  [13.5%] 300/2229, found=147, 123.9/s, ETA 16s
+  [15.7%] 350/2229, found=173, 129.8/s, ETA 14s
+  [17.9%] 400/2229, found=202, 132.6/s, ETA 14s
+  [20.2%] 450/2229, found=224, 132.5/s, ETA 13s
+  [22.4%] 500/2229, found=243, 131.3/s, ETA 13s
+  [24.7%] 550/2229, found=260, 130.4/s, ETA 13s
+  [26.9%] 600/2229, found=280, 129.3/s, ETA 13s
+  [29.2%] 650/2229, found=297, 129.0/s, ETA 12s
+  [31.4%] 700/2229, found=317, 129.0/s, ETA 12s
+  [33.6%] 750/2229, found=341, 129.1/s, ETA 11s
+  [35.9%] 800/2229, found=367, 128.8/s, ETA 11s
+  [38.1%] 850/2229, found=392, 128.0/s, ETA 11s
+  [40.4%] 900/2229, found=408, 127.4/s, ETA 10s
+  [42.6%] 950/2229, found=432, 125.9/s, ETA 10s
+  [44.9%] 1000/2229, found=447, 123.9/s, ETA 10s
+  [47.1%] 1050/2229, found=466, 124.2/s, ETA 9s
+  [49.3%] 1100/2229, found=491, 123.9/s, ETA 9s
+  [51.6%] 1150/2229, found=510, 124.6/s, ETA 9s
+  [53.8%] 1200/2229, found=532, 124.5/s, ETA 8s
+  [56.1%] 1250/2229, found=555, 123.9/s, ETA 8s
+  [58.3%] 1300/2229, found=571, 124.8/s, ETA 7s
+  [60.6%] 1350/2229, found=591, 125.1/s, ETA 7s
+  [62.8%] 1400/2229, found=609, 124.6/s, ETA 7s
+  [65.1%] 1450/2229, found=621, 125.4/s, ETA 6s
+  [67.3%] 1500/2229, found=637, 125.3/s, ETA 6s
+  [69.5%] 1550/2229, found=657, 124.9/s, ETA 5s
+  [71.8%] 1600/2229, found=676, 125.7/s, ETA 5s
+  [74.0%] 1650/2229, found=692, 125.8/s, ETA 5s
+  [76.3%] 1700/2229, found=719, 124.7/s, ETA 4s
+  [78.5%] 1750/2229, found=743, 123.9/s, ETA 4s
+  [80.8%] 1800/2229, found=760, 122.4/s, ETA 4s
+  [83.0%] 1850/2229, found=772, 121.8/s, ETA 3s
+  [85.2%] 1900/2229, found=790, 121.4/s, ETA 3s
+  [87.5%] 1950/2229, found=814, 121.8/s, ETA 2s
+  [89.7%] 2000/2229, found=831, 121.3/s, ETA 2s
+  [92.0%] 2050/2229, found=851, 120.9/s, ETA 1s
+  [94.2%] 2100/2229, found=870, 120.2/s, ETA 1s
+  [96.5%] 2150/2229, found=888, 120.0/s, ETA 1s
+  [98.7%] 2200/2229, found=910, 119.7/s, ETA 0s
+  [100.0%] 2229/2229, found=920, 110.0/s, ETA 0s
+
+=== DONE ===
+Unique orgs tried:   2229
+Orgs with domain:    920
+Rows enriched:       1447
+Output: output/eoir-with-domains.csv

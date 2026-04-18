@@ -1,0 +1,425 @@
+=== SuperLawyers Immigration — REMAINING 41 STATES ===
+States: MD, WA, AZ, CO, NC, OH, MI, CT, MN, OR, NV, TN, MO, IN, WI, SC, KY, LA, AL, OK, IA, UT, KS, AR, MS, NE, NM, HI, NH, ME, ID, WV, MT, RI, DE, SD, ND, AK, VT, WY, DC
+Total states: 41
+
+Loaded 14 existing profile URLs for dedup
+Warming up browser with homepage...
+
+[1/41] MD (4 cities)
+  Baltimore: https://attorneys.superlawyers.com/immigration/maryland/baltimore/
+    Page 1: Found 25 attorneys
+    Navigating to page 2...
+    Page 2: Found 19 attorneys
+  Bethesda: https://attorneys.superlawyers.com/immigration/maryland/bethesda/
+    Page 1: Found 26 attorneys
+    Navigating to page 2...
+    Page 2: Found 26 attorneys
+    Navigating to page 3...
+    Page 3: Found 2 attorneys
+  Rockville: https://attorneys.superlawyers.com/immigration/maryland/rockville/
+    Page 1: Found 26 attorneys
+    Navigating to page 2...
+    Page 2: Found 26 attorneys
+    Navigating to page 3...
+    Page 3: Found 2 attorneys
+  Silver Spring: https://attorneys.superlawyers.com/immigration/maryland/silver-spring/
+    Page 1: Found 26 attorneys
+    Navigating to page 2...
+    Page 2: Found 26 attorneys
+    Navigating to page 3...
+    Page 3: Found 2 attorneys
+  MD: 96 new attorneys (running total: 96)
+
+[2/41] WA (4 cities)
+  Seattle: https://attorneys.superlawyers.com/immigration/washington/seattle/
+    Page 1: Found 25 attorneys
+    Navigating to page 2...
+    Page 2: Found 26 attorneys
+    Navigating to page 3...
+    Page 3: Found 21 attorneys
+  Tacoma: https://attorneys.superlawyers.com/immigration/washington/tacoma/
+    Page 1: Found 5 attorneys
+  Spokane: https://attorneys.superlawyers.com/immigration/washington/spokane/
+    Page 1: Found 2 attorneys
+  Bellevue: https://attorneys.superlawyers.com/immigration/washington/bellevue/
+    Page 1: Found 25 attorneys
+    Navigating to page 2...
+    Page 2: Found 26 attorneys
+    Navigating to page 3...
+    Page 3: Found 21 attorneys
+  WA: 77 new attorneys (running total: 173)
+
+[3/41] AZ (4 cities)
+  Phoenix: https://attorneys.superlawyers.com/immigration/arizona/phoenix/
+    Page 1: Found 26 attorneys
+    Navigating to page 2...
+    Page 2: Found 9 attorneys
+  Tucson: https://attorneys.superlawyers.com/immigration/arizona/tucson/
+    Page 1: Found 3 attorneys
+  Mesa: https://attorneys.superlawyers.com/immigration/arizona/mesa/
+    Page 1: Found 26 attorneys
+    Navigating to page 2...
+    Page 2: Found 9 attorneys
+  Scottsdale: https://attorneys.superlawyers.com/immigration/arizona/scottsdale/
+    Page 1: Found 26 attorneys
+    Navigating to page 2...
+    Page 2: Found 9 attorneys
+  AZ: 34 new attorneys (running total: 207)
+
+[4/41] CO (3 cities)
+  Denver: https://attorneys.superlawyers.com/immigration/colorado/denver/
+    Page 1: Found 25 attorneys
+    Navigating to page 2...
+    Page 2: Found 25 attorneys
+  Colorado Springs: https://attorneys.superlawyers.com/immigration/colorado/colorado-springs/
+    Page 1: Found 4 attorneys
+  Aurora: https://attorneys.superlawyers.com/immigration/colorado/aurora/
+    Page 1: Found 25 attorneys
+    Navigating to page 2...
+    Page 2: Found 25 attorneys
+  CO: 52 new attorneys (running total: 259)
+
+[5/41] NC (4 cities)
+  Charlotte: https://attorneys.superlawyers.com/immigration/north-carolina/charlotte/
+    Page 1: Found 22 attorneys
+  Raleigh: https://attorneys.superlawyers.com/immigration/north-carolina/raleigh/
+    Page 1: Found 18 attorneys
+  Durham: https://attorneys.superlawyers.com/immigration/north-carolina/durham/
+    Page 1: Found 18 attorneys
+  Greensboro: https://attorneys.superlawyers.com/immigration/north-carolina/greensboro/
+    Page 1: Found 11 attorneys
+  NC: 51 new attorneys (running total: 310)
+  [CHECKPOINT] Appended 310 leads to CSV (total new: 310)
+
+[6/41] OH (4 cities)
+  Columbus: https://attorneys.superlawyers.com/immigration/ohio/columbus/
+    Page 1: Found 25 attorneys
+  Cleveland: https://attorneys.superlawyers.com/immigration/ohio/cleveland/
+    Page 1: Found 25 attorneys
+    Navigating to page 2...
+    Page 2: Found 12 attorneys
+  Cincinnati: https://attorneys.superlawyers.com/immigration/ohio/cincinnati/
+    Page 1: Found 20 attorneys
+  Dayton: https://attorneys.superlawyers.com/immigration/ohio/dayton/
+    Page 1: Found 5 attorneys
+  OH: 83 new attorneys (running total: 393)
+
+[7/41] MI (4 cities)
+  Detroit: https://attorneys.superlawyers.com/immigration/michigan/detroit/
+    Page 1: Found 25 attorneys
+    Navigating to page 2...
+    Page 2: Found 25 attorneys
+    Navigating to page 3...
+    Page 3: Found 25 attorneys
+    Navigating to page 4...
+    Page 4: Found 21 attorneys
+  Grand Rapids: https://attorneys.superlawyers.com/immigration/michigan/grand-rapids/
+    Page 1: Found 11 attorneys
+  Ann Arbor: https://attorneys.superlawyers.com/immigration/michigan/ann-arbor/
+    Page 1: Found 11 attorneys
+  Dearborn: https://attorneys.superlawyers.com/immigration/michigan/dearborn/
+    Page 1: Found 25 attorneys
+    Navigating to page 2...
+    Page 2: Found 25 attorneys
+    Navigating to page 3...
+    Page 3: Found 25 attorneys
+    Navigating to page 4...
+    Page 4: Found 21 attorneys
+  MI: 118 new attorneys (running total: 511)
+
+[8/41] CT (4 cities)
+  Hartford: https://attorneys.superlawyers.com/immigration/connecticut/hartford/
+    Page 1: Found 21 attorneys
+  New Haven: https://attorneys.superlawyers.com/immigration/connecticut/new-haven/
+    Page 1: Found 7 attorneys
+  Stamford: https://attorneys.superlawyers.com/immigration/connecticut/stamford/
+    Page 1: Found 8 attorneys
+  Bridgeport: https://attorneys.superlawyers.com/immigration/connecticut/bridgeport/
+    Page 1: Found 4 attorneys
+  CT: 39 new attorneys (running total: 550)
+
+[9/41] MN (3 cities)
+  Minneapolis: https://attorneys.superlawyers.com/immigration/minnesota/minneapolis/
+    Page 1: Found 25 attorneys
+    Navigating to page 2...
+    Page 2: Found 29 attorneys
+    Navigating to page 3...
+    Page 3: Found 24 attorneys
+  Saint Paul: https://attorneys.superlawyers.com/immigration/minnesota/saint-paul/
+    Page 1: Found 25 attorneys
+    Navigating to page 2...
+    Page 2: Found 29 attorneys
+    Navigating to page 3...
+    Page 3: Found 24 attorneys
+  Bloomington: https://attorneys.superlawyers.com/immigration/minnesota/bloomington/
+    Page 1: Found 25 attorneys
+    Navigating to page 2...
+    Page 2: Found 29 attorneys
+    Navigating to page 3...
+    Page 3: Found 24 attorneys
+  MN: 70 new attorneys (running total: 620)
+
+[10/41] OR (3 cities)
+  Portland: https://attorneys.superlawyers.com/immigration/oregon/portland/
+    Page 1: Found 25 attorneys
+    Navigating to page 2...
+    Page 2: Found 3 attorneys
+  Eugene: https://attorneys.superlawyers.com/immigration/oregon/eugene/
+    Page 1: Found 0 attorneys
+  Salem: https://attorneys.superlawyers.com/immigration/oregon/salem/
+    Page 1: Found 2 attorneys
+  OR: 30 new attorneys (running total: 650)
+  [CHECKPOINT] Appended 340 leads to CSV (total new: 650)
+
+[11/41] NV (3 cities)
+  Las Vegas: https://attorneys.superlawyers.com/immigration/nevada/las-vegas/
+    Page 1: Found 16 attorneys
+  Reno: https://attorneys.superlawyers.com/immigration/nevada/reno/
+    Page 1: Found 0 attorneys
+  Henderson: https://attorneys.superlawyers.com/immigration/nevada/henderson/
+    Page 1: Found 16 attorneys
+  NV: 16 new attorneys (running total: 666)
+
+[12/41] TN (4 cities)
+  Nashville: https://attorneys.superlawyers.com/immigration/tennessee/nashville/
+    Page 1: Found 17 attorneys
+  Memphis: https://attorneys.superlawyers.com/immigration/tennessee/memphis/
+    Page 1: Found 9 attorneys
+  Knoxville: https://attorneys.superlawyers.com/immigration/tennessee/knoxville/
+    Page 1: Found 4 attorneys
+  Chattanooga: https://attorneys.superlawyers.com/immigration/tennessee/chattanooga/
+    Page 1: Found 4 attorneys
+  TN: 33 new attorneys (running total: 699)
+
+[13/41] MO (3 cities)
+  Kansas City: https://attorneys.superlawyers.com/immigration/missouri/kansas-city/
+    Page 1: Found 22 attorneys
+  Saint Louis: https://attorneys.superlawyers.com/immigration/missouri/saint-louis/
+    Page 1: Found 18 attorneys
+  Springfield: https://attorneys.superlawyers.com/immigration/missouri/springfield/
+    Page 1: Found 0 attorneys
+  MO: 40 new attorneys (running total: 739)
+
+[14/41] IN (3 cities)
+  Indianapolis: https://attorneys.superlawyers.com/immigration/indiana/indianapolis/
+    Page 1: Found 27 attorneys
+    Navigating to page 2...
+    Page 2: Found 8 attorneys
+  Fort Wayne: https://attorneys.superlawyers.com/immigration/indiana/fort-wayne/
+    Page 1: Found 0 attorneys
+  South Bend: https://attorneys.superlawyers.com/immigration/indiana/south-bend/
+    Page 1: Found 0 attorneys
+  IN: 33 new attorneys (running total: 772)
+
+[15/41] WI (3 cities)
+  Milwaukee: https://attorneys.superlawyers.com/immigration/wisconsin/milwaukee/
+    Page 1: Found 22 attorneys
+  Madison: https://attorneys.superlawyers.com/immigration/wisconsin/madison/
+    Page 1: Found 9 attorneys
+  Green Bay: https://attorneys.superlawyers.com/immigration/wisconsin/green-bay/
+    Page 1: Found 2 attorneys
+  WI: 33 new attorneys (running total: 805)
+  [CHECKPOINT] Appended 155 leads to CSV (total new: 805)
+
+[16/41] SC (3 cities)
+  Charleston: https://attorneys.superlawyers.com/immigration/south-carolina/charleston/
+    Page 1: Found 5 attorneys
+  Columbia: https://attorneys.superlawyers.com/immigration/south-carolina/columbia/
+    Page 1: Found 3 attorneys
+  Greenville: https://attorneys.superlawyers.com/immigration/south-carolina/greenville/
+    Page 1: Found 0 attorneys
+  SC: 8 new attorneys (running total: 813)
+
+[17/41] KY (2 cities)
+  Louisville: https://attorneys.superlawyers.com/immigration/kentucky/louisville/
+    Page 1: Found 5 attorneys
+  Lexington: https://attorneys.superlawyers.com/immigration/kentucky/lexington/
+    Page 1: Found 5 attorneys
+  KY: 10 new attorneys (running total: 823)
+
+[18/41] LA (3 cities)
+  New Orleans: https://attorneys.superlawyers.com/immigration/louisiana/new-orleans/
+    Page 1: Found 11 attorneys
+  Baton Rouge: https://attorneys.superlawyers.com/immigration/louisiana/baton-rouge/
+    Page 1: Found 7 attorneys
+  Shreveport: https://attorneys.superlawyers.com/immigration/louisiana/shreveport/
+    Page 1: Found 0 attorneys
+  LA: 18 new attorneys (running total: 841)
+
+[19/41] AL (3 cities)
+  Birmingham: https://attorneys.superlawyers.com/immigration/alabama/birmingham/
+    Page 1: Found 10 attorneys
+  Montgomery: https://attorneys.superlawyers.com/immigration/alabama/montgomery/
+    Page 1: Found 0 attorneys
+  Huntsville: https://attorneys.superlawyers.com/immigration/alabama/huntsville/
+    Page 1: Found 4 attorneys
+  AL: 14 new attorneys (running total: 855)
+
+[20/41] OK (2 cities)
+  Oklahoma City: https://attorneys.superlawyers.com/immigration/oklahoma/oklahoma-city/
+    Page 1: Found 13 attorneys
+  Tulsa: https://attorneys.superlawyers.com/immigration/oklahoma/tulsa/
+    Page 1: Found 5 attorneys
+  OK: 18 new attorneys (running total: 873)
+  [CHECKPOINT] Appended 68 leads to CSV (total new: 873)
+
+[21/41] IA (3 cities)
+  Des Moines: https://attorneys.superlawyers.com/immigration/iowa/des-moines/
+    Page 1: Found 13 attorneys
+  Cedar Rapids: https://attorneys.superlawyers.com/immigration/iowa/cedar-rapids/
+    Page 1: Found 4 attorneys
+  Iowa City: https://attorneys.superlawyers.com/immigration/iowa/iowa-city/
+    Page 1: Found 1 attorneys
+  IA: 18 new attorneys (running total: 891)
+
+[22/41] UT (3 cities)
+  Salt Lake City: https://attorneys.superlawyers.com/immigration/utah/salt-lake-city/
+    Page 1: Found 17 attorneys
+  Provo: https://attorneys.superlawyers.com/immigration/utah/provo/
+    Page 1: Found 2 attorneys
+  Ogden: https://attorneys.superlawyers.com/immigration/utah/ogden/
+    Page 1: Found 17 attorneys
+  UT: 19 new attorneys (running total: 910)
+
+[23/41] KS (3 cities)
+  Kansas City: https://attorneys.superlawyers.com/immigration/kansas/kansas-city/
+    Page 1: Found 7 attorneys
+  Wichita: https://attorneys.superlawyers.com/immigration/kansas/wichita/
+    Page 1: Found 3 attorneys
+  Overland Park: https://attorneys.superlawyers.com/immigration/kansas/overland-park/
+    Page 1: Found 7 attorneys
+  KS: 10 new attorneys (running total: 920)
+
+[24/41] AR (2 cities)
+  Little Rock: https://attorneys.superlawyers.com/immigration/arkansas/little-rock/
+    Page 1: Found 5 attorneys
+  Fayetteville: https://attorneys.superlawyers.com/immigration/arkansas/fayetteville/
+    Page 1: Found 11 attorneys
+  AR: 16 new attorneys (running total: 936)
+
+[25/41] MS (2 cities)
+  Jackson: https://attorneys.superlawyers.com/immigration/mississippi/jackson/
+    Page 1: Found 3 attorneys
+  Gulfport: https://attorneys.superlawyers.com/immigration/mississippi/gulfport/
+    Page 1: Found 0 attorneys
+  MS: 3 new attorneys (running total: 939)
+  [CHECKPOINT] Appended 66 leads to CSV (total new: 939)
+
+[26/41] NE (2 cities)
+  Omaha: https://attorneys.superlawyers.com/immigration/nebraska/omaha/
+    Page 1: Found 9 attorneys
+  Lincoln: https://attorneys.superlawyers.com/immigration/nebraska/lincoln/
+    Page 1: Found 1 attorneys
+  NE: 10 new attorneys (running total: 949)
+
+[27/41] NM (3 cities)
+  Albuquerque: https://attorneys.superlawyers.com/immigration/new-mexico/albuquerque/
+    Page 1: Found 5 attorneys
+  Santa Fe: https://attorneys.superlawyers.com/immigration/new-mexico/santa-fe/
+    Page 1: Found 1 attorneys
+  Las Cruces: https://attorneys.superlawyers.com/immigration/new-mexico/las-cruces/
+    Page 1: Found 1 attorneys
+  NM: 7 new attorneys (running total: 956)
+
+[28/41] HI (1 cities)
+  Honolulu: https://attorneys.superlawyers.com/immigration/hawaii/honolulu/
+    Page 1: Found 9 attorneys
+  HI: 9 new attorneys (running total: 965)
+
+[29/41] NH (2 cities)
+  Manchester: https://attorneys.superlawyers.com/immigration/new-hampshire/manchester/
+    Page 1: Found 8 attorneys
+  Concord: https://attorneys.superlawyers.com/immigration/new-hampshire/concord/
+    Page 1: Found 8 attorneys
+  NH: 8 new attorneys (running total: 973)
+
+[30/41] ME (2 cities)
+  Portland: https://attorneys.superlawyers.com/immigration/maine/portland/
+    Page 1: Found 6 attorneys
+  Bangor: https://attorneys.superlawyers.com/immigration/maine/bangor/
+    Page 1: Found 1 attorneys
+  ME: 7 new attorneys (running total: 980)
+  [CHECKPOINT] Appended 41 leads to CSV (total new: 980)
+
+[31/41] ID (2 cities)
+  Boise: https://attorneys.superlawyers.com/immigration/idaho/boise/
+    Page 1: Found 2 attorneys
+  Idaho Falls: https://attorneys.superlawyers.com/immigration/idaho/idaho-falls/
+    Page 1: Found 0 attorneys
+  ID: 2 new attorneys (running total: 982)
+
+[32/41] WV (2 cities)
+  Charleston: https://attorneys.superlawyers.com/immigration/west-virginia/charleston/
+    Page 1: Found 0 attorneys
+  Morgantown: https://attorneys.superlawyers.com/immigration/west-virginia/morgantown/
+    Page 1: Found 0 attorneys
+  WV: 0 new attorneys (running total: 982)
+
+[33/41] MT (2 cities)
+  Billings: https://attorneys.superlawyers.com/immigration/montana/billings/
+    Page 1: Found 0 attorneys
+  Missoula: https://attorneys.superlawyers.com/immigration/montana/missoula/
+    Page 1: Found 0 attorneys
+  MT: 0 new attorneys (running total: 982)
+
+[34/41] RI (2 cities)
+  Providence: https://attorneys.superlawyers.com/immigration/rhode-island/providence/
+    Page 1: Found 9 attorneys
+  Cranston: https://attorneys.superlawyers.com/immigration/rhode-island/cranston/
+    Page 1: Found 9 attorneys
+  RI: 9 new attorneys (running total: 991)
+
+[35/41] DE (2 cities)
+  Wilmington: https://attorneys.superlawyers.com/immigration/delaware/wilmington/
+    Page 1: Found 0 attorneys
+  Dover: https://attorneys.superlawyers.com/immigration/delaware/dover/
+    Page 1: Found 0 attorneys
+  DE: 0 new attorneys (running total: 991)
+  [CHECKPOINT] Appended 11 leads to CSV (total new: 991)
+
+[36/41] SD (1 cities)
+  Sioux Falls: https://attorneys.superlawyers.com/immigration/south-dakota/sioux-falls/
+    Page 1: Found 3 attorneys
+  SD: 2 new attorneys (running total: 993)
+
+[37/41] ND (2 cities)
+  Fargo: https://attorneys.superlawyers.com/immigration/north-dakota/fargo/
+    Page 1: Found 0 attorneys
+  Bismarck: https://attorneys.superlawyers.com/immigration/north-dakota/bismarck/
+    Page 1: Found 0 attorneys
+  ND: 0 new attorneys (running total: 993)
+
+[38/41] AK (2 cities)
+  Anchorage: https://attorneys.superlawyers.com/immigration/alaska/anchorage/
+    Page 1: Found 1 attorneys
+  Fairbanks: https://attorneys.superlawyers.com/immigration/alaska/fairbanks/
+    Page 1: Found 0 attorneys
+  AK: 1 new attorneys (running total: 994)
+
+[39/41] VT (2 cities)
+  Burlington: https://attorneys.superlawyers.com/immigration/vermont/burlington/
+    Page 1: Found 1 attorneys
+  Montpelier: https://attorneys.superlawyers.com/immigration/vermont/montpelier/
+    Page 1: Found 1 attorneys
+  VT: 1 new attorneys (running total: 995)
+
+[40/41] WY (2 cities)
+  Cheyenne: https://attorneys.superlawyers.com/immigration/wyoming/cheyenne/
+    Page 1: Found 0 attorneys
+  Casper: https://attorneys.superlawyers.com/immigration/wyoming/casper/
+    Page 1: Found 0 attorneys
+  WY: 0 new attorneys (running total: 995)
+  [CHECKPOINT] Appended 4 leads to CSV (total new: 995)
+
+[41/41] DC (1 cities)
+  Washington: https://attorneys.superlawyers.com/immigration/district-of-columbia/washington/
+    Page 1: Found 0 attorneys
+  DC: 0 new attorneys (running total: 995)
+
+=== DONE ===
+New attorneys found: 995
+Duplicates skipped: 655
+Output (appended): /Users/fardeenchoudhury/mortar-lead-scraper/output/us-immigration-lawyers-superlawyers.csv
+With phone: 57
+With website: 18
+Total leads in CSV: 1736

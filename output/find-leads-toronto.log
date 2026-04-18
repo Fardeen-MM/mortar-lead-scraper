@@ -1,0 +1,13 @@
+=== find-leads: "immigration consultant" in "Toronto" (target 50) ===
+Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/find-leads_immigration-consultant_toronto.csv
+
+[Stage 1] Discovery (Multi-Engine (Brave+Startpage+Mojeek+DDG))
+  [multi-engine] "immigration consultant Toronto"
+[multi-search] Trying mojeek...
+  mojeek: 8 results (8 new, 8 total)
+[multi-search] Trying ddg...
+  ddg: 20 results (7 new, 15 total)
+  [multi-engine] ""immigration consultant" "Toronto""
+[multi-search] Trying brave...
+[Brave] 429 rate limit — waiting 30s (attempt 1/4)
+[Brave] 429 rate limit — waiting 90s (attempt 2/4)

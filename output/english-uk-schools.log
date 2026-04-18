@@ -1,0 +1,46 @@
+=== English UK Member Centre Directory Scraper (ESL Schools) ===
+Mode: FULL
+Skipping detail page fetches
+
+--- Phase 1: Fetching listing pages ---
+  [0s] Fetching page 1...
+  Total schools: 278, Pages: 14
+  Got 20 schools (total: 20)
+  [2s] Fetching page 2...
+  Got 20 schools (total: 40)
+  [5s] Fetching page 3...
+  Got 20 schools (total: 60)
+  [7s] Fetching page 4...
+  Got 20 schools (total: 80)
+  [9s] Fetching page 5...
+  Got 20 schools (total: 100)
+  [12s] Fetching page 6...
+  Got 20 schools (total: 120)
+  [14s] Fetching page 7...
+  Got 20 schools (total: 140)
+  [16s] Fetching page 8...
+  Got 20 schools (total: 160)
+  [19s] Fetching page 9...
+  Got 20 schools (total: 180)
+  [21s] Fetching page 10...
+  Got 20 schools (total: 200)
+  [23s] Fetching page 11...
+  Got 20 schools (total: 220)
+  [26s] Fetching page 12...
+  Got 20 schools (total: 240)
+  [28s] Fetching page 13...
+  Got 20 schools (total: 260)
+  [30s] Fetching page 14...
+  Got 18 schools (total: 278)
+  Reached last page.
+
+Phase 1 complete: 278 schools from 14 pages
+
+=== RESULTS ===
+Total schools: 278
+With email:    278 (100.0%)
+With phone:    278 (100.0%)
+With website:  278 (100.0%)
+With contact:  0
+Time: 31s
+Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/uk-esl-schools-english-uk.csv

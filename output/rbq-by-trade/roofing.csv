@@ -1,0 +1,97 @@
+first_name,last_name,firm_name,email,phone,city,state,trade_category,license_type,bar_number,source
+,,Lambert & Bergeron Asphalte Ltee,lambertetbergeronasphalteltee@outlook.com,(418) 881-3579,Saint-Apollinaire,QC,Roofing,Entrepreneur,1186-7991-80,rbq_contractors_bar
+,,Démolition A.M. De L'Est Du Québec Inc.,admin@amdemolition.com,(450) 581-4840,Charlemagne,QC,Roofing,Entrepreneur,1337-6843-50,rbq_contractors_bar
+,,Les Entreprises G.S.B. inc.,patsalvo@videotron.ca,(514) 322-2513,Laval,QC,Roofing,Entrepreneur,1502-9903-63,rbq_contractors_bar
+,,Cloture Manic Ltee,contact@cloturemanic.com,(450) 682-6200,Laval,QC,Roofing,Entrepreneur,1674-9533-16,rbq_contractors_bar
+,,Les Pavages K.I. Bon et Paysagistes Ltée.,info@pavageskibon.com,(514) 323-0179,Montréal,QC,Roofing,Entrepreneur,1827-6675-67,rbq_contractors_bar
+,,Tessier Ltée,payables@tessier.desgagnes.com,(418) 296-1000,Québec,QC,Roofing,Entrepreneur,1848-1614-28,rbq_contractors_bar
+,,Pavage J.R. Lagace Paving inc.,andre@jrlagace.ca,(506) 753-3142,Charlo,QC,Roofing,Entrepreneur,2131-7888-49,rbq_contractors_bar
+,,166346 Canada inc.,celine@cloturefortin.com,(450) 622-6788,Mirabel,QC,Roofing,Entrepreneur,2283-1416-75,rbq_contractors_bar
+,,L'Assomption Asphalte inc.,guillaume.martel@lassomptionasphalte.com,(450) 589-3026,L'Assomption,QC,Roofing,Entrepreneur,2314-2276-68,rbq_contractors_bar
+,,Demolition Simco Inc.,martinerv@icloud.com,(514) 498-3839,Montréal,QC,Roofing,Entrepreneur,2353-7046-35,rbq_contractors_bar
+,,Les Planchers En Beton Fariz Inc.,farizplanchers@hotmail.com,(514) 323-2159,Montréal,QC,Roofing,Entrepreneur,2382-0848-24,rbq_contractors_bar
+,,2419-2429 Quebec Inc.,maurice@cloturesriviera.ca,(819) 568-3695,Gatineau,QC,Roofing,Entrepreneur,2419-2429-07,rbq_contractors_bar
+,,Maçonnerie R.D.R. Inc.,admrdr@videotron.ca,(450) 622-2222,Saint-Eustache,QC,Roofing,Entrepreneur,2433-4740-61,rbq_contractors_bar
+,,2551-4514 Québec inc.,potvinsophie@hotmail.com,(418) 668-3924,Alma,QC,Roofing,Entrepreneur,2551-4514-92,rbq_contractors_bar
+,,Les Terrassements Ciccarello Inc.,ciccarello@videotron.ca,(450) 447-7867,Longueuil,QC,Roofing,Entrepreneur,2552-4216-42,rbq_contractors_bar
+,,Mario Levesque Consultant Inc.,mario@mlc.qc.ca,(450) 447-3551,Carignan,QC,Roofing,Entrepreneur,2622-6746-85,rbq_contractors_bar
+,,Systeme Interieur Bruno Vachon Inc.,systeme.marie@videotron.ca,(450) 628-0110,Sainte-Thérèse,QC,Roofing,Entrepreneur,2627-2211-43,rbq_contractors_bar
+,,Gestion C.F. Inc.,beton2000@outlook.com,(450) 359-6767,Saint-Jean-sur-Richelieu,QC,Roofing,Entrepreneur,2743-1592-72,rbq_contractors_bar
+,,Clôture Cambrek inc.,info@cloturescambrek.com,(819) 377-3123,Trois-Rivières,QC,Roofing,Entrepreneur,2850-1062-65,rbq_contractors_bar
+,,Jean Simard Et Fils P.D.L. Ltée,info@jsf.ca,(819) 377-1818,Trois-Rivières,QC,Roofing,Entrepreneur,2973-2633-91,rbq_contractors_bar
+,,Les Sciages de Béton R.N. inc.,richard2757@hotmail.com,(819) 296-2757,Yamachiche,QC,Roofing,Entrepreneur,3091-6514-29,rbq_contractors_bar
+,,Construction Sbelgiorno inc.,simon@revolubox.net,(514) 894-8330,Saint-Jacques,QC,Roofing,Entrepreneur,5581-6607-01,rbq_contractors_bar
+,,Asselin & Asselin Arpenteurs-Géomètres inc.,nathalie.turcotte@topocom.com,(418) 724-7447,Rimouski,QC,Roofing,Entrepreneur,5587-6049-01,rbq_contractors_bar
+,,Latcon (2009) Ltd,luc@latconltd.com,(613) 738-9061,Ottawa,QC,Roofing,Entrepreneur,5594-2338-01,rbq_contractors_bar
+,,Asphalte Caroussel inc.,magalie@asphaltecaroussel.com,(450) 472-9289,Mirabel,QC,Roofing,Entrepreneur,5611-9472-01,rbq_contractors_bar
+,,ECCE TERRA ARPENTAGE DE CONSTRUCTION INC.,djean@ecceterra.com,(418) 397-6656,Saint-Joseph-de-Beauce,QC,Roofing,Entrepreneur,5616-5715-01,rbq_contractors_bar
+,,Stéphane Roy Arpenteur-Géomètre inc,nbernatchez@stephaneroyag.ca,(418) 253-5825,Vallée-Jonction,QC,Roofing,Entrepreneur,5624-7406-01,rbq_contractors_bar
+,,Les Gestions N.T.L. inc.,nadine_sebj@hotmail.com,(418) 569-3572,L'Ange-Gardien,QC,Roofing,Entrepreneur,5626-3460-01,rbq_contractors_bar
+,,Transport G.L.P. Morin inc.,garagetgm@hotmail.com,(819) 623-2700,Mont-Laurier,QC,Roofing,Entrepreneur,5637-4010-01,rbq_contractors_bar
+,,Impact Aluminium inc.,impactaluminium@hotmail.com,(450) 224-2002,Prévost,QC,Roofing,Entrepreneur,5644-4110-01,rbq_contractors_bar
+,,La Corporation des Couvreurs du Québec inc.,ccq@montreal-roofers.ca,(514) 663-6345,Dollard-des-Ormeaux,QC,Roofing,Entrepreneur,5651-2122-01,rbq_contractors_bar
+,,"Jacques Blanchard, arpenteur -geomètre inc.",admin@llbag.com,(819) 564-3013,Sherbrooke,QC,Roofing,Entrepreneur,5658-1044-01,rbq_contractors_bar
+,,Arpentage SM inc.,arpentagesm@hotmail.com,(450) 475-0300,Mirabel,QC,Roofing,Entrepreneur,5662-6641-01,rbq_contractors_bar
+,,Helferty's Disaster Restoration inc.,wendy.leal@helfertys.dki.ca,(613) 646-7854,Cobden,QC,Roofing,Entrepreneur,5668-5498-01,rbq_contractors_bar
+,,Lepage Signature inc.,stephan@lepagesignature.com,(418) 476-1678,Québec,QC,Roofing,Entrepreneur,5668-7981-01,rbq_contractors_bar
+,,8902437 S.A.C,fls.construction@outlook.com,(418) 907-0100,Sherbrooke,QC,Roofing,Entrepreneur,5688-5452-01,rbq_contractors_bar
+,,Construction Ultimate inc.,frank3376@hotmail.fr,(450) 657-9699,L'Assomption,QC,Roofing,Entrepreneur,5689-8489-01,rbq_contractors_bar
+,,9304-7793 Québec inc.,jp@dechamplainiso.com,(819) 755-0185,Lebel-sur-Quévillon,QC,Roofing,Entrepreneur,5692-8617-01,rbq_contractors_bar
+,,Clôtures St-Martin inc.,info@cloturesstmartin.com,(450) 661-9991,Laval,QC,Roofing,Entrepreneur,5695-9521-01,rbq_contractors_bar
+,,Nettoyage et Décontamination Cryotechnique inc.,m.panneton@cryotechnic.com,(514) 799-9805,Coteau-du-Lac,QC,Roofing,Entrepreneur,5704-5429-01,rbq_contractors_bar
+,,9299-4508 Québec inc.,laurence.clp@bellnet.ca,(450) 462-8282,Saint-Hubert,QC,Roofing,Entrepreneur,5704-9611-01,rbq_contractors_bar
+,,Boréal Grues inc.,payables@borealcranes.desgagnes.com,(709) 282-3910,Labrador City,QC,Roofing,Entrepreneur,5712-6799-01,rbq_contractors_bar
+,,Cadax Services Techniques inc.,admin@cadax.ca,(418) 204-0808,Québec,QC,Roofing,Entrepreneur,5732-4634-01,rbq_contractors_bar
+,,"Nadeau, Fournier Arpenteurs-Géomètres inc.",dmelancon@arpentage.ca,(819) 643-4901,Gatineau,QC,Roofing,Entrepreneur,5736-0836-01,rbq_contractors_bar
+,,"Denincourt Migué, Arpenteurs-Géomètres inc.",kmigue@dmarpenteurs.ca,(877) 882-3096,Saint-Jean-sur-Richelieu,QC,Roofing,Entrepreneur,5750-5711-01,rbq_contractors_bar
+,,Modélis S.A inc.,sebastien.anouil@modelisgc.com,(819) 347-1588,Sherbrooke,QC,Roofing,Entrepreneur,5769-2436-01,rbq_contractors_bar
+,,Toiture Thuot inc.,thuote@hotmail.ca,(514) 951-9670,Beloeil,QC,Roofing,Entrepreneur,5817-3733-01,rbq_contractors_bar
+,,PAVETECH (OTTAWA) LTD.,jolene@pavetechottawa.com,(613) 294-5016,Gloucester,QC,Roofing,Entrepreneur,5817-7791-01,rbq_contractors_bar
+,,Giroux ConstruXion inc.,celine.carbonneau@arpentage.com,(418) 652-8838,Québec,QC,Roofing,Entrepreneur,5818-2908-01,rbq_contractors_bar
+,,Bellemare Manutention inc.,pcote@groupebellemare.com,(819) 379-2535,Trois-Rivières,QC,Roofing,Entrepreneur,5824-9970-01,rbq_contractors_bar
+,,"Luc Hébert, Arpenteur-Géomètre inc.",luchebert@gagnonhebert.com,(418) 276-8724,Dolbeau-Mistassini,QC,Roofing,Entrepreneur,5846-8620-01,rbq_contractors_bar
+,,Maximum Arpentage inc.,maxime@maximumarpentage.ca,(514) 745-4418,Saint-Lin--Laurentides,QC,Roofing,Entrepreneur,5850-9894-01,rbq_contractors_bar
+,,Trigo Arpentage inc.,trigoarpentage@gmail.com,(514) 718-4371,Montréal,QC,Roofing,Entrepreneur,5856-4170-01,rbq_contractors_bar
+,,Paquin Scellant Asphalte Inc.,scellantaspk@outlook.com,(450) 752-1145,Saint-Ambroise-de-Kildare,QC,Roofing,Entrepreneur,5875-2908-01,rbq_contractors_bar
+,,Pavages Garneau inc.,f.durand@lafontaineetfils.com,(819) 583-3535,Nantes,QC,Roofing,Entrepreneur,8003-9548-61,rbq_contractors_bar
+,,Maçonnerie Sutton inc.,maconneriesutton@gmail.com,(450) 538-3230,Sutton,QC,Roofing,Entrepreneur,8006-0270-80,rbq_contractors_bar
+,,Clôtures M.T. inc.,cloturemt@hotmail.com,(450) 834-2417,Rawdon,QC,Roofing,Entrepreneur,8102-7161-03,rbq_contractors_bar
+,,Maçonnerie Pro inc.,maconneriepro@hotmail.ca,(450) 572-0736,Richelieu,QC,Roofing,Entrepreneur,8104-3499-02,rbq_contractors_bar
+,,Clôtures Solival inc.,mraymond@cloturesolival.com,(450) 682-1318,Laval,QC,Roofing,Entrepreneur,8108-5011-41,rbq_contractors_bar
+,,Louis-Alain Tremblay Inc.,bureau@tremblay-laliberte.ca,(418) 662-7329,Alma,QC,Roofing,Entrepreneur,8110-4895-58,rbq_contractors_bar
+,,Arpentage 3D Inc,aird_roger@hotmail.com,(514) 891-6495,Montréal,QC,Roofing,Entrepreneur,8111-1460-44,rbq_contractors_bar
+,,Greenwood Paving (Pembroke) Ltd.,greenwoodpaving@nrtco.net,(613) 735-4101,Pembroke,QC,Roofing,Entrepreneur,8113-1815-10,rbq_contractors_bar
+Miller,Limited,Miller Paving Limited,regulatoryrenewals@colascanada.ca,(905) 475-6660,Markham,QC,Roofing,Entrepreneur,8170-9313-01,rbq_contractors_bar
+,,9069-1379 Québec Inc.,info@pavagesnick.com,(450) 641-1127,Boucherville,QC,Roofing,Entrepreneur,8222-0492-03,rbq_contractors_bar
+,,9050-9571 Québec Inc,mp777@videotron.ca,(450) 438-7320,Saint-Colomban,QC,Roofing,Entrepreneur,8242-5299-38,rbq_contractors_bar
+,,Les Pavages R.S.M. Inc.,lespavagesrsm@videotron.ca,(450) 632-6518,Saint-Constant,QC,Roofing,Entrepreneur,8243-7583-01,rbq_contractors_bar
+,,Carrier & Fils Entrepreneurs-Paysagistes Inc.,raymondcarrier@videotron.ca,(418) 837-7886,Lévis,QC,Roofing,Entrepreneur,8249-3818-43,rbq_contractors_bar
+,,Géo-Civil inc.,jeanfrancoisboies@videotron.ca,(418) 665-3502,La Malbaie,QC,Roofing,Entrepreneur,8250-3129-07,rbq_contractors_bar
+,,Finition Acrylique Rive-Nord Inc.,info@acrylique-rive-nord.com,(514) 210-9876,Mascouche,QC,Roofing,Entrepreneur,8268-1982-27,rbq_contractors_bar
+,,Opti-Services restauration Inc.,info@opti-services.com,(450) 430-7879,Boisbriand,QC,Roofing,Entrepreneur,8276-7740-46,rbq_contractors_bar
+,,Daniel Touchette Arpenteur-Géomètre inc.,danieltouchette@icloud.com,(450) 770-1088,Granby,QC,Roofing,Entrepreneur,8280-1473-19,rbq_contractors_bar
+,,4002091 Canada Inc.,jchamberland@powerblastcanada.com,(450) 625-9344,Saint-Eustache,QC,Roofing,Entrepreneur,8281-3379-01,rbq_contractors_bar
+,,Carrelages de Montréal ltée,jfrappier@carrelagesdemontreal.com,(450) 463-3337,Longueuil,QC,Roofing,Entrepreneur,8282-9292-46,rbq_contractors_bar
+,,9116-7593 Québec inc.,davicodemolition@gmail.com,(514) 774-0288,Sainte-Anne-des-Plaines,QC,Roofing,Entrepreneur,8285-5172-04,rbq_contractors_bar
+,,Pavage Lavigne inc.,pavagelavigne@cgocable.ca,(819) 397-4463,Saint-Cyrille-de-Wendover,QC,Roofing,Entrepreneur,8291-6909-34,rbq_contractors_bar
+,,Planchers C.L. inc.,plancherscl@qc.aibn.com,(514) 494-0217,Montréal,QC,Roofing,Entrepreneur,8291-8350-52,rbq_contractors_bar
+,,Arpentech des Laurentides inc.,dloiselle@boreal-ag.com,(819) 425-9808,Mont-Tremblant,QC,Roofing,Entrepreneur,8292-1537-09,rbq_contractors_bar
+,,3830705 Canada inc.,finances@houleag.com,(514) 634-2530,Pointe-Claire,QC,Roofing,Entrepreneur,8293-7889-20,rbq_contractors_bar
+,,9039-4347 Québec inc.,comptabilite@alecjutras.com,(819) 293-6516,Nicolet,QC,Roofing,Entrepreneur,8294-9363-26,rbq_contractors_bar
+,,Techni-Asphalte Inc.,techniasphalte849@gmail.com,(418) 849-4043,Lac-Beauport,QC,Roofing,Entrepreneur,8296-7746-38,rbq_contractors_bar
+,,Pépinières Henner Inc.,pepiniereshenner@cgocable.ca,(819) 472-3022,Drummondville,QC,Roofing,Entrepreneur,8297-4320-49,rbq_contractors_bar
+,,Hamel Arpentage inc.,dstpierre@hamelarp.com,(819) 856-6785,Amos,QC,Roofing,Entrepreneur,8300-6080-51,rbq_contractors_bar
+,,Arpentage Robocad inc.,erictorresan@robocad.ca,(514) 444-7626,Saint-Eustache,QC,Roofing,Entrepreneur,8304-4511-20,rbq_contractors_bar
+,,Acry-Nord Inc.,acry.nord@videotron.ca,(514) 944-7820,Saint-Jérôme,QC,Roofing,Entrepreneur,8304-5641-02,rbq_contractors_bar
+,,Pavage V.L. Inc.,pavagevl@hotmail.com,(819) 471-0161,Saint-Cyrille-de-Wendover,QC,Roofing,Entrepreneur,8305-5236-13,rbq_contractors_bar
+,,Groupe Civitas inc.,michelle.martin-dumont@groupecivitas.com,(450) 776-6767,Montréal,QC,Roofing,Entrepreneur,8311-4678-24,rbq_contractors_bar
+,,9145-7697 Québec Inc.,info@pavagego.com,(450) 378-2117,Granby,QC,Roofing,Entrepreneur,8315-8170-41,rbq_contractors_bar
+,,Arpentage Rousseau inc.,arpentagerousseau@gmail.com,(450) 264-5526,Saint-Anicet,QC,Roofing,Entrepreneur,8316-4038-18,rbq_contractors_bar
+,,9142-0992 Québec inc.,francois.marquis@globetroter.net,(418) 882-6023,Saint-Henri,QC,Roofing,Entrepreneur,8320-8512-49,rbq_contractors_bar
+,,Protech Démolition enr.,protech.demolition@gmail.com,(514) 295-5181,Montréal,QC,Roofing,Entrepreneur,8324-5936-28,rbq_contractors_bar
+,,Techni-Arp inc.,info@techni-arp.com,(418) 660-5555,Québec,QC,Roofing,Entrepreneur,8332-2982-07,rbq_contractors_bar
+,,Groupe Barbe & Robidoux.Sat inc.,vlemay@gbrsat.ca,(819) 425-2777,Mont-Tremblant,QC,Roofing,Entrepreneur,8346-3703-45,rbq_contractors_bar
+,,Mat Expert Inc.,mjacques@matexpert.com,(418) 397-1800,Saint-Joseph-de-Beauce,QC,Roofing,Entrepreneur,8353-1038-44,rbq_contractors_bar
+,,2145675 Ontario Inc.,payroll@demoplus.ca,(613) 938-9881,CORWALL,QC,Roofing,Entrepreneur,8354-6085-35,rbq_contractors_bar
+,,Clôture Expert SN inc.,sebastiennaud@hotmail.com,(514) 325-8111,Montréal,QC,Roofing,Entrepreneur,8356-2215-21,rbq_contractors_bar
+,,Scellement de fissures d'asphalte inc.,2020pma@gmail.com,(514) 944-6936,Saint-Thomas,QC,Roofing,Entrepreneur,8358-1777-29,rbq_contractors_bar

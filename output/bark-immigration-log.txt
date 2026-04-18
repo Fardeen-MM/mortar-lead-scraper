@@ -1,0 +1,673 @@
+[02:44:32] Bark.com Immigration Lawyers/Consultants Scraper
+[02:44:32] Countries: UK, US, CA | Test: false
+[02:44:32] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/immigration-lawyers-bark.csv
+[02:44:32] 
+[02:44:35] 
+============================================================
+[02:44:35] COUNTRY: UK (gb)
+[02:44:35] ============================================================
+[02:44:35] Discovering cities for UK from https://www.bark.com/en/gb/immigration-lawyer/
+[02:44:39]   Discovered 140 city URLs
+[02:44:42]   Total: 140 cities | Remaining: 140
+[02:44:42] 
+[1/140] Birmingham, UK
+[02:44:42]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/west-midlands/birmingham/
+[02:44:45]   Found 12 profile links
+[02:44:45]   [1/12] Scraping profile...
+[02:44:49]     + Shams Williams Solicitors | no email | no website
+[02:44:51]   [2/12] Scraping profile...
+[02:44:55]     + Smart Solicitors | no email | no website
+[02:44:57]   [3/12] Scraping profile...
+[02:45:02]     + Eastwood Consultants Ltd | Eastwoodlegal@consultant.com | http://www.eastwoodconsultantsltd.com
+[02:45:04]   [4/12] Scraping profile...
+[02:45:08]     + ikon Law Ltd | no email | no website
+[02:45:10]   [5/12] Scraping profile...
+[02:45:14]     + David Liu Solicitor | no email | no website
+[02:45:16]   [6/12] Scraping profile...
+[02:45:19]     + Law Doctor Legal and Corporate | no email | no website
+[02:45:21]   [7/12] Scraping profile...
+[02:45:25]     + HALEYS SOLICITORS | no email | no website
+[02:45:27]   [8/12] Scraping profile...
+[02:45:31]     + Alex James Law | no email | no website
+[02:45:33]   [9/12] Scraping profile...
+[02:45:36]     + ALLNATIONS LEGAL SERVICES | no email | no website
+[02:45:39]   [10/12] Scraping profile...
+[02:45:42]     + Vestra Lawyers | no email | no website
+[02:45:45]   [11/12] Scraping profile...
+[02:45:49]     + JUST IMMIGRATION LAW | no email | no website
+[02:45:51]   [12/12] Scraping profile...
+[02:45:55]     + Novi Law | no email | no website
+[02:45:58]   City total: 12 profiles, 12 new
+[02:46:02] 
+[2/140] Bradford, UK
+[02:46:02]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/west-yorkshire/bradford/
+[02:46:06]   Found 12 profile links
+[02:46:06]   [1/12] Scraping profile...
+[02:46:09]     + ECA Lawyers | no email | no website
+[02:46:12]   [2/12] Scraping profile...
+[02:46:16]     + GDB Legal | no email | no website
+[02:46:18]   [3/12] Scraping profile...
+[02:46:22]     + UK Immigration Solicitors | no email | no website
+[02:46:25]   [4/12] Scraping profile...
+[02:46:29]     + Haider Solicitors | no email | no website
+[02:46:32]   [5/12] Scraping profile...
+[02:46:35]     + RKS Solicitors (Dewsbury) Ltd | no email | no website
+[02:46:37]   [6/12] Scraping profile...
+[02:46:43]     + Ghafoors Legal | no email | no website
+[02:46:46]   [7/12] Scraping profile...
+[02:46:50]     + Gracefields Solicitors | no email | no website
+[02:46:53]   [8/12] Scraping profile...
+[02:46:57]     + Visas & Immigration (UK) Consultants Ltd | no email | no website
+[02:46:59]   [9/12] Scraping profile...
+[02:47:03]     + MJH Law - UK Immigration Visas & Nationality | mjhlawltd@gmail.com | http://www.mjhlaw.co.uk
+[02:47:06]   [10/12] Scraping profile...
+[02:47:10]     + GRACEFIELDS SOLICITOR | no email | no website
+[02:47:13]   [11/12] Scraping profile...
+[02:47:16]     + Simo Law Firm | no email | no website
+[02:47:20]   [12/12] Scraping profile...
+[02:47:24]     + Henry Hyams Solicitors | no email | no website
+[02:47:27]   City total: 12 profiles, 12 new
+[02:47:31] 
+[3/140] Leeds, UK
+[02:47:31]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/west-yorkshire/leeds/
+[02:47:34]   Found 12 profile links
+[02:47:34]   [1/12] Scraping profile...
+[02:47:37]     + GRACEFIELDS SOLICITOR | no email | no website
+[02:47:40]   [2/12] Scraping profile...
+[02:47:44]     + Gracefields Solicitors | no email | no website
+[02:47:47]   [3/12] Scraping profile...
+[02:47:50]     + Henry Hyams Solicitors | no email | no website
+[02:47:53]   [4/12] Scraping profile...
+[02:47:57]     = Duplicate: ECA Lawyers
+[02:47:59]   [5/12] Scraping profile...
+[02:48:03]     + Tyler Hoffman Solicitors | no email | no website
+[02:48:06]   [6/12] Scraping profile...
+[02:48:09]     + Alpha Shindara Legal | no email | no website
+[02:48:12]   [7/12] Scraping profile...
+[02:48:16]     + Cooper Hall Solicitors | no email | no website
+[02:48:18]   [8/12] Scraping profile...
+[02:48:21]     = Duplicate: Simo Law Firm
+[02:48:25]   [9/12] Scraping profile...
+[02:48:25]     Profile error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F5
+[02:48:28]   [10/12] Scraping profile...
+[02:48:28]     Profile error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F5
+[02:48:31]   [11/12] Scraping profile...
+[02:48:31]     Profile error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F5
+[02:48:33]   [12/12] Scraping profile...
+[02:48:33]     Profile error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F5
+[02:48:37]   City total: 12 profiles, 6 new
+[02:48:41] 
+[4/140] Liverpool, UK
+[02:48:41]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/merseyside/liverpool/
+[02:48:41]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:48:46] 
+[5/140] London, UK
+[02:48:46]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/london/
+[02:48:46]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:48:49] 
+[6/140] Manchester, UK
+[02:48:49]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/greater-manchester/manchester/
+[02:48:49]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:48:54] 
+[7/140] Sheffield, UK
+[02:48:54]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/south-yorkshire/sheffield/
+[02:48:54]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:48:58] 
+[8/140] Nottingham, UK
+[02:48:58]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/nottinghamshire/nottingham/
+[02:48:58]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:49:02] 
+[9/140] Bristol, UK
+[02:49:02]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/bristol/
+[02:49:02]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:49:07] 
+[10/140] Glasgow City, UK
+[02:49:07]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/glasgow-city/
+[02:49:07]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:49:12] 
+[11/140] Leicester, UK
+[02:49:12]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/leicestershire/leicester/
+[02:49:12]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:49:16] 
+[12/140] Edinburgh, UK
+[02:49:16]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/edinburgh/
+[02:49:16]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:49:19] 
+[13/140] Cardiff, UK
+[02:49:19]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/cardiff/
+[02:49:19]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:49:23] 
+[14/140] Stoke on Trent, UK
+[02:49:23]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/staffordshire/stoke-on-trent/
+[02:49:23]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:49:26] 
+[15/140] Coventry, UK
+[02:49:26]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/west-midlands/coventry/
+[02:49:26]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:49:31] 
+[16/140] Sunderland, UK
+[02:49:31]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/tyne-and-wear/sunderland/
+[02:49:31]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:49:35] 
+[17/140] Birkenhead, UK
+[02:49:35]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/merseyside/birkenhead/
+[02:49:35]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:49:39] 
+[18/140] Islington, UK
+[02:49:39]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/central-london/islington/
+[02:49:39]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:49:43] 
+[19/140] Reading, UK
+[02:49:43]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/berkshire/reading/
+[02:49:43]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:49:48] 
+[20/140] Hull, UK
+[02:49:48]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/east-riding-of-yorkshire/hull/
+[02:49:48]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:49:52] 
+[21/140] Preston, UK
+[02:49:52]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/lancashire/preston/
+[02:49:52]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:49:56] 
+[22/140] Newport, UK
+[02:49:56]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/newport/
+[02:49:56]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:50:01] 
+[23/140] City and County of Swansea, UK
+[02:50:01]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/city-and-county-of-swansea/
+[02:50:01]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:50:06] 
+[24/140] Southend, UK
+[02:50:06]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/essex/southend/
+[02:50:06]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:50:11] 
+[25/140] Belfast, UK
+[02:50:11]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/belfast/
+[02:50:11]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:50:14] 
+[26/140] Derby, UK
+[02:50:14]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/derbyshire/derby/
+[02:50:14]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:50:18] 
+[27/140] Plymouth, UK
+[02:50:18]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/devon/plymouth/
+[02:50:18]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:50:22] 
+[28/140] Luton, UK
+[02:50:22]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/bedfordshire/luton/
+[02:50:22]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:50:26] 
+[29/140] Wolverhampton, UK
+[02:50:26]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/west-midlands/wolverhampton/
+[02:50:26]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:50:31] 
+[30/140] Westminster, UK
+[02:50:31]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/central-london/westminster/
+[02:50:31]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:50:34] 
+[31/140] Derbyshire, UK
+[02:50:34]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/derbyshire/
+[02:50:34]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:50:39] 
+[32/140] Leicestershire, UK
+[02:50:39]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/leicestershire/
+[02:50:39]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:50:43] 
+[33/140] Northamptonshire, UK
+[02:50:43]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/northamptonshire/
+[02:50:43]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:50:47] 
+[34/140] Nottinghamshire, UK
+[02:50:47]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/nottinghamshire/
+[02:50:47]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:50:52] 
+[35/140] Rutland, UK
+[02:50:52]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/rutland/
+[02:50:52]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:50:56] 
+[36/140] Bedfordshire, UK
+[02:50:56]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/bedfordshire/
+[02:50:56]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:51:00] 
+[37/140] Cambridgeshire, UK
+[02:51:00]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/cambridgeshire/
+[02:51:00]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:51:04] 
+[38/140] Essex, UK
+[02:51:04]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/essex/
+[02:51:04]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:51:09] 
+[39/140] Hertfordshire, UK
+[02:51:09]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/hertfordshire/
+[02:51:09]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:51:13] 
+[40/140] Norfolk, UK
+[02:51:13]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/norfolk/
+[02:51:13]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:51:17] 
+[41/140] Suffolk, UK
+[02:51:17]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/suffolk/
+[02:51:17]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:51:22] 
+[42/140] Central London, UK
+[02:51:22]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/central-london/
+[02:51:22]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:51:25] 
+[43/140] East London, UK
+[02:51:25]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/east-london/
+[02:51:25]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:51:29] 
+[44/140] North London, UK
+[02:51:29]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/north-london/
+[02:51:29]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:51:34] 
+[45/140] South London, UK
+[02:51:34]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/south-london/
+[02:51:34]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:51:39] 
+[46/140] West London, UK
+[02:51:39]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/west-london/
+[02:51:39]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:51:43] 
+[47/140] County Durham, UK
+[02:51:43]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/county-durham/
+[02:51:43]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:51:47] 
+[48/140] Northumberland, UK
+[02:51:47]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/northumberland/
+[02:51:47]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:51:52] 
+[49/140] Tyne and Wear, UK
+[02:51:52]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/tyne-and-wear/
+[02:51:52]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:51:55] 
+[50/140] Cheshire, UK
+[02:51:55]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/cheshire/
+[02:51:55]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:51:59] 
+[51/140] Cumbria, UK
+[02:51:59]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/cumbria/
+[02:51:59]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:52:03] 
+[52/140] Greater Manchester, UK
+[02:52:03]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/greater-manchester/
+[02:52:03]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:52:07] 
+[53/140] Lancashire, UK
+[02:52:07]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/lancashire/
+[02:52:07]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:52:11] 
+[54/140] Merseyside, UK
+[02:52:11]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/merseyside/
+[02:52:11]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:52:15] 
+[55/140] County Antrim, UK
+[02:52:15]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/county-antrim/
+[02:52:15]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:52:20] 
+[56/140] Ards and North Down, UK
+[02:52:20]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/ards-and-north-down/
+[02:52:20]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:52:24] 
+[57/140] Armagh City Banbridge and Craigavon, UK
+[02:52:24]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/armagh-city-banbridge-and-craigavon/
+[02:52:24]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:52:29] 
+[58/140] Causeway Coast and Glens, UK
+[02:52:29]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/causeway-coast-and-glens/
+[02:52:29]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:52:33] 
+[59/140] Derry City and Strabane, UK
+[02:52:33]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/derry-city-and-strabane/
+[02:52:33]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:52:38] 
+[60/140] Fermanagh and Omagh, UK
+[02:52:38]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/fermanagh-and-omagh/
+[02:52:38]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:52:42] 
+[61/140] Lisburn and Castlereagh, UK
+[02:52:42]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/lisburn-and-castlereagh/
+[02:52:42]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:52:46] 
+[62/140] Mid and East Antrim, UK
+[02:52:46]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/mid-and-east-antrim/
+[02:52:46]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:52:50] 
+[63/140] Mid Ulster, UK
+[02:52:50]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/mid-ulster/
+[02:52:50]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:52:54] 
+[64/140] Newry Mourne and Down, UK
+[02:52:54]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/newry-mourne-and-down/
+[02:52:54]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:52:58] 
+[65/140] Aberdeen City, UK
+[02:52:58]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/aberdeen-city/
+[02:52:58]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:53:01] 
+[66/140] Aberdeenshire, UK
+[02:53:01]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/aberdeenshire/
+[02:53:01]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:53:05] 
+[67/140] Angus, UK
+[02:53:05]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/angus/
+[02:53:05]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:53:10] 
+[68/140] Argyll and Bute, UK
+[02:53:10]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/argyll-and-bute/
+[02:53:10]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:53:14] 
+[69/140] Clackmannanshire, UK
+[02:53:14]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/clackmannanshire/
+[02:53:14]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:53:19] 
+[70/140] Dumfries and Galloway, UK
+[02:53:19]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/dumfries-and-galloway/
+[02:53:19]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:53:23] 
+[71/140] Dundee City, UK
+[02:53:23]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/dundee-city/
+[02:53:23]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:53:27] 
+[72/140] East Ayrshire, UK
+[02:53:27]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/east-ayrshire/
+[02:53:27]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:53:30] 
+[73/140] East Dunbartonshire, UK
+[02:53:30]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/east-dunbartonshire/
+[02:53:30]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:53:34] 
+[74/140] East Lothian, UK
+[02:53:34]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/east-lothian/
+[02:53:34]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:53:38] 
+[75/140] East Renfrewshire, UK
+[02:53:38]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/east-renfrewshire/
+[02:53:38]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:53:43] 
+[76/140] Falkirk, UK
+[02:53:43]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/falkirk/
+[02:53:43]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:53:47] 
+[77/140] Fife, UK
+[02:53:47]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/fife/
+[02:53:47]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:53:51] 
+[78/140] Highland, UK
+[02:53:51]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/highland/
+[02:53:51]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:53:55] 
+[79/140] Inverclyde, UK
+[02:53:55]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/inverclyde/
+[02:53:55]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:53:59] 
+[80/140] Midlothian, UK
+[02:53:59]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/midlothian/
+[02:53:59]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:54:03] 
+[81/140] Moray, UK
+[02:54:03]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/moray/
+[02:54:03]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:54:07] 
+[82/140] Eilean Siar, UK
+[02:54:07]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/eilean-siar/
+[02:54:07]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:54:11] 
+[83/140] North Ayrshire, UK
+[02:54:11]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/north-ayrshire/
+[02:54:11]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:54:15] 
+[84/140] North Lanarkshire, UK
+[02:54:15]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/north-lanarkshire/
+[02:54:15]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:54:19] 
+[85/140] Orkney Islands, UK
+[02:54:19]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/orkney-islands/
+[02:54:19]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:54:24] 
+[86/140] Perth and Kinross, UK
+[02:54:24]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/perth-and-kinross/
+[02:54:24]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:54:27] 
+[87/140] Renfrewshire, UK
+[02:54:27]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/renfrewshire/
+[02:54:27]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:54:31] 
+[88/140] Scottish Borders, UK
+[02:54:31]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/scottish-borders/
+[02:54:31]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:54:35] 
+[89/140] Shetland Islands, UK
+[02:54:35]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/shetland-islands/
+[02:54:35]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:54:39] 
+[90/140] South Ayrshire, UK
+[02:54:39]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/south-ayrshire/
+[02:54:39]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:54:44] 
+[91/140] South Lanarkshire, UK
+[02:54:44]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/south-lanarkshire/
+[02:54:44]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:54:49] 
+[92/140] Stirling, UK
+[02:54:49]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/stirling/
+[02:54:49]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:54:54] 
+[93/140] West Dunbartonshire, UK
+[02:54:54]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/west-dunbartonshire/
+[02:54:54]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:54:58] 
+[94/140] West Lothian, UK
+[02:54:58]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/west-lothian/
+[02:54:58]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:55:01] 
+[95/140] Berkshire, UK
+[02:55:01]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/berkshire/
+[02:55:01]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:55:05] 
+[96/140] Buckinghamshire, UK
+[02:55:05]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/buckinghamshire/
+[02:55:05]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:55:09] 
+[97/140] East Sussex, UK
+[02:55:09]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/east-sussex/
+[02:55:09]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:55:12] 
+[98/140] Hampshire, UK
+[02:55:12]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/hampshire/
+[02:55:12]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:55:16] 
+[99/140] Isle of Wight, UK
+[02:55:16]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/isle-of-wight/
+[02:55:16]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:55:19] 
+[100/140] Kent, UK
+[02:55:19]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/kent/
+[02:55:19]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:55:23] 
+[101/140] Oxfordshire, UK
+[02:55:23]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/oxfordshire/
+[02:55:23]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:55:27] 
+[102/140] Surrey, UK
+[02:55:27]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/surrey/
+[02:55:27]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:55:31] 
+[103/140] West Sussex, UK
+[02:55:31]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/west-sussex/
+[02:55:31]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:55:35] 
+[104/140] Cornwall, UK
+[02:55:35]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/cornwall/
+[02:55:35]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:55:38] 
+[105/140] Devon, UK
+[02:55:38]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/devon/
+[02:55:38]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:55:42] 
+[106/140] Dorset, UK
+[02:55:42]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/dorset/
+[02:55:42]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:55:45] 
+[107/140] Gloucestershire, UK
+[02:55:45]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/gloucestershire/
+[02:55:45]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:55:50] 
+[108/140] Isles of Scilly, UK
+[02:55:50]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/isles-of-scilly/
+[02:55:50]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:55:54] 
+[109/140] Somerset, UK
+[02:55:54]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/somerset/
+[02:55:54]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:55:58] 
+[110/140] Wiltshire, UK
+[02:55:58]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/wiltshire/
+[02:55:58]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:56:02] 
+[111/140] Blaenau Gwent, UK
+[02:56:02]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/blaenau-gwent/
+[02:56:02]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:56:06] 
+[112/140] Bridgend County, UK
+[02:56:06]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/bridgend-county/
+[02:56:06]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:56:11] 
+[113/140] Caerphilly County, UK
+[02:56:11]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/caerphilly-county/
+[02:56:11]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:56:14] 
+[114/140] Carmarthenshire, UK
+[02:56:14]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/carmarthenshire/
+[02:56:14]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:56:19] 
+[115/140] Ceredigion, UK
+[02:56:19]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/ceredigion/
+[02:56:19]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:56:22] 
+[116/140] Conwy County Borough, UK
+[02:56:22]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/conwy-county-borough/
+[02:56:22]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:56:25] 
+[117/140] Denbighshire, UK
+[02:56:25]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/denbighshire/
+[02:56:25]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:56:30] 
+[118/140] Flintshire, UK
+[02:56:30]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/flintshire/
+[02:56:30]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:56:34] 
+[119/140] Gwynedd, UK
+[02:56:34]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/gwynedd/
+[02:56:34]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:56:38] 
+[120/140] Anglesey, UK
+[02:56:38]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/anglesey/
+[02:56:38]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:56:42] 
+[121/140] Merthyr Tydfil County Borough, UK
+[02:56:42]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/merthyr-tydfil-county-borough/
+[02:56:42]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:56:45] 
+[122/140] Monmouthshire, UK
+[02:56:45]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/monmouthshire/
+[02:56:45]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:56:49] 
+[123/140] Neath Port Talbot, UK
+[02:56:49]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/neath-port-talbot/
+[02:56:49]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:56:53] 
+[124/140] Pembrokeshire, UK
+[02:56:53]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/pembrokeshire/
+[02:56:53]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:56:58] 
+[125/140] Powys, UK
+[02:56:58]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/powys/
+[02:56:58]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:57:01] 
+[126/140] Rhondda Cynon Taf, UK
+[02:57:01]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/rhondda-cynon-taf/
+[02:57:01]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:57:06] 
+[127/140] Torfaen, UK
+[02:57:06]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/torfaen/
+[02:57:06]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:57:10] 
+[128/140] Vale of Glamorgan, UK
+[02:57:10]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/vale-of-glamorgan/
+[02:57:10]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:57:13] 
+[129/140] Wrexham, UK
+[02:57:13]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/wrexham/
+[02:57:13]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:57:16] 
+[130/140] Herefordshire, UK
+[02:57:16]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/herefordshire/
+[02:57:16]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:57:21] 
+[131/140] Shropshire, UK
+[02:57:21]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/shropshire/
+[02:57:21]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:57:26] 
+[132/140] Staffordshire, UK
+[02:57:26]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/staffordshire/
+[02:57:26]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:57:30] 
+[133/140] Warwickshire, UK
+[02:57:30]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/warwickshire/
+[02:57:30]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:57:34] 
+[134/140] West Midlands, UK
+[02:57:34]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/west-midlands/
+[02:57:34]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:57:37] 
+[135/140] Worcestershire, UK
+[02:57:37]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/worcestershire/
+[02:57:37]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:57:41] 
+[136/140] East Riding of Yorkshire, UK
+[02:57:41]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/east-riding-of-yorkshire/
+[02:57:41]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:57:45] 
+[137/140] Lincolnshire, UK
+[02:57:45]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/lincolnshire/
+[02:57:45]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:57:48] 
+[138/140] North Yorkshire, UK
+[02:57:48]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/north-yorkshire/
+[02:57:48]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:57:53] 
+[139/140] South Yorkshire, UK
+[02:57:53]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/south-yorkshire/
+[02:57:53]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:57:56] 
+[140/140] West Yorkshire, UK
+[02:57:56]   Loading listing: https://www.bark.com/en/gb/immigration-lawyer/west-yorkshire/
+[02:57:56]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:58:01] 
+============================================================
+[02:58:01] COUNTRY: US (us)
+[02:58:01] ============================================================
+[02:58:01] Discovering cities for US from https://www.bark.com/en/us/immigration-lawyer/
+[02:58:01]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:58:05]   No cities found for US, skipping
+[02:58:05] 
+============================================================
+[02:58:05] COUNTRY: CA (ca)
+[02:58:05] ============================================================
+[02:58:05] Discovering cities for CA from https://www.bark.com/en/ca/immigration-lawyer/
+[02:58:05]   Navigation error: Attempted to use detached Frame 'A834D7192AB6AE9D2E2DC00F8F53B02D'.
+[02:58:09]   No cities found for CA, skipping
+[02:58:10] 
+[02:58:10] ============================================================
+[02:58:10] DONE
+[02:58:10] Cities scraped: 140 (137 empty, 0 errors)
+[02:58:10] Total unique leads: 30
+[02:58:10] With email: 2
+[02:58:10] With phone: 0
+[02:58:10] With website: 2
+[02:58:10] With parsed name: 6
+[02:58:10] Unique countries: 1
+[02:58:10] Unique cities: 12
+[02:58:10] By country: {"UK":30}
+[02:58:10] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/immigration-lawyers-bark.csv

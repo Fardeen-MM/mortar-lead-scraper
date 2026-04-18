@@ -1,0 +1,956 @@
+ipeds_id,school_name,school_url,city,state,zip,cip_code,country,niche,source
+,A.T. Still University,http://www.atsu.edu/master-of-science-in-nursing-online,Kirksville,MO,,5138,US,nursing,aacn
+,Abilene Christian University,http://www.acu.edu/nursing,Abilene,TX,,5138,US,nursing,aacn
+,Adams State University,http://www.adams.edu/academics/nursing/index.php,Alamosa,CO,,5138,US,nursing,aacn
+,Adelphi University,http://nursing.adelphi.edu/academics/nursing-programs/bs-in-nursing/,Garden City,NY,,5138,US,nursing,aacn
+,AdventHealth University,http://www.adu.edu/academics/bs-nursing,Orlando,FL,,5138,US,nursing,aacn
+,Albany State University,http://www.asurams.edu/academic-affairs/dchealthprof/nursing/index.php,Albany,GA,,5138,US,nursing,aacn
+,Alcorn State University,http://www.alcorn.edu/academics/schools-and-departments/school-of-nursing,Natchez,MS,,5138,US,nursing,aacn
+,Allen College,http://www.allencollege.edu/our-programs/school-of-nursing,Waterloo,IA,,5138,US,nursing,aacn
+,Alliant University,http://www.alliant.edu/health/nursing,Phoenix,AZ,,5138,US,nursing,aacn
+,Alma College,http://www.alma.edu/academics/programs/nursing/,Alma,MI,,5138,US,nursing,aacn
+,Alvernia University,http://www.alvernia.edu/academics/undergraduate-major/nursing,Reading,PA,,5138,US,nursing,aacn
+,Alverno College,http://www.alverno.edu/our-programs/nursing,Milwaukee,WI,,5138,US,nursing,aacn
+,American College of Education,http://www.ace.edu/programs/nursing-programs,Indianapolis,IN,,5138,US,nursing,aacn
+,American International College,http://www.aic.edu/school-of-health-sciences/programs/,Springfield,MA,,5138,US,nursing,aacn
+,American Public University System,http://www.apu.apus.edu/academic/schools/health-sciences/bachelors/nursing.html,Charles Town,WV,,5138,US,nursing,aacn
+,American Sentinel College of Nursing and Health Sciences,http://www.americansentinel.edu/nursing,Waterbury,CT,,5138,US,nursing,aacn
+,American University of Beirut,http://www.aub.edu.lb/hson/Pages/home.aspx,New York,NY,,5138,US,nursing,aacn
+,American University of Health Sciences,http://www.auhs.edu/academics/school-of-nursing/,Signal Hill,CA,,5138,US,nursing,aacn
+,Anderson University,http://www.anderson.edu/nursing-kinesiology/programs/nursing,Anderson,IN,,5138,US,nursing,aacn
+,Anderson University-South Carolina,http://www.andersonuniversity.edu/nursing,Anderson,SC,,5138,US,nursing,aacn
+,Angelo State University,http://www.angelo.edu/dept/nursing,San Angelo,TX,,5138,US,nursing,aacn
+,Appalachian State University,http://nursing.appstate.edu/,Boone,NC,,5138,US,nursing,aacn
+,Arizona College of Nursing-Cleveland,,Beachwood,OH,,5138,US,nursing,aacn
+,Arizona College of Nursing-Dallas,http://arizonacollege.edu/dallas-nursing-school/,Dallas,TX,,5138,US,nursing,aacn
+,Arizona College of Nursing-Fort Lauderdale,,Fort Lauderdale,FL,,5138,US,nursing,aacn
+,Arizona College of Nursing-Hartford,http://www.arizonacollege.edu/hartford-nursing-school/,East Hartford,CT,,5138,US,nursing,aacn
+,Arizona College of Nursing-Las Vegas,http://www.arizonacollege.edu/las-vegas/,Las Vegas,NV,,5138,US,nursing,aacn
+,Arizona College of Nursing-Ontario,http://https://www.arizonacollege.edu/bsn-campus-near-you,Ontario,CA,,5138,US,nursing,aacn
+,Arizona College of Nursing-Phoenix,http://arizonacollege.edu/bsn-campus-near-you/,Phoenix,AZ,,5138,US,nursing,aacn
+,Arizona College of Nursing-Saint Louis,,Maryland Heights,MO,,5138,US,nursing,aacn
+,Arizona College of Nursing-Salt Lake City,,Murray,UT,,5138,US,nursing,aacn
+,Arizona College of Nursing-Tempe,http://arizonacollege.edu/tempe-nursing-school/,Tempe,AZ,,5138,US,nursing,aacn
+,Arizona State University,http://nursingandhealth.asu.edu/,Phoenix,AZ,,5138,US,nursing,aacn
+,Arkansas State University-Jonesboro,http://www.astate.edu/college/conhp/,State University,AR,,5138,US,nursing,aacn
+,Arkansas Tech University,http://www.atu.edu/nursing/,Russellville,AR,,5138,US,nursing,aacn
+,Asbury University,http://https://www.asbury.edu/,Wilmore,KY,,5138,US,nursing,aacn
+,Ashland University,http://www.ashland.edu/nursing/,Mansfield,OH,,5138,US,nursing,aacn
+,Aspen University,http://www.aspen.edu/nursing/,PHOENIX,AZ,,5138,US,nursing,aacn
+,Assumption University,http://www.assumption.edu/undergraduate/nursing,Worcester,MA,,5138,US,nursing,aacn
+,Auburn University,http://cws.auburn.edu/nursing,Auburn,AL,,5138,US,nursing,aacn
+,Auburn University at Montgomery,http://www.conhs.aum.edu,Montgomery,AL,,5138,US,nursing,aacn
+,Augsburg University,http://www.augsburg.edu/nursing/,Minneapolis,MN,,5138,US,nursing,aacn
+,Augusta University,http://www.augusta.edu/nursing/,Augusta,GA,,5138,US,nursing,aacn
+,Augustana University,http://www.augie.edu/nursing,Sioux Falls,SD,,5138,US,nursing,aacn
+,Aultman College,http://www.aultmancollege.edu/nursing,Canton,OH,,5138,US,nursing,aacn
+,Aurora University,http://www.aurora.edu/nursing/,Aurora,IL,,5138,US,nursing,aacn
+,Austin Peay State University,http://www.apsu.edu/nursing/,Clarksville,TN,,5138,US,nursing,aacn
+,Averett University,http://www.averett.edu/academics/majors-and-programs/undergraduate/nursing/,Danville,VA,,5138,US,nursing,aacn
+,Avila University,http://www.avila.edu/academics/schools-colleges/school-of-nursing,Kansas City,MO,,5138,US,nursing,aacn
+,Azusa Pacific University,http://www.apu.edu/nursing/,Azusa,CA,,5138,US,nursing,aacn
+,Baker College,http://www.baker.edu/academics/undergraduate-studies/college-of-health-science/school-of-nursing/,Owosso,MI,,5138,US,nursing,aacn
+,Baker University,http://www.bakeru.edu/nursing/,Topeka,KS,,5138,US,nursing,aacn
+,Baldwin Wallace University,http://www.bw.edu/academics/nursing,Berea,OH,,5138,US,nursing,aacn
+,Ball State University,http://www.bsu.edu/nursing,Muncie,IN,,5138,US,nursing,aacn
+,Baptist Health Sciences University,http://www.baptistu.edu,Memphis,TN,,5138,US,nursing,aacn
+,Barry University,http://www.barry.edu/nursing,Miami Shores,FL,,5138,US,nursing,aacn
+,Barton College,http://www.barton.edu/nursing/,Wilson,NC,,5138,US,nursing,aacn
+,Bay Path University,http://www.baypath.edu/academics/undergraduate-programs/nursing-rn-to-bsn/,E. Longmeadow,MA,,5138,US,nursing,aacn
+,Baylor University,http://www.baylor.edu/Nursing/,Dallas,TX,,5138,US,nursing,aacn
+,Belhaven University,http://www.belhaven.edu/academics/nursing/,Jackson,MS,,5138,US,nursing,aacn
+,Bellarmine University,http://www.bellarmine.edu/lansing/nursing/,Louisville,KY,,5138,US,nursing,aacn
+,Bellevue College,http://catalog.bellevuecollege.edu/content.php?catoid=14&amp;navoid=722,Bellevue,WA,,5138,US,nursing,aacn
+,Bellin College,http://www.bellincollege.edu,Green Bay,WI,,5138,US,nursing,aacn
+,Belmont Abbey College,http://www.belmontabbeycollege.edu/academics/majors-degrees/nursing/,Belmont,NC,,5138,US,nursing,aacn
+,Belmont University,http://www.belmont.edu/nursing,Nashville,TN,,5138,US,nursing,aacn
+,Bemidji State University,http://www.bemidjistate.edu/academics/nursing/,Bemidji,MN,,5138,US,nursing,aacn
+,Benedictine College,http://www.benedictine.edu/academics/departments/nursing/index,Atchison,KS,,5138,US,nursing,aacn
+,Benedictine University,http://ben.edu/academics/nursing-and-health/,Lisle,IL,,5138,US,nursing,aacn
+,Berea College,http://www.berea.edu/nur,Berea,KY,,5138,US,nursing,aacn
+,Berry College,http://www.berry.edu/academics/nursing/,Mount Berry,GA,,5138,US,nursing,aacn
+,Bethel College of Kansas,http://bethelks.edu/area-of-study/medical-health/nursing/,North Newton,KS,,5138,US,nursing,aacn
+,Bethel University of Indiana,http://www.betheluniversity.edu,Mishawaka,IN,,5138,US,nursing,aacn
+,Bethel University of Minnesota,http://www.bethel.edu/academics/nursing//,St. Paul,MN,,5138,US,nursing,aacn
+,Bethel University of Tennessee,http://www.bethelu.edu/academics/colleges/college-of-health-sciences/nursing-program,McKenzie,TN,,5138,US,nursing,aacn
+,Binghamton University,http://www.binghamton.edu/dson/,Binghamton,NY,,5138,US,nursing,aacn
+,Biola University,http://www.biola.edu/nursing-department,La Mirada,CA,,5138,US,nursing,aacn
+,Blessing-Rieman College of Nursing & Health Sciences,http://www.brcn.edu,Quincy,IL,,5138,US,nursing,aacn
+,Bloomfield College of Montclair State University,http://www.bloomfield.edu/academics/majors/bs-nursing/,Bloomfield,NJ,,5138,US,nursing,aacn
+,Bloomsburg University,http://www.commonwealthu.edu/academics/programs/nursing-bsn,Bloomsburg,PA,,5138,US,nursing,aacn
+,Blue Mountain Christian University,http://www.bmcnursing.org,Blue Mountain,MS,,5138,US,nursing,aacn
+,Bluefield State University,http://bluefieldstate.edu/college/health-sciences/,Bluefield,WV,,5138,US,nursing,aacn
+,Bluefield University,http://www.bluefield.edu/school-of-nursing/,Bluefield,VA,,5138,US,nursing,aacn
+,Bluffton University,http://www.bluffton.edu/nursing/index.aspx,Bluffton,OH,,5138,US,nursing,aacn
+,Boise State University,http://www.boisestate.edu/nursing/,Boise,ID,,5138,US,nursing,aacn
+,Bon Secours Memorial,http://www.bsmcon.edu,Richmond,VA,,5138,US,nursing,aacn
+,Boston College,http://www.bc.edu/bc-web/schools/cson.html,Chestnut Hill,MA,,5138,US,nursing,aacn
+,Bowie State University,http://www.bowiestate.edu/academics/colleges/college-of-professional-studies/departments/nursing/,Bowie,MD,,5138,US,nursing,aacn
+,Bowling Green State University,http://www.bgsu.edu/academics/nursing.html,Bowling Green,OH,,5138,US,nursing,aacn
+,Bradley University,http://www.bradley.edu/academic/departments/nur/,Peoria,IL,,5138,US,nursing,aacn
+,Brenau University,http://www.brenau.edu/college/health-sciences/,Gainesville,GA,,5138,US,nursing,aacn
+,Briar Cliff University,http://www.briarcliff.edu/academics/departments/nursing/,Sioux City,IA,,5138,US,nursing,aacn
+,Brigham Young University,http://nursing.byu.edu/,Provo,UT,,5138,US,nursing,aacn
+,Brookline College Albuquerque,,Albuquerque,NM,,5138,US,nursing,aacn
+,Brookline College Phoenix,http://brooklinecollege.edu/college-programs/nursing/,Phoenix,AZ,,5138,US,nursing,aacn
+,Brookline College Tucson,,Tucson,AZ,,5138,US,nursing,aacn
+,Broward College,http://www.broward.edu/academics/programs/nursing/Pages/default.aspx,Davie,FL,,5138,US,nursing,aacn
+,Bryan College,http://www.bryan.edu/academics/degrees/nursing/,Dayton,TN,,5138,US,nursing,aacn
+,Bushnell University,http://www.bushnell.edu/academics/schools/school-of-nursing/,Eugene,OR,,5138,US,nursing,aacn
+,Butler University,,INDIANAPOLIS,IN,,5138,US,nursing,aacn
+,Cabarrus College of Health Sciences,http://www.carolinashealthcare.org/education/cabarrus-college-of-health-sciences/Academic-Programs/,Concord,NC,,5138,US,nursing,aacn
+,Caldwell University,http://www.caldwell.edu/academics/academic-departments/nursing-and-public-health/,Caldwell,NJ,,5138,US,nursing,aacn
+,California Baptist University,http://calbaptist.edu/college-of-nursing/,Riverside,CA,,5138,US,nursing,aacn
+,California Northstate University,http://https://www.cnsu.edu/,Rancho Cordova,CA,,5138,US,nursing,aacn
+,California State Polytechnic University-Humboldt,http://www.humboldt.edu/programs/nursing,Arcata,CA,,5138,US,nursing,aacn
+,California State University-Bakersfield,http://www.csub.edu/nursing/,Bakersfield,CA,,5138,US,nursing,aacn
+,California State University-Channel Islands,http://nursing.csuci.edu/,Camarillo,CA,,5138,US,nursing,aacn
+,California State University-Chico,http://www.csuchico.edu/nurs,Chico,CA,,5138,US,nursing,aacn
+,California State University-Dominguez Hills,http://www.csudh.edu/son/,Carson,CA,,5138,US,nursing,aacn
+,California State University-East Bay,http://www.csueastbay.edu/nursing/,Hayward,CA,,5138,US,nursing,aacn
+,California State University-Fresno,http://www.fresnostate.edu/chhs/nursing/,Fresno,CA,,5138,US,nursing,aacn
+,California State University-Fullerton,http://nursing.fullerton.edu/,Fullerton,CA,,5138,US,nursing,aacn
+,California State University-Long Beach,http://www.csulb.edu/college-of-health-human-services/school-of-nursing,Long Beach,CA,,5138,US,nursing,aacn
+,California State University-Los Angeles,http://www.calstatela.edu/hhs/nursing,Los Angeles,CA,,5138,US,nursing,aacn
+,California State University-Monterey Bay,http://csumb.edu/nursing,Seaside,CA,,5138,US,nursing,aacn
+,California State University-Northridge,http://www.csun.edu/health-human-development/nursing,Northridge,CA,,5138,US,nursing,aacn
+,California State University-Sacramento,http://www.hhs.csus.edu/nrs,Sacramento,CA,,5138,US,nursing,aacn
+,California State University-San Bernardino,http://nursing.csusb.edu/,San Bernardino,CA,,5138,US,nursing,aacn
+,California State University-San Marcos,http://www.csusm.edu/nursing,San Marcos,CA,,5138,US,nursing,aacn
+,California State University-Stanislaus,http://www.csustan.edu/Nursing,Turlock,CA,,5138,US,nursing,aacn
+,Calvin University,http://calvin.edu/academics/departments-programs/nursing/,Grand Rapids,MI,,5138,US,nursing,aacn
+,Campbell University,http://cphs.campbell.edu/academic-programs/nursing/,Buies Creek,NC,,5138,US,nursing,aacn
+,Capella University,http://www.capella.edu/online-degrees/bachelors-rn-to-bsn-completion/,Minneapolis,MN,,5138,US,nursing,aacn
+,Capital University,http://www.capital.edu/nursing,Columbus,OH,,5138,US,nursing,aacn
+,Carlow University,http://online.carlow.edu/nursing-degrees/,Pittsburgh,PA,,5138,US,nursing,aacn
+,Carolinas College of Health Sciences,http://atriumhealth.org/education/carolinas-college-of-health-sciences/academic-programs/nursing-adn,Charlotte,NC,,5138,US,nursing,aacn
+,Carroll College-Montana,http://www.carroll.edu/academic-programs/nursing,Helena,MT,,5138,US,nursing,aacn
+,Carroll University,http://www.carrollu.edu/programs/nursing/,Waukesha,WI,,5138,US,nursing,aacn
+,Carson-Newman University,http://www.cn.edu/departments,Jefferson City,TN,,5138,US,nursing,aacn
+,Carthage College,http://www.carthage.edu/nursing/,Kenosha,WI,,5138,US,nursing,aacn
+,Case Western Reserve University,http://nursing.case.edu/,Cleveland,OH,,5138,US,nursing,aacn
+,Catawba College,http://www.catawba.edu/nursing/,Salisbury,NC,,5138,US,nursing,aacn
+,Cedar Crest College,http://cedarcrest.edu/program/nursing/school-of-nursing/,Allentown,PA,,5138,US,nursing,aacn
+,Cedarville University,http://www.cedarville.edu/academic-schools-and-departments/nursing,Cedarville,OH,,5138,US,nursing,aacn
+,Central Connecticut State University,http://www.ccsu.edu/nursing/,New Britain,CT,,5138,US,nursing,aacn
+,Central Methodist University,http://www.centralmethodist.edu/academics/undergraduate/nursing/index.html,Fayette,MO,,5138,US,nursing,aacn
+,Central Michigan University,http://www.cmich.edu/academics/colleges/college-of-medicine,Mount Pleasant,MI,,5138,US,nursing,aacn
+,Chamberlain University Headquarters,http://chamberlain.edu,Chicago,IL,,5138,US,nursing,aacn
+,Chamberlain University-Addison,http://www.chamberlain.edu/nursing-school/illinois/addison,Addison,IL,,5138,US,nursing,aacn
+,Chamberlain University-Charlotte,http://www.chamberlain.edu/nursing-schools/campuses/Charlotte-North-Carolina,Charlotte,NC,,5138,US,nursing,aacn
+,Chamberlain University-Chicago,http://www.chamberlain.edu/academics/nursing-school/bachelor-of-science-in-nursing,Chicago,IL,,5138,US,nursing,aacn
+,Chamberlain University-Columbus,http://www.chamberlain.edu/nursing-school/ohio/columbus,Columbus,OH,,5138,US,nursing,aacn
+,Chamberlain University-Houston,http://www.chamberlain.edu/nursing-school/texas/houston,Houston,TX,,5138,US,nursing,aacn
+,Chamberlain University-Irving,http://www.chamberlain.edu/nursing-school/texas/irving,Irving,TX,,5138,US,nursing,aacn
+,Chamberlain University-Irwindale,http://www.chamberlain.edu/academics/nursing-school/rn-to-bsn,Irwindale,CA,,5138,US,nursing,aacn
+,Chamberlain University-Jacksonville,http://www.chamberlain.edu/nursing-school/florida/jacksonville,Jacksonville,FL,,5138,US,nursing,aacn
+,Chamberlain University-Las Vegas,http://www.chamberlain.edu/nursing-school/nevada/las-vegas,Las Vegas,NV,,5138,US,nursing,aacn
+,Chamberlain University-Miramar,http://www.chamberlain.edu/nursing-school/florida/miramar,Miramar,FL,,5138,US,nursing,aacn
+,Chamberlain University-Pearland,http://www.chamberlain.edu/nursing-school/texas/pearland,Pearland,TX,,5138,US,nursing,aacn
+,Chamberlain University-Phoenix,http://www.chamberlain.edu/nursing-school/arizona/phoenix,Phoenix,AZ,,5138,US,nursing,aacn
+,Chamberlain University-Sacramento,http://www.chamberlain.edu/nursing-school/california/sacramento,Rancho Cordova,CA,,5138,US,nursing,aacn
+,Chamberlain University-Tinley Park,http://www.chamberlain.edu/nursing-school/illinois/tinley-park,Tinley Park,IL,,5138,US,nursing,aacn
+,Chamberlain University-Troy,http://www.chamberlain.edu/nursing-school/michigan/troy,Troy,MI,,5138,US,nursing,aacn
+,Chamberlain University-Vienna,http://www.chamberlain.edu/nursing-school/virginia/tysons-corner,Vienna,VA,,5138,US,nursing,aacn
+,Chaminade University of Honolulu,http://chaminade.edu/nursing-health-professions/,Honolulu,HI,,5138,US,nursing,aacn
+,Charles R. Drew University of Medicine and Science,http://www.cdrewu.edu/son,Los Angeles,CA,,5138,US,nursing,aacn
+,Charleston Southern University,http://www.charlestonsouthern.edu/academics/college-of-nursing/,Charleston,SC,,5138,US,nursing,aacn
+,Charter Oak State College,http://www.charteroak.edu/rn-adn-to-bsn/,New Britian,CT,,5138,US,nursing,aacn
+,Chatham University,http://www.chatham.edu/rn-bsn/,Pittsburgh,PA,,5138,US,nursing,aacn
+,Chestnut Hill College,http://http://www.chc.edu,Philadelphia,PA,,5138,US,nursing,aacn
+,Chipola College,http://www.chipola.edu/academics/academic-departments/health-sciences/,Marianna,FL,,5138,US,nursing,aacn
+,Christian Brothers University,http://www.cbu.edu/nursing,Memphis,TN,,5138,US,nursing,aacn
+,Claflin University,http://shorturl.at/ourdE,Orangeburg,SC,,5138,US,nursing,aacn
+,Clarke University,http://clarke.edu/department/nursing/,Dubuque,IA,,5138,US,nursing,aacn
+,Clayton State University,http://clayton.edu/health/nursing/,Morrow,GA,,5138,US,nursing,aacn
+,Clemson University,http://www.clemson.edu/cbshs/departments/nursing/,Clemson,SC,,5138,US,nursing,aacn
+,Cleveland State University,http://health.csuohio.edu/nursing-school,Cleveland,OH,,5138,US,nursing,aacn
+,CNI College,http://cnicollege.edu/,Santa Ana,CA,,5138,US,nursing,aacn
+,Cochise College,http://cochise.edu/programs/nursing.html,Sierra Vista,AZ,,5138,US,nursing,aacn
+,Coe College,http://coe.edu/nursing,Cedar Rapids,IA,,5138,US,nursing,aacn
+,Colby-Sawyer College,http://www.colby-sawyer.edu/postgraduate/professional/absn,New London,NH,,5138,US,nursing,aacn
+,College of Saint Benedict/Saint John's University,http://www.csbsju.edu/nursing,St. Joseph,MN,,5138,US,nursing,aacn
+,College of Staten Island CUNY,http://www.csi.cuny.edu/nursing/,Staten Island,NY,,5138,US,nursing,aacn
+,College of the Ozarks,http://www.cofo.edu/nursing,Point Lookout,MO,,5138,US,nursing,aacn
+,Colorado Christian University,http://www.ccu.edu/ccu/nursing/,Lakewood,CO,,5138,US,nursing,aacn
+,Colorado Mesa University,http://www.coloradomesa.edu/health-sciences/index.html,Grand Junction,CO,,5138,US,nursing,aacn
+,Colorado Mountain College,http://www.coloradomtn.edu,Glenwood Springs,CO,,5138,US,nursing,aacn
+,Colorado State University-Pueblo,http://www.csupueblo.edu/school-of-nursing/index.html,Pueblo,CO,,5138,US,nursing,aacn
+,Colorado Technical University,http://www.coloradotech.edu/degrees/studies/nursing,Colorado Springs,CO,,5138,US,nursing,aacn
+,Columbia College-Missouri,http://www.ccis.edu/departments/nursing.aspx,Columbia,MO,,5138,US,nursing,aacn
+,Columbia International University,http://www.ciu.edu/campus-degrees/undergraduate/bachelor-science/nursing,Columbia,SC,,5138,US,nursing,aacn
+,Columbia University,http://www.nursing.columbia.edu/,New York,NY,,5138,US,nursing,aacn
+,Columbus State University,http://www.columbusstate.edu/nursing/,Columbus,GA,,5138,US,nursing,aacn
+,Commonwealth University,http://www.commonwealthu.edu/cu-colleges,Bloomsburg,PA,,5138,US,nursing,aacn
+,Concordia College-Minnesota,http://www.concordiacollege.edu/academics/programs-of-study/nursing/,Moorhead,MN,,5138,US,nursing,aacn
+,Concordia University-Ann Arbor,http://www.cuaa.edu/academics/programs/nursing-bachelors,Ann Arbor,MI,,5138,US,nursing,aacn
+,Concordia University-Chicago,http://catalog.cuchicago.edu/undergraduate/college-health-science-technology/bachelor-science-bsn/,River Forest,IL,,5138,US,nursing,aacn
+,Concordia University-Irvine,http://cui.edu/academicprograms/nursing,Irvine,CA,,5138,US,nursing,aacn
+,Concordia University-Saint Paul,http://www.csp.edu/program/nursing-bsn-pre-licensure/,St. Paul,MN,,5138,US,nursing,aacn
+,Concordia University-Texas,http://www.concordia.edu/nursing,Austin,TX,,5138,US,nursing,aacn
+,Concordia University-Wisconsin,http://www.cuw.edu/academics/schools/son/index.html,Mequon,WI,,5138,US,nursing,aacn
+,Coppin State University,http://www.coppin.edu/nursing,Baltimore,MD,,5138,US,nursing,aacn
+,Cornerstone University,http://www.cornerstone.edu/divisions/nursing-degree/,Grand Rapids,MI,,5138,US,nursing,aacn
+,Cox College,http://coxcollege.edu/college-programs/undergraduate-nursing-program/bsn/,Springfield,MO,,5138,US,nursing,aacn
+,Creighton University,http://nursing.creighton.edu/,Omaha,NE,,5138,US,nursing,aacn
+,Crown College,http://www.crown.edu/on-campus-degree-programs/nursing/,St. Bonifacius,MN,,5138,US,nursing,aacn
+,Cumberland University,http://www.cumberland.edu/nursing-health-professions/nursing/,Lebanon,TN,,5138,US,nursing,aacn
+,CUNY School of Professional Studies,http://sps.cuny.edu/academics/undergraduate/bachelor-science-nursing-bs,New York,NY,,5138,US,nursing,aacn
+,Curry College,http://www.curry.edu/nursing.html,Milton,MA,,5138,US,nursing,aacn
+,D'Youville University,http://www.dyc.edu/academics/schools-and-departments/nursing/,Buffalo,NY,,5138,US,nursing,aacn
+,Daemen University,http://www.daemen.edu/academics/areas-study/nursing,Amherst,NY,,5138,US,nursing,aacn
+,Dakota Wesleyan University,http://www.dwu.edu/academics/majors-minors/nursing,Mitchell,SD,,5138,US,nursing,aacn
+,Davenport University,http://davenport.edu/academics/areas/college-health-professions,Grand Rapids,MI,,5138,US,nursing,aacn
+,Daytona State College,http://www.daytonastate.edu/dept_directory_nur/index.html,Daytona Beach,FL,,5138,US,nursing,aacn
+,Defiance College,http://www.defiance.edu/academics/sm/nursing/index.html,Defiance,OH,,5138,US,nursing,aacn
+,Delta State University,http://www.deltastate.edu/school-of-nursing/degree-programs/,Cleveland,MS,,5138,US,nursing,aacn
+,Denver College of Nursing,http://www.denvercollegeofnursing.edu/programs.html,Denver,CO,,5138,US,nursing,aacn
+,DePaul University,http://csh.depaul.edu/academics/nursing/Pages/default.aspx,Chicago,IL,,5138,US,nursing,aacn
+,DeSales University,http://www.desales.edu/academics/academic-programs/detail/traditional-day-bsn,Center Valley,PA,,5138,US,nursing,aacn
+,Dominican University New York,http://www.dc.edu/academic-divisions/division-nursing/nursing/,Orangeburg,NY,,5138,US,nursing,aacn
+,Dominican University of California,http://www.dominican.edu/academics/hns2/nursing,San Rafael,CA,,5138,US,nursing,aacn
+,Dominican University of Illinois,http://www.dom.edu/academics/majors-programs/bachelor-science-nursing,River Forest,IL,,5138,US,nursing,aacn
+,Dordt University,http://www.dordt.edu/academics/undergraduate-programs/4-year-programs/nursing,Sioux Center,IA,,5138,US,nursing,aacn
+,Drake University,http://https://www.drake.edu/academics/undergraduate/majors/nursing/,Des Moines,IA,,5138,US,nursing,aacn
+,Drexel University,http://www.drexel.edu/cnhp,Philadelphia,PA,,5138,US,nursing,aacn
+,Duke University,http://nursing.duke.edu/,Durham,NC,,5138,US,nursing,aacn
+,Duquesne University,http://duq.edu/academics/schools/nursing,Pittsburgh,PA,,5138,US,nursing,aacn
+,Eagle Gate College Bosie,,Boise,ID,,5138,US,nursing,aacn
+,Eagle Gate College Idaho Falls,,Idaho Falls,ID,,5138,US,nursing,aacn
+,Eagle Gate College Layton,http://www.eaglegatecollege.edu/programs/healthcare/nursing/,Layton,UT,,5138,US,nursing,aacn
+,Eagle Gate College Murray,,Murray,UT,,5138,US,nursing,aacn
+,East Carolina University,http://nursing.ecu.edu,Greenville,NC,,5138,US,nursing,aacn
+,East Tennessee State University,http://www.etsu.edu/nursing,Johnson City,TN,,5138,US,nursing,aacn
+,East Texas A&M University,http://www.tamuc.edu/nursing,Commerce,TX,,5138,US,nursing,aacn
+,East Texas Baptist University,http://www.etbu.edu/nursing/,Marshall,TX,,5138,US,nursing,aacn
+,Eastern Connecticut State University,http://https://www.easternct.edu/health-sciences/programs-of-study/nursing-major-degree-requirement.html,Willimantic,CT,,5138,US,nursing,aacn
+,Eastern Illinois University,http://www.eiu.edu/~nursing/,Charleston,IL,,5138,US,nursing,aacn
+,Eastern Kentucky University,http://bsn-gn.eku.edu/,Richmond,KY,,5138,US,nursing,aacn
+,Eastern Mennonite University,http://www.emu.edu/nursing,Harrisonburg,VA,,5138,US,nursing,aacn
+,Eastern Michigan University,http://www.emich.edu/chhs/nursing/,Ypsilanti,MI,,5138,US,nursing,aacn
+,Eastern University,http://www.eastern.edu/academics/programs/nursing-department-undergraduate,St. Davids,PA,,5138,US,nursing,aacn
+,Eastern Washington University,http://www.ewu.edu/chsph/nursing/,Spokane,WA,,5138,US,nursing,aacn
+,ECPI University,http://www.ecpi.edu/college-of-nursing,Virginia Beach,VA,,5138,US,nursing,aacn
+,ECPI University-Manassas,,Manassas,VA,,5138,US,nursing,aacn
+,ECPI University-Orlando,http://www.ecpi.edu/locations/orlando-lake-mary-fl,Lake Mary,FL,,5138,US,nursing,aacn
+,ECPI University-Richmond,http://https://www.ecpi.edu/locations/richmond-va,Richmond,VA,,5138,US,nursing,aacn
+,Edgewood University,http://www.edgewood.edu/academics/schools/henry-predolin-school-of-nursing,Madison,WI,,5138,US,nursing,aacn
+,Elmhurst University,http://www.elmhurst.edu/nursing,Elmhurst,IL,,5138,US,nursing,aacn
+,Elmira College,http://elmira.edu/academics/programs/Majors_Minors/Nursing/index.html,Elmira,NY,,5138,US,nursing,aacn
+,Elms College,http://www.elms.edu/school-of-nursing/,Chicopee,MA,,5138,US,nursing,aacn
+,Elon University,http://www.elon.edu/u/academics/health-sciences/nursing/,Elon,NC,,5138,US,nursing,aacn
+,Emmanuel College,http://www.emmanuel.edu/academics/academic-study/schools/school-science-health,Boston,MA,,5138,US,nursing,aacn
+,Emory & Henry University,http://www.ehc.edu/academics/rn-bsn/,Marion,VA,,5138,US,nursing,aacn
+,Emory University,http://www.nursing.emory.edu,Atlanta,GA,,5138,US,nursing,aacn
+,Emporia State University,http://www.emporia.edu/nursing/,Emporia,KS,,5138,US,nursing,aacn
+,Endicott College,http://www.endicott.edu/academics/schools/nursing,Beverly,MA,,5138,US,nursing,aacn
+,Excelsior University,http://www.excelsior.edu/programs/nursing,Albany,NY,,5138,US,nursing,aacn
+,Fairfield University,http://www.fairfield.edu/nursing,Fairfield,CT,,5138,US,nursing,aacn
+,Fairleigh Dickinson University,http://view2.fdu.edu/academics/university-college/school-of-nursing-and-allied-health/,Teaneck,NJ,,5138,US,nursing,aacn
+,Fairmont State University,http://www.fairmontstate.edu/schoolofnursing/,Fairmont,WV,,5138,US,nursing,aacn
+,Farmingdale State College,http://www.farmingdale.edu/health-sciences/nur/index.shtml,Farmingdale,NY,,5138,US,nursing,aacn
+,Fayetteville State University,http://www.uncfsu.edu/nursing,Fayetteville,NC,,5138,US,nursing,aacn
+,Felician University,http://www.felician.edu/academics/school-of-nursing,Lodi,NJ,,5138,US,nursing,aacn
+,Ferris State University,http://ferris.edu/htmls/colleges/alliedhe/Nursing/homepage.htm,Big Rapids,MI,,5138,US,nursing,aacn
+,Fitchburg State University,http://www.fitchburgstate.edu/nursing,Fitchburg,MA,,5138,US,nursing,aacn
+,Florida A&M University,http://nursing.famu.edu/index.php,Tallahassee,FL,,5138,US,nursing,aacn
+,Florida Atlantic University,http://www.fau.edu/nursing,Boca Raton,FL,,5138,US,nursing,aacn
+,Florida College,http://floridacollege.edu/departments/nursing/,Temple Terrace,FL,,5138,US,nursing,aacn
+,Florida Gateway College,http://www.fgc.edu/academics/programs/health-sciences/nursing/,Lake City,FL,,5138,US,nursing,aacn
+,Florida Gulf Coast University,http://fgcu.edu/mariebcollege/nursing,Fort Myers,FL,,5138,US,nursing,aacn
+,Florida International University,http://cnhs.fiu.edu/,Miami,FL,,5138,US,nursing,aacn
+,Florida Southern College,http://www.flsouthern.edu/academic-life/all-academic-programs/rug/nursing,Lakeland,FL,,5138,US,nursing,aacn
+,Florida Southwestern State College,http://www.fsw.edu/sohp,Fort Myers,FL,,5138,US,nursing,aacn
+,Florida State University,http://nursing.fsu.edu/,Tallahassee,FL,,5138,US,nursing,aacn
+,Fort Hays State University,http://www.fhsu.edu/nursing/,Hays,KS,,5138,US,nursing,aacn
+,Francis Marion University,http://www.fmarion.edu/healthsciences/nursing/,Florence,SC,,5138,US,nursing,aacn
+,Franklin University,http://www.franklin.edu/nursing-rn-bsn-bachelors-degree-program,Columbus,OH,,5138,US,nursing,aacn
+,Freed-Hardeman University,http://www.fhu.edu/academics/colleges/artsandsciences/nursing,Henderson,TN,,5138,US,nursing,aacn
+,Fresno Pacific University,http://www.fresno.edu/programs-majors/graduate/nursing-msn-fnp,Fresno,CA,,5138,US,nursing,aacn
+,Frontier Nursing University,http://www.frontier.edu/,Versailles,KY,,5138,US,nursing,aacn
+,Galen College of Nursing,http://www.galencollege.edu/,Louisville,KY,,5138,US,nursing,aacn
+,Gannon University,http://www.gannon.edu/Academic-Offerings/Health-Professions-and-Sciences/Villa-Maria-School-of-Nursing,Erie,PA,,5138,US,nursing,aacn
+,George Fox University,http://www.georgefox.edu/academics/undergrad/departments/nursing/,Newberg,OR,,5138,US,nursing,aacn
+,George Mason University,http://nursing.gmu.edu,Fairfax,VA,,5138,US,nursing,aacn
+,George Washington University,http://nursing.gwu.edu/,Washington,DC,,5138,US,nursing,aacn
+,George Williams College,http://aurora.edu/academics/colleges-schools/nursing/index.html,Williams Bay,WI,,5138,US,nursing,aacn
+,Georgetown University,http://nhs.georgetown.edu/,Washington,DC,,5138,US,nursing,aacn
+,Georgia College & State University,http://www.gcsu.edu/health/nursing,Milledgeville,GA,,5138,US,nursing,aacn
+,Georgia Gwinnett College,http://www.ggc.edu/academics/school-of-health-sciences/nursing,Lawrenceville,GA,,5138,US,nursing,aacn
+,Georgia Southern University,http://chp.georgiasouthern.edu/nursing/,Savannah,GA,,5138,US,nursing,aacn
+,Georgia Southwestern State University,http://www.gsw.edu/academics/schools-and-departments/college-of-nursing-and-health-sciences/index,Americus,GA,,5138,US,nursing,aacn
+,Georgia State University,http://lewis.gsu.edu/,Atlanta,GA,,5138,US,nursing,aacn
+,Georgian Court University,http://georgian.edu/academics/undergraduate/nursing/,Lakewood,NJ,,5138,US,nursing,aacn
+,Goldfarb School of Nursing at Barnes-Jewish College,http://www.barnesjewishcollege.edu/,St. Louis,MO,,5138,US,nursing,aacn
+,Gonzaga University,http://www.gonzaga.edu/school-of-nursing-human-physiology/departments/nursing,Spokane,WA,,5138,US,nursing,aacn
+,Goodwin University,http://www.goodwin.edu/majors/nursing/,East Hartford,CT,,5138,US,nursing,aacn
+,Goshen College,http://www.goshen.edu/academics/nursing/,Goshen,IN,,5138,US,nursing,aacn
+,Governors State University,http://govst.edu/nursing/,University Park,IL,,5138,US,nursing,aacn
+,Graceland University,http://www.graceland.edu/nursing,Independence,MO,,5138,US,nursing,aacn
+,Grambling State University,http://www.gram.edu/academics/majors/pro-grad-studies/nursing/,Grambling,LA,,5138,US,nursing,aacn
+,Grand Canyon University,http://www.gcu.edu/college-of-nursing-and-health-care-professions.php,Phoenix,AZ,,5138,US,nursing,aacn
+,Grand Valley State University,http://www.gvsu.edu/kcon/,Grand Rapids,MI,,5138,US,nursing,aacn
+,Grand View University,http://www.grandview.edu/academics/undergraduate,Des Moines,IA,,5138,US,nursing,aacn
+,Gulf Coast State College,http://www.gulfcoast.edu/academics/programs/nursing-rn-bsn/index.html,Panama City,FL,,5138,US,nursing,aacn
+,Gurnick Academy of Medical Arts,http://www.gurnick.edu/programs/bsn-program/,Concord,CA,,5138,US,nursing,aacn
+,Gustavus Adolphus College,http://gustavus.edu/nursing/,Saint Peter,MN,,5138,US,nursing,aacn
+,Gwynedd Mercy University,http://www.gmercyu.edu/academics/schools/school-of-nursing-and-health-professions,Gwynedd Valley,PA,,5138,US,nursing,aacn
+,Hampton University,http://nursing.hamptonu.edu/,Hampton,VA,,5138,US,nursing,aacn
+,Hardin-Simmons University,http://www.hsutx.edu/academics/undergraduate-majors-minors/nursing-degree/,Abilene,TX,,5138,US,nursing,aacn
+,Harding University,http://www.harding.edu/nursing/,Searcy,AR,,5138,US,nursing,aacn
+,Hartwick College,http://www.hartwick.edu/academics/academic-departments/nursing-department/,Oneonta,NY,,5138,US,nursing,aacn
+,Hawaii Pacific University,http://www.hpu.edu/nursing/index.html,Honolulu,HI,,5138,US,nursing,aacn
+,Heidelberg University,http://www.heidelberg.edu/academics/programs/nursing,Tiffin,OH,,5138,US,nursing,aacn
+,Helene Fuld College of Nursing,http://www.helenefuld.edu,New York,NY,,5138,US,nursing,aacn
+,Henderson State University,http://hsu.edu/academics/aviation-science-and-nursing/nursing/,Arkadelphia,AR,,5138,US,nursing,aacn
+,Heritage University,http://www.heritage.edu/nursing,Toppenish,WA,,5138,US,nursing,aacn
+,Herzing University,http://www.herzing.edu/nursing-programs,Milwaukee,WI,,5138,US,nursing,aacn
+,Herzing University Akron,http://www.herzing.edu/nursing-programs,Akron,OH,,5138,US,nursing,aacn
+,Herzing University Atlanta,http://www.herzing.edu/atlanta,Sandy Springs,GA,,5138,US,nursing,aacn
+,Herzing University Brookfield,http://www.herzing.edu/milwaukeebrookfield#nursing-progra,Brookfield,WI,,5138,US,nursing,aacn
+,Herzing University Kenosha,http://www.herzing.edu/kenosha,Kenosha,WI,,5138,US,nursing,aacn
+,Herzing University Madison,http://www.herzing.edu/madison,Madison,WI,,5138,US,nursing,aacn
+,Herzing University Minneapolis,http://www.herzing.edu/minneapolis,St. Louis Park,MN,,5138,US,nursing,aacn
+,Herzing University Nashville,http://herzing.edu/nursing-programs,Nashville,TN,,5138,US,nursing,aacn
+,Herzing University New Orleans,http://www.herzing.edu/nursing/bsn-degree/louisiana/new-orleans,Metairie,LA,,5138,US,nursing,aacn
+,Herzing University Orlando,http://www.herzing.edu/orlando,Winter Park,FL,,5138,US,nursing,aacn
+,Hiram College,http://www.hiram.edu/academics/majors-minors/nursing/,Hiram,OH,,5138,US,nursing,aacn
+,Hofstra University,http://www.hofstra.edu/academics/colleges/nursing-physician-assistant/,Uniondale,NY,,5138,US,nursing,aacn
+,Holy Family University,http://www.holyfamily.edu/choosing-holy-family-u/academics/schools-of-study/philadelphia-school-of-nursing,Philadelphia,PA,,5138,US,nursing,aacn
+,Hondros College of Nursing,http://www.hondros.edu,Columbus,OH,,5138,US,nursing,aacn
+,Hood College,http://www.hood.edu/nursingprogram/,Frederick,MD,,5138,US,nursing,aacn
+,Hope College,http://www.hope.edu/academic/nursing/,Holland,MI,,5138,US,nursing,aacn
+,Houston Christian University,http://hbu.edu/school-of-nursing-and-allied-health/,Houston,TX,,5138,US,nursing,aacn
+,Howard Payne University,http://www.hputx.edu/academics/schools/school-of-nursing/,Brownwood,TX,,5138,US,nursing,aacn
+,Howard University,http://cnahs.howard.edu/,Washington,DC,,5138,US,nursing,aacn
+,Hunter College of CUNY,http://www.hunter.cuny.edu/nursing,New York,NY,,5138,US,nursing,aacn
+,Huntington University,http://www.huntington.edu/nursing,Huntington,IN,,5138,US,nursing,aacn
+,Husson University,http://husson.edu/college-of-health-and-pharmacy/school-of-nursing/,Bangor,ME,,5138,US,nursing,aacn
+,Idaho State University,http://isu.edu/nursing/,Pocatello,ID,,5138,US,nursing,aacn
+,Illinois College,http://www.ic.edu/nursing,Jacksonville,IL,,5138,US,nursing,aacn
+,Illinois State University,http://nursing.illinoisstate.edu/,Normal,IL,,5138,US,nursing,aacn
+,Illinois Wesleyan University,http://www.iwu.edu/nursing/,Bloomington,IL,,5138,US,nursing,aacn
+,Immaculata University,http://www.immaculata.edu/nursing,Immaculata,PA,,5138,US,nursing,aacn
+,Indiana State University,http://www.indstate.edu/health/department/son,Terre Haute,IN,,5138,US,nursing,aacn
+,Indiana University Bloomington,http://nursing.indiana.edu/,Bloomington,IN,,5138,US,nursing,aacn
+,Indiana University Columbus,http://www.iupuc.edu/health-sciences/index.html,Columbus,IN,,5138,US,nursing,aacn
+,Indiana University East,http://www.iue.edu/nursing,Richmond,IN,,5138,US,nursing,aacn
+,Indiana University Fort Wayne,http://nursing.iu.edu/fort-wayne/index.html,Fort Wayne,IN,,5138,US,nursing,aacn
+,Indiana University Indianapolis,http://nursing.iupui.edu/,Indianapolis,IN,,5138,US,nursing,aacn
+,Indiana University Kokomo,http://www.iuk.edu/nursing/index.html,Kokomo,IN,,5138,US,nursing,aacn
+,Indiana University Northwest,http://iun.edu/nursing/,Gary,IN,,5138,US,nursing,aacn
+,Indiana University of Pennsylvania,http://www.iup.edu/rn-alliedhealth/,Indiana,PA,,5138,US,nursing,aacn
+,Indiana University South Bend,http://healthscience.iusb.edu/nursing/index.html,South Bend,IN,,5138,US,nursing,aacn
+,Indiana University Southeast,http://www.ius.edu/nursing,New Albany,IN,,5138,US,nursing,aacn
+,Indiana Wesleyan University,http://www.indwes.edu/academics/cas/school-of-nursing-and-health-sciences/,Marion,IN,,5138,US,nursing,aacn
+,Iona University,http://www.iona.edu/academics/explore-majors-programs/nursing-bs,New Rochelle,NY,,5138,US,nursing,aacn
+,Iowa State University,http://fshn.hs.iastate.edu/undergraduate-programs/nursing/,Ames,IA,,5138,US,nursing,aacn
+,Jacksonville State University,http://jsu.edu/nursing/,Jacksonville,AL,,5138,US,nursing,aacn
+,Jacksonville University,http://www.ju.edu/nursing,Jacksonville,FL,,5138,US,nursing,aacn
+,James Madison University,http://www.nursing.jmu.edu,Harrisonburg,VA,,5138,US,nursing,aacn
+,Jessup University,http://https://jessup.edu/academics/majors-programs/undergrad/nursing/,Rocklin,CA,,5138,US,nursing,aacn
+,John Brown University,http://www.jbu.edu/majors/nursing/,Siloam Springs,AR,,5138,US,nursing,aacn
+,John Carroll University,http://www.jcu.edu/bachelor-in-nursing-bsn,University Heights,OH,,5138,US,nursing,aacn
+,Johns Hopkins University,http://nursing.jhu.edu/index.html,Baltimore,MD,,5138,US,nursing,aacn
+,Johnson & Wales University,http://www.jwu.edu/academics/majors-and-programs/nursing-accelerated-bs.html,Providence,RI,,5138,US,nursing,aacn
+,Joyce University,http://www.joyce.edu/nursing/,Draper,UT,,5138,US,nursing,aacn
+,Kansas Wesleyan University,http://www.kwu.edu/academics/programs/undergraduate/nursing/,Salina,KS,,5138,US,nursing,aacn
+,Kean University,http://kean.edu/academics/college-natural-applied-and-health-sciences/school-nursing,Union,NJ,,5138,US,nursing,aacn
+,Keene State College,http://www.keene.edu/academics/programs/nursing/,Keene,NH,,5138,US,nursing,aacn
+,Keiser University,http://www.keiseruniversity.edu/college-of-nursing/,Ft. Lauderdale,FL,,5138,US,nursing,aacn
+,Kennesaw State University,http://wellstarcollege.kennesaw.edu/nursing/,Kennesaw,GA,,5138,US,nursing,aacn
+,Kent State University,http://www.kent.edu/nursing,Kent,OH,,5138,US,nursing,aacn
+,Kentucky Christian University,http://www.kcu.edu/academics/school-nursing/,Grayson,KY,,5138,US,nursing,aacn
+,Kettering College,http://kc.edu/academics/nursing/,Kettering,OH,,5138,US,nursing,aacn
+,Keuka College,http://www.keuka.edu/academics/programs/nursing-dual-degree,Keuka Park,NY,,5138,US,nursing,aacn
+,King University,http://www.king.edu/academics/schools-and-institutes/school-of-nursing/,Bristol,TN,,5138,US,nursing,aacn
+,King's College,http://www.kings.edu/programs/undergraduate/nursing.html,Wilkes-Barre,PA,,5138,US,nursing,aacn
+,La Salle University,http://www.lasalle.edu/nursing/,Philadelphia,PA,,5138,US,nursing,aacn
+,Laboure College of Healthcare,http://www.laboure.edu/academic-programs/bachelor-degree/rn-to-bsn,Milton,MA,,5138,US,nursing,aacn
+,Lakeland University,http://lakeland.edu/degrees/nursing,Plymouth,WI,,5138,US,nursing,aacn
+,Lakeview College of Nursing,http://www.lakeviewcol.edu/,Danville,IL,,5138,US,nursing,aacn
+,Lamar University,http://https://www.lamar.edu/nursing-health-professions/nursing/,Beaumont,TX,,5138,US,nursing,aacn
+,Lander University,http://lander.edu/academics/colleges-schools/school-nursing,Greenwood,SC,,5138,US,nursing,aacn
+,Lawrence Technological University,http://ltu.edu/health-sciences/,Southfield,MI,,5138,US,nursing,aacn
+,Le Moyne College,http://www.lemoyne.edu/Academics/Graduate-Programs/Graduate-Nursing,Syracuse,NY,,5138,US,nursing,aacn
+,Lebanese American University,http://nursing.lau.edu.lb/programs/bs-nursing/,New York,NY,,5138,US,nursing,aacn
+,Lebanon Valley College,http://www.lvc.edu/academics/undergraduate-studies/nursing/,Annville,PA,,5138,US,nursing,aacn
+,Lee University,http://www.leeuniversity.edu/academics/nursing/,Cleveland,TN,,5138,US,nursing,aacn
+,Lenoir-Rhyne University,http://www.lr.edu/nursing,Hickory,NC,,5138,US,nursing,aacn
+,LeTourneau University,http://www.letu.edu/_Academics/Health_Sciences/Nursing/index.html,Longview,TX,,5138,US,nursing,aacn
+,Lewis University,http://www.lewisu.edu/academics/nursing/index.htm,Romeoville,IL,,5138,US,nursing,aacn
+,Lewis-Clark State College,http://www.lcsc.edu/nursing/,Lewiston,ID,,5138,US,nursing,aacn
+,Liberty University,http://www.liberty.edu/academics/nursing/,Lynchburg,VA,,5138,US,nursing,aacn
+,Lincoln Memorial University,http://www.lmunet.edu/caylor-school-of-nursing/,Harrogate,TN,,5138,US,nursing,aacn
+,Lindenwood University,http://www.lindenwood.edu/academics/academic-schools/school-of-health-sciences/nursing/,St. Charles,MO,,5138,US,nursing,aacn
+,Lindsey Wilson University,http://www.lindsey.edu/academics/majors-and-programs/Nursing/index.cfm,Columbia,KY,,5138,US,nursing,aacn
+,Linfield University,http://www.linfield.edu/nursing,Portland,OR,,5138,US,nursing,aacn
+,Lipscomb University,http://www.lipscomb.edu/nursing,Nashville,TN,,5138,US,nursing,aacn
+,Lock Haven University,http://www.commonwealthu.edu/offices-directory/nursing-undergraduate,Clearfield,PA,,5138,US,nursing,aacn
+,Loma Linda University,http://nursing.llu.edu/,Loma Linda,CA,,5138,US,nursing,aacn
+,Long Island University-Brooklyn,http://liu.edu/Brooklyn/Academics/Schools/SON/About,Brooklyn,NY,,5138,US,nursing,aacn
+,Long Island University-Post,http://liu.edu/post/academics/school-of-health-professions-and-nursing/Academic-Departments/Nursing/,Brookville,NY,,5138,US,nursing,aacn
+,Longwood University,http://www.longwood.edu/nursing,Farmville,VA,,5138,US,nursing,aacn
+,Louisiana Christian University,http://lcuniversity.edu/academics/,Pineville,LA,,5138,US,nursing,aacn
+,Louisiana State University Health Sciences Ctr,http://nursing.lsuhsc.edu/,New Orleans,LA,,5138,US,nursing,aacn
+,Lourdes University,http://www.lourdes.edu/academics/nursing-2/,Sylvania,OH,,5138,US,nursing,aacn
+,Lower Columbia College,,Longview,WA,,5138,US,nursing,aacn
+,Loyola University Chicago,http://www.luc.edu/nursing,Maywood,IL,,5138,US,nursing,aacn
+,Loyola University Maryland,http://https://www.loyola.edu/academics/biology/curriculum/nursing/,Baltimore,MD,,5138,US,nursing,aacn
+,Loyola University New Orleans,http://www.loyno.edu/academics/colleges/college-nursing-health,New Orleans,LA,,5138,US,nursing,aacn
+,Luther College,http://www.luther.edu/nursing/,Decorah,IA,,5138,US,nursing,aacn
+,Lyon College,http://lyon.edu/,Batesville,AR,,5138,US,nursing,aacn
+,Madonna University,http://madonna.edu/academics/programs/nursing-bsn/,Livonia,MI,,5138,US,nursing,aacn
+,Maine College of Health Professions,http://https://www.mchp.edu/program/nursing/bachelor-of-science-in-nursing/,Lewiston,ME,,5138,US,nursing,aacn
+,Malone University,http://www.malone.edu/academics/colleges-schools/nursing-health-sciences/,Canton,OH,,5138,US,nursing,aacn
+,Manchester University,http://www.manchester.edu/nursing/,Fort Wayne,IN,,5138,US,nursing,aacn
+,Manhattanville University,http://www.mville.edu/academics/schools/school-of-nursing-and-health-sciences.php,Purchase,NY,,5138,US,nursing,aacn
+,Mansfield University,http://commonwealthu.edu/academics/programs/nursing-bsn,Sayre,PA,,5138,US,nursing,aacn
+,Maranatha Baptist University,http://www.mbu.edu/major/nursing/,Watertown,WI,,5138,US,nursing,aacn
+,Marian University,http://www.marianuniversity.edu/academic-programs/,Fond du Lac,WI,,5138,US,nursing,aacn
+,Marian University-Indiana,http://marian.edu/school-of-nursing,Indianapolis,IN,,5138,US,nursing,aacn
+,Marquette University,http://www.marquette.edu/nursing,Milwaukee,WI,,5138,US,nursing,aacn
+,Mars Hill University,http://www.mhu.edu/nursing,Mars Hill,NC,,5138,US,nursing,aacn
+,Marshall University,http://www.marshall.edu/nursing/,Huntington,WV,,5138,US,nursing,aacn
+,Mary Baldwin University,http://www.marybaldwin.edu/academics/nursing/,Fishersville,VA,,5138,US,nursing,aacn
+,Marymount University,http://www.marymount.edu/Academics/Malek-School-of-Health-Professions,Arlington,VA,,5138,US,nursing,aacn
+,Maryville University-Saint Louis,http://www.maryville.edu/hp/nursing,St. Louis,MO,,5138,US,nursing,aacn
+,Marywood University,http://www.marywood.edu/nursing/index.html,Scranton,PA,,5138,US,nursing,aacn
+,Mayville State University,http://mayvillestate.edu/academics/majors-and-minors/nursing/,Mayville,ND,,5138,US,nursing,aacn
+,McDaniel College,http://www.mcdaniel.edu/academics/graduate-professional-studies/nursing-bachelor-science-bsn,Westminster,MD,,5138,US,nursing,aacn
+,McKendree University-Illinois,http://www.mckendree.edu/academics/info/nursing-health/nursing/,Lebanon,IL,,5138,US,nursing,aacn
+,McKendree University-Kentucky,http://www.mckendree.edu/academics/info/nursing-health/nursing/index.php,Louisville,KY,,5138,US,nursing,aacn
+,McNeese State University,http://www.mcneese.edu/nursing,Lake Charles,LA,,5138,US,nursing,aacn
+,MCPHS University,http://www.mcphs.edu/academics/school-of-nursing,Boston,MA,,5138,US,nursing,aacn
+,Medical University of South Carolina,http://www.musc.edu/nursing,Charleston,SC,,5138,US,nursing,aacn
+,Mercer University,http://nursing.mercer.edu,Atlanta,GA,,5138,US,nursing,aacn
+,Mercy College of Health Sciences,http://www.mchs.edu/,Des Moines,IA,,5138,US,nursing,aacn
+,Mercy College of Ohio,http://www.mercycollege.edu/academics/nursing,Toledo,OH,,5138,US,nursing,aacn
+,Mercy University,http://www.mercy.edu/academics/school-health-natural-sciences/health-professions/nursing-programs,Dobbs Ferry,NY,,5138,US,nursing,aacn
+,Merrimack College,http://www.merrimack.edu/academics/health-sciences/degree-programs/nursing/,North Andover,MA,,5138,US,nursing,aacn
+,Messiah University,http://www.messiah.edu/info/20205/department_of_nursing,Mechanicsburg,PA,,5138,US,nursing,aacn
+,Methodist College,http://www.methodistcol.edu/degrees-and-programs.aspx,Peoria,IL,,5138,US,nursing,aacn
+,Methodist University,http://www.methodist.edu/academics/program/nursing/,Fayetteville,NC,,5138,US,nursing,aacn
+,Metropolitan State University,http://metrostate.edu/academics/nursing-and-health-sciences/nursing,St. Paul,MN,,5138,US,nursing,aacn
+,Metropolitan State University of Denver,http://www.msudenver.edu/nursing,Denver,CO,,5138,US,nursing,aacn
+,MGH Institute of Health Professions,http://www.mghihp.edu/school-nursing,Boston,MA,,5138,US,nursing,aacn
+,Miami Dade College,http://www.mdc.edu/medical/Nursing/Default.asp,Miami,FL,,5138,US,nursing,aacn
+,Miami University,http://miamioh.edu/regionals/academics/departments/nsg/index.html,Hamilton,OH,,5138,US,nursing,aacn
+,Michigan State University,http://nursing.msu.edu/,East Lansing,MI,,5138,US,nursing,aacn
+,Michigan Technological University,http://https://www.mtu.edu/biological/undergraduate/nursing/,Houghton,MI,,5138,US,nursing,aacn
+,MidAmerica Nazarene University,http://www.mnu.edu/nursing.html,Olathe,KS,,5138,US,nursing,aacn
+,Middle Georgia State University,http://www.mga.edu/health-natural-sciences/nursing/index.php,Macon,GA,,5138,US,nursing,aacn
+,Middle Tennessee State University,http://mtsu.edu/nursing/,Murfreesboro,TN,,5138,US,nursing,aacn
+,Midland University,http://www.midlandu.edu/academics/college-of-health-professions/school-of-nursing/,Fremont,NE,,5138,US,nursing,aacn
+,Midwestern State University,http://msutexas.edu/academics/hs2/nursing/wson-about-us.php,Wichita Falls,TX,,5138,US,nursing,aacn
+,Milligan University,http://www.milligan.edu/academics/nursing/,Milligan,TN,,5138,US,nursing,aacn
+,Millikin University,http://www.millikin.edu/nursing,Decatur,IL,,5138,US,nursing,aacn
+,Milwaukee School of Engineering,http://www.msoe.edu/academics/departments/school-of-nursing/,Milwaukee,WI,,5138,US,nursing,aacn
+,Minnesota State University Mankato,http://ahn.mnsu.edu,Mankato,MN,,5138,US,nursing,aacn
+,Minnesota State University Moorhead,http://www.mnstate.edu/academics/colleges-schools/snhl/,Moorhead,MN,,5138,US,nursing,aacn
+,Minot State University,http://www.minotstateu.edu/nursing/,Minot,ND,,5138,US,nursing,aacn
+,Misericordia University,http://www.misericordia.edu/page.cfm?p=632,Dallas,PA,,5138,US,nursing,aacn
+,Mississippi College,http://www.mc.edu/academics/nursing/,Clinton,MS,,5138,US,nursing,aacn
+,Mississippi State University,,Meridian,MS,,5138,US,nursing,aacn
+,Mississippi University for Women,http://www.muw.edu/nhs,Columbus,MS,,5138,US,nursing,aacn
+,Missouri State University,http://www.missouristate.edu/nursing/,Springfield,MO,,5138,US,nursing,aacn
+,Missouri Western State University,http://www.missouriwestern.edu/nursing/,St. Joseph,MO,,5138,US,nursing,aacn
+,Molloy University,http://www.molloy.edu/academics/schools/barbara-h-hagan-school-of-nursing-and-health-sciences,Rockville Centre,NY,,5138,US,nursing,aacn
+,Monmouth University,http://www.monmouth.edu/school-of-nursing-health/department-of-nursing.aspx,West Long Branch,NJ,,5138,US,nursing,aacn
+,Montana State University-Bozeman,http://www.montana.edu/nursing/index.html,Bozeman,MT,,5138,US,nursing,aacn
+,Montclair State University,http://www.montclair.edu/nursing/,Montclair,NJ,,5138,US,nursing,aacn
+,Moravian University,http://www.moravian.edu/nursing,Bethlehem,PA,,5138,US,nursing,aacn
+,Morehead State University,http://moreheadstate.edu/academics/colleges/science/nursing/,Morehead,KY,,5138,US,nursing,aacn
+,Morehouse School of Medicine,http://https://www.msm.edu,Atlanta,GA,,5138,US,nursing,aacn
+,Morgan State University,http://www.morgan.edu/schp/nursing,Baltimore,MD,,5138,US,nursing,aacn
+,Morningside University,http://morningside.edu/academics/undergraduate/nursing/,Sioux City,IA,,5138,US,nursing,aacn
+,Mount Carmel College of Nursing,http://www.mccn.edu/,Columbus,OH,,5138,US,nursing,aacn
+,Mount Marty University,http://mountmarty.edu/academics/majors-and-programs/nursing/nursing/,Yankton,SD,,5138,US,nursing,aacn
+,Mount Mary University,http://mtmary.edu/majors-programs/undergraduate/nursing-program/index.html,Milwaukee,WI,,5138,US,nursing,aacn
+,Mount Mercy University,http://www.mtmercy.edu/nursing,Cedar Rapids,IA,,5138,US,nursing,aacn
+,Mount Saint Joseph University,http://www.msj.edu/school-of-health-sciences/department-of-nursing/index.html,Cincinnati,OH,,5138,US,nursing,aacn
+,Mount Saint Mary College-New York,http://www.msmc.edu/majors-programs/academic-divisions-schools/nursing/,Newburgh,NY,,5138,US,nursing,aacn
+,Mount Saint Mary's University,http://msmu.edu/undergraduate-bachelor-programs/nursing/,Los Angeles,CA,,5138,US,nursing,aacn
+,Mount Sinai Phillips School of Nursing,http://pson.edu,New York,NY,,5138,US,nursing,aacn
+,Mount Vernon Nazarene University,http://mvnu.edu/undergraduate/academics/nursing,Mount Vernon,OH,,5138,US,nursing,aacn
+,Murray State University,http://www.murraystate.edu/nursing,Murray,KY,,5138,US,nursing,aacn
+,Muskingum University,http://www.muskingum.edu/academics/nursing,New Concord,OH,,5138,US,nursing,aacn
+,National Louis University,http://nl.edu/school-of-nursing/,Chicago,IL,,5138,US,nursing,aacn
+,National University,http://www.nu.edu/OurPrograms/SchoolOfHealthAndHumanServices/Nursing.html,San Diego,CA,,5138,US,nursing,aacn
+,Nazareth University,http://www2.naz.edu/dept/nursing,Rochester,NY,,5138,US,nursing,aacn
+,Nebraska Methodist College,http://www.methodistcollege.edu/nursing,Omaha,NE,,5138,US,nursing,aacn
+,Neumann University,http://www.neumann.edu/academics/undergrad/nursing/index.asp,Aston,PA,,5138,US,nursing,aacn
+,Nevada State University,http://nsc.edu/academics/school-of-nursing/,Henderson,NV,,5138,US,nursing,aacn
+,New Jersey City University,http://www.njcu.edu/department/nursing,Jersey City,NJ,,5138,US,nursing,aacn
+,New Mexico Highlands University,http://www.nmhu.edu/landing-nursing/,Las Vegas,NM,,5138,US,nursing,aacn
+,New Mexico State University,http://schoolofnursing.nmsu.edu/,Las Cruces,NM,,5138,US,nursing,aacn
+,New York Institute of Technology,http://www.nyit.edu/degrees/nursing,Old Westbury,NY,,5138,US,nursing,aacn
+,New York University,http://nursing.nyu.edu/,New York,NY,,5138,US,nursing,aacn
+,Newman University,http://newmanu.edu/academics/undergraduate/nursing-wichita,Wichita,KS,,5138,US,nursing,aacn
+,Niagara University,http://www.niagara.edu/nursing,Niagara University,NY,,5138,US,nursing,aacn
+,Nicholls State University,http://www.nicholls.edu/nursing/,Thibodaux,LA,,5138,US,nursing,aacn
+,Nightingale College,http://nightingale.edu/,Salt Lake City,UT,,5138,US,nursing,aacn
+,North Carolina A&T State University,http://www.ncat.edu/chhs/departments/the-school-of-nursing/index.php,Greensboro,NC,,5138,US,nursing,aacn
+,North Carolina Central University,http://www.nccu.edu/chas/nursing,Durham,NC,,5138,US,nursing,aacn
+,North Central College,http://www.northcentralcollege.edu/program/master-nursing,Naperville,IL,,5138,US,nursing,aacn
+,North Dakota State University,http://ndsu.edu/nursing,FARGO,ND,,5138,US,nursing,aacn
+,North Park University,http://www.northpark.edu/nursing/,Chicago,IL,,5138,US,nursing,aacn
+,Northeastern Illinois University,,Chicago,IL,,5138,US,nursing,aacn
+,Northeastern State University,http://academics.nsuok.edu/healthprofessions/DegreePrograms/Nursing/default.aspx,Muskogee,OK,,5138,US,nursing,aacn
+,Northeastern University,http://www.northeastern.edu/bouve/nursing/,Boston,MA,,5138,US,nursing,aacn
+,Northern Arizona University,http://nau.edu/nursing/,Flagstaff,AZ,,5138,US,nursing,aacn
+,Northern Illinois University,http://chhs.niu.edu/health-studies/,DeKalb,IL,,5138,US,nursing,aacn
+,Northern Kentucky University,http://www.nku.edu/academics/chhs/programs/schools/nursing.html,Highland Heights,KY,,5138,US,nursing,aacn
+,Northern Michigan University,http://www.nmu.edu/nursing/,Marquette,MI,,5138,US,nursing,aacn
+,Northern New Mexico College,http://nnmc.edu/home/academics/schools-and-departments/nursing-health/,Espanola,NM,,5138,US,nursing,aacn
+,Northern State University,http://https://northern.edu/degrees/nursing-bachelors-degree,Aberdeen,SD,,5138,US,nursing,aacn
+,Northwest Nazarene University,http://www.nnu.edu/departments/nursing,Nampa,ID,,5138,US,nursing,aacn
+,Northwest University,http://www.northwestu.edu,Kirkland,WA,,5138,US,nursing,aacn
+,Northwestern College,http://www.nwciowa.edu/nursing,Orange City,IA,,5138,US,nursing,aacn
+,Northwestern Oklahoma State University,http://www.nwosu.edu/school-of-professional-studies/nursing,Alva,OK,,5138,US,nursing,aacn
+,Northwestern State University,http://www.nsula.edu/nursing/,Shreveport,LA,,5138,US,nursing,aacn
+,Norwich University,http://norwich.edu/offices/school-nursing,Northfield,VT,,5138,US,nursing,aacn
+,Notre Dame of Maryland University,http://www.ndm.edu/colleges-and-schools/school-nursing,Baltimore,MD,,5138,US,nursing,aacn
+,Nova Southeastern University,http://nursing.nova.edu/,Ft Lauderdale,FL,,5138,US,nursing,aacn
+,Oakland University,http://oakland.edu/nursing/,Rochester,MI,,5138,US,nursing,aacn
+,Oakwood University,http://https://oakwood.edu/school-of-nursing-health-professions/,Huntsville,AL,,5138,US,nursing,aacn
+,Ohio Northern University,http://www.onu.edu/arts_sciences/nursing,Ada,OH,,5138,US,nursing,aacn
+,Ohio University,http://ohio.edu/chsp/nursing,Athens,OH,,5138,US,nursing,aacn
+,Oklahoma Baptist University,http://www.okbu.edu/nursing/index.html,Shawnee,OK,,5138,US,nursing,aacn
+,Oklahoma Christian University,http://www.oc.edu/academics/nursing/,Edmond,OK,,5138,US,nursing,aacn
+,Oklahoma State University,http://go.okstate.edu/undergraduate-academics/majors/nursing.html,Stillwater,OK,,5138,US,nursing,aacn
+,Oklahoma Wesleyan University,http://www.okwu.edu/academics/department-of-nursing/,BARTLESVILLE,OK,,5138,US,nursing,aacn
+,Old Dominion University,http://odu.edu/nursing,Virginia Beach,VA,,5138,US,nursing,aacn
+,Olivet Nazarene University,http://www.olivet.edu/nursing,Bourbonnais,IL,,5138,US,nursing,aacn
+,Olympic College,http://www.olympic.edu/nursing-division,Bremerton,WA,,5138,US,nursing,aacn
+,Oral Roberts University,http://www.oru.edu/academics/avcon/,Tulsa,OK,,5138,US,nursing,aacn
+,Oregon Health and Science University,http://ohsu.edu/school-of-nursing,Portland,OR,,5138,US,nursing,aacn
+,Ottawa University,http://www.ottawa.edu/nursing,Overland Park,KS,,5138,US,nursing,aacn
+,Otterbein University,http://www.otterbein.edu/nursing/,Westerville,OH,,5138,US,nursing,aacn
+,Pace University,http://www.pace.edu/college-health-professions/department/lienhard-school-nursing,Pleasantville,NY,,5138,US,nursing,aacn
+,Pacific College of Health and Science,http://https://www.pacificcollege.edu/prospective/programs/new-york/nursing,New York,NY,,5138,US,nursing,aacn
+,Pacific Lutheran University,http://www.plu.edu/nursing/,Tacoma,WA,,5138,US,nursing,aacn
+,Palm Beach Atlantic University,http://www.pba.edu/academics/schools/nursing/,West Palm Beach,FL,,5138,US,nursing,aacn
+,Park University,http://www.park.edu/academics/explore-majors-programs/nursing-degree/,Parkville,MO,,5138,US,nursing,aacn
+,Pasco-Hernando State College,http://phsc.edu/index.php/academics/degrees-and-programs/health-sciences,New Port Richey,FL,,5138,US,nursing,aacn
+,Patty Hanks Shelton School of Nursing - McMurry University,http://www.phssn.edu/,Abilene,TX,,5138,US,nursing,aacn
+,Pennsylvania State University,http://harrisburg.psu.edu/behavioral-sciences-education/nursing-bsn,University Park,PA,,5138,US,nursing,aacn
+,Pennsylvania State University-Abington,http://www.abington.psu.edu/academics/majors-at-abington/121-nursing-program,Abington,PA,,5138,US,nursing,aacn
+,Pennsylvania State University-Fayette,http://https://fayette.psu.edu/academics/baccalaureate/nursing,Lemont Furnace,PA,,5138,US,nursing,aacn
+,Pennsylvania State University-Harrisburg,http://harrisburg.psu.edu/behavioral-sciences-education/nursing-bsn,Middletown,PA,,5138,US,nursing,aacn
+,Pennsylvania Western University,http://www.pennwest.edu/academics,Clarion,PA,,5138,US,nursing,aacn
+,PennWest California,http://www.calu.edu/academics/nursing/,California,PA,,5138,US,nursing,aacn
+,PennWest Clarion,http://www.clarion.edu/academics/colleges-and-schools/college-of-education-health-and-human-service,Oil City,PA,,5138,US,nursing,aacn
+,PennWest Edinboro,http://edinboro.edu/academics/schools-and-departments/cshp/departments/nursing/,Edinboro,PA,,5138,US,nursing,aacn
+,Pensacola State College,http://www.pensacolastate.edu/academic-programs/nur-bsn/,Pensacola,FL,,5138,US,nursing,aacn
+,Pepperdine University,http://healthscience.pepperdine.edu/bsn/,Calabasas,CA,,5138,US,nursing,aacn
+,Pfeiffer University,http://www.pfeiffer.edu/academics/programs/bachelor-science-nursing,Misenheimer,NC,,5138,US,nursing,aacn
+,Pikes Peak State College,http://www.pikespeak.edu/programs/nursing/rn-bsn/index.php,Colorado Springs,CO,,5138,US,nursing,aacn
+,Pittsburg State University,http://www.pittstate.edu/academics/academic-programs/fields-of-study.html,Pittsburg,KS,,5138,US,nursing,aacn
+,Plymouth State University,http://campus.plymouth.edu/nursing/,Plymouth,NH,,5138,US,nursing,aacn
+,Point Loma Nazarene University,http://www.pointloma.edu/schools-departments-colleges/school-nursing,San Diego,CA,,5138,US,nursing,aacn
+,Ponce Health Sciences University,http://www.psm.edu/nursing/,Ponce,PR,,5138,US,nursing,aacn
+,Ponce Health Sciences University-St. Louis,http://https://phsu.edu/about/locations-and-visits/st-louis.php,St. Louis,MO,,5138,US,nursing,aacn
+,Prairie View A&M University,http://www.pvamu.edu/nursing,Houston,TX,,5138,US,nursing,aacn
+,Providence College,http://nursing-health-sciences.providence.edu/,Providence,RI,,5138,US,nursing,aacn
+,Provo College,http://www.provocollege.edu/programs/healthcare/nursing/,Provo,UT,,5138,US,nursing,aacn
+,Purdue University,http://www.purdue.edu/hhs/nur/,West Lafayette,IN,,5138,US,nursing,aacn
+,Purdue University Global,http://www.purdueglobal.edu/,West Lafayette,IN,,5138,US,nursing,aacn
+,Purdue University Northwest,http://academics.pnw.edu/nursing/,Hammond,IN,,5138,US,nursing,aacn
+,Queens University of Charlotte,http://www.queens.edu/nursing/,Charlotte,NC,,5138,US,nursing,aacn
+,Quinnipiac University,http://www.qu.edu/schools/nursing/,Hamden,CT,,5138,US,nursing,aacn
+,Radford University,http://www.radford.edu/content/wchs/home/nursing.html,Radford,VA,,5138,US,nursing,aacn
+,Ramapo College of New Jersey,http://www.ramapo.edu/nursing,Mahwah,NJ,,5138,US,nursing,aacn
+,Randolph-Macon College,http://www.rmc.edu/academics/nursing,Ashland,VA,,5138,US,nursing,aacn
+,Rasmussen University,http://www.rasmussen.edu/degrees/nursing/,Bloomington,MN,,5138,US,nursing,aacn
+,Rasmussen University - Ocala,,Ocoee,FL,,5138,US,nursing,aacn
+,Rasmussen University-North Orlando,http://https://www.rasmussen.edu/locations/florida/orlando/,Altamonte Springs,FL,,5138,US,nursing,aacn
+,Regent University,http://www.regent.edu/program/rn-to-b-s-in-nursing/,Virginia Beach,VA,,5138,US,nursing,aacn
+,Regis College,http://www.regiscollege.edu/academics/schools/richard-and-sheila-young-school-nursing,Weston,MA,,5138,US,nursing,aacn
+,Regis University,http://www.regis.edu/RHCHP/Schools/Loretto-Heights-School-of-Nursing.aspx,Denver,CO,,5138,US,nursing,aacn
+,Reinhardt University,http://reinhardt.edu/schools-programs/cauble-school-of-nursing-health-sciences/,Waleska,GA,,5138,US,nursing,aacn
+,Research College of Nursing,http://www.researchcollege.edu,Kansas City,MO,,5138,US,nursing,aacn
+,Rhode Island College,http://ric.edu/academics/undergraduate-degree-programs/nursing-bsn,Providence,RI,,5138,US,nursing,aacn
+,Robert Morris University,http://snhs.rmu.edu/,Moon Township,PA,,5138,US,nursing,aacn
+,Roberts Wesleyan University,http://roberts.edu/departments/school-of-nursing/,Rochester,NY,,5138,US,nursing,aacn
+,Rochester Christian University,http://rochesteru.edu/academics/school-of-nursing/,Rochester Hills,MI,,5138,US,nursing,aacn
+,Rockhurst University,http://www.rockhurst.edu/saint-lukes-college,Kansas City,MO,,5138,US,nursing,aacn
+,Rocky Mountain University of Health Professions,http://rm.edu,Provo,UT,,5138,US,nursing,aacn
+,Rosalind Franklin University of Medicine and Science,http://www.rosalindfranklin.edu/academics/college-of-health-professions/degree-programs/,North Chicago,IL,,5138,US,nursing,aacn
+,Roseman University of Health Sciences-Nevada,http://nursing.roseman.edu/,Henderson,NV,,5138,US,nursing,aacn
+,Rowan University,http://academics.rowan.edu/shp/departments/nursing/index.html,Stratford,NJ,,5138,US,nursing,aacn
+,Rush University,http://www.rushu.rush.edu/college-nursing,Chicago,IL,,5138,US,nursing,aacn
+,Russell Sage College,http://www.sage.edu/academics/schools/health-sciences/,Troy,NY,,5138,US,nursing,aacn
+,Rutgers University-Camden,http://nursing.camden.rutgers.edu/,Camden,NJ,,5138,US,nursing,aacn
+,Rutgers University-Newark,http://nursing.rutgers.edu/,Newark,NJ,,5138,US,nursing,aacn
+,Sacred Heart University,http://sacredheart.edu/academics/colleges--schools/college-of-nursing/,Fairfield,CT,,5138,US,nursing,aacn
+,Saginaw Valley State University,http://svsu.edu/nursing/,University Center,MI,,5138,US,nursing,aacn
+,Saint Anselm College,http://anselm.edu/academics/departments/nursing-department,Manchester,NH,,5138,US,nursing,aacn
+,Saint Anthony College of Nursing,http://www.sacn.edu,Rockford,IL,,5138,US,nursing,aacn
+,Saint Bonaventure University,http://www.sbu.edu/academics/nursing-programs,St. Bonaventure,NY,,5138,US,nursing,aacn
+,Saint Catherine University,http://www.stkate.edu/academics/academic-programs/cfw-nursing,Saint Paul,MN,,5138,US,nursing,aacn
+,Saint Cloud State University,http://www.stcloudstate.edu/nursing/,St. Cloud,MN,,5138,US,nursing,aacn
+,Saint Edward's University,http://www.stedwards.edu,Austin,TX,,5138,US,nursing,aacn
+,Saint Francis College,http://www.sfc.edu/academics/undergraduate/nursing,Brooklyn,NY,,5138,US,nursing,aacn
+,Saint Francis Medical Center College of Nursing,http://www.sfmccon.edu,Peoria,IL,,5138,US,nursing,aacn
+,Saint Francis University,http://www.francis.edu/nursing/,Loretto,PA,,5138,US,nursing,aacn
+,Saint John Fisher University,http://www.sjfc.edu/schools/school-of-nursing/,Rochester,NY,,5138,US,nursing,aacn
+,Saint John's College-Springfield,http://www.sjcs.edu/Home,Springfield,IL,,5138,US,nursing,aacn
+,Saint John's University,http://www.stjohns.edu/academics/programs/nursing-bachelor-science,Queens,NY,,5138,US,nursing,aacn
+,Saint Joseph's College of Maine,http://www.sjcme.edu/academics/programs/bs-nursing/oncampus/,Standish,ME,,5138,US,nursing,aacn
+,Saint Joseph's University-Lancaster,http://sju.edu/academics/nursing,Lancaster,PA,,5138,US,nursing,aacn
+,Saint Joseph's University-New York,http://www.sjcny.edu/brooklyn/academics/programs-departments/nursing,Brooklyn,NY,,5138,US,nursing,aacn
+,Saint Louis University,http://www.slu.edu/nursing,Saint Louis,MO,,5138,US,nursing,aacn
+,Saint Martin's University,http://www.stmartin.edu/academics/programs-schools/college-arts-sciences/areas-of-study/nursing,Lacey,WA,,5138,US,nursing,aacn
+,Saint Mary's College-Indiana,http://www.saintmarys.edu/academics/departments/nursing-science,Notre Dame,IN,,5138,US,nursing,aacn
+,Saint Mary's University,http://stmarytx.edu/academics/programs/nursing/,San Antonio,TX,,5138,US,nursing,aacn
+,Saint Mary's University of Minnesota,http://www.smumn.edu/nursing-major/,Winona,MN,,5138,US,nursing,aacn
+,Saint Mary-of-the-Woods College,http://www.smwc.edu/departments/nursing/,Saint Mary of the Woods,IN,,5138,US,nursing,aacn
+,Saint Olaf College,http://wp.stolaf.edu/nursing/,Northfield,MN,,5138,US,nursing,aacn
+,Saint Peter's University,http://www.saintpeters.edu/academics/school-of-nursing/,Jersey City,NJ,,5138,US,nursing,aacn
+,Saint Petersburg College,http://go.spcollege.edu/Nursing/,Pinellas Park,FL,,5138,US,nursing,aacn
+,Saint Thomas University,http://www.stu.edu/nursing,Miami Gardens,FL,,5138,US,nursing,aacn
+,Saint Vincent College,http://stvincent.edu/academics/undergraduate-programs/programs/nursing-degree.html,Latrobe,PA,,5138,US,nursing,aacn
+,Saint Xavier University,http://www.sxu.edu/academics/sonhs/index.aspx,Chicago,IL,,5138,US,nursing,aacn
+,Salem State University,http://www.salemstate.edu/nursing#degree-723,Salem,MA,,5138,US,nursing,aacn
+,Salem University,http://www.salemu.edu/programs/nursing-programs,Salem,WV,,5138,US,nursing,aacn
+,Salisbury University,http://www.salisbury.edu/nursing/welcome.html,Salisbury,MD,,5138,US,nursing,aacn
+,Salve Regina University,http://salve.edu/nursing,Newport,RI,,5138,US,nursing,aacn
+,Sam Houston State University,http://www.shsu.edu/academics/health-sciences/nursing/,The Woodlands,TX,,5138,US,nursing,aacn
+,Samford University,http://www.samford.edu/nursing,Birmingham,AL,,5138,US,nursing,aacn
+,Samuel Merritt University,http://www.samuelmerritt.edu/nursing,Oakland,CA,,5138,US,nursing,aacn
+,San Diego State University,http://nursing.sdsu.edu/,San Diego,CA,,5138,US,nursing,aacn
+,San Francisco State University,http://www.nursing.sfsu.edu,San Francisco,CA,,5138,US,nursing,aacn
+,San Jose State University,http://www.sjsu.edu/nursing,San Jose,CA,,5138,US,nursing,aacn
+,San Juan Bautista School of Medicine,http://sanjuanbautista.edu/academics/programs/nursing-program,Turabo Gardens Caguas,PR,,5138,US,nursing,aacn
+,Santa Fe College,http://www.sfcollege.edu/programs/5400,Gainesville,FL,,5138,US,nursing,aacn
+,Schreiner University,http://schreiner.edu/nursing/,Kerrville,TX,,5138,US,nursing,aacn
+,Seattle Pacific University,http://spu.edu,Seattle,WA,,5138,US,nursing,aacn
+,Seattle University,http://www.seattleu.edu/nursing/,Seattle,WA,,5138,US,nursing,aacn
+,Sentara College of Health Sciences,http://www.sentara.edu,Chesapeake,VA,,5138,US,nursing,aacn
+,Seton Hall University,http://www.shu.edu/nursing/,Nutley,NJ,,5138,US,nursing,aacn
+,Seton Hill University,http://www.setonhill.edu,Greensburg,PA,,5138,US,nursing,aacn
+,Shenandoah University,http://www.su.edu/nursing/,Winchester,VA,,5138,US,nursing,aacn
+,Shepherd University,http://shepherd.edu/nursing,Shepherdstown,WV,,5138,US,nursing,aacn
+,Shorter University,http://www.shorter.edu/department/nursing/,Rome,GA,,5138,US,nursing,aacn
+,Siena Heights University,http://sienaheights.edu/academics/nursing-pre-licensure-bsn/,Adrian,MI,,5138,US,nursing,aacn
+,Siena University,http://www.siena.edu/academics/schools-departments/departments/baldwin-nursing-program/,Loudonville,NY,,5138,US,nursing,aacn
+,Simmons University,http://simmons.edu/academics/colleges-schools-departments/schools-departments/son,Boston,MA,,5138,US,nursing,aacn
+,Slippery Rock University,http://www.sru.edu/academics/colleges-and-departments/ches/departments/nursing,Slippery Rock,PA,,5138,US,nursing,aacn
+,Sonoma State University,http://www.sonoma.edu/nursing/,Rohnert Park,CA,,5138,US,nursing,aacn
+,South College,http://www.south.edu/programs/school-of-nursing/,Knoxville,TN,,5138,US,nursing,aacn
+,South Dakota State University,http://www.sdstate.edu/nursing,Brookings,SD,,5138,US,nursing,aacn
+,South University,http://www.southuniversity.edu/college-of-nursing-and-public-health#cid-50,Savannah,GA,,5138,US,nursing,aacn
+,South University-Tampa,http://www.southuniversity.edu/tampa,Tampa,FL,,5138,US,nursing,aacn
+,South University-West Palm Beach,http://www.southuniversity.edu/west-palm-beach#lid-82,Royal Palm Beach,FL,,5138,US,nursing,aacn
+,Southeast Missouri State University,http://www.semo.edu/nursing/,Cape Girardeau,MO,,5138,US,nursing,aacn
+,Southeastern Louisiana University,http://southeastern.edu/acad_research/depts/nurs/index.html,Hammond,LA,,5138,US,nursing,aacn
+,Southeastern University,http://seu.edu/academics/cnhs/,Lakeland,FL,,5138,US,nursing,aacn
+,Southern Arkansas University,http://web.saumag.edu/nursing/,Magnolia,AR,,5138,US,nursing,aacn
+,Southern Connecticut State University,http://southernct.edu/academics/schools/health/academic-programs/nursing/index.html/,New Haven,CT,,5138,US,nursing,aacn
+,Southern Illinois University Carbondale,http://academics.siu.edu/health-professions/nursing/,Carbondale,IL,,5138,US,nursing,aacn
+,Southern Illinois University Edwardsville,http://www.siue.edu/nursing/,Edwardsville,IL,,5138,US,nursing,aacn
+,Southern Nazarene University,http://snu.edu/school-of-nursing,Bethany,OK,,5138,US,nursing,aacn
+,Southern New Hampshire University,http://www.snhu.edu/online-degrees/nursing,Manchester,NH,,5138,US,nursing,aacn
+,Southern Oregon University,http://www.ohsu.edu/xd/education/schools/school-of-nursing/about/campuses/ashland-campus-page.cfm,Ashland,OR,,5138,US,nursing,aacn
+,Southern University and A&M College,http://www.subr.edu/suson,Baton Rouge,LA,,5138,US,nursing,aacn
+,Southern Utah University,http://www.suu.edu/nursing/,Cedar City,UT,,5138,US,nursing,aacn
+,Southwest University at El Paso,http://southwestuniversity.edu/colleges/college-of-nursing/,El Paso,TX,,5138,US,nursing,aacn
+,Southwestern Adventist University,http://swau.edu/nursing/,Keene,TX,,5138,US,nursing,aacn
+,Southwestern College,http://http://www.sckans.edu/nursing,Winfield,KS,,5138,US,nursing,aacn
+,Spalding University,http://www.spalding.edu/nursing,Louisville,KY,,5138,US,nursing,aacn
+,Spring Hill College,http://www.shc.edu/academics/freshmen-transfer/majors/nursing/,Mobile,AL,,5138,US,nursing,aacn
+,St. Ambrose University,http://sau.edu/academic-programs/bachelors/nursing/bsn/,Davenport,IA,,5138,US,nursing,aacn
+,Stephens College,http://stephens.edu/program/nursing/,Columbia,MO,,5138,US,nursing,aacn
+,Stevenson University,http://stevenson.edu/academics/undergraduate-programs/nursing/,Owings Mills,MD,,5138,US,nursing,aacn
+,Stockton University,http://www.stockton.edu/health-sciences/index.html,Galloway Township,NJ,,5138,US,nursing,aacn
+,Stony Brook University,http://nursing.stonybrookmedicine.edu/,Stony Brook,NY,,5138,US,nursing,aacn
+,Sullivan University,http://sullivan.edu/college-of-nursing/,Louisville,KY,,5138,US,nursing,aacn
+,Sumner College,http://www.sumnercollege.edu/bachelors-of-science-in-nursing/,Portland,OR,,5138,US,nursing,aacn
+,SUNY Brockport,http://www.brockport.edu/academics/nursing/,Brockport,NY,,5138,US,nursing,aacn
+,SUNY Downstate Health Sciences University,http://www.downstate.edu/education-training/college-of-nursing/,Brooklyn,NY,,5138,US,nursing,aacn
+,SUNY Empire State College,http://www.esc.edu/nursingalliedhealth/,Saratoga Springs,NY,,5138,US,nursing,aacn
+,SUNY Plattsburgh,http://www.plattsburgh.edu/academics/schools/ehhs/nursing/index.html,Plattsburgh,NY,,5138,US,nursing,aacn
+,SUNY Polytechnic Institute,http://sunypoly.edu/academics/majors-and-programs/nursing.html,Utica,NY,,5138,US,nursing,aacn
+,SUNY Upstate Medical University,http://upstate.edu/con/,Syracuse,NY,,5138,US,nursing,aacn
+,Tarleton State University,http://tarleton.edu/nursing,Stephenville,TX,,5138,US,nursing,aacn
+,Taylor University,,Upland,IN,,5138,US,nursing,aacn
+,Teachers College,http://www.tc.columbia.edu/health-and-behavior-studies/nursing-education/,New York,NY,,5138,US,nursing,aacn
+,Temple University,http://temple.edu/academics/degree-programs/nursing-major-hp-nurs-bsnu,Philadelphia,PA,,5138,US,nursing,aacn
+,Tennessee State University,http://www.tnstate.edu/nursing,Nashville,TN,,5138,US,nursing,aacn
+,Tennessee Technological University,http://www.tntech.edu/nursing,Cookeville,TN,,5138,US,nursing,aacn
+,Tennessee Wesleyan University,http://www.tnwesleyan.edu/nursing-landing-page/nursing.php,Knoxville,TN,,5138,US,nursing,aacn
+,Texas A&M University Health Science Center,http://nursing.tamu.edu,Bryan,TX,,5138,US,nursing,aacn
+,Texas A&M University-Central Texas,http://tamuct.edu/coas/nursing.html,Killeen,TX,,5138,US,nursing,aacn
+,Texas A&M University-Corpus Christi,http://tamucc.edu/nursing-and-health-sciences/,Corpus Christi,TX,,5138,US,nursing,aacn
+,Texas A&M University-Texarkana,http://tamut.edu/academic-programs/nursing/index.html,Texarkana,TX,,5138,US,nursing,aacn
+,Texas A&M University-Victoria,http://uhv.edu/nursing/,Victoria,TX,,5138,US,nursing,aacn
+,Texas Christian University,http://harriscollege.tcu.edu/,Fort Worth,TX,,5138,US,nursing,aacn
+,Texas Lutheran University,http://www.tlu.edu/academics/programs/nursing/,Sequin,TX,,5138,US,nursing,aacn
+,Texas State University,http://www.nursing.txstate.edu/,Round Rock,TX,,5138,US,nursing,aacn
+,Texas Tech University Health Sciences Center,http://www.ttuhsc.edu/nursing/,Lubbock,TX,,5138,US,nursing,aacn
+,Texas Tech University Health Sciences Center-El Paso,http://elpaso.ttuhsc.edu/son/default.aspx,El Paso,TX,,5138,US,nursing,aacn
+,Texas Wesleyan University,http://txwes.edu/academics/health-professions/,Fort Worth,TX,,5138,US,nursing,aacn
+,Texas Woman’s University,http://www.twu.edu/nursing/,Denton,TX,,5138,US,nursing,aacn
+,The Catholic University of America,http://nursing.catholic.edu/,Washington,DC,,5138,US,nursing,aacn
+,The Christ College of Nursing and Health Sciences,http://www.thechristcollege.edu,Cincinnati,OH,,5138,US,nursing,aacn
+,The Citadel,http://citadel.edu/nursing/,Charleston,SC,,5138,US,nursing,aacn
+,The College of New Jersey,http://nursing.tcnj.edu/,Ewing,NJ,,5138,US,nursing,aacn
+,The College of Saint Scholastica,http://www.css.edu/academics/school-of-nursing.html,Duluth,MN,,5138,US,nursing,aacn
+,The Ohio State University,http://nursing.osu.edu/,Columbus,OH,,5138,US,nursing,aacn
+,The University of Akron,http://www.uakron.edu/nursing/,Akron,OH,,5138,US,nursing,aacn
+,The University of Alabama,http://nursing.ua.edu/,Tuscaloosa,AL,,5138,US,nursing,aacn
+,The University of Alabama in Huntsville,http://www.uah.edu/nursing,Huntsville,AL,,5138,US,nursing,aacn
+,The University of Findlay,http://www.findlay.edu/health-professions/nursing/,Findlay,OH,,5138,US,nursing,aacn
+,The University of Olivet,http://uolivet.edu/program/nursing/,Olivet,MI,,5138,US,nursing,aacn
+,The University of South Dakota,http://www.usd.edu/nursing,Sioux Falls,SD,,5138,US,nursing,aacn
+,The University of Tampa,http://ut.edu/nursing/,Tampa,FL,,5138,US,nursing,aacn
+,The University of Texas at San Antonio,http://nursing.uthscsa.edu/,San Antonio,TX,,5138,US,nursing,aacn
+,Thomas Edison State University,http://tesu.edu/degrees-programs/schools/nursing/index.php,Trenton,NJ,,5138,US,nursing,aacn
+,Thomas Jefferson University,http://www.jefferson.edu/academics/colleges-schools-institutes/nursing.html,Philadelphia,PA,,5138,US,nursing,aacn
+,Toccoa Falls College,http://tfc.edu/academics/schools/fetterman-school-of-nursing/,Toccoa Falls,GA,,5138,US,nursing,aacn
+,Touro University,http://tun.touro.edu/programs/nursing/,Henderson,NV,,5138,US,nursing,aacn
+,Touro University California,http://cehs.tu.edu/nursing/,Vallejo,CA,,5138,US,nursing,aacn
+,Towson University,http://www.towson.edu/chp/departments/nursing/,Towson,MD,,5138,US,nursing,aacn
+,Trine University,http://www.trine.edu,Angola,IN,,5138,US,nursing,aacn
+,Trinity Christian College,http://www.trnty.edu/academics/nursing/nursing.html,Palos Heights,IL,,5138,US,nursing,aacn
+,Trinity College of Nursing and Health Sciences,http://www.trinitycollegeqc.edu,Rock Island,IL,,5138,US,nursing,aacn
+,Trinity Washington University,http://www.trinitydc.edu/nursing-health/,Washington,DC,,5138,US,nursing,aacn
+,Troy University,http://troy.edu/academics/colleges-schools/health-human-services/departments/school-of-nursing/,Troy,AL,,5138,US,nursing,aacn
+,Truman State University,http://www.truman.edu/majors-programs/majors-minors/nursing-major/,Kirksville,MO,,5138,US,nursing,aacn
+,Tulane University,http://nursing.tulane.edu/,New Orleans,LA,,5138,US,nursing,aacn
+,Tuskegee University,http://tuskegee.edu/programs-courses/colleges-schools/sonah/nursing,Tuskegee,AL,,5138,US,nursing,aacn
+,Uniformed Services University of the Health Sciences,http://nursing.usuhs.edu,Bethesda,MD,,5138,US,nursing,aacn
+,Union Adventist University,http://www.ucollege.edu/nursing,Lincoln,NE,,5138,US,nursing,aacn
+,Union Commonwealth University,http://www.unionky.edu/academics/undergraduate-programs#EdnaJenkinsMannSchoolofNursing,Barbourville,KY,,5138,US,nursing,aacn
+,Union University-Tennessee,http://www.uu.edu/academics/son/,Jackson,TN,,5138,US,nursing,aacn
+,United States University,http://www.usuniversity.edu/colleges/nursing-health-sciences,Sandy Springs,GA,,5138,US,nursing,aacn
+,Unitek College,http://www.unitekcollege.edu/programs/bachelors-degree-nursing/,Fremont,CA,,5138,US,nursing,aacn
+,Unitek College Bakersfield,,Bakersfield,CA,,5138,US,nursing,aacn
+,Unitek College Concord,,Concord,CA,,5138,US,nursing,aacn
+,Unitek College Reno,,Reno,NV,,5138,US,nursing,aacn
+,Unitek College Sacramento,,Sacramento,CA,,5138,US,nursing,aacn
+,Universidad Central de Bayamon,http://www.ucb.edu.pr,Bayamon,PR,,5138,US,nursing,aacn
+,Universidad de Puerto Rico en Arecibo,http://upra.edu/,Arecibo,PR,,5138,US,nursing,aacn
+,University at Buffalo-SUNY,http://nursing.buffalo.edu/,Buffalo,NY,,5138,US,nursing,aacn
+,University of Alabama at Birmingham,http://www.uab.edu/nursing/home/,Birmingham,AL,,5138,US,nursing,aacn
+,University of Alaska Anchorage,http://www.uaa.alaska.edu/schoolofnursing/,Anchorage,AK,,5138,US,nursing,aacn
+,University of Arizona,http://www.nursing.arizona.edu/,Tucson,AZ,,5138,US,nursing,aacn
+,University of Arizona Global Campus,http://www.uagc.edu/degrees/bachelors-nursing-online,Chandler,AZ,,5138,US,nursing,aacn
+,University of Arkansas at Pine Bluff,http://uapb.edu/academics/sas/dept-of-nursing/,Pine Bluff,AR,,5138,US,nursing,aacn
+,University of Arkansas for Medical Sciences,http://nursing.uams.edu/,Little Rock,AR,,5138,US,nursing,aacn
+,University of Arkansas-Fayetteville,http://nurs.uark.edu/,Fayetteville,AR,,5138,US,nursing,aacn
+,University of Arkansas-Fort Smith,http://uafs.edu/academics/colleges-and-schools/chehs/health-sciences/departments/nursing/index.php,Fort Smith,AR,,5138,US,nursing,aacn
+,University of Bridgeport,http://www.bridgeport.edu/academics/undergraduate/rn-bsn/,Bridgeport,CT,,5138,US,nursing,aacn
+,University of California-Davis,http://health.ucdavis.edu/nursing/,Sacramento,CA,,5138,US,nursing,aacn
+,University of California-Irvine,http://www.nursing.uci.edu,Irvine,CA,,5138,US,nursing,aacn
+,University of California-Los Angeles,http://www.nursing.ucla.edu,Los Angeles,CA,,5138,US,nursing,aacn
+,University of California-San Francisco,http://nursing.ucsf.edu/,San Francisco,CA,,5138,US,nursing,aacn
+,University of Central Arkansas,http://www.uca.edu/nursing/,Conway,AR,,5138,US,nursing,aacn
+,University of Central Florida,http://nursing.ucf.edu/,Orlando,FL,,5138,US,nursing,aacn
+,University of Central Missouri,http://www.ucmo.edu/nursing/,Warrensburg,MO,,5138,US,nursing,aacn
+,University of Central Oklahoma,http://uco.edu/cms/academics/nursing/,Edmond,OK,,5138,US,nursing,aacn
+,University of Cincinnati,http://nursing.uc.edu/,Cincinnati,OH,,5138,US,nursing,aacn
+,University of Colorado-Anschutz,http://https://nursing.cuanschutz.edu/,Aurora,CO,,5138,US,nursing,aacn
+,University of Colorado-Colorado Springs,http://www.uccs.edu/bethel/,Colorado Springs,CO,,5138,US,nursing,aacn
+,University of Connecticut,http://www.nursing.uconn.edu,Storrs,CT,,5138,US,nursing,aacn
+,University of Dayton,http://udayton.edu/education/departments_and_programs/hss/programs/undergraduate/nursing/index.php,Dayton,OH,,5138,US,nursing,aacn
+,University of Delaware,http://www.udel.edu/nursing/,Newark,DE,,5138,US,nursing,aacn
+,University of Detroit Mercy,http://healthprofessions.udmercy.edu/academics/nursing/,Detroit,MI,,5138,US,nursing,aacn
+,University of Dubuque,http://dbq.edu/Academics/UndergraduatePrograms/Nursing/,Dubuque,IA,,5138,US,nursing,aacn
+,University of Evansville,http://www.evansville.edu/majors/nursing/,Evansville,IN,,5138,US,nursing,aacn
+,University of Florida,http://nursing.ufl.edu,Gainesville,FL,,5138,US,nursing,aacn
+,University of Hartford,http://www.hartford.edu/academics/schools-colleges/enhp/default.aspx,West Hartford,CT,,5138,US,nursing,aacn
+,University of Hawaii at Hilo,http://hilo.hawaii.edu/depts/nursing/,Hilo,HI,,5138,US,nursing,aacn
+,University of Hawaii at Manoa,http://www.nursing.hawaii.edu,Honolulu,HI,,5138,US,nursing,aacn
+,University of Holy Cross,http://uhcno.edu/nhs/index.php,New Orleans,LA,,5138,US,nursing,aacn
+,University of Houston,http://www.uh.edu/nursing/,Sugar Land,TX,,5138,US,nursing,aacn
+,University of Houston-Downtown,http://www.uhd.edu,Houston,TX,,5138,US,nursing,aacn
+,University of Illinois Chicago,http://nursing.uic.edu/,Chicago,IL,,5138,US,nursing,aacn
+,University of Indianapolis,http://www.uindy.edu/nursing,Indianapolis,IN,,5138,US,nursing,aacn
+,University of Iowa,http://www.nursing.uiowa.edu,Iowa City,IA,,5138,US,nursing,aacn
+,University of Kansas,http://nursing.kumc.edu/,Kansas City,KS,,5138,US,nursing,aacn
+,University of Kentucky,http://www.uky.edu/nursing/,Lexington,KY,,5138,US,nursing,aacn
+,University of Louisiana at Lafayette,http://www.nursing.louisiana.edu,Lafayette,LA,,5138,US,nursing,aacn
+,University of Louisiana at Monroe,http://www.ulm.edu/nursing,Monroe,LA,,5138,US,nursing,aacn
+,University of Louisville,http://www.louisville.edu/nursing,Louisville,KY,,5138,US,nursing,aacn
+,University of Lynchburg,http://www.lynchburg.edu/academics/majors-and-minors/nursing/,Lynchburg,VA,,5138,US,nursing,aacn
+,University of Maine,http://www.umaine.edu/nursing,Orono,ME,,5138,US,nursing,aacn
+,University of Maine-Fort Kent,http://www.umfk.edu/academics/programs/nursing/,Fort Kent,ME,,5138,US,nursing,aacn
+,University of Mary,http://www.umary.edu/academics/programs/nursing.php,Bismarck,ND,,5138,US,nursing,aacn
+,University of Mary Hardin-Baylor,http://umhb.edu/programs/nursing,Belton,TX,,5138,US,nursing,aacn
+,University of Mary Washington,http://cas.umw.edu/nursing/,Fredericksburg,VA,,5138,US,nursing,aacn
+,University of Maryland,http://nursing.umaryland.edu/,Baltimore,MD,,5138,US,nursing,aacn
+,University of Maryland Global Campus,http://https://www.umgc.edu/academic-programs/bachelors-degrees/nursing-major.cfm,Adelphi,MD,,5138,US,nursing,aacn
+,University of Massachusetts-Amherst,http://www.umass.edu/nursing,Amherst,MA,,5138,US,nursing,aacn
+,University of Massachusetts-Boston,http://umb.edu/academics/program-finder/nursing-bs/,Boston,MA,,5138,US,nursing,aacn
+,University of Massachusetts-Chan Medical School,http://www.umassmed.edu/gsn,Worcester,MA,,5138,US,nursing,aacn
+,University of Massachusetts-Dartmouth,http://www.umassd.edu/nursing,North Dartmouth,MA,,5138,US,nursing,aacn
+,University of Massachusetts-Lowell,http://www.uml.edu/Health-Sciences/Nursing/default.aspx,Lowell,MA,,5138,US,nursing,aacn
+,University of Memphis,http://nursing.memphis.edu,Memphis,TN,,5138,US,nursing,aacn
+,University of Miami,http://www.sonhs.miami.edu/,Coral Gables,FL,,5138,US,nursing,aacn
+,University of Michigan,http://www.nursing.umich.edu,Ann Arbor,MI,,5138,US,nursing,aacn
+,University of Michigan-Flint,http://www.umflint.edu/nursing,Flint,MI,,5138,US,nursing,aacn
+,University of Minnesota,http://www.nursing.umn.edu,Minneapolis,MN,,5138,US,nursing,aacn
+,University of Mississippi Medical Center,http://www.umc.edu/son,Jackson,MS,,5138,US,nursing,aacn
+,University of Missouri-Columbia,http://nursing.missouri.edu,Columbia,MO,,5138,US,nursing,aacn
+,University of Missouri-Kansas City,http://sonhs.umkc.edu/,Kansas City,MO,,5138,US,nursing,aacn
+,University of Missouri-Saint Louis,http://WWW.UMSL.edu/divisions/nursing/,St. Louis,MO,,5138,US,nursing,aacn
+,University of Mobile,http://umobile.edu/academics/school-of-nursing/,Mobile,AL,,5138,US,nursing,aacn
+,University of Montevallo,http://montevallo.edu/academics/colleges/college-of-health-professions/nursing/,Montevallo,AL,,5138,US,nursing,aacn
+,University of Mount Olive,http://umo.edu/nursing/,Mount Olive,NC,,5138,US,nursing,aacn
+,University of Mount Saint Vincent,http://mountsaintvincent.edu/academics/undergraduate-college/areas-of-study/all-areas-of-study/nursing/,Riverdale,NY,,5138,US,nursing,aacn
+,University of Mount Union,http://www.mountunion.edu/nursing-major,Alliance,OH,,5138,US,nursing,aacn
+,University of Nebraska Medical Center,http://www.unmc.edu/nursing/,Omaha,NE,,5138,US,nursing,aacn
+,University of Nevada-Las Vegas,http://www.unlv.edu/nursing,Las Vegas,NV,,5138,US,nursing,aacn
+,University of Nevada-Reno,http://unr.edu/nursing,Reno,NV,,5138,US,nursing,aacn
+,University of New Hampshire,http://chhs.unh.edu/nursing,Durham,NH,,5138,US,nursing,aacn
+,University of New Mexico,http://hsc.unm.edu/college-of-nursing/,Albuquerque,NM,,5138,US,nursing,aacn
+,University of North Alabama,http://una.edu/nursing/,Florence,AL,,5138,US,nursing,aacn
+,University of North Carolina-Chapel Hill,http://nursing.unc.edu/,Chapel Hill,NC,,5138,US,nursing,aacn
+,University of North Carolina-Charlotte,http://nursing.uncc.edu,Charlotte,NC,,5138,US,nursing,aacn
+,University of North Carolina-Greensboro,http://nursing.uncg.edu/,Greensboro,NC,,5138,US,nursing,aacn
+,University of North Carolina-Pembroke,http://www.uncp.edu/departments/nursing,Pembroke,NC,,5138,US,nursing,aacn
+,University of North Carolina-Wilmington,http://www.uncw.edu/son,Wilmington,NC,,5138,US,nursing,aacn
+,University of North Dakota,http://nursing.und.edu/,Grand Forks,ND,,5138,US,nursing,aacn
+,University of North Florida,http://www.unf.edu/brooks/nursing/,Jacksonville,FL,,5138,US,nursing,aacn
+,University of North Texas Health Science Center,http://unthsc.edu/college-of-nursing/,Fort Worth,TX,,5138,US,nursing,aacn
+,University of Northern Colorado,http://www.unco.edu/nhs/nursing,Greeley,CO,,5138,US,nursing,aacn
+,University of Northwestern-Saint Paul,http://unwsp.edu/academics/schools-and-departments/school-of-nursing/,Saint Paul,MN,,5138,US,nursing,aacn
+,University of Oklahoma,http://nursing.ouhsc.edu/,Oklahoma City,OK,,5138,US,nursing,aacn
+,University of Pennsylvania,http://www.nursing.upenn.edu,Philadelphia,PA,,5138,US,nursing,aacn
+,University of Phoenix,http://phoenix.edu/nursing,Phoenix,AZ,,5138,US,nursing,aacn
+,University of Pikeville,http://upike.edu/SON,Pikeville,KY,,5138,US,nursing,aacn
+,University of Pittsburgh,http://nursing.pitt.edu,Pittsburgh,PA,,5138,US,nursing,aacn
+,University of Portland,http://nursing.up.edu/,Portland,OR,,5138,US,nursing,aacn
+,University of Providence,http://www.uprovidence.edu/academics/explore-programs/nursing/,Great Falls,MT,,5138,US,nursing,aacn
+,University of Puerto Rico,http://uprrp.edu/english/,San Juan,PR,,5138,US,nursing,aacn
+,University of Puerto Rico-Humacao,http://uprh.edu/,Humacao,PR,,5138,US,nursing,aacn
+,University of Puerto Rico-Mayaguez,http://uprm.edu/portada/,Mayaguez,PR,,5138,US,nursing,aacn
+,University of Rhode Island,http://www.uri.edu/nursing,Kingston,RI,,5138,US,nursing,aacn
+,University of Rochester,http://son.rochester.edu,Rochester,NY,,5138,US,nursing,aacn
+,University of Saint Augustine for Health Sciences,http://ww.usa.edu/college-health-sciences/school-of-nursing/,Saint Augustine,FL,,5138,US,nursing,aacn
+,University of Saint Francis-Illinois,http://www.stfrancis.edu/leach-college-of-nursing/,Joliet,IL,,5138,US,nursing,aacn
+,University of Saint Francis-Indiana,http://sf.edu/programs/nursing-bsn/,Fort Wayne,IN,,5138,US,nursing,aacn
+,University of Saint Joseph,http://usj.edu/academics/schools/school-of-health-natural-sciences/nursing/,West Hartford,CT,,5138,US,nursing,aacn
+,University of Saint Mary,http://stmary.edu/nursing,Leavenworth,KS,,5138,US,nursing,aacn
+,University of Saint Thomas-Minnesota,http://health.stthomas.edu/nursing/index.html,St. Paul,MN,,5138,US,nursing,aacn
+,University of Saint Thomas-Texas,http://health.stthomas.edu/nursing/index.html,Houston,TX,,5138,US,nursing,aacn
+,University of San Diego,http://www.sandiego.edu/nursing/,San Diego,CA,,5138,US,nursing,aacn
+,University of San Francisco,http://www.usfca.edu/nursing,San Francisco,CA,,5138,US,nursing,aacn
+,University of Scranton,http://scranton.edu/academics/pcps/nursing/index.shtml,Scranton,PA,,5138,US,nursing,aacn
+,University of Sioux Falls,http://usiouxfalls.edu/academics/all-degrees/nursing,Sioux Falls,SD,,5138,US,nursing,aacn
+,University of South Alabama,http://southalabama.edu/colleges/con/,Mobile,AL,,5138,US,nursing,aacn
+,University of South Carolina,http://sc.edu/study/colleges_schools/nursing/,Columbia,SC,,5138,US,nursing,aacn
+,University of South Carolina Aiken,http://www.usca.edu/nursing/,Aiken,SC,,5138,US,nursing,aacn
+,University of South Carolina Beaufort,http://uscb.edu/academics/nursing/index.html,Bluffton,SC,,5138,US,nursing,aacn
+,University of South Carolina Upstate,http://www.uscupstate.edu,Spartanburg,SC,,5138,US,nursing,aacn
+,University of South Florida,http://health.usf.edu/nursing/,Tampa,FL,,5138,US,nursing,aacn
+,University of Southern California,http://nursing.usc.edu,Los Angeles,CA,,5138,US,nursing,aacn
+,University of Southern Indiana,http://www.usi.edu/health/nursing,Evansville,IN,,5138,US,nursing,aacn
+,University of Southern Maine,http://www.usm.maine.edu/nursing,Portland,ME,,5138,US,nursing,aacn
+,University of Southern Mississippi,http://usm.edu/professional-nursing-practice/index.php,Hattiesburg,MS,,5138,US,nursing,aacn
+,University of Tennessee-Chattanooga,http://utc.edu/nursing/,Chattanooga,TN,,5138,US,nursing,aacn
+,University of Tennessee-Health Science Center,http://www.uthsc.edu/nursing,Memphis,TN,,5138,US,nursing,aacn
+,University of Tennessee-Knoxville,http://www.nursing.utk.edu/,Knoxville,TN,,5138,US,nursing,aacn
+,University of Tennessee-Southern,http://utsouthern.edu/academics/jeanette-m-travis-school-of-nursing-and-health-sciences/nursing/,Pulaski,TN,,5138,US,nursing,aacn
+,University of Texas at Tyler,http://www.uttyler.edu/nursing,Tyler,TX,,5138,US,nursing,aacn
+,University of Texas Health Science Center-Houston,http://nursing.uth.edu/,Houston,TX,,5138,US,nursing,aacn
+,University of Texas Medical Branch,http://nursing.utmb.edu,Galveston,TX,,5138,US,nursing,aacn
+,University of Texas Permian Basin,http://www.utpb.edu/nursing,Odessa,TX,,5138,US,nursing,aacn
+,University of Texas Rio Grande Valley,http://www.utrgv.edu/nursing,Edinburg,TX,,5138,US,nursing,aacn
+,University of Texas-Arlington,http://www.uta.edu/nursing,Arlington,TX,,5138,US,nursing,aacn
+,University of Texas-Austin,http://www.utexas.edu/nursing/,Austin,TX,,5138,US,nursing,aacn
+,University of Texas-El Paso,http://www.utep.edu/nursing/,El Paso,TX,,5138,US,nursing,aacn
+,University of the Cumberlands,http://www.ucumberlands.edu/nursing,Williamsburg,KY,,5138,US,nursing,aacn
+,University of the District of Columbia,http://www.udc.edu/causes/nursing,Washington,DC,,5138,US,nursing,aacn
+,University of the Incarnate Word,http://uiw.edu/snhp,San Antonio,TX,,5138,US,nursing,aacn
+,University of the Pacific,http://healthsciences.pacific.edu/healthsciences/programs/nursing,Sacramento,CA,,5138,US,nursing,aacn
+,University of the Virgin Islands,http://https://www.uvi.edu/academics/nursing/programs/default.aspx,Kingshill,VI,,5138,US,nursing,aacn
+,University of Toledo,http://www.utoledo.edu/nursing/index.html,Toledo,OH,,5138,US,nursing,aacn
+,University of Utah,http://nursing.utah.edu/,Salt Lake City,UT,,5138,US,nursing,aacn
+,University of Vermont,http://uvm.edu/~cnhs/nursing/,Burlington,VT,,5138,US,nursing,aacn
+,University of Virginia,http://www.nursing.virginia.edu/,Charlottesville,VA,,5138,US,nursing,aacn
+,University of Virginia's College at Wise,http://www.uvawise.edu/academics/departments/nursing,Wise,VA,,5138,US,nursing,aacn
+,University of Washington,http://nursing.uw.edu/,SEATTLE,WA,,5138,US,nursing,aacn
+,University of Washington Bothell,http://www.uwb.edu/nhs,Bothell,WA,,5138,US,nursing,aacn
+,University of Washington Tacoma,http://www.tacoma.uw.edu/nursing,Tacoma,WA,,5138,US,nursing,aacn
+,University of West Florida,http://onlinedegrees.uwf.edu/online-degrees/rn-to-bsn-online/,Pensacola,FL,,5138,US,nursing,aacn
+,University of West Georgia,http://www.westga.edu/academics/nursing/index.php,Carrollton,GA,,5138,US,nursing,aacn
+,University of Wisconsin-Eau Claire,http://www.uwec.edu/academics/college-nursing-health-sciences/,Eau Claire,WI,,5138,US,nursing,aacn
+,University of Wisconsin-Green Bay,http://www.uwgb.edu/nursing/,Green Bay,WI,,5138,US,nursing,aacn
+,University of Wisconsin-Madison,http://nursing.wisc.edu/,Madison,WI,,5138,US,nursing,aacn
+,University of Wisconsin-Milwaukee,http://uwm.edu/nursing/,Milwaukee,WI,,5138,US,nursing,aacn
+,University of Wisconsin-Oshkosh,http://uwosh.edu/con/,Oshkosh,WI,,5138,US,nursing,aacn
+,University of Wyoming,http://www.uwyo.edu/nursing/,Laramie,WY,,5138,US,nursing,aacn
+,Ursuline College,http://ursuline.edu/academics/find-a-program?field=nursing,Pepper Pike,OH,,5138,US,nursing,aacn
+,Utica University,http://www.utica.edu/academics/programs/nursing/,Utica,NY,,5138,US,nursing,aacn
+,Valdosta State University,http://www.valdosta.edu/nursing/,Valdosta,GA,,5138,US,nursing,aacn
+,Valparaiso University,http://www.valpo.edu/nursing,Valparaiso,IN,,5138,US,nursing,aacn
+,Vanderbilt University,http://nursing.vanderbilt.edu,Nashville,TN,,5138,US,nursing,aacn
+,Vanguard University of Southern California,http://www.vanguard.edu/academics/academic-programs/nursing,Costa Mesa,CA,,5138,US,nursing,aacn
+,Vermont State University,http://vermontstate.edu/nursing-programs/,Castleton,VT,,5138,US,nursing,aacn
+,Villanova University,http://www.nursing.villanova.edu,Villanova,PA,,5138,US,nursing,aacn
+,Virginia Commonwealth University,http://nursing.vcu.edu/,Richmond,VA,,5138,US,nursing,aacn
+,Virginia State University,http://www.cnhs.vsu.edu/departments/nursing/index.php,Petersburg,VA,,5138,US,nursing,aacn
+,Viterbo University,http://www.viterbo.edu/school-nursing,LaCrosse,WI,,5138,US,nursing,aacn
+,Wagner College,http://wagner.edu/nursing/,Staten Island,NY,,5138,US,nursing,aacn
+,Wake Forest University School of Medicine,http://school.wakehealth.edu/education-and-training/nursing-programs,Winston-Salem,NC,,5138,US,nursing,aacn
+,Walden University,http://www.waldenu.edu/about/colleges-schools/college-of-health-sciences/school-of-nursing,Minneapolis,MN,,5138,US,nursing,aacn
+,Walla Walla University,http://wallawalla.edu/academics/areas-of-study/nursing,Portland,OR,,5138,US,nursing,aacn
+,Walsh University,http://www.walsh.edu/nursing,North Canton,OH,,5138,US,nursing,aacn
+,Warner Pacific University,http://www.warnerpacific.edu/academics/majors/nursing/,Portland,OR,,5138,US,nursing,aacn
+,Washburn University,http://washburn.edu/academics/college-schools/nursing/index.html,Topeka,KS,,5138,US,nursing,aacn
+,Washington & Jefferson College,http://www.washjeff.edu/programs/nursing/,Washington,PA,,5138,US,nursing,aacn
+,Washington Adventist University,http://www.wau.edu/edyth-t-james-department-of-nursing,Takoma Park,MD,,5138,US,nursing,aacn
+,Washington State University,http://www.nursing.wsu.edu,Spokane,WA,,5138,US,nursing,aacn
+,Washington State University - Tri-Cities,http://tricities.wsu.edu/nursing/,Richland,WA,,5138,US,nursing,aacn
+,Washington State University Vancouver,http://nursing.vancouver.wsu.edu/,Vancouver,WA,,5138,US,nursing,aacn
+,Wayne State University,http://nursing.wayne.edu/,Detroit,MI,,5138,US,nursing,aacn
+,Waynesburg University,http://waynesburg.edu/nursing,Waynesburg,PA,,5138,US,nursing,aacn
+,Weber State University,http://weber.edu/Nursing/default.html,Ogden,UT,,5138,US,nursing,aacn
+,Wesleyan College-Georgia,http://www.wesleyancollege.edu/academics/undergraduate/majorsminors/Nursing-Major-Home-Page.cfm,Macon,GA,,5138,US,nursing,aacn
+,West Chester University,http://www.wcupa.edu/healthSciences/nursing/,West Chester,PA,,5138,US,nursing,aacn
+,West Coast University,http://westcoastuniversity.edu/programs/bachelor-science-nursing-bsn.html,Irvine,CA,,5138,US,nursing,aacn
+,West Coast University Dallas,,Denton,TX,,5138,US,nursing,aacn
+,West Liberty University,http://westliberty.edu/health-sciences/academics/nursing/,West Liberty,WV,,5138,US,nursing,aacn
+,West Texas A&M University,http://wtamu.edu/academics/nursing.aspx,Canyon,TX,,5138,US,nursing,aacn
+,West Virginia Institute of Technology,http://wvutech.edu/,Montgomery,WV,,5138,US,nursing,aacn
+,West Virginia State University,http://wvstateu.edu/college-of-professional-studies/degree-program/nursing/,Institute,WV,,5138,US,nursing,aacn
+,West Virginia University,http://nursing.hsc.wvu.edu/,Morgantown,WV,,5138,US,nursing,aacn
+,West Virginia Wesleyan College,http://www.wvwc.edu/programs/nursing/,Buckhannon,WV,,5138,US,nursing,aacn
+,Western Carolina University,http://wcu.edu/learn/departments-schools-colleges/HHS/nursing/,Cullowhee,NC,,5138,US,nursing,aacn
+,Western Connecticut State University,http://wcsu.edu/nursing/,Danbury,CT,,5138,US,nursing,aacn
+,Western Governors University,http://www.wgu.edu/online_health_professions_degrees/onli,Salt Lake City,UT,,5138,US,nursing,aacn
+,Western Illinois University,http://www.wiu.edu/nursing,Macomb,IL,,5138,US,nursing,aacn
+,Western Kentucky University,http://www.wku.edu/nursing/index.php,Bowling Green,KY,,5138,US,nursing,aacn
+,Western Michigan University,http://wmich.edu/nursing,Kalamazoo,MI,,5138,US,nursing,aacn
+,Western New Mexico University,http://wnmu.edu/academic/nursing/,Silver City,NM,,5138,US,nursing,aacn
+,Western University of Health Sciences,http://westernu.edu/nursing/,Pomona,CA,,5138,US,nursing,aacn
+,Western Washington University,http://wce.wwu.edu/bsn/rn-bsn-program,Bellingham,WA,,5138,US,nursing,aacn
+,Westfield State University,http://westfield.ma.edu/academics/degrees/nursing-degree-bsn,Westfield,MA,,5138,US,nursing,aacn
+,Westminster College-Pennsylvania,http://www.westminster.edu/academics/majors-programs/nursing/,New Wilmington,PA,,5138,US,nursing,aacn
+,Westminster University-Utah,http://westminsteru.edu/academics/programs/nursing/index.html,Salt Lake City,UT,,5138,US,nursing,aacn
+,Westmont College,http://www.westmont.edu/nursing,Santa Barbara,CA,,5138,US,nursing,aacn
+,Wheaton College,http://wheatoncollege.edu/academics/programs/nursing/,Norton,MA,,5138,US,nursing,aacn
+,Wheeling University,http://wheeling.edu/academics/nursing/,Wheeling,WV,,5138,US,nursing,aacn
+,Wichita State University,http://www.wichita.edu/nursing,Wichita,KS,,5138,US,nursing,aacn
+,Widener University,http://www.widener.edu/academics/colleges-schools/school-nursing,Chester,PA,,5138,US,nursing,aacn
+,Wilkes University,http://wilkes.edu/academics/colleges/school-of-nursing/index.aspx,Wilkes-Barre,PA,,5138,US,nursing,aacn
+,William Carey University-Hattiesburg,http://wmcarey.edu/program/nursing,Hattiesburg,MS,,5138,US,nursing,aacn
+,William Jewell College,http://jewell.edu/nursing,Liberty,MO,,5138,US,nursing,aacn
+,William Paterson University,http://www.wpunj.edu/cosh/departments/nursing/,Wayne,NJ,,5138,US,nursing,aacn
+,William Penn University,http://www.wmpenn.edu/academics/nursing/,Oskaloosa,IA,,5138,US,nursing,aacn
+,Wilmington University,http://wilmu.edu/health/nurprograms.aspx,New Castle,DE,,5138,US,nursing,aacn
+,Wilmington University - Georgetown,http://www.wilmu.edu/georgetown/,Georgetown,DE,,5138,US,nursing,aacn
+,Winona State University,http://winona.edu/nursing/,Winona,MN,,5138,US,nursing,aacn
+,Winston-Salem State University,http://www.wssu.edu/academics/colleges-and-departments/school-of-health-sciences/division-of-nursing,Winston-Salem,NC,,5138,US,nursing,aacn
+,Wisconsin Lutheran College,http://wlc.edu/academics/programs/nursing.html,Milwaukee,WI,,5138,US,nursing,aacn
+,Wittenberg University,http://www.wittenberg.edu/nursing,Springfield,OH,,5138,US,nursing,aacn
+,Worcester State University,http://www.worcester.edu/Nursing/,Worcester,MA,,5138,US,nursing,aacn
+,Wright State University,http://nursing.wright.edu/,Dayton,OH,,5138,US,nursing,aacn
+,Xavier University,http://xavier.edu/nursing/,Cincinnati,OH,,5138,US,nursing,aacn
+,Yale University,http://nursing.yale.edu/,West Haven,CT,,5138,US,nursing,aacn
+,Yeshiva University,http://www.yu.edu/katz,New York,NY,,5138,US,nursing,aacn
+,York College of Pennsylvania,http://www.ycp.edu/academics/,York,PA,,5138,US,nursing,aacn
+,Youngstown State University,http://nursing.ysu.edu,Youngstown,OH,,5138,US,nursing,aacn

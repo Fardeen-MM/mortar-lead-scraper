@@ -1,0 +1,1044 @@
+[04:17:06] ========================================
+[04:17:06]   Avvo Immigration Lawyers Scraper
+[04:17:06] ========================================
+[04:17:06] States: 42 (VA, MD, WA, AZ, CO, NC, OH, MI, CT, MN, OR, NV, TN, MO, IN, WI, SC, KY, LA, AL, OK, IA, UT, KS, AR, MS, NE, NM, HI, NH, ME, ID, WV, MT, RI, DE, SD, ND, AK, VT, WY, DC)
+[04:17:06] Mode: FULL
+[04:17:06] Max cities/state: all
+[04:17:06] Max pages/city: 25
+[04:17:06] RESUME: loaded 4122 existing leads from CSV
+[04:17:06] RESUME: states already done: CA, NY, TX, FL, IL, NJ, MA, GA, PA
+[04:17:06] Launching browser...
+[04:17:07] Warming up session...
+[04:17:12] Session warmup: OK
+[04:17:12] 
+==================================================
+[04:17:12] State 1/42: VA
+[04:17:12]   City 1/5: Arlington
+[04:17:13]     Arlington: 1012 immigration lawyers (51 pages)
+[04:17:13]     Page 1: 20 cards, 20 new
+[04:17:18]     Page 2: 20 cards, 20 new
+[04:17:21]     Page 3: 20 cards, 19 new
+[04:17:26]     Page 4: 20 cards, 18 new
+[04:17:30]     Page 5: 20 cards, 19 new
+[04:17:34]     Page 6: 20 cards, 19 new
+[04:17:38]     Page 7: 20 cards, 20 new
+[04:17:42]     Page 8: 20 cards, 20 new
+[04:17:46]     Page 9: 20 cards, 20 new
+[04:17:50]     Page 10: 20 cards, 20 new
+[04:17:53]     Page 11: 20 cards, 20 new
+[04:17:58]     Page 12: 20 cards, 20 new
+[04:18:02]     Page 13: 20 cards, 20 new
+[04:18:06]     Page 14: 20 cards, 19 new
+[04:18:11]     Page 15: 20 cards, 20 new
+[04:18:15]     Page 16: 20 cards, 20 new
+[04:18:20]     Page 17: 20 cards, 20 new
+[04:18:24]     Page 18: 20 cards, 20 new
+[04:18:29]     Page 19: 20 cards, 18 new
+[04:18:32]     Page 20: 20 cards, 20 new
+[04:18:38]     Page 21: 20 cards, 20 new
+[04:18:42]     Page 22: 20 cards, 19 new
+[04:18:46]     Page 23: 20 cards, 20 new
+[04:18:50]     Page 24: 20 cards, 20 new
+[04:18:54]     Page 25: 20 cards, 20 new
+[04:19:00]   City 2/5: Fairfax
+[04:19:01]     Fairfax: 306 immigration lawyers (16 pages)
+[04:19:01]     Page 1: 20 cards, 17 new
+[04:19:06]     Page 2: 20 cards, 12 new
+[04:19:10]     Page 3: 20 cards, 18 new
+[04:19:14]     Page 4: 20 cards, 16 new
+[04:19:17]     Page 5: 20 cards, 6 new
+[04:19:21]     Page 6: 20 cards, 6 new
+[04:19:25]     Page 7: 20 cards, 4 new
+[04:19:28]     Page 8: 20 cards, 1 new
+[04:19:32]     Page 9: 20 cards, 6 new
+[04:19:37]     Page 10: 20 cards, 7 new
+[04:19:41]     Page 11: 20 cards, 14 new
+[04:19:45]     Page 12: 20 cards, 20 new
+[04:19:50]     Page 13: 20 cards, 20 new
+[04:19:54]     Page 14: 20 cards, 20 new
+[04:20:00]     Page 15: 20 cards, 18 new
+[04:20:03]     Page 16: 6 cards, 6 new
+[04:20:06]   City 3/5: Richmond
+[04:20:08]     Richmond: 50 immigration lawyers (3 pages)
+[04:20:08]     Page 1: 20 cards, 16 new
+[04:20:13]     Page 2: 20 cards, 20 new
+[04:20:17]     Page 3: 10 cards, 10 new
+[04:20:20]   City 4/5: Virginia Beach
+[04:20:22]     Virginia Beach: 32 immigration lawyers (2 pages)
+[04:20:22]     Page 1: 20 cards, 20 new
+[04:20:27]     Page 2: 12 cards, 12 new
+[04:20:30]   City 5/5: Alexandria
+[04:20:32]     Alexandria: 855 immigration lawyers (43 pages)
+[04:20:32]     Page 1: 20 cards, 0 new
+[04:20:36]     Page 2: 20 cards, 0 new
+[04:20:41]     Page 3: 20 cards, 11 new
+[04:20:46]     Page 4: 20 cards, 9 new
+[04:20:51]     Page 5: 20 cards, 2 new
+[04:20:54]     Page 6: 20 cards, 0 new
+[04:20:57]     Page 7: 20 cards, 0 new
+[04:21:02]     Page 8: 20 cards, 0 new
+[04:21:07]     Page 9: 20 cards, 0 new
+[04:21:11]     Page 10: 20 cards, 0 new
+[04:21:16]     Page 11: 20 cards, 0 new
+[04:21:21]     Page 12: 20 cards, 1 new
+[04:21:24]     Page 13: 20 cards, 1 new
+[04:21:28]     Page 14: 20 cards, 0 new
+[04:21:33]     Page 15: 20 cards, 0 new
+[04:21:36]     Page 16: 20 cards, 0 new
+[04:21:41]     Page 17: 20 cards, 0 new
+[04:21:45]     Page 18: 20 cards, 0 new
+[04:21:48]     Page 19: 20 cards, 1 new
+[04:21:52]     Page 20: 20 cards, 0 new
+[04:21:56]     Page 21: 20 cards, 0 new
+[04:22:01]     Page 22: 20 cards, 9 new
+[04:22:05]     Page 23: 20 cards, 17 new
+[04:22:09]     Page 24: 20 cards, 18 new
+[04:22:13]     Page 25: 20 cards, 19 new
+[04:22:17]   VA total: 848 new leads
+[04:22:17]   Saved 4970 total leads to CSV
+[04:22:24] 
+==================================================
+[04:22:24] State 2/42: MD
+[04:22:24]   City 1/4: Baltimore
+[04:22:26]     Baltimore: 182 immigration lawyers (10 pages)
+[04:22:26]     Page 1: 20 cards, 18 new
+[04:22:30]     Page 2: 20 cards, 20 new
+[04:22:34]     Page 3: 20 cards, 20 new
+[04:22:38]     Page 4: 20 cards, 20 new
+[04:22:42]     Page 5: 20 cards, 19 new
+[04:22:47]     Page 6: 20 cards, 19 new
+[04:22:51]     Page 7: 20 cards, 19 new
+[04:22:56]     Page 8: 20 cards, 20 new
+[04:23:00]     Page 9: 20 cards, 20 new
+[04:23:06]     Page 10: 2 cards, 2 new
+[04:23:09]   City 2/4: Bethesda
+[04:23:10]     Bethesda: 994 immigration lawyers (50 pages)
+[04:23:10]     Page 1: 20 cards, 0 new
+[04:23:15]     Page 2: 20 cards, 2 new
+[04:23:20]     Page 3: 20 cards, 13 new
+[04:23:24]     Page 4: 20 cards, 6 new
+[04:23:28]     Page 5: 20 cards, 8 new
+[04:23:33]     Page 6: 20 cards, 5 new
+[04:23:37]     Page 7: 20 cards, 7 new
+[04:23:42]     Page 8: 20 cards, 4 new
+[04:23:46]     Page 9: 20 cards, 3 new
+[04:23:50]     Page 10: 20 cards, 3 new
+[04:23:53]     Page 11: 20 cards, 3 new
+[04:23:57]     Page 12: 20 cards, 4 new
+[04:24:01]     Page 13: 20 cards, 1 new
+[04:24:05]     Page 14: 20 cards, 8 new
+[04:24:09]     Page 15: 20 cards, 4 new
+[04:24:14]     Page 16: 20 cards, 5 new
+[04:24:17]     Page 17: 20 cards, 2 new
+[04:24:22]     Page 18: 20 cards, 4 new
+[04:24:27]     Page 19: 20 cards, 5 new
+[04:24:31]     Page 20: 20 cards, 1 new
+[04:24:35]     Page 21: 20 cards, 1 new
+[04:24:39]     Page 22: 20 cards, 3 new
+[04:24:44]     Page 23: 20 cards, 5 new
+[04:24:50]     Page 24: 20 cards, 2 new
+[04:24:55]     Page 25: 20 cards, 4 new
+[04:25:03]   City 3/4: Rockville
+[04:25:04]     Rockville: 333 immigration lawyers (17 pages)
+[04:25:04]     Page 1: 20 cards, 0 new
+[04:25:08]     Page 2: 20 cards, 3 new
+[04:25:12]     Page 3: 20 cards, 11 new
+[04:25:17]     Page 4: 20 cards, 14 new
+[04:25:20]     Page 5: 20 cards, 1 new
+[04:25:25]     Page 6: 20 cards, 1 new
+[04:25:29]     Page 7: 20 cards, 3 new
+[04:25:33]     Page 8: 20 cards, 2 new
+[04:25:37]     Page 9: 20 cards, 1 new
+[04:25:42]     Page 10: 20 cards, 4 new
+[04:25:47]     Page 11: 20 cards, 5 new
+[04:25:53]     Page 12: 20 cards, 11 new
+[04:25:58]     Page 13: 20 cards, 12 new
+[04:26:04]     Page 14: 20 cards, 14 new
+[04:26:08]     Page 15: 20 cards, 13 new
+[04:26:13]     Page 16: 20 cards, 17 new
+[04:26:18]     Page 17: 13 cards, 11 new
+[04:26:21]   City 4/4: Silver Spring
+[04:26:23]     Silver Spring: 935 immigration lawyers (47 pages)
+[04:26:23]     Page 1: 20 cards, 0 new
+[04:26:28]     Page 2: 20 cards, 0 new
+[04:26:31]     Page 3: 20 cards, 0 new
+[04:26:35]     Page 4: 20 cards, 0 new
+[04:26:38]     Page 5: 20 cards, 0 new
+[04:26:43]     Page 6: 20 cards, 2 new
+[04:26:49]     Page 7: 20 cards, 1 new
+[04:26:54]     Page 8: 20 cards, 0 new
+[04:26:58]     Page 9: 20 cards, 4 new
+[04:27:02]     Page 10: 20 cards, 3 new
+[04:27:07]     Page 11: 20 cards, 2 new
+[04:27:10]     Page 12: 20 cards, 1 new
+[04:27:14]     Page 13: 20 cards, 5 new
+[04:27:18]     Page 14: 20 cards, 4 new
+[04:27:23]     Page 15: 20 cards, 1 new
+[04:27:28]     Page 16: 20 cards, 1 new
+[04:27:33]     Page 17: 20 cards, 2 new
+[04:27:38]     Page 18: 20 cards, 1 new
+[04:27:43]     Page 19: 20 cards, 1 new
+[04:27:48]     Page 20: 20 cards, 1 new
+[04:27:52]     Page 21: 20 cards, 1 new
+[04:27:56]     Page 22: 20 cards, 1 new
+[04:28:00]     Page 23: 20 cards, 1 new
+[04:28:03]     Page 24: 20 cards, 2 new
+[04:28:08]     Page 25: 20 cards, 0 new
+[04:28:11]   MD total: 437 new leads
+[04:28:11]   Saved 5407 total leads to CSV
+[04:28:17] 
+==================================================
+[04:28:17] State 3/42: WA
+[04:28:17]   City 1/4: Seattle
+[04:28:19]     Seattle: 582 immigration lawyers (30 pages)
+[04:28:19]     Page 1: 20 cards, 20 new
+[04:28:22]     Page 2: 20 cards, 20 new
+[04:28:26]     Page 3: 20 cards, 20 new
+[04:28:30]     Page 4: 20 cards, 20 new
+[04:28:35]     Page 5: 20 cards, 20 new
+[04:28:40]     Page 6: 20 cards, 20 new
+[04:28:44]     Page 7: 20 cards, 20 new
+[04:28:48]     Page 8: 20 cards, 20 new
+[04:28:52]     Page 9: 20 cards, 19 new
+[04:28:56]     Page 10: 20 cards, 20 new
+[04:29:01]     Page 11: 20 cards, 20 new
+[04:29:06]     Page 12: 20 cards, 19 new
+[04:29:10]     Page 13: 20 cards, 20 new
+[04:29:13]     Page 14: 20 cards, 19 new
+[04:29:18]     Page 15: 20 cards, 20 new
+[04:29:22]     Page 16: 20 cards, 20 new
+[04:29:25]     Page 17: 20 cards, 19 new
+[04:29:29]     Page 18: 20 cards, 20 new
+[04:29:34]     Page 19: 20 cards, 20 new
+[04:29:38]     Page 20: 20 cards, 20 new
+[04:29:42]     Page 21: 20 cards, 18 new
+[04:29:46]     Page 22: 20 cards, 19 new
+[04:29:50]     Page 23: 20 cards, 19 new
+[04:29:54]     Page 24: 20 cards, 20 new
+[04:29:58]     Page 25: 20 cards, 20 new
+[04:30:04]   City 2/4: Tacoma
+[04:30:06]     Tacoma: 79 immigration lawyers (4 pages)
+[04:30:06]     Page 1: 20 cards, 19 new
+[04:30:10]     Page 2: 20 cards, 20 new
+[04:30:15]     Page 3: 20 cards, 15 new
+[04:30:20]     Page 4: 19 cards, 17 new
+[04:30:23]   City 3/4: Spokane
+[04:30:24]     Spokane: 30 immigration lawyers (2 pages)
+[04:30:24]     Page 1: 20 cards, 20 new
+[04:30:29]     Page 2: 10 cards, 10 new
+[04:30:31]   City 4/4: Bellevue
+[04:30:32]     Bellevue: 525 immigration lawyers (27 pages)
+[04:30:32]     Page 1: 20 cards, 0 new
+[04:30:37]     Page 2: 20 cards, 0 new
+[04:30:41]     Page 3: 20 cards, 14 new
+[04:30:46]     Page 4: 20 cards, 9 new
+[04:30:51]     Page 5: 20 cards, 3 new
+[04:30:54]     Page 6: 20 cards, 1 new
+[04:30:59]     Page 7: 20 cards, 2 new
+[04:31:04]     Page 8: 20 cards, 0 new
+[04:31:11]     Page 9: 20 cards, 3 new
+[04:31:16]     Page 10: 20 cards, 1 new
+[04:31:20]     Page 11: 20 cards, 1 new
+[04:31:24]     Page 12: 20 cards, 0 new
+[04:31:29]     Page 13: 20 cards, 2 new
+[04:31:32]     Page 14: 20 cards, 2 new
+[04:31:36]     Page 15: 20 cards, 0 new
+[04:31:39]     Page 16: 20 cards, 1 new
+[04:31:44]     Page 17: 20 cards, 1 new
+[04:31:49]     Page 18: 20 cards, 5 new
+[04:31:54]     Page 19: 20 cards, 5 new
+[04:31:58]     Page 20: 20 cards, 6 new
+[04:32:03]     Page 21: 20 cards, 1 new
+[04:32:08]     Page 22: 20 cards, 5 new
+[04:32:13]     Page 23: 20 cards, 5 new
+[04:32:17]     Page 24: 20 cards, 5 new
+[04:32:21]     Page 25: 20 cards, 3 new
+[04:32:23]   WA total: 668 new leads
+[04:32:23]   Saved 6075 total leads to CSV
+[04:32:28] 
+==================================================
+[04:32:28] State 4/42: AZ
+[04:32:28]   City 1/4: Phoenix
+[04:32:30]     Phoenix: 310 immigration lawyers (16 pages)
+[04:32:30]     Page 1: 20 cards, 19 new
+[04:32:33]     Page 2: 20 cards, 20 new
+[04:32:38]     Page 3: 20 cards, 19 new
+[04:32:43]     Page 4: 20 cards, 20 new
+[04:32:47]     Page 5: 20 cards, 20 new
+[04:32:51]     Page 6: 20 cards, 20 new
+[04:32:56]     Page 7: 20 cards, 19 new
+[04:33:00]     Page 8: 20 cards, 20 new
+[04:33:05]     Page 9: 20 cards, 20 new
+[04:33:10]     Page 10: 20 cards, 20 new
+[04:33:14]     Page 11: 20 cards, 20 new
+[04:33:18]     Page 12: 20 cards, 20 new
+[04:33:22]     Page 13: 20 cards, 20 new
+[04:33:25]     Page 14: 20 cards, 20 new
+[04:33:30]     Page 15: 20 cards, 20 new
+[04:33:34]     Page 16: 10 cards, 10 new
+[04:33:38]   City 2/4: Tucson
+[04:33:39]     Tucson: 95 immigration lawyers (5 pages)
+[04:33:39]     Page 1: 20 cards, 20 new
+[04:33:43]     Page 2: 20 cards, 19 new
+[04:33:47]     Page 3: 20 cards, 18 new
+[04:33:51]     Page 4: 20 cards, 19 new
+[04:33:55]     Page 5: 15 cards, 15 new
+[04:33:59]   City 3/4: Mesa
+[04:34:00]     Mesa: 69 immigration lawyers (4 pages)
+[04:34:00]     Page 1: 20 cards, 17 new
+[04:34:05]     Page 2: 20 cards, 12 new
+[04:34:09]     Page 3: 20 cards, 4 new
+[04:34:13]     Page 4: 9 cards, 1 new
+[04:34:15]   City 4/4: Scottsdale
+[04:34:17]     Scottsdale: 88 immigration lawyers (5 pages)
+[04:34:17]     Page 1: 20 cards, 3 new
+[04:34:21]     Page 2: 20 cards, 0 new
+[04:34:26]     Page 3: 20 cards, 1 new
+[04:34:30]     Page 4: 20 cards, 1 new
+[04:34:33]     Page 5: 8 cards, 0 new
+[04:34:33]   AZ total: 437 new leads
+[04:34:33]   Saved 6512 total leads to CSV
+[04:34:39] 
+==================================================
+[04:34:39] State 5/42: CO
+[04:34:39]   City 1/4: Denver
+[04:34:40]     Denver: 255 immigration lawyers (13 pages)
+[04:34:40]     Page 1: 20 cards, 19 new
+[04:34:45]     Page 2: 20 cards, 18 new
+[04:34:50]     Page 3: 20 cards, 18 new
+[04:34:54]     Page 4: 20 cards, 20 new
+[04:34:58]     Page 5: 20 cards, 20 new
+[04:35:02]     Page 6: 20 cards, 20 new
+[04:35:07]     Page 7: 20 cards, 20 new
+[04:35:11]     Page 8: 20 cards, 20 new
+[04:35:15]     Page 9: 20 cards, 20 new
+[04:35:19]     Page 10: 20 cards, 20 new
+[04:35:24]     Page 11: 20 cards, 20 new
+[04:35:28]     Page 12: 20 cards, 20 new
+[04:35:32]     Page 13: 15 cards, 14 new
+[04:35:35]   City 2/4: Colorado Springs
+[04:35:37]     Colorado Springs: 21 immigration lawyers (2 pages)
+[04:35:37]     Page 1: 20 cards, 14 new
+[04:35:40]     Page 2: 1 cards, 1 new
+[04:35:42]   City 3/4: Aurora
+[04:35:44]     Aurora: 211 immigration lawyers (11 pages)
+[04:35:44]     Page 1: 20 cards, 0 new
+[04:35:48]     Page 2: 20 cards, 0 new
+[04:35:53]     Page 3: 20 cards, 0 new
+[04:35:58]     Page 4: 20 cards, 0 new
+[04:36:03]     Page 5: 20 cards, 0 new
+[04:36:08]     Page 6: 20 cards, 0 new
+[04:36:12]     Page 7: 20 cards, 0 new
+[04:36:18]     Page 8: 20 cards, 0 new
+[04:36:22]     Page 9: 20 cards, 0 new
+[04:36:27]     Page 10: 20 cards, 0 new
+[04:36:31]     Page 11: 11 cards, 0 new
+[04:36:33]   City 4/4: Boulder
+[04:36:35]     Boulder: 35 immigration lawyers (2 pages)
+[04:36:35]     Page 1: 20 cards, 16 new
+[04:36:39]     Page 2: 15 cards, 14 new
+[04:36:39]   CO total: 294 new leads
+[04:36:39]   Saved 6806 total leads to CSV
+[04:36:47] 
+==================================================
+[04:36:47] State 6/42: NC
+[04:36:47]   City 1/4: Charlotte
+[04:36:48]     Charlotte: 133 immigration lawyers (7 pages)
+[04:36:48]     Page 1: 20 cards, 19 new
+[04:36:52]     Page 2: 20 cards, 19 new
+[04:36:57]     Page 3: 20 cards, 19 new
+[04:37:01]     Page 4: 20 cards, 20 new
+[04:37:04]     Page 5: 20 cards, 20 new
+[04:37:07]     Page 6: 20 cards, 20 new
+[04:37:11]     Page 7: 13 cards, 13 new
+[04:37:15]   City 2/4: Raleigh
+[04:37:16]     Raleigh: 107 immigration lawyers (6 pages)
+[04:37:16]     Page 1: 20 cards, 20 new
+[04:37:20]     Page 2: 20 cards, 18 new
+[04:37:25]     Page 3: 20 cards, 19 new
+[04:37:30]     Page 4: 20 cards, 20 new
+[04:37:34]     Page 5: 20 cards, 18 new
+[04:37:38]     Page 6: 7 cards, 7 new
+[04:37:40]   City 3/4: Durham
+[04:37:42]     Durham: 43 immigration lawyers (3 pages)
+[04:37:42]     Page 1: 20 cards, 15 new
+[04:37:47]     Page 2: 20 cards, 14 new
+[04:37:52]     Page 3: 3 cards, 0 new
+[04:37:55]   City 4/4: Greensboro
+[04:37:57]     Greensboro: 26 immigration lawyers (2 pages)
+[04:37:57]     Page 1: 20 cards, 20 new
+[04:38:01]     Page 2: 6 cards, 6 new
+[04:38:01]   NC total: 287 new leads
+[04:38:01]   Saved 7093 total leads to CSV
+[04:38:06] 
+==================================================
+[04:38:06] State 7/42: OH
+[04:38:06]   City 1/4: Columbus
+[04:38:08]     Columbus: 164 immigration lawyers (9 pages)
+[04:38:08]     Page 1: 20 cards, 15 new
+[04:38:13]     Page 2: 20 cards, 20 new
+[04:38:18]     Page 3: 20 cards, 19 new
+[04:38:22]     Page 4: 20 cards, 20 new
+[04:38:26]     Page 5: 20 cards, 20 new
+[04:38:30]     Page 6: 20 cards, 20 new
+[04:38:35]     Page 7: 20 cards, 20 new
+[04:38:39]     Page 8: 20 cards, 20 new
+[04:38:44]     Page 9: 4 cards, 4 new
+[04:38:47]   City 2/4: Cleveland
+[04:38:48]     Cleveland: 153 immigration lawyers (8 pages)
+[04:38:48]     Page 1: 20 cards, 11 new
+[04:38:53]     Page 2: 20 cards, 18 new
+[04:38:57]     Page 3: 20 cards, 18 new
+[04:39:01]     Page 4: 20 cards, 19 new
+[04:39:05]     Page 5: 20 cards, 20 new
+[04:39:09]     Page 6: 20 cards, 19 new
+[04:39:14]     Page 7: 20 cards, 20 new
+[04:39:17]     Page 8: 13 cards, 13 new
+[04:39:21]   City 3/4: Cincinnati
+[04:39:22]     Cincinnati: 127 immigration lawyers (7 pages)
+[04:39:22]     Page 1: 20 cards, 20 new
+[04:39:26]     Page 2: 20 cards, 20 new
+[04:39:30]     Page 3: 20 cards, 18 new
+[04:39:34]     Page 4: 20 cards, 20 new
+[04:39:39]     Page 5: 20 cards, 20 new
+[04:39:44]     Page 6: 20 cards, 20 new
+[04:39:49]     Page 7: 7 cards, 7 new
+[04:39:52]   City 4/4: Dayton
+[04:39:53]     Dayton: 39 immigration lawyers (2 pages)
+[04:39:53]     Page 1: 20 cards, 16 new
+[04:39:57]     Page 2: 19 cards, 18 new
+[04:39:57]   OH total: 455 new leads
+[04:39:57]   Saved 7548 total leads to CSV
+[04:40:04] 
+==================================================
+[04:40:04] State 8/42: MI
+[04:40:04]   City 1/4: Detroit
+[04:40:05]     Detroit: 363 immigration lawyers (19 pages)
+[04:40:05]     Page 1: 20 cards, 17 new
+[04:40:10]     Page 2: 20 cards, 19 new
+[04:40:15]     Page 3: 20 cards, 20 new
+[04:40:20]     Page 4: 20 cards, 17 new
+[04:40:24]     Page 5: 20 cards, 20 new
+[04:40:29]     Page 6: 20 cards, 20 new
+[04:40:33]     Page 7: 20 cards, 20 new
+[04:40:38]     Page 8: 20 cards, 20 new
+[04:40:42]     Page 9: 20 cards, 20 new
+[04:40:47]     Page 10: 20 cards, 20 new
+[04:40:52]     Page 11: 20 cards, 20 new
+[04:40:57]     Page 12: 20 cards, 20 new
+[04:41:01]     Page 13: 20 cards, 20 new
+[04:41:05]     Page 14: 20 cards, 20 new
+[04:41:10]     Page 15: 20 cards, 20 new
+[04:41:15]     Page 16: 20 cards, 19 new
+[04:41:20]     Page 17: 20 cards, 20 new
+[04:41:24]     Page 18: 20 cards, 20 new
+[04:41:27]     Page 19: 3 cards, 3 new
+[04:41:30]   City 2/4: Grand Rapids
+[04:41:31]     Grand Rapids: 66 immigration lawyers (4 pages)
+[04:41:31]     Page 1: 20 cards, 18 new
+[04:41:36]     Page 2: 20 cards, 20 new
+[04:41:41]     Page 3: 20 cards, 20 new
+[04:41:44]     Page 4: 6 cards, 6 new
+[04:41:48]   City 3/4: Ann Arbor
+[04:41:49]     Ann Arbor: 84 immigration lawyers (5 pages)
+[04:41:49]     Page 1: 20 cards, 18 new
+[04:41:54]     Page 2: 20 cards, 18 new
+[04:41:58]     Page 3: 20 cards, 20 new
+[04:42:02]     Page 4: 20 cards, 20 new
+[04:42:06]     Page 5: 4 cards, 4 new
+[04:42:09]   City 4/4: Dearborn
+[04:42:10]     Dearborn: 159 immigration lawyers (8 pages)
+[04:42:10]     Page 1: 20 cards, 0 new
+[04:42:15]     Page 2: 20 cards, 0 new
+[04:42:20]     Page 3: 20 cards, 0 new
+[04:42:24]     Page 4: 20 cards, 0 new
+[04:42:28]     Page 5: 20 cards, 0 new
+[04:42:33]     Page 6: 20 cards, 0 new
+[04:42:37]     Page 7: 20 cards, 0 new
+[04:42:41]     Page 8: 19 cards, 0 new
+[04:42:41]   MI total: 499 new leads
+[04:42:41]   Saved 8047 total leads to CSV
+[04:42:47] 
+==================================================
+[04:42:47] State 9/42: CT
+[04:42:47]   City 1/4: Hartford
+[04:42:48]     Hartford: 93 immigration lawyers (5 pages)
+[04:42:48]     Page 1: 20 cards, 19 new
+[04:42:52]     Page 2: 20 cards, 20 new
+[04:42:57]     Page 3: 20 cards, 20 new
+[04:43:01]     Page 4: 20 cards, 19 new
+[04:43:05]     Page 5: 13 cards, 13 new
+[04:43:08]   City 2/4: New Haven
+[04:43:10]     New Haven: 53 immigration lawyers (3 pages)
+[04:43:10]     Page 1: 20 cards, 17 new
+[04:43:14]     Page 2: 20 cards, 19 new
+[04:43:19]     Page 3: 13 cards, 13 new
+[04:43:23]   City 3/4: Stamford
+[04:43:24]     Stamford: 51 immigration lawyers (3 pages)
+[04:43:24]     Page 1: 20 cards, 17 new
+[04:43:29]     Page 2: 20 cards, 19 new
+[04:43:33]     Page 3: 11 cards, 11 new
+[04:43:36]   City 4/4: Bridgeport
+[04:43:37]     Bridgeport: 25 immigration lawyers (2 pages)
+[04:43:37]     Page 1: 20 cards, 16 new
+[04:43:42]     Page 2: 5 cards, 4 new
+[04:43:42]   CT total: 207 new leads
+[04:43:42]   Saved 8254 total leads to CSV
+[04:43:48] 
+==================================================
+[04:43:48] State 10/42: MN
+[04:43:48]   City 1/3: Minneapolis
+[04:43:50]     Minneapolis: 288 immigration lawyers (15 pages)
+[04:43:50]     Page 1: 20 cards, 19 new
+[04:43:55]     Page 2: 20 cards, 20 new
+[04:44:00]     Page 3: 20 cards, 20 new
+[04:44:05]     Page 4: 20 cards, 19 new
+[04:44:09]     Page 5: 20 cards, 20 new
+[04:44:14]     Page 6: 20 cards, 19 new
+[04:44:19]     Page 7: 20 cards, 20 new
+[04:44:24]     Page 8: 20 cards, 20 new
+[04:44:29]     Page 9: 20 cards, 20 new
+[04:44:34]     Page 10: 20 cards, 20 new
+[04:44:39]     Page 11: 20 cards, 20 new
+[04:44:42]     Page 12: 20 cards, 20 new
+[04:44:47]     Page 13: 20 cards, 19 new
+[04:44:51]     Page 14: 20 cards, 19 new
+[04:44:56]     Page 15: 8 cards, 8 new
+[04:44:59]   City 2/3: Saint Paul
+[04:45:00]     Saint Paul: 270 immigration lawyers (14 pages)
+[04:45:00]     Page 1: 20 cards, 0 new
+[04:45:04]     Page 2: 20 cards, 2 new
+[04:45:07]     Page 3: 20 cards, 0 new
+[04:45:11]     Page 4: 20 cards, 0 new
+[04:45:16]     Page 5: 20 cards, 2 new
+[04:45:21]     Page 6: 20 cards, 0 new
+[04:45:25]     Page 7: 20 cards, 0 new
+[04:45:31]     Page 8: 20 cards, 1 new
+[04:45:35]     Page 9: 20 cards, 1 new
+[04:45:40]     Page 10: 20 cards, 0 new
+[04:45:44]     Page 11: 20 cards, 0 new
+[04:45:49]     Page 12: 20 cards, 1 new
+[04:45:53]     Page 13: 20 cards, 0 new
+[04:45:58]     Page 14: 10 cards, 1 new
+[04:46:01]   City 3/3: Bloomington
+[04:46:03]     Bloomington: 49 immigration lawyers (3 pages)
+[04:46:03]     Page 1: 20 cards, 0 new
+[04:46:08]     Page 2: 20 cards, 0 new
+[04:46:14]     Page 3: 9 cards, 0 new
+[04:46:14]   MN total: 291 new leads
+[04:46:14]   Saved 8545 total leads to CSV
+[04:46:20] 
+==================================================
+[04:46:20] State 11/42: OR
+[04:46:20]   City 1/3: Portland
+[04:46:21]     Portland: 167 immigration lawyers (9 pages)
+[04:46:21]     Page 1: 20 cards, 17 new
+[04:46:25]     Page 2: 20 cards, 20 new
+[04:46:29]     Page 3: 20 cards, 20 new
+[04:46:33]     Page 4: 20 cards, 20 new
+[04:46:38]     Page 5: 20 cards, 20 new
+[04:46:42]     Page 6: 20 cards, 20 new
+[04:46:47]     Page 7: 20 cards, 18 new
+[04:46:52]     Page 8: 20 cards, 20 new
+[04:46:55]     Page 9: 7 cards, 7 new
+[04:46:59]   City 2/3: Eugene
+[04:47:00]     Eugene: 5 immigration lawyers (1 pages)
+[04:47:00]     Page 1: 5 cards, 5 new
+[04:47:04]   City 3/3: Salem
+[04:47:06]     Salem: 15 immigration lawyers (1 pages)
+[04:47:06]     Page 1: 15 cards, 14 new
+[04:47:06]   OR total: 181 new leads
+[04:47:06]   Saved 8726 total leads to CSV
+[04:47:12] 
+==================================================
+[04:47:12] State 12/42: NV
+[04:47:12]   City 1/3: Las Vegas
+[04:47:14]     Las Vegas: 150 immigration lawyers (8 pages)
+[04:47:14]     Page 1: 20 cards, 20 new
+[04:47:19]     Page 2: 20 cards, 19 new
+[04:47:24]     Page 3: 20 cards, 19 new
+[04:47:29]     Page 4: 20 cards, 20 new
+[04:47:34]     Page 5: 20 cards, 20 new
+[04:47:38]     Page 6: 20 cards, 20 new
+[04:47:42]     Page 7: 20 cards, 20 new
+[04:47:46]     Page 8: 10 cards, 10 new
+[04:47:49]   City 2/3: Reno
+[04:47:51]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:48:01]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:48:11]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:48:21]     BLOCKED by Cloudflare on reno page 1
+[04:48:25]   City 3/3: Henderson
+[04:48:26]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:48:36]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:48:46]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:48:56]     BLOCKED by Cloudflare on henderson page 1
+[04:48:56]   NV total: 148 new leads
+[04:48:56]   Saved 8874 total leads to CSV
+[04:49:02] 
+==================================================
+[04:49:02] State 13/42: TN
+[04:49:02]   City 1/4: Nashville
+[04:49:03]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:49:13]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:49:23]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:49:33]     BLOCKED by Cloudflare on nashville page 1
+[04:49:36]   City 2/4: Memphis
+[04:49:37]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:49:47]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:49:57]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:50:07]     BLOCKED by Cloudflare on memphis page 1
+[04:50:10]   City 3/4: Knoxville
+[04:50:12]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:50:22]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:50:32]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:50:42]     BLOCKED by Cloudflare on knoxville page 1
+[04:50:45]   City 4/4: Chattanooga
+[04:50:46]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:50:56]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:51:06]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:51:16]     BLOCKED by Cloudflare on chattanooga page 1
+[04:51:16]   TN total: 0 new leads
+[04:51:16]   Saved 8874 total leads to CSV
+[04:51:21] 
+==================================================
+[04:51:21] State 14/42: MO
+[04:51:21]   City 1/3: Kansas City
+[04:51:23]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:51:33]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:51:43]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:51:53]     BLOCKED by Cloudflare on kansas_city page 1
+[04:51:55]   City 2/3: Saint Louis
+[04:51:56]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:52:06]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:52:16]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:52:26]     BLOCKED by Cloudflare on saint_louis page 1
+[04:52:30]   City 3/3: Springfield
+[04:52:31]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:52:41]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:52:51]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:53:01]     BLOCKED by Cloudflare on springfield page 1
+[04:53:01]   MO total: 0 new leads
+[04:53:01]   Saved 8874 total leads to CSV
+[04:53:07] 
+==================================================
+[04:53:07] State 15/42: IN
+[04:53:07]   City 1/3: Indianapolis
+[04:53:09]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:53:19]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:53:29]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:53:39]     BLOCKED by Cloudflare on indianapolis page 1
+[04:53:42]   City 2/3: Fort Wayne
+[04:53:43]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:53:53]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:54:03]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:54:13]     BLOCKED by Cloudflare on fort_wayne page 1
+[04:54:17]   City 3/3: South Bend
+[04:54:18]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:54:28]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:54:38]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:54:48]     BLOCKED by Cloudflare on south_bend page 1
+[04:54:48]   IN total: 0 new leads
+[04:54:48]   Saved 8874 total leads to CSV
+[04:54:54] 
+==================================================
+[04:54:54] State 16/42: WI
+[04:54:54]   3 consecutive blocks — pausing 60s to cool down...
+[04:55:54]   City 1/3: Milwaukee
+[04:55:55]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:56:05]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:56:15]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:56:25]     BLOCKED by Cloudflare on milwaukee page 1
+[04:56:29]   City 2/3: Madison
+[04:56:30]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:56:40]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:56:50]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:57:00]     BLOCKED by Cloudflare on madison page 1
+[04:57:03]   City 3/3: Green Bay
+[04:57:05]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:57:15]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:57:25]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:57:35]     BLOCKED by Cloudflare on green_bay page 1
+[04:57:35]   WI total: 0 new leads
+[04:57:35]   Saved 8874 total leads to CSV
+[04:57:42] 
+==================================================
+[04:57:42] State 17/42: SC
+[04:57:42]   City 1/3: Charleston
+[04:57:43]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:57:53]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:58:03]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:58:13]     BLOCKED by Cloudflare on charleston page 1
+[04:58:15]   City 2/3: Columbia
+[04:58:17]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:58:27]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:58:37]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:58:47]     BLOCKED by Cloudflare on columbia page 1
+[04:58:50]   City 3/3: Greenville
+[04:58:51]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:59:01]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:59:11]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[04:59:21]     BLOCKED by Cloudflare on greenville page 1
+[04:59:21]   SC total: 0 new leads
+[04:59:21]   Saved 8874 total leads to CSV
+[04:59:28] 
+==================================================
+[04:59:28] State 18/42: KY
+[04:59:28]   City 1/2: Louisville
+[04:59:30]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[04:59:40]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[04:59:50]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:00:00]     BLOCKED by Cloudflare on louisville page 1
+[05:00:02]   City 2/2: Lexington
+[05:00:04]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:00:14]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:00:24]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:00:34]     BLOCKED by Cloudflare on lexington page 1
+[05:00:34]   KY total: 0 new leads
+[05:00:34]   Saved 8874 total leads to CSV
+[05:00:40] 
+==================================================
+[05:00:40] State 19/42: LA
+[05:00:40]   3 consecutive blocks — pausing 60s to cool down...
+[05:01:40]   City 1/2: New Orleans
+[05:01:42]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:01:52]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:02:02]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:02:12]     BLOCKED by Cloudflare on new_orleans page 1
+[05:02:15]   City 2/2: Baton Rouge
+[05:02:16]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:02:26]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:02:36]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:02:46]     BLOCKED by Cloudflare on baton_rouge page 1
+[05:02:46]   LA total: 0 new leads
+[05:02:46]   Saved 8874 total leads to CSV
+[05:02:53] 
+==================================================
+[05:02:53] State 20/42: AL
+[05:02:53]   City 1/3: Birmingham
+[05:02:54]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:03:04]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:03:15]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:03:25]     BLOCKED by Cloudflare on birmingham page 1
+[05:03:27]   City 2/3: Huntsville
+[05:03:29]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:03:39]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:03:49]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:03:59]     BLOCKED by Cloudflare on huntsville page 1
+[05:04:02]   City 3/3: Montgomery
+[05:04:04]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:04:14]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:04:24]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:04:34]     BLOCKED by Cloudflare on montgomery page 1
+[05:04:34]   AL total: 0 new leads
+[05:04:34]   Saved 8874 total leads to CSV
+[05:04:41] 
+==================================================
+[05:04:41] State 21/42: OK
+[05:04:41]   City 1/2: Oklahoma City
+[05:04:42]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:04:52]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:05:02]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:05:12]     BLOCKED by Cloudflare on oklahoma_city page 1
+[05:05:15]   City 2/2: Tulsa
+[05:05:16]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:05:26]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:05:36]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:05:46]     BLOCKED by Cloudflare on tulsa page 1
+[05:05:46]   OK total: 0 new leads
+[05:05:46]   Saved 8874 total leads to CSV
+[05:05:52] 
+==================================================
+[05:05:52] State 22/42: IA
+[05:05:52]   3 consecutive blocks — pausing 60s to cool down...
+[05:06:52]   City 1/2: Des Moines
+[05:06:53]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:07:03]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:07:13]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:07:23]     BLOCKED by Cloudflare on des_moines page 1
+[05:07:25]   City 2/2: Cedar Rapids
+[05:07:27]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:07:37]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:07:47]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:07:57]     BLOCKED by Cloudflare on cedar_rapids page 1
+[05:07:57]   IA total: 0 new leads
+[05:07:57]   Saved 8874 total leads to CSV
+[05:08:03] 
+==================================================
+[05:08:03] State 23/42: UT
+[05:08:03]   City 1/2: Salt Lake City
+[05:08:04]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:08:14]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:08:25]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:08:35]     BLOCKED by Cloudflare on salt_lake_city page 1
+[05:08:38]   City 2/2: Provo
+[05:08:39]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:08:49]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:08:59]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:09:09]     BLOCKED by Cloudflare on provo page 1
+[05:09:09]   UT total: 0 new leads
+[05:09:09]   Saved 8874 total leads to CSV
+[05:09:16] 
+==================================================
+[05:09:16] State 24/42: KS
+[05:09:16]   City 1/2: Wichita
+[05:09:18]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:09:28]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:09:38]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:09:48]     BLOCKED by Cloudflare on wichita page 1
+[05:09:52]   City 2/2: Kansas City
+[05:09:53]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:10:03]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:10:13]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:10:23]     BLOCKED by Cloudflare on kansas_city page 1
+[05:10:23]   KS total: 0 new leads
+[05:10:23]   Saved 8874 total leads to CSV
+[05:10:28] 
+==================================================
+[05:10:28] State 25/42: AR
+[05:10:28]   3 consecutive blocks — pausing 60s to cool down...
+[05:11:28]   City 1/2: Little Rock
+[05:11:29]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:11:39]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:11:49]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:11:59]     BLOCKED by Cloudflare on little_rock page 1
+[05:12:02]   City 2/2: Fayetteville
+[05:12:03]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:12:13]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:12:23]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:12:33]     BLOCKED by Cloudflare on fayetteville page 1
+[05:12:33]   AR total: 0 new leads
+[05:12:33]   Saved 8874 total leads to CSV
+[05:12:41] 
+==================================================
+[05:12:41] State 26/42: MS
+[05:12:41]   City 1/2: Jackson
+[05:12:42]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:12:52]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:13:02]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:13:12]     BLOCKED by Cloudflare on jackson page 1
+[05:13:15]   City 2/2: Gulfport
+[05:13:17]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:13:27]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:13:37]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:13:47]     BLOCKED by Cloudflare on gulfport page 1
+[05:13:47]   MS total: 0 new leads
+[05:13:47]   Saved 8874 total leads to CSV
+[05:13:54] 
+==================================================
+[05:13:54] State 27/42: NE
+[05:13:54]   City 1/2: Omaha
+[05:13:55]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:14:05]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:14:15]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:14:25]     BLOCKED by Cloudflare on omaha page 1
+[05:14:28]   City 2/2: Lincoln
+[05:14:30]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:14:40]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:14:50]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:15:00]     BLOCKED by Cloudflare on lincoln page 1
+[05:15:00]   NE total: 0 new leads
+[05:15:00]   Saved 8874 total leads to CSV
+[05:15:05] 
+==================================================
+[05:15:05] State 28/42: NM
+[05:15:05]   3 consecutive blocks — pausing 60s to cool down...
+[05:16:05]   City 1/3: Albuquerque
+[05:16:06]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:16:16]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:16:26]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:16:36]     BLOCKED by Cloudflare on albuquerque page 1
+[05:16:39]   City 2/3: Santa Fe
+[05:16:40]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:16:50]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:17:00]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:17:10]     BLOCKED by Cloudflare on santa_fe page 1
+[05:17:13]   City 3/3: Las Cruces
+[05:17:14]   Cloudflare challenge detected, waiting 10s (attempt 1/3)...
+[05:17:24]   Cloudflare challenge detected, waiting 10s (attempt 2/3)...
+[05:17:34]   Cloudflare challenge detected, waiting 10s (attempt 3/3)...
+[05:17:44]     BLOCKED by Cloudflare on las_cruces page 1
+[05:17:44]   NM total: 0 new leads
+[05:17:44]   Saved 8874 total leads to CSV
+[05:17:50] 
+==================================================
+[05:17:50] State 29/42: HI
+[05:17:50]   City 1/1: Honolulu
+[05:17:52]     Honolulu: 53 immigration lawyers (3 pages)
+[05:17:52]     Page 1: 20 cards, 18 new
+[05:17:56]     Page 2: 20 cards, 19 new
+[05:18:00]     Page 3: 13 cards, 13 new
+[05:18:00]   HI total: 50 new leads
+[05:18:00]   Saved 8924 total leads to CSV
+[05:18:06] 
+==================================================
+[05:18:06] State 30/42: NH
+[05:18:06]   City 1/2: Manchester
+[05:18:08]     Manchester: 12 immigration lawyers (1 pages)
+[05:18:08]     Page 1: 12 cards, 11 new
+[05:18:11]   City 2/2: Concord
+[05:18:13]     Concord: 6 immigration lawyers (1 pages)
+[05:18:13]     Page 1: 6 cards, 6 new
+[05:18:13]   NH total: 17 new leads
+[05:18:13]   Saved 8941 total leads to CSV
+[05:18:19] 
+==================================================
+[05:18:19] State 31/42: ME
+[05:18:19]   City 1/2: Portland
+[05:18:20]     Portland: 26 immigration lawyers (2 pages)
+[05:18:20]     Page 1: 20 cards, 20 new
+[05:18:25]     Page 2: 6 cards, 6 new
+[05:18:28]   City 2/2: Bangor
+[05:18:29]     Bangor: 4 immigration lawyers (1 pages)
+[05:18:29]     Page 1: 4 cards, 3 new
+[05:18:29]   ME total: 29 new leads
+[05:18:29]   Saved 8970 total leads to CSV
+[05:18:34] 
+==================================================
+[05:18:34] State 32/42: ID
+[05:18:34]   City 1/2: Boise
+[05:18:36]     Boise: 29 immigration lawyers (2 pages)
+[05:18:36]     Page 1: 20 cards, 19 new
+[05:18:40]     Page 2: 9 cards, 8 new
+[05:18:44]   City 2/2: Idaho Falls
+[05:18:45]     Idaho Falls: 3 immigration lawyers (1 pages)
+[05:18:45]     Page 1: 3 cards, 3 new
+[05:18:45]   ID total: 30 new leads
+[05:18:45]   Saved 9000 total leads to CSV
+[05:18:53] 
+==================================================
+[05:18:53] State 33/42: WV
+[05:18:53]   City 1/2: Charleston
+[05:18:54]     Charleston: 5 immigration lawyers (1 pages)
+[05:18:54]     Page 1: 5 cards, 4 new
+[05:18:57]   City 2/2: Morgantown
+[05:18:58]     Morgantown: 5 immigration lawyers (1 pages)
+[05:18:58]     Page 1: 5 cards, 5 new
+[05:18:58]   WV total: 9 new leads
+[05:18:58]   Saved 9009 total leads to CSV
+[05:19:06] 
+==================================================
+[05:19:06] State 34/42: MT
+[05:19:06]   City 1/2: Billings
+[05:19:07]     Billings: 1 immigration lawyers (1 pages)
+[05:19:07]     Page 1: 1 cards, 1 new
+[05:19:11]   City 2/2: Missoula
+[05:19:12]     Missoula: 3 immigration lawyers (1 pages)
+[05:19:12]     Page 1: 3 cards, 3 new
+[05:19:12]   MT total: 4 new leads
+[05:19:12]   Saved 9013 total leads to CSV
+[05:19:19] 
+==================================================
+[05:19:19] State 35/42: RI
+[05:19:19]   City 1/2: Providence
+[05:19:20]     Providence: 42 immigration lawyers (3 pages)
+[05:19:20]     Page 1: 20 cards, 19 new
+[05:19:25]     Page 2: 20 cards, 20 new
+[05:19:29]     Page 3: 2 cards, 2 new
+[05:19:32]   City 2/2: Warwick
+[05:19:33]     Warwick: 38 immigration lawyers (2 pages)
+[05:19:33]     Page 1: 20 cards, 0 new
+[05:19:37]     Page 2: 18 cards, 2 new
+[05:19:37]   RI total: 43 new leads
+[05:19:37]   Saved 9056 total leads to CSV
+[05:19:43] 
+==================================================
+[05:19:43] State 36/42: DE
+[05:19:43]   City 1/2: Wilmington
+[05:19:45]     Wilmington: 13 immigration lawyers (1 pages)
+[05:19:45]     Page 1: 13 cards, 13 new
+[05:19:49]   City 2/2: Dover
+[05:19:50]     Dover: 3 immigration lawyers (1 pages)
+[05:19:50]     Page 1: 3 cards, 2 new
+[05:19:50]   DE total: 15 new leads
+[05:19:50]   Saved 9071 total leads to CSV
+[05:19:55] 
+==================================================
+[05:19:55] State 37/42: SD
+[05:19:55]   City 1/1: Sioux Falls
+[05:19:57]     Sioux Falls: 3 immigration lawyers (1 pages)
+[05:19:57]     Page 1: 3 cards, 3 new
+[05:19:57]   SD total: 3 new leads
+[05:19:57]   Saved 9074 total leads to CSV
+[05:20:03] 
+==================================================
+[05:20:03] State 38/42: ND
+[05:20:03]   City 1/2: Fargo
+[05:20:04]     Fargo: 5 immigration lawyers (1 pages)
+[05:20:04]     Page 1: 5 cards, 5 new
+[05:20:07]   City 2/2: Bismarck
+[05:20:08]     Bismarck: 4 immigration lawyers (1 pages)
+[05:20:08]     Page 1: 4 cards, 4 new
+[05:20:08]   ND total: 9 new leads
+[05:20:08]   Saved 9083 total leads to CSV
+[05:20:14] 
+==================================================
+[05:20:14] State 39/42: AK
+[05:20:14]   City 1/2: Anchorage
+[05:20:15]     Anchorage: 22 immigration lawyers (2 pages)
+[05:20:15]     Page 1: 20 cards, 19 new
+[05:20:20]     Page 2: 2 cards, 2 new
+[05:20:23]   City 2/2: Fairbanks
+[05:20:24]     Fairbanks: 3 immigration lawyers (1 pages)
+[05:20:24]     Page 1: 3 cards, 3 new
+[05:20:24]   AK total: 24 new leads
+[05:20:24]   Saved 9107 total leads to CSV
+[05:20:32] 
+==================================================
+[05:20:32] State 40/42: VT
+[05:20:32]   City 1/1: Burlington
+[05:20:33]     Burlington: 5 immigration lawyers (1 pages)
+[05:20:33]     Page 1: 5 cards, 5 new
+[05:20:33]   VT total: 5 new leads
+[05:20:33]   Saved 9112 total leads to CSV
+[05:20:39] 
+==================================================
+[05:20:39] State 41/42: WY
+[05:20:39]   City 1/2: Cheyenne
+[05:20:40]     Cheyenne: 7 immigration lawyers (1 pages)
+[05:20:40]     Page 1: 7 cards, 7 new
+[05:20:43]   City 2/2: Casper
+[05:20:44]     Casper: 3 immigration lawyers (1 pages)
+[05:20:44]     Page 1: 3 cards, 3 new
+[05:20:44]   WY total: 10 new leads
+[05:20:44]   Saved 9122 total leads to CSV
+[05:20:52] 
+==================================================
+[05:20:52] State 42/42: DC
+[05:20:52]   City 1/1: Washington
+[05:20:54]     Washington: 1306 immigration lawyers (66 pages)
+[05:20:54]     Page 1: 20 cards, 0 new
+[05:20:58]     Page 2: 20 cards, 0 new
+[05:21:03]     Page 3: 20 cards, 0 new
+[05:21:08]     Page 4: 20 cards, 0 new
+[05:21:13]     Page 5: 20 cards, 0 new
+[05:21:18]     Page 6: 20 cards, 0 new
+[05:21:23]     Page 7: 20 cards, 0 new
+[05:21:27]     Page 8: 20 cards, 0 new
+[05:21:31]     Page 9: 20 cards, 0 new
+[05:21:36]     Page 10: 20 cards, 0 new
+[05:21:39]     Page 11: 20 cards, 0 new
+[05:21:44]     Page 12: 20 cards, 0 new
+[05:21:49]     Page 13: 20 cards, 0 new
+[05:21:53]     Page 14: 20 cards, 0 new
+[05:21:57]     Page 15: 20 cards, 0 new
+[05:22:01]     Page 16: 20 cards, 0 new
+[05:22:04]     Page 17: 20 cards, 4 new
+[05:22:10]     Page 18: 20 cards, 19 new
+[05:22:14]     Page 19: 20 cards, 19 new
+[05:22:20]     Page 20: 20 cards, 19 new
+[05:22:24]     Page 21: 20 cards, 16 new
+[05:22:29]     Page 22: 20 cards, 17 new
+[05:22:35]     Page 23: 20 cards, 20 new
+[05:22:40]     Page 24: 20 cards, 18 new
+[05:22:45]     Page 25: 20 cards, 17 new
+[05:22:48]   DC total: 149 new leads
+[05:22:48]   Saved 9271 total leads to CSV
+[05:22:48] 
+============================================================
+[05:22:48] DONE
+[05:22:48] Total unique leads: 9271
+[05:22:48] States processed: 42
+[05:22:48] With phone: 8141
+[05:22:48] With firm name: 9270
+[05:22:48] With full name: 9268
+[05:22:48] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/us-immigration-lawyers-avvo.csv

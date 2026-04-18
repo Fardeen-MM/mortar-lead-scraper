@@ -1,0 +1,121 @@
+=== COLD EMAIL EXPORT STATS (generated 2026-04-18T01:57:46.171Z) ===
+Source file: /Users/fardeenchoudhury/mortar-lead-scraper/output/master-immigration-leads.csv
+Total input rows: 26056
+Ready (valid+unique): 14760
+  No email: 11230
+  Invalid format: 66
+  Duplicates: 0
+
+By country (sorted):
+  Canada: 8676
+  United States: 2233
+  Unknown: 1669
+  Kenya: 1316
+  United Kingdom: 295
+  India: 92
+  Australia: 55
+  Nepal: 38
+  Nigeria: 33
+  Türkiye: 30
+  Bangladesh: 21
+  Pakistan: 18
+  Brazil: 18
+  Mexico: 14
+  United Arab Emirates: 13
+  Sri Lanka: 10
+  Colombia: 10
+  Spain: 10
+  Azerbaijan: 9
+  Uzbekistan: 9
+  Taiwan: 9
+  Ghana: 8
+  Morocco: 7
+  Kazakhstan: 7
+  Georgia: 7
+  Saudi Arabia: 7
+  Italy: 6
+  Japan: 6
+  Philippines: 6
+  Ukraine: 6
+  Egypt: 6
+  Vietnam: 5
+  France: 5
+  Serbia: 5
+  Côte d'Ivoire: 5
+  Jordan: 5
+  Germany: 5
+  Hong Kong SAR: 4
+  Thailand: 4
+  Uganda: 4
+  Peru: 4
+  China: 3
+  New Zealand: 3
+  Malaysia: 3
+  Singapore: 3
+  Tunisia: 3
+  Kuwait: 3
+  Ireland: 3
+  Argentina: 3
+  Algeria: 2
+  Ecuador: 2
+  Panama: 2
+  Tanzania: 2
+  Kyrgyz Republic: 2
+  Rwanda: 2
+  Denmark: 2
+  Venezuela: 2
+  Lebanon: 2
+  Cameroon: 2
+  Albania: 2
+  Armenia: 1
+  Russia: 1
+  Madagascar: 1
+  Zimbabwe: 1
+  El Salvador: 1
+  Iraq: 1
+  Montenegro: 1
+  Cyprus: 1
+  Bahrain: 1
+  Mongolia: 1
+  Myanmar: 1
+  Dominican Republic: 1
+  Senegal: 1
+  Iran: 1
+  Croatia: 1
+  Latvia: 1
+  Afghanistan: 1
+  Romania: 1
+  South Korea: 1
+  Sweden: 1
+  Jamaica: 1
+  Netherlands: 1
+  Qatar: 1
+  Hungary: 1
+
+By source:
+  cicc_registry: 8635
+  neaims_kenya: 1309
+  immigration_podcast: 1256
+  propublica: 1135
+  martindale_waterfall: 799
+  icef_ias: 634
+  bulk_find_leads: 413
+  english-uk-schools: 265
+  eoir_accredited_reps: 208
+  best_lawyers: 77
+  immlaw_consortium: 29
+
+By niche:
+  immigration consultant: 9048
+  overseas employment agent: 1309
+  immigration podcast host: 1256
+  immigration nonprofit: 1135
+  immigration attorney: 905
+  study abroad / migration agent: 634
+  ESL Language School: 265
+  immigration: 208
+
+Files written:
+  Main:    /Users/fardeenchoudhury/mortar-lead-scraper/output/cold-email-ready.csv
+  By-country: /Users/fardeenchoudhury/mortar-lead-scraper/output/cold-email-by-country/
+  Stats:   /Users/fardeenchoudhury/mortar-lead-scraper/output/cold-email-stats.txt

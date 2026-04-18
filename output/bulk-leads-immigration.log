@@ -1,0 +1,302 @@
+=== Bulk find-leads ===
+Cities: 53
+Niches: immigration consultant
+Max per query: 20
+Delay between queries: 20s
+Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/bulk-leads-immigration-consultant.csv
+
+
+[1] immigration consultant Toronto, ON
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 19 domains, 0 emails
+
+[2] immigration consultant Vancouver, BC
+[multi-search] brave rate-limited — backing off 60s
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 30 domains, 0 emails
+
+[3] immigration consultant Calgary, AB
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 44 domains, 0 emails
+
+[4] immigration consultant Montreal, QC
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 59 domains, 0 emails
+
+[5] immigration consultant Edmonton, AB
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 73 domains, 0 emails
+
+[6] immigration consultant Ottawa, ON
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 85 domains, 0 emails
+
+[7] immigration consultant Winnipeg, MB
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 94 domains, 0 emails
+
+[8] immigration consultant Mississauga, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 107 domains, 0 emails
+
+[9] immigration consultant Brampton, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 118 domains, 0 emails
+
+[10] immigration consultant Surrey, BC
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 129 domains, 0 emails
+
+[11] immigration consultant Hamilton, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 144 domains, 0 emails
+
+[12] immigration consultant Saskatoon, SK
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 157 domains, 0 emails
+
+[13] immigration consultant Halifax, NS
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 167 domains, 0 emails
+
+[14] immigration consultant London, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 181 domains, 0 emails
+
+[15] immigration consultant Markham, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 188 domains, 0 emails
+
+[16] immigration consultant New York, NY
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 205 domains, 0 emails
+
+[17] immigration consultant Los Angeles, CA
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 220 domains, 0 emails
+
+[18] immigration consultant Chicago, IL
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 232 domains, 0 emails
+
+[19] immigration consultant Houston, TX
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 246 domains, 0 emails
+
+[20] immigration consultant Miami, FL
+[multi-search] brave rate-limited — backing off 60s
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 262 domains, 0 emails
+
+[21] immigration consultant San Francisco, CA
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 275 domains, 0 emails
+
+[22] immigration consultant Boston, MA
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 286 domains, 0 emails
+
+[23] immigration consultant Seattle, WA
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 297 domains, 0 emails
+
+[24] immigration consultant Washington, DC
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 309 domains, 0 emails
+
+[25] immigration consultant Atlanta, GA
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 318 domains, 0 emails
+
+[26] immigration consultant Dallas, TX
+[multi-search] brave rate-limited — backing off 60s
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 331 domains, 0 emails
+
+[27] immigration consultant Philadelphia, PA
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 343 domains, 0 emails
+
+[28] immigration consultant San Diego, CA
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 355 domains, 0 emails
+
+[29] immigration consultant Phoenix, AZ
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 368 domains, 0 emails
+
+[30] immigration consultant Austin, TX
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 377 domains, 0 emails
+
+[31] immigration consultant Denver, CO
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 386 domains, 0 emails
+
+[32] immigration consultant San Jose, CA
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 399 domains, 0 emails
+
+[33] immigration consultant Minneapolis, MN
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 410 domains, 0 emails
+
+[34] immigration consultant London, UK
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 423 domains, 0 emails
+
+[35] immigration consultant Manchester, UK
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 438 domains, 0 emails
+
+[36] immigration consultant Birmingham, UK
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 453 domains, 0 emails
+
+[37] immigration consultant Glasgow, Scotland
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 464 domains, 0 emails
+
+[38] immigration consultant Edinburgh, Scotland
+[multi-search] brave rate-limited — backing off 60s
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 471 domains, 0 emails
+
+[39] immigration consultant Leeds, UK
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 481 domains, 0 emails
+
+[40] immigration consultant Bristol, UK
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 492 domains, 0 emails
+
+[41] immigration consultant Liverpool, UK
+[multi-search] brave rate-limited — backing off 60s
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 503 domains, 0 emails
+
+[42] immigration consultant Sydney, NSW
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 520 domains, 0 emails
+
+[43] immigration consultant Melbourne, VIC
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 534 domains, 0 emails
+
+[44] immigration consultant Brisbane, QLD
+[multi-search] brave rate-limited — backing off 60s
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 546 domains, 0 emails
+
+[45] immigration consultant Perth, WA
+  Found 20 domains (via multi-engine)
+  0 verified emails
+  Totals: 560 domains, 0 emails
+
+[46] immigration consultant Adelaide, SA
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 572 domains, 0 emails
+
+[47] immigration consultant Gold Coast, QLD
+[multi-search] brave rate-limited — backing off 60s
+  Found 20 domains (via multi-engine)
+  0 verified emails
+  Totals: 586 domains, 0 emails
+
+[48] immigration consultant Dublin, Ireland
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 601 domains, 0 emails
+
+[49] immigration consultant Auckland, New Zealand
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 617 domains, 0 emails
+
+[50] immigration consultant Wellington, New Zealand
+[multi-search] brave rate-limited — backing off 60s
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 627 domains, 0 emails
+
+[51] immigration consultant Dubai, UAE
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 643 domains, 0 emails
+
+[52] immigration consultant Singapore
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 662 domains, 0 emails
+
+[53] immigration consultant Hong Kong
+[multi-search] brave rate-limited — backing off 60s
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 677 domains, 0 emails
+
+=== DONE in 1120s ===
+Queries:         53
+Unique domains:  677
+Verified emails: 0
+Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/bulk-leads-immigration-consultant.csv
+
+Engine status:
+  brave: backed_off=true, count=18
+  startpage: backed_off=false, count=0
+  mojeek: backed_off=false, count=0
+  ddg: backed_off=false, count=0

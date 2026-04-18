@@ -1,0 +1,4033 @@
+[04:17:34] FindLaw Immigration Lawyers Scraper
+[04:17:34] States: 44 | Test mode: false | Max cities/state: 999
+[04:17:35] 
+[========================================]
+[04:17:35] State 1/44: MA (massachusetts)
+[04:17:37]   MA: 82 cities found
+[04:17:37]   City 1/82: Amherst
+[04:17:42]     Amherst: 14 total, 14 scraped, 14 new
+[04:17:42]   City 2/82: Andover
+[04:17:47]     Andover: 14 total, 14 scraped, 2 new
+[04:17:47]   City 3/82: Attleboro
+[04:17:52]     Attleboro: 14 total, 14 scraped, 0 new
+[04:17:52]   City 4/82: Bedford
+[04:17:55]     Bedford: 14 total, 14 scraped, 0 new
+[04:17:55]   City 5/82: Belmont
+[04:18:00]     Belmont: 14 total, 14 scraped, 0 new
+[04:18:00]   City 6/82: Beverly
+[04:18:04]     Beverly: 14 total, 14 scraped, 1 new
+[04:18:04]   City 7/82: Boston
+[04:18:09]     Boston: 14 total, 14 scraped, 0 new
+[04:18:09]   City 8/82: Braintree
+[04:18:12]     Braintree: 15 total, 15 scraped, 0 new
+[04:18:12]   City 9/82: Brockton
+[04:18:17]     Brockton: 13 total, 13 scraped, 0 new
+[04:18:17]   City 10/82: Brookline
+[04:18:20]     Brookline: 15 total, 15 scraped, 0 new
+[04:18:20]   City 11/82: Cambridge
+[04:18:24]     Cambridge: 14 total, 14 scraped, 0 new
+[04:18:24]   City 12/82: Chelsea
+[04:18:29]     Chelsea: 14 total, 14 scraped, 0 new
+[04:18:29]   City 13/82: Chicopee
+[04:18:33]     Chicopee: 14 total, 14 scraped, 0 new
+[04:18:33]   City 14/82: Dorchester
+[04:18:38]     Dorchester: 14 total, 14 scraped, 0 new
+[04:18:38]   City 15/82: Easthampton
+[04:18:42]     Easthampton: 14 total, 14 scraped, 0 new
+[04:18:42]   City 16/82: Everett
+[04:18:47]     Everett: 14 total, 14 scraped, 0 new
+[04:18:47]   City 17/82: Fall River
+[04:18:51]     Fall River: 14 total, 14 scraped, 0 new
+[04:18:51]   City 18/82: Fitchburg
+[04:18:55]     Fitchburg: 13 total, 13 scraped, 0 new
+[04:18:56]   City 19/82: Foxboro
+[04:18:59]     Foxboro: 15 total, 15 scraped, 0 new
+[04:18:59]   City 20/82: Framingham
+[04:19:05]     Framingham: 14 total, 14 scraped, 0 new
+[04:19:05]   City 21/82: Franklin
+[04:19:10]     Franklin: 15 total, 15 scraped, 0 new
+[04:19:10]   City 22/82: Gardner
+[04:19:14]     Gardner: 13 total, 13 scraped, 0 new
+[04:19:14]   City 23/82: Gloucester
+[04:19:18]     Gloucester: 14 total, 14 scraped, 0 new
+[04:19:18]   City 24/82: Harvard
+[04:19:22]     Harvard: 14 total, 14 scraped, 0 new
+[04:19:22]   City 25/82: Haverhill
+[04:19:27]     Haverhill: 14 total, 14 scraped, 0 new
+[04:19:27]   City 26/82: Holyoke
+[04:19:32]     Holyoke: 14 total, 14 scraped, 0 new
+[04:19:32]   City 27/82: Lawrence
+[04:19:36]     Lawrence: 14 total, 14 scraped, 0 new
+[04:19:36]   City 28/82: Leominster
+[04:19:41]     Leominster: 13 total, 13 scraped, 0 new
+[04:19:41]   City 29/82: Lexington
+[04:19:45]     Lexington: 14 total, 14 scraped, 0 new
+[04:19:45]   City 30/82: Lowell
+[04:19:51]     Lowell: 14 total, 14 scraped, 0 new
+[04:19:51]   City 31/82: Lynn
+[04:19:56]     Lynn: 14 total, 14 scraped, 0 new
+[04:19:56]   City 32/82: Malden
+[04:20:00]     Malden: 14 total, 14 scraped, 0 new
+[04:20:00]   City 33/82: Marlborough
+[04:20:03]     Marlborough: 14 total, 14 scraped, 0 new
+[04:20:03]   City 34/82: Medford
+[04:20:07]     Medford: 14 total, 14 scraped, 0 new
+[04:20:07]   City 35/82: Melrose
+[04:20:12]     Melrose: 14 total, 14 scraped, 0 new
+[04:20:12]   City 36/82: Methuen
+[04:20:17]     Methuen: 14 total, 14 scraped, 0 new
+[04:20:17]   City 37/82: Middleboro
+[04:20:21]     Middleboro: 13 total, 13 scraped, 0 new
+[04:20:21]   City 38/82: Milford
+[04:20:26]     Milford: 14 total, 14 scraped, 0 new
+[04:20:26]   City 39/82: Milton
+[04:20:30]     Milton: 15 total, 15 scraped, 0 new
+[04:20:30]   City 40/82: Nantucket
+[04:20:34]     Nantucket: 13 total, 13 scraped, 0 new
+[04:20:34]   City 41/82: Needham
+[04:20:39]     Needham: 15 total, 15 scraped, 0 new
+[04:20:39]   City 42/82: New Bedford
+[04:20:43]     New Bedford: 14 total, 14 scraped, 0 new
+[04:20:43]   City 43/82: Newburyport
+[04:20:49]     Newburyport: 14 total, 14 scraped, 0 new
+[04:20:49]   City 44/82: Newton
+[04:20:52]     Newton: 14 total, 14 scraped, 0 new
+[04:20:52]   City 45/82: North Adams
+[04:20:57]     North Adams: 13 total, 13 scraped, 0 new
+[04:20:57]   City 46/82: Northampton
+[04:21:01]     Northampton: 14 total, 14 scraped, 0 new
+[04:21:01]   City 47/82: Peabody
+[04:21:04]     Peabody: 14 total, 14 scraped, 0 new
+[04:21:04]   City 48/82: Pittsfield
+[04:21:09]     Pittsfield: 13 total, 13 scraped, 0 new
+[04:21:09]   City 49/82: Plymouth
+[04:21:13]     Plymouth: 14 total, 14 scraped, 0 new
+[04:21:13]   City 50/82: Quincy
+[04:21:18]     Quincy: 15 total, 15 scraped, 0 new
+[04:21:18]   City 51/82: Reading
+[04:21:22]     Reading: 14 total, 14 scraped, 0 new
+[04:21:22]   City 52/82: Revere
+[04:21:26]     Revere: 14 total, 14 scraped, 0 new
+[04:21:26]   City 53/82: Roxbury
+[04:21:30]     Roxbury: 14 total, 14 scraped, 0 new
+[04:21:30]   City 54/82: Salem
+[04:21:35]     Salem: 14 total, 14 scraped, 0 new
+[04:21:35]   City 55/82: Somerville
+[04:21:39]     Somerville: 14 total, 14 scraped, 0 new
+[04:21:39]   City 56/82: Springfield
+[04:21:43]     Springfield: 14 total, 14 scraped, 0 new
+[04:21:43]   City 57/82: Taunton
+[04:21:48]     Taunton: 15 total, 15 scraped, 0 new
+[04:21:48]   City 58/82: Waltham
+[04:21:52]     Waltham: 14 total, 14 scraped, 0 new
+[04:21:52]   City 59/82: Watertown
+[04:21:57]     Watertown: 14 total, 14 scraped, 0 new
+[04:21:57]   City 60/82: West Roxbury
+[04:22:03]     West Roxbury: 14 total, 14 scraped, 0 new
+[04:22:03]   City 61/82: West Springfield
+[04:22:07]     West Springfield: 14 total, 14 scraped, 0 new
+[04:22:07]   City 62/82: Westborough
+[04:22:11]     Westborough: 13 total, 13 scraped, 0 new
+[04:22:11]   City 63/82: Westfield
+[04:22:16]     Westfield: 14 total, 14 scraped, 0 new
+[04:22:16]   City 64/82: Westford
+[04:22:20]     Westford: 14 total, 14 scraped, 0 new
+[04:22:20]   City 65/82: Winchester
+[04:22:24]     Winchester: 14 total, 14 scraped, 0 new
+[04:22:24]   City 66/82: Woburn
+[04:22:29]     Woburn: 14 total, 14 scraped, 0 new
+[04:22:29]   City 67/82: Worcester
+[04:22:33]     Worcester: 13 total, 13 scraped, 0 new
+[04:22:33]   City 68/82: View All Cities
+[04:22:36]   City 69/82: Barnstable County
+[04:22:40]     Barnstable County: 13 total, 13 scraped, 0 new
+[04:22:40]   City 70/82: Berkshire County
+[04:22:44]     Berkshire County: 13 total, 13 scraped, 0 new
+[04:22:44]   City 71/82: Bristol County
+[04:22:48]     Bristol County: 14 total, 14 scraped, 0 new
+[04:22:48]   City 72/82: Dukes County
+[04:22:52]     Dukes County: 13 total, 13 scraped, 0 new
+[04:22:52]   City 73/82: Essex County
+[04:22:55]     Essex County: 13 total, 13 scraped, 0 new
+[04:22:55]   City 74/82: Franklin County
+[04:22:59]     Franklin County: 13 total, 13 scraped, 0 new
+[04:22:59]   City 75/82: Hampden County
+[04:23:04]     Hampden County: 13 total, 13 scraped, 0 new
+[04:23:04]   City 76/82: Hampshire County
+[04:23:08]     Hampshire County: 13 total, 13 scraped, 0 new
+[04:23:08]   City 77/82: Middlesex County
+[04:23:13]     Middlesex County: 13 total, 13 scraped, 0 new
+[04:23:13]   City 78/82: Nantucket County
+[04:23:18]     Nantucket County: 13 total, 13 scraped, 0 new
+[04:23:18]   City 79/82: Norfolk County
+[04:23:22]     Norfolk County: 14 total, 14 scraped, 0 new
+[04:23:22]   City 80/82: Plymouth County
+[04:23:26]     Plymouth County: 13 total, 13 scraped, 0 new
+[04:23:26]   City 81/82: Suffolk County
+[04:23:30]     Suffolk County: 13 total, 13 scraped, 0 new
+[04:23:30]   City 82/82: Worcester County
+[04:23:34]     Worcester County: 13 total, 13 scraped, 0 new
+[04:23:34]   MA total: 17 unique leads
+[04:23:40] 
+[========================================]
+[04:23:40] State 2/44: GA (georgia)
+[04:23:42]   GA: 82 cities found
+[04:23:42]   City 1/82: Acworth
+[04:23:47]     Acworth: 16 total, 17 scraped, 12 new
+[04:23:47]   City 2/82: Albany
+[04:23:52]     Albany: 12 total, 12 scraped, 0 new
+[04:23:52]   City 3/82: Alpharetta
+[04:23:58]     Alpharetta: 15 total, 16 scraped, 0 new
+[04:23:58]   City 4/82: Athens
+[04:24:03]     Athens: 12 total, 12 scraped, 0 new
+[04:24:03]   City 5/82: Atlanta
+[04:24:07]     Atlanta: 15 total, 16 scraped, 0 new
+[04:24:07]   City 6/82: Augusta
+[04:24:11]     Augusta: 12 total, 12 scraped, 0 new
+[04:24:11]   City 7/82: Brunswick
+[04:24:16]     Brunswick: 11 total, 11 scraped, 0 new
+[04:24:16]   City 8/82: Buford
+[04:24:19]     Buford: 16 total, 16 scraped, 0 new
+[04:24:19]   City 9/82: Calhoun
+[04:24:24]     Calhoun: 11 total, 11 scraped, 1 new
+[04:24:24]   City 10/82: Canton
+[04:24:28]     Canton: 16 total, 16 scraped, 0 new
+[04:24:28]   City 11/82: Carrollton
+[04:24:32]     Carrollton: 16 total, 16 scraped, 0 new
+[04:24:32]   City 12/82: Cartersville
+[04:24:36]     Cartersville: 15 total, 16 scraped, 0 new
+[04:24:36]   City 13/82: College Park
+[04:24:41]     College Park: 15 total, 16 scraped, 0 new
+[04:24:41]   City 14/82: Columbus
+[04:24:45]     Columbus: 12 total, 12 scraped, 0 new
+[04:24:45]   City 15/82: Conyers
+[04:24:50]     Conyers: 16 total, 16 scraped, 0 new
+[04:24:50]   City 16/82: Covington
+[04:24:54]     Covington: 15 total, 16 scraped, 0 new
+[04:24:54]   City 17/82: Cumming
+[04:24:59]     Cumming: 15 total, 16 scraped, 0 new
+[04:24:59]   City 18/82: Dallas
+[04:25:03]     Dallas: 15 total, 16 scraped, 0 new
+[04:25:03]   City 19/82: Dalton
+[04:25:08]     Dalton: 13 total, 13 scraped, 1 new
+[04:25:08]   City 20/82: Decatur
+[04:25:12]     Decatur: 16 total, 16 scraped, 0 new
+[04:25:12]   City 21/82: Douglasville
+[04:25:17]     Douglasville: 16 total, 16 scraped, 0 new
+[04:25:17]   City 22/82: Dublin
+[04:25:21]     Dublin: 11 total, 11 scraped, 0 new
+[04:25:21]   City 23/82: Duluth
+[04:25:25]     Duluth: 15 total, 16 scraped, 0 new
+[04:25:25]   City 24/82: Fayetteville
+[04:25:31]     Fayetteville: 15 total, 16 scraped, 0 new
+[04:25:31]   City 25/82: Fort Benning
+[04:25:36]     Fort Benning: 12 total, 12 scraped, 0 new
+[04:25:36]   City 26/82: Gainesville
+[04:25:41]     Gainesville: 11 total, 11 scraped, 0 new
+[04:25:41]   City 27/82: Griffin
+[04:25:46]     Griffin: 16 total, 16 scraped, 0 new
+[04:25:46]   City 28/82: Hinesville
+[04:25:50]     Hinesville: 11 total, 11 scraped, 0 new
+[04:25:50]   City 29/82: Holly Springs
+[04:25:56]     Holly Springs: 15 total, 16 scraped, 0 new
+[04:25:56]   City 30/82: Kennesaw
+[04:26:00]     Kennesaw: 16 total, 17 scraped, 0 new
+[04:26:00]   City 31/82: Lagrange
+[04:26:04]     Lagrange: 11 total, 11 scraped, 0 new
+[04:26:04]   City 32/82: Lawrenceville
+[04:26:09]     Lawrenceville: 15 total, 16 scraped, 0 new
+[04:26:09]   City 33/82: Lilburn
+[04:26:13]     Lilburn: 15 total, 16 scraped, 0 new
+[04:26:13]   City 34/82: Loganville
+[04:26:17]     Loganville: 15 total, 16 scraped, 0 new
+[04:26:17]   City 35/82: Macon
+[04:26:22]     Macon: 12 total, 12 scraped, 0 new
+[04:26:22]   City 36/82: Marietta
+[04:26:26]     Marietta: 16 total, 17 scraped, 0 new
+[04:26:26]   City 37/82: McDonough
+[04:26:31]     McDonough: 15 total, 16 scraped, 0 new
+[04:26:31]   City 38/82: Milledgeville
+[04:26:36]     Milledgeville: 11 total, 11 scraped, 0 new
+[04:26:36]   City 39/82: Newnan
+[04:26:41]     Newnan: 15 total, 16 scraped, 0 new
+[04:26:41]   City 40/82: Norcross
+[04:26:46]     Norcross: 16 total, 16 scraped, 0 new
+[04:26:46]   City 41/82: Peachtree City
+[04:26:50]     Peachtree City: 16 total, 16 scraped, 0 new
+[04:26:50]   City 42/82: Rome
+[04:26:55]     Rome: 11 total, 11 scraped, 0 new
+[04:26:55]   City 43/82: Roswell
+[04:27:00]     Roswell: 15 total, 16 scraped, 0 new
+[04:27:00]   City 44/82: Sandy Springs
+[04:27:04]     Sandy Springs: 15 total, 16 scraped, 0 new
+[04:27:04]   City 45/82: Savannah
+[04:27:07]     Savannah: 12 total, 12 scraped, 0 new
+[04:27:07]   City 46/82: Smyrna
+[04:27:12]     Smyrna: 16 total, 17 scraped, 0 new
+[04:27:12]   City 47/82: Snellville
+[04:27:17]     Snellville: 15 total, 16 scraped, 0 new
+[04:27:17]   City 48/82: South Fulton
+[04:27:20]     South Fulton: 15 total, 16 scraped, 0 new
+[04:27:20]   City 49/82: Statesboro
+[04:27:25]     Statesboro: 11 total, 11 scraped, 0 new
+[04:27:25]   City 50/82: Stockbridge
+[04:27:30]     Stockbridge: 15 total, 16 scraped, 0 new
+[04:27:30]   City 51/82: Thomasville
+[04:27:35]     Thomasville: 11 total, 11 scraped, 0 new
+[04:27:35]   City 52/82: Tifton
+[04:27:40]     Tifton: 11 total, 11 scraped, 0 new
+[04:27:40]   City 53/82: Union City
+[04:27:45]     Union City: 16 total, 16 scraped, 0 new
+[04:27:45]   City 54/82: Valdosta
+[04:27:49]     Valdosta: 11 total, 11 scraped, 0 new
+[04:27:49]   City 55/82: Warner Robins
+[04:27:54]     Warner Robins: 12 total, 12 scraped, 0 new
+[04:27:54]   City 56/82: Waycross
+[04:27:58]     Waycross: 11 total, 11 scraped, 0 new
+[04:27:58]   City 57/82: Woodstock
+[04:28:02]     Woodstock: 16 total, 16 scraped, 0 new
+[04:28:02]   City 58/82: View All Cities
+[04:28:06]   City 59/82: Bibb County
+[04:28:11]     Bibb County: 11 total, 11 scraped, 0 new
+[04:28:11]   City 60/82: Carroll County
+[04:28:16]     Carroll County: 11 total, 11 scraped, 0 new
+[04:28:16]   City 61/82: Chatham County
+[04:28:21]     Chatham County: 11 total, 11 scraped, 0 new
+[04:28:21]   City 62/82: Cherokee County
+[04:28:26]     Cherokee County: 11 total, 11 scraped, 0 new
+[04:28:26]   City 63/82: Clarke County
+[04:28:31]     Clarke County: 11 total, 11 scraped, 0 new
+[04:28:31]   City 64/82: Clayton County
+[04:28:35]     Clayton County: 11 total, 11 scraped, 0 new
+[04:28:35]   City 65/82: Cobb County
+[04:28:40]     Cobb County: 12 total, 12 scraped, 0 new
+[04:28:40]   City 66/82: Columbia County
+[04:28:45]     Columbia County: 11 total, 11 scraped, 0 new
+[04:28:45]   City 67/82: Coweta County
+[04:28:50]     Coweta County: 11 total, 11 scraped, 0 new
+[04:28:50]   City 68/82: Dekalb County
+[04:28:54]     Dekalb County: 11 total, 11 scraped, 0 new
+[04:28:54]   City 69/82: Douglas County
+[04:28:59]     Douglas County: 11 total, 11 scraped, 0 new
+[04:28:59]   City 70/82: Fayette County
+[04:29:03]     Fayette County: 11 total, 11 scraped, 0 new
+[04:29:03]   City 71/82: Forsyth County
+[04:29:08]     Forsyth County: 11 total, 11 scraped, 0 new
+[04:29:08]   City 72/82: Fulton County
+[04:29:13]     Fulton County: 11 total, 11 scraped, 0 new
+[04:29:13]   City 73/82: Gwinnett County
+[04:29:16]     Gwinnett County: 11 total, 11 scraped, 0 new
+[04:29:16]   City 74/82: Hall County
+[04:29:21]     Hall County: 11 total, 11 scraped, 0 new
+[04:29:21]   City 75/82: Henry County
+[04:29:25]     Henry County: 11 total, 11 scraped, 0 new
+[04:29:25]   City 76/82: Houston County
+[04:29:30]     Houston County: 11 total, 11 scraped, 0 new
+[04:29:30]   City 77/82: Lowndes County
+[04:29:35]     Lowndes County: 11 total, 11 scraped, 0 new
+[04:29:35]   City 78/82: Muscogee County
+[04:29:39]     Muscogee County: 11 total, 11 scraped, 0 new
+[04:29:39]   City 79/82: Newton County
+[04:29:44]     Newton County: 11 total, 11 scraped, 0 new
+[04:29:44]   City 80/82: Paulding County
+[04:29:49]     Paulding County: 11 total, 11 scraped, 0 new
+[04:29:49]   City 81/82: Richmond County
+[04:29:54]     Richmond County: 11 total, 11 scraped, 0 new
+[04:29:54]   City 82/82: Whitfield County
+[04:29:59]     Whitfield County: 13 total, 13 scraped, 0 new
+[04:29:59]   GA total: 14 unique leads
+[04:30:03] 
+[========================================]
+[04:30:03] State 3/44: PA (pennsylvania)
+[04:30:05]   PA: 93 cities found
+[04:30:05]   City 1/93: Aliquippa
+[04:30:10]     Aliquippa: 13 total, 13 scraped, 10 new
+[04:30:10]   City 2/93: Allentown
+[04:30:13]     Allentown: 12 total, 12 scraped, 2 new
+[04:30:13]   City 3/93: Allison Park
+[04:30:18]     Allison Park: 13 total, 13 scraped, 0 new
+[04:30:18]   City 4/93: Altoona
+[04:30:23]     Altoona: 12 total, 12 scraped, 0 new
+[04:30:23]   City 5/93: Beaver Falls
+[04:30:28]     Beaver Falls: 13 total, 13 scraped, 0 new
+[04:30:28]   City 6/93: Berwick
+[04:30:32]     Berwick: 12 total, 12 scraped, 1 new
+[04:30:32]   City 7/93: Bethel Park
+[04:30:37]     Bethel Park: 13 total, 13 scraped, 0 new
+[04:30:37]   City 8/93: Bethlehem
+[04:30:43]     Bethlehem: 12 total, 12 scraped, 0 new
+[04:30:43]   City 9/93: Bloomsburg
+[04:30:47]     Bloomsburg: 12 total, 12 scraped, 0 new
+[04:30:47]   City 10/93: Butler
+[04:30:51]     Butler: 13 total, 13 scraped, 0 new
+[04:30:51]   City 11/93: Camp Hill
+[04:30:56]     Camp Hill: 11 total, 11 scraped, 0 new
+[04:30:56]   City 12/93: Carlisle
+[04:30:59]     Carlisle: 11 total, 11 scraped, 0 new
+[04:30:59]   City 13/93: Chambersburg
+[04:31:03]     Chambersburg: 12 total, 12 scraped, 1 new
+[04:31:03]   City 14/93: Chester
+[04:31:08]     Chester: 14 total, 14 scraped, 3 new
+[04:31:08]   City 15/93: Darby
+[04:31:11]     Darby: 14 total, 14 scraped, 1 new
+[04:31:11]   City 16/93: Doylestown
+[04:31:15]     Doylestown: 14 total, 14 scraped, 1 new
+[04:31:15]   City 17/93: East Stroudsburg
+[04:31:20]     East Stroudsburg: 12 total, 12 scraped, 0 new
+[04:31:20]   City 18/93: Easton
+[04:31:26]     Easton: 12 total, 12 scraped, 0 new
+[04:31:26]   City 19/93: Ephrata
+[04:31:30]     Ephrata: 11 total, 11 scraped, 1 new
+[04:31:30]   City 20/93: Erie
+[04:31:35]     Erie: 13 total, 13 scraped, 1 new
+[04:31:35]   City 21/93: Gettysburg
+[04:31:40]     Gettysburg: 12 total, 12 scraped, 0 new
+[04:31:40]   City 22/93: Greensburg
+[04:31:44]     Greensburg: 13 total, 13 scraped, 0 new
+[04:31:44]   City 23/93: Hanover
+[04:31:48]     Hanover: 11 total, 11 scraped, 0 new
+[04:31:48]   City 24/93: Harrisburg
+[04:31:52]     Harrisburg: 11 total, 11 scraped, 0 new
+[04:31:52]   City 25/93: Hazleton
+[04:31:55]     Hazleton: 12 total, 12 scraped, 0 new
+[04:31:55]   City 26/93: Hermitage
+[04:31:59]     Hermitage: 12 total, 12 scraped, 0 new
+[04:31:59]   City 27/93: Indiana
+[04:32:04]     Indiana: 12 total, 12 scraped, 0 new
+[04:32:04]   City 28/93: Johnstown
+[04:32:09]     Johnstown: 12 total, 12 scraped, 0 new
+[04:32:09]   City 29/93: King Of Prussia
+[04:32:13]     King Of Prussia: 14 total, 14 scraped, 1 new
+[04:32:13]   City 30/93: Kingston
+[04:32:16]     Kingston: 12 total, 12 scraped, 0 new
+[04:32:16]   City 31/93: Lancaster
+[04:32:20]     Lancaster: 11 total, 11 scraped, 0 new
+[04:32:20]   City 32/93: Lansdale
+[04:32:24]     Lansdale: 14 total, 14 scraped, 0 new
+[04:32:24]   City 33/93: Latrobe
+[04:32:29]     Latrobe: 13 total, 13 scraped, 0 new
+[04:32:29]   City 34/93: Lebanon
+[04:32:34]     Lebanon: 11 total, 11 scraped, 0 new
+[04:32:34]   City 35/93: Lehigh Valley
+[04:32:37]     Lehigh Valley: 12 total, 12 scraped, 0 new
+[04:32:37]   City 36/93: Levittown
+[04:32:42]     Levittown: 14 total, 14 scraped, 1 new
+[04:32:42]   City 37/93: McKeesport
+[04:32:46]     McKeesport: 13 total, 13 scraped, 0 new
+[04:32:46]   City 38/93: Meadville
+[04:32:50]     Meadville: 12 total, 12 scraped, 0 new
+[04:32:50]   City 39/93: Mechanicsburg
+[04:32:55]     Mechanicsburg: 11 total, 11 scraped, 0 new
+[04:32:55]   City 40/93: Media
+[04:32:59]     Media: 14 total, 14 scraped, 0 new
+[04:32:59]   City 41/93: Millersville
+[04:33:04]     Millersville: 11 total, 11 scraped, 0 new
+[04:33:04]   City 42/93: Monroeville
+[04:33:08]     Monroeville: 13 total, 13 scraped, 0 new
+[04:33:08]   City 43/93: Montgomeryville
+[04:33:13]     Montgomeryville: 14 total, 14 scraped, 0 new
+[04:33:13]   City 44/93: Morrisville
+[04:33:19]     Morrisville: 14 total, 14 scraped, 0 new
+[04:33:19]   City 45/93: New Castle
+[04:33:23]     New Castle: 12 total, 12 scraped, 0 new
+[04:33:23]   City 46/93: New Kensington
+[04:33:29]     New Kensington: 13 total, 13 scraped, 0 new
+[04:33:29]   City 47/93: Norristown
+[04:33:33]     Norristown: 14 total, 14 scraped, 0 new
+[04:33:33]   City 48/93: Philadelphia
+[04:33:38]     Philadelphia: 14 total, 14 scraped, 0 new
+[04:33:38]   City 49/93: Phoenixville
+[04:33:42]     Phoenixville: 14 total, 14 scraped, 0 new
+[04:33:42]   City 50/93: Pittsburgh
+[04:33:47]     Pittsburgh: 13 total, 13 scraped, 0 new
+[04:33:47]   City 51/93: Pottstown
+[04:33:52]     Pottstown: 14 total, 14 scraped, 0 new
+[04:33:52]   City 52/93: Pottsville
+[04:33:56]     Pottsville: 12 total, 12 scraped, 0 new
+[04:33:56]   City 53/93: Punxsutawney
+[04:33:59]     Punxsutawney: 12 total, 12 scraped, 0 new
+[04:33:59]   City 54/93: Quakertown
+[04:34:04]     Quakertown: 14 total, 14 scraped, 0 new
+[04:34:04]   City 55/93: Reading
+[04:34:08]     Reading: 13 total, 13 scraped, 0 new
+[04:34:08]   City 56/93: Scranton
+[04:34:14]     Scranton: 12 total, 12 scraped, 0 new
+[04:34:14]   City 57/93: State College
+[04:34:18]     State College: 12 total, 12 scraped, 0 new
+[04:34:18]   City 58/93: Sunbury
+[04:34:22]     Sunbury: 12 total, 12 scraped, 0 new
+[04:34:22]   City 59/93: Uniontown
+[04:34:27]     Uniontown: 13 total, 13 scraped, 0 new
+[04:34:27]   City 60/93: Upper Darby
+[04:34:33]     Upper Darby: 14 total, 14 scraped, 0 new
+[04:34:33]   City 61/93: Washington
+[04:34:37]     Washington: 13 total, 13 scraped, 0 new
+[04:34:37]   City 62/93: Waynesboro
+[04:34:41]     Waynesboro: 12 total, 12 scraped, 0 new
+[04:34:41]   City 63/93: West Chester
+[04:34:46]     West Chester: 14 total, 14 scraped, 0 new
+[04:34:46]   City 64/93: Whitehall
+[04:34:50]     Whitehall: 12 total, 12 scraped, 0 new
+[04:34:50]   City 65/93: Wilkes-Barre
+[04:34:55]     Wilkes-Barre: 12 total, 12 scraped, 0 new
+[04:34:55]   City 66/93: Williamsport
+[04:34:59]     Williamsport: 12 total, 12 scraped, 0 new
+[04:34:59]   City 67/93: Willow Grove
+[04:35:04]     Willow Grove: 14 total, 14 scraped, 0 new
+[04:35:04]   City 68/93: York
+[04:35:08]     York: 11 total, 11 scraped, 0 new
+[04:35:08]   City 69/93: View All Cities
+[04:35:11]   City 70/93: Allegheny County
+[04:35:17]     Allegheny County: 10 total, 10 scraped, 0 new
+[04:35:17]   City 71/93: Beaver County
+[04:35:21]     Beaver County: 10 total, 10 scraped, 0 new
+[04:35:21]   City 72/93: Berks County
+[04:35:25]     Berks County: 10 total, 10 scraped, 0 new
+[04:35:25]   City 73/93: Bucks County
+[04:35:30]     Bucks County: 10 total, 10 scraped, 0 new
+[04:35:30]   City 74/93: Butler County
+[04:35:34]     Butler County: 10 total, 10 scraped, 0 new
+[04:35:34]   City 75/93: Cambria County
+[04:35:38]     Cambria County: 10 total, 10 scraped, 0 new
+[04:35:38]   City 76/93: Chester County
+[04:35:43]     Chester County: 10 total, 10 scraped, 0 new
+[04:35:43]   City 77/93: Cumberland County
+[04:35:48]     Cumberland County: 10 total, 10 scraped, 0 new
+[04:35:48]   City 78/93: Dauphin County
+[04:35:52]     Dauphin County: 10 total, 10 scraped, 0 new
+[04:35:52]   City 79/93: Delaware County
+[04:35:56]     Delaware County: 10 total, 10 scraped, 0 new
+[04:35:56]   City 80/93: Erie County
+[04:36:01]     Erie County: 10 total, 10 scraped, 0 new
+[04:36:01]   City 81/93: Fayette County
+[04:36:06]     Fayette County: 10 total, 10 scraped, 0 new
+[04:36:06]   City 82/93: Lackawanna County
+[04:36:10]     Lackawanna County: 10 total, 10 scraped, 0 new
+[04:36:10]   City 83/93: Lancaster County
+[04:36:14]     Lancaster County: 10 total, 10 scraped, 0 new
+[04:36:14]   City 84/93: Lehigh County
+[04:36:19]     Lehigh County: 10 total, 10 scraped, 0 new
+[04:36:19]   City 85/93: Luzerne County
+[04:36:23]     Luzerne County: 10 total, 10 scraped, 0 new
+[04:36:23]   City 86/93: Monroe County
+[04:36:28]     Monroe County: 12 total, 12 scraped, 0 new
+[04:36:28]   City 87/93: Montgomery County
+[04:36:33]     Montgomery County: 10 total, 10 scraped, 0 new
+[04:36:33]   City 88/93: Northampton County
+[04:36:37]     Northampton County: 10 total, 10 scraped, 0 new
+[04:36:37]   City 89/93: Philadelphia County
+[04:36:42]     Philadelphia County: 10 total, 10 scraped, 0 new
+[04:36:42]   City 90/93: Schuylkill County
+[04:36:46]     Schuylkill County: 12 total, 12 scraped, 0 new
+[04:36:46]   City 91/93: Washington County
+[04:36:50]     Washington County: 10 total, 10 scraped, 0 new
+[04:36:50]   City 92/93: Westmoreland County
+[04:36:55]     Westmoreland County: 10 total, 10 scraped, 0 new
+[04:36:55]   City 93/93: York County
+[04:36:58]     York County: 10 total, 10 scraped, 0 new
+[04:36:58]   PA total: 23 unique leads
+[04:37:04] 
+[========================================]
+[04:37:04] State 4/44: VA (virginia)
+[04:37:06]   VA: 75 cities found
+[04:37:06]   City 1/75: Abingdon
+[04:37:10]     Abingdon: 11 total, 11 scraped, 11 new
+[04:37:10]   City 2/75: Alexandria
+[04:37:19]     Alexandria: 26 total, 33 scraped, 19 new
+[04:37:19]   City 3/75: Annandale
+[04:37:24]     Annandale: 14 total, 14 scraped, 1 new
+[04:37:24]   City 4/75: Arlington
+[04:37:35]     Arlington: 25 total, 30 scraped, 0 new
+[04:37:35]   City 5/75: Blacksburg
+[04:37:39]     Blacksburg: 12 total, 12 scraped, 0 new
+[04:37:39]   City 6/75: Bristol
+[04:37:44]     Bristol: 11 total, 11 scraped, 0 new
+[04:37:44]   City 7/75: Burke
+[04:37:48]     Burke: 14 total, 14 scraped, 0 new
+[04:37:48]   City 8/75: Chantilly
+[04:37:52]     Chantilly: 14 total, 14 scraped, 0 new
+[04:37:52]   City 9/75: Charlottesville
+[04:37:55]     Charlottesville: 11 total, 11 scraped, 0 new
+[04:37:55]   City 10/75: Chesapeake
+[04:37:59]     Chesapeake: 11 total, 11 scraped, 0 new
+[04:37:59]   City 11/75: Chester
+[04:38:03]     Chester: 11 total, 11 scraped, 0 new
+[04:38:03]   City 12/75: Chesterfield
+[04:38:07]     Chesterfield: 11 total, 11 scraped, 0 new
+[04:38:07]   City 13/75: Christiansburg
+[04:38:12]     Christiansburg: 12 total, 12 scraped, 0 new
+[04:38:12]   City 14/75: Colonial Heights
+[04:38:17]     Colonial Heights: 11 total, 11 scraped, 0 new
+[04:38:17]   City 15/75: Culpeper
+[04:38:22]     Culpeper: 13 total, 13 scraped, 0 new
+[04:38:22]   City 16/75: Danville
+[04:38:25]     Danville: 11 total, 11 scraped, 0 new
+[04:38:25]   City 17/75: Fairfax
+[04:38:30]     Fairfax: 14 total, 14 scraped, 0 new
+[04:38:30]   City 18/75: Falls Church
+[04:38:34]     Falls Church: 13 total, 13 scraped, 0 new
+[04:38:34]   City 19/75: Fredericksburg
+[04:38:38]     Fredericksburg: 13 total, 13 scraped, 0 new
+[04:38:38]   City 20/75: Front Royal
+[04:38:43]     Front Royal: 13 total, 13 scraped, 0 new
+[04:38:43]   City 21/75: Glen Allen
+[04:38:47]     Glen Allen: 11 total, 11 scraped, 0 new
+[04:38:47]   City 22/75: Halifax
+[04:38:51]     Halifax: 11 total, 11 scraped, 0 new
+[04:38:51]   City 23/75: Hampton
+[04:38:56]     Hampton: 11 total, 11 scraped, 0 new
+[04:38:56]   City 24/75: Harrisonburg
+[04:39:01]     Harrisonburg: 11 total, 11 scraped, 0 new
+[04:39:01]   City 25/75: Herndon
+[04:39:06]     Herndon: 14 total, 14 scraped, 0 new
+[04:39:06]   City 26/75: Hillsville
+[04:39:11]     Hillsville: 11 total, 11 scraped, 0 new
+[04:39:11]   City 27/75: Hopewell
+[04:39:15]     Hopewell: 11 total, 11 scraped, 0 new
+[04:39:15]   City 28/75: Leesburg
+[04:39:20]     Leesburg: 13 total, 13 scraped, 0 new
+[04:39:20]   City 29/75: Lexington
+[04:39:25]     Lexington: 11 total, 11 scraped, 0 new
+[04:39:25]   City 30/75: Lynchburg
+[04:39:29]     Lynchburg: 11 total, 11 scraped, 0 new
+[04:39:29]   City 31/75: Manassas
+[04:39:34]     Manassas: 13 total, 13 scraped, 0 new
+[04:39:34]   City 32/75: Martinsville
+[04:39:38]     Martinsville: 11 total, 11 scraped, 0 new
+[04:39:38]   City 33/75: Mechanicsville
+[04:39:41]     Mechanicsville: 11 total, 11 scraped, 0 new
+[04:39:41]   City 34/75: Midlothian
+[04:39:46]     Midlothian: 11 total, 11 scraped, 0 new
+[04:39:46]   City 35/75: Newport News
+[04:39:51]     Newport News: 11 total, 11 scraped, 0 new
+[04:39:51]   City 36/75: Norfolk
+[04:39:55]     Norfolk: 11 total, 11 scraped, 0 new
+[04:39:55]   City 37/75: Petersburg
+[04:40:00]     Petersburg: 11 total, 11 scraped, 0 new
+[04:40:00]   City 38/75: Portsmouth
+[04:40:04]     Portsmouth: 11 total, 11 scraped, 0 new
+[04:40:04]   City 39/75: Pulaski
+[04:40:08]     Pulaski: 11 total, 11 scraped, 0 new
+[04:40:08]   City 40/75: Radford
+[04:40:13]     Radford: 11 total, 11 scraped, 0 new
+[04:40:13]   City 41/75: Reston
+[04:40:17]     Reston: 14 total, 14 scraped, 0 new
+[04:40:17]   City 42/75: Richmond
+[04:40:20]     Richmond: 11 total, 11 scraped, 0 new
+[04:40:20]   City 43/75: Roanoke
+[04:40:25]     Roanoke: 12 total, 12 scraped, 0 new
+[04:40:25]   City 44/75: Rocky Mount
+[04:40:29]     Rocky Mount: 11 total, 11 scraped, 0 new
+[04:40:29]   City 45/75: Salem
+[04:40:34]     Salem: 12 total, 12 scraped, 0 new
+[04:40:34]   City 46/75: Springfield
+[04:40:38]     Springfield: 14 total, 14 scraped, 0 new
+[04:40:38]   City 47/75: Stafford
+[04:40:42]     Stafford: 13 total, 13 scraped, 0 new
+[04:40:42]   City 48/75: Staunton
+[04:40:46]     Staunton: 11 total, 11 scraped, 0 new
+[04:40:46]   City 49/75: Sterling
+[04:40:49]     Sterling: 13 total, 13 scraped, 0 new
+[04:40:49]   City 50/75: Suffolk
+[04:40:54]     Suffolk: 11 total, 11 scraped, 0 new
+[04:40:54]   City 51/75: Vienna
+[04:40:58]     Vienna: 14 total, 14 scraped, 0 new
+[04:40:58]   City 52/75: Virginia Beach
+[04:41:03]     Virginia Beach: 11 total, 11 scraped, 0 new
+[04:41:03]   City 53/75: Warrenton
+[04:41:08]     Warrenton: 13 total, 13 scraped, 0 new
+[04:41:08]   City 54/75: Waynesboro
+[04:41:12]     Waynesboro: 11 total, 11 scraped, 0 new
+[04:41:12]   City 55/75: Williamsburg
+[04:41:17]     Williamsburg: 11 total, 11 scraped, 0 new
+[04:41:17]   City 56/75: Winchester
+[04:41:20]     Winchester: 11 total, 11 scraped, 0 new
+[04:41:20]   City 57/75: Woodbridge
+[04:41:29]     Woodbridge: 23 total, 27 scraped, 0 new
+[04:41:29]   City 58/75: Wytheville
+[04:41:33]     Wytheville: 11 total, 11 scraped, 0 new
+[04:41:33]   City 59/75: Yorktown
+[04:41:38]     Yorktown: 11 total, 11 scraped, 0 new
+[04:41:38]   City 60/75: View All Cities
+[04:41:43]   City 61/75: Albemarle County
+[04:41:47]     Albemarle County: 11 total, 11 scraped, 0 new
+[04:41:47]   City 62/75: Arlington County
+[04:41:51]     Arlington County: 11 total, 11 scraped, 0 new
+[04:41:51]   City 63/75: Chesterfield County
+[04:41:54]     Chesterfield County: 11 total, 11 scraped, 0 new
+[04:41:54]   City 64/75: Fairfax County
+[04:41:58]     Fairfax County: 12 total, 12 scraped, 0 new
+[04:41:58]   City 65/75: Frederick County
+[04:42:02]     Frederick County: 11 total, 11 scraped, 0 new
+[04:42:02]   City 66/75: Hanover County
+[04:42:06]     Hanover County: 11 total, 11 scraped, 0 new
+[04:42:06]   City 67/75: Henrico County
+[04:42:12]     Henrico County: 11 total, 11 scraped, 0 new
+[04:42:12]   City 68/75: James City County
+[04:42:17]     James City County: 11 total, 11 scraped, 0 new
+[04:42:17]   City 69/75: Loudoun County
+[04:42:22]     Loudoun County: 11 total, 11 scraped, 0 new
+[04:42:22]   City 70/75: Montgomery County
+[04:42:26]     Montgomery County: 11 total, 11 scraped, 0 new
+[04:42:26]   City 71/75: Prince William County
+[04:42:29]     Prince William County: 11 total, 11 scraped, 0 new
+[04:42:29]   City 72/75: Roanoke County
+[04:42:33]     Roanoke County: 11 total, 11 scraped, 0 new
+[04:42:33]   City 73/75: Rockingham County
+[04:42:38]     Rockingham County: 11 total, 11 scraped, 0 new
+[04:42:38]   City 74/75: Spotsylvania County
+[04:42:43]     Spotsylvania County: 11 total, 11 scraped, 0 new
+[04:42:43]   City 75/75: Stafford County
+[04:42:46]     Stafford County: 11 total, 11 scraped, 0 new
+[04:42:46]   VA total: 31 unique leads
+[04:42:52] 
+[========================================]
+[04:42:52] State 5/44: MD (maryland)
+[04:42:54]   MD: 68 cities found
+[04:42:54]   City 1/68: Annapolis
+[04:42:58]     Annapolis: 14 total, 14 scraped, 4 new
+[04:42:58]   City 2/68: Baltimore
+[04:43:06]     Baltimore: 24 total, 26 scraped, 1 new
+[04:43:06]   City 3/68: Bel Air
+[04:43:11]     Bel Air: 14 total, 14 scraped, 1 new
+[04:43:11]   City 4/68: Beltsville
+[04:43:15]     Beltsville: 18 total, 18 scraped, 0 new
+[04:43:15]   City 5/68: Bethesda
+[04:43:20]     Bethesda: 18 total, 18 scraped, 0 new
+[04:43:20]   City 6/68: Bowie
+[04:43:26]     Bowie: 18 total, 18 scraped, 0 new
+[04:43:26]   City 7/68: Burtonsville
+[04:43:30]     Burtonsville: 18 total, 18 scraped, 0 new
+[04:43:30]   City 8/68: Cambridge
+[04:43:34]     Cambridge: 12 total, 12 scraped, 1 new
+[04:43:34]   City 9/68: Catonsville
+[04:43:39]     Catonsville: 14 total, 14 scraped, 0 new
+[04:43:39]   City 10/68: Chevy Chase
+[04:43:43]     Chevy Chase: 18 total, 18 scraped, 0 new
+[04:43:43]   City 11/68: College Park
+[04:43:48]     College Park: 18 total, 18 scraped, 0 new
+[04:43:48]   City 12/68: Columbia
+[04:43:52]     Columbia: 14 total, 14 scraped, 0 new
+[04:43:52]   City 13/68: Cumberland
+[04:43:57]     Cumberland: 12 total, 12 scraped, 2 new
+[04:43:57]   City 14/68: Dundalk
+[04:44:00]     Dundalk: 14 total, 14 scraped, 0 new
+[04:44:00]   City 15/68: Easton
+[04:44:05]     Easton: 12 total, 12 scraped, 0 new
+[04:44:05]   City 16/68: Elkton
+[04:44:09]     Elkton: 12 total, 12 scraped, 0 new
+[04:44:09]   City 17/68: Ellicott City
+[04:44:13]     Ellicott City: 14 total, 14 scraped, 0 new
+[04:44:13]   City 18/68: Essex
+[04:44:19]     Essex: 14 total, 14 scraped, 0 new
+[04:44:19]   City 19/68: Fort Washington
+[04:44:24]     Fort Washington: 18 total, 18 scraped, 0 new
+[04:44:24]   City 20/68: Frederick
+[04:44:29]     Frederick: 17 total, 17 scraped, 0 new
+[04:44:29]   City 21/68: Gaithersburg
+[04:44:33]     Gaithersburg: 18 total, 18 scraped, 0 new
+[04:44:33]   City 22/68: Germantown
+[04:44:37]     Germantown: 18 total, 18 scraped, 0 new
+[04:44:37]   City 23/68: Glen Burnie
+[04:44:42]     Glen Burnie: 14 total, 14 scraped, 0 new
+[04:44:42]   City 24/68: Greenbelt
+[04:44:46]     Greenbelt: 18 total, 18 scraped, 0 new
+[04:44:46]   City 25/68: Hagerstown
+[04:44:50]     Hagerstown: 12 total, 12 scraped, 0 new
+[04:44:50]   City 26/68: Hyattsville
+[04:44:54]     Hyattsville: 18 total, 18 scraped, 0 new
+[04:44:54]   City 27/68: Laurel
+[04:45:00]     Laurel: 18 total, 18 scraped, 0 new
+[04:45:00]   City 28/68: Ocean City
+[04:45:04]     Ocean City: 12 total, 12 scraped, 1 new
+[04:45:04]   City 29/68: Owings Mills
+[04:45:09]     Owings Mills: 14 total, 14 scraped, 1 new
+[04:45:09]   City 30/68: Oxon Hill
+[04:45:14]     Oxon Hill: 18 total, 18 scraped, 0 new
+[04:45:14]   City 31/68: Parkville
+[04:45:18]     Parkville: 14 total, 14 scraped, 0 new
+[04:45:18]   City 32/68: Pasadena
+[04:45:23]     Pasadena: 14 total, 14 scraped, 0 new
+[04:45:23]   City 33/68: Pikesville
+[04:45:27]     Pikesville: 14 total, 14 scraped, 0 new
+[04:45:27]   City 34/68: Potomac
+[04:45:31]     Potomac: 18 total, 18 scraped, 0 new
+[04:45:31]   City 35/68: Rockville
+[04:45:35]     Rockville: 18 total, 18 scraped, 0 new
+[04:45:35]   City 36/68: Salisbury
+[04:45:40]     Salisbury: 12 total, 12 scraped, 0 new
+[04:45:40]   City 37/68: Severna Park
+[04:45:46]     Severna Park: 14 total, 14 scraped, 0 new
+[04:45:46]   City 38/68: Silver Spring
+[04:45:55]     Silver Spring: 29 total, 37 scraped, 0 new
+[04:45:55]   City 39/68: Suitland
+[04:45:59]     Suitland: 18 total, 18 scraped, 0 new
+[04:45:59]   City 40/68: Takoma Park
+[04:46:04]     Takoma Park: 18 total, 18 scraped, 0 new
+[04:46:04]   City 41/68: Towson
+[04:46:09]     Towson: 14 total, 14 scraped, 0 new
+[04:46:09]   City 42/68: Upper Marlboro
+[04:46:15]     Upper Marlboro: 18 total, 18 scraped, 0 new
+[04:46:15]   City 43/68: Waldorf
+[04:46:20]     Waldorf: 17 total, 17 scraped, 0 new
+[04:46:20]   City 44/68: Westminster
+[04:46:24]     Westminster: 14 total, 14 scraped, 0 new
+[04:46:24]   City 45/68: View All Cities
+[04:46:29]   City 46/68: Allegany County
+[04:46:34]     Allegany County: 12 total, 12 scraped, 0 new
+[04:46:34]   City 47/68: Anne Arundel County
+[04:46:39]     Anne Arundel County: 13 total, 12 scraped, 0 new
+[04:46:39]   City 48/68: Baltimore County
+[04:46:43]     Baltimore County: 13 total, 12 scraped, 0 new
+[04:46:43]   City 49/68: Calvert County
+[04:46:47]     Calvert County: 13 total, 12 scraped, 0 new
+[04:46:47]   City 50/68: Caroline County
+[04:46:52]     Caroline County: 12 total, 12 scraped, 0 new
+[04:46:52]   City 51/68: Carroll County
+[04:46:56]     Carroll County: 13 total, 12 scraped, 0 new
+[04:46:56]   City 52/68: Cecil County
+[04:46:59]     Cecil County: 12 total, 12 scraped, 0 new
+[04:46:59]   City 53/68: Charles County
+[04:47:05]     Charles County: 13 total, 12 scraped, 0 new
+[04:47:05]   City 54/68: Dorchester County
+[04:47:08]     Dorchester County: 12 total, 12 scraped, 0 new
+[04:47:08]   City 55/68: Frederick County
+[04:47:13]     Frederick County: 13 total, 12 scraped, 0 new
+[04:47:13]   City 56/68: Garrett County
+[04:47:18]     Garrett County: 12 total, 12 scraped, 0 new
+[04:47:18]   City 57/68: Harford County
+[04:47:23]     Harford County: 12 total, 12 scraped, 0 new
+[04:47:23]   City 58/68: Howard County
+[04:47:28]     Howard County: 13 total, 12 scraped, 0 new
+[04:47:28]   City 59/68: Kent County
+[04:47:32]     Kent County: 12 total, 12 scraped, 0 new
+[04:47:32]   City 60/68: Montgomery County
+[04:47:36]     Montgomery County: 14 total, 13 scraped, 0 new
+[04:47:36]   City 61/68: Prince Georges County
+[04:47:40]     Prince Georges County: 13 total, 13 scraped, 0 new
+[04:47:40]   City 62/68: Queen Annes County
+[04:47:45]     Queen Annes County: 12 total, 12 scraped, 0 new
+[04:47:45]   City 63/68: Saint Marys County
+[04:47:48]     Saint Marys County: 12 total, 12 scraped, 0 new
+[04:47:48]   City 64/68: Somerset County
+[04:47:52]     Somerset County: 12 total, 12 scraped, 0 new
+[04:47:52]   City 65/68: Talbot County
+[04:47:56]     Talbot County: 12 total, 12 scraped, 0 new
+[04:47:56]   City 66/68: Washington County
+[04:47:59]     Washington County: 12 total, 12 scraped, 0 new
+[04:47:59]   City 67/68: Wicomico County
+[04:48:03]     Wicomico County: 12 total, 12 scraped, 0 new
+[04:48:03]   City 68/68: Worcester County
+[04:48:08]     Worcester County: 12 total, 12 scraped, 0 new
+[04:48:08]   MD total: 11 unique leads
+[04:48:14] 
+[========================================]
+[04:48:14] State 6/44: WA (washington)
+[04:48:16]   WA: 73 cities found
+[04:48:16]   City 1/73: Aberdeen
+[04:48:21]     Aberdeen: 13 total, 13 scraped, 13 new
+[04:48:21]   City 2/73: Arlington
+[04:48:26]     Arlington: 15 total, 15 scraped, 4 new
+[04:48:26]   City 3/73: Auburn
+[04:48:31]     Auburn: 15 total, 15 scraped, 0 new
+[04:48:31]   City 4/73: Bellevue
+[04:48:36]     Bellevue: 15 total, 15 scraped, 1 new
+[04:48:36]   City 5/73: Bellingham
+[04:48:41]     Bellingham: 13 total, 13 scraped, 0 new
+[04:48:41]   City 6/73: Bothell
+[04:48:45]     Bothell: 15 total, 15 scraped, 0 new
+[04:48:45]   City 7/73: Bremerton
+[04:48:50]     Bremerton: 13 total, 13 scraped, 0 new
+[04:48:50]   City 8/73: Camas
+[04:48:54]     Camas: 13 total, 13 scraped, 0 new
+[04:48:54]   City 9/73: Centralia
+[04:48:58]     Centralia: 13 total, 13 scraped, 0 new
+[04:48:58]   City 10/73: Chehalis
+[04:49:02]     Chehalis: 13 total, 13 scraped, 0 new
+[04:49:02]   City 11/73: Edmonds
+[04:49:05]     Edmonds: 15 total, 15 scraped, 0 new
+[04:49:05]   City 12/73: Ellensburg
+[04:49:10]     Ellensburg: 13 total, 13 scraped, 0 new
+[04:49:10]   City 13/73: Everett
+[04:49:15]     Everett: 15 total, 15 scraped, 0 new
+[04:49:15]   City 14/73: Federal Way
+[04:49:18]     Federal Way: 15 total, 15 scraped, 0 new
+[04:49:18]   City 15/73: Gig Harbor
+[04:49:22]     Gig Harbor: 13 total, 13 scraped, 0 new
+[04:49:22]   City 16/73: Issaquah
+[04:49:27]     Issaquah: 15 total, 15 scraped, 0 new
+[04:49:27]   City 17/73: Kelso
+[04:49:31]     Kelso: 13 total, 13 scraped, 0 new
+[04:49:31]   City 18/73: Kenmore
+[04:49:35]     Kenmore: 15 total, 15 scraped, 0 new
+[04:49:35]   City 19/73: Kennewick
+[04:49:39]     Kennewick: 13 total, 13 scraped, 0 new
+[04:49:39]   City 20/73: Kent
+[04:49:43]     Kent: 15 total, 15 scraped, 0 new
+[04:49:43]   City 21/73: Kirkland
+[04:49:47]     Kirkland: 15 total, 15 scraped, 0 new
+[04:49:47]   City 22/73: Lacey
+[04:49:51]     Lacey: 13 total, 13 scraped, 0 new
+[04:49:51]   City 23/73: Lakewood
+[04:49:56]     Lakewood: 13 total, 13 scraped, 0 new
+[04:49:56]   City 24/73: Longview
+[04:49:59]     Longview: 13 total, 13 scraped, 0 new
+[04:49:59]   City 25/73: Lynnwood
+[04:50:04]     Lynnwood: 15 total, 15 scraped, 0 new
+[04:50:04]   City 26/73: Marysville
+[04:50:09]     Marysville: 15 total, 15 scraped, 0 new
+[04:50:09]   City 27/73: Moses Lake
+[04:50:13]     Moses Lake: 13 total, 13 scraped, 0 new
+[04:50:13]   City 28/73: Mount Vernon
+[04:50:17]     Mount Vernon: 13 total, 13 scraped, 0 new
+[04:50:17]   City 29/73: Oak Harbor
+[04:50:21]     Oak Harbor: 15 total, 15 scraped, 0 new
+[04:50:21]   City 30/73: Olympia
+[04:50:26]     Olympia: 13 total, 13 scraped, 0 new
+[04:50:26]   City 31/73: Pasco
+[04:50:31]     Pasco: 13 total, 13 scraped, 0 new
+[04:50:31]   City 32/73: Port Angeles
+[04:50:35]     Port Angeles: 13 total, 13 scraped, 0 new
+[04:50:35]   City 33/73: Port Orchard
+[04:50:39]     Port Orchard: 13 total, 13 scraped, 0 new
+[04:50:39]   City 34/73: Pullman
+[04:50:44]     Pullman: 13 total, 13 scraped, 0 new
+[04:50:44]   City 35/73: Puyallup
+[04:50:47]     Puyallup: 13 total, 13 scraped, 0 new
+[04:50:47]   City 36/73: Redmond
+[04:50:51]     Redmond: 15 total, 15 scraped, 0 new
+[04:50:51]   City 37/73: Renton
+[04:50:56]     Renton: 15 total, 15 scraped, 0 new
+[04:50:56]   City 38/73: Richland
+[04:51:00]     Richland: 13 total, 13 scraped, 0 new
+[04:51:00]   City 39/73: Seattle
+[04:51:06]     Seattle: 15 total, 15 scraped, 0 new
+[04:51:06]   City 40/73: Shelton
+[04:51:09]     Shelton: 13 total, 13 scraped, 0 new
+[04:51:09]   City 41/73: Silverdale
+[04:51:14]     Silverdale: 13 total, 13 scraped, 0 new
+[04:51:14]   City 42/73: Spokane
+[04:51:19]     Spokane: 13 total, 13 scraped, 0 new
+[04:51:19]   City 43/73: Spokane Valley
+[04:51:23]     Spokane Valley: 13 total, 13 scraped, 0 new
+[04:51:23]   City 44/73: Tacoma
+[04:51:28]     Tacoma: 13 total, 13 scraped, 0 new
+[04:51:28]   City 45/73: Vancouver
+[04:51:31]     Vancouver: 13 total, 13 scraped, 0 new
+[04:51:31]   City 46/73: Walla Walla
+[04:51:35]     Walla Walla: 13 total, 13 scraped, 0 new
+[04:51:35]   City 47/73: Wenatchee
+[04:51:39]     Wenatchee: 13 total, 13 scraped, 0 new
+[04:51:39]   City 48/73: Yakima
+[04:51:42]     Yakima: 13 total, 13 scraped, 0 new
+[04:51:42]   City 49/73: View All Cities
+[04:51:47]   City 50/73: Benton County
+[04:51:51]     Benton County: 13 total, 13 scraped, 0 new
+[04:51:51]   City 51/73: Chelan County
+[04:51:55]     Chelan County: 13 total, 13 scraped, 0 new
+[04:51:55]   City 52/73: Clallam County
+[04:52:00]     Clallam County: 13 total, 13 scraped, 0 new
+[04:52:00]   City 53/73: Clark County
+[04:52:04]     Clark County: 13 total, 13 scraped, 0 new
+[04:52:04]   City 54/73: Cowlitz County
+[04:52:09]     Cowlitz County: 13 total, 13 scraped, 0 new
+[04:52:09]   City 55/73: Franklin County
+[04:52:13]     Franklin County: 13 total, 13 scraped, 0 new
+[04:52:13]   City 56/73: Grant County
+[04:52:17]     Grant County: 13 total, 13 scraped, 0 new
+[04:52:17]   City 57/73: Grays Harbor County
+[04:52:22]     Grays Harbor County: 13 total, 13 scraped, 0 new
+[04:52:22]   City 58/73: Island County
+[04:52:25]     Island County: 13 total, 13 scraped, 0 new
+[04:52:25]   City 59/73: King County
+[04:52:30]     King County: 13 total, 13 scraped, 0 new
+[04:52:30]   City 60/73: Kitsap County
+[04:52:35]     Kitsap County: 13 total, 13 scraped, 0 new
+[04:52:35]   City 61/73: Kittitas County
+[04:52:39]     Kittitas County: 13 total, 13 scraped, 0 new
+[04:52:39]   City 62/73: Lewis County
+[04:52:43]     Lewis County: 13 total, 13 scraped, 0 new
+[04:52:43]   City 63/73: Mason County
+[04:52:48]     Mason County: 13 total, 13 scraped, 0 new
+[04:52:48]   City 64/73: Okanogan County
+[04:52:52]     Okanogan County: 13 total, 13 scraped, 0 new
+[04:52:52]   City 65/73: Pierce County
+[04:52:57]     Pierce County: 13 total, 13 scraped, 0 new
+[04:52:57]   City 66/73: Skagit County
+[04:53:01]     Skagit County: 13 total, 13 scraped, 0 new
+[04:53:01]   City 67/73: Snohomish County
+[04:53:06]     Snohomish County: 13 total, 13 scraped, 0 new
+[04:53:06]   City 68/73: Spokane County
+[04:53:11]     Spokane County: 13 total, 13 scraped, 0 new
+[04:53:11]   City 69/73: Stevens County
+[04:53:16]     Stevens County: 13 total, 13 scraped, 0 new
+[04:53:16]   City 70/73: Thurston County
+[04:53:21]     Thurston County: 13 total, 13 scraped, 0 new
+[04:53:21]   City 71/73: Whatcom County
+[04:53:24]     Whatcom County: 13 total, 13 scraped, 0 new
+[04:53:24]   City 72/73: Whitman County
+[04:53:29]     Whitman County: 13 total, 13 scraped, 0 new
+[04:53:29]   City 73/73: Yakima County
+[04:53:33]     Yakima County: 13 total, 13 scraped, 0 new
+[04:53:33]   WA total: 18 unique leads
+[04:53:38] 
+[========================================]
+[04:53:38] State 7/44: AZ (arizona)
+[04:53:39]   AZ: 60 cities found
+[04:53:39]   City 1/60: Apache Junction
+[04:53:44]     Apache Junction: 5 total, 5 scraped, 4 new
+[04:53:44]   City 2/60: Avondale
+[04:53:48]     Avondale: 4 total, 4 scraped, 0 new
+[04:53:48]   City 3/60: Buckeye
+[04:53:53]     Buckeye: 4 total, 4 scraped, 0 new
+[04:53:53]   City 4/60: Bullhead City
+[04:53:58]     Bullhead City: 4 total, 4 scraped, 0 new
+[04:53:58]   City 5/60: Camp Verde
+[04:54:03]     Camp Verde: 4 total, 4 scraped, 0 new
+[04:54:03]   City 6/60: Casa Grande
+[04:54:07]     Casa Grande: 5 total, 5 scraped, 0 new
+[04:54:07]   City 7/60: Chandler
+[04:54:12]     Chandler: 4 total, 4 scraped, 0 new
+[04:54:12]   City 8/60: Chino Valley
+[04:54:17]     Chino Valley: 4 total, 4 scraped, 0 new
+[04:54:17]   City 9/60: Cottonwood
+[04:54:22]     Cottonwood: 4 total, 4 scraped, 0 new
+[04:54:22]   City 10/60: Douglas
+[04:54:26]     Douglas: 4 total, 4 scraped, 0 new
+[04:54:26]   City 11/60: Eloy
+[04:54:31]     Eloy: 5 total, 5 scraped, 0 new
+[04:54:31]   City 12/60: Flagstaff
+[04:54:35]     Flagstaff: 4 total, 4 scraped, 0 new
+[04:54:35]   City 13/60: Florence
+[04:54:40]     Florence: 5 total, 5 scraped, 0 new
+[04:54:40]   City 14/60: Fountain Hills
+[04:54:45]     Fountain Hills: 4 total, 4 scraped, 0 new
+[04:54:45]   City 15/60: Gilbert
+[04:54:50]     Gilbert: 4 total, 4 scraped, 0 new
+[04:54:50]   City 16/60: Glendale
+[04:54:55]     Glendale: 4 total, 4 scraped, 0 new
+[04:54:55]   City 17/60: Globe
+[04:55:00]     Globe: 4 total, 4 scraped, 0 new
+[04:55:00]   City 18/60: Goodyear
+[04:55:04]     Goodyear: 4 total, 4 scraped, 0 new
+[04:55:04]   City 19/60: Kingman
+[04:55:08]     Kingman: 4 total, 4 scraped, 0 new
+[04:55:08]   City 20/60: Lake Havasu City
+[04:55:11]     Lake Havasu City: 4 total, 4 scraped, 0 new
+[04:55:11]   City 21/60: Marana
+[04:55:16]     Marana: 5 total, 5 scraped, 0 new
+[04:55:16]   City 22/60: Maricopa
+[04:55:21]     Maricopa: 5 total, 5 scraped, 0 new
+[04:55:21]   City 23/60: Mesa
+[04:55:24]     Mesa: 4 total, 4 scraped, 0 new
+[04:55:24]   City 24/60: Nogales
+[04:55:29]     Nogales: 4 total, 4 scraped, 0 new
+[04:55:29]   City 25/60: Oro Valley
+[04:55:34]     Oro Valley: 5 total, 5 scraped, 0 new
+[04:55:34]   City 26/60: Paradise Valley
+[04:55:39]     Paradise Valley: 4 total, 4 scraped, 0 new
+[04:55:39]   City 27/60: Payson
+[04:55:43]     Payson: 4 total, 4 scraped, 0 new
+[04:55:43]   City 28/60: Peoria
+[04:55:47]     Peoria: 4 total, 4 scraped, 0 new
+[04:55:47]   City 29/60: Phoenix
+[04:55:51]     Phoenix: 4 total, 4 scraped, 0 new
+[04:55:51]   City 30/60: Prescott
+[04:55:55]     Prescott: 4 total, 4 scraped, 0 new
+[04:55:55]   City 31/60: Prescott Valley
+[04:55:59]     Prescott Valley: 4 total, 4 scraped, 0 new
+[04:55:59]   City 32/60: Safford
+[04:56:05]     Safford: 4 total, 4 scraped, 0 new
+[04:56:05]   City 33/60: Sahuarita
+[04:56:10]     Sahuarita: 5 total, 5 scraped, 0 new
+[04:56:10]   City 34/60: Scottsdale
+[04:56:15]     Scottsdale: 4 total, 4 scraped, 0 new
+[04:56:15]   City 35/60: Sedona
+[04:56:20]     Sedona: 4 total, 4 scraped, 0 new
+[04:56:20]   City 36/60: Show Low
+[04:56:24]     Show Low: 4 total, 4 scraped, 0 new
+[04:56:24]   City 37/60: Sierra Vista
+[04:56:29]     Sierra Vista: 4 total, 4 scraped, 0 new
+[04:56:29]   City 38/60: Sun City
+[04:56:34]     Sun City: 4 total, 4 scraped, 0 new
+[04:56:34]   City 39/60: Surprise
+[04:56:38]     Surprise: 4 total, 4 scraped, 0 new
+[04:56:38]   City 40/60: Tempe
+[04:56:43]     Tempe: 4 total, 4 scraped, 0 new
+[04:56:43]   City 41/60: Tombstone
+[04:56:48]     Tombstone: 4 total, 4 scraped, 0 new
+[04:56:48]   City 42/60: Tucson
+[04:56:52]     Tucson: 5 total, 5 scraped, 0 new
+[04:56:52]   City 43/60: Winslow
+[04:56:56]     Winslow: 4 total, 4 scraped, 0 new
+[04:56:56]   City 44/60: Yuma
+[04:57:02]     Yuma: 4 total, 4 scraped, 0 new
+[04:57:02]   City 45/60: View All Cities
+[04:57:06]   City 46/60: Apache County
+[04:57:11]     Apache County: 4 total, 4 scraped, 0 new
+[04:57:11]   City 47/60: Cochise County
+[04:57:15]     Cochise County: 4 total, 4 scraped, 0 new
+[04:57:15]   City 48/60: Coconino County
+[04:57:19]     Coconino County: 4 total, 4 scraped, 0 new
+[04:57:19]   City 49/60: Gila County
+[04:57:23]     Gila County: 4 total, 4 scraped, 0 new
+[04:57:23]   City 50/60: Graham County
+[04:57:27]     Graham County: 4 total, 4 scraped, 0 new
+[04:57:27]   City 51/60: Greenlee County
+[04:57:31]     Greenlee County: 4 total, 4 scraped, 0 new
+[04:57:31]   City 52/60: La Paz County
+[04:57:36]     La Paz County: 4 total, 4 scraped, 0 new
+[04:57:36]   City 53/60: Maricopa County
+[04:57:40]     Maricopa County: 4 total, 4 scraped, 0 new
+[04:57:40]   City 54/60: Mohave County
+[04:57:44]     Mohave County: 4 total, 4 scraped, 0 new
+[04:57:44]   City 55/60: Navajo County
+[04:57:50]     Navajo County: 4 total, 4 scraped, 0 new
+[04:57:50]   City 56/60: Pima County
+[04:57:54]     Pima County: 5 total, 5 scraped, 0 new
+[04:57:54]   City 57/60: Pinal County
+[04:57:59]     Pinal County: 5 total, 5 scraped, 0 new
+[04:57:59]   City 58/60: Santa Cruz County
+[04:58:04]     Santa Cruz County: 4 total, 4 scraped, 0 new
+[04:58:04]   City 59/60: Yavapai County
+[04:58:08]     Yavapai County: 4 total, 4 scraped, 0 new
+[04:58:08]   City 60/60: Yuma County
+[04:58:12]     Yuma County: 4 total, 4 scraped, 0 new
+[04:58:12]   AZ total: 4 unique leads
+[04:58:17] 
+[========================================]
+[04:58:17] State 8/44: CO (colorado)
+[04:58:18]   CO: 71 cities found
+[04:58:18]   City 1/71: Alamosa
+[04:58:24]     Alamosa: 7 total, 7 scraped, 6 new
+[04:58:24]   City 2/71: Arvada
+[04:58:29]     Arvada: 8 total, 8 scraped, 1 new
+[04:58:29]   City 3/71: Aspen
+[04:58:32]     Aspen: 7 total, 7 scraped, 0 new
+[04:58:32]   City 4/71: Aurora
+[04:58:37]     Aurora: 8 total, 8 scraped, 0 new
+[04:58:37]   City 5/71: Boulder
+[04:58:42]     Boulder: 9 total, 9 scraped, 0 new
+[04:58:42]   City 6/71: Breckenridge
+[04:58:47]     Breckenridge: 7 total, 7 scraped, 0 new
+[04:58:47]   City 7/71: Brighton
+[04:58:51]     Brighton: 8 total, 8 scraped, 0 new
+[04:58:51]   City 8/71: Broomfield
+[04:58:55]     Broomfield: 9 total, 9 scraped, 0 new
+[04:58:55]   City 9/71: Canon City
+[04:58:59]     Canon City: 7 total, 7 scraped, 0 new
+[04:58:59]   City 10/71: Castle Rock
+[04:59:05]     Castle Rock: 8 total, 8 scraped, 0 new
+[04:59:05]   City 11/71: Centennial
+[04:59:09]     Centennial: 8 total, 8 scraped, 0 new
+[04:59:09]   City 12/71: Colorado Springs
+[04:59:13]     Colorado Springs: 7 total, 7 scraped, 0 new
+[04:59:13]   City 13/71: Commerce City
+[04:59:18]     Commerce City: 8 total, 8 scraped, 0 new
+[04:59:18]   City 14/71: Cortez
+[04:59:23]     Cortez: 7 total, 7 scraped, 0 new
+[04:59:23]   City 15/71: Denver
+[04:59:28]     Denver: 8 total, 8 scraped, 0 new
+[04:59:28]   City 16/71: Durango
+[04:59:32]     Durango: 7 total, 7 scraped, 0 new
+[04:59:32]   City 17/71: Englewood
+[04:59:37]     Englewood: 8 total, 8 scraped, 0 new
+[04:59:37]   City 18/71: Erie
+[04:59:40]     Erie: 8 total, 8 scraped, 0 new
+[04:59:40]   City 19/71: Evans
+[04:59:45]     Evans: 8 total, 8 scraped, 0 new
+[04:59:45]   City 20/71: Evergreen
+[04:59:49]     Evergreen: 8 total, 8 scraped, 0 new
+[04:59:49]   City 21/71: Fort Collins
+[04:59:53]     Fort Collins: 8 total, 8 scraped, 0 new
+[04:59:53]   City 22/71: Fort Morgan
+[04:59:58]     Fort Morgan: 7 total, 7 scraped, 0 new
+[04:59:58]   City 23/71: Fountain
+[05:00:02]     Fountain: 7 total, 7 scraped, 0 new
+[05:00:02]   City 24/71: Glenwood Springs
+[05:00:06]     Glenwood Springs: 7 total, 7 scraped, 0 new
+[05:00:06]   City 25/71: Golden
+[05:00:11]     Golden: 8 total, 8 scraped, 0 new
+[05:00:11]   City 26/71: Grand Junction
+[05:00:14]     Grand Junction: 7 total, 7 scraped, 0 new
+[05:00:14]   City 27/71: Greeley
+[05:00:19]     Greeley: 8 total, 8 scraped, 0 new
+[05:00:19]   City 28/71: Lafayette
+[05:00:24]     Lafayette: 9 total, 9 scraped, 0 new
+[05:00:24]   City 29/71: Lakewood
+[05:00:28]     Lakewood: 8 total, 8 scraped, 0 new
+[05:00:28]   City 30/71: Littleton
+[05:00:32]     Littleton: 8 total, 8 scraped, 0 new
+[05:00:32]   City 31/71: Longmont
+[05:00:37]     Longmont: 9 total, 9 scraped, 0 new
+[05:00:37]   City 32/71: Louisville
+[05:00:43]     Louisville: 9 total, 9 scraped, 0 new
+[05:00:43]   City 33/71: Loveland
+[05:00:48]     Loveland: 8 total, 8 scraped, 0 new
+[05:00:48]   City 34/71: Montrose
+[05:00:53]     Montrose: 7 total, 7 scraped, 0 new
+[05:00:53]   City 35/71: Monument
+[05:00:57]     Monument: 7 total, 7 scraped, 0 new
+[05:00:57]   City 36/71: Niwot
+[05:01:02]     Niwot: 9 total, 9 scraped, 0 new
+[05:01:02]   City 37/71: Parker
+[05:01:07]     Parker: 8 total, 8 scraped, 0 new
+[05:01:07]   City 38/71: Pueblo
+[05:01:11]     Pueblo: 7 total, 7 scraped, 0 new
+[05:01:11]   City 39/71: Steamboat Springs
+[05:01:15]     Steamboat Springs: 7 total, 7 scraped, 0 new
+[05:01:15]   City 40/71: Sterling
+[05:01:20]     Sterling: 7 total, 7 scraped, 0 new
+[05:01:20]   City 41/71: Thornton
+[05:01:24]     Thornton: 8 total, 8 scraped, 0 new
+[05:01:24]   City 42/71: Trinidad
+[05:01:29]     Trinidad: 7 total, 7 scraped, 0 new
+[05:01:29]   City 43/71: Vail
+[05:01:33]     Vail: 7 total, 7 scraped, 0 new
+[05:01:33]   City 44/71: Westminster
+[05:01:37]     Westminster: 8 total, 8 scraped, 0 new
+[05:01:37]   City 45/71: Wheat Ridge
+[05:01:42]     Wheat Ridge: 8 total, 8 scraped, 0 new
+[05:01:42]   City 46/71: Windsor
+[05:01:46]     Windsor: 8 total, 8 scraped, 0 new
+[05:01:46]   City 47/71: View All Cities
+[05:01:51]   City 48/71: Adams County
+[05:01:55]     Adams County: 6 total, 6 scraped, 0 new
+[05:01:55]   City 49/71: Arapahoe County
+[05:01:58]     Arapahoe County: 6 total, 6 scraped, 0 new
+[05:01:58]   City 50/71: Boulder County
+[05:02:03]     Boulder County: 6 total, 6 scraped, 0 new
+[05:02:03]   City 51/71: Broomfield County
+[05:02:06]     Broomfield County: 6 total, 6 scraped, 0 new
+[05:02:06]   City 52/71: Delta County
+[05:02:10]     Delta County: 7 total, 7 scraped, 0 new
+[05:02:10]   City 53/71: Denver County
+[05:02:14]     Denver County: 6 total, 6 scraped, 0 new
+[05:02:14]   City 54/71: Douglas County
+[05:02:19]     Douglas County: 6 total, 6 scraped, 0 new
+[05:02:19]   City 55/71: Eagle County
+[05:02:24]     Eagle County: 7 total, 7 scraped, 0 new
+[05:02:24]   City 56/71: El Paso County
+[05:02:29]     El Paso County: 6 total, 6 scraped, 0 new
+[05:02:29]   City 57/71: Fremont County
+[05:02:34]     Fremont County: 7 total, 7 scraped, 0 new
+[05:02:34]   City 58/71: Garfield County
+[05:02:38]     Garfield County: 7 total, 7 scraped, 0 new
+[05:02:38]   City 59/71: Jefferson County
+[05:02:43]     Jefferson County: 6 total, 6 scraped, 0 new
+[05:02:43]   City 60/71: La Plata County
+[05:02:47]     La Plata County: 7 total, 7 scraped, 0 new
+[05:02:47]   City 61/71: Larimer County
+[05:02:51]     Larimer County: 6 total, 6 scraped, 0 new
+[05:02:51]   City 62/71: Logan County
+[05:02:57]     Logan County: 7 total, 7 scraped, 0 new
+[05:02:57]   City 63/71: Mesa County
+[05:03:02]     Mesa County: 6 total, 6 scraped, 0 new
+[05:03:02]   City 64/71: Montezuma County
+[05:03:06]     Montezuma County: 7 total, 7 scraped, 0 new
+[05:03:06]   City 65/71: Montrose County
+[05:03:10]     Montrose County: 7 total, 7 scraped, 0 new
+[05:03:10]   City 66/71: Morgan County
+[05:03:14]     Morgan County: 7 total, 7 scraped, 0 new
+[05:03:14]   City 67/71: Otero County
+[05:03:18]     Otero County: 7 total, 7 scraped, 0 new
+[05:03:18]   City 68/71: Pueblo County
+[05:03:22]     Pueblo County: 6 total, 6 scraped, 0 new
+[05:03:22]   City 69/71: Summit County
+[05:03:25]     Summit County: 7 total, 7 scraped, 0 new
+[05:03:25]   City 70/71: Teller County
+[05:03:30]     Teller County: 7 total, 7 scraped, 0 new
+[05:03:30]   City 71/71: Weld County
+[05:03:35]     Weld County: 6 total, 6 scraped, 0 new
+[05:03:35]   CO total: 7 unique leads
+[05:03:40] 
+[========================================]
+[05:03:40] State 9/44: NC (north-carolina)
+[05:03:42]   NC: 88 cities found
+[05:03:42]   City 1/88: Albemarle
+[05:03:47]     Albemarle: 9 total, 9 scraped, 9 new
+[05:03:47]   City 2/88: Apex
+[05:03:50]     Apex: 9 total, 9 scraped, 1 new
+[05:03:50]   City 3/88: Asheboro
+[05:03:55]     Asheboro: 9 total, 9 scraped, 0 new
+[05:03:55]   City 4/88: Asheville
+[05:04:01]     Asheville: 10 total, 10 scraped, 0 new
+[05:04:01]   City 5/88: Boone
+[05:04:04]     Boone: 9 total, 9 scraped, 0 new
+[05:04:04]   City 6/88: Burlington
+[05:04:09]     Burlington: 9 total, 9 scraped, 0 new
+[05:04:09]   City 7/88: Cary
+[05:04:14]     Cary: 9 total, 9 scraped, 0 new
+[05:04:14]   City 8/88: Chapel Hill
+[05:04:19]     Chapel Hill: 9 total, 9 scraped, 0 new
+[05:04:19]   City 9/88: Charlotte
+[05:04:24]     Charlotte: 11 total, 11 scraped, 0 new
+[05:04:24]   City 10/88: Clayton
+[05:04:28]     Clayton: 9 total, 9 scraped, 0 new
+[05:04:28]   City 11/88: Clemmons
+[05:04:33]     Clemmons: 9 total, 9 scraped, 0 new
+[05:04:33]   City 12/88: Concord
+[05:04:38]     Concord: 11 total, 11 scraped, 0 new
+[05:04:38]   City 13/88: Conover
+[05:04:42]     Conover: 9 total, 9 scraped, 0 new
+[05:04:42]   City 14/88: Durham
+[05:04:47]     Durham: 9 total, 9 scraped, 0 new
+[05:04:47]   City 15/88: Elizabeth City
+[05:04:51]     Elizabeth City: 9 total, 9 scraped, 0 new
+[05:04:51]   City 16/88: Elon
+[05:04:56]     Elon: 9 total, 9 scraped, 0 new
+[05:04:56]   City 17/88: Fayetteville
+[05:04:59]     Fayetteville: 9 total, 9 scraped, 0 new
+[05:04:59]   City 18/88: Fort Bragg
+[05:05:04]     Fort Bragg: 9 total, 9 scraped, 0 new
+[05:05:04]   City 19/88: Garner
+[05:05:08]     Garner: 9 total, 9 scraped, 0 new
+[05:05:08]   City 20/88: Gastonia
+[05:05:12]     Gastonia: 11 total, 11 scraped, 0 new
+[05:05:12]   City 21/88: Goldsboro
+[05:05:16]     Goldsboro: 9 total, 9 scraped, 0 new
+[05:05:16]   City 22/88: Graham
+[05:05:20]     Graham: 9 total, 9 scraped, 0 new
+[05:05:20]   City 23/88: Greensboro
+[05:05:23]     Greensboro: 9 total, 9 scraped, 0 new
+[05:05:23]   City 24/88: Greenville
+[05:05:27]     Greenville: 9 total, 9 scraped, 0 new
+[05:05:27]   City 25/88: Henderson
+[05:05:32]     Henderson: 9 total, 9 scraped, 0 new
+[05:05:32]   City 26/88: Hendersonville
+[05:05:36]     Hendersonville: 9 total, 9 scraped, 0 new
+[05:05:36]   City 27/88: Hickory
+[05:05:41]     Hickory: 9 total, 9 scraped, 0 new
+[05:05:41]   City 28/88: High Point
+[05:05:46]     High Point: 9 total, 9 scraped, 0 new
+[05:05:46]   City 29/88: Huntersville
+[05:05:50]     Huntersville: 11 total, 11 scraped, 0 new
+[05:05:50]   City 30/88: Jacksonville
+[05:05:54]     Jacksonville: 9 total, 9 scraped, 0 new
+[05:05:54]   City 31/88: Kannapolis
+[05:05:57]     Kannapolis: 11 total, 11 scraped, 0 new
+[05:05:57]   City 32/88: Kernersville
+[05:06:02]     Kernersville: 9 total, 9 scraped, 0 new
+[05:06:02]   City 33/88: Kings Mountain
+[05:06:07]     Kings Mountain: 9 total, 9 scraped, 0 new
+[05:06:07]   City 34/88: Kinston
+[05:06:12]     Kinston: 9 total, 9 scraped, 0 new
+[05:06:12]   City 35/88: Kitty Hawk
+[05:06:17]     Kitty Hawk: 9 total, 9 scraped, 0 new
+[05:06:17]   City 36/88: Lenoir
+[05:06:21]     Lenoir: 9 total, 9 scraped, 0 new
+[05:06:21]   City 37/88: Lewisville
+[05:06:26]     Lewisville: 9 total, 9 scraped, 0 new
+[05:06:26]   City 38/88: Lexington
+[05:06:31]     Lexington: 9 total, 9 scraped, 0 new
+[05:06:31]   City 39/88: Lincolnton
+[05:06:36]     Lincolnton: 11 total, 11 scraped, 0 new
+[05:06:36]   City 40/88: Lumberton
+[05:06:40]     Lumberton: 9 total, 9 scraped, 0 new
+[05:06:40]   City 41/88: Matthews
+[05:06:44]     Matthews: 11 total, 11 scraped, 0 new
+[05:06:44]   City 42/88: Monroe
+[05:06:49]     Monroe: 11 total, 11 scraped, 0 new
+[05:06:49]   City 43/88: Mooresville
+[05:06:54]     Mooresville: 9 total, 9 scraped, 0 new
+[05:06:54]   City 44/88: Morehead City
+[05:06:58]     Morehead City: 9 total, 9 scraped, 0 new
+[05:06:58]   City 45/88: Morganton
+[05:07:02]     Morganton: 9 total, 9 scraped, 0 new
+[05:07:02]   City 46/88: Morrisville
+[05:07:07]     Morrisville: 9 total, 9 scraped, 0 new
+[05:07:07]   City 47/88: New Bern
+[05:07:10]     New Bern: 9 total, 9 scraped, 0 new
+[05:07:10]   City 48/88: Newton
+[05:07:15]     Newton: 9 total, 9 scraped, 0 new
+[05:07:15]   City 49/88: Pineville
+[05:07:20]     Pineville: 11 total, 11 scraped, 0 new
+[05:07:20]   City 50/88: Raleigh
+[05:07:25]     Raleigh: 9 total, 9 scraped, 0 new
+[05:07:25]   City 51/88: Reidsville
+[05:07:30]     Reidsville: 9 total, 9 scraped, 0 new
+[05:07:30]   City 52/88: Rocky Mount
+[05:07:34]     Rocky Mount: 9 total, 9 scraped, 0 new
+[05:07:34]   City 53/88: Salisbury
+[05:07:39]     Salisbury: 11 total, 11 scraped, 0 new
+[05:07:39]   City 54/88: Sanford
+[05:07:44]     Sanford: 9 total, 9 scraped, 0 new
+[05:07:44]   City 55/88: Shelby
+[05:07:49]     Shelby: 9 total, 9 scraped, 0 new
+[05:07:49]   City 56/88: Smithfield
+[05:07:54]     Smithfield: 9 total, 9 scraped, 0 new
+[05:07:54]   City 57/88: Statesville
+[05:07:57]     Statesville: 9 total, 9 scraped, 0 new
+[05:07:57]   City 58/88: Summerfield
+[05:08:01]     Summerfield: 9 total, 9 scraped, 0 new
+[05:08:01]   City 59/88: Wake Forest
+[05:08:06]     Wake Forest: 9 total, 9 scraped, 0 new
+[05:08:06]   City 60/88: Waynesville
+[05:08:11]     Waynesville: 9 total, 9 scraped, 0 new
+[05:08:11]   City 61/88: Wilmington
+[05:08:15]     Wilmington: 9 total, 9 scraped, 0 new
+[05:08:15]   City 62/88: Wilson
+[05:08:19]     Wilson: 9 total, 9 scraped, 0 new
+[05:08:19]   City 63/88: Winston-Salem
+[05:08:23]     Winston-Salem: 9 total, 9 scraped, 0 new
+[05:08:23]   City 64/88: View All Cities
+[05:08:28]   City 65/88: Alamance County
+[05:08:33]     Alamance County: 9 total, 9 scraped, 0 new
+[05:08:33]   City 66/88: Buncombe County
+[05:08:37]     Buncombe County: 9 total, 9 scraped, 0 new
+[05:08:37]   City 67/88: Cabarrus County
+[05:08:42]     Cabarrus County: 9 total, 9 scraped, 0 new
+[05:08:42]   City 68/88: Catawba County
+[05:08:46]     Catawba County: 9 total, 9 scraped, 0 new
+[05:08:46]   City 69/88: Cleveland County
+[05:08:51]     Cleveland County: 9 total, 9 scraped, 0 new
+[05:08:51]   City 70/88: Cumberland County
+[05:08:55]     Cumberland County: 9 total, 9 scraped, 0 new
+[05:08:55]   City 71/88: Davidson County
+[05:08:58]     Davidson County: 9 total, 9 scraped, 0 new
+[05:08:58]   City 72/88: Durham County
+[05:09:02]     Durham County: 9 total, 9 scraped, 0 new
+[05:09:02]   City 73/88: Forsyth County
+[05:09:06]     Forsyth County: 9 total, 9 scraped, 0 new
+[05:09:06]   City 74/88: Gaston County
+[05:09:10]     Gaston County: 9 total, 9 scraped, 0 new
+[05:09:10]   City 75/88: Guilford County
+[05:09:14]     Guilford County: 9 total, 9 scraped, 0 new
+[05:09:14]   City 76/88: Iredell County
+[05:09:19]     Iredell County: 9 total, 9 scraped, 0 new
+[05:09:19]   City 77/88: Johnston County
+[05:09:24]     Johnston County: 9 total, 9 scraped, 0 new
+[05:09:24]   City 78/88: Mecklenburg County
+[05:09:29]     Mecklenburg County: 9 total, 9 scraped, 0 new
+[05:09:29]   City 79/88: New Hanover County
+[05:09:32]     New Hanover County: 9 total, 9 scraped, 0 new
+[05:09:32]   City 80/88: Onslow County
+[05:09:37]     Onslow County: 9 total, 9 scraped, 0 new
+[05:09:37]   City 81/88: Orange County
+[05:09:42]     Orange County: 9 total, 9 scraped, 0 new
+[05:09:42]   City 82/88: Pitt County
+[05:09:47]     Pitt County: 9 total, 9 scraped, 0 new
+[05:09:47]   City 83/88: Randolph County
+[05:09:52]     Randolph County: 9 total, 9 scraped, 0 new
+[05:09:52]   City 84/88: Robeson County
+[05:09:57]     Robeson County: 9 total, 9 scraped, 0 new
+[05:09:57]   City 85/88: Rowan County
+[05:10:01]     Rowan County: 9 total, 9 scraped, 0 new
+[05:10:01]   City 86/88: Union County
+[05:10:05]     Union County: 9 total, 9 scraped, 0 new
+[05:10:05]   City 87/88: Wake County
+[05:10:09]     Wake County: 9 total, 9 scraped, 0 new
+[05:10:09]   City 88/88: Wayne County
+[05:10:13]     Wayne County: 9 total, 9 scraped, 0 new
+[05:10:13]   NC total: 10 unique leads
+[05:10:19] 
+[========================================]
+[05:10:19] State 10/44: MI (michigan)
+[05:10:20]   MI: 85 cities found
+[05:10:20]   City 1/85: Adrian
+[05:10:24]     Adrian: 6 total, 6 scraped, 6 new
+[05:10:24]   City 2/85: Ann Arbor
+[05:10:28]     Ann Arbor: 6 total, 6 scraped, 0 new
+[05:10:28]   City 3/85: Battle Creek
+[05:10:32]     Battle Creek: 6 total, 6 scraped, 1 new
+[05:10:32]   City 4/85: Bay City
+[05:10:38]     Bay City: 6 total, 6 scraped, 1 new
+[05:10:38]   City 5/85: Benton Harbor
+[05:10:42]     Benton Harbor: 6 total, 6 scraped, 0 new
+[05:10:42]   City 6/85: Bingham Farms
+[05:10:48]     Bingham Farms: 7 total, 7 scraped, 1 new
+[05:10:48]   City 7/85: Bloomfield Hills
+[05:10:52]     Bloomfield Hills: 7 total, 7 scraped, 0 new
+[05:10:52]   City 8/85: Burton
+[05:10:56]     Burton: 6 total, 6 scraped, 0 new
+[05:10:56]   City 9/85: Cadillac
+[05:10:59]     Cadillac: 6 total, 6 scraped, 0 new
+[05:10:59]   City 10/85: Cheboygan
+[05:11:04]     Cheboygan: 6 total, 6 scraped, 0 new
+[05:11:04]   City 11/85: Copper Harbor
+[05:11:09]     Copper Harbor: 6 total, 6 scraped, 0 new
+[05:11:09]   City 12/85: Dearborn
+[05:11:13]     Dearborn: 7 total, 7 scraped, 0 new
+[05:11:13]   City 13/85: Dearborn Heights
+[05:11:18]     Dearborn Heights: 7 total, 7 scraped, 0 new
+[05:11:18]   City 14/85: Detroit
+[05:11:23]     Detroit: 7 total, 7 scraped, 0 new
+[05:11:23]   City 15/85: East Lansing
+[05:11:28]     East Lansing: 6 total, 6 scraped, 0 new
+[05:11:28]   City 16/85: Eastpointe
+[05:11:32]     Eastpointe: 7 total, 7 scraped, 0 new
+[05:11:32]   City 17/85: Escanaba
+[05:11:37]     Escanaba: 6 total, 6 scraped, 0 new
+[05:11:37]   City 18/85: Farmington
+[05:11:40]     Farmington: 7 total, 7 scraped, 0 new
+[05:11:40]   City 19/85: Farmington Hills
+[05:11:45]     Farmington Hills: 7 total, 7 scraped, 0 new
+[05:11:45]   City 20/85: Flint
+[05:11:49]     Flint: 6 total, 6 scraped, 0 new
+[05:11:49]   City 21/85: Garden City
+[05:11:54]     Garden City: 7 total, 7 scraped, 0 new
+[05:11:54]   City 22/85: Grand Haven
+[05:11:58]     Grand Haven: 6 total, 6 scraped, 0 new
+[05:11:58]   City 23/85: Grand Rapids
+[05:12:03]     Grand Rapids: 6 total, 6 scraped, 0 new
+[05:12:03]   City 24/85: Grosse Pointe
+[05:12:08]     Grosse Pointe: 7 total, 7 scraped, 0 new
+[05:12:08]   City 25/85: Holland
+[05:12:13]     Holland: 6 total, 6 scraped, 0 new
+[05:12:13]   City 26/85: Howell
+[05:12:17]     Howell: 6 total, 6 scraped, 0 new
+[05:12:17]   City 27/85: Jackson
+[05:12:22]     Jackson: 6 total, 6 scraped, 0 new
+[05:12:22]   City 28/85: Kalamazoo
+[05:12:27]     Kalamazoo: 6 total, 6 scraped, 0 new
+[05:12:27]   City 29/85: L'Anse
+[05:12:32]     L'Anse: 6 total, 6 scraped, 0 new
+[05:12:32]   City 30/85: Lansing
+[05:12:36]     Lansing: 6 total, 6 scraped, 0 new
+[05:12:36]   City 31/85: Lincoln Park
+[05:12:41]     Lincoln Park: 7 total, 7 scraped, 0 new
+[05:12:41]   City 32/85: Livonia
+[05:12:44]     Livonia: 7 total, 7 scraped, 0 new
+[05:12:44]   City 33/85: Marquette
+[05:12:48]     Marquette: 6 total, 6 scraped, 0 new
+[05:12:48]   City 34/85: Midland
+[05:12:53]     Midland: 6 total, 6 scraped, 0 new
+[05:12:53]   City 35/85: Monroe
+[05:12:57]     Monroe: 7 total, 7 scraped, 0 new
+[05:12:57]   City 36/85: Mount Clemens
+[05:13:01]     Mount Clemens: 7 total, 7 scraped, 0 new
+[05:13:01]   City 37/85: Mount Pleasant
+[05:13:06]     Mount Pleasant: 6 total, 6 scraped, 0 new
+[05:13:06]   City 38/85: Muskegon
+[05:13:10]     Muskegon: 6 total, 6 scraped, 0 new
+[05:13:10]   City 39/85: Niles
+[05:13:15]     Niles: 6 total, 6 scraped, 0 new
+[05:13:15]   City 40/85: Novi
+[05:13:19]     Novi: 7 total, 7 scraped, 0 new
+[05:13:19]   City 41/85: Ontonagon
+[05:13:23]     Ontonagon: 6 total, 6 scraped, 0 new
+[05:13:23]   City 42/85: Pontiac
+[05:13:27]     Pontiac: 7 total, 7 scraped, 0 new
+[05:13:27]   City 43/85: Port Huron
+[05:13:32]     Port Huron: 7 total, 7 scraped, 0 new
+[05:13:32]   City 44/85: Portage
+[05:13:36]     Portage: 6 total, 6 scraped, 0 new
+[05:13:36]   City 45/85: Rochester
+[05:13:40]     Rochester: 7 total, 7 scraped, 0 new
+[05:13:40]   City 46/85: Royal Oak
+[05:13:45]     Royal Oak: 7 total, 7 scraped, 0 new
+[05:13:45]   City 47/85: Saginaw
+[05:13:51]     Saginaw: 6 total, 6 scraped, 0 new
+[05:13:51]   City 48/85: Saint Clair Shores
+[05:13:54]     Saint Clair Shores: 7 total, 7 scraped, 0 new
+[05:13:54]   City 49/85: Sault Sainte Marie
+[05:13:59]     Sault Sainte Marie: 6 total, 6 scraped, 0 new
+[05:13:59]   City 50/85: Southfield
+[05:14:03]     Southfield: 7 total, 7 scraped, 0 new
+[05:14:03]   City 51/85: Southgate
+[05:14:09]     Southgate: 7 total, 7 scraped, 0 new
+[05:14:09]   City 52/85: Sterling Heights
+[05:14:14]     Sterling Heights: 7 total, 7 scraped, 0 new
+[05:14:14]   City 53/85: Taylor
+[05:14:19]     Taylor: 7 total, 7 scraped, 0 new
+[05:14:19]   City 54/85: Traverse City
+[05:14:23]     Traverse City: 6 total, 6 scraped, 0 new
+[05:14:23]   City 55/85: Troy
+[05:14:26]     Troy: 7 total, 7 scraped, 0 new
+[05:14:26]   City 56/85: Warren
+[05:14:30]     Warren: 7 total, 7 scraped, 0 new
+[05:14:30]   City 57/85: Westland
+[05:14:35]     Westland: 7 total, 7 scraped, 0 new
+[05:14:35]   City 58/85: Wyandotte
+[05:14:38]     Wyandotte: 7 total, 7 scraped, 0 new
+[05:14:38]   City 59/85: Wyoming
+[05:14:43]     Wyoming: 6 total, 6 scraped, 0 new
+[05:14:43]   City 60/85: Ypsilanti
+[05:14:48]     Ypsilanti: 6 total, 6 scraped, 0 new
+[05:14:48]   City 61/85: View All Cities
+[05:14:52]   City 62/85: Allegan County
+[05:14:57]     Allegan County: 6 total, 6 scraped, 0 new
+[05:14:57]   City 63/85: Bay County
+[05:15:01]     Bay County: 6 total, 6 scraped, 0 new
+[05:15:01]   City 64/85: Berrien County
+[05:15:05]     Berrien County: 6 total, 6 scraped, 0 new
+[05:15:05]   City 65/85: Calhoun County
+[05:15:10]     Calhoun County: 6 total, 6 scraped, 0 new
+[05:15:10]   City 66/85: Eaton County
+[05:15:15]     Eaton County: 6 total, 6 scraped, 0 new
+[05:15:15]   City 67/85: Genesee County
+[05:15:18]     Genesee County: 6 total, 6 scraped, 0 new
+[05:15:18]   City 68/85: Grand Traverse County
+[05:15:22]     Grand Traverse County: 6 total, 6 scraped, 0 new
+[05:15:22]   City 69/85: Ingham County
+[05:15:27]     Ingham County: 6 total, 6 scraped, 0 new
+[05:15:27]   City 70/85: Jackson County
+[05:15:31]     Jackson County: 6 total, 6 scraped, 0 new
+[05:15:31]   City 71/85: Kalamazoo County
+[05:15:36]     Kalamazoo County: 6 total, 6 scraped, 0 new
+[05:15:36]   City 72/85: Kent County
+[05:15:41]     Kent County: 6 total, 6 scraped, 0 new
+[05:15:41]   City 73/85: Lapeer County
+[05:15:46]     Lapeer County: 6 total, 6 scraped, 0 new
+[05:15:46]   City 74/85: Lenawee County
+[05:15:50]     Lenawee County: 6 total, 6 scraped, 0 new
+[05:15:50]   City 75/85: Livingston County
+[05:15:54]     Livingston County: 6 total, 6 scraped, 0 new
+[05:15:54]   City 76/85: Macomb County
+[05:15:59]     Macomb County: 6 total, 6 scraped, 0 new
+[05:15:59]   City 77/85: Monroe County
+[05:16:02]     Monroe County: 6 total, 6 scraped, 0 new
+[05:16:02]   City 78/85: Muskegon County
+[05:16:07]     Muskegon County: 6 total, 6 scraped, 0 new
+[05:16:07]   City 79/85: Oakland County
+[05:16:12]     Oakland County: 6 total, 6 scraped, 0 new
+[05:16:12]   City 80/85: Ottawa County
+[05:16:16]     Ottawa County: 6 total, 6 scraped, 0 new
+[05:16:16]   City 81/85: Saginaw County
+[05:16:21]     Saginaw County: 6 total, 6 scraped, 0 new
+[05:16:21]   City 82/85: Saint Clair County
+[05:16:25]     Saint Clair County: 6 total, 6 scraped, 0 new
+[05:16:25]   City 83/85: Van Buren County
+[05:16:30]     Van Buren County: 6 total, 6 scraped, 0 new
+[05:16:30]   City 84/85: Washtenaw County
+[05:16:34]     Washtenaw County: 6 total, 6 scraped, 0 new
+[05:16:34]   City 85/85: Wayne County
+[05:16:39]     Wayne County: 6 total, 6 scraped, 0 new
+[05:16:39]   MI total: 9 unique leads
+[05:16:45] 
+[========================================]
+[05:16:45] State 11/44: CT (connecticut)
+[05:16:47]   CT: 62 cities found
+[05:16:47]   City 1/62: Ansonia
+[05:16:52]     Ansonia: 6 total, 6 scraped, 5 new
+[05:16:52]   City 2/62: Avon
+[05:16:56]     Avon: 6 total, 6 scraped, 1 new
+[05:16:56]   City 3/62: Bethel
+[05:17:00]     Bethel: 6 total, 6 scraped, 1 new
+[05:17:00]   City 4/62: Bloomfield
+[05:17:05]     Bloomfield: 6 total, 6 scraped, 0 new
+[05:17:05]   City 5/62: Branford
+[05:17:09]     Branford: 6 total, 6 scraped, 0 new
+[05:17:09]   City 6/62: Bridgeport
+[05:17:14]     Bridgeport: 6 total, 6 scraped, 1 new
+[05:17:14]   City 7/62: Bristol
+[05:17:19]     Bristol: 6 total, 6 scraped, 1 new
+[05:17:19]   City 8/62: Cheshire
+[05:17:24]     Cheshire: 6 total, 6 scraped, 0 new
+[05:17:24]   City 9/62: Danbury
+[05:17:27]     Danbury: 6 total, 6 scraped, 0 new
+[05:17:27]   City 10/62: Derby
+[05:17:32]     Derby: 6 total, 6 scraped, 0 new
+[05:17:32]   City 11/62: East Hartford
+[05:17:37]     East Hartford: 6 total, 6 scraped, 0 new
+[05:17:37]   City 12/62: East Haven
+[05:17:42]     East Haven: 6 total, 6 scraped, 0 new
+[05:17:42]   City 13/62: Enfield
+[05:17:47]     Enfield: 6 total, 6 scraped, 0 new
+[05:17:47]   City 14/62: Fairfield
+[05:17:50]     Fairfield: 6 total, 6 scraped, 0 new
+[05:17:50]   City 15/62: Glastonbury
+[05:17:55]     Glastonbury: 6 total, 6 scraped, 0 new
+[05:17:55]   City 16/62: Greenwich
+[05:17:59]     Greenwich: 6 total, 6 scraped, 2 new
+[05:17:59]   City 17/62: Groton
+[05:18:03]     Groton: 6 total, 6 scraped, 0 new
+[05:18:03]   City 18/62: Guilford
+[05:18:07]     Guilford: 6 total, 6 scraped, 0 new
+[05:18:07]   City 19/62: Hamden
+[05:18:11]     Hamden: 6 total, 6 scraped, 0 new
+[05:18:11]   City 20/62: Hartford
+[05:18:14]     Hartford: 6 total, 6 scraped, 0 new
+[05:18:14]   City 21/62: Manchester
+[05:18:19]     Manchester: 6 total, 6 scraped, 0 new
+[05:18:19]   City 22/62: Meriden
+[05:18:23]     Meriden: 6 total, 6 scraped, 0 new
+[05:18:23]   City 23/62: Middletown
+[05:18:28]     Middletown: 6 total, 6 scraped, 0 new
+[05:18:28]   City 24/62: Milford
+[05:18:32]     Milford: 6 total, 6 scraped, 0 new
+[05:18:32]   City 25/62: Naugatuck
+[05:18:37]     Naugatuck: 6 total, 6 scraped, 0 new
+[05:18:37]   City 26/62: New Britain
+[05:18:42]     New Britain: 6 total, 6 scraped, 0 new
+[05:18:42]   City 27/62: New Haven
+[05:18:48]     New Haven: 6 total, 6 scraped, 0 new
+[05:18:48]   City 28/62: New London
+[05:18:52]     New London: 6 total, 6 scraped, 0 new
+[05:18:52]   City 29/62: New Milford
+[05:18:58]     New Milford: 6 total, 6 scraped, 0 new
+[05:18:58]   City 30/62: Newington
+[05:19:02]     Newington: 6 total, 6 scraped, 0 new
+[05:19:02]   City 31/62: Newtown
+[05:19:06]     Newtown: 6 total, 6 scraped, 0 new
+[05:19:06]   City 32/62: North Haven
+[05:19:10]     North Haven: 6 total, 6 scraped, 0 new
+[05:19:10]   City 33/62: Norwalk
+[05:19:14]     Norwalk: 6 total, 6 scraped, 0 new
+[05:19:14]   City 34/62: Norwich
+[05:19:19]     Norwich: 6 total, 6 scraped, 0 new
+[05:19:19]   City 35/62: Putnam
+[05:19:23]     Putnam: 6 total, 6 scraped, 0 new
+[05:19:23]   City 36/62: Ridgefield
+[05:19:27]     Ridgefield: 6 total, 6 scraped, 0 new
+[05:19:27]   City 37/62: Shelton
+[05:19:32]     Shelton: 6 total, 6 scraped, 0 new
+[05:19:32]   City 38/62: South Windsor
+[05:19:35]     South Windsor: 6 total, 6 scraped, 0 new
+[05:19:35]   City 39/62: Southbury
+[05:19:41]     Southbury: 6 total, 6 scraped, 0 new
+[05:19:41]   City 40/62: Southington
+[05:19:46]     Southington: 6 total, 6 scraped, 0 new
+[05:19:46]   City 41/62: Stamford
+[05:19:51]     Stamford: 6 total, 6 scraped, 0 new
+[05:19:51]   City 42/62: Stratford
+[05:19:55]     Stratford: 6 total, 6 scraped, 0 new
+[05:19:55]   City 43/62: Torrington
+[05:19:58]     Torrington: 6 total, 6 scraped, 0 new
+[05:19:58]   City 44/62: Trumbull
+[05:20:03]     Trumbull: 6 total, 6 scraped, 0 new
+[05:20:03]   City 45/62: Vernon Rockville
+[05:20:07]     Vernon Rockville: 6 total, 6 scraped, 0 new
+[05:20:07]   City 46/62: Wallingford
+[05:20:11]     Wallingford: 6 total, 6 scraped, 0 new
+[05:20:11]   City 47/62: Waterbury
+[05:20:16]     Waterbury: 6 total, 6 scraped, 0 new
+[05:20:16]   City 48/62: West Hartford
+[05:20:20]     West Hartford: 6 total, 6 scraped, 0 new
+[05:20:20]   City 49/62: West Haven
+[05:20:24]     West Haven: 6 total, 6 scraped, 0 new
+[05:20:24]   City 50/62: Westport
+[05:20:28]     Westport: 6 total, 6 scraped, 0 new
+[05:20:28]   City 51/62: Wethersfield
+[05:20:32]     Wethersfield: 6 total, 6 scraped, 0 new
+[05:20:32]   City 52/62: Willimantic
+[05:20:37]     Willimantic: 6 total, 6 scraped, 0 new
+[05:20:37]   City 53/62: Windsor
+[05:20:43]     Windsor: 6 total, 6 scraped, 0 new
+[05:20:43]   City 54/62: View All Cities
+[05:20:47]   City 55/62: Fairfield County
+[05:20:52]     Fairfield County: 6 total, 6 scraped, 0 new
+[05:20:52]   City 56/62: Hartford County
+[05:20:57]     Hartford County: 6 total, 6 scraped, 0 new
+[05:20:57]   City 57/62: Litchfield County
+[05:21:01]     Litchfield County: 6 total, 6 scraped, 0 new
+[05:21:01]   City 58/62: Middlesex County
+[05:21:05]     Middlesex County: 6 total, 6 scraped, 0 new
+[05:21:05]   City 59/62: New Haven County
+[05:21:09]     New Haven County: 6 total, 6 scraped, 0 new
+[05:21:09]   City 60/62: New London County
+[05:21:13]     New London County: 6 total, 6 scraped, 0 new
+[05:21:13]   City 61/62: Tolland County
+[05:21:18]     Tolland County: 6 total, 6 scraped, 0 new
+[05:21:18]   City 62/62: Windham County
+[05:21:22]     Windham County: 6 total, 6 scraped, 0 new
+[05:21:22]   CT total: 11 unique leads
+[05:21:27] 
+[========================================]
+[05:21:27] State 12/44: MN (minnesota)
+[05:21:29]   MN: 77 cities found
+[05:21:29]   City 1/77: Albert Lea
+[05:21:32]     Albert Lea: 7 total, 6 scraped, 6 new
+[05:21:32]   City 2/77: Alexandria
+[05:21:36]     Alexandria: 7 total, 6 scraped, 0 new
+[05:21:36]   City 3/77: Andover
+[05:21:41]     Andover: 10 total, 10 scraped, 0 new
+[05:21:41]   City 4/77: Anoka
+[05:21:46]     Anoka: 10 total, 10 scraped, 0 new
+[05:21:46]   City 5/77: Austin
+[05:21:51]     Austin: 7 total, 6 scraped, 0 new
+[05:21:51]   City 6/77: Bemidji
+[05:21:54]     Bemidji: 6 total, 6 scraped, 0 new
+[05:21:54]   City 7/77: Bloomington
+[05:21:58]     Bloomington: 10 total, 10 scraped, 0 new
+[05:21:58]   City 8/77: Brainerd
+[05:22:03]     Brainerd: 7 total, 6 scraped, 0 new
+[05:22:03]   City 9/77: Burnsville
+[05:22:07]     Burnsville: 10 total, 10 scraped, 0 new
+[05:22:07]   City 10/77: Cambridge
+[05:22:11]     Cambridge: 10 total, 10 scraped, 0 new
+[05:22:11]   City 11/77: Chanhassen
+[05:22:16]     Chanhassen: 10 total, 10 scraped, 0 new
+[05:22:16]   City 12/77: Cottage Grove
+[05:22:21]     Cottage Grove: 10 total, 10 scraped, 0 new
+[05:22:21]   City 13/77: Duluth
+[05:22:26]     Duluth: 8 total, 7 scraped, 0 new
+[05:22:26]   City 14/77: Eagan
+[05:22:30]     Eagan: 10 total, 10 scraped, 0 new
+[05:22:30]   City 15/77: Eden Prairie
+[05:22:34]     Eden Prairie: 10 total, 10 scraped, 0 new
+[05:22:34]   City 16/77: Edina
+[05:22:37]     Edina: 10 total, 10 scraped, 0 new
+[05:22:37]   City 17/77: Elk River
+[05:22:42]     Elk River: 10 total, 10 scraped, 0 new
+[05:22:42]   City 18/77: Faribault
+[05:22:46]     Faribault: 7 total, 6 scraped, 0 new
+[05:22:46]   City 19/77: Fergus Falls
+[05:22:50]     Fergus Falls: 6 total, 6 scraped, 0 new
+[05:22:50]   City 20/77: Forest Lake
+[05:22:54]     Forest Lake: 10 total, 10 scraped, 0 new
+[05:22:54]   City 21/77: Fridley
+[05:22:59]     Fridley: 10 total, 10 scraped, 0 new
+[05:22:59]   City 22/77: Hastings
+[05:23:02]     Hastings: 10 total, 10 scraped, 0 new
+[05:23:02]   City 23/77: Hibbing
+[05:23:06]     Hibbing: 8 total, 7 scraped, 0 new
+[05:23:06]   City 24/77: Hopkins
+[05:23:10]     Hopkins: 10 total, 10 scraped, 0 new
+[05:23:10]   City 25/77: International Falls
+[05:23:14]     International Falls: 6 total, 6 scraped, 0 new
+[05:23:14]   City 26/77: Inver Grove Heights
+[05:23:18]     Inver Grove Heights: 10 total, 10 scraped, 0 new
+[05:23:18]   City 27/77: Lakeville
+[05:23:22]     Lakeville: 10 total, 10 scraped, 0 new
+[05:23:22]   City 28/77: Mankato
+[05:23:26]     Mankato: 7 total, 6 scraped, 0 new
+[05:23:26]   City 29/77: Maple Grove
+[05:23:30]     Maple Grove: 10 total, 10 scraped, 0 new
+[05:23:30]   City 30/77: Marshall
+[05:23:34]     Marshall: 7 total, 6 scraped, 0 new
+[05:23:34]   City 31/77: Minneapolis
+[05:23:38]     Minneapolis: 10 total, 10 scraped, 0 new
+[05:23:38]   City 32/77: Minnetonka
+[05:23:42]     Minnetonka: 10 total, 10 scraped, 0 new
+[05:23:42]   City 33/77: Moorhead
+[05:23:46]     Moorhead: 6 total, 6 scraped, 0 new
+[05:23:46]   City 34/77: New Ulm
+[05:23:51]     New Ulm: 7 total, 6 scraped, 0 new
+[05:23:51]   City 35/77: Northfield
+[05:23:56]     Northfield: 7 total, 6 scraped, 0 new
+[05:23:56]   City 36/77: Owatonna
+[05:24:00]     Owatonna: 7 total, 6 scraped, 0 new
+[05:24:00]   City 37/77: Plymouth
+[05:24:04]     Plymouth: 10 total, 10 scraped, 0 new
+[05:24:04]   City 38/77: Prior Lake
+[05:24:09]     Prior Lake: 10 total, 10 scraped, 0 new
+[05:24:09]   City 39/77: Red Wing
+[05:24:13]     Red Wing: 7 total, 6 scraped, 0 new
+[05:24:13]   City 40/77: Redwood Falls
+[05:24:17]     Redwood Falls: 7 total, 6 scraped, 0 new
+[05:24:17]   City 41/77: Rochester
+[05:24:21]     Rochester: 7 total, 6 scraped, 0 new
+[05:24:21]   City 42/77: Saint Cloud
+[05:24:26]     Saint Cloud: 7 total, 6 scraped, 0 new
+[05:24:26]   City 43/77: Saint Paul
+[05:24:30]     Saint Paul: 10 total, 10 scraped, 0 new
+[05:24:30]   City 44/77: Savage
+[05:24:36]     Savage: 10 total, 10 scraped, 0 new
+[05:24:36]   City 45/77: Shakopee
+[05:24:40]     Shakopee: 10 total, 10 scraped, 0 new
+[05:24:40]   City 46/77: South Saint Paul
+[05:24:44]     South Saint Paul: 10 total, 10 scraped, 0 new
+[05:24:44]   City 47/77: Stillwater
+[05:24:49]     Stillwater: 10 total, 10 scraped, 0 new
+[05:24:49]   City 48/77: Virginia
+[05:24:54]     Virginia: 8 total, 7 scraped, 0 new
+[05:24:54]   City 49/77: White Bear Lake
+[05:24:58]     White Bear Lake: 10 total, 10 scraped, 0 new
+[05:24:58]   City 50/77: Willmar
+[05:25:02]     Willmar: 7 total, 6 scraped, 0 new
+[05:25:02]   City 51/77: Winona
+[05:25:07]     Winona: 8 total, 7 scraped, 1 new
+[05:25:07]   City 52/77: Woodbury
+[05:25:12]     Woodbury: 10 total, 10 scraped, 0 new
+[05:25:12]   City 53/77: View All Cities
+[05:25:17]   City 54/77: Anoka County
+[05:25:22]     Anoka County: 7 total, 6 scraped, 0 new
+[05:25:22]   City 55/77: Beltrami County
+[05:25:26]     Beltrami County: 6 total, 6 scraped, 0 new
+[05:25:26]   City 56/77: Benton County
+[05:25:30]     Benton County: 7 total, 6 scraped, 0 new
+[05:25:30]   City 57/77: Blue Earth County
+[05:25:35]     Blue Earth County: 7 total, 6 scraped, 0 new
+[05:25:35]   City 58/77: Carver County
+[05:25:39]     Carver County: 7 total, 6 scraped, 0 new
+[05:25:39]   City 59/77: Chisago County
+[05:25:44]     Chisago County: 7 total, 6 scraped, 0 new
+[05:25:44]   City 60/77: Clay County
+[05:25:49]     Clay County: 6 total, 6 scraped, 0 new
+[05:25:49]   City 61/77: Crow Wing County
+[05:25:53]     Crow Wing County: 7 total, 6 scraped, 0 new
+[05:25:53]   City 62/77: Dakota County
+[05:25:58]     Dakota County: 7 total, 6 scraped, 0 new
+[05:25:58]   City 63/77: Goodhue County
+[05:26:02]     Goodhue County: 7 total, 6 scraped, 0 new
+[05:26:02]   City 64/77: Hennepin County
+[05:26:05]     Hennepin County: 7 total, 6 scraped, 0 new
+[05:26:05]   City 65/77: Itasca County
+[05:26:10]     Itasca County: 6 total, 6 scraped, 0 new
+[05:26:10]   City 66/77: Kandiyohi County
+[05:26:13]     Kandiyohi County: 7 total, 6 scraped, 0 new
+[05:26:13]   City 67/77: Olmsted County
+[05:26:18]     Olmsted County: 7 total, 6 scraped, 0 new
+[05:26:18]   City 68/77: Otter Tail County
+[05:26:22]     Otter Tail County: 6 total, 6 scraped, 0 new
+[05:26:22]   City 69/77: Ramsey County
+[05:26:26]     Ramsey County: 7 total, 6 scraped, 0 new
+[05:26:26]   City 70/77: Rice County
+[05:26:30]     Rice County: 7 total, 6 scraped, 0 new
+[05:26:30]   City 71/77: Saint Louis County
+[05:26:35]     Saint Louis County: 6 total, 6 scraped, 0 new
+[05:26:35]   City 72/77: Scott County
+[05:26:39]     Scott County: 7 total, 6 scraped, 0 new
+[05:26:39]   City 73/77: Sherburne County
+[05:26:43]     Sherburne County: 7 total, 6 scraped, 0 new
+[05:26:43]   City 74/77: Stearns County
+[05:26:47]     Stearns County: 7 total, 6 scraped, 0 new
+[05:26:47]   City 75/77: Washington County
+[05:26:52]     Washington County: 7 total, 6 scraped, 0 new
+[05:26:52]   City 76/77: Winona County
+[05:26:55]     Winona County: 8 total, 7 scraped, 0 new
+[05:26:55]   City 77/77: Wright County
+[05:27:00]     Wright County: 7 total, 6 scraped, 0 new
+[05:27:00]   MN total: 7 unique leads
+[05:27:04] 
+[========================================]
+[05:27:04] State 13/44: OR (oregon)
+[05:27:05]   OR: 71 cities found
+[05:27:05]   City 1/71: Albany
+[05:27:10]     Albany: 2 total, 2 scraped, 2 new
+[05:27:10]   City 2/71: Ashland
+[05:27:15]     Ashland: 2 total, 2 scraped, 0 new
+[05:27:15]   City 3/71: Astoria
+[05:27:20]     Astoria: 2 total, 2 scraped, 0 new
+[05:27:20]   City 4/71: Beaverton
+[05:27:24]     Beaverton: 2 total, 2 scraped, 0 new
+[05:27:24]   City 5/71: Bend
+[05:27:29]     Bend: 2 total, 2 scraped, 0 new
+[05:27:29]   City 6/71: Canby
+[05:27:34]     Canby: 2 total, 2 scraped, 0 new
+[05:27:34]   City 7/71: Central Point
+[05:27:39]     Central Point: 2 total, 2 scraped, 0 new
+[05:27:39]   City 8/71: Clackamas
+[05:27:43]     Clackamas: 2 total, 2 scraped, 0 new
+[05:27:43]   City 9/71: Coos Bay
+[05:27:46]     Coos Bay: 2 total, 2 scraped, 0 new
+[05:27:46]   City 10/71: Corvallis
+[05:27:51]     Corvallis: 2 total, 2 scraped, 0 new
+[05:27:51]   City 11/71: Dallas
+[05:27:57]     Dallas: 2 total, 2 scraped, 0 new
+[05:27:57]   City 12/71: Eugene
+[05:28:01]     Eugene: 2 total, 2 scraped, 0 new
+[05:28:01]   City 13/71: Forest Grove
+[05:28:05]     Forest Grove: 2 total, 2 scraped, 0 new
+[05:28:05]   City 14/71: Gladstone
+[05:28:09]     Gladstone: 2 total, 2 scraped, 0 new
+[05:28:09]   City 15/71: Grants Pass
+[05:28:13]     Grants Pass: 2 total, 2 scraped, 0 new
+[05:28:13]   City 16/71: Gresham
+[05:28:17]     Gresham: 2 total, 2 scraped, 0 new
+[05:28:17]   City 17/71: Hermiston
+[05:28:21]     Hermiston: 2 total, 2 scraped, 0 new
+[05:28:21]   City 18/71: Hillsboro
+[05:28:25]     Hillsboro: 2 total, 2 scraped, 0 new
+[05:28:25]   City 19/71: Hood River
+[05:28:30]     Hood River: 2 total, 2 scraped, 0 new
+[05:28:30]   City 20/71: Keizer
+[05:28:36]     Keizer: 2 total, 2 scraped, 0 new
+[05:28:36]   City 21/71: Klamath Falls
+[05:28:39]     Klamath Falls: 2 total, 2 scraped, 0 new
+[05:28:39]   City 22/71: Lake Oswego
+[05:28:45]     Lake Oswego: 2 total, 2 scraped, 0 new
+[05:28:45]   City 23/71: Lebanon
+[05:28:48]     Lebanon: 2 total, 2 scraped, 0 new
+[05:28:48]   City 24/71: McMinnville
+[05:28:53]     McMinnville: 2 total, 2 scraped, 0 new
+[05:28:53]   City 25/71: Medford
+[05:28:58]     Medford: 2 total, 2 scraped, 0 new
+[05:28:58]   City 26/71: Monmouth
+[05:29:03]     Monmouth: 2 total, 2 scraped, 0 new
+[05:29:03]   City 27/71: Newberg
+[05:29:07]     Newberg: 2 total, 2 scraped, 0 new
+[05:29:07]   City 28/71: Newport
+[05:29:11]     Newport: 2 total, 2 scraped, 0 new
+[05:29:11]   City 29/71: North Bend
+[05:29:16]     North Bend: 2 total, 2 scraped, 0 new
+[05:29:16]   City 30/71: Ontario
+[05:29:21]     Ontario: 2 total, 2 scraped, 0 new
+[05:29:21]   City 31/71: Oregon City
+[05:29:24]     Oregon City: 2 total, 2 scraped, 0 new
+[05:29:24]   City 32/71: Pendleton
+[05:29:29]     Pendleton: 2 total, 2 scraped, 0 new
+[05:29:29]   City 33/71: Portland
+[05:29:33]     Portland: 2 total, 2 scraped, 0 new
+[05:29:33]   City 34/71: Prineville
+[05:29:37]     Prineville: 2 total, 2 scraped, 0 new
+[05:29:37]   City 35/71: Redmond
+[05:29:41]     Redmond: 2 total, 2 scraped, 0 new
+[05:29:41]   City 36/71: Roseburg
+[05:29:45]     Roseburg: 2 total, 2 scraped, 0 new
+[05:29:45]   City 37/71: Salem
+[05:29:48]     Salem: 2 total, 2 scraped, 0 new
+[05:29:48]   City 38/71: Sandy
+[05:29:53]     Sandy: 2 total, 2 scraped, 0 new
+[05:29:53]   City 39/71: Springfield
+[05:29:58]     Springfield: 2 total, 2 scraped, 0 new
+[05:29:58]   City 40/71: The Dalles
+[05:30:03]     The Dalles: 2 total, 2 scraped, 0 new
+[05:30:03]   City 41/71: Tigard
+[05:30:07]     Tigard: 2 total, 2 scraped, 0 new
+[05:30:07]   City 42/71: Troutdale
+[05:30:12]     Troutdale: 2 total, 2 scraped, 0 new
+[05:30:12]   City 43/71: Tualatin
+[05:30:16]     Tualatin: 2 total, 2 scraped, 0 new
+[05:30:16]   City 44/71: West Linn
+[05:30:21]     West Linn: 2 total, 2 scraped, 0 new
+[05:30:21]   City 45/71: Wilsonville
+[05:30:25]     Wilsonville: 2 total, 2 scraped, 0 new
+[05:30:25]   City 46/71: Woodburn
+[05:30:29]     Woodburn: 2 total, 2 scraped, 0 new
+[05:30:29]   City 47/71: View All Cities
+[05:30:34]   City 48/71: Benton County
+[05:30:39]     Benton County: 2 total, 2 scraped, 0 new
+[05:30:39]   City 49/71: Clackamas County
+[05:30:43]     Clackamas County: 2 total, 2 scraped, 0 new
+[05:30:43]   City 50/71: Clatsop County
+[05:30:46]     Clatsop County: 2 total, 2 scraped, 0 new
+[05:30:46]   City 51/71: Columbia County
+[05:30:49]     Columbia County: 2 total, 2 scraped, 0 new
+[05:30:49]   City 52/71: Coos County
+[05:30:55]     Coos County: 2 total, 2 scraped, 0 new
+[05:30:55]   City 53/71: Deschutes County
+[05:30:58]     Deschutes County: 2 total, 2 scraped, 0 new
+[05:30:58]   City 54/71: Douglas County
+[05:31:02]     Douglas County: 2 total, 2 scraped, 0 new
+[05:31:02]   City 55/71: Jackson County
+[05:31:07]     Jackson County: 2 total, 2 scraped, 0 new
+[05:31:07]   City 56/71: Jefferson County
+[05:31:11]     Jefferson County: 2 total, 2 scraped, 0 new
+[05:31:11]   City 57/71: Josephine County
+[05:31:16]     Josephine County: 2 total, 2 scraped, 0 new
+[05:31:16]   City 58/71: Klamath County
+[05:31:21]     Klamath County: 2 total, 2 scraped, 0 new
+[05:31:21]   City 59/71: Lane County
+[05:31:24]     Lane County: 2 total, 2 scraped, 0 new
+[05:31:24]   City 60/71: Lincoln County
+[05:31:28]     Lincoln County: 2 total, 2 scraped, 0 new
+[05:31:28]   City 61/71: Linn County
+[05:31:32]     Linn County: 2 total, 2 scraped, 0 new
+[05:31:32]   City 62/71: Malheur County
+[05:31:36]     Malheur County: 2 total, 2 scraped, 0 new
+[05:31:36]   City 63/71: Marion County
+[05:31:40]     Marion County: 2 total, 2 scraped, 0 new
+[05:31:40]   City 64/71: Multnomah County
+[05:31:45]     Multnomah County: 2 total, 2 scraped, 0 new
+[05:31:45]   City 65/71: Polk County
+[05:31:49]     Polk County: 2 total, 2 scraped, 0 new
+[05:31:49]   City 66/71: Tillamook County
+[05:31:54]     Tillamook County: 2 total, 2 scraped, 0 new
+[05:31:54]   City 67/71: Umatilla County
+[05:31:59]     Umatilla County: 2 total, 2 scraped, 0 new
+[05:31:59]   City 68/71: Union County
+[05:32:04]     Union County: 2 total, 2 scraped, 0 new
+[05:32:04]   City 69/71: Wasco County
+[05:32:09]     Wasco County: 2 total, 2 scraped, 0 new
+[05:32:09]   City 70/71: Washington County
+[05:32:12]     Washington County: 2 total, 2 scraped, 0 new
+[05:32:12]   City 71/71: Yamhill County
+[05:32:16]     Yamhill County: 2 total, 2 scraped, 0 new
+[05:32:16]   OR total: 2 unique leads
+[05:32:23] 
+[========================================]
+[05:32:23] State 14/44: NV (nevada)
+[05:32:25]   NV: 38 cities found
+[05:32:25]   City 1/38: Boulder City
+[05:32:30]     Boulder City: 3 total, 3 scraped, 3 new
+[05:32:30]   City 2/38: Carson City
+[05:32:33]     Carson City: 3 total, 3 scraped, 0 new
+[05:32:33]   City 3/38: Elko
+[05:32:36]     Elko: 3 total, 3 scraped, 0 new
+[05:32:36]   City 4/38: Ely
+[05:32:41]     Ely: 3 total, 3 scraped, 0 new
+[05:32:41]   City 5/38: Fallon
+[05:32:45]     Fallon: 3 total, 3 scraped, 0 new
+[05:32:45]   City 6/38: Fernley
+[05:32:50]     Fernley: 3 total, 3 scraped, 0 new
+[05:32:50]   City 7/38: Gardnerville
+[05:32:54]     Gardnerville: 3 total, 3 scraped, 0 new
+[05:32:54]   City 8/38: Henderson
+[05:32:57]     Henderson: 3 total, 3 scraped, 0 new
+[05:32:57]   City 9/38: Incline Village
+[05:33:01]     Incline Village: 3 total, 3 scraped, 0 new
+[05:33:01]   City 10/38: Las Vegas
+[05:33:05]     Las Vegas: 3 total, 3 scraped, 0 new
+[05:33:05]   City 11/38: Lovelock
+[05:33:08]     Lovelock: 3 total, 3 scraped, 0 new
+[05:33:08]   City 12/38: Mesquite
+[05:33:11]     Mesquite: 3 total, 3 scraped, 0 new
+[05:33:11]   City 13/38: Minden
+[05:33:15]     Minden: 3 total, 3 scraped, 0 new
+[05:33:15]   City 14/38: North Las Vegas
+[05:33:19]     North Las Vegas: 3 total, 3 scraped, 0 new
+[05:33:19]   City 15/38: Paradise
+[05:33:23]     Paradise: 3 total, 3 scraped, 0 new
+[05:33:23]   City 16/38: Reno
+[05:33:28]     Reno: 3 total, 3 scraped, 0 new
+[05:33:28]   City 17/38: Sparks
+[05:33:33]     Sparks: 3 total, 3 scraped, 0 new
+[05:33:33]   City 18/38: Stateline
+[05:33:37]     Stateline: 3 total, 3 scraped, 0 new
+[05:33:37]   City 19/38: West Wendover
+[05:33:42]     West Wendover: 3 total, 3 scraped, 0 new
+[05:33:42]   City 20/38: Winnemucca
+[05:33:46]     Winnemucca: 3 total, 3 scraped, 0 new
+[05:33:46]   City 21/38: Yerington
+[05:33:51]     Yerington: 3 total, 3 scraped, 0 new
+[05:33:51]   City 22/38: View All Cities
+[05:33:56]   City 23/38: Churchill County
+[05:34:00]     Churchill County: 3 total, 3 scraped, 0 new
+[05:34:00]   City 24/38: Clark County
+[05:34:05]     Clark County: 3 total, 3 scraped, 0 new
+[05:34:05]   City 25/38: Douglas County
+[05:34:09]     Douglas County: 3 total, 3 scraped, 0 new
+[05:34:09]   City 26/38: Elko County
+[05:34:14]     Elko County: 3 total, 3 scraped, 0 new
+[05:34:14]   City 27/38: Esmeralda County
+[05:34:17]     Esmeralda County: 3 total, 3 scraped, 0 new
+[05:34:17]   City 28/38: Eureka County
+[05:34:21]     Eureka County: 3 total, 3 scraped, 0 new
+[05:34:21]   City 29/38: Humboldt County
+[05:34:26]     Humboldt County: 3 total, 3 scraped, 0 new
+[05:34:26]   City 30/38: Lander County
+[05:34:30]     Lander County: 3 total, 3 scraped, 0 new
+[05:34:30]   City 31/38: Lincoln County
+[05:34:35]     Lincoln County: 3 total, 3 scraped, 0 new
+[05:34:35]   City 32/38: Lyon County
+[05:34:39]     Lyon County: 3 total, 3 scraped, 0 new
+[05:34:39]   City 33/38: Mineral County
+[05:34:43]     Mineral County: 3 total, 3 scraped, 0 new
+[05:34:43]   City 34/38: Nye County
+[05:34:47]     Nye County: 3 total, 3 scraped, 0 new
+[05:34:47]   City 35/38: Pershing County
+[05:34:51]     Pershing County: 3 total, 3 scraped, 0 new
+[05:34:51]   City 36/38: Storey County
+[05:34:55]     Storey County: 3 total, 3 scraped, 0 new
+[05:34:55]   City 37/38: Washoe County
+[05:35:00]     Washoe County: 3 total, 3 scraped, 0 new
+[05:35:00]   City 38/38: White Pine County
+[05:35:04]     White Pine County: 3 total, 3 scraped, 0 new
+[05:35:04]   NV total: 3 unique leads
+[05:35:09] 
+[========================================]
+[05:35:09] State 15/44: TN (tennessee)
+[05:35:11]   TN: 74 cities found
+[05:35:11]   City 1/74: Athens
+[05:35:15]     Athens: 8 total, 8 scraped, 6 new
+[05:35:15]   City 2/74: Brentwood
+[05:35:20]     Brentwood: 8 total, 8 scraped, 2 new
+[05:35:20]   City 3/74: Bristol
+[05:35:25]     Bristol: 8 total, 8 scraped, 1 new
+[05:35:25]   City 4/74: Chattanooga
+[05:35:30]     Chattanooga: 10 total, 10 scraped, 1 new
+[05:35:30]   City 5/74: Clarksville
+[05:35:34]     Clarksville: 8 total, 8 scraped, 0 new
+[05:35:34]   City 6/74: Cleveland
+[05:35:37]     Cleveland: 8 total, 8 scraped, 0 new
+[05:35:37]   City 7/74: Clinton
+[05:35:41]     Clinton: 9 total, 9 scraped, 0 new
+[05:35:41]   City 8/74: Collierville
+[05:35:46]     Collierville: 8 total, 8 scraped, 0 new
+[05:35:46]   City 9/74: Columbia
+[05:35:50]     Columbia: 8 total, 8 scraped, 0 new
+[05:35:50]   City 10/74: Cookeville
+[05:35:55]     Cookeville: 8 total, 8 scraped, 0 new
+[05:35:55]   City 11/74: Cordova
+[05:35:59]     Cordova: 8 total, 8 scraped, 0 new
+[05:35:59]   City 12/74: Covington
+[05:36:03]     Covington: 8 total, 8 scraped, 0 new
+[05:36:03]   City 13/74: Crossville
+[05:36:08]     Crossville: 8 total, 8 scraped, 0 new
+[05:36:08]   City 14/74: Dickson
+[05:36:12]     Dickson: 8 total, 8 scraped, 0 new
+[05:36:12]   City 15/74: Dyersburg
+[05:36:17]     Dyersburg: 8 total, 8 scraped, 0 new
+[05:36:17]   City 16/74: Elizabethton
+[05:36:22]     Elizabethton: 8 total, 8 scraped, 0 new
+[05:36:22]   City 17/74: Fayetteville
+[05:36:26]     Fayetteville: 8 total, 8 scraped, 0 new
+[05:36:26]   City 18/74: Franklin
+[05:36:30]     Franklin: 8 total, 8 scraped, 0 new
+[05:36:30]   City 19/74: Gallatin
+[05:36:34]     Gallatin: 8 total, 8 scraped, 0 new
+[05:36:34]   City 20/74: Germantown
+[05:36:38]     Germantown: 8 total, 8 scraped, 0 new
+[05:36:38]   City 21/74: Goodlettsville
+[05:36:43]     Goodlettsville: 8 total, 8 scraped, 0 new
+[05:36:43]   City 22/74: Greeneville
+[05:36:48]     Greeneville: 8 total, 8 scraped, 0 new
+[05:36:48]   City 23/74: Hendersonville
+[05:36:52]     Hendersonville: 8 total, 8 scraped, 0 new
+[05:36:52]   City 24/74: Jackson
+[05:36:56]     Jackson: 8 total, 8 scraped, 0 new
+[05:36:56]   City 25/74: Johnson City
+[05:36:59]     Johnson City: 8 total, 8 scraped, 0 new
+[05:36:59]   City 26/74: Kingsport
+[05:37:04]     Kingsport: 8 total, 8 scraped, 0 new
+[05:37:04]   City 27/74: Knoxville
+[05:37:07]     Knoxville: 9 total, 9 scraped, 0 new
+[05:37:07]   City 28/74: Lawrenceburg
+[05:37:12]     Lawrenceburg: 8 total, 8 scraped, 0 new
+[05:37:12]   City 29/74: Lebanon
+[05:37:17]     Lebanon: 8 total, 8 scraped, 0 new
+[05:37:17]   City 30/74: Lewisburg
+[05:37:23]     Lewisburg: 8 total, 8 scraped, 0 new
+[05:37:23]   City 31/74: Lexington
+[05:37:27]     Lexington: 8 total, 8 scraped, 0 new
+[05:37:27]   City 32/74: Madison
+[05:37:32]     Madison: 8 total, 8 scraped, 0 new
+[05:37:32]   City 33/74: Manchester
+[05:37:37]     Manchester: 8 total, 8 scraped, 0 new
+[05:37:37]   City 34/74: Maryville
+[05:37:43]     Maryville: 9 total, 9 scraped, 0 new
+[05:37:43]   City 35/74: McMinnville
+[05:37:47]     McMinnville: 8 total, 8 scraped, 0 new
+[05:37:47]   City 36/74: Memphis
+[05:37:52]     Memphis: 8 total, 8 scraped, 0 new
+[05:37:52]   City 37/74: Morristown
+[05:37:57]     Morristown: 8 total, 8 scraped, 0 new
+[05:37:57]   City 38/74: Murfreesboro
+[05:38:02]     Murfreesboro: 8 total, 8 scraped, 0 new
+[05:38:02]   City 39/74: Nashville
+[05:38:07]     Nashville: 8 total, 8 scraped, 0 new
+[05:38:07]   City 40/74: Oak Ridge
+[05:38:13]     Oak Ridge: 9 total, 9 scraped, 0 new
+[05:38:13]   City 41/74: Paris
+[05:38:18]     Paris: 8 total, 8 scraped, 0 new
+[05:38:18]   City 42/74: Rogersville
+[05:38:23]     Rogersville: 8 total, 8 scraped, 0 new
+[05:38:23]   City 43/74: Sevierville
+[05:38:27]     Sevierville: 9 total, 9 scraped, 0 new
+[05:38:27]   City 44/74: Shelbyville
+[05:38:31]     Shelbyville: 8 total, 8 scraped, 0 new
+[05:38:31]   City 45/74: Spring Hill
+[05:38:36]     Spring Hill: 8 total, 8 scraped, 0 new
+[05:38:36]   City 46/74: Springfield
+[05:38:41]     Springfield: 8 total, 8 scraped, 0 new
+[05:38:41]   City 47/74: Tullahoma
+[05:38:46]     Tullahoma: 8 total, 8 scraped, 0 new
+[05:38:46]   City 48/74: Union City
+[05:38:51]     Union City: 8 total, 8 scraped, 0 new
+[05:38:51]   City 49/74: Winchester
+[05:38:56]     Winchester: 8 total, 8 scraped, 0 new
+[05:38:56]   City 50/74: View All Cities
+[05:39:01]   City 51/74: Anderson County
+[05:39:05]     Anderson County: 7 total, 7 scraped, 0 new
+[05:39:05]   City 52/74: Blount County
+[05:39:10]     Blount County: 7 total, 7 scraped, 0 new
+[05:39:10]   City 53/74: Bradley County
+[05:39:14]     Bradley County: 8 total, 8 scraped, 0 new
+[05:39:14]   City 54/74: Coffee County
+[05:39:18]     Coffee County: 8 total, 8 scraped, 0 new
+[05:39:18]   City 55/74: Davidson County
+[05:39:23]     Davidson County: 7 total, 7 scraped, 0 new
+[05:39:23]   City 56/74: Gibson County
+[05:39:27]     Gibson County: 8 total, 8 scraped, 0 new
+[05:39:27]   City 57/74: Greene County
+[05:39:31]     Greene County: 8 total, 8 scraped, 0 new
+[05:39:31]   City 58/74: Hamblen County
+[05:39:35]     Hamblen County: 8 total, 8 scraped, 0 new
+[05:39:35]   City 59/74: Hamilton County
+[05:39:40]     Hamilton County: 7 total, 7 scraped, 0 new
+[05:39:40]   City 60/74: Knox County
+[05:39:44]     Knox County: 7 total, 7 scraped, 0 new
+[05:39:44]   City 61/74: Madison County
+[05:39:49]     Madison County: 7 total, 7 scraped, 0 new
+[05:39:49]   City 62/74: Maury County
+[05:39:52]     Maury County: 8 total, 8 scraped, 0 new
+[05:39:52]   City 63/74: Montgomery County
+[05:39:56]     Montgomery County: 7 total, 7 scraped, 0 new
+[05:39:56]   City 64/74: Putnam County
+[05:40:02]     Putnam County: 8 total, 8 scraped, 0 new
+[05:40:02]   City 65/74: Roane County
+[05:40:06]     Roane County: 8 total, 8 scraped, 0 new
+[05:40:06]   City 66/74: Robertson County
+[05:40:10]     Robertson County: 7 total, 7 scraped, 0 new
+[05:40:10]   City 67/74: Rutherford County
+[05:40:15]     Rutherford County: 7 total, 7 scraped, 0 new
+[05:40:15]   City 68/74: Sevier County
+[05:40:20]     Sevier County: 7 total, 7 scraped, 0 new
+[05:40:20]   City 69/74: Shelby County
+[05:40:25]     Shelby County: 7 total, 7 scraped, 0 new
+[05:40:25]   City 70/74: Sullivan County
+[05:40:30]     Sullivan County: 7 total, 7 scraped, 0 new
+[05:40:30]   City 71/74: Sumner County
+[05:40:33]     Sumner County: 7 total, 7 scraped, 0 new
+[05:40:33]   City 72/74: Washington County
+[05:40:39]     Washington County: 7 total, 7 scraped, 0 new
+[05:40:39]   City 73/74: Williamson County
+[05:40:43]     Williamson County: 7 total, 7 scraped, 0 new
+[05:40:43]   City 74/74: Wilson County
+[05:40:47]     Wilson County: 7 total, 7 scraped, 0 new
+[05:40:47]   TN total: 10 unique leads
+[05:40:52] 
+[========================================]
+[05:40:52] State 16/44: MO (missouri)
+[05:40:54]   MO: 68 cities found
+[05:40:54]   City 1/68: Arnold
+[05:40:59]     Arnold: 6 total, 6 scraped, 5 new
+[05:40:59]   City 2/68: Ballwin
+[05:41:02]     Ballwin: 6 total, 6 scraped, 0 new
+[05:41:02]   City 3/68: Belton
+[05:41:06]     Belton: 7 total, 7 scraped, 0 new
+[05:41:06]   City 4/68: Blue Springs
+[05:41:10]     Blue Springs: 6 total, 6 scraped, 0 new
+[05:41:10]   City 5/68: Bridgeton
+[05:41:14]     Bridgeton: 6 total, 6 scraped, 0 new
+[05:41:14]   City 6/68: Cape Girardeau
+[05:41:18]     Cape Girardeau: 6 total, 6 scraped, 0 new
+[05:41:18]   City 7/68: Chesterfield
+[05:41:23]     Chesterfield: 6 total, 6 scraped, 0 new
+[05:41:23]   City 8/68: Clayton
+[05:41:27]     Clayton: 6 total, 6 scraped, 0 new
+[05:41:27]   City 9/68: Columbia
+[05:41:32]     Columbia: 6 total, 6 scraped, 0 new
+[05:41:32]   City 10/68: Farmington
+[05:41:37]     Farmington: 6 total, 6 scraped, 0 new
+[05:41:37]   City 11/68: Fenton
+[05:41:41]     Fenton: 6 total, 6 scraped, 0 new
+[05:41:41]   City 12/68: Florissant
+[05:41:44]     Florissant: 6 total, 6 scraped, 0 new
+[05:41:44]   City 13/68: Fulton
+[05:41:49]     Fulton: 6 total, 6 scraped, 0 new
+[05:41:49]   City 14/68: Grandview
+[05:41:52]     Grandview: 6 total, 6 scraped, 0 new
+[05:41:52]   City 15/68: Hannibal
+[05:41:56]     Hannibal: 6 total, 6 scraped, 0 new
+[05:41:56]   City 16/68: Hazelwood
+[05:42:00]     Hazelwood: 6 total, 6 scraped, 0 new
+[05:42:00]   City 17/68: Independence
+[05:42:04]     Independence: 6 total, 6 scraped, 0 new
+[05:42:04]   City 18/68: Jefferson City
+[05:42:08]     Jefferson City: 6 total, 6 scraped, 0 new
+[05:42:08]   City 19/68: Joplin
+[05:42:13]     Joplin: 6 total, 6 scraped, 0 new
+[05:42:13]   City 20/68: Kansas City
+[05:42:18]     Kansas City: 6 total, 6 scraped, 0 new
+[05:42:18]   City 21/68: Kirksville
+[05:42:22]     Kirksville: 6 total, 6 scraped, 0 new
+[05:42:22]   City 22/68: Lebanon
+[05:42:26]     Lebanon: 6 total, 6 scraped, 0 new
+[05:42:26]   City 23/68: Lee's Summit
+[05:42:30]     Lee's Summit: 6 total, 6 scraped, 0 new
+[05:42:30]   City 24/68: Liberty
+[05:42:34]     Liberty: 6 total, 6 scraped, 0 new
+[05:42:34]   City 25/68: Maryland Heights
+[05:42:39]     Maryland Heights: 6 total, 6 scraped, 0 new
+[05:42:39]   City 26/68: Mexico
+[05:42:44]     Mexico: 6 total, 6 scraped, 0 new
+[05:42:44]   City 27/68: Neosho
+[05:42:48]     Neosho: 6 total, 6 scraped, 0 new
+[05:42:48]   City 28/68: O'Fallon
+[05:42:51]     O'Fallon: 6 total, 6 scraped, 0 new
+[05:42:51]   City 29/68: Park Hills
+[05:42:55]     Park Hills: 6 total, 6 scraped, 0 new
+[05:42:55]   City 30/68: Poplar Bluff
+[05:42:58]     Poplar Bluff: 6 total, 6 scraped, 0 new
+[05:42:58]   City 31/68: Rolla
+[05:43:03]     Rolla: 6 total, 6 scraped, 0 new
+[05:43:03]   City 32/68: Saint Charles
+[05:43:07]     Saint Charles: 6 total, 6 scraped, 0 new
+[05:43:07]   City 33/68: Saint Joseph
+[05:43:11]     Saint Joseph: 6 total, 6 scraped, 0 new
+[05:43:11]   City 34/68: Saint Peters
+[05:43:16]     Saint Peters: 6 total, 6 scraped, 0 new
+[05:43:16]   City 35/68: Sedalia
+[05:43:20]     Sedalia: 6 total, 6 scraped, 0 new
+[05:43:20]   City 36/68: Sikeston
+[05:43:25]     Sikeston: 6 total, 6 scraped, 0 new
+[05:43:25]   City 37/68: Springfield
+[05:43:30]     Springfield: 6 total, 6 scraped, 0 new
+[05:43:30]   City 38/68: St. Louis
+[05:43:34]     St. Louis: 6 total, 6 scraped, 0 new
+[05:43:34]   City 39/68: Troy
+[05:43:40]     Troy: 6 total, 6 scraped, 0 new
+[05:43:40]   City 40/68: Union
+[05:43:45]     Union: 6 total, 6 scraped, 0 new
+[05:43:45]   City 41/68: Warrensburg
+[05:43:50]     Warrensburg: 6 total, 6 scraped, 0 new
+[05:43:50]   City 42/68: Washington
+[05:43:53]     Washington: 6 total, 6 scraped, 0 new
+[05:43:53]   City 43/68: Wentzville
+[05:43:59]     Wentzville: 6 total, 6 scraped, 0 new
+[05:43:59]   City 44/68: West Plains
+[05:44:04]     West Plains: 6 total, 6 scraped, 0 new
+[05:44:04]   City 45/68: View All Cities
+[05:44:08]   City 46/68: Boone County
+[05:44:13]     Boone County: 5 total, 5 scraped, 0 new
+[05:44:13]   City 47/68: Buchanan County
+[05:44:17]     Buchanan County: 5 total, 5 scraped, 0 new
+[05:44:17]   City 48/68: Callaway County
+[05:44:22]     Callaway County: 6 total, 6 scraped, 0 new
+[05:44:22]   City 49/68: Cape Girardeau County
+[05:44:27]     Cape Girardeau County: 6 total, 6 scraped, 0 new
+[05:44:27]   City 50/68: Cass County
+[05:44:30]     Cass County: 6 total, 6 scraped, 0 new
+[05:44:30]   City 51/68: Christian County
+[05:44:35]     Christian County: 5 total, 5 scraped, 0 new
+[05:44:35]   City 52/68: Clay County
+[05:44:40]     Clay County: 5 total, 5 scraped, 0 new
+[05:44:40]   City 53/68: Cole County
+[05:44:44]     Cole County: 6 total, 6 scraped, 0 new
+[05:44:44]   City 54/68: Franklin County
+[05:44:49]     Franklin County: 5 total, 5 scraped, 0 new
+[05:44:49]   City 55/68: Greene County
+[05:44:53]     Greene County: 5 total, 5 scraped, 0 new
+[05:44:53]   City 56/68: Jackson County
+[05:44:57]     Jackson County: 5 total, 5 scraped, 0 new
+[05:44:57]   City 57/68: Jasper County
+[05:45:01]     Jasper County: 5 total, 5 scraped, 0 new
+[05:45:01]   City 58/68: Jefferson County
+[05:45:07]     Jefferson County: 5 total, 5 scraped, 0 new
+[05:45:07]   City 59/68: Johnson County
+[05:45:11]     Johnson County: 6 total, 6 scraped, 0 new
+[05:45:11]   City 60/68: Lincoln County
+[05:45:16]     Lincoln County: 5 total, 5 scraped, 0 new
+[05:45:16]   City 61/68: Newton County
+[05:45:20]     Newton County: 5 total, 5 scraped, 0 new
+[05:45:20]   City 62/68: Phelps County
+[05:45:24]     Phelps County: 6 total, 6 scraped, 0 new
+[05:45:24]   City 63/68: Platte County
+[05:45:29]     Platte County: 5 total, 5 scraped, 0 new
+[05:45:29]   City 64/68: Pulaski County
+[05:45:33]     Pulaski County: 6 total, 6 scraped, 0 new
+[05:45:33]   City 65/68: Saint Charles County
+[05:45:39]     Saint Charles County: 5 total, 5 scraped, 0 new
+[05:45:39]   City 66/68: Saint Francois County
+[05:45:44]     Saint Francois County: 6 total, 6 scraped, 0 new
+[05:45:44]   City 67/68: St. Louis County
+[05:45:49]     St. Louis County: 5 total, 5 scraped, 0 new
+[05:45:49]   City 68/68: Taney County
+[05:45:53]     Taney County: 6 total, 6 scraped, 0 new
+[05:45:53]   MO total: 5 unique leads
+[05:45:58] 
+[========================================]
+[05:45:58] State 17/44: IN (indiana)
+[05:46:00]   IN: 75 cities found
+[05:46:00]   City 1/75: Anderson
+[05:46:04]     Anderson: 11 total, 11 scraped, 8 new
+[05:46:04]   City 2/75: Bedford
+[05:46:10]     Bedford: 11 total, 7 scraped, 1 new
+[05:46:10]   City 3/75: Beech Grove
+[05:46:14]     Beech Grove: 12 total, 11 scraped, 0 new
+[05:46:14]   City 4/75: Bloomington
+[05:46:20]     Bloomington: 12 total, 8 scraped, 0 new
+[05:46:20]   City 5/75: Carmel
+[05:46:23]     Carmel: 11 total, 11 scraped, 0 new
+[05:46:23]   City 6/75: Clarksville
+[05:46:28]     Clarksville: 12 total, 9 scraped, 1 new
+[05:46:28]   City 7/75: Columbus
+[05:46:33]     Columbus: 11 total, 7 scraped, 0 new
+[05:46:33]   City 8/75: Crawfordsville
+[05:46:37]     Crawfordsville: 10 total, 7 scraped, 2 new
+[05:46:37]   City 9/75: Crown Point
+[05:46:42]     Crown Point: 11 total, 7 scraped, 1 new
+[05:46:42]   City 10/75: Elkhart
+[05:46:47]     Elkhart: 11 total, 7 scraped, 0 new
+[05:46:47]   City 11/75: Evansville
+[05:46:50]     Evansville: 12 total, 8 scraped, 0 new
+[05:46:50]   City 12/75: Fishers
+[05:46:54]     Fishers: 12 total, 11 scraped, 0 new
+[05:46:54]   City 13/75: Fort Wayne
+[05:46:58]     Fort Wayne: 11 total, 7 scraped, 0 new
+[05:46:58]   City 14/75: Franklin
+[05:47:03]     Franklin: 11 total, 11 scraped, 0 new
+[05:47:03]   City 15/75: Gary
+[05:47:08]     Gary: 11 total, 7 scraped, 0 new
+[05:47:08]   City 16/75: Goshen
+[05:47:12]     Goshen: 11 total, 7 scraped, 0 new
+[05:47:12]   City 17/75: Greenfield
+[05:47:17]     Greenfield: 12 total, 11 scraped, 0 new
+[05:47:17]   City 18/75: Greenwood
+[05:47:22]     Greenwood: 11 total, 11 scraped, 0 new
+[05:47:22]   City 19/75: Hammond
+[05:47:26]     Hammond: 11 total, 7 scraped, 0 new
+[05:47:26]   City 20/75: Highland
+[05:47:29]     Highland: 11 total, 7 scraped, 0 new
+[05:47:29]   City 21/75: Huntington
+[05:47:34]     Huntington: 11 total, 7 scraped, 0 new
+[05:47:34]   City 22/75: Indianapolis
+[05:47:39]     Indianapolis: 12 total, 11 scraped, 0 new
+[05:47:39]   City 23/75: Jeffersonville
+[05:47:43]     Jeffersonville: 12 total, 9 scraped, 0 new
+[05:47:43]   City 24/75: Kokomo
+[05:47:47]     Kokomo: 11 total, 7 scraped, 0 new
+[05:47:47]   City 25/75: La Porte
+[05:47:51]     La Porte: 11 total, 7 scraped, 0 new
+[05:47:51]   City 26/75: Lafayette
+[05:47:57]     Lafayette: 11 total, 7 scraped, 0 new
+[05:47:57]   City 27/75: Logansport
+[05:48:01]     Logansport: 11 total, 7 scraped, 0 new
+[05:48:01]   City 28/75: Marion
+[05:48:05]     Marion: 11 total, 7 scraped, 0 new
+[05:48:05]   City 29/75: Martinsville
+[05:48:09]     Martinsville: 12 total, 11 scraped, 0 new
+[05:48:09]   City 30/75: Merrillville
+[05:48:13]     Merrillville: 11 total, 7 scraped, 0 new
+[05:48:13]   City 31/75: Michigan City
+[05:48:18]     Michigan City: 11 total, 7 scraped, 0 new
+[05:48:18]   City 32/75: Mishawaka
+[05:48:23]     Mishawaka: 11 total, 7 scraped, 0 new
+[05:48:23]   City 33/75: Muncie
+[05:48:27]     Muncie: 11 total, 7 scraped, 0 new
+[05:48:27]   City 34/75: Munster
+[05:48:31]     Munster: 11 total, 7 scraped, 0 new
+[05:48:31]   City 35/75: New Albany
+[05:48:35]     New Albany: 12 total, 9 scraped, 0 new
+[05:48:35]   City 36/75: New Castle
+[05:48:40]     New Castle: 11 total, 7 scraped, 0 new
+[05:48:40]   City 37/75: Noblesville
+[05:48:45]     Noblesville: 11 total, 11 scraped, 0 new
+[05:48:45]   City 38/75: Peru
+[05:48:49]     Peru: 11 total, 7 scraped, 0 new
+[05:48:49]   City 39/75: Plymouth
+[05:48:53]     Plymouth: 11 total, 7 scraped, 0 new
+[05:48:53]   City 40/75: Portage
+[05:48:59]     Portage: 11 total, 7 scraped, 0 new
+[05:48:59]   City 41/75: Richmond
+[05:49:03]     Richmond: 11 total, 7 scraped, 0 new
+[05:49:03]   City 42/75: Schererville
+[05:49:08]     Schererville: 11 total, 7 scraped, 0 new
+[05:49:08]   City 43/75: Seymour
+[05:49:12]     Seymour: 11 total, 7 scraped, 0 new
+[05:49:12]   City 44/75: Shelbyville
+[05:49:16]     Shelbyville: 11 total, 11 scraped, 0 new
+[05:49:16]   City 45/75: South Bend
+[05:49:20]     South Bend: 11 total, 7 scraped, 0 new
+[05:49:20]   City 46/75: Terre Haute
+[05:49:24]     Terre Haute: 12 total, 8 scraped, 0 new
+[05:49:24]   City 47/75: Valparaiso
+[05:49:28]     Valparaiso: 11 total, 7 scraped, 0 new
+[05:49:28]   City 48/75: Vincennes
+[05:49:32]     Vincennes: 11 total, 7 scraped, 0 new
+[05:49:32]   City 49/75: Warsaw
+[05:49:37]     Warsaw: 11 total, 7 scraped, 0 new
+[05:49:37]   City 50/75: Westfield
+[05:49:41]     Westfield: 12 total, 11 scraped, 0 new
+[05:49:41]   City 51/75: View All Cities
+[05:49:45]   City 52/75: Allen County
+[05:49:51]     Allen County: 11 total, 7 scraped, 0 new
+[05:49:51]   City 53/75: Bartholomew County
+[05:49:56]     Bartholomew County: 11 total, 7 scraped, 0 new
+[05:49:56]   City 54/75: Clark County
+[05:50:01]     Clark County: 11 total, 7 scraped, 0 new
+[05:50:01]   City 55/75: Delaware County
+[05:50:06]     Delaware County: 11 total, 7 scraped, 0 new
+[05:50:06]   City 56/75: Elkhart County
+[05:50:11]     Elkhart County: 11 total, 7 scraped, 0 new
+[05:50:11]   City 57/75: Floyd County
+[05:50:15]     Floyd County: 11 total, 7 scraped, 0 new
+[05:50:15]   City 58/75: Grant County
+[05:50:20]     Grant County: 11 total, 7 scraped, 0 new
+[05:50:20]   City 59/75: Hamilton County
+[05:50:23]     Hamilton County: 11 total, 7 scraped, 0 new
+[05:50:23]   City 60/75: Hendricks County
+[05:50:27]     Hendricks County: 11 total, 7 scraped, 0 new
+[05:50:27]   City 61/75: Howard County
+[05:50:32]     Howard County: 11 total, 7 scraped, 0 new
+[05:50:32]   City 62/75: Johnson County
+[05:50:37]     Johnson County: 11 total, 7 scraped, 0 new
+[05:50:37]   City 63/75: Kosciusko County
+[05:50:43]     Kosciusko County: 11 total, 7 scraped, 0 new
+[05:50:43]   City 64/75: La Porte County
+[05:50:48]     La Porte County: 7 total, 7 scraped, 0 new
+[05:50:48]   City 65/75: Lake County
+[05:50:53]     Lake County: 11 total, 7 scraped, 0 new
+[05:50:53]   City 66/75: Madison County
+[05:50:57]     Madison County: 11 total, 7 scraped, 0 new
+[05:50:57]   City 67/75: Marion County
+[05:51:02]     Marion County: 11 total, 7 scraped, 0 new
+[05:51:02]   City 68/75: Monroe County
+[05:51:06]     Monroe County: 11 total, 7 scraped, 0 new
+[05:51:06]   City 69/75: Morgan County
+[05:51:10]     Morgan County: 11 total, 7 scraped, 0 new
+[05:51:10]   City 70/75: Porter County
+[05:51:13]     Porter County: 11 total, 7 scraped, 0 new
+[05:51:13]   City 71/75: St Joseph County
+[05:51:18]     St Joseph County: 11 total, 7 scraped, 0 new
+[05:51:18]   City 72/75: Tippecanoe County
+[05:51:22]     Tippecanoe County: 11 total, 7 scraped, 0 new
+[05:51:22]   City 73/75: Vanderburgh County
+[05:51:28]     Vanderburgh County: 11 total, 7 scraped, 0 new
+[05:51:28]   City 74/75: Vigo County
+[05:51:33]     Vigo County: 11 total, 7 scraped, 0 new
+[05:51:33]   City 75/75: Wayne County
+[05:51:38]     Wayne County: 11 total, 7 scraped, 0 new
+[05:51:38]   IN total: 13 unique leads
+[05:51:44] 
+[========================================]
+[05:51:44] State 18/44: WI (wisconsin)
+[05:51:45]   WI: 84 cities found
+[05:51:45]   City 1/84: Appleton
+[05:51:51]     Appleton: 9 total, 9 scraped, 9 new
+[05:51:51]   City 2/84: Ashland
+[05:51:56]     Ashland: 9 total, 9 scraped, 0 new
+[05:51:56]   City 3/84: Ashwaubenon
+[05:52:00]     Ashwaubenon: 9 total, 9 scraped, 0 new
+[05:52:00]   City 4/84: Baldwin
+[05:52:04]     Baldwin: 10 total, 10 scraped, 1 new
+[05:52:04]   City 5/84: Baraboo
+[05:52:09]     Baraboo: 9 total, 9 scraped, 1 new
+[05:52:09]   City 6/84: Beaver Dam
+[05:52:13]     Beaver Dam: 9 total, 9 scraped, 0 new
+[05:52:13]   City 7/84: Beloit
+[05:52:17]     Beloit: 9 total, 9 scraped, 3 new
+[05:52:17]   City 8/84: Black River Falls
+[05:52:22]     Black River Falls: 10 total, 10 scraped, 0 new
+[05:52:22]   City 9/84: Brookfield
+[05:52:27]     Brookfield: 10 total, 9 scraped, 0 new
+[05:52:27]   City 10/84: Burlington
+[05:52:32]     Burlington: 10 total, 9 scraped, 0 new
+[05:52:32]   City 11/84: Caledonia
+[05:52:37]     Caledonia: 10 total, 9 scraped, 0 new
+[05:52:37]   City 12/84: Chippewa Falls
+[05:52:42]     Chippewa Falls: 10 total, 10 scraped, 0 new
+[05:52:42]   City 13/84: De Pere
+[05:52:46]     De Pere: 9 total, 9 scraped, 0 new
+[05:52:46]   City 14/84: Eau Claire
+[05:52:50]     Eau Claire: 10 total, 10 scraped, 0 new
+[05:52:50]   City 15/84: Elkhorn
+[05:52:55]     Elkhorn: 9 total, 9 scraped, 0 new
+[05:52:55]   City 16/84: Fond Du Lac
+[05:53:01]     Fond Du Lac: 9 total, 9 scraped, 0 new
+[05:53:01]   City 17/84: Franklin
+[05:53:06]     Franklin: 10 total, 9 scraped, 0 new
+[05:53:06]   City 18/84: Germantown
+[05:53:10]     Germantown: 9 total, 9 scraped, 0 new
+[05:53:10]   City 19/84: Green Bay
+[05:53:15]     Green Bay: 9 total, 9 scraped, 0 new
+[05:53:15]   City 20/84: Hartford
+[05:53:20]     Hartford: 9 total, 9 scraped, 0 new
+[05:53:20]   City 21/84: Hudson
+[05:53:25]     Hudson: 10 total, 10 scraped, 0 new
+[05:53:25]   City 22/84: Janesville
+[05:53:29]     Janesville: 9 total, 9 scraped, 0 new
+[05:53:29]   City 23/84: Kenosha
+[05:53:33]     Kenosha: 10 total, 9 scraped, 0 new
+[05:53:33]   City 24/84: La Crosse
+[05:53:38]     La Crosse: 10 total, 10 scraped, 0 new
+[05:53:38]   City 25/84: Lake Geneva
+[05:53:42]     Lake Geneva: 9 total, 9 scraped, 0 new
+[05:53:42]   City 26/84: Madison
+[05:53:47]     Madison: 9 total, 9 scraped, 0 new
+[05:53:47]   City 27/84: Manitowoc
+[05:53:53]     Manitowoc: 9 total, 9 scraped, 0 new
+[05:53:53]   City 28/84: Marinette
+[05:53:57]     Marinette: 9 total, 9 scraped, 0 new
+[05:53:57]   City 29/84: Marshfield
+[05:54:00]     Marshfield: 9 total, 9 scraped, 0 new
+[05:54:00]   City 30/84: Menomonee Falls
+[05:54:05]     Menomonee Falls: 10 total, 9 scraped, 0 new
+[05:54:05]   City 31/84: Menomonie
+[05:54:09]     Menomonie: 9 total, 9 scraped, 0 new
+[05:54:09]   City 32/84: Merrill
+[05:54:13]     Merrill: 9 total, 9 scraped, 0 new
+[05:54:13]   City 33/84: Milwaukee
+[05:54:17]     Milwaukee: 10 total, 9 scraped, 0 new
+[05:54:17]   City 34/84: Monroe
+[05:54:22]     Monroe: 9 total, 9 scraped, 0 new
+[05:54:22]   City 35/84: Neenah
+[05:54:27]     Neenah: 9 total, 9 scraped, 0 new
+[05:54:27]   City 36/84: New Berlin
+[05:54:32]     New Berlin: 10 total, 9 scraped, 0 new
+[05:54:32]   City 37/84: New Richmond
+[05:54:37]     New Richmond: 10 total, 10 scraped, 0 new
+[05:54:37]   City 38/84: Oak Creek
+[05:54:43]     Oak Creek: 10 total, 9 scraped, 0 new
+[05:54:43]   City 39/84: Oconomowoc
+[05:54:47]     Oconomowoc: 10 total, 9 scraped, 0 new
+[05:54:47]   City 40/84: Oshkosh
+[05:54:51]     Oshkosh: 9 total, 9 scraped, 0 new
+[05:54:51]   City 41/84: Pewaukee
+[05:54:55]     Pewaukee: 10 total, 9 scraped, 0 new
+[05:54:55]   City 42/84: Pleasant Prairie
+[05:55:00]     Pleasant Prairie: 10 total, 9 scraped, 0 new
+[05:55:00]   City 43/84: Port Washington
+[05:55:04]     Port Washington: 9 total, 9 scraped, 0 new
+[05:55:04]   City 44/84: Portage
+[05:55:08]     Portage: 9 total, 9 scraped, 0 new
+[05:55:08]   City 45/84: Racine
+[05:55:14]     Racine: 10 total, 9 scraped, 0 new
+[05:55:14]   City 46/84: Rhinelander
+[05:55:17]     Rhinelander: 9 total, 9 scraped, 0 new
+[05:55:17]   City 47/84: Rice Lake
+[05:55:21]     Rice Lake: 9 total, 9 scraped, 0 new
+[05:55:21]   City 48/84: River Falls
+[05:55:25]     River Falls: 10 total, 10 scraped, 0 new
+[05:55:25]   City 49/84: Sheboygan
+[05:55:29]     Sheboygan: 9 total, 9 scraped, 0 new
+[05:55:29]   City 50/84: Stevens Point
+[05:55:34]     Stevens Point: 9 total, 9 scraped, 0 new
+[05:55:34]   City 51/84: Sturgeon Bay
+[05:55:39]     Sturgeon Bay: 9 total, 9 scraped, 0 new
+[05:55:39]   City 52/84: Sun Prairie
+[05:55:44]     Sun Prairie: 9 total, 9 scraped, 0 new
+[05:55:44]   City 53/84: Superior
+[05:55:48]     Superior: 9 total, 9 scraped, 0 new
+[05:55:48]   City 54/84: Watertown
+[05:55:52]     Watertown: 9 total, 9 scraped, 0 new
+[05:55:52]   City 55/84: Waukesha
+[05:55:58]     Waukesha: 10 total, 9 scraped, 0 new
+[05:55:58]   City 56/84: Wausau
+[05:56:02]     Wausau: 10 total, 10 scraped, 0 new
+[05:56:02]   City 57/84: West Bend
+[05:56:07]     West Bend: 9 total, 9 scraped, 0 new
+[05:56:07]   City 58/84: Whitewater
+[05:56:11]     Whitewater: 9 total, 9 scraped, 0 new
+[05:56:11]   City 59/84: Wisconsin Rapids
+[05:56:15]     Wisconsin Rapids: 9 total, 9 scraped, 0 new
+[05:56:15]   City 60/84: View All Cities
+[05:56:20]   City 61/84: Brown County
+[05:56:24]     Brown County: 9 total, 9 scraped, 0 new
+[05:56:24]   City 62/84: Chippewa County
+[05:56:29]     Chippewa County: 9 total, 9 scraped, 0 new
+[05:56:29]   City 63/84: Dane County
+[05:56:33]     Dane County: 9 total, 9 scraped, 0 new
+[05:56:33]   City 64/84: Dodge County
+[05:56:38]     Dodge County: 9 total, 9 scraped, 0 new
+[05:56:38]   City 65/84: Eau Claire County
+[05:56:43]     Eau Claire County: 9 total, 9 scraped, 0 new
+[05:56:43]   City 66/84: Fond du Lac County
+[05:56:46]     Fond du Lac County: 9 total, 9 scraped, 0 new
+[05:56:46]   City 67/84: Jefferson County
+[05:56:51]     Jefferson County: 9 total, 9 scraped, 0 new
+[05:56:51]   City 68/84: Kenosha County
+[05:56:56]     Kenosha County: 10 total, 9 scraped, 0 new
+[05:56:56]   City 69/84: La Crosse County
+[05:57:01]     La Crosse County: 9 total, 9 scraped, 0 new
+[05:57:01]   City 70/84: Manitowoc County
+[05:57:05]     Manitowoc County: 9 total, 9 scraped, 0 new
+[05:57:05]   City 71/84: Marathon County
+[05:57:09]     Marathon County: 9 total, 9 scraped, 0 new
+[05:57:09]   City 72/84: Milwaukee County
+[05:57:14]     Milwaukee County: 10 total, 9 scraped, 0 new
+[05:57:14]   City 73/84: Outagamie County
+[05:57:19]     Outagamie County: 9 total, 9 scraped, 0 new
+[05:57:19]   City 74/84: Ozaukee County
+[05:57:23]     Ozaukee County: 9 total, 9 scraped, 0 new
+[05:57:23]   City 75/84: Portage County
+[05:57:26]     Portage County: 9 total, 9 scraped, 0 new
+[05:57:26]   City 76/84: Racine County
+[05:57:31]     Racine County: 10 total, 9 scraped, 0 new
+[05:57:31]   City 77/84: Rock County
+[05:57:36]     Rock County: 9 total, 9 scraped, 0 new
+[05:57:36]   City 78/84: Saint Croix County
+[05:57:40]     Saint Croix County: 9 total, 9 scraped, 0 new
+[05:57:40]   City 79/84: Sheboygan County
+[05:57:44]     Sheboygan County: 9 total, 9 scraped, 0 new
+[05:57:44]   City 80/84: Walworth County
+[05:57:48]     Walworth County: 9 total, 9 scraped, 0 new
+[05:57:48]   City 81/84: Washington County
+[05:57:52]     Washington County: 9 total, 9 scraped, 0 new
+[05:57:52]   City 82/84: Waukesha County
+[05:57:58]     Waukesha County: 10 total, 9 scraped, 0 new
+[05:57:58]   City 83/84: Winnebago County
+[05:58:03]     Winnebago County: 9 total, 9 scraped, 0 new
+[05:58:03]   City 84/84: Wood County
+[05:58:07]     Wood County: 9 total, 9 scraped, 0 new
+[05:58:07]   WI total: 14 unique leads
+[05:58:13] 
+[========================================]
+[05:58:13] State 19/44: SC (south-carolina)
+[05:58:14]   SC: 73 cities found
+[05:58:14]   City 1/73: Aiken
+[05:58:18]     Aiken: 2 total, 2 scraped, 2 new
+[05:58:18]   City 2/73: Anderson
+[05:58:23]     Anderson: 2 total, 2 scraped, 0 new
+[05:58:23]   City 3/73: Beaufort
+[05:58:27]     Beaufort: 2 total, 2 scraped, 0 new
+[05:58:27]   City 4/73: Bennettsville
+[05:58:32]     Bennettsville: 2 total, 2 scraped, 0 new
+[05:58:32]   City 5/73: Bluffton
+[05:58:36]     Bluffton: 2 total, 2 scraped, 0 new
+[05:58:36]   City 6/73: Camden
+[05:58:40]     Camden: 2 total, 2 scraped, 0 new
+[05:58:40]   City 7/73: Charleston
+[05:58:45]     Charleston: 2 total, 2 scraped, 0 new
+[05:58:45]   City 8/73: Clemson
+[05:58:49]     Clemson: 2 total, 2 scraped, 0 new
+[05:58:49]   City 9/73: Clover
+[05:58:54]     Clover: 2 total, 2 scraped, 0 new
+[05:58:54]   City 10/73: Columbia
+[05:58:58]     Columbia: 2 total, 2 scraped, 0 new
+[05:58:58]   City 11/73: Conway
+[05:59:03]     Conway: 2 total, 2 scraped, 0 new
+[05:59:03]   City 12/73: Darlington
+[05:59:08]     Darlington: 2 total, 2 scraped, 0 new
+[05:59:08]   City 13/73: Dillon
+[05:59:13]     Dillon: 2 total, 2 scraped, 0 new
+[05:59:13]   City 14/73: Easley
+[05:59:18]     Easley: 2 total, 2 scraped, 0 new
+[05:59:18]   City 15/73: Florence
+[05:59:22]     Florence: 2 total, 2 scraped, 0 new
+[05:59:22]   City 16/73: Fort Mill
+[05:59:27]     Fort Mill: 2 total, 2 scraped, 0 new
+[05:59:27]   City 17/73: Fountain Inn
+[05:59:30]     Fountain Inn: 2 total, 2 scraped, 0 new
+[05:59:30]   City 18/73: Gaffney
+[05:59:34]     Gaffney: 2 total, 2 scraped, 0 new
+[05:59:34]   City 19/73: Georgetown
+[05:59:40]     Georgetown: 2 total, 2 scraped, 0 new
+[05:59:40]   City 20/73: Goose Creek
+[05:59:44]     Goose Creek: 2 total, 2 scraped, 0 new
+[05:59:44]   City 21/73: Greenville
+[05:59:48]     Greenville: 2 total, 2 scraped, 0 new
+[05:59:48]   City 22/73: Greenwood
+[05:59:52]     Greenwood: 2 total, 2 scraped, 0 new
+[05:59:52]   City 23/73: Greer
+[05:59:57]     Greer: 2 total, 2 scraped, 0 new
+[05:59:57]   City 24/73: Hartsville
+[06:00:01]     Hartsville: 2 total, 2 scraped, 0 new
+[06:00:01]   City 25/73: Hilton Head Island
+[06:00:06]     Hilton Head Island: 2 total, 2 scraped, 0 new
+[06:00:06]   City 26/73: Irmo
+[06:00:12]     Irmo: 2 total, 2 scraped, 0 new
+[06:00:12]   City 27/73: Lancaster
+[06:00:16]     Lancaster: 2 total, 2 scraped, 0 new
+[06:00:16]   City 28/73: Laurens
+[06:00:21]     Laurens: 2 total, 2 scraped, 0 new
+[06:00:21]   City 29/73: Lexington
+[06:00:25]     Lexington: 2 total, 2 scraped, 0 new
+[06:00:25]   City 30/73: Mauldin
+[06:00:29]     Mauldin: 2 total, 2 scraped, 0 new
+[06:00:29]   City 31/73: Moncks Corner
+[06:00:33]     Moncks Corner: 2 total, 2 scraped, 0 new
+[06:00:33]   City 32/73: Mount Pleasant
+[06:00:39]     Mount Pleasant: 2 total, 2 scraped, 0 new
+[06:00:39]   City 33/73: Myrtle Beach
+[06:00:44]     Myrtle Beach: 2 total, 2 scraped, 0 new
+[06:00:44]   City 34/73: Newberry
+[06:00:47]     Newberry: 2 total, 2 scraped, 0 new
+[06:00:47]   City 35/73: North Augusta
+[06:00:52]     North Augusta: 2 total, 2 scraped, 0 new
+[06:00:52]   City 36/73: North Charleston
+[06:00:57]     North Charleston: 2 total, 2 scraped, 0 new
+[06:00:57]   City 37/73: North Myrtle Beach
+[06:01:03]     North Myrtle Beach: 2 total, 2 scraped, 0 new
+[06:01:03]   City 38/73: Orangeburg
+[06:01:07]     Orangeburg: 2 total, 2 scraped, 0 new
+[06:01:07]   City 39/73: Pawleys Island
+[06:01:11]     Pawleys Island: 2 total, 2 scraped, 0 new
+[06:01:11]   City 40/73: Rock Hill
+[06:01:15]     Rock Hill: 2 total, 2 scraped, 0 new
+[06:01:15]   City 41/73: Seneca
+[06:01:20]     Seneca: 2 total, 2 scraped, 0 new
+[06:01:20]   City 42/73: Simpsonville
+[06:01:25]     Simpsonville: 2 total, 2 scraped, 0 new
+[06:01:25]   City 43/73: Spartanburg
+[06:01:29]     Spartanburg: 2 total, 2 scraped, 0 new
+[06:01:29]   City 44/73: Summerville
+[06:01:33]     Summerville: 2 total, 2 scraped, 0 new
+[06:01:33]   City 45/73: Sumter
+[06:01:37]     Sumter: 2 total, 2 scraped, 0 new
+[06:01:37]   City 46/73: Union
+[06:01:42]     Union: 2 total, 2 scraped, 0 new
+[06:01:42]   City 47/73: West Columbia
+[06:01:45]     West Columbia: 2 total, 2 scraped, 0 new
+[06:01:45]   City 48/73: York
+[06:01:49]     York: 2 total, 2 scraped, 0 new
+[06:01:49]   City 49/73: View All Cities
+[06:01:54]   City 50/73: Aiken County
+[06:01:58]     Aiken County: 2 total, 2 scraped, 0 new
+[06:01:58]   City 51/73: Anderson County
+[06:02:02]     Anderson County: 2 total, 2 scraped, 0 new
+[06:02:02]   City 52/73: Beaufort County
+[06:02:07]     Beaufort County: 2 total, 2 scraped, 0 new
+[06:02:07]   City 53/73: Berkeley County
+[06:02:12]     Berkeley County: 2 total, 2 scraped, 0 new
+[06:02:12]   City 54/73: Charleston County
+[06:02:18]     Charleston County: 2 total, 2 scraped, 0 new
+[06:02:18]   City 55/73: Cherokee County
+[06:02:22]     Cherokee County: 2 total, 2 scraped, 0 new
+[06:02:22]   City 56/73: Darlington County
+[06:02:27]     Darlington County: 2 total, 2 scraped, 0 new
+[06:02:27]   City 57/73: Dorchester County
+[06:02:31]     Dorchester County: 2 total, 2 scraped, 0 new
+[06:02:31]   City 58/73: Florence County
+[06:02:36]     Florence County: 2 total, 2 scraped, 0 new
+[06:02:36]   City 59/73: Georgetown County
+[06:02:41]     Georgetown County: 2 total, 2 scraped, 0 new
+[06:02:41]   City 60/73: Greenville County
+[06:02:46]     Greenville County: 2 total, 2 scraped, 0 new
+[06:02:46]   City 61/73: Greenwood County
+[06:02:49]     Greenwood County: 2 total, 2 scraped, 0 new
+[06:02:49]   City 62/73: Horry County
+[06:02:54]     Horry County: 2 total, 2 scraped, 0 new
+[06:02:54]   City 63/73: Kershaw County
+[06:02:58]     Kershaw County: 2 total, 2 scraped, 0 new
+[06:02:58]   City 64/73: Lancaster County
+[06:03:02]     Lancaster County: 2 total, 2 scraped, 0 new
+[06:03:02]   City 65/73: Laurens County
+[06:03:05]     Laurens County: 2 total, 2 scraped, 0 new
+[06:03:05]   City 66/73: Lexington County
+[06:03:09]     Lexington County: 2 total, 2 scraped, 0 new
+[06:03:09]   City 67/73: Oconee County
+[06:03:13]     Oconee County: 2 total, 2 scraped, 0 new
+[06:03:13]   City 68/73: Orangeburg County
+[06:03:18]     Orangeburg County: 2 total, 2 scraped, 0 new
+[06:03:18]   City 69/73: Pickens County
+[06:03:23]     Pickens County: 2 total, 2 scraped, 0 new
+[06:03:23]   City 70/73: Richland County
+[06:03:28]     Richland County: 2 total, 2 scraped, 0 new
+[06:03:28]   City 71/73: Spartanburg County
+[06:03:33]     Spartanburg County: 2 total, 2 scraped, 0 new
+[06:03:33]   City 72/73: Sumter County
+[06:03:38]     Sumter County: 2 total, 2 scraped, 0 new
+[06:03:38]   City 73/73: York County
+[06:03:43]     York County: 2 total, 2 scraped, 0 new
+[06:03:43]   SC total: 2 unique leads
+[06:03:50] 
+[========================================]
+[06:03:50] State 20/44: KY (kentucky)
+[06:03:52]   KY: 65 cities found
+[06:03:52]   City 1/65: Ashland
+[06:03:57]     Ashland: 8 total, 8 scraped, 5 new
+[06:03:57]   City 2/65: Bardstown
+[06:04:02]     Bardstown: 8 total, 8 scraped, 0 new
+[06:04:02]   City 3/65: Berea
+[06:04:07]     Berea: 8 total, 8 scraped, 0 new
+[06:04:07]   City 4/65: Bowling Green
+[06:04:11]     Bowling Green: 8 total, 8 scraped, 1 new
+[06:04:11]   City 5/65: Campbellsville
+[06:04:15]     Campbellsville: 8 total, 8 scraped, 0 new
+[06:04:15]   City 6/65: Corbin
+[06:04:20]     Corbin: 8 total, 8 scraped, 0 new
+[06:04:20]   City 7/65: Covington
+[06:04:25]     Covington: 9 total, 9 scraped, 1 new
+[06:04:25]   City 8/65: Danville
+[06:04:31]     Danville: 8 total, 8 scraped, 0 new
+[06:04:31]   City 9/65: Elizabethtown
+[06:04:36]     Elizabethtown: 8 total, 8 scraped, 0 new
+[06:04:36]   City 10/65: Erlanger
+[06:04:41]     Erlanger: 9 total, 9 scraped, 0 new
+[06:04:41]   City 11/65: Florence
+[06:04:46]     Florence: 9 total, 9 scraped, 0 new
+[06:04:46]   City 12/65: Fort Thomas
+[06:04:50]     Fort Thomas: 9 total, 9 scraped, 0 new
+[06:04:50]   City 13/65: Frankfort
+[06:04:55]     Frankfort: 8 total, 8 scraped, 0 new
+[06:04:55]   City 14/65: Ft Mitchell
+[06:04:59]     Ft Mitchell: 9 total, 9 scraped, 0 new
+[06:04:59]   City 15/65: Georgetown
+[06:05:04]     Georgetown: 8 total, 8 scraped, 0 new
+[06:05:04]   City 16/65: Glasgow
+[06:05:08]     Glasgow: 8 total, 8 scraped, 0 new
+[06:05:08]   City 17/65: Hazard
+[06:05:13]     Hazard: 8 total, 8 scraped, 0 new
+[06:05:13]   City 18/65: Henderson
+[06:05:18]     Henderson: 8 total, 8 scraped, 1 new
+[06:05:18]   City 19/65: Hopkinsville
+[06:05:22]     Hopkinsville: 8 total, 8 scraped, 1 new
+[06:05:22]   City 20/65: Lawrenceburg
+[06:05:27]     Lawrenceburg: 8 total, 8 scraped, 0 new
+[06:05:27]   City 21/65: Lexington
+[06:05:32]     Lexington: 8 total, 8 scraped, 0 new
+[06:05:32]   City 22/65: London
+[06:05:37]     London: 8 total, 8 scraped, 0 new
+[06:05:37]   City 23/65: Louisville
+[06:05:40]     Louisville: 8 total, 8 scraped, 1 new
+[06:05:40]   City 24/65: Madisonville
+[06:05:45]     Madisonville: 8 total, 8 scraped, 0 new
+[06:05:45]   City 25/65: Manchester
+[06:05:49]     Manchester: 8 total, 8 scraped, 0 new
+[06:05:49]   City 26/65: Mayfield
+[06:05:54]     Mayfield: 8 total, 8 scraped, 0 new
+[06:05:54]   City 27/65: Morehead
+[06:05:59]     Morehead: 8 total, 8 scraped, 0 new
+[06:05:59]   City 28/65: Mount Sterling
+[06:06:03]     Mount Sterling: 8 total, 8 scraped, 0 new
+[06:06:03]   City 29/65: Murray
+[06:06:08]     Murray: 8 total, 8 scraped, 0 new
+[06:06:08]   City 30/65: Newport
+[06:06:12]     Newport: 9 total, 9 scraped, 0 new
+[06:06:12]   City 31/65: Nicholasville
+[06:06:17]     Nicholasville: 8 total, 8 scraped, 0 new
+[06:06:17]   City 32/65: Owensboro
+[06:06:22]     Owensboro: 8 total, 8 scraped, 0 new
+[06:06:22]   City 33/65: Paducah
+[06:06:27]     Paducah: 8 total, 8 scraped, 0 new
+[06:06:27]   City 34/65: Pikeville
+[06:06:31]     Pikeville: 8 total, 8 scraped, 0 new
+[06:06:31]   City 35/65: Radcliff
+[06:06:35]     Radcliff: 8 total, 8 scraped, 0 new
+[06:06:35]   City 36/65: Richmond
+[06:06:41]     Richmond: 8 total, 8 scraped, 0 new
+[06:06:41]   City 37/65: Shelbyville
+[06:06:45]     Shelbyville: 8 total, 8 scraped, 0 new
+[06:06:45]   City 38/65: Shepherdsville
+[06:06:49]     Shepherdsville: 8 total, 8 scraped, 0 new
+[06:06:49]   City 39/65: Somerset
+[06:06:54]     Somerset: 8 total, 8 scraped, 0 new
+[06:06:54]   City 40/65: Winchester
+[06:07:00]     Winchester: 8 total, 8 scraped, 0 new
+[06:07:00]   City 41/65: View All Cities
+[06:07:04]   City 42/65: Boone County
+[06:07:09]     Boone County: 6 total, 6 scraped, 0 new
+[06:07:09]   City 43/65: Boyd County
+[06:07:14]     Boyd County: 6 total, 6 scraped, 0 new
+[06:07:14]   City 44/65: Bullitt County
+[06:07:18]     Bullitt County: 6 total, 6 scraped, 0 new
+[06:07:18]   City 45/65: Campbell County
+[06:07:23]     Campbell County: 6 total, 6 scraped, 0 new
+[06:07:23]   City 46/65: Christian County
+[06:07:28]     Christian County: 6 total, 6 scraped, 1 new
+[06:07:28]   City 47/65: Daviess County
+[06:07:32]     Daviess County: 6 total, 6 scraped, 0 new
+[06:07:32]   City 48/65: Fayette County
+[06:07:36]     Fayette County: 6 total, 6 scraped, 0 new
+[06:07:36]   City 49/65: Franklin County
+[06:07:40]     Franklin County: 8 total, 8 scraped, 0 new
+[06:07:40]   City 50/65: Hardin County
+[06:07:45]     Hardin County: 8 total, 8 scraped, 0 new
+[06:07:45]   City 51/65: Henderson County
+[06:07:50]     Henderson County: 6 total, 6 scraped, 0 new
+[06:07:50]   City 52/65: Hopkins County
+[06:07:55]     Hopkins County: 8 total, 8 scraped, 0 new
+[06:07:55]   City 53/65: Jefferson County
+[06:07:58]     Jefferson County: 6 total, 6 scraped, 0 new
+[06:07:58]   City 54/65: Jessamine County
+[06:08:03]     Jessamine County: 6 total, 6 scraped, 0 new
+[06:08:03]   City 55/65: Kenton County
+[06:08:07]     Kenton County: 6 total, 6 scraped, 0 new
+[06:08:07]   City 56/65: Laurel County
+[06:08:13]     Laurel County: 8 total, 8 scraped, 0 new
+[06:08:13]   City 57/65: Madison County
+[06:08:16]     Madison County: 6 total, 6 scraped, 0 new
+[06:08:16]   City 58/65: McCracken County
+[06:08:20]     McCracken County: 8 total, 8 scraped, 0 new
+[06:08:20]   City 59/65: Nelson County
+[06:08:25]     Nelson County: 8 total, 8 scraped, 0 new
+[06:08:25]   City 60/65: Oldham County
+[06:08:29]     Oldham County: 6 total, 6 scraped, 0 new
+[06:08:29]   City 61/65: Pike County
+[06:08:33]     Pike County: 8 total, 8 scraped, 0 new
+[06:08:33]   City 62/65: Pulaski County
+[06:08:38]     Pulaski County: 8 total, 8 scraped, 0 new
+[06:08:38]   City 63/65: Scott County
+[06:08:42]     Scott County: 6 total, 6 scraped, 0 new
+[06:08:42]   City 64/65: Shelby County
+[06:08:46]     Shelby County: 8 total, 8 scraped, 0 new
+[06:08:46]   City 65/65: Warren County
+[06:08:51]     Warren County: 8 total, 8 scraped, 0 new
+[06:08:51]   KY total: 11 unique leads
+[06:08:56] 
+[========================================]
+[06:08:56] State 21/44: LA (louisiana)
+[06:08:57]   LA: 58 cities found
+[06:08:57]   City 1/58: Abbeville
+[06:09:02]     Abbeville: 5 total, 5 scraped, 5 new
+[06:09:02]   City 2/58: Alexandria
+[06:09:06]     Alexandria: 5 total, 5 scraped, 1 new
+[06:09:06]   City 3/58: Baker
+[06:09:10]     Baker: 5 total, 5 scraped, 1 new
+[06:09:10]   City 4/58: Baton Rouge
+[06:09:15]     Baton Rouge: 5 total, 5 scraped, 1 new
+[06:09:15]   City 5/58: Belle Chasse
+[06:09:19]     Belle Chasse: 5 total, 5 scraped, 1 new
+[06:09:19]   City 6/58: Bogalusa
+[06:09:24]     Bogalusa: 5 total, 5 scraped, 0 new
+[06:09:24]   City 7/58: Bossier City
+[06:09:28]     Bossier City: 5 total, 5 scraped, 1 new
+[06:09:28]   City 8/58: Crowley
+[06:09:32]     Crowley: 5 total, 5 scraped, 0 new
+[06:09:32]   City 9/58: DeRidder
+[06:09:36]     DeRidder: 5 total, 5 scraped, 1 new
+[06:09:36]   City 10/58: Denham Springs
+[06:09:41]     Denham Springs: 5 total, 5 scraped, 0 new
+[06:09:41]   City 11/58: Gretna
+[06:09:44]     Gretna: 5 total, 5 scraped, 0 new
+[06:09:44]   City 12/58: Hammond
+[06:09:48]     Hammond: 5 total, 5 scraped, 0 new
+[06:09:48]   City 13/58: Harvey
+[06:09:54]     Harvey: 5 total, 5 scraped, 0 new
+[06:09:54]   City 14/58: Houma
+[06:09:58]     Houma: 5 total, 5 scraped, 1 new
+[06:09:58]   City 15/58: Jennings
+[06:10:03]     Jennings: 5 total, 5 scraped, 0 new
+[06:10:03]   City 16/58: Kenner
+[06:10:07]     Kenner: 5 total, 5 scraped, 0 new
+[06:10:07]   City 17/58: Lafayette
+[06:10:11]     Lafayette: 5 total, 5 scraped, 0 new
+[06:10:11]   City 18/58: Lake Charles
+[06:10:14]     Lake Charles: 6 total, 6 scraped, 1 new
+[06:10:14]   City 19/58: Mandeville
+[06:10:19]     Mandeville: 5 total, 5 scraped, 0 new
+[06:10:19]   City 20/58: Metairie
+[06:10:23]     Metairie: 5 total, 5 scraped, 0 new
+[06:10:23]   City 21/58: Minden
+[06:10:28]     Minden: 5 total, 5 scraped, 0 new
+[06:10:28]   City 22/58: Monroe
+[06:10:33]     Monroe: 5 total, 5 scraped, 1 new
+[06:10:33]   City 23/58: Morgan City
+[06:10:38]     Morgan City: 5 total, 5 scraped, 0 new
+[06:10:38]   City 24/58: Natchitoches
+[06:10:44]     Natchitoches: 5 total, 5 scraped, 0 new
+[06:10:44]   City 25/58: New Iberia
+[06:10:48]     New Iberia: 5 total, 5 scraped, 0 new
+[06:10:48]   City 26/58: New Orleans
+[06:10:54]     New Orleans: 5 total, 5 scraped, 0 new
+[06:10:54]   City 27/58: Opelousas
+[06:10:59]     Opelousas: 5 total, 5 scraped, 0 new
+[06:10:59]   City 28/58: Ruston
+[06:11:02]     Ruston: 5 total, 5 scraped, 0 new
+[06:11:02]   City 29/58: Shreveport
+[06:11:06]     Shreveport: 5 total, 5 scraped, 0 new
+[06:11:06]   City 30/58: Slidell
+[06:11:09]     Slidell: 5 total, 5 scraped, 0 new
+[06:11:09]   City 31/58: Sulphur
+[06:11:14]     Sulphur: 6 total, 6 scraped, 0 new
+[06:11:14]   City 32/58: Thibodaux
+[06:11:18]     Thibodaux: 5 total, 5 scraped, 0 new
+[06:11:18]   City 33/58: West Monroe
+[06:11:22]     West Monroe: 5 total, 5 scraped, 0 new
+[06:11:22]   City 34/58: View All Cities
+[06:11:27]   City 35/58: Acadia Parish
+[06:11:31]     Acadia Parish: 5 total, 5 scraped, 0 new
+[06:11:31]   City 36/58: Ascension Parish
+[06:11:35]     Ascension Parish: 5 total, 5 scraped, 0 new
+[06:11:35]   City 37/58: Bossier Parish
+[06:11:40]     Bossier Parish: 5 total, 5 scraped, 0 new
+[06:11:40]   City 38/58: Caddo Parish
+[06:11:45]     Caddo Parish: 5 total, 5 scraped, 0 new
+[06:11:45]   City 39/58: Calcasieu Parish
+[06:11:50]     Calcasieu Parish: 5 total, 5 scraped, 0 new
+[06:11:50]   City 40/58: East Baton Rouge Parish
+[06:11:55]     East Baton Rouge Parish: 5 total, 5 scraped, 0 new
+[06:11:55]   City 41/58: Iberia Parish
+[06:12:00]     Iberia Parish: 5 total, 5 scraped, 0 new
+[06:12:00]   City 42/58: Jefferson Parish
+[06:12:05]     Jefferson Parish: 5 total, 5 scraped, 0 new
+[06:12:05]   City 43/58: Lafayette Parish
+[06:12:09]     Lafayette Parish: 5 total, 5 scraped, 0 new
+[06:12:09]   City 44/58: Lafourche Parish
+[06:12:14]     Lafourche Parish: 5 total, 5 scraped, 0 new
+[06:12:14]   City 45/58: Livingston Parish
+[06:12:18]     Livingston Parish: 5 total, 5 scraped, 0 new
+[06:12:18]   City 46/58: Orleans Parish
+[06:12:22]     Orleans Parish: 5 total, 5 scraped, 0 new
+[06:12:22]   City 47/58: Ouachita Parish
+[06:12:26]     Ouachita Parish: 5 total, 5 scraped, 0 new
+[06:12:26]   City 48/58: Rapides Parish
+[06:12:30]     Rapides Parish: 5 total, 5 scraped, 0 new
+[06:12:30]   City 49/58: Saint Bernard Parish
+[06:12:34]     Saint Bernard Parish: 5 total, 5 scraped, 0 new
+[06:12:34]   City 50/58: Saint Charles Parish
+[06:12:38]     Saint Charles Parish: 5 total, 5 scraped, 0 new
+[06:12:38]   City 51/58: Saint Landry Parish
+[06:12:43]     Saint Landry Parish: 5 total, 5 scraped, 0 new
+[06:12:43]   City 52/58: Saint Mary Parish
+[06:12:48]     Saint Mary Parish: 5 total, 5 scraped, 0 new
+[06:12:48]   City 53/58: Saint Tammany Parish
+[06:12:53]     Saint Tammany Parish: 5 total, 5 scraped, 0 new
+[06:12:53]   City 54/58: Tangipahoa Parish
+[06:12:59]     Tangipahoa Parish: 5 total, 5 scraped, 0 new
+[06:12:59]   City 55/58: Terrebonne Parish
+[06:13:04]     Terrebonne Parish: 5 total, 5 scraped, 0 new
+[06:13:04]   City 56/58: Vermilion Parish
+[06:13:08]     Vermilion Parish: 5 total, 5 scraped, 0 new
+[06:13:08]   City 57/58: Vernon Parish
+[06:13:12]     Vernon Parish: 5 total, 5 scraped, 0 new
+[06:13:12]   City 58/58: Washington Parish
+[06:13:18]     Washington Parish: 5 total, 5 scraped, 0 new
+[06:13:18]   LA total: 14 unique leads
+[06:13:23] 
+[========================================]
+[06:13:23] State 22/44: AL (alabama)
+[06:13:24]   AL: 65 cities found
+[06:13:24]   City 1/65: Alabaster
+[06:13:28]     Alabaster: 2 total, 2 scraped, 1 new
+[06:13:28]   City 2/65: Albertville
+[06:13:33]     Albertville: 1 total, 1 scraped, 0 new
+[06:13:33]   City 3/65: Alexander City
+[06:13:36]     Alexander City: 1 total, 1 scraped, 0 new
+[06:13:36]   City 4/65: Anniston
+[06:13:42]     Anniston: 1 total, 1 scraped, 0 new
+[06:13:42]   City 5/65: Athens
+[06:13:47]     Athens: 1 total, 1 scraped, 0 new
+[06:13:47]   City 6/65: Auburn
+[06:13:52]     Auburn: 1 total, 1 scraped, 0 new
+[06:13:52]   City 7/65: Bessemer
+[06:13:55]     Bessemer: 2 total, 2 scraped, 0 new
+[06:13:55]   City 8/65: Birmingham
+[06:14:00]     Birmingham: 2 total, 2 scraped, 0 new
+[06:14:00]   City 9/65: Cullman
+[06:14:03]     Cullman: 1 total, 1 scraped, 0 new
+[06:14:03]   City 10/65: Daphne
+[06:14:07]     Daphne: 1 total, 1 scraped, 0 new
+[06:14:07]   City 11/65: Decatur
+[06:14:12]     Decatur: 1 total, 1 scraped, 0 new
+[06:14:12]   City 12/65: Dothan
+[06:14:16]     Dothan: 1 total, 1 scraped, 0 new
+[06:14:16]   City 13/65: Enterprise
+[06:14:21]     Enterprise: 1 total, 1 scraped, 0 new
+[06:14:21]   City 14/65: Fairhope
+[06:14:25]     Fairhope: 1 total, 1 scraped, 0 new
+[06:14:25]   City 15/65: Florence
+[06:14:29]     Florence: 1 total, 1 scraped, 0 new
+[06:14:29]   City 16/65: Foley
+[06:14:34]     Foley: 1 total, 1 scraped, 0 new
+[06:14:34]   City 17/65: Gadsden
+[06:14:39]     Gadsden: 1 total, 1 scraped, 0 new
+[06:14:39]   City 18/65: Gardendale
+[06:14:43]     Gardendale: 2 total, 2 scraped, 0 new
+[06:14:43]   City 19/65: Helena
+[06:14:46]     Helena: 2 total, 2 scraped, 0 new
+[06:14:46]   City 20/65: Homewood
+[06:14:51]     Homewood: 2 total, 2 scraped, 0 new
+[06:14:51]   City 21/65: Hoover
+[06:14:57]     Hoover: 2 total, 2 scraped, 0 new
+[06:14:57]   City 22/65: Huntsville
+[06:15:02]     Huntsville: 1 total, 1 scraped, 0 new
+[06:15:02]   City 23/65: Jasper
+[06:15:07]     Jasper: 1 total, 1 scraped, 0 new
+[06:15:07]   City 24/65: Madison
+[06:15:12]     Madison: 1 total, 1 scraped, 0 new
+[06:15:12]   City 25/65: Mobile
+[06:15:17]     Mobile: 1 total, 1 scraped, 0 new
+[06:15:17]   City 26/65: Montgomery
+[06:15:21]     Montgomery: 1 total, 1 scraped, 0 new
+[06:15:21]   City 27/65: Muscle Shoals
+[06:15:24]     Muscle Shoals: 1 total, 1 scraped, 0 new
+[06:15:24]   City 28/65: Northport
+[06:15:29]     Northport: 1 total, 1 scraped, 0 new
+[06:15:29]   City 29/65: Opelika
+[06:15:32]     Opelika: 1 total, 1 scraped, 0 new
+[06:15:32]   City 30/65: Oxford
+[06:15:37]     Oxford: 1 total, 1 scraped, 0 new
+[06:15:37]   City 31/65: Pelham
+[06:15:43]     Pelham: 2 total, 2 scraped, 0 new
+[06:15:43]   City 32/65: Phenix City
+[06:15:46]     Phenix City: 1 total, 1 scraped, 0 new
+[06:15:46]   City 33/65: Prattville
+[06:15:50]     Prattville: 1 total, 1 scraped, 0 new
+[06:15:50]   City 34/65: Selma
+[06:15:55]     Selma: 1 total, 1 scraped, 0 new
+[06:15:55]   City 35/65: Sylacauga
+[06:15:59]     Sylacauga: 1 total, 1 scraped, 0 new
+[06:15:59]   City 36/65: Talladega
+[06:16:03]     Talladega: 1 total, 1 scraped, 0 new
+[06:16:03]   City 37/65: Troy
+[06:16:08]     Troy: 1 total, 1 scraped, 0 new
+[06:16:08]   City 38/65: Trussville
+[06:16:13]     Trussville: 2 total, 2 scraped, 0 new
+[06:16:13]   City 39/65: Tuscaloosa
+[06:16:17]     Tuscaloosa: 1 total, 1 scraped, 0 new
+[06:16:17]   City 40/65: Vestavia Hills
+[06:16:20]     Vestavia Hills: 2 total, 2 scraped, 0 new
+[06:16:20]   City 41/65: View All Cities
+[06:16:24]   City 42/65: Baldwin County
+[06:16:29]     Baldwin County: 1 total, 1 scraped, 0 new
+[06:16:29]   City 43/65: Calhoun County
+[06:16:33]     Calhoun County: 1 total, 1 scraped, 0 new
+[06:16:33]   City 44/65: Colbert County
+[06:16:37]     Colbert County: 1 total, 1 scraped, 0 new
+[06:16:37]   City 45/65: Cullman County
+[06:16:41]     Cullman County: 1 total, 1 scraped, 0 new
+[06:16:41]   City 46/65: De Kalb County
+[06:16:45]     De Kalb County: 2 total, 2 scraped, 0 new
+[06:16:45]   City 47/65: Elmore County
+[06:16:51]     Elmore County: 1 total, 1 scraped, 0 new
+[06:16:51]   City 48/65: Etowah County
+[06:16:55]     Etowah County: 1 total, 1 scraped, 0 new
+[06:16:55]   City 49/65: Houston County
+[06:16:59]     Houston County: 1 total, 1 scraped, 0 new
+[06:16:59]   City 50/65: Jackson County
+[06:17:04]     Jackson County: 1 total, 1 scraped, 0 new
+[06:17:04]   City 51/65: Jefferson County
+[06:17:09]     Jefferson County: 1 total, 1 scraped, 0 new
+[06:17:09]   City 52/65: Lauderdale County
+[06:17:14]     Lauderdale County: 1 total, 1 scraped, 0 new
+[06:17:14]   City 53/65: Lee County
+[06:17:18]     Lee County: 1 total, 1 scraped, 0 new
+[06:17:18]   City 54/65: Limestone County
+[06:17:22]     Limestone County: 1 total, 1 scraped, 0 new
+[06:17:22]   City 55/65: Madison County
+[06:17:26]     Madison County: 1 total, 1 scraped, 0 new
+[06:17:26]   City 56/65: Marshall County
+[06:17:30]     Marshall County: 1 total, 1 scraped, 0 new
+[06:17:30]   City 57/65: Mobile County
+[06:17:34]     Mobile County: 1 total, 1 scraped, 0 new
+[06:17:34]   City 58/65: Montgomery County
+[06:17:38]     Montgomery County: 1 total, 1 scraped, 0 new
+[06:17:38]   City 59/65: Morgan County
+[06:17:44]     Morgan County: 1 total, 1 scraped, 0 new
+[06:17:44]   City 60/65: Russell County
+[06:17:49]     Russell County: 1 total, 1 scraped, 0 new
+[06:17:49]   City 61/65: Saint Clair County
+[06:17:54]     Saint Clair County: 1 total, 1 scraped, 0 new
+[06:17:54]   City 62/65: Shelby County
+[06:17:59]     Shelby County: 1 total, 1 scraped, 0 new
+[06:17:59]   City 63/65: Talladega County
+[06:18:04]     Talladega County: 1 total, 1 scraped, 0 new
+[06:18:04]   City 64/65: Tuscaloosa County
+[06:18:08]     Tuscaloosa County: 1 total, 1 scraped, 0 new
+[06:18:08]   City 65/65: Walker County
+[06:18:20]     Walker County: 1 total, 1 scraped, 0 new
+[06:18:20]   AL total: 1 unique leads
+[06:18:27] 
+[========================================]
+[06:18:27] State 23/44: OK (oklahoma)
+[06:18:28]   OK: 76 cities found
+[06:18:28]   City 1/76: Ada
+[06:18:32]   City 2/76: Altus
+[06:18:37]   City 3/76: Ardmore
+[06:18:41]   City 4/76: Atoka
+[06:18:46]   City 5/76: Bartlesville
+[06:18:53]   City 6/76: Bethany
+[06:19:00]     Bethany: 1 total, 1 scraped, 1 new
+[06:19:00]   City 7/76: Bixby
+[06:19:04]   City 8/76: Bray
+[06:19:11]   City 9/76: Broken Arrow
+[06:19:18]   City 10/76: Broken Bow
+[06:19:25]   City 11/76: Chickasha
+[06:19:30]   City 12/76: Choctaw
+[06:19:34]     Choctaw: 1 total, 1 scraped, 0 new
+[06:19:34]   City 13/76: Claremore
+[06:19:39]   City 14/76: Coweta
+[06:19:44]   City 15/76: Duncan
+[06:19:50]   City 16/76: Durant
+[06:19:57]   City 17/76: Edmond
+[06:20:03]     Edmond: 1 total, 1 scraped, 0 new
+[06:20:03]   City 18/76: El Reno
+[06:20:09]     El Reno: 1 total, 1 scraped, 0 new
+[06:20:09]   City 19/76: Elk City
+[06:20:14]   City 20/76: Enid
+[06:20:20]   City 21/76: Glenpool
+[06:20:24]   City 22/76: Grove
+[06:20:28]   City 23/76: Guthrie
+[06:20:32]     Guthrie: 1 total, 1 scraped, 0 new
+[06:20:32]   City 24/76: Guymon
+[06:20:37]   City 25/76: Jenks
+[06:20:42]   City 26/76: Jones
+[06:20:46]     Jones: 1 total, 1 scraped, 0 new
+[06:20:46]   City 27/76: Lawton
+[06:20:51]   City 28/76: McAlester
+[06:20:55]   City 29/76: Miami
+[06:20:59]   City 30/76: Muskogee
+[06:21:04]   City 31/76: Mustang
+[06:21:08]     Mustang: 1 total, 1 scraped, 0 new
+[06:21:08]   City 32/76: Norman
+[06:21:14]     Norman: 1 total, 1 scraped, 0 new
+[06:21:14]   City 33/76: Oklahoma City
+[06:21:19]     Oklahoma City: 1 total, 1 scraped, 0 new
+[06:21:19]   City 34/76: Okmulgee
+[06:21:23]   City 35/76: Owasso
+[06:21:29]   City 36/76: Pauls Valley
+[06:21:34]   City 37/76: Ponca City
+[06:21:38]   City 38/76: Poteau
+[06:21:45]   City 39/76: Pryor
+[06:21:49]   City 40/76: Sallisaw
+[06:21:55]   City 41/76: Sand Springs
+[06:22:00]   City 42/76: Sapulpa
+[06:22:05]   City 43/76: Shawnee
+[06:22:11]     Shawnee: 1 total, 1 scraped, 0 new
+[06:22:11]   City 44/76: Stillwater
+[06:22:15]   City 45/76: Tahlequah
+[06:22:21]   City 46/76: Tulsa
+[06:22:25]   City 47/76: Vinita
+[06:22:29]   City 48/76: Wagoner
+[06:22:33]   City 49/76: Weatherford
+[06:22:39]   City 50/76: Woodward
+[06:22:45]   City 51/76: Yukon
+[06:22:50]     Yukon: 1 total, 1 scraped, 0 new
+[06:22:50]   City 52/76: View All Cities
+[06:22:55]   City 53/76: Bryan County
+[06:23:01]   City 54/76: Canadian County
+[06:23:08]   City 55/76: Carter County
+[06:23:14]   City 56/76: Cherokee County
+[06:23:19]   City 57/76: Cleveland County
+[06:23:24]   City 58/76: Comanche County
+[06:23:29]   City 59/76: Creek County
+[06:23:35]   City 60/76: Delaware County
+[06:23:39]   City 61/76: Garfield County
+[06:23:45]   City 62/76: Grady County
+[06:23:49]   City 63/76: Kay County
+[06:23:53]   City 64/76: Le Flore County
+[06:23:57]   City 65/76: Logan County
+[06:24:01]   City 66/76: Muskogee County
+[06:24:05]   City 67/76: Oklahoma County
+[06:24:09]   City 68/76: Osage County
+[06:24:14]   City 69/76: Payne County
+[06:24:20]   City 70/76: Pittsburg County
+[06:24:25]   City 71/76: Pottawatomie County
+[06:24:29]   City 72/76: Rogers County
+[06:24:35]   City 73/76: Stephens County
+[06:24:40]   City 74/76: Tulsa County
+[06:24:45]   City 75/76: Wagoner County
+[06:24:50]   City 76/76: Washington County
+[06:24:53]   OK total: 1 unique leads
+[06:24:59] 
+[========================================]
+[06:24:59] State 24/44: IA (iowa)
+[06:25:00]   IA: 55 cities found
+[06:25:00]   City 1/55: Ames
+[06:25:04]     Ames: 2 total, 2 scraped, 2 new
+[06:25:04]   City 2/55: Ankeny
+[06:25:09]     Ankeny: 2 total, 2 scraped, 0 new
+[06:25:09]   City 3/55: Bettendorf
+[06:25:19]     Bettendorf: 2 total, 2 scraped, 1 new
+[06:25:19]   City 4/55: Burlington
+[06:25:23]     Burlington: 2 total, 2 scraped, 0 new
+[06:25:23]   City 5/55: Carroll
+[06:25:28]     Carroll: 2 total, 2 scraped, 0 new
+[06:25:28]   City 6/55: Cedar Falls
+[06:25:33]     Cedar Falls: 2 total, 2 scraped, 0 new
+[06:25:33]   City 7/55: Cedar Rapids
+[06:25:38]     Cedar Rapids: 3 total, 3 scraped, 0 new
+[06:25:38]   City 8/55: Clinton
+[06:25:44]     Clinton: 2 total, 2 scraped, 0 new
+[06:25:44]   City 9/55: Council Bluffs
+[06:25:50]     Council Bluffs: 2 total, 2 scraped, 0 new
+[06:25:50]   City 10/55: Davenport
+[06:25:55]     Davenport: 2 total, 2 scraped, 0 new
+[06:25:55]   City 11/55: Des Moines
+[06:25:59]     Des Moines: 2 total, 2 scraped, 0 new
+[06:25:59]   City 12/55: Dubuque
+[06:26:05]     Dubuque: 2 total, 2 scraped, 0 new
+[06:26:05]   City 13/55: Fort Dodge
+[06:26:10]     Fort Dodge: 2 total, 2 scraped, 0 new
+[06:26:10]   City 14/55: Fort Madison
+[06:26:15]     Fort Madison: 2 total, 2 scraped, 0 new
+[06:26:15]   City 15/55: Indianola
+[06:26:20]     Indianola: 2 total, 2 scraped, 0 new
+[06:26:20]   City 16/55: Iowa City
+[06:26:25]     Iowa City: 3 total, 3 scraped, 0 new
+[06:26:25]   City 17/55: Keokuk
+[06:26:30]     Keokuk: 2 total, 2 scraped, 0 new
+[06:26:30]   City 18/55: Marion
+[06:26:36]     Marion: 3 total, 3 scraped, 0 new
+[06:26:36]   City 19/55: Marshalltown
+[06:26:40]     Marshalltown: 2 total, 2 scraped, 0 new
+[06:26:40]   City 20/55: Mason City
+[06:26:45]     Mason City: 2 total, 2 scraped, 0 new
+[06:26:45]   City 21/55: Muscatine
+[06:26:50]     Muscatine: 2 total, 2 scraped, 0 new
+[06:26:50]   City 22/55: Newton
+[06:26:54]     Newton: 2 total, 2 scraped, 0 new
+[06:26:54]   City 23/55: Oskaloosa
+[06:26:59]     Oskaloosa: 2 total, 2 scraped, 0 new
+[06:26:59]   City 24/55: Ottumwa
+[06:27:05]     Ottumwa: 2 total, 2 scraped, 0 new
+[06:27:05]   City 25/55: Sioux City
+[06:27:09]     Sioux City: 2 total, 2 scraped, 0 new
+[06:27:09]   City 26/55: Spencer
+[06:27:13]     Spencer: 2 total, 2 scraped, 0 new
+[06:27:13]   City 27/55: Storm Lake
+[06:27:19]     Storm Lake: 2 total, 2 scraped, 0 new
+[06:27:19]   City 28/55: Urbandale
+[06:27:24]     Urbandale: 2 total, 2 scraped, 0 new
+[06:27:24]   City 29/55: Waterloo
+[06:27:28]     Waterloo: 2 total, 2 scraped, 0 new
+[06:27:28]   City 30/55: West Des Moines
+[06:27:33]     West Des Moines: 2 total, 2 scraped, 0 new
+[06:27:33]   City 31/55: View All Cities
+[06:27:37]   City 32/55: Black Hawk County
+[06:27:43]     Black Hawk County: 2 total, 2 scraped, 0 new
+[06:27:43]   City 33/55: Boone County
+[06:27:48]     Boone County: 2 total, 2 scraped, 0 new
+[06:27:48]   City 34/55: Bremer County
+[06:27:53]     Bremer County: 2 total, 2 scraped, 0 new
+[06:27:53]   City 35/55: Cerro Gordo County
+[06:27:58]     Cerro Gordo County: 2 total, 2 scraped, 0 new
+[06:27:58]   City 36/55: Clinton County
+[06:28:05]     Clinton County: 2 total, 2 scraped, 0 new
+[06:28:05]   City 37/55: Dallas County
+[06:28:09]     Dallas County: 2 total, 2 scraped, 0 new
+[06:28:09]   City 38/55: Des Moines County
+[06:28:14]     Des Moines County: 2 total, 2 scraped, 0 new
+[06:28:14]   City 39/55: Dubuque County
+[06:28:20]     Dubuque County: 2 total, 2 scraped, 0 new
+[06:28:20]   City 40/55: Jasper County
+[06:28:28]     Jasper County: 2 total, 2 scraped, 0 new
+[06:28:28]   City 41/55: Johnson County
+[06:28:35]     Johnson County: 2 total, 2 scraped, 0 new
+[06:28:35]   City 42/55: Lee County
+[06:28:44]     Lee County: 2 total, 2 scraped, 0 new
+[06:28:44]   City 43/55: Linn County
+[06:28:48]     Linn County: 2 total, 2 scraped, 0 new
+[06:28:48]   City 44/55: Marion County
+[06:28:55]     Marion County: 2 total, 2 scraped, 0 new
+[06:28:55]   City 45/55: Marshall County
+[06:29:02]     Marshall County: 2 total, 2 scraped, 0 new
+[06:29:02]   City 46/55: Muscatine County
+[06:29:07]     Muscatine County: 2 total, 2 scraped, 0 new
+[06:29:07]   City 47/55: Polk County
+[06:29:12]     Polk County: 2 total, 2 scraped, 0 new
+[06:29:12]   City 48/55: Pottawattamie County
+[06:29:17]     Pottawattamie County: 2 total, 2 scraped, 0 new
+[06:29:17]   City 49/55: Scott County
+[06:29:22]     Scott County: 2 total, 2 scraped, 0 new
+[06:29:22]   City 50/55: Sioux County
+[06:29:28]     Sioux County: 2 total, 2 scraped, 0 new
+[06:29:28]   City 51/55: Story County
+[06:29:32]     Story County: 2 total, 2 scraped, 0 new
+[06:29:32]   City 52/55: Wapello County
+[06:29:37]     Wapello County: 2 total, 2 scraped, 0 new
+[06:29:37]   City 53/55: Warren County
+[06:29:41]     Warren County: 2 total, 2 scraped, 0 new
+[06:29:41]   City 54/55: Webster County
+[06:29:47]     Webster County: 2 total, 2 scraped, 0 new
+[06:29:47]   City 55/55: Woodbury County
+[06:29:50]     Woodbury County: 2 total, 2 scraped, 0 new
+[06:29:50]   IA total: 3 unique leads
+[06:29:57] 
+[========================================]
+[06:29:57] State 25/44: UT (utah)
+[06:29:59]   UT: 51 cities found
+[06:29:59]   City 1/51: American Fork
+[06:30:04]   City 2/51: Bountiful
+[06:30:10]   City 3/51: Brigham City
+[06:30:14]   City 4/51: Cedar City
+[06:30:18]   City 5/51: Draper
+[06:30:22]   City 6/51: Farmington
+[06:30:27]   City 7/51: Kaysville
+[06:30:33]   City 8/51: Layton
+[06:30:37]   City 9/51: Logan
+[06:30:43]   City 10/51: Midvale
+[06:30:50]   City 11/51: Ogden
+[06:30:56]   City 12/51: Orem
+[06:31:03]   City 13/51: Park City
+[06:31:10]   City 14/51: Provo
+[06:31:14]   City 15/51: Richfield
+[06:31:22]   City 16/51: Saint George
+[06:31:26]   City 17/51: Salt Lake City
+[06:31:32]   City 18/51: Sandy
+[06:31:39]   City 19/51: South Jordan
+[06:31:45]   City 20/51: Spanish Fork
+[06:31:49]   City 21/51: Springville
+[06:31:55]   City 22/51: Tooele
+[06:32:01]   City 23/51: Vernal
+[06:32:07]   City 24/51: Washington
+[06:32:12]   City 25/51: West Jordan
+[06:32:17]   City 26/51: West Valley City
+[06:32:21]   City 27/51: View All Cities
+[06:32:26]   City 28/51: Beaver County
+[06:32:30]   City 29/51: Box Elder County
+[06:32:35]   City 30/51: Cache County
+[06:32:40]   City 31/51: Carbon County
+[06:32:47]   City 32/51: Davis County
+[06:32:51]   City 33/51: Duchesne County
+[06:32:56]   City 34/51: Emery County
+[06:33:00]   City 35/51: Grand County
+[06:33:06]   City 36/51: Iron County
+[06:33:10]   City 37/51: Juab County
+[06:33:16]   City 38/51: Kane County
+[06:33:21]   City 39/51: Millard County
+[06:33:25]   City 40/51: Morgan County
+[06:33:29]   City 41/51: Salt Lake County
+[06:33:35]   City 42/51: San Juan County
+[06:33:40]   City 43/51: Sanpete County
+[06:33:44]   City 44/51: Sevier County
+[06:33:55]   City 45/51: Summit County
+[06:34:01]   City 46/51: Tooele County
+[06:34:06]   City 47/51: Uintah County
+[06:34:12]   City 48/51: Utah County
+[06:34:18]   City 49/51: Wasatch County
+[06:34:23]   City 50/51: Washington County
+[06:34:29]   City 51/51: Weber County
+[06:34:33]   UT total: 0 unique leads
+[06:34:38] 
+[========================================]
+[06:34:38] State 26/44: KS (kansas)
+[06:34:39]   KS: 65 cities found
+[06:34:39]   City 1/65: Abilene
+[06:34:43]     Abilene: 1 total, 1 scraped, 1 new
+[06:34:43]   City 2/65: Andover
+[06:34:49]     Andover: 1 total, 1 scraped, 0 new
+[06:34:49]   City 3/65: Atchison
+[06:34:54]     Atchison: 1 total, 1 scraped, 0 new
+[06:34:54]   City 4/65: Augusta
+[06:34:59]     Augusta: 1 total, 1 scraped, 0 new
+[06:34:59]   City 5/65: Bonner Springs
+[06:35:03]     Bonner Springs: 1 total, 1 scraped, 0 new
+[06:35:03]   City 6/65: Chanute
+[06:35:08]     Chanute: 1 total, 1 scraped, 0 new
+[06:35:08]   City 7/65: Coffeyville
+[06:35:13]     Coffeyville: 1 total, 1 scraped, 0 new
+[06:35:13]   City 8/65: Derby
+[06:35:18]     Derby: 1 total, 1 scraped, 0 new
+[06:35:18]   City 9/65: Dodge City
+[06:35:24]     Dodge City: 1 total, 1 scraped, 0 new
+[06:35:24]   City 10/65: El Dorado
+[06:35:28]     El Dorado: 1 total, 1 scraped, 0 new
+[06:35:28]   City 11/65: Emporia
+[06:35:34]     Emporia: 1 total, 1 scraped, 0 new
+[06:35:34]   City 12/65: Fort Scott
+[06:35:40]     Fort Scott: 1 total, 1 scraped, 0 new
+[06:35:40]   City 13/65: Garden City
+[06:35:46]     Garden City: 1 total, 1 scraped, 0 new
+[06:35:46]   City 14/65: Great Bend
+[06:35:52]     Great Bend: 1 total, 1 scraped, 0 new
+[06:35:52]   City 15/65: Hays
+[06:35:57]     Hays: 1 total, 1 scraped, 0 new
+[06:35:57]   City 16/65: Hutchinson
+[06:36:04]     Hutchinson: 1 total, 1 scraped, 0 new
+[06:36:04]   City 17/65: Independence
+[06:36:08]     Independence: 1 total, 1 scraped, 0 new
+[06:36:08]   City 18/65: Junction City
+[06:36:15]     Junction City: 1 total, 1 scraped, 0 new
+[06:36:15]   City 19/65: Kansas City
+[06:36:18]     Kansas City: 1 total, 1 scraped, 0 new
+[06:36:18]   City 20/65: Lansing
+[06:36:23]     Lansing: 1 total, 1 scraped, 0 new
+[06:36:23]   City 21/65: Lawrence
+[06:36:29]     Lawrence: 1 total, 1 scraped, 0 new
+[06:36:29]   City 22/65: Leavenworth
+[06:36:34]     Leavenworth: 1 total, 1 scraped, 0 new
+[06:36:34]   City 23/65: Leawood
+[06:36:39]     Leawood: 1 total, 1 scraped, 0 new
+[06:36:39]   City 24/65: Lenexa
+[06:36:45]     Lenexa: 1 total, 1 scraped, 0 new
+[06:36:45]   City 25/65: Liberal
+[06:36:49]     Liberal: 1 total, 1 scraped, 0 new
+[06:36:49]   City 26/65: Manhattan
+[06:36:54]     Manhattan: 1 total, 1 scraped, 0 new
+[06:36:54]   City 27/65: McPherson
+[06:36:59]     McPherson: 1 total, 1 scraped, 0 new
+[06:36:59]   City 28/65: Mission
+[06:37:05]     Mission: 1 total, 1 scraped, 0 new
+[06:37:05]   City 29/65: Newton
+[06:37:10]     Newton: 1 total, 1 scraped, 0 new
+[06:37:10]   City 30/65: Olathe
+[06:37:15]     Olathe: 1 total, 1 scraped, 0 new
+[06:37:15]   City 31/65: Ottawa
+[06:37:20]     Ottawa: 1 total, 1 scraped, 0 new
+[06:37:20]   City 32/65: Overland Park
+[06:37:25]     Overland Park: 1 total, 1 scraped, 0 new
+[06:37:25]   City 33/65: Parsons
+[06:37:31]     Parsons: 1 total, 1 scraped, 0 new
+[06:37:31]   City 34/65: Pittsburg
+[06:37:35]     Pittsburg: 1 total, 1 scraped, 0 new
+[06:37:35]   City 35/65: Salina
+[06:37:39]     Salina: 1 total, 1 scraped, 0 new
+[06:37:39]   City 36/65: Shawnee
+[06:37:47]     Shawnee: 1 total, 1 scraped, 0 new
+[06:37:47]   City 37/65: Topeka
+[06:37:52]     Topeka: 1 total, 1 scraped, 0 new
+[06:37:52]   City 38/65: Wellington
+[06:37:56]     Wellington: 1 total, 1 scraped, 0 new
+[06:37:56]   City 39/65: Wichita
+[06:38:01]     Wichita: 1 total, 1 scraped, 0 new
+[06:38:01]   City 40/65: Winfield
+[06:38:06]     Winfield: 1 total, 1 scraped, 0 new
+[06:38:06]   City 41/65: View All Cities
+[06:38:12]   City 42/65: Barton County
+[06:38:17]     Barton County: 1 total, 1 scraped, 0 new
+[06:38:17]   City 43/65: Butler County
+[06:38:23]     Butler County: 1 total, 1 scraped, 0 new
+[06:38:23]   City 44/65: Cowley County
+[06:38:28]     Cowley County: 1 total, 1 scraped, 0 new
+[06:38:28]   City 45/65: Crawford County
+[06:38:32]     Crawford County: 1 total, 1 scraped, 0 new
+[06:38:32]   City 46/65: Douglas County
+[06:38:38]     Douglas County: 1 total, 1 scraped, 0 new
+[06:38:38]   City 47/65: Ellis County
+[06:38:44]     Ellis County: 1 total, 1 scraped, 0 new
+[06:38:44]   City 48/65: Finney County
+[06:38:49]     Finney County: 1 total, 1 scraped, 0 new
+[06:38:49]   City 49/65: Ford County
+[06:38:56]     Ford County: 1 total, 1 scraped, 0 new
+[06:38:56]   City 50/65: Franklin County
+[06:39:02]     Franklin County: 1 total, 1 scraped, 0 new
+[06:39:02]   City 51/65: Geary County
+[06:39:07]     Geary County: 1 total, 1 scraped, 0 new
+[06:39:07]   City 52/65: Harvey County
+[06:39:11]     Harvey County: 1 total, 1 scraped, 0 new
+[06:39:11]   City 53/65: Johnson County
+[06:39:16]     Johnson County: 1 total, 1 scraped, 0 new
+[06:39:16]   City 54/65: Labette County
+[06:39:21]     Labette County: 1 total, 1 scraped, 0 new
+[06:39:21]   City 55/65: Leavenworth County
+[06:39:26]     Leavenworth County: 1 total, 1 scraped, 0 new
+[06:39:26]   City 56/65: Lyon County
+[06:39:31]     Lyon County: 1 total, 1 scraped, 0 new
+[06:39:31]   City 57/65: McPherson County
+[06:39:35]     McPherson County: 1 total, 1 scraped, 0 new
+[06:39:35]   City 58/65: Miami County
+[06:39:39]     Miami County: 1 total, 1 scraped, 0 new
+[06:39:39]   City 59/65: Montgomery County
+[06:39:44]     Montgomery County: 1 total, 1 scraped, 0 new
+[06:39:44]   City 60/65: Reno County
+[06:39:48]     Reno County: 1 total, 1 scraped, 0 new
+[06:39:48]   City 61/65: Riley County
+[06:39:52]     Riley County: 1 total, 1 scraped, 0 new
+[06:39:52]   City 62/65: Saline County
+[06:39:57]     Saline County: 1 total, 1 scraped, 0 new
+[06:39:57]   City 63/65: Sedgwick County
+[06:40:02]     Sedgwick County: 1 total, 1 scraped, 0 new
+[06:40:02]   City 64/65: Shawnee County
+[06:40:07]     Shawnee County: 1 total, 1 scraped, 0 new
+[06:40:07]   City 65/65: Wyandotte County
+[06:40:12]     Wyandotte County: 1 total, 1 scraped, 0 new
+[06:40:12]   KS total: 1 unique leads
+[06:40:18] 
+[========================================]
+[06:40:18] State 27/44: AR (arkansas)
+[06:40:20]   AR: 70 cities found
+[06:40:20]   City 1/70: Arkadelphia
+[06:40:25]     Arkadelphia: 4 total, 4 scraped, 4 new
+[06:40:25]   City 2/70: Batesville
+[06:40:31]     Batesville: 4 total, 4 scraped, 0 new
+[06:40:31]   City 3/70: Beebe
+[06:40:36]     Beebe: 4 total, 4 scraped, 0 new
+[06:40:36]   City 4/70: Bella Vista
+[06:40:42]     Bella Vista: 4 total, 4 scraped, 0 new
+[06:40:42]   City 5/70: Benton
+[06:40:46]     Benton: 6 total, 6 scraped, 0 new
+[06:40:46]   City 6/70: Bentonville
+[06:40:50]     Bentonville: 4 total, 4 scraped, 0 new
+[06:40:50]   City 7/70: Blytheville
+[06:40:56]     Blytheville: 4 total, 4 scraped, 0 new
+[06:40:56]   City 8/70: Bryant
+[06:40:59]     Bryant: 6 total, 6 scraped, 0 new
+[06:40:59]   City 9/70: Cabot
+[06:41:05]     Cabot: 6 total, 6 scraped, 0 new
+[06:41:05]   City 10/70: Camden
+[06:41:09]     Camden: 4 total, 4 scraped, 0 new
+[06:41:09]   City 11/70: Centerton
+[06:41:15]     Centerton: 4 total, 4 scraped, 0 new
+[06:41:15]   City 12/70: Clinton
+[06:41:20]     Clinton: 4 total, 4 scraped, 0 new
+[06:41:20]   City 13/70: Conway
+[06:41:25]     Conway: 6 total, 6 scraped, 0 new
+[06:41:25]   City 14/70: El Dorado
+[06:41:30]     El Dorado: 4 total, 4 scraped, 0 new
+[06:41:30]   City 15/70: Eureka Springs
+[06:41:36]     Eureka Springs: 4 total, 4 scraped, 0 new
+[06:41:36]   City 16/70: Fayetteville
+[06:41:41]     Fayetteville: 4 total, 4 scraped, 0 new
+[06:41:41]   City 17/70: Forrest City
+[06:41:46]     Forrest City: 4 total, 4 scraped, 0 new
+[06:41:46]   City 18/70: Fort Smith
+[06:41:52]     Fort Smith: 4 total, 4 scraped, 0 new
+[06:41:52]   City 19/70: Harrison
+[06:41:57]     Harrison: 4 total, 4 scraped, 0 new
+[06:41:57]   City 20/70: Hope
+[06:42:04]     Hope: 4 total, 4 scraped, 0 new
+[06:42:04]   City 21/70: Hot Springs
+[06:42:10]     Hot Springs: 4 total, 4 scraped, 0 new
+[06:42:10]   City 22/70: Jacksonville
+[06:42:15]     Jacksonville: 6 total, 6 scraped, 0 new
+[06:42:15]   City 23/70: Jonesboro
+[06:42:20]     Jonesboro: 4 total, 4 scraped, 0 new
+[06:42:20]   City 24/70: Little Rock
+[06:42:25]     Little Rock: 6 total, 6 scraped, 0 new
+[06:42:25]   City 25/70: Lowell
+[06:42:30]     Lowell: 4 total, 4 scraped, 0 new
+[06:42:30]   City 26/70: Magnolia
+[06:42:35]     Magnolia: 4 total, 4 scraped, 0 new
+[06:42:35]   City 27/70: Malvern
+[06:42:39]     Malvern: 4 total, 4 scraped, 0 new
+[06:42:39]   City 28/70: Marion
+[06:42:45]     Marion: 4 total, 4 scraped, 0 new
+[06:42:45]   City 29/70: Maumelle
+[06:42:50]     Maumelle: 6 total, 6 scraped, 0 new
+[06:42:50]   City 30/70: Monticello
+[06:42:56]     Monticello: 4 total, 4 scraped, 0 new
+[06:42:56]   City 31/70: Mountain Home
+[06:43:02]     Mountain Home: 4 total, 4 scraped, 0 new
+[06:43:02]   City 32/70: North Little Rock
+[06:43:06]     North Little Rock: 6 total, 6 scraped, 0 new
+[06:43:06]   City 33/70: Paragould
+[06:43:11]     Paragould: 4 total, 4 scraped, 0 new
+[06:43:11]   City 34/70: Pine Bluff
+[06:43:16]     Pine Bluff: 4 total, 4 scraped, 0 new
+[06:43:16]   City 35/70: Pocahontas
+[06:43:22]     Pocahontas: 4 total, 4 scraped, 0 new
+[06:43:22]   City 36/70: Rogers
+[06:43:27]     Rogers: 4 total, 4 scraped, 0 new
+[06:43:27]   City 37/70: Russellville
+[06:43:32]     Russellville: 4 total, 4 scraped, 0 new
+[06:43:32]   City 38/70: Searcy
+[06:43:37]     Searcy: 4 total, 4 scraped, 0 new
+[06:43:37]   City 39/70: Sherwood
+[06:43:43]     Sherwood: 6 total, 6 scraped, 0 new
+[06:43:43]   City 40/70: Siloam Springs
+[06:43:50]     Siloam Springs: 4 total, 4 scraped, 0 new
+[06:43:50]   City 41/70: Springdale
+[06:43:56]     Springdale: 4 total, 4 scraped, 0 new
+[06:43:56]   City 42/70: Stuttgart
+[06:44:01]     Stuttgart: 4 total, 4 scraped, 0 new
+[06:44:01]   City 43/70: Texarkana
+[06:44:06]     Texarkana: 4 total, 4 scraped, 0 new
+[06:44:06]   City 44/70: Van Buren
+[06:44:10]     Van Buren: 4 total, 4 scraped, 0 new
+[06:44:10]   City 45/70: West Memphis
+[06:44:16]     West Memphis: 4 total, 4 scraped, 0 new
+[06:44:16]   City 46/70: View All Cities
+[06:44:20]   City 47/70: Baxter County
+[06:44:26]     Baxter County: 4 total, 4 scraped, 0 new
+[06:44:26]   City 48/70: Benton County
+[06:44:31]     Benton County: 4 total, 4 scraped, 0 new
+[06:44:31]   City 49/70: Boone County
+[06:44:38]     Boone County: 4 total, 4 scraped, 0 new
+[06:44:38]   City 50/70: Craighead County
+[06:44:42]     Craighead County: 4 total, 4 scraped, 0 new
+[06:44:42]   City 51/70: Crawford County
+[06:44:48]     Crawford County: 4 total, 4 scraped, 0 new
+[06:44:48]   City 52/70: Crittenden County
+[06:44:52]     Crittenden County: 4 total, 4 scraped, 0 new
+[06:44:52]   City 53/70: Faulkner County
+[06:44:57]     Faulkner County: 4 total, 4 scraped, 0 new
+[06:44:57]   City 54/70: Garland County
+[06:45:03]     Garland County: 4 total, 4 scraped, 0 new
+[06:45:03]   City 55/70: Greene County
+[06:45:07]     Greene County: 4 total, 4 scraped, 0 new
+[06:45:07]   City 56/70: Hot Spring County
+[06:45:11]     Hot Spring County: 4 total, 4 scraped, 0 new
+[06:45:11]   City 57/70: Independence County
+[06:45:16]     Independence County: 4 total, 4 scraped, 0 new
+[06:45:16]   City 58/70: Jefferson County
+[06:45:22]     Jefferson County: 4 total, 4 scraped, 0 new
+[06:45:22]   City 59/70: Lonoke County
+[06:45:27]     Lonoke County: 4 total, 4 scraped, 0 new
+[06:45:27]   City 60/70: Miller County
+[06:45:32]     Miller County: 4 total, 4 scraped, 0 new
+[06:45:32]   City 61/70: Mississippi County
+[06:45:37]     Mississippi County: 4 total, 4 scraped, 0 new
+[06:45:37]   City 62/70: Ouachita County
+[06:45:43]     Ouachita County: 4 total, 4 scraped, 0 new
+[06:45:43]   City 63/70: Pope County
+[06:45:50]     Pope County: 4 total, 4 scraped, 0 new
+[06:45:50]   City 64/70: Pulaski County
+[06:45:58]     Pulaski County: 4 total, 4 scraped, 0 new
+[06:45:58]   City 65/70: Saint Francis County
+[06:46:02]     Saint Francis County: 4 total, 4 scraped, 0 new
+[06:46:02]   City 66/70: Saline County
+[06:46:08]     Saline County: 4 total, 4 scraped, 0 new
+[06:46:08]   City 67/70: Sebastian County
+[06:46:13]     Sebastian County: 4 total, 4 scraped, 0 new
+[06:46:13]   City 68/70: Union County
+[06:46:19]     Union County: 4 total, 4 scraped, 0 new
+[06:46:19]   City 69/70: Washington County
+[06:46:23]     Washington County: 4 total, 4 scraped, 0 new
+[06:46:23]   City 70/70: White County
+[06:46:30]     White County: 4 total, 4 scraped, 0 new
+[06:46:30]   AR total: 4 unique leads
+[06:46:35] 
+[========================================]
+[06:46:35] State 28/44: MS (mississippi)
+[06:46:37]   MS: 75 cities found
+[06:46:37]   City 1/75: Batesville
+[06:46:45]     Batesville: 2 total, 2 scraped, 2 new
+[06:46:45]   City 2/75: Bay Saint Louis
+[06:46:49]     Bay Saint Louis: 2 total, 2 scraped, 0 new
+[06:46:49]   City 3/75: Biloxi
+[06:46:54]     Biloxi: 2 total, 2 scraped, 0 new
+[06:46:54]   City 4/75: Booneville
+[06:47:00]     Booneville: 2 total, 2 scraped, 0 new
+[06:47:00]   City 5/75: Brandon
+[06:47:05]     Brandon: 2 total, 2 scraped, 0 new
+[06:47:05]   City 6/75: Brookhaven
+[06:47:10]     Brookhaven: 2 total, 2 scraped, 0 new
+[06:47:10]   City 7/75: Canton
+[06:47:17]     Canton: 2 total, 2 scraped, 0 new
+[06:47:17]   City 8/75: Clarksdale
+[06:47:23]     Clarksdale: 2 total, 2 scraped, 0 new
+[06:47:23]   City 9/75: Cleveland
+[06:47:27]     Cleveland: 2 total, 2 scraped, 0 new
+[06:47:27]   City 10/75: Clinton
+[06:47:32]     Clinton: 2 total, 2 scraped, 0 new
+[06:47:32]   City 11/75: Columbus
+[06:47:37]     Columbus: 2 total, 2 scraped, 0 new
+[06:47:37]   City 12/75: Corinth
+[06:47:41]     Corinth: 2 total, 2 scraped, 0 new
+[06:47:41]   City 13/75: Florence
+[06:47:47]     Florence: 2 total, 2 scraped, 0 new
+[06:47:47]   City 14/75: Flowood
+[06:47:52]     Flowood: 2 total, 2 scraped, 0 new
+[06:47:52]   City 15/75: Gautier
+[06:47:58]     Gautier: 2 total, 2 scraped, 0 new
+[06:47:58]   City 16/75: Greenville
+[06:48:03]     Greenville: 2 total, 2 scraped, 0 new
+[06:48:03]   City 17/75: Greenwood
+[06:48:08]     Greenwood: 2 total, 2 scraped, 0 new
+[06:48:08]   City 18/75: Grenada
+[06:48:12]     Grenada: 2 total, 2 scraped, 0 new
+[06:48:12]   City 19/75: Gulfport
+[06:48:18]     Gulfport: 2 total, 2 scraped, 0 new
+[06:48:18]   City 20/75: Hattiesburg
+[06:48:23]     Hattiesburg: 2 total, 2 scraped, 0 new
+[06:48:23]   City 21/75: Hernando
+[06:48:28]     Hernando: 2 total, 2 scraped, 0 new
+[06:48:28]   City 22/75: Holly Springs
+[06:48:34]     Holly Springs: 2 total, 2 scraped, 0 new
+[06:48:34]   City 23/75: Indianola
+[06:48:40]     Indianola: 2 total, 2 scraped, 0 new
+[06:48:40]   City 24/75: Jackson
+[06:48:46]     Jackson: 2 total, 2 scraped, 0 new
+[06:48:46]   City 25/75: Laurel
+[06:48:52]     Laurel: 2 total, 2 scraped, 0 new
+[06:48:52]   City 26/75: Long Beach
+[06:48:57]     Long Beach: 2 total, 2 scraped, 0 new
+[06:48:57]   City 27/75: Lucedale
+[06:49:02]     Lucedale: 2 total, 2 scraped, 0 new
+[06:49:02]   City 28/75: Lyon
+[06:49:07]     Lyon: 2 total, 2 scraped, 0 new
+[06:49:07]   City 29/75: Madison
+[06:49:12]     Madison: 2 total, 2 scraped, 0 new
+[06:49:12]   City 30/75: McComb
+[06:49:15]     McComb: 2 total, 2 scraped, 0 new
+[06:49:15]   City 31/75: Meridian
+[06:49:20]     Meridian: 2 total, 2 scraped, 0 new
+[06:49:20]   City 32/75: Moss Point
+[06:49:24]     Moss Point: 2 total, 2 scraped, 0 new
+[06:49:24]   City 33/75: Natchez
+[06:49:29]     Natchez: 2 total, 2 scraped, 0 new
+[06:49:29]   City 34/75: New Albany
+[06:49:35]     New Albany: 2 total, 2 scraped, 0 new
+[06:49:35]   City 35/75: Ocean Springs
+[06:49:39]     Ocean Springs: 2 total, 2 scraped, 0 new
+[06:49:39]   City 36/75: Olive Branch
+[06:49:45]     Olive Branch: 2 total, 2 scraped, 0 new
+[06:49:45]   City 37/75: Oxford
+[06:49:51]     Oxford: 2 total, 2 scraped, 0 new
+[06:49:51]   City 38/75: Pascagoula
+[06:49:58]     Pascagoula: 2 total, 2 scraped, 0 new
+[06:49:58]   City 39/75: Pass Christian
+[06:50:02]     Pass Christian: 2 total, 2 scraped, 0 new
+[06:50:02]   City 40/75: Petal
+[06:50:06]     Petal: 2 total, 2 scraped, 0 new
+[06:50:06]   City 41/75: Philadelphia
+[06:50:11]     Philadelphia: 2 total, 2 scraped, 0 new
+[06:50:11]   City 42/75: Picayune
+[06:50:16]     Picayune: 2 total, 2 scraped, 0 new
+[06:50:16]   City 43/75: Pontotoc
+[06:50:22]     Pontotoc: 2 total, 2 scraped, 0 new
+[06:50:22]   City 44/75: Ridgeland
+[06:50:28]     Ridgeland: 2 total, 2 scraped, 0 new
+[06:50:28]   City 45/75: Southaven
+[06:50:33]     Southaven: 2 total, 2 scraped, 0 new
+[06:50:33]   City 46/75: Starkville
+[06:50:40]     Starkville: 2 total, 2 scraped, 0 new
+[06:50:40]   City 47/75: Tupelo
+[06:50:45]     Tupelo: 2 total, 2 scraped, 0 new
+[06:50:45]   City 48/75: Vicksburg
+[06:50:51]     Vicksburg: 2 total, 2 scraped, 0 new
+[06:50:51]   City 49/75: West Point
+[06:50:57]     West Point: 2 total, 2 scraped, 0 new
+[06:50:57]   City 50/75: Yazoo City
+[06:51:03]     Yazoo City: 2 total, 2 scraped, 0 new
+[06:51:03]   City 51/75: View All Cities
+[06:51:09]   City 52/75: Alcorn County
+[06:51:15]     Alcorn County: 2 total, 2 scraped, 0 new
+[06:51:15]   City 53/75: De Soto County
+[06:51:19]     De Soto County: 2 total, 2 scraped, 0 new
+[06:51:19]   City 54/75: Forrest County
+[06:51:24]     Forrest County: 2 total, 2 scraped, 0 new
+[06:51:24]   City 55/75: Hancock County
+[06:51:29]     Hancock County: 2 total, 2 scraped, 0 new
+[06:51:29]   City 56/75: Harrison County
+[06:51:36]     Harrison County: 2 total, 2 scraped, 0 new
+[06:51:36]   City 57/75: Hinds County
+[06:51:41]     Hinds County: 2 total, 2 scraped, 0 new
+[06:51:41]   City 58/75: Jackson County
+[06:51:47]     Jackson County: 2 total, 2 scraped, 0 new
+[06:51:47]   City 59/75: Jones County
+[06:51:51]     Jones County: 2 total, 2 scraped, 0 new
+[06:51:51]   City 60/75: Lafayette County
+[06:51:56]     Lafayette County: 2 total, 2 scraped, 0 new
+[06:51:56]   City 61/75: Lamar County
+[06:52:03]     Lamar County: 2 total, 2 scraped, 0 new
+[06:52:03]   City 62/75: Lauderdale County
+[06:52:08]     Lauderdale County: 2 total, 2 scraped, 0 new
+[06:52:08]   City 63/75: Lee County
+[06:52:15]     Lee County: 2 total, 2 scraped, 0 new
+[06:52:15]   City 64/75: Lincoln County
+[06:52:22]     Lincoln County: 2 total, 2 scraped, 0 new
+[06:52:22]   City 65/75: Lowndes County
+[06:52:27]     Lowndes County: 2 total, 2 scraped, 0 new
+[06:52:27]   City 66/75: Madison County
+[06:52:32]     Madison County: 2 total, 2 scraped, 0 new
+[06:52:32]   City 67/75: Marshall County
+[06:52:37]     Marshall County: 2 total, 2 scraped, 0 new
+[06:52:37]   City 68/75: Monroe County
+[06:52:43]     Monroe County: 2 total, 2 scraped, 0 new
+[06:52:43]   City 69/75: Oktibbeha County
+[06:52:48]     Oktibbeha County: 2 total, 2 scraped, 0 new
+[06:52:48]   City 70/75: Panola County
+[06:52:58]     Panola County: 2 total, 2 scraped, 0 new
+[06:52:58]   City 71/75: Pearl River County
+[06:53:04]     Pearl River County: 2 total, 2 scraped, 0 new
+[06:53:04]   City 72/75: Pike County
+[06:53:08]     Pike County: 2 total, 2 scraped, 0 new
+[06:53:08]   City 73/75: Rankin County
+[06:53:13]     Rankin County: 2 total, 2 scraped, 0 new
+[06:53:13]   City 74/75: Warren County
+[06:53:16]     ERROR navigating to Warren County page 1: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[06:53:16]   City 75/75: Washington County
+[06:53:20]     ERROR navigating to Washington County page 1: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[06:53:20]   MS total: 2 unique leads
+[07:27:04] 
+[========================================]
+[07:27:04] State 29/44: NE (nebraska)
+[07:27:04]   ERROR loading state page for NE: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[07:27:04] 
+[========================================]
+[07:27:04] State 30/44: NM (new-mexico)
+[07:27:04]   ERROR loading state page for NM: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[07:27:04] 
+[========================================]
+[07:27:04] State 31/44: HI (hawaii)
+[07:27:04]   ERROR loading state page for HI: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[07:27:04] 
+[========================================]
+[07:27:04] State 32/44: NH (new-hampshire)
+[07:27:04]   ERROR loading state page for NH: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[07:27:04] 
+[========================================]
+[07:27:04] State 33/44: ME (maine)
+[07:27:04]   ERROR loading state page for ME: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[07:27:04] 
+[========================================]
+[07:27:04] State 34/44: ID (idaho)
+[07:27:04]   ERROR loading state page for ID: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[07:27:04] 
+[========================================]
+[07:27:04] State 35/44: WV (west-virginia)
+[07:27:04]   ERROR loading state page for WV: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[07:27:04] 
+[========================================]
+[07:27:04] State 36/44: MT (montana)
+[07:27:04]   ERROR loading state page for MT: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[07:27:04] 
+[========================================]
+[07:27:04] State 37/44: RI (rhode-island)
+[07:27:04]   ERROR loading state page for RI: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[07:27:04] 
+[========================================]
+[07:27:04] State 38/44: DE (delaware)
+[07:27:04]   ERROR loading state page for DE: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[07:27:04] 
+[========================================]
+[07:27:04] State 39/44: SD (south-dakota)
+[07:27:04]   ERROR loading state page for SD: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[07:27:04] 
+[========================================]
+[07:27:04] State 40/44: ND (north-dakota)
+[07:27:04]   ERROR loading state page for ND: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[07:27:04] 
+[========================================]
+[07:27:04] State 41/44: AK (alaska)
+[07:27:04]   ERROR loading state page for AK: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[07:27:04] 
+[========================================]
+[07:27:04] State 42/44: VT (vermont)
+[07:27:04]   ERROR loading state page for VT: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[07:27:04] 
+[========================================]
+[07:27:04] State 43/44: WY (wyoming)
+[07:27:04]   ERROR loading state page for WY: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[07:27:04] 
+[========================================]
+[07:27:04] State 44/44: DC (district-of-columbia)
+[07:27:04]   ERROR loading state page for DC: Attempted to use detached Frame 'E6AD040E043E58BB495C7E9D38826B7B'.
+[07:27:05] Appended 248 leads to existing CSV
+[07:27:05] 
+============================================================
+[07:27:05] DONE
+[07:27:05] Total unique leads: 248
+[07:27:05] States processed: 44/44
+[07:27:05] With phone: 248
+[07:27:05] With website: 210
+[07:27:05] With person name: 129
+[07:27:05] Firm-only (no person name): 119
+[07:27:05] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/us-immigration-lawyers-findlaw.csv

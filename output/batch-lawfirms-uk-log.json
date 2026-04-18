@@ -1,0 +1,222 @@
+{
+  "LONDON": {
+    "status": "done",
+    "leads": 40,
+    "emails": 14,
+    "phones": 20,
+    "persons": 20,
+    "decisionMakers": 0,
+    "elapsed": 254,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_london-uk_2026-03-02T05-16-28.csv",
+    "timestamp": "2026-03-02T05:16:28.886Z"
+  },
+  "MANCHESTER": {
+    "status": "done",
+    "leads": 42,
+    "emails": 26,
+    "phones": 20,
+    "persons": 22,
+    "decisionMakers": 3,
+    "elapsed": 291,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_manchester-uk_2026-03-02T05-17-06.csv",
+    "timestamp": "2026-03-02T05:17:06.201Z"
+  },
+  "BIRMINGHAM": {
+    "status": "done",
+    "leads": 40,
+    "emails": 24,
+    "phones": 20,
+    "persons": 20,
+    "decisionMakers": 7,
+    "elapsed": 298,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_birmingham-uk_2026-03-02T05-17-12.csv",
+    "timestamp": "2026-03-02T05:17:12.888Z"
+  },
+  "LEEDS": {
+    "status": "done",
+    "leads": 54,
+    "emails": 39,
+    "phones": 19,
+    "persons": 35,
+    "decisionMakers": 14,
+    "elapsed": 260,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_leeds-uk_2026-03-02T05-21-32.csv",
+    "timestamp": "2026-03-02T05:21:32.645Z"
+  },
+  "EDINBURGH": {
+    "status": "done",
+    "leads": 132,
+    "emails": 64,
+    "phones": 21,
+    "persons": 112,
+    "decisionMakers": 10,
+    "elapsed": 280,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_edinburgh-uk_2026-03-02T05-21-53.csv",
+    "timestamp": "2026-03-02T05:21:53.299Z"
+  },
+  "GLASGOW": {
+    "status": "done",
+    "leads": 40,
+    "emails": 20,
+    "phones": 20,
+    "persons": 20,
+    "decisionMakers": 0,
+    "elapsed": 312,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_glasgow-uk_2026-03-02T05-22-24.csv",
+    "timestamp": "2026-03-02T05:22:24.923Z"
+  },
+  "LIVERPOOL": {
+    "status": "done",
+    "leads": 44,
+    "emails": 23,
+    "phones": 20,
+    "persons": 24,
+    "decisionMakers": 5,
+    "elapsed": 297,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_liverpool-uk_2026-03-02T05-27-21.csv",
+    "timestamp": "2026-03-02T05:27:21.888Z"
+  },
+  "BRISTOL": {
+    "status": "done",
+    "leads": 44,
+    "emails": 28,
+    "phones": 25,
+    "persons": 24,
+    "decisionMakers": 6,
+    "elapsed": 308,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_bristol-uk_2026-03-02T05-27-32.csv",
+    "timestamp": "2026-03-02T05:27:32.826Z"
+  },
+  "CARDIFF": {
+    "status": "done",
+    "leads": 114,
+    "emails": 104,
+    "phones": 34,
+    "persons": 95,
+    "decisionMakers": 19,
+    "elapsed": 349,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_cardiff-uk_2026-03-02T05-28-13.csv",
+    "timestamp": "2026-03-02T05:28:13.507Z"
+  },
+  "NOTTINGHAM": {
+    "status": "done",
+    "leads": 103,
+    "emails": 86,
+    "phones": 25,
+    "persons": 85,
+    "decisionMakers": 22,
+    "elapsed": 266,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_nottingham-uk_2026-03-02T05-32-39.csv",
+    "timestamp": "2026-03-02T05:32:39.680Z"
+  },
+  "SHEFFIELD": {
+    "status": "done",
+    "leads": 30,
+    "emails": 17,
+    "phones": 20,
+    "persons": 10,
+    "decisionMakers": 0,
+    "elapsed": 272,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_sheffield-uk_2026-03-02T05-32-45.csv",
+    "timestamp": "2026-03-02T05:32:45.578Z"
+  },
+  "NEWCASTLE": {
+    "status": "done",
+    "leads": 85,
+    "emails": 69,
+    "phones": 20,
+    "persons": 65,
+    "decisionMakers": 10,
+    "elapsed": 319,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_newcastle-upon-tyne-uk_2026-03-02T05-33-32.csv",
+    "timestamp": "2026-03-02T05:33:32.999Z"
+  },
+  "OXFORD": {
+    "status": "done",
+    "leads": 22,
+    "emails": 11,
+    "phones": 21,
+    "persons": 3,
+    "decisionMakers": 3,
+    "elapsed": 269,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_oxford-uk_2026-03-02T05-38-02.csv",
+    "timestamp": "2026-03-02T05:38:02.041Z"
+  },
+  "CAMBRIDGE": {
+    "status": "done",
+    "leads": 47,
+    "emails": 28,
+    "phones": 21,
+    "persons": 27,
+    "decisionMakers": 19,
+    "elapsed": 271,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_cambridge-uk_2026-03-02T05-38-04.csv",
+    "timestamp": "2026-03-02T05:38:04.402Z"
+  },
+  "BELFAST": {
+    "status": "done",
+    "leads": 203,
+    "emails": 75,
+    "phones": 30,
+    "persons": 184,
+    "decisionMakers": 14,
+    "elapsed": 277,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_belfast-uk_2026-03-02T05-38-10.csv",
+    "timestamp": "2026-03-02T05:38:10.198Z"
+  },
+  "YORK": {
+    "status": "done",
+    "leads": 52,
+    "emails": 34,
+    "phones": 20,
+    "persons": 32,
+    "decisionMakers": 13,
+    "elapsed": 243,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_york-uk_2026-03-02T05-42-12.csv",
+    "timestamp": "2026-03-02T05:42:12.740Z"
+  },
+  "BATH": {
+    "status": "done",
+    "leads": 28,
+    "emails": 19,
+    "phones": 24,
+    "persons": 9,
+    "decisionMakers": 8,
+    "elapsed": 292,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_bath-uk_2026-03-02T05-43-02.csv",
+    "timestamp": "2026-03-02T05:43:02.649Z"
+  },
+  "BRIGHTON": {
+    "status": "done",
+    "leads": 70,
+    "emails": 59,
+    "phones": 20,
+    "persons": 51,
+    "decisionMakers": 8,
+    "elapsed": 352,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_brighton-uk_2026-03-02T05-44-01.csv",
+    "timestamp": "2026-03-02T05:44:01.772Z"
+  },
+  "ABERDEEN": {
+    "status": "done",
+    "leads": 41,
+    "emails": 29,
+    "phones": 20,
+    "persons": 21,
+    "decisionMakers": 4,
+    "elapsed": 252,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_aberdeen-uk_2026-03-02T05-48-13.csv",
+    "timestamp": "2026-03-02T05:48:14.017Z"
+  },
+  "EXETER": {
+    "status": "done",
+    "leads": 221,
+    "emails": 137,
+    "phones": 20,
+    "persons": 202,
+    "decisionMakers": 35,
+    "elapsed": 312,
+    "csv": "/Users/fardeenchoudhury/mortar-lead-scraper/output/solicitors_exeter-uk_2026-03-02T05-49-13.csv",
+    "timestamp": "2026-03-02T05:49:13.936Z"
+  }
+}

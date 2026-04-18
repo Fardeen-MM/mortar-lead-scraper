@@ -1,0 +1,64 @@
+=== ProPublica Immigration Nonprofits ===
+
+[KW] "immigration"...
+  462 results (462 new), total unique=462
+
+[KW] "immigrant"...
+  635 results (633 new), total unique=1095
+
+[KW] "refugee"...
+  1249 results (1195 new), total unique=2290
+
+[KW] "asylum"...
+  85 results (79 new), total unique=2369
+
+[KW] "migrant"...
+  166 results (162 new), total unique=2531
+
+[KW] "naturalization"...
+  7 results (5 new), total unique=2536
+
+[KW] "citizenship"...
+  89 results (80 new), total unique=2616
+
+[KW] "visa"...
+  1250 results (1248 new), total unique=3864
+
+[KW] "deportation"...
+  4 results (4 new), total unique=3868
+
+[KW] "DACA"...
+  48 results (48 new), total unique=3916
+
+[KW] "sanctuary"...
+  1250 results (1246 new), total unique=5162
+
+[KW] "border"...
+  1238 results (1237 new), total unique=6399
+
+Total unique nonprofits: 6399
+
+=== RESULTS ===
+Total: 6399
+Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/propublica-immigration-nonprofits.csv
+
+Top 15 states:
+  CA: 1181
+  TX: 737
+  FL: 350
+  NY: 335
+  AZ: 275
+  CO: 201
+  PA: 174
+  WA: 167
+  GA: 166
+  NC: 165
+  IL: 158
+  OH: 157
+  VA: 152
+  MN: 128
+  MI: 125
+
+Next steps:
+  node scripts/resolve-org-domains.js --in /Users/fardeenchoudhury/mortar-lead-scraper/output/propublica-immigration-nonprofits.csv --out output/propublica-with-domains.csv
+  node scripts/crawl-websites-for-emails.js --in output/propublica-with-domains.csv --out output/propublica-crawled.csv

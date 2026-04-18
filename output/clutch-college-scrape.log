@@ -1,0 +1,260 @@
+[23:30:57] Clutch.co College / Education Consultants Scraper
+[23:30:57] Mode: ALL pages
+[23:30:57] Categories: 3
+[23:30:57] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/college-consultants-clutch.csv
+[23:30:57] 
+[23:30:57] Launching stealth browser...
+[23:30:57] Phase 1: Collecting listings from directory pages...
+[23:30:57] 
+[23:30:57] === Category 1/3: https://clutch.co/consulting/education ===
+[23:30:57] 
+[23:30:57] Loading page 1: https://clutch.co/consulting/education
+[23:30:59]   Discovered 22 total pages. Scraping: 22
+[23:30:59] 
+[23:30:59]   [Page 1/22] https://clutch.co/consulting/education
+[23:30:59]     Found 82 listings
+[23:30:59]     New (deduped): 52
+[23:31:02]   [Page 2/22] https://clutch.co/consulting/education?page=2
+[23:31:04]     Found 82 listings
+[23:31:04]     New (deduped): 0
+[23:31:06]   [Page 3/22] https://clutch.co/consulting/education?page=3
+[23:31:07]     Found 82 listings
+[23:31:07]     New (deduped): 0
+[23:31:10]   [Page 4/22] https://clutch.co/consulting/education?page=4
+[23:31:11]     Found 82 listings
+[23:31:11]     New (deduped): 0
+[23:31:14]   [Page 5/22] https://clutch.co/consulting/education?page=5
+[23:31:15]     Found 82 listings
+[23:31:15]     New (deduped): 0
+[23:31:18]   [Page 6/22] https://clutch.co/consulting/education?page=6
+[23:31:19]     Found 82 listings
+[23:31:19]     New (deduped): 0
+[23:31:21]   [Page 7/22] https://clutch.co/consulting/education?page=7
+[23:31:22]     Found 82 listings
+[23:31:22]     New (deduped): 0
+[23:31:24]   [Page 8/22] https://clutch.co/consulting/education?page=8
+[23:31:26]     Found 82 listings
+[23:31:26]     New (deduped): 0
+[23:31:29]   [Page 9/22] https://clutch.co/consulting/education?page=9
+[23:31:30]     Found 82 listings
+[23:31:30]     New (deduped): 0
+[23:31:32]   [Page 10/22] https://clutch.co/consulting/education?page=10
+[23:31:33]     Found 82 listings
+[23:31:33]     New (deduped): 0
+[23:31:35]   [Page 11/22] https://clutch.co/consulting/education?page=11
+[23:31:37]     Found 82 listings
+[23:31:37]     New (deduped): 0
+[23:31:40]   [Page 12/22] https://clutch.co/consulting/education?page=12
+[23:31:41]     Found 82 listings
+[23:31:41]     New (deduped): 0
+[23:31:43]   [Page 13/22] https://clutch.co/consulting/education?page=13
+[23:31:44]     Found 82 listings
+[23:31:44]     New (deduped): 0
+[23:31:47]   [Page 14/22] https://clutch.co/consulting/education?page=14
+[23:31:48]     Found 82 listings
+[23:31:48]     New (deduped): 0
+[23:31:51]   [Page 15/22] https://clutch.co/consulting/education?page=15
+[23:31:52]     Found 82 listings
+[23:31:52]     New (deduped): 0
+[23:31:56]   [Page 16/22] https://clutch.co/consulting/education?page=16
+[23:31:57]     Found 82 listings
+[23:31:57]     New (deduped): 0
+[23:32:00]   [Page 17/22] https://clutch.co/consulting/education?page=17
+[23:32:01]     Found 82 listings
+[23:32:01]     New (deduped): 0
+[23:32:03]   [Page 18/22] https://clutch.co/consulting/education?page=18
+[23:32:04]     Found 82 listings
+[23:32:04]     New (deduped): 0
+[23:32:07]   [Page 19/22] https://clutch.co/consulting/education?page=19
+[23:32:08]     Found 82 listings
+[23:32:08]     New (deduped): 0
+[23:32:11]   [Page 20/22] https://clutch.co/consulting/education?page=20
+[23:32:12]     Found 82 listings
+[23:32:12]     New (deduped): 0
+[23:32:15]   [Page 21/22] https://clutch.co/consulting/education?page=21
+[23:32:16]     Found 82 listings
+[23:32:16]     New (deduped): 0
+[23:32:19]   [Page 22/22] https://clutch.co/consulting/education?page=22
+[23:32:20]     Found 82 listings
+[23:32:20]     New (deduped): 0
+[23:32:20] 
+[23:32:20]   Category complete: 1804 listings scraped
+[23:32:20] 
+[23:32:22] === Category 2/3: https://clutch.co/tutoring ===
+[23:32:22] 
+[23:32:22] Loading page 1: https://clutch.co/tutoring
+[23:32:23]   Category returned 404 — skipping.
+[23:32:23] 
+[23:32:26] === Category 3/3: https://clutch.co/consulting/college-admissions ===
+[23:32:26] 
+[23:32:26] Loading page 1: https://clutch.co/consulting/college-admissions
+[23:32:27]   Category returned 404 — skipping.
+[23:32:27] 
+[23:32:30] Phase 1 complete: 52 unique listings from 1804 total across 3 categories
+[23:32:30] 
+[23:32:30] Phase 2: Enriching 52 profiles for phone numbers...
+[23:32:30] 
+[23:32:30]   [1/52] DataRoot Labs -> https://r.clutch.co/redirect?analyticsjs=true&category=Consulting&content_group=directory&debug_mode=false&event_category=visit_website&event_label=184531&featured_listing_id=17&from_page=https%3A%2F%2Fclutch.co%2Fconsulting%2Feducation-industry&is_sponsor=true&keyword=Consulting&link_type=featured&no_click=1&page_canonical_id=1061000008000&page_location=https%3A%2F%2Fclutch.co%2Fconsulting%2Feducation-industry&page_number=0&page_type=directory&pid=184531&position=1&source=directory&trace_id=9d9dded7fad2aa71&transport_url=https%3A%2F%2Fg.clutch.co&u=https%3A%2F%2Fppc.clutch.co%2Fppc%2Fclick%2F%3Fs%3DeyJkZWNpc2lvbl9pZCI6ImExZDk0NTg2LTZmNGItNGQwYS05NGM5LTU1NjBiOGRhZmFmNiIsImltcHJlc3Npb25faWQiOiI2OTdmYmFmMS1hMDZiLTQwMzEtYTlkNS0wNGYyOWRkOWViNjQiLCJwcm92aWRlcl9pZCI6MTg0NTMxLCJmZWF0dXJlZF9saXN0aW5nX2lkIjoxNywiZmVhdHVyZWRfcG9zaXRpb25faWQiOjIzNjM1MSwicG9zaXRpb24iOjEsImlzX3Nwb3RsaWdodCI6ZmFsc2V9%3A1vzk3V%3AqzC_qn0Q9Vu90HMXpSVZvv264V_R6hK0eHekRqZU-Wg
+[23:32:34]   [2/52] Working Excellence -> https://r.clutch.co/redirect?analyticsjs=true&category=Consulting&content_group=directory&debug_mode=false&event_category=visit_website&event_label=2398114&featured_listing_id=17&from_page=https%3A%2F%2Fclutch.co%2Fconsulting%2Feducation-industry&is_sponsor=true&keyword=Consulting&link_type=featured&no_click=1&page_canonical_id=1061000008000&page_location=https%3A%2F%2Fclutch.co%2Fconsulting%2Feducation-industry&page_number=0&page_type=directory&pid=2398114&position=2&source=directory&trace_id=9d9dded7fad2aa71&transport_url=https%3A%2F%2Fg.clutch.co&u=https%3A%2F%2Fppc.clutch.co%2Fppc%2Fclick%2F%3Fs%3DeyJkZWNpc2lvbl9pZCI6ImExZDk0NTg2LTZmNGItNGQwYS05NGM5LTU1NjBiOGRhZmFmNiIsImltcHJlc3Npb25faWQiOiI5Zjk4ZDQ0OS00YTM1LTRjMTMtODZkMy1jNmQyYTBlNzk0ZjkiLCJwcm92aWRlcl9pZCI6MjM5ODExNCwiZmVhdHVyZWRfbGlzdGluZ19pZCI6MTcsImZlYXR1cmVkX3Bvc2l0aW9uX2lkIjoyNzkwMjksInBvc2l0aW9uIjoyLCJpc19zcG90bGlnaHQiOmZhbHNlfQ%3A1vzk3V%3AyLghkK8IYWvKSszOHRzkmBiV17MvKSj8cxCX4bOWZ44
+[23:32:38]     Phone: (202) 587-1200
+[23:32:39]   [3/52] Edvantis -> https://clutch.co/profile/edvantis
+[23:32:41]     Phone: +48533189252
+[23:32:43]   [4/52] Facet Interactive -> https://clutch.co/profile/facet-interactive
+[23:32:44]     Phone: +1-323-909-2005
+[23:32:46]   [5/52] Takeaway Reality -> https://clutch.co/profile/takeaway-reality
+[23:32:47]     Phone: +1
+[23:32:50]   [6/52] One 10 Media -> https://clutch.co/profile/one-10-media
+[23:32:51]     Phone: 330-440-0239
+[23:32:53]   [7/52] Headscape -> https://clutch.co/profile/headscape
+[23:32:54]     Phone: +44 (0)844 8040 284
+[23:32:56]   [8/52] Full Stack Experts -> https://clutch.co/profile/full-stack-experts
+[23:32:58]     Phone: +48 422 787 324
+[23:33:00]   [9/52] MetaCTO -> https://clutch.co/profile/metacto
+[23:33:02]     Phone: 6572040620
+[23:33:04]   [10/52] BALTUM -> https://clutch.co/profile/baltum
+[23:33:08]   [11/52] SteadyRain -> https://clutch.co/profile/steadyrain
+[23:33:09]     Phone: 3144460733
+[23:33:11]   [12/52] Serenichron -> https://clutch.co/profile/serenichron
+[23:33:13]     Phone: +40750292410
+[23:33:15]   [13/52] Lata Forum Digital Engagement -> https://clutch.co/profile/lata-forum-digital-engagement
+[23:33:16]     Phone: 480-504-1499
+[23:33:18]   [14/52] Motto® -> https://clutch.co/profile/motto
+[23:33:19]     Phone: (843) 455-5022
+[23:33:21]   [15/52] Last Call Media -> https://clutch.co/profile/last-call-media
+[23:33:22]     Phone: 888-788-7177
+[23:33:25]   [16/52] The Influencer Marketing Factory -> https://clutch.co/profile/influencer-marketing-factory
+[23:33:26]     Phone: 8004699753
+[23:33:28]   [17/52] Brand Poets -> https://clutch.co/profile/brand-poets
+[23:33:30]     Phone: (786) 732 7466
+[23:33:32]   [18/52] Finevolution -> https://clutch.co/profile/finevolution
+[23:33:33]     Phone: +380730553301
+[23:33:36]   [19/52] MALONE MEDIA -> https://clutch.co/profile/malone-media
+[23:33:37]     Phone: 6174625648
+[23:33:39]   [20/52] wukonig.com -> https://clutch.co/profile/wukonigcom
+[23:33:40]     Phone: +43316319321
+[23:33:40]     [Progress saved: 20 profiles]
+[23:33:42]   [21/52] UNAPEN, Inc. -> https://clutch.co/profile/unapen
+[23:33:43]     Phone: 203-269-6111
+[23:33:46]   [22/52] The Chalifour Consulting Group, LLC -> https://clutch.co/profile/chalifour-consulting-group
+[23:33:47]     Phone: +16037226206
+[23:33:47]     Website: https://chalifourconsulting.com/schedule-a-consultation-today/?utm_source=clutch.co&utm_medium=referral&utm_campaign=directory
+[23:33:49]   [23/52] Resonate Digital -> https://clutch.co/profile/resonate-digital
+[23:33:50]     Phone: 915945596
+[23:33:50]     Website: http://www.resonate.digital
+[23:33:52]   [24/52] Turknett Leadership Group -> https://clutch.co/profile/turknett-leadership-group
+[23:33:53]     Phone: 770-270-1723
+[23:33:53]     Website: https://www.turknett.com
+[23:33:55]   [25/52] Angle2 -> https://clutch.co/profile/angle2
+[23:33:56]     Phone: +380633496219
+[23:33:56]     Website: https://angle2.agency/
+[23:33:58]   [26/52] Modern Craft -> https://clutch.co/profile/modern-craft
+[23:34:00]     Phone: 7783891563
+[23:34:00]     Website: https://www.themoderncraft.com/?utm_source=clutch.co&utm_medium=referral&utm_campaign=directory
+[23:34:01]   [27/52] Red Cup Agency -> https://clutch.co/profile/red-cup-agency
+[23:34:02]     Phone: 424-265-6047
+[23:34:02]     Website: http://redcupagency.com/contact?utm_source=clutch.co&utm_medium=referral&utm_campaign=directory
+[23:34:05]   [28/52] Three Five Two -> https://clutch.co/profile/three-five-two
+[23:34:06]     Phone: 877.352.6334
+[23:34:06]     Website: https://www.threefivetwo.com/?utm_source=clutch&utm_medium=display&utm_campaign=clutch_reviews
+[23:34:08]   [29/52] Casbeg -> https://clutch.co/profile/casbeg
+[23:34:09]     Phone: +48 533 613 543
+[23:34:09]     Website: https://casbeg.com/
+[23:34:10]   [30/52] GoodCore Software -> https://clutch.co/profile/goodcore-software
+[23:34:11]     Phone: 442087816903
+[23:34:11]     Website: http://www.goodcore.co.uk/?utm_source=clutch.co&utm_medium=referral&utm_campaign=clutchprofile
+[23:34:13]   [31/52] Webtronic Labs -> https://clutch.co/profile/webtronic-labs
+[23:34:15]     Phone: (305) 703-2411
+[23:34:15]     Website: https://webtroniclabs.com/?utm_source=clutch.co&utm_medium=referral&utm_campaign=directory
+[23:34:17]   [32/52] Emerging Strategy -> https://clutch.co/profile/emerging-strategy
+[23:34:18]     Phone: +862161911101
+[23:34:18]     Website: http://www.emerging-strategy.com
+[23:34:20]   [33/52] DevriX -> https://clutch.co/profile/devrix
+[23:34:21]     Phone: +359 898 532 461
+[23:34:21]     Website: https://devrix.com/?utm_source=clutch.co&utm_medium=referral&utm_campaign=directory
+[23:34:24]   [34/52] SHERMAN -> https://clutch.co/profile/sherman
+[23:34:25]     Phone: 312-803-0238
+[23:34:25]     Website: http://www.shermancm.com/?utm_source=clutch.co&utm_medium=referral&utm_campaign=directory
+[23:34:27]   [35/52] Red Caffeine - A Growth Consultancy -> https://clutch.co/profile/red-caffeine-growth-consultancy
+[23:34:29]     Phone: 630-785-6903
+[23:34:29]     Website: https://www.redcaffeine.com/
+[23:34:30]   [36/52] FROM: The Digital Transformation Agency -> https://clutch.co/profile/digital-transformation-agency-0
+[23:34:31]     Phone: 1-833-376-6588
+[23:34:31]     Website: https://www.from.digital/?utm_source=clutch.co&utm_medium=referral&utm_campaign=directory
+[23:34:33]   [37/52] One Umbrella -> https://clutch.co/profile/one-umbrella
+[23:34:34]     Website: http://oneumbrella.co/?utm_source=clutch.co&utm_medium=referral&utm_campaign=directory
+[23:34:36]   [38/52] Relab Studios -> https://clutch.co/profile/relab-studios
+[23:34:37]     Phone: 1300540022
+[23:34:37]     Website: https://www.relab.com.au/
+[23:34:39]   [39/52] TaskDrive -> https://clutch.co/profile/taskdrive
+[23:34:40]     Website: https://taskdrive.com
+[23:34:42]   [40/52] Montather Rassoul Business Consulting Firm -> https://clutch.co/profile/montather-rassoul-business-consulting-firm
+[23:34:43]     Phone: +9647710029000
+[23:34:43]     Website: http://www.montather-rassoul.com
+[23:34:43]     [Progress saved: 40 profiles]
+[23:34:46]   [41/52] BeCurious Studio -> https://clutch.co/profile/becurious-studio
+[23:34:47]     Phone: + 1 504 475 7060
+[23:34:47]     Website: https://becurious.co
+[23:34:49]   [42/52] Wemersive -> https://clutch.co/profile/wemersive
+[23:34:50]     Phone: 7029373461
+[23:34:50]     Website: https://www.wemersive.com/?utm_source=clutch.co&utm_medium=referral&utm_campaign=directory
+[23:34:52]   [43/52] LANE Digital Consulting -> https://clutch.co/profile/lane-digital-consulting
+[23:34:53]     Phone: 0799627562
+[23:34:53]     Website: https://lane-digital.ch/
+[23:34:56]   [44/52] Tronvig -> https://clutch.co/profile/tronvig
+[23:34:57]     Phone: +1 (718) 522-6326
+[23:34:57]     Website: https://www.tronviggroup.com/?utm_source=clutch.co&utm_medium=referral&utm_campaign=directory
+[23:34:59]   [45/52] SoftUni Global -> https://clutch.co/profile/softuni-global
+[23:35:00]     Website: https://softuni.org
+[23:35:02]   [46/52] Agility Consulting International -> https://clutch.co/profile/agility-consulting-international
+[23:35:03]     Phone: 8122191639
+[23:35:03]     Website: http://www.agilityconsultinginternational.com
+[23:35:05]   [47/52] CRMiUM -> https://clutch.co/profile/crmium
+[23:35:06]     Phone: 38 (093) 170-37-47
+[23:35:06]     Website: https://crmium.com/?utm_source=clutch&utm_medium=referral&utm_campaign=clutch_profile
+[23:35:08]   [48/52] Wojack Productions -> https://clutch.co/profile/wojack-productions
+[23:35:10]     Phone: 514-926-9525
+[23:35:10]     Website: https://wojackproductions.biz
+[23:35:11]   [49/52] LOGICON, LLC -> https://clutch.co/profile/logicon-0
+[23:35:12]     Phone: +92-321-9467053
+[23:35:12]     Website: https://logicon.tech/?source=clutch%3futm_source%3dclutch.co&utm_medium=referral&utm_campaign=directory
+[23:35:15]   [50/52] Rocket Science Communications -> https://clutch.co/profile/rocket-science-communications
+[23:35:16]     Phone: +48 785 857 662
+[23:35:16]     Website: https://www.rocketscience.com.pl/home
+[23:35:18]   [51/52] Ro Team -> https://clutch.co/profile/ro-team
+[23:35:19]     Phone: +48 501 54 94 20
+[23:35:19]     Website: https://ro.team
+[23:35:21]   [52/52] Digital Thinkers -> https://clutch.co/profile/digital-thinkers-0
+[23:35:22]     Phone: +36305955887
+[23:35:22]     Website: https://digitalthinkers.com
+[23:35:24] Browser closed.
+[23:35:24] 
+[23:35:24] ============================================================
+[23:35:24] DONE
+[23:35:24] 
+[23:35:24] Category results:
+[23:35:24]   https://clutch.co/consulting/education: ok (1804 listings, 22 pages)
+[23:35:24]   https://clutch.co/tutoring: 404 (0 listings, 0 pages)
+[23:35:24]   https://clutch.co/consulting/college-admissions: 404 (0 listings, 0 pages)
+[23:35:24] 
+[23:35:24] Total unique firms: 52
+[23:35:24] Profiles enriched: 52 (0 errors)
+[23:35:24] With phone: 47
+[23:35:24] With website: 52
+[23:35:24] With city: 48
+[23:35:24] With country: 48
+[23:35:24] Countries:
+[23:35:24]   US: 25
+[23:35:24]   PL: 5
+[23:35:24]   UA: 4
+[23:35:24]   UK: 3
+[23:35:24]   CA: 2
+[23:35:24]   RO: 1
+[23:35:24]   AT: 1
+[23:35:24]   HR: 1
+[23:35:24]   CN: 1
+[23:35:24]   BG: 1
+[23:35:24]   AU: 1
+[23:35:24]   Iraq: 1
+[23:35:24]   CH: 1
+[23:35:24]   HU: 1
+[23:35:24] Output: /Users/fardeenchoudhury/mortar-lead-scraper/output/college-consultants-clutch.csv

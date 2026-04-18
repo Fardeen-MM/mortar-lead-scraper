@@ -1,0 +1,14 @@
+
+╔═══════════════════════════════════════════════════════════╗
+║  MORTAR — CICC Registry Full Scrape                     ║
+╚═══════════════════════════════════════════════════════════╝
+
+  ID Range:    22856 → 30000 (7144 to scan)
+  Delay:       300ms between requests
+  Est. time:   ~36 minutes
+  Output:      /Users/fardeenchoudhury/mortar-lead-scraper/output/cicc-segment-D.csv
+
+  [PAUSE] 10 consecutive errors at ID 24671: getaddrinfo ENOTFOUND register.college-ic.ca
+  Waiting 30 seconds...
+  [PAUSE] 10 consecutive errors at ID 24684: getaddrinfo ENOTFOUND register.college-ic.ca
+  Waiting 30 seconds...

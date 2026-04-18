@@ -1,0 +1,1672 @@
+=== Bulk find-leads ===
+Cities: 277
+Niches: visa consultant | citizenship consultant | immigration services | work visa consultant | student visa consultant | immigration specialist | visa expert | PR consultant
+Max per query: 25
+Delay between queries: 25s
+Output: output/mega-immigration-sweep-B.csv
+State: output/mega-immigration-sweep-B.state.json
+Total queries: 2216
+
+
+[1/2216] visa consultant Toronto, ON
+[1s] ℹ [DDG] Rate limited on "visa consultant Toronto, ON" — waiting 30s (attempt 1/3)...
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 18 domains, 0 emails
+
+[2/2216] citizenship consultant Toronto, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 33 domains, 0 emails
+
+[3/2216] immigration services Toronto, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 43 domains, 0 emails
+
+[4/2216] work visa consultant Toronto, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 52 domains, 0 emails
+
+[5/2216] student visa consultant Toronto, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 62 domains, 0 emails
+
+[6/2216] immigration specialist Toronto, ON
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 70 domains, 0 emails
+
+[7/2216] visa expert Toronto, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 79 domains, 0 emails
+
+[8/2216] PR consultant Toronto, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 94 domains, 0 emails
+
+[9/2216] visa consultant Mississauga, ON
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 106 domains, 0 emails
+
+[10/2216] citizenship consultant Mississauga, ON
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 119 domains, 0 emails
+
+[11/2216] immigration services Mississauga, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 130 domains, 0 emails
+
+[12/2216] work visa consultant Mississauga, ON
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 133 domains, 0 emails
+
+[13/2216] student visa consultant Mississauga, ON
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 135 domains, 0 emails
+
+[14/2216] immigration specialist Mississauga, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 143 domains, 0 emails
+
+[15/2216] visa expert Mississauga, ON
+[417s] ℹ [DDG] Rate limited on "visa expert Mississauga, ON" — waiting 30s (attempt 1/3)...
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 150 domains, 0 emails
+
+[16/2216] PR consultant Mississauga, ON
+[multi-search] brave rate-limited — backing off 60s
+[474s] ℹ [DDG] Rate limited on "PR consultant Mississauga, ON" — waiting 30s (attempt 1/3)...
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 159 domains, 0 emails
+
+[17/2216] visa consultant Brampton, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 168 domains, 0 emails
+
+[18/2216] citizenship consultant Brampton, ON
+[multi-search] brave rate-limited — backing off 60s
+[559s] ℹ [DDG] Rate limited on "citizenship consultant Brampton, ON" — waiting 30s (attempt 1/3)...
+[590s] ℹ [DDG] Rate limited on "citizenship consultant Brampton, ON" — waiting 60s (attempt 2/3)...
+[651s] ⚠ [DDG] Search failed for "citizenship consultant Brampton, ON": HTTP 202
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 172 domains, 0 emails
+
+[19/2216] immigration services Brampton, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 178 domains, 0 emails
+
+[20/2216] work visa consultant Brampton, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 181 domains, 0 emails
+
+[21/2216] student visa consultant Brampton, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 185 domains, 0 emails
+
+[22/2216] immigration specialist Brampton, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 189 domains, 0 emails
+
+[23/2216] visa expert Brampton, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 193 domains, 0 emails
+
+[24/2216] PR consultant Brampton, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 197 domains, 0 emails
+
+[25/2216] visa consultant Markham, ON
+[multi-search] brave rate-limited — backing off 60s
+[842s] ℹ [DDG] Rate limited on "visa consultant Markham, ON" — waiting 30s (attempt 1/3)...
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 206 domains, 0 emails
+
+[26/2216] citizenship consultant Markham, ON
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 217 domains, 0 emails
+
+[27/2216] immigration services Markham, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 221 domains, 0 emails
+
+[28/2216] work visa consultant Markham, ON
+[955s] ℹ [DDG] Rate limited on "work visa consultant Markham, ON" — waiting 30s (attempt 1/3)...
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 223 domains, 0 emails
+
+[29/2216] student visa consultant Markham, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 228 domains, 0 emails
+
+[30/2216] immigration specialist Markham, ON
+[1038s] ℹ [DDG] Rate limited on "immigration specialist Markham, ON" — waiting 30s (attempt 1/3)...
+[1069s] ℹ [DDG] Rate limited on "immigration specialist Markham, ON" — waiting 60s (attempt 2/3)...
+[1129s] ⚠ [DDG] Search failed for "immigration specialist Markham, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 8 domains (via multi-engine)
+  0 verified emails
+  Totals: 229 domains, 0 emails
+
+[31/2216] visa expert Markham, ON
+[1155s] ℹ [DDG] Rate limited on "visa expert Markham, ON" — waiting 30s (attempt 1/3)...
+[1186s] ℹ [DDG] Rate limited on "visa expert Markham, ON" — waiting 60s (attempt 2/3)...
+[1246s] ⚠ [DDG] Search failed for "visa expert Markham, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 232 domains, 0 emails
+
+[32/2216] PR consultant Markham, ON
+[1273s] ℹ [DDG] Rate limited on "PR consultant Markham, ON" — waiting 30s (attempt 1/3)...
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 241 domains, 0 emails
+
+[33/2216] visa consultant Hamilton, ON
+[multi-search] brave rate-limited — backing off 60s
+[1332s] ℹ [DDG] Rate limited on "visa consultant Hamilton, ON" — waiting 30s (attempt 1/3)...
+[1362s] ℹ [DDG] Rate limited on "visa consultant Hamilton, ON" — waiting 60s (attempt 2/3)...
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 249 domains, 0 emails
+
+[34/2216] citizenship consultant Hamilton, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 254 domains, 0 emails
+
+[35/2216] immigration services Hamilton, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 263 domains, 0 emails
+
+[36/2216] work visa consultant Hamilton, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 266 domains, 0 emails
+
+[37/2216] student visa consultant Hamilton, ON
+[multi-search] brave rate-limited — backing off 60s
+[1533s] ℹ [DDG] Rate limited on "student visa consultant Hamilton, ON" — waiting 30s (attempt 1/3)...
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 270 domains, 0 emails
+
+[38/2216] immigration specialist Hamilton, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 270 domains, 0 emails
+
+[39/2216] visa expert Hamilton, ON
+[multi-search] brave rate-limited — backing off 60s
+[1618s] ℹ [DDG] Rate limited on "visa expert Hamilton, ON" — waiting 30s (attempt 1/3)...
+[1648s] ℹ [DDG] Rate limited on "visa expert Hamilton, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+[1709s] ℹ [DDG] Rate limited on "visa expert Hamilton, ON" — waiting 30s (attempt 1/3)...
+[1740s] ℹ [DDG] Rate limited on "visa expert Hamilton, ON" — waiting 60s (attempt 2/3)...
+[1800s] ⚠ [DDG] Search failed for "visa expert Hamilton, ON": HTTP 202
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 272 domains, 0 emails
+
+[40/2216] PR consultant Hamilton, ON
+[multi-search] brave rate-limited — backing off 60s
+[1826s] ℹ [DDG] Rate limited on "PR consultant Hamilton, ON" — waiting 30s (attempt 1/3)...
+[1856s] ℹ [DDG] Rate limited on "PR consultant Hamilton, ON" — waiting 60s (attempt 2/3)...
+[1916s] ⚠ [DDG] Search failed for "PR consultant Hamilton, ON": HTTP 202
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 286 domains, 0 emails
+
+[41/2216] visa consultant Ottawa, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 288 domains, 0 emails
+
+[42/2216] citizenship consultant Ottawa, ON
+[1970s] ℹ [DDG] Rate limited on "citizenship consultant Ottawa, ON" — waiting 30s (attempt 1/3)...
+[2000s] ℹ [DDG] Rate limited on "citizenship consultant Ottawa, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 292 domains, 0 emails
+
+[43/2216] immigration services Ottawa, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 300 domains, 0 emails
+
+[44/2216] work visa consultant Ottawa, ON
+[2116s] ℹ [DDG] Rate limited on "work visa consultant Ottawa, ON" — waiting 30s (attempt 1/3)...
+  Found 19 domains (via multi-engine)
+  0 verified emails
+  Totals: 305 domains, 0 emails
+
+[45/2216] student visa consultant Ottawa, ON
+[multi-search] brave rate-limited — backing off 60s
+[2173s] ℹ [DDG] Rate limited on "student visa consultant Ottawa, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 309 domains, 0 emails
+
+[46/2216] immigration specialist Ottawa, ON
+[2232s] ℹ [DDG] Rate limited on "immigration specialist Ottawa, ON" — waiting 30s (attempt 1/3)...
+[2262s] ℹ [DDG] Rate limited on "immigration specialist Ottawa, ON" — waiting 60s (attempt 2/3)...
+[2322s] ⚠ [DDG] Search failed for "immigration specialist Ottawa, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 311 domains, 0 emails
+
+[47/2216] visa expert Ottawa, ON
+[multi-search] brave rate-limited — backing off 60s
+[2348s] ℹ [DDG] Rate limited on "visa expert Ottawa, ON" — waiting 30s (attempt 1/3)...
+[2379s] ℹ [DDG] Rate limited on "visa expert Ottawa, ON" — waiting 30s (attempt 1/3)...
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 313 domains, 0 emails
+
+[48/2216] PR consultant Ottawa, ON
+[multi-search] brave rate-limited — backing off 60s
+[2436s] ℹ [DDG] Rate limited on "PR consultant Ottawa, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 317 domains, 0 emails
+
+[49/2216] visa consultant Vaughan, ON
+[multi-search] mojeek rate-limited — backing off 60s
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 323 domains, 0 emails
+
+[50/2216] citizenship consultant Vaughan, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 326 domains, 0 emails
+
+[51/2216] immigration services Vaughan, ON
+[2549s] ℹ [DDG] Rate limited on "immigration services Vaughan, ON" — waiting 30s (attempt 1/3)...
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 332 domains, 0 emails
+
+[52/2216] work visa consultant Vaughan, ON
+[multi-search] brave rate-limited — backing off 60s
+[2612s] ℹ [DDG] Rate limited on "work visa consultant Vaughan, ON" — waiting 30s (attempt 1/3)...
+[2642s] ℹ [DDG] Rate limited on "work visa consultant Vaughan, ON" — waiting 60s (attempt 2/3)...
+[2702s] ⚠ [DDG] Search failed for "work visa consultant Vaughan, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[2703s] ℹ [DDG] Rate limited on "work visa consultant Vaughan, ON" — waiting 30s (attempt 1/3)...
+[2733s] ℹ [DDG] Rate limited on "work visa consultant Vaughan, ON" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 333 domains, 0 emails
+
+[53/2216] student visa consultant Vaughan, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 334 domains, 0 emails
+
+[54/2216] immigration specialist Vaughan, ON
+[2848s] ℹ [DDG] Rate limited on "immigration specialist Vaughan, ON" — waiting 30s (attempt 1/3)...
+[2879s] ℹ [DDG] Rate limited on "immigration specialist Vaughan, ON" — waiting 60s (attempt 2/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 334 domains, 0 emails
+
+[55/2216] visa expert Vaughan, ON
+[multi-search] brave rate-limited — backing off 60s
+[2965s] ℹ [DDG] Rate limited on "visa expert Vaughan, ON" — waiting 30s (attempt 1/3)...
+[2996s] ℹ [DDG] Rate limited on "visa expert Vaughan, ON" — waiting 60s (attempt 2/3)...
+[3056s] ⚠ [DDG] Search failed for "visa expert Vaughan, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[3056s] ℹ [DDG] Rate limited on "visa expert Vaughan, ON" — waiting 30s (attempt 1/3)...
+[3087s] ℹ [DDG] Rate limited on "visa expert Vaughan, ON" — waiting 60s (attempt 2/3)...
+[3147s] ⚠ [DDG] Search failed for "visa expert Vaughan, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 334 domains, 0 emails
+
+[56/2216] PR consultant Vaughan, ON
+[multi-search] brave rate-limited — backing off 60s
+[3173s] ℹ [DDG] Rate limited on "PR consultant Vaughan, ON" — waiting 30s (attempt 1/3)...
+[3203s] ℹ [DDG] Rate limited on "PR consultant Vaughan, ON" — waiting 60s (attempt 2/3)...
+[3263s] ⚠ [DDG] Search failed for "PR consultant Vaughan, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[3264s] ℹ [DDG] Rate limited on "PR consultant Vaughan, ON" — waiting 30s (attempt 1/3)...
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 337 domains, 0 emails
+
+[57/2216] visa consultant London, ON
+[3320s] ℹ [DDG] Rate limited on "visa consultant London, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+[3352s] ℹ [DDG] Rate limited on "visa consultant London, ON" — waiting 30s (attempt 1/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 343 domains, 0 emails
+
+[58/2216] citizenship consultant London, ON
+[3409s] ℹ [DDG] Rate limited on "citizenship consultant London, ON" — waiting 30s (attempt 1/3)...
+[3439s] ℹ [DDG] Rate limited on "citizenship consultant London, ON" — waiting 60s (attempt 2/3)...
+[3499s] ⚠ [DDG] Search failed for "citizenship consultant London, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[3500s] ℹ [DDG] Rate limited on "citizenship consultant London, ON" — waiting 30s (attempt 1/3)...
+[3530s] ℹ [DDG] Rate limited on "citizenship consultant London, ON" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 345 domains, 0 emails
+
+[59/2216] immigration services London, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 348 domains, 0 emails
+
+[60/2216] work visa consultant London, ON
+[3644s] ℹ [DDG] Rate limited on "work visa consultant London, ON" — waiting 30s (attempt 1/3)...
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 349 domains, 0 emails
+
+[61/2216] student visa consultant London, ON
+[multi-search] brave rate-limited — backing off 60s
+[3703s] ℹ [DDG] Rate limited on "student visa consultant London, ON" — waiting 30s (attempt 1/3)...
+[3733s] ℹ [DDG] Rate limited on "student visa consultant London, ON" — waiting 60s (attempt 2/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 349 domains, 0 emails
+
+[62/2216] immigration specialist London, ON
+[multi-search] brave rate-limited — backing off 60s
+[3821s] ℹ [DDG] Rate limited on "immigration specialist London, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 349 domains, 0 emails
+
+[63/2216] visa expert London, ON
+[3877s] ℹ [DDG] Rate limited on "visa expert London, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 352 domains, 0 emails
+
+[64/2216] PR consultant London, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 361 domains, 0 emails
+
+[65/2216] visa consultant Windsor, ON
+[3963s] ℹ [DDG] Rate limited on "visa consultant Windsor, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 364 domains, 0 emails
+
+[66/2216] citizenship consultant Windsor, ON
+[multi-search] brave rate-limited — backing off 60s
+[4020s] ℹ [DDG] Rate limited on "citizenship consultant Windsor, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 369 domains, 0 emails
+
+[67/2216] immigration services Windsor, ON
+[4078s] ℹ [DDG] Rate limited on "immigration services Windsor, ON" — waiting 30s (attempt 1/3)...
+[4108s] ℹ [DDG] Rate limited on "immigration services Windsor, ON" — waiting 60s (attempt 2/3)...
+[4168s] ⚠ [DDG] Search failed for "immigration services Windsor, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[4169s] ℹ [DDG] Rate limited on "immigration services Windsor, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 370 domains, 0 emails
+
+[68/2216] work visa consultant Windsor, ON
+[4225s] ℹ [DDG] Rate limited on "work visa consultant Windsor, ON" — waiting 30s (attempt 1/3)...
+[4255s] ℹ [DDG] Rate limited on "work visa consultant Windsor, ON" — waiting 60s (attempt 2/3)...
+[4315s] ⚠ [DDG] Search failed for "work visa consultant Windsor, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[4316s] ℹ [DDG] Rate limited on "work visa consultant Windsor, ON" — waiting 30s (attempt 1/3)...
+[4346s] ℹ [DDG] Rate limited on "work visa consultant Windsor, ON" — waiting 60s (attempt 2/3)...
+[4406s] ⚠ [DDG] Search failed for "work visa consultant Windsor, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 370 domains, 0 emails
+
+[69/2216] student visa consultant Windsor, ON
+[multi-search] brave rate-limited — backing off 60s
+[4432s] ℹ [DDG] Rate limited on "student visa consultant Windsor, ON" — waiting 30s (attempt 1/3)...
+[4462s] ℹ [DDG] Rate limited on "student visa consultant Windsor, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 372 domains, 0 emails
+
+[70/2216] immigration specialist Windsor, ON
+[4551s] ℹ [DDG] Rate limited on "immigration specialist Windsor, ON" — waiting 30s (attempt 1/3)...
+[4581s] ℹ [DDG] Rate limited on "immigration specialist Windsor, ON" — waiting 60s (attempt 2/3)...
+[4642s] ⚠ [DDG] Search failed for "immigration specialist Windsor, ON": HTTP 403
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 373 domains, 0 emails
+
+[71/2216] visa expert Windsor, ON
+[4669s] ℹ [DDG] Rate limited on "visa expert Windsor, ON" — waiting 30s (attempt 1/3)...
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 373 domains, 0 emails
+
+[72/2216] PR consultant Windsor, ON
+[multi-search] brave rate-limited — backing off 60s
+[4727s] ℹ [DDG] Rate limited on "PR consultant Windsor, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 376 domains, 0 emails
+
+[73/2216] visa consultant Kitchener, ON
+[4785s] ⚠ [DDG] Search failed for "visa consultant Kitchener, ON": HTTP 403
+[4786s] ℹ [DDG] Rate limited on "visa consultant Kitchener, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 378 domains, 0 emails
+
+[74/2216] citizenship consultant Kitchener, ON
+[multi-search] brave rate-limited — backing off 60s
+[4844s] ⚠ [DDG] Search failed for "citizenship consultant Kitchener, ON": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 383 domains, 0 emails
+
+[75/2216] immigration services Kitchener, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 386 domains, 0 emails
+
+[76/2216] work visa consultant Kitchener, ON
+[4897s] ℹ [DDG] Rate limited on "work visa consultant Kitchener, ON" — waiting 30s (attempt 1/3)...
+[4927s] ℹ [DDG] Rate limited on "work visa consultant Kitchener, ON" — waiting 60s (attempt 2/3)...
+[4988s] ⚠ [DDG] Search failed for "work visa consultant Kitchener, ON": HTTP 403
+[multi-search] brave rate-limited — backing off 60s
+[4988s] ℹ [DDG] Rate limited on "work visa consultant Kitchener, ON" — waiting 30s (attempt 1/3)...
+[5019s] ℹ [DDG] Rate limited on "work visa consultant Kitchener, ON" — waiting 60s (attempt 2/3)...
+[5079s] ⚠ [DDG] Search failed for "work visa consultant Kitchener, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 386 domains, 0 emails
+
+[77/2216] student visa consultant Kitchener, ON
+[multi-search] brave rate-limited — backing off 60s
+[5105s] ℹ [DDG] Rate limited on "student visa consultant Kitchener, ON" — waiting 30s (attempt 1/3)...
+[5135s] ℹ [DDG] Rate limited on "student visa consultant Kitchener, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 387 domains, 0 emails
+
+[78/2216] immigration specialist Kitchener, ON
+[5223s] ℹ [DDG] Rate limited on "immigration specialist Kitchener, ON" — waiting 30s (attempt 1/3)...
+[5253s] ℹ [DDG] Rate limited on "immigration specialist Kitchener, ON" — waiting 60s (attempt 2/3)...
+[5313s] ⚠ [DDG] Search failed for "immigration specialist Kitchener, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[5314s] ℹ [DDG] Rate limited on "immigration specialist Kitchener, ON" — waiting 30s (attempt 1/3)...
+[5344s] ℹ [DDG] Rate limited on "immigration specialist Kitchener, ON" — waiting 60s (attempt 2/3)...
+[5404s] ⚠ [DDG] Search failed for "immigration specialist Kitchener, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 387 domains, 0 emails
+
+[79/2216] visa expert Kitchener, ON
+[multi-search] brave rate-limited — backing off 60s
+[5430s] ℹ [DDG] Rate limited on "visa expert Kitchener, ON" — waiting 30s (attempt 1/3)...
+[5460s] ℹ [DDG] Rate limited on "visa expert Kitchener, ON" — waiting 60s (attempt 2/3)...
+[5520s] ⚠ [DDG] Search failed for "visa expert Kitchener, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[5521s] ℹ [DDG] Rate limited on "visa expert Kitchener, ON" — waiting 30s (attempt 1/3)...
+[5552s] ⚠ [DDG] Search failed for "visa expert Kitchener, ON": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 387 domains, 0 emails
+
+[80/2216] PR consultant Kitchener, ON
+[5578s] ⚠ [DDG] Search failed for "PR consultant Kitchener, ON": HTTP 403
+[5578s] ℹ [DDG] Rate limited on "PR consultant Kitchener, ON" — waiting 30s (attempt 1/3)...
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 388 domains, 0 emails
+
+[81/2216] visa consultant Waterloo, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 394 domains, 0 emails
+
+[82/2216] citizenship consultant Waterloo, ON
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 397 domains, 0 emails
+
+[83/2216] immigration services Waterloo, ON
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 399 domains, 0 emails
+
+[84/2216] work visa consultant Waterloo, ON
+[multi-search] brave rate-limited — backing off 60s
+[5918s] ℹ [DDG] Rate limited on "work visa consultant Waterloo, ON" — waiting 30s (attempt 1/3)...
+[5948s] ℹ [DDG] Rate limited on "work visa consultant Waterloo, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 399 domains, 0 emails
+
+[85/2216] student visa consultant Waterloo, ON
+[6591s] ℹ [DDG] Rate limited on "student visa consultant Waterloo, ON" — waiting 30s (attempt 1/3)...
+[6621s] ℹ [DDG] Rate limited on "student visa consultant Waterloo, ON" — waiting 60s (attempt 2/3)...
+[6681s] ⚠ [DDG] Search failed for "student visa consultant Waterloo, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[6682s] ℹ [DDG] Rate limited on "student visa consultant Waterloo, ON" — waiting 30s (attempt 1/3)...
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 399 domains, 0 emails
+
+[86/2216] immigration specialist Waterloo, ON
+[6738s] ℹ [DDG] Rate limited on "immigration specialist Waterloo, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+[6770s] ℹ [DDG] Rate limited on "immigration specialist Waterloo, ON" — waiting 30s (attempt 1/3)...
+[6800s] ℹ [DDG] Rate limited on "immigration specialist Waterloo, ON" — waiting 60s (attempt 2/3)...
+[6860s] ⚠ [DDG] Search failed for "immigration specialist Waterloo, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 400 domains, 0 emails
+
+[87/2216] visa expert Waterloo, ON
+[multi-search] brave rate-limited — backing off 60s
+[6886s] ℹ [DDG] Rate limited on "visa expert Waterloo, ON" — waiting 30s (attempt 1/3)...
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 401 domains, 0 emails
+
+[88/2216] PR consultant Waterloo, ON
+[6944s] ℹ [DDG] Rate limited on "PR consultant Waterloo, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 402 domains, 0 emails
+
+[89/2216] visa consultant Oshawa, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 405 domains, 0 emails
+
+[90/2216] citizenship consultant Oshawa, ON
+[7031s] ℹ [DDG] Rate limited on "citizenship consultant Oshawa, ON" — waiting 30s (attempt 1/3)...
+[7061s] ℹ [DDG] Rate limited on "citizenship consultant Oshawa, ON" — waiting 60s (attempt 2/3)...
+[7121s] ⚠ [DDG] Search failed for "citizenship consultant Oshawa, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[7122s] ℹ [DDG] Rate limited on "citizenship consultant Oshawa, ON" — waiting 30s (attempt 1/3)...
+[7153s] ℹ [DDG] Rate limited on "citizenship consultant Oshawa, ON" — waiting 60s (attempt 2/3)...
+[7213s] ⚠ [DDG] Search failed for "citizenship consultant Oshawa, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 405 domains, 0 emails
+
+[91/2216] immigration services Oshawa, ON
+[multi-search] brave rate-limited — backing off 60s
+[7239s] ℹ [DDG] Rate limited on "immigration services Oshawa, ON" — waiting 30s (attempt 1/3)...
+[7269s] ℹ [DDG] Rate limited on "immigration services Oshawa, ON" — waiting 60s (attempt 2/3)...
+[7329s] ⚠ [DDG] Search failed for "immigration services Oshawa, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 406 domains, 0 emails
+
+[92/2216] work visa consultant Oshawa, ON
+[7357s] ℹ [DDG] Rate limited on "work visa consultant Oshawa, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 406 domains, 0 emails
+
+[93/2216] student visa consultant Oshawa, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 407 domains, 0 emails
+
+[94/2216] immigration specialist Oshawa, ON
+[7441s] ℹ [DDG] Rate limited on "immigration specialist Oshawa, ON" — waiting 30s (attempt 1/3)...
+[7472s] ℹ [DDG] Rate limited on "immigration specialist Oshawa, ON" — waiting 60s (attempt 2/3)...
+[7532s] ⚠ [DDG] Search failed for "immigration specialist Oshawa, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[7532s] ℹ [DDG] Rate limited on "immigration specialist Oshawa, ON" — waiting 30s (attempt 1/3)...
+[7563s] ℹ [DDG] Rate limited on "immigration specialist Oshawa, ON" — waiting 60s (attempt 2/3)...
+[7623s] ⚠ [DDG] Search failed for "immigration specialist Oshawa, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 407 domains, 0 emails
+
+[95/2216] visa expert Oshawa, ON
+[multi-search] brave rate-limited — backing off 60s
+[7649s] ℹ [DDG] Rate limited on "visa expert Oshawa, ON" — waiting 30s (attempt 1/3)...
+[7679s] ℹ [DDG] Rate limited on "visa expert Oshawa, ON" — waiting 60s (attempt 2/3)...
+[7739s] ⚠ [DDG] Search failed for "visa expert Oshawa, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[7740s] ℹ [DDG] Rate limited on "visa expert Oshawa, ON" — waiting 30s (attempt 1/3)...
+[7770s] ℹ [DDG] Rate limited on "visa expert Oshawa, ON" — waiting 60s (attempt 2/3)...
+[7830s] ⚠ [DDG] Search failed for "visa expert Oshawa, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 407 domains, 0 emails
+
+[96/2216] PR consultant Oshawa, ON
+[multi-search] brave rate-limited — backing off 60s
+[7856s] ℹ [DDG] Rate limited on "PR consultant Oshawa, ON" — waiting 30s (attempt 1/3)...
+[7886s] ℹ [DDG] Rate limited on "PR consultant Oshawa, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+[7947s] ℹ [DDG] Rate limited on "PR consultant Oshawa, ON" — waiting 30s (attempt 1/3)...
+[7978s] ℹ [DDG] Rate limited on "PR consultant Oshawa, ON" — waiting 60s (attempt 2/3)...
+[8038s] ⚠ [DDG] Search failed for "PR consultant Oshawa, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 409 domains, 0 emails
+
+[97/2216] visa consultant Burlington, ON
+[multi-search] brave rate-limited — backing off 60s
+[8064s] ℹ [DDG] Rate limited on "visa consultant Burlington, ON" — waiting 30s (attempt 1/3)...
+[8094s] ℹ [DDG] Rate limited on "visa consultant Burlington, ON" — waiting 60s (attempt 2/3)...
+[8154s] ⚠ [DDG] Search failed for "visa consultant Burlington, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[8155s] ℹ [DDG] Rate limited on "visa consultant Burlington, ON" — waiting 30s (attempt 1/3)...
+[8185s] ℹ [DDG] Rate limited on "visa consultant Burlington, ON" — waiting 60s (attempt 2/3)...
+[8245s] ⚠ [DDG] Search failed for "visa consultant Burlington, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 409 domains, 0 emails
+
+[98/2216] citizenship consultant Burlington, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 412 domains, 0 emails
+
+[99/2216] immigration services Burlington, ON
+[8298s] ℹ [DDG] Rate limited on "immigration services Burlington, ON" — waiting 30s (attempt 1/3)...
+[8328s] ℹ [DDG] Rate limited on "immigration services Burlington, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 413 domains, 0 emails
+
+[100/2216] work visa consultant Burlington, ON
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 417 domains, 0 emails
+
+[101/2216] student visa consultant Burlington, ON
+[8443s] ℹ [DDG] Rate limited on "student visa consultant Burlington, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 419 domains, 0 emails
+
+[102/2216] immigration specialist Burlington, ON
+[8502s] ℹ [DDG] Rate limited on "immigration specialist Burlington, ON" — waiting 30s (attempt 1/3)...
+[8532s] ℹ [DDG] Rate limited on "immigration specialist Burlington, ON" — waiting 60s (attempt 2/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 422 domains, 0 emails
+
+[103/2216] visa expert Burlington, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 423 domains, 0 emails
+
+[104/2216] PR consultant Burlington, ON
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 425 domains, 0 emails
+
+[105/2216] visa consultant Oakville, ON
+[8675s] ℹ [DDG] Rate limited on "visa consultant Oakville, ON" — waiting 30s (attempt 1/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 430 domains, 0 emails
+
+[106/2216] citizenship consultant Oakville, ON
+[multi-search] brave rate-limited — backing off 60s
+[8731s] ℹ [DDG] Rate limited on "citizenship consultant Oakville, ON" — waiting 30s (attempt 1/3)...
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 437 domains, 0 emails
+
+[107/2216] immigration services Oakville, ON
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 439 domains, 0 emails
+
+[108/2216] work visa consultant Oakville, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 439 domains, 0 emails
+
+[109/2216] student visa consultant Oakville, ON
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 439 domains, 0 emails
+
+[110/2216] immigration specialist Oakville, ON
+[8870s] ℹ [DDG] Rate limited on "immigration specialist Oakville, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+[8902s] ℹ [DDG] Rate limited on "immigration specialist Oakville, ON" — waiting 30s (attempt 1/3)...
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 441 domains, 0 emails
+
+[111/2216] visa expert Oakville, ON
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 442 domains, 0 emails
+
+[112/2216] PR consultant Oakville, ON
+[multi-search] brave rate-limited — backing off 60s
+[8985s] ℹ [DDG] Rate limited on "PR consultant Oakville, ON" — waiting 30s (attempt 1/3)...
+[9017s] ℹ [DDG] Rate limited on "PR consultant Oakville, ON" — waiting 30s (attempt 1/3)...
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 445 domains, 0 emails
+
+[113/2216] visa consultant Richmond Hill, ON
+[multi-search] brave rate-limited — backing off 60s
+[9073s] ℹ [DDG] Rate limited on "visa consultant Richmond Hill, ON" — waiting 30s (attempt 1/3)...
+[9104s] ℹ [DDG] Rate limited on "visa consultant Richmond Hill, ON" — waiting 60s (attempt 2/3)...
+[9164s] ⚠ [DDG] Search failed for "visa consultant Richmond Hill, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 450 domains, 0 emails
+
+[114/2216] citizenship consultant Richmond Hill, ON
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 452 domains, 0 emails
+
+[115/2216] immigration services Richmond Hill, ON
+[9218s] ℹ [DDG] Rate limited on "immigration services Richmond Hill, ON" — waiting 30s (attempt 1/3)...
+[9248s] ℹ [DDG] Rate limited on "immigration services Richmond Hill, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 18 domains (via multi-engine)
+  0 verified emails
+  Totals: 456 domains, 0 emails
+
+[116/2216] work visa consultant Richmond Hill, ON
+[9335s] ℹ [DDG] Rate limited on "work visa consultant Richmond Hill, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 456 domains, 0 emails
+
+[117/2216] student visa consultant Richmond Hill, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 456 domains, 0 emails
+
+[118/2216] immigration specialist Richmond Hill, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 458 domains, 0 emails
+
+[119/2216] visa expert Richmond Hill, ON
+[9448s] ℹ [DDG] Rate limited on "visa expert Richmond Hill, ON" — waiting 30s (attempt 1/3)...
+[9478s] ℹ [DDG] Rate limited on "visa expert Richmond Hill, ON" — waiting 60s (attempt 2/3)...
+[9538s] ⚠ [DDG] Search failed for "visa expert Richmond Hill, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[9539s] ℹ [DDG] Rate limited on "visa expert Richmond Hill, ON" — waiting 30s (attempt 1/3)...
+[9569s] ℹ [DDG] Rate limited on "visa expert Richmond Hill, ON" — waiting 60s (attempt 2/3)...
+[9629s] ⚠ [DDG] Search failed for "visa expert Richmond Hill, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 458 domains, 0 emails
+
+[120/2216] PR consultant Richmond Hill, ON
+[multi-search] brave rate-limited — backing off 60s
+[9655s] ℹ [DDG] Rate limited on "PR consultant Richmond Hill, ON" — waiting 30s (attempt 1/3)...
+[9685s] ℹ [DDG] Rate limited on "PR consultant Richmond Hill, ON" — waiting 60s (attempt 2/3)...
+[9745s] ⚠ [DDG] Search failed for "PR consultant Richmond Hill, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 8 domains (via multi-engine)
+  0 verified emails
+  Totals: 460 domains, 0 emails
+
+[121/2216] visa consultant Ajax, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 464 domains, 0 emails
+
+[122/2216] citizenship consultant Ajax, ON
+[9801s] ℹ [DDG] Rate limited on "citizenship consultant Ajax, ON" — waiting 30s (attempt 1/3)...
+[9831s] ℹ [DDG] Rate limited on "citizenship consultant Ajax, ON" — waiting 60s (attempt 2/3)...
+[9892s] ⚠ [DDG] Search failed for "citizenship consultant Ajax, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 466 domains, 0 emails
+
+[123/2216] immigration services Ajax, ON
+[multi-search] brave rate-limited — backing off 60s
+[9917s] ℹ [DDG] Rate limited on "immigration services Ajax, ON" — waiting 30s (attempt 1/3)...
+[9948s] ℹ [DDG] Rate limited on "immigration services Ajax, ON" — waiting 60s (attempt 2/3)...
+[10008s] ⚠ [DDG] Search failed for "immigration services Ajax, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[10008s] ℹ [DDG] Rate limited on "immigration services Ajax, ON" — waiting 30s (attempt 1/3)...
+[10039s] ℹ [DDG] Rate limited on "immigration services Ajax, ON" — waiting 60s (attempt 2/3)...
+[10099s] ⚠ [DDG] Search failed for "immigration services Ajax, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 466 domains, 0 emails
+
+[124/2216] work visa consultant Ajax, ON
+[multi-search] brave rate-limited — backing off 60s
+[10124s] ℹ [DDG] Rate limited on "work visa consultant Ajax, ON" — waiting 30s (attempt 1/3)...
+[10155s] ⚠ [DDG] Search failed for "work visa consultant Ajax, ON": HTTP 403
+[10156s] ℹ [DDG] Rate limited on "work visa consultant Ajax, ON" — waiting 30s (attempt 1/3)...
+[10186s] ℹ [DDG] Rate limited on "work visa consultant Ajax, ON" — waiting 60s (attempt 2/3)...
+[10246s] ⚠ [DDG] Search failed for "work visa consultant Ajax, ON": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 466 domains, 0 emails
+
+[125/2216] student visa consultant Ajax, ON
+[multi-search] brave rate-limited — backing off 60s
+[10272s] ℹ [DDG] Rate limited on "student visa consultant Ajax, ON" — waiting 30s (attempt 1/3)...
+[10304s] ⚠ [DDG] Search failed for "student visa consultant Ajax, ON": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 466 domains, 0 emails
+
+[126/2216] immigration specialist Ajax, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 467 domains, 0 emails
+
+[127/2216] visa expert Ajax, ON
+[multi-search] brave rate-limited — backing off 60s
+[10357s] ℹ [DDG] Rate limited on "visa expert Ajax, ON" — waiting 30s (attempt 1/3)...
+[10388s] ⚠ [DDG] Search failed for "visa expert Ajax, ON": HTTP 403
+[10389s] ⚠ [DDG] Search failed for "visa expert Ajax, ON": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 467 domains, 0 emails
+
+[128/2216] PR consultant Ajax, ON
+[10415s] ⚠ [DDG] Search failed for "PR consultant Ajax, ON": HTTP 403
+[10415s] ⚠ [DDG] Search failed for "PR consultant Ajax, ON": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 467 domains, 0 emails
+
+[129/2216] visa consultant Whitby, ON
+[multi-search] brave rate-limited — backing off 60s
+[10444s] ⚠ [DDG] Search failed for "visa consultant Whitby, ON": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 467 domains, 0 emails
+
+[130/2216] citizenship consultant Whitby, ON
+[10471s] ℹ [DDG] Rate limited on "citizenship consultant Whitby, ON" — waiting 30s (attempt 1/3)...
+[10502s] ⚠ [DDG] Search failed for "citizenship consultant Whitby, ON": HTTP 403
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 470 domains, 0 emails
+
+[131/2216] immigration services Whitby, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 474 domains, 0 emails
+
+[132/2216] work visa consultant Whitby, ON
+[10555s] ℹ [DDG] Rate limited on "work visa consultant Whitby, ON" — waiting 30s (attempt 1/3)...
+[10586s] ⚠ [DDG] Search failed for "work visa consultant Whitby, ON": HTTP 403
+[10586s] ℹ [DDG] Rate limited on "work visa consultant Whitby, ON" — waiting 30s (attempt 1/3)...
+[10617s] ⚠ [DDG] Search failed for "work visa consultant Whitby, ON": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 474 domains, 0 emails
+
+[133/2216] student visa consultant Whitby, ON
+[multi-search] brave rate-limited — backing off 60s
+[10644s] ℹ [DDG] Rate limited on "student visa consultant Whitby, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 475 domains, 0 emails
+
+[134/2216] immigration specialist Whitby, ON
+[10700s] ℹ [DDG] Rate limited on "immigration specialist Whitby, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 475 domains, 0 emails
+
+[135/2216] visa expert Whitby, ON
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 478 domains, 0 emails
+
+[136/2216] PR consultant Whitby, ON
+[10785s] ℹ [DDG] Rate limited on "PR consultant Whitby, ON" — waiting 30s (attempt 1/3)...
+[10815s] ℹ [DDG] Rate limited on "PR consultant Whitby, ON" — waiting 60s (attempt 2/3)...
+[10875s] ⚠ [DDG] Search failed for "PR consultant Whitby, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[10876s] ℹ [DDG] Rate limited on "PR consultant Whitby, ON" — waiting 30s (attempt 1/3)...
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 479 domains, 0 emails
+
+[137/2216] visa consultant Barrie, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 483 domains, 0 emails
+
+[138/2216] citizenship consultant Barrie, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 484 domains, 0 emails
+
+[139/2216] immigration services Barrie, ON
+[10987s] ℹ [DDG] Rate limited on "immigration services Barrie, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 488 domains, 0 emails
+
+[140/2216] work visa consultant Barrie, ON
+[multi-search] brave rate-limited — backing off 60s
+[11045s] ℹ [DDG] Rate limited on "work visa consultant Barrie, ON" — waiting 30s (attempt 1/3)...
+[11075s] ℹ [DDG] Rate limited on "work visa consultant Barrie, ON" — waiting 60s (attempt 2/3)...
+[11136s] ⚠ [DDG] Search failed for "work visa consultant Barrie, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[11136s] ℹ [DDG] Rate limited on "work visa consultant Barrie, ON" — waiting 30s (attempt 1/3)...
+[11167s] ℹ [DDG] Rate limited on "work visa consultant Barrie, ON" — waiting 60s (attempt 2/3)...
+[11227s] ⚠ [DDG] Search failed for "work visa consultant Barrie, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 488 domains, 0 emails
+
+[141/2216] student visa consultant Barrie, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 488 domains, 0 emails
+
+[142/2216] immigration specialist Barrie, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 488 domains, 0 emails
+
+[143/2216] visa expert Barrie, ON
+[11308s] ℹ [DDG] Rate limited on "visa expert Barrie, ON" — waiting 30s (attempt 1/3)...
+[11338s] ℹ [DDG] Rate limited on "visa expert Barrie, ON" — waiting 60s (attempt 2/3)...
+[11398s] ⚠ [DDG] Search failed for "visa expert Barrie, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[11399s] ℹ [DDG] Rate limited on "visa expert Barrie, ON" — waiting 30s (attempt 1/3)...
+[11429s] ℹ [DDG] Rate limited on "visa expert Barrie, ON" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 488 domains, 0 emails
+
+[144/2216] PR consultant Barrie, ON
+[multi-search] brave rate-limited — backing off 60s
+[11516s] ℹ [DDG] Rate limited on "PR consultant Barrie, ON" — waiting 30s (attempt 1/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 490 domains, 0 emails
+
+[145/2216] visa consultant Guelph, ON
+[11573s] ℹ [DDG] Rate limited on "visa consultant Guelph, ON" — waiting 30s (attempt 1/3)...
+[11604s] ℹ [DDG] Rate limited on "visa consultant Guelph, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+[11665s] ℹ [DDG] Rate limited on "visa consultant Guelph, ON" — waiting 30s (attempt 1/3)...
+[11695s] ℹ [DDG] Rate limited on "visa consultant Guelph, ON" — waiting 60s (attempt 2/3)...
+[11755s] ⚠ [DDG] Search failed for "visa consultant Guelph, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 491 domains, 0 emails
+
+[146/2216] citizenship consultant Guelph, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 491 domains, 0 emails
+
+[147/2216] immigration services Guelph, ON
+  Found 15 domains (via multi-engine)
+  0 verified emails
+  Totals: 494 domains, 0 emails
+
+[148/2216] work visa consultant Guelph, ON
+[11837s] ℹ [DDG] Rate limited on "work visa consultant Guelph, ON" — waiting 30s (attempt 1/3)...
+[11867s] ℹ [DDG] Rate limited on "work visa consultant Guelph, ON" — waiting 60s (attempt 2/3)...
+[11927s] ⚠ [DDG] Search failed for "work visa consultant Guelph, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 494 domains, 0 emails
+
+[149/2216] student visa consultant Guelph, ON
+[multi-search] brave rate-limited — backing off 60s
+[11953s] ℹ [DDG] Rate limited on "student visa consultant Guelph, ON" — waiting 30s (attempt 1/3)...
+[11983s] ℹ [DDG] Rate limited on "student visa consultant Guelph, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+[12045s] ℹ [DDG] Rate limited on "student visa consultant Guelph, ON" — waiting 30s (attempt 1/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 495 domains, 0 emails
+
+[150/2216] immigration specialist Guelph, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 496 domains, 0 emails
+
+[151/2216] visa expert Guelph, ON
+[multi-search] brave rate-limited — backing off 60s
+[12129s] ℹ [DDG] Rate limited on "visa expert Guelph, ON" — waiting 30s (attempt 1/3)...
+[12160s] ℹ [DDG] Rate limited on "visa expert Guelph, ON" — waiting 60s (attempt 2/3)...
+[12220s] ⚠ [DDG] Search failed for "visa expert Guelph, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 497 domains, 0 emails
+
+[152/2216] PR consultant Guelph, ON
+[multi-search] brave rate-limited — backing off 60s
+[12246s] ℹ [DDG] Rate limited on "PR consultant Guelph, ON" — waiting 30s (attempt 1/3)...
+[12276s] ℹ [DDG] Rate limited on "PR consultant Guelph, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 500 domains, 0 emails
+
+[153/2216] visa consultant Kingston, ON
+[12364s] ℹ [DDG] Rate limited on "visa consultant Kingston, ON" — waiting 30s (attempt 1/3)...
+[12394s] ℹ [DDG] Rate limited on "visa consultant Kingston, ON" — waiting 60s (attempt 2/3)...
+[12454s] ⚠ [DDG] Search failed for "visa consultant Kingston, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[12455s] ℹ [DDG] Rate limited on "visa consultant Kingston, ON" — waiting 30s (attempt 1/3)...
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 503 domains, 0 emails
+
+[154/2216] citizenship consultant Kingston, ON
+[12511s] ℹ [DDG] Rate limited on "citizenship consultant Kingston, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 504 domains, 0 emails
+
+[155/2216] immigration services Kingston, ON
+[12570s] ℹ [DDG] Rate limited on "immigration services Kingston, ON" — waiting 30s (attempt 1/3)...
+[12601s] ℹ [DDG] Rate limited on "immigration services Kingston, ON" — waiting 30s (attempt 1/3)...
+[12631s] ℹ [DDG] Rate limited on "immigration services Kingston, ON" — waiting 60s (attempt 2/3)...
+[12691s] ⚠ [DDG] Search failed for "immigration services Kingston, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 510 domains, 0 emails
+
+[156/2216] work visa consultant Kingston, ON
+[multi-search] brave rate-limited — backing off 60s
+[12717s] ℹ [DDG] Rate limited on "work visa consultant Kingston, ON" — waiting 30s (attempt 1/3)...
+[12747s] ℹ [DDG] Rate limited on "work visa consultant Kingston, ON" — waiting 60s (attempt 2/3)...
+[12808s] ⚠ [DDG] Search failed for "work visa consultant Kingston, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[12808s] ℹ [DDG] Rate limited on "work visa consultant Kingston, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 511 domains, 0 emails
+
+[157/2216] student visa consultant Kingston, ON
+[12865s] ℹ [DDG] Rate limited on "student visa consultant Kingston, ON" — waiting 30s (attempt 1/3)...
+[12895s] ℹ [DDG] Rate limited on "student visa consultant Kingston, ON" — waiting 60s (attempt 2/3)...
+[12955s] ⚠ [DDG] Search failed for "student visa consultant Kingston, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 513 domains, 0 emails
+
+[158/2216] immigration specialist Kingston, ON
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 515 domains, 0 emails
+
+[159/2216] visa expert Kingston, ON
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 517 domains, 0 emails
+
+[160/2216] PR consultant Kingston, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 519 domains, 0 emails
+
+[161/2216] visa consultant Sudbury, ON
+[13064s] ℹ [DDG] Rate limited on "visa consultant Sudbury, ON" — waiting 30s (attempt 1/3)...
+[13094s] ℹ [DDG] Rate limited on "visa consultant Sudbury, ON" — waiting 60s (attempt 2/3)...
+[13155s] ⚠ [DDG] Search failed for "visa consultant Sudbury, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[13155s] ℹ [DDG] Rate limited on "visa consultant Sudbury, ON" — waiting 30s (attempt 1/3)...
+[13186s] ℹ [DDG] Rate limited on "visa consultant Sudbury, ON" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 522 domains, 0 emails
+
+[162/2216] citizenship consultant Sudbury, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 16 domains (via multi-engine)
+  0 verified emails
+  Totals: 525 domains, 0 emails
+
+[163/2216] immigration services Sudbury, ON
+[13299s] ℹ [DDG] Rate limited on "immigration services Sudbury, ON" — waiting 30s (attempt 1/3)...
+[13329s] ℹ [DDG] Rate limited on "immigration services Sudbury, ON" — waiting 60s (attempt 2/3)...
+[13389s] ⚠ [DDG] Search failed for "immigration services Sudbury, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[13390s] ℹ [DDG] Rate limited on "immigration services Sudbury, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 528 domains, 0 emails
+
+[164/2216] work visa consultant Sudbury, ON
+[13447s] ℹ [DDG] Rate limited on "work visa consultant Sudbury, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 528 domains, 0 emails
+
+[165/2216] student visa consultant Sudbury, ON
+[13505s] ⚠ [DDG] Search failed for "student visa consultant Sudbury, ON": HTTP 403
+[13505s] ℹ [DDG] Rate limited on "student visa consultant Sudbury, ON" — waiting 30s (attempt 1/3)...
+[13536s] ⚠ [DDG] Search failed for "student visa consultant Sudbury, ON": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 528 domains, 0 emails
+
+[166/2216] immigration specialist Sudbury, ON
+[multi-search] brave rate-limited — backing off 60s
+[13562s] ℹ [DDG] Rate limited on "immigration specialist Sudbury, ON" — waiting 30s (attempt 1/3)...
+[13592s] ℹ [DDG] Rate limited on "immigration specialist Sudbury, ON" — waiting 60s (attempt 2/3)...
+[13652s] ⚠ [DDG] Search failed for "immigration specialist Sudbury, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[13653s] ℹ [DDG] Rate limited on "immigration specialist Sudbury, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 529 domains, 0 emails
+
+[167/2216] visa expert Sudbury, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 532 domains, 0 emails
+
+[168/2216] PR consultant Sudbury, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 539 domains, 0 emails
+
+[169/2216] visa consultant Thunder Bay, ON
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 543 domains, 0 emails
+
+[170/2216] citizenship consultant Thunder Bay, ON
+[13791s] ℹ [DDG] Rate limited on "citizenship consultant Thunder Bay, ON" — waiting 30s (attempt 1/3)...
+[13821s] ℹ [DDG] Rate limited on "citizenship consultant Thunder Bay, ON" — waiting 60s (attempt 2/3)...
+[13881s] ⚠ [DDG] Search failed for "citizenship consultant Thunder Bay, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[13882s] ℹ [DDG] Rate limited on "citizenship consultant Thunder Bay, ON" — waiting 30s (attempt 1/3)...
+[13912s] ℹ [DDG] Rate limited on "citizenship consultant Thunder Bay, ON" — waiting 60s (attempt 2/3)...
+  Found 8 domains (via multi-engine)
+  0 verified emails
+  Totals: 545 domains, 0 emails
+
+[171/2216] immigration services Thunder Bay, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 546 domains, 0 emails
+
+[172/2216] work visa consultant Thunder Bay, ON
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 546 domains, 0 emails
+
+[173/2216] student visa consultant Thunder Bay, ON
+[14054s] ℹ [DDG] Rate limited on "student visa consultant Thunder Bay, ON" — waiting 30s (attempt 1/3)...
+[14084s] ℹ [DDG] Rate limited on "student visa consultant Thunder Bay, ON" — waiting 60s (attempt 2/3)...
+[14144s] ⚠ [DDG] Search failed for "student visa consultant Thunder Bay, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[14145s] ℹ [DDG] Rate limited on "student visa consultant Thunder Bay, ON" — waiting 30s (attempt 1/3)...
+[14175s] ℹ [DDG] Rate limited on "student visa consultant Thunder Bay, ON" — waiting 60s (attempt 2/3)...
+[14235s] ⚠ [DDG] Search failed for "student visa consultant Thunder Bay, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 546 domains, 0 emails
+
+[174/2216] immigration specialist Thunder Bay, ON
+[multi-search] brave rate-limited — backing off 60s
+[14261s] ℹ [DDG] Rate limited on "immigration specialist Thunder Bay, ON" — waiting 30s (attempt 1/3)...
+[14291s] ℹ [DDG] Rate limited on "immigration specialist Thunder Bay, ON" — waiting 60s (attempt 2/3)...
+[14351s] ⚠ [DDG] Search failed for "immigration specialist Thunder Bay, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 547 domains, 0 emails
+
+[175/2216] visa expert Thunder Bay, ON
+[14378s] ℹ [DDG] Rate limited on "visa expert Thunder Bay, ON" — waiting 30s (attempt 1/3)...
+[14408s] ℹ [DDG] Rate limited on "visa expert Thunder Bay, ON" — waiting 60s (attempt 2/3)...
+[14469s] ⚠ [DDG] Search failed for "visa expert Thunder Bay, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[14469s] ℹ [DDG] Rate limited on "visa expert Thunder Bay, ON" — waiting 30s (attempt 1/3)...
+[14499s] ℹ [DDG] Rate limited on "visa expert Thunder Bay, ON" — waiting 60s (attempt 2/3)...
+[14560s] ⚠ [DDG] Search failed for "visa expert Thunder Bay, ON": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 547 domains, 0 emails
+
+[176/2216] PR consultant Thunder Bay, ON
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 554 domains, 0 emails
+
+[177/2216] visa consultant Niagara Falls, ON
+[14613s] ℹ [DDG] Rate limited on "visa consultant Niagara Falls, ON" — waiting 30s (attempt 1/3)...
+[14645s] ⚠ [DDG] Search failed for "visa consultant Niagara Falls, ON": HTTP 403
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 555 domains, 0 emails
+
+[178/2216] citizenship consultant Niagara Falls, ON
+[multi-search] brave rate-limited — backing off 60s
+[14672s] ℹ [DDG] Rate limited on "citizenship consultant Niagara Falls, ON" — waiting 30s (attempt 1/3)...
+[14702s] ℹ [DDG] Rate limited on "citizenship consultant Niagara Falls, ON" — waiting 60s (attempt 2/3)...
+[14762s] ⚠ [DDG] Search failed for "citizenship consultant Niagara Falls, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 555 domains, 0 emails
+
+[179/2216] immigration services Niagara Falls, ON
+[multi-search] brave rate-limited — backing off 60s
+[14788s] ℹ [DDG] Rate limited on "immigration services Niagara Falls, ON" — waiting 30s (attempt 1/3)...
+[14818s] ℹ [DDG] Rate limited on "immigration services Niagara Falls, ON" — waiting 60s (attempt 2/3)...
+[14878s] ⚠ [DDG] Search failed for "immigration services Niagara Falls, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[14879s] ⚠ [DDG] Search failed for "immigration services Niagara Falls, ON": HTTP 403
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 555 domains, 0 emails
+
+[180/2216] work visa consultant Niagara Falls, ON
+[14905s] ℹ [DDG] Rate limited on "work visa consultant Niagara Falls, ON" — waiting 30s (attempt 1/3)...
+[14935s] ℹ [DDG] Rate limited on "work visa consultant Niagara Falls, ON" — waiting 60s (attempt 2/3)...
+[14996s] ⚠ [DDG] Search failed for "work visa consultant Niagara Falls, ON": HTTP 403
+[multi-search] brave rate-limited — backing off 60s
+[14997s] ℹ [DDG] Rate limited on "work visa consultant Niagara Falls, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 557 domains, 0 emails
+
+[181/2216] student visa consultant Niagara Falls, ON
+[15053s] ℹ [DDG] Rate limited on "student visa consultant Niagara Falls, ON" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 557 domains, 0 emails
+
+[182/2216] immigration specialist Niagara Falls, ON
+[15111s] ℹ [DDG] Rate limited on "immigration specialist Niagara Falls, ON" — waiting 30s (attempt 1/3)...
+[15143s] ℹ [DDG] Rate limited on "immigration specialist Niagara Falls, ON" — waiting 30s (attempt 1/3)...
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 557 domains, 0 emails
+
+[183/2216] visa expert Niagara Falls, ON
+[multi-search] brave rate-limited — backing off 60s
+[15199s] ℹ [DDG] Rate limited on "visa expert Niagara Falls, ON" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 557 domains, 0 emails
+
+[184/2216] PR consultant Niagara Falls, ON
+[15257s] ℹ [DDG] Rate limited on "PR consultant Niagara Falls, ON" — waiting 30s (attempt 1/3)...
+[15287s] ℹ [DDG] Rate limited on "PR consultant Niagara Falls, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 559 domains, 0 emails
+
+[185/2216] visa consultant St. Catharines, ON
+[15375s] ℹ [DDG] Rate limited on "visa consultant St. Catharines, ON" — waiting 30s (attempt 1/3)...
+[15407s] ℹ [DDG] Rate limited on "visa consultant St. Catharines, ON" — waiting 30s (attempt 1/3)...
+[15437s] ℹ [DDG] Rate limited on "visa consultant St. Catharines, ON" — waiting 60s (attempt 2/3)...
+[15497s] ⚠ [DDG] Search failed for "visa consultant St. Catharines, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 561 domains, 0 emails
+
+[186/2216] citizenship consultant St. Catharines, ON
+[multi-search] brave rate-limited — backing off 60s
+[15523s] ℹ [DDG] Rate limited on "citizenship consultant St. Catharines, ON" — waiting 30s (attempt 1/3)...
+[15553s] ℹ [DDG] Rate limited on "citizenship consultant St. Catharines, ON" — waiting 60s (attempt 2/3)...
+[15613s] ⚠ [DDG] Search failed for "citizenship consultant St. Catharines, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[15614s] ℹ [DDG] Rate limited on "citizenship consultant St. Catharines, ON" — waiting 30s (attempt 1/3)...
+[15644s] ℹ [DDG] Rate limited on "citizenship consultant St. Catharines, ON" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 563 domains, 0 emails
+
+[187/2216] immigration services St. Catharines, ON
+[multi-search] brave rate-limited — backing off 60s
+[15731s] ℹ [DDG] Rate limited on "immigration services St. Catharines, ON" — waiting 30s (attempt 1/3)...
+[15761s] ℹ [DDG] Rate limited on "immigration services St. Catharines, ON" — waiting 60s (attempt 2/3)...
+[15821s] ⚠ [DDG] Search failed for "immigration services St. Catharines, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 564 domains, 0 emails
+
+[188/2216] work visa consultant St. Catharines, ON
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 565 domains, 0 emails
+
+[189/2216] student visa consultant St. Catharines, ON
+[15875s] ℹ [DDG] Rate limited on "student visa consultant St. Catharines, ON" — waiting 30s (attempt 1/3)...
+[15906s] ℹ [DDG] Rate limited on "student visa consultant St. Catharines, ON" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 565 domains, 0 emails
+
+[190/2216] immigration specialist St. Catharines, ON
+[15994s] ℹ [DDG] Rate limited on "immigration specialist St. Catharines, ON" — waiting 30s (attempt 1/3)...
+[16024s] ℹ [DDG] Rate limited on "immigration specialist St. Catharines, ON" — waiting 60s (attempt 2/3)...
+[16084s] ⚠ [DDG] Search failed for "immigration specialist St. Catharines, ON": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[16085s] ℹ [DDG] Rate limited on "immigration specialist St. Catharines, ON" — waiting 30s (attempt 1/3)...
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 566 domains, 0 emails
+
+[191/2216] visa expert St. Catharines, ON
+[16142s] ℹ [DDG] Rate limited on "visa expert St. Catharines, ON" — waiting 30s (attempt 1/3)...
+[16172s] ℹ [DDG] Rate limited on "visa expert St. Catharines, ON" — waiting 60s (attempt 2/3)...
+[16233s] ⚠ [DDG] Search failed for "visa expert St. Catharines, ON": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 567 domains, 0 emails
+
+[192/2216] PR consultant St. Catharines, ON
+[multi-search] brave rate-limited — backing off 60s
+[16258s] ℹ [DDG] Rate limited on "PR consultant St. Catharines, ON" — waiting 30s (attempt 1/3)...
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 569 domains, 0 emails
+
+[193/2216] visa consultant Montreal, QC
+[16316s] ℹ [DDG] Rate limited on "visa consultant Montreal, QC" — waiting 30s (attempt 1/3)...
+[multi-search] brave rate-limited — backing off 60s
+[16347s] ℹ [DDG] Rate limited on "visa consultant Montreal, QC" — waiting 30s (attempt 1/3)...
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 578 domains, 0 emails
+
+[194/2216] citizenship consultant Montreal, QC
+[16404s] ℹ [DDG] Rate limited on "citizenship consultant Montreal, QC" — waiting 30s (attempt 1/3)...
+[16434s] ℹ [DDG] Rate limited on "citizenship consultant Montreal, QC" — waiting 60s (attempt 2/3)...
+[16494s] ⚠ [DDG] Search failed for "citizenship consultant Montreal, QC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[16495s] ℹ [DDG] Rate limited on "citizenship consultant Montreal, QC" — waiting 30s (attempt 1/3)...
+[16525s] ℹ [DDG] Rate limited on "citizenship consultant Montreal, QC" — waiting 60s (attempt 2/3)...
+[16585s] ⚠ [DDG] Search failed for "citizenship consultant Montreal, QC": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 578 domains, 0 emails
+
+[195/2216] immigration services Montreal, QC
+[multi-search] brave rate-limited — backing off 60s
+[16612s] ℹ [DDG] Rate limited on "immigration services Montreal, QC" — waiting 30s (attempt 1/3)...
+[16642s] ℹ [DDG] Rate limited on "immigration services Montreal, QC" — waiting 60s (attempt 2/3)...
+[16702s] ⚠ [DDG] Search failed for "immigration services Montreal, QC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[16703s] ℹ [DDG] Rate limited on "immigration services Montreal, QC" — waiting 30s (attempt 1/3)...
+[16733s] ℹ [DDG] Rate limited on "immigration services Montreal, QC" — waiting 60s (attempt 2/3)...
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 582 domains, 0 emails
+
+[196/2216] work visa consultant Montreal, QC
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 582 domains, 0 emails
+
+[197/2216] student visa consultant Montreal, QC
+[16847s] ℹ [DDG] Rate limited on "student visa consultant Montreal, QC" — waiting 30s (attempt 1/3)...
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 583 domains, 0 emails
+
+[198/2216] immigration specialist Montreal, QC
+[multi-search] brave rate-limited — backing off 60s
+[16906s] ℹ [DDG] Rate limited on "immigration specialist Montreal, QC" — waiting 30s (attempt 1/3)...
+[16936s] ℹ [DDG] Rate limited on "immigration specialist Montreal, QC" — waiting 60s (attempt 2/3)...
+  Found 14 domains (via multi-engine)
+  0 verified emails
+  Totals: 589 domains, 0 emails
+
+[199/2216] visa expert Montreal, QC
+[multi-search] brave rate-limited — backing off 60s
+[17023s] ℹ [DDG] Rate limited on "visa expert Montreal, QC" — waiting 30s (attempt 1/3)...
+[17053s] ℹ [DDG] Rate limited on "visa expert Montreal, QC" — waiting 60s (attempt 2/3)...
+  Found 17 domains (via multi-engine)
+  0 verified emails
+  Totals: 596 domains, 0 emails
+
+[200/2216] PR consultant Montreal, QC
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 602 domains, 0 emails
+
+[201/2216] visa consultant Laval, QC
+[17167s] ℹ [DDG] Rate limited on "visa consultant Laval, QC" — waiting 30s (attempt 1/3)...
+[17197s] ℹ [DDG] Rate limited on "visa consultant Laval, QC" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+[17259s] ℹ [DDG] Rate limited on "visa consultant Laval, QC" — waiting 30s (attempt 1/3)...
+[17289s] ℹ [DDG] Rate limited on "visa consultant Laval, QC" — waiting 60s (attempt 2/3)...
+[17349s] ⚠ [DDG] Search failed for "visa consultant Laval, QC": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 604 domains, 0 emails
+
+[202/2216] citizenship consultant Laval, QC
+[multi-search] brave rate-limited — backing off 60s
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 605 domains, 0 emails
+
+[203/2216] immigration services Laval, QC
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 608 domains, 0 emails
+
+[204/2216] work visa consultant Laval, QC
+[17430s] ⚠ [DDG] Search failed for "work visa consultant Laval, QC": HTTP 403
+[17430s] ℹ [DDG] Rate limited on "work visa consultant Laval, QC" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 608 domains, 0 emails
+
+[205/2216] student visa consultant Laval, QC
+[multi-search] brave rate-limited — backing off 60s
+[17488s] ℹ [DDG] Rate limited on "student visa consultant Laval, QC" — waiting 30s (attempt 1/3)...
+[17518s] ℹ [DDG] Rate limited on "student visa consultant Laval, QC" — waiting 60s (attempt 2/3)...
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 609 domains, 0 emails
+
+[206/2216] immigration specialist Laval, QC
+[multi-search] brave rate-limited — backing off 60s
+[17605s] ℹ [DDG] Rate limited on "immigration specialist Laval, QC" — waiting 30s (attempt 1/3)...
+[17636s] ℹ [DDG] Rate limited on "immigration specialist Laval, QC" — waiting 30s (attempt 1/3)...
+[17666s] ℹ [DDG] Rate limited on "immigration specialist Laval, QC" — waiting 60s (attempt 2/3)...
+  Found 12 domains (via multi-engine)
+  0 verified emails
+  Totals: 612 domains, 0 emails
+
+[207/2216] visa expert Laval, QC
+[multi-search] brave rate-limited — backing off 60s
+[17753s] ℹ [DDG] Rate limited on "visa expert Laval, QC" — waiting 30s (attempt 1/3)...
+[17783s] ℹ [DDG] Rate limited on "visa expert Laval, QC" — waiting 60s (attempt 2/3)...
+[17844s] ⚠ [DDG] Search failed for "visa expert Laval, QC": HTTP 403
+[multi-search] brave rate-limited — backing off 60s
+  Found 8 domains (via multi-engine)
+  0 verified emails
+  Totals: 613 domains, 0 emails
+
+[208/2216] PR consultant Laval, QC
+[17872s] ⚠ [DDG] Search failed for "PR consultant Laval, QC": HTTP 403
+  Found 9 domains (via multi-engine)
+  0 verified emails
+  Totals: 613 domains, 0 emails
+
+[209/2216] visa consultant Quebec City, QC
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 618 domains, 0 emails
+
+[210/2216] citizenship consultant Quebec City, QC
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 621 domains, 0 emails
+
+[211/2216] immigration services Quebec City, QC
+[17953s] ℹ [DDG] Rate limited on "immigration services Quebec City, QC" — waiting 30s (attempt 1/3)...
+[17984s] ℹ [DDG] Rate limited on "immigration services Quebec City, QC" — waiting 30s (attempt 1/3)...
+[18014s] ℹ [DDG] Rate limited on "immigration services Quebec City, QC" — waiting 60s (attempt 2/3)...
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 624 domains, 0 emails
+
+[212/2216] work visa consultant Quebec City, QC
+[multi-search] brave rate-limited — backing off 60s
+  Found 13 domains (via multi-engine)
+  0 verified emails
+  Totals: 627 domains, 0 emails
+
+[213/2216] student visa consultant Quebec City, QC
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 629 domains, 0 emails
+
+[214/2216] immigration specialist Quebec City, QC
+[18156s] ℹ [DDG] Rate limited on "immigration specialist Quebec City, QC" — waiting 30s (attempt 1/3)...
+[18186s] ℹ [DDG] Rate limited on "immigration specialist Quebec City, QC" — waiting 60s (attempt 2/3)...
+[18246s] ⚠ [DDG] Search failed for "immigration specialist Quebec City, QC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[18247s] ℹ [DDG] Rate limited on "immigration specialist Quebec City, QC" — waiting 30s (attempt 1/3)...
+[18277s] ℹ [DDG] Rate limited on "immigration specialist Quebec City, QC" — waiting 60s (attempt 2/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 630 domains, 0 emails
+
+[215/2216] visa expert Quebec City, QC
+[multi-search] brave rate-limited — backing off 60s
+  Found 11 domains (via multi-engine)
+  0 verified emails
+  Totals: 633 domains, 0 emails
+
+[216/2216] PR consultant Quebec City, QC
+[18404s] ℹ [DDG] Rate limited on "PR consultant Quebec City, QC" — waiting 30s (attempt 1/3)...
+[18435s] ℹ [DDG] Rate limited on "PR consultant Quebec City, QC" — waiting 60s (attempt 2/3)...
+[18495s] ⚠ [DDG] Search failed for "PR consultant Quebec City, QC": HTTP 202
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 635 domains, 0 emails
+
+[217/2216] visa consultant Gatineau, QC
+[multi-search] brave rate-limited — backing off 60s
+[18520s] ℹ [DDG] Rate limited on "visa consultant Gatineau, QC" — waiting 30s (attempt 1/3)...
+[18551s] ℹ [DDG] Rate limited on "visa consultant Gatineau, QC" — waiting 60s (attempt 2/3)...
+[18611s] ⚠ [DDG] Search failed for "visa consultant Gatineau, QC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[18611s] ℹ [DDG] Rate limited on "visa consultant Gatineau, QC" — waiting 30s (attempt 1/3)...
+[18642s] ℹ [DDG] Rate limited on "visa consultant Gatineau, QC" — waiting 60s (attempt 2/3)...
+[18702s] ⚠ [DDG] Search failed for "visa consultant Gatineau, QC": HTTP 202
+  Found 0 domains (via multi-engine)
+  0 verified emails
+  Totals: 635 domains, 0 emails
+
+[218/2216] citizenship consultant Gatineau, QC
+[multi-search] brave rate-limited — backing off 60s
+[18728s] ℹ [DDG] Rate limited on "citizenship consultant Gatineau, QC" — waiting 30s (attempt 1/3)...
+[18758s] ℹ [DDG] Rate limited on "citizenship consultant Gatineau, QC" — waiting 60s (attempt 2/3)...
+[18818s] ⚠ [DDG] Search failed for "citizenship consultant Gatineau, QC": HTTP 202
+[multi-search] brave rate-limited — backing off 60s
+[18819s] ℹ [DDG] Rate limited on "citizenship consultant Gatineau, QC" — waiting 30s (attempt 1/3)...
+  Found 10 domains (via multi-engine)
+  0 verified emails
+  Totals: 636 domains, 0 emails
+
+[219/2216] immigration services Gatineau, QC
+[18875s] ℹ [DDG] Rate limited on "immigration services Gatineau, QC" — waiting 30s (attempt 1/3)...
+[18905s] ℹ [DDG] Rate limited on "immigration services Gatineau, QC" — waiting 60s (attempt 2/3)...
+[multi-search] brave rate-limited — backing off 60s
+[18967s] ℹ [DDG] Rate limited on "immigration services Gatineau, QC" — waiting 30s (attempt 1/3)...
+[18997s] ℹ [DDG] Rate limited on "immigration services Gatineau, QC" — waiting 60s (attempt 2/3)...
+[19057s] ⚠ [DDG] Search failed for "immigration services Gatineau, QC": HTTP 202
+  Found 6 domains (via multi-engine)
+  0 verified emails
+  Totals: 636 domains, 0 emails
+
+[220/2216] work visa consultant Gatineau, QC
+[multi-search] brave rate-limited — backing off 60s
+[19083s] ℹ [DDG] Rate limited on "work visa consultant Gatineau, QC" — waiting 30s (attempt 1/3)...
