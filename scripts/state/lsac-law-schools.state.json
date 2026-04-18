@@ -1,0 +1,793 @@
+{
+  "processed": {
+    "https://www.lsac.org/node/2755": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/2816": {
+      "ok": true,
+      "email": false
+    },
+    "https://www.lsac.org/node/2817": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3196": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3199": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3198": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3197": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3200": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3201": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3202": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3203": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3204": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3205": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3206": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3207": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3208": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3209": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3210": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3211": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3212": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3213": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3214": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3216": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3217": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3215": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3218": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3219": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3220": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3225": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3226": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3227": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3228": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3229": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3230": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3231": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3232": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3233": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3234": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3246": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3245": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3244": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3408": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3243": {
+      "ok": true,
+      "email": false
+    },
+    "https://www.lsac.org/node/3242": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3241": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3240": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3239": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3252": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3251": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3250": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3253": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3249": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3254": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3255": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3256": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3257": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3258": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3260": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3261": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3262": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3263": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3268": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3267": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3266": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3265": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3264": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3272": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3271": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3270": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/6076": {
+      "ok": true,
+      "email": false
+    },
+    "https://www.lsac.org/node/3269": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3282": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3281": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3280": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3278": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3279": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3287": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3286": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3285": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3284": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/4978": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3283": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3288": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3289": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3290": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3291": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3292": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3293": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3294": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3295": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3296": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3297": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3298": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3299": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3300": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3301": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3302": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3303": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3304": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3305": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3306": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3307": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3308": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3309": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3310": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3311": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3312": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3313": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3314": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3315": {
+      "ok": true,
+      "email": false
+    },
+    "https://www.lsac.org/node/3316": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3317": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3318": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3319": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3321": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3322": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3323": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3324": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3325": {
+      "ok": true,
+      "email": false
+    },
+    "https://www.lsac.org/node/3326": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3327": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3328": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3329": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3330": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3335": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3336": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3337": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3338": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3339": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3340": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3341": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3342": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3343": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3345": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3346": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3347": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3348": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3349": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3354": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3353": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3352": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3350": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3351": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3355": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3356": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3357": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3358": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3359": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3360": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3361": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3362": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3363": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3364": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3365": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3366": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3367": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3368": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3369": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3370": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3371": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3374": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3375": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3376": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3377": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3378": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3379": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3380": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3381": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3382": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3383": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3384": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3392": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3393": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3394": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3395": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3396": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3397": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3398": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3399": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3400": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3401": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3402": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3403": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3404": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3405": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3406": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3407": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3409": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3410": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3411": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3412": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3413": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3414": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/5541": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3415": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3416": {
+      "ok": true,
+      "email": true
+    },
+    "https://www.lsac.org/node/3417": {
+      "ok": true,
+      "email": true
+    }
+  },
+  "startedAt": "2026-04-18T05:43:32.180Z"
+}

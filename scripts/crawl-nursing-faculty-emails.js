@@ -209,26 +209,8 @@ function extractEmailsFromHtml(html, rootDom) {
       const handle = email.split('@')[0].toLowerCase();
       const nameFromImg = findNameFromNearbyImage(html, m.index, handle);
       if (nameFromImg) {
-        // Decide first/last order using email handle if possible
-        const a = nameFromImg.firstName.toLowerCase();
-        const b = nameFromImg.lastName.toLowerCase();
-        if (handle.includes(a) && handle.includes(b)) {
-          // Prefer Firstname_Lastname if handle starts with a
-          if (handle.startsWith(a)) {
-            existing.firstName = nameFromImg.firstName;
-            existing.lastName = nameFromImg.lastName;
-          } else if (handle.startsWith(b)) {
-            existing.firstName = nameFromImg.altOrder.firstName;
-            existing.lastName = nameFromImg.altOrder.lastName;
-          } else {
-            existing.firstName = nameFromImg.altOrder.firstName;
-            existing.lastName = nameFromImg.altOrder.lastName;
-          }
-        } else {
-          // Default: Lastname_Firstname ordering is common in university photo libraries
-          existing.firstName = nameFromImg.altOrder.firstName;
-          existing.lastName = nameFromImg.altOrder.lastName;
-        }
+        existing.firstName = nameFromImg.firstName;
+        existing.lastName = nameFromImg.lastName;
       }
       if (!existing.firstName && !existing.lastName) {
         // Text-based fallback
@@ -256,20 +238,10 @@ function extractEmailsFromHtml(html, rootDom) {
     if (found.has(email)) continue;
     const entry = { firstName: '', lastName: '' };
     const handle = email.split('@')[0].toLowerCase();
-    const nameFromImg = findNameFromNearbyImage(html, tm.index);
+    const nameFromImg = findNameFromNearbyImage(html, tm.index, handle);
     if (nameFromImg) {
-      const a = nameFromImg.firstName.toLowerCase();
-      const b = nameFromImg.lastName.toLowerCase();
-      if (handle.includes(a) && handle.startsWith(a)) {
-        entry.firstName = nameFromImg.firstName;
-        entry.lastName = nameFromImg.lastName;
-      } else if (handle.includes(b) && handle.startsWith(b)) {
-        entry.firstName = nameFromImg.altOrder.firstName;
-        entry.lastName = nameFromImg.altOrder.lastName;
-      } else {
-        entry.firstName = nameFromImg.altOrder.firstName;
-        entry.lastName = nameFromImg.altOrder.lastName;
-      }
+      entry.firstName = nameFromImg.firstName;
+      entry.lastName = nameFromImg.lastName;
     }
     if (!entry.firstName && !entry.lastName) {
       const ctx = getSurroundingText(html, tm.index, 600);
@@ -395,27 +367,62 @@ function findNameFromNearbyImage(html, emailIdx, emailHandle) {
   const aLow = a.toLowerCase();
   const bLow = b.toLowerCase();
   if (NON_NAME_WORDS.has(aLow) || NON_NAME_WORDS.has(bLow)) return null;
-  // Ensure the image actually corresponds to this email: handle should contain at least one side
-  // OR handle's initials should match.
-  const h = (emailHandle || '').toLowerCase();
-  const handleNoNums = h.replace(/\d+$/, '');
-  const matches =
-    handleNoNums.includes(aLow) ||
-    handleNoNums.includes(bLow) ||
-    handleNoNums.startsWith(aLow[0] + bLow) || // flast
-    handleNoNums.startsWith(bLow[0] + aLow) || // flast
-    (handleNoNums.length === 2 && handleNoNums === aLow[0] + bLow[0]) || // initials
-    (aLow.startsWith(handleNoNums.slice(0, 3))) ||
-    (bLow.startsWith(handleNoNums.slice(0, 3)));
-  if (!matches) return null;
-  // Decide first/last
-  if (handleNoNums.startsWith(aLow) || aLow.startsWith(handleNoNums.split('.')[0] || '')) {
-    return { firstName: a, lastName: b, altOrder: { firstName: b, lastName: a } };
+  // Verify the image belongs to this email. Compute handle-relatedness score for each side.
+  const h = (emailHandle || '').toLowerCase().replace(/\d+$/, '');
+
+  // Score: higher = more likely this side matches the handle
+  const scoreAgainst = (side) => {
+    if (!side) return 0;
+    if (h === side) return 100;
+    if (h.startsWith(side)) return 80;
+    if (h.endsWith(side)) return 75;
+    if (h.includes(side)) return 60;
+    if (side.startsWith(h.replace(/\./g, ''))) return 40;
+    if (side[0] === h[0]) return 10;
+    return 0;
+  };
+
+  // Most universities use "first.last" or flast or firstl patterns in email
+  // Infer order from what each side matches
+  const aScore = scoreAgainst(aLow);
+  const bScore = scoreAgainst(bLow);
+  const maxScore = Math.max(aScore, bScore);
+  if (maxScore < 10) return null;
+
+  // The side with the higher match-score for the SECOND half of a "first.last" pattern is the
+  // last name. Conversely, the side matching the FIRST portion is the first name.
+  // Example: handle=jennifer.bail, a=Jennifer b=Bail → aScore on "jennifer"=100, bScore on "bail"=100
+  // Example: handle=keakins, a=Akins b=Kristina → aScore ("akins") h=keakins, endsWith=75; bScore ("kristina") h[0]=k, side[0]=k → 10.
+  //   So Akins wins -> lastName.
+  // Example: handle=abarmstrong, a=Armstrong b=Alexandra → h starts with 'a' for both; a ends with 'armstrong'? handle is 'abarmstrong' -> endsWith('armstrong')=true (75). b 'alexandra' not included (0+10 initial).
+  //   So Armstrong wins -> lastName.
+
+  // If handle has a dot, the part before dot = first name, after = last name
+  if (h.includes('.')) {
+    const [firstPart, lastPart] = h.split('.');
+    const aMatchesFirst = aLow === firstPart || firstPart.startsWith(aLow.slice(0, 3));
+    const aMatchesLast = aLow === lastPart || lastPart.startsWith(aLow.slice(0, 3));
+    const bMatchesFirst = bLow === firstPart || firstPart.startsWith(bLow.slice(0, 3));
+    const bMatchesLast = bLow === lastPart || lastPart.startsWith(bLow.slice(0, 3));
+    if (aMatchesFirst && bMatchesLast) {
+      return { firstName: a, lastName: b, altOrder: { firstName: b, lastName: a } };
+    }
+    if (bMatchesFirst && aMatchesLast) {
+      return { firstName: b, lastName: a, altOrder: { firstName: a, lastName: b } };
+    }
   }
-  if (handleNoNums.startsWith(bLow) || bLow.startsWith(handleNoNums.split('.')[0] || '')) {
+
+  // Pick whichever side has a higher endsWith/contains score → that's the last name (handle
+  // usually ends with lastname in flast / firstl / lastf patterns).
+  const aEnds = h.endsWith(aLow) || h.slice(-aLow.length) === aLow;
+  const bEnds = h.endsWith(bLow) || h.slice(-bLow.length) === bLow;
+  if (aEnds && !bEnds) {
     return { firstName: b, lastName: a, altOrder: { firstName: a, lastName: b } };
   }
-  // Default: "Lastname_Firstname" (common in academic photo libraries)
+  if (bEnds && !aEnds) {
+    return { firstName: a, lastName: b, altOrder: { firstName: b, lastName: a } };
+  }
+  // Default: Lastname_Firstname (academic photo library convention)
   return { firstName: b, lastName: a, altOrder: { firstName: a, lastName: b } };
 }
 
@@ -496,8 +503,27 @@ async function crawlSchool(school) {
   const allEmails = new Map();
   const patternsHit = [];
 
-  for (const p of FACULTY_PATHS) {
-    const url = new URL(p, rootUrl).toString();
+  // Build list of (baseUrl, path) pairs:
+  //  1. Subdomain hosts like nursing.<root>, son.<root>, con.<root>
+  //  2. Paths on the main host
+  const SUBDOMAIN_HOSTS = ['nursing', 'son', 'con', 'nurs'];
+  const baseUrls = [rootUrl];
+  for (const sub of SUBDOMAIN_HOSTS) {
+    baseUrls.push(`https://${sub}.${rootDom}`);
+  }
+  const subPaths = ['/', '/faculty', '/directory', '/people', '/about/faculty', '/faculty-and-staff', '/about/directory', '/faculty-staff', '/staff'];
+
+  const urls = [];
+  for (const base of baseUrls) {
+    // If it's a subdomain host, try the sub-paths (root-relative)
+    if (base !== rootUrl) {
+      for (const p of subPaths) urls.push(base + p);
+    }
+  }
+  // Plus traditional /nursing/* paths on the main host
+  for (const p of FACULTY_PATHS) urls.push(new URL(p, rootUrl).toString());
+
+  for (const url of urls) {
     const res = await httpGet(url);
     await sleep(PER_SCHOOL_RATE_MS);
     if (res.status !== 200 || !res.body) continue;
@@ -509,7 +535,7 @@ async function crawlSchool(school) {
 
     const emails = extractEmailsFromHtml(res.body, rootDom);
     if (emails.length === 0) continue;
-    patternsHit.push({ pattern: p, count: emails.length });
+    patternsHit.push({ pattern: url, count: emails.length });
     for (const e of emails) {
       if (!allEmails.has(e.email)) allEmails.set(e.email, e);
     }

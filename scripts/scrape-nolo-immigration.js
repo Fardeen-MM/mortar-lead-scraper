@@ -80,6 +80,18 @@ function log(msg) {
   console.log(`[${ts}] ${msg}`);
 }
 
+function decodeHtmlEntities(str) {
+  if (!str) return '';
+  return str
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&#x27;/g, "'")
+    .replace(/&#x2F;/g, '/');
+}
+
 function httpGet(url, retries = MAX_RETRIES) {
   return new Promise((resolve, reject) => {
     const doRequest = (attempt) => {
@@ -139,6 +151,11 @@ function httpGet(url, retries = MAX_RETRIES) {
   });
 }
 
+function isFirmLikeName(name) {
+  if (!name) return false;
+  return /\b(law\s*(office|firm|group|center)?|legal|&|associates|attorneys|pllc|plc|llc|llp|p\.?c\.?|p\.?a\.?|apc|corp|inc|counselors|immigration|consultants)\b/i.test(name);
+}
+
 function parseName(fullName) {
   if (!fullName) return { first_name: '', last_name: '' };
   // Remove common suffixes
@@ -147,8 +164,8 @@ function parseName(fullName) {
     .replace(/\s+/g, ' ')
     .trim();
 
-  // If it looks like a firm name (contains &, "Law", "Legal", "Group", "Office", etc.), skip name parsing
-  if (/\b(law\s+(office|firm|group|center)|legal|&|associates|attorneys)\b/i.test(cleaned)) {
+  // If it looks like a firm name, skip name parsing
+  if (isFirmLikeName(cleaned)) {
     return { first_name: '', last_name: '' };
   }
 
@@ -305,7 +322,7 @@ function parseProfilePage(html) {
   // 1. Try JSON-LD first (most reliable)
   $('script[type="application/ld+json"]').each((_, el) => {
     try {
-      const data = JSON.parse($(el).html());
+      const data = JSON.parse(decodeHtmlEntities($(el).html()));
       const graph = data['@graph'] || [data];
       for (const item of graph) {
         if (item['@type'] === 'LegalService' || item['@type'] === 'Attorney') {

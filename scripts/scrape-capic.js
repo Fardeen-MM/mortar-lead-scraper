@@ -110,6 +110,20 @@ function sleep(ms) {
   return new Promise(r => setTimeout(r, ms));
 }
 
+// --- HTML entity decoder ---
+function decodeEntities(str) {
+  if (!str) return '';
+  return str
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCharCode(parseInt(dec, 10)))
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&nbsp;/g, ' ');
+}
+
 // --- Simple HTML parser (no cheerio dependency) ---
 function extractTableRows(html) {
   const rows = [];
@@ -124,7 +138,7 @@ function extractTableRows(html) {
     const tdRegex = /<td[^>]*>([\s\S]*?)<\/td>/gi;
     let tdMatch;
     while ((tdMatch = tdRegex.exec(trMatch[1])) !== null) {
-      cells.push(tdMatch[1].trim().replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>'));
+      cells.push(decodeEntities(tdMatch[1].trim()));
     }
     if (cells.length >= 4) {
       rows.push({
@@ -185,7 +199,7 @@ function parseProfilePage(html) {
   // Firm name from h1.consultant-heading
   const firmMatch = html.match(/<h1 class="consultant-heading">([\s\S]*?)<\/h1>/i);
   if (firmMatch) {
-    result.firm_name = firmMatch[1].trim().replace(/&amp;/g, '&').replace(/&#x27;/g, "'");
+    result.firm_name = decodeEntities(firmMatch[1].trim());
   }
 
   // Phone from list-phone

@@ -79,6 +79,10 @@ const FILES = [
   { file: 'sec-iapd-firms.csv', niche: 'RIA firm', country: 'US', source: 'sec_iapd', emailField: 'email' },
   { file: 'crossfit-affiliates.csv', niche: 'gym owner', country: '', source: 'crossfit', emailField: 'email' },
   { file: 'naifa-financial-pros.csv', niche: 'financial advisor', country: 'US', source: 'naifa', emailField: 'email' },
+  { file: 'mtna-music-teachers.csv', niche: 'music teacher', country: 'US', source: 'mtna', emailField: 'email' },
+  { file: 'dance-studios.csv', niche: 'dance chapter', country: 'US', source: 'usadance', emailField: 'email' },
+  { file: 'ifa-franchisors.csv', niche: 'franchise', country: 'US', source: 'ifa', emailField: 'email' },
+  { file: 'nursing-aacn-schools.csv', niche: 'nursing school', country: 'US', source: 'aacn', emailField: 'email' },
 ];
 
 function main() {

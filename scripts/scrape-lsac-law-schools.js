@@ -125,9 +125,16 @@ function parseSchoolProfile(html, fallbackName) {
   if (!email) email = emails.find((e) => /admission/i.test(e));
   if (!email) email = emails[0] || '';
 
-  // Phone
-  const phoneMatch = allText.match(/(\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})/);
-  const phone = phoneMatch ? phoneMatch[1] : '';
+  // Phone — look in contact/address block first, with proper word boundaries.
+  // Avoid matching parts of unrelated numbers like library barcodes or URLs.
+  let phone = '';
+  const phoneRe = /(?:^|[^\d])(\(?[2-9]\d{2}\)?[-.\s]\d{3}[-.\s]\d{4})(?:[^\d]|$)/;
+  // Prefer phone inside the Contact Information block.
+  const contactSection = $('h2:contains("Contact Information")').parent().text() || $('h2:contains("Contact Information")').nextAll().text();
+  const contactTxt = contactSection || allText;
+  let m = contactTxt.match(phoneRe);
+  if (!m) m = allText.match(phoneRe);
+  if (m) phone = m[1];
 
   // Address
   const street = ($('.address-street').first().text() || '').replace(/\s+/g, ' ').trim().replace(/,$/, '');
@@ -144,15 +151,34 @@ function parseSchoolProfile(html, fallbackName) {
     city = cityState.split(',')[0].trim();
   }
 
-  // Website — external edu link
+  // Website — find school homepage. Skip lsac.org, os.lsac.org, and common non-site hosts.
   let website = '';
-  $('a[href]').each((_, el) => {
-    const href = $(el).attr('href') || '';
-    if (!website && /^https?:\/\/(?!www\.lsac\.org)[^\/]+\.(edu|org)/i.test(href)) {
-      website = href.split('?')[0].replace(/#.*$/, '');
+  const skipHosts = /(^|\.)lsac\.org$|(^|\.)googleapis\.com$|(^|\.)facebook\.com$|(^|\.)twitter\.com$|(^|\.)linkedin\.com$|(^|\.)instagram\.com$|(^|\.)youtube\.com$|(^|\.)youtu\.be$|(^|\.)tiktok\.com$|(^|\.)pinterest\./i;
+  // 1) Try the "website" link in contact info.
+  $('a[href^="http"]').each((_, el) => {
+    if (website) return;
+    const href = ($(el).attr('href') || '').split('?')[0].replace(/#.*$/, '');
+    let host;
+    try { host = new URL(href).hostname.toLowerCase(); } catch { return; }
+    if (skipHosts.test(host)) return;
+    // Prefer .edu, then .law/.org, but the first valid external non-social link wins.
+    if (/\.edu(\b|\/)/i.test(host) || /\.law(\b|\/)/i.test(host)) {
+      website = href;
       return false;
     }
   });
+  if (!website) {
+    // Fallback: first external non-social non-LSAC link.
+    $('a[href^="http"]').each((_, el) => {
+      if (website) return;
+      const href = ($(el).attr('href') || '').split('?')[0].replace(/#.*$/, '');
+      let host;
+      try { host = new URL(href).hostname.toLowerCase(); } catch { return; }
+      if (skipHosts.test(host)) return;
+      website = href;
+      return false;
+    });
+  }
 
   return {
     school_name: schoolName,
