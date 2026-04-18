@@ -287,6 +287,10 @@ function isValidEmail(e) {
   if (/\.(png|jpg|jpeg|gif|svg|webp|ico|pdf|css|js)$/i.test(e)) return false;
   if (/^(info|example|test|no-?reply|noreply|donotreply|webmaster|postmaster|admin|support|help|contact|mail|email|office|hello|sales|marketing)@/i.test(e)) return false;
   if (/sentry|cloudflare|wixpress|googlemail|png$|jpg$/i.test(e)) return false;
+  // Reject emails that are clearly generic department addresses
+  if (/^(nursing|graduate-nursing|undergraduate-nursing|mailto|webadmin|it|hr|registrar|admissions|admissions-nursing|dnp|msn|phd-nursing|student-nursing|faculty-nursing)@/i.test(e)) return false;
+  // Reject literal "mailto@" that can appear if a broken <a href="mailto:"></a> exists
+  if (/^mailto@/i.test(e)) return false;
   return true;
 }
 
