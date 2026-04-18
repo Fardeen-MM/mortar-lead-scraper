@@ -522,6 +522,29 @@ async function main() {
   }, LISTING_CONCURRENCY);
 
   saveState(state);
+
+  // Final pass: dedup CSV by profile_url to guard against rows written before
+  // an interrupted run was resumed.
+  if (fs.existsSync(OUTPUT_CSV)) {
+    const raw = fs.readFileSync(OUTPUT_CSV, 'utf8');
+    const lines = raw.split(/\r?\n/).filter(Boolean);
+    if (lines.length > 1) {
+      const header = lines[0];
+      const seen = new Set();
+      const kept = [header];
+      for (let i = 1; i < lines.length; i++) {
+        const row = lines[i];
+        const profileIdx = row.lastIndexOf(',');
+        const profile = row.slice(profileIdx + 1).trim();
+        if (profile && !seen.has(profile)) {
+          seen.add(profile);
+          kept.push(row);
+        }
+      }
+      fs.writeFileSync(OUTPUT_CSV, kept.join('\n') + '\n');
+    }
+  }
+
   console.log(`\n[run] done: ${success} rows written, ${failed} failed`);
   console.log(`[run] csv: ${OUTPUT_CSV}`);
 }
