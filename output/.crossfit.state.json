@@ -1,6 +1,11 @@
 {
   "phase": "bulk",
   "enriched": {
+    "16": {
+      "email": "cevering24@hotmail.com",
+      "website": "http://www.crossfitbelair.com/",
+      "phone": "4435288553"
+    },
     "31": {
       "email": "cbalentyne@sycamorecrossfit.com",
       "website": "http://www.sycamorecrossfit.com/",
@@ -11,10 +16,20 @@
       "website": "http://www.crossfitseo.com",
       "phone": "7405910735"
     },
+    "54": {
+      "email": "info@crossfitzachary.com",
+      "website": "http://www.crossfitzachary.com/",
+      "phone": "2252550815"
+    },
     "136": {
       "email": "lucatravaglione@hotmail.com",
       "website": "",
       "phone": "393897831990"
+    },
+    "144": {
+      "email": "",
+      "website": "http://www.crossfitconway.com/",
+      "phone": "8176895990"
     },
     "165": {
       "email": "info@crossfitalmere.nl",
@@ -56,6 +71,11 @@
       "website": "http://crossfitbath.com/",
       "phone": "+44 7923253217"
     },
+    "462": {
+      "email": "info@foundationcrossfit.com",
+      "website": "http://www.foundationcrossfit.com/",
+      "phone": ""
+    },
     "510": {
       "email": "info@crossfitjax.com",
       "website": "http://www.crossfitjax.com/",
@@ -76,6 +96,11 @@
       "website": "https://www.crossfitriverside.com",
       "phone": "951-616-8106"
     },
+    "760": {
+      "email": "info@crossfitpickering.com",
+      "website": "https://www.crossfitpickering.com",
+      "phone": "647-606-3069"
+    },
     "784": {
       "email": "info@crossfitboston.com",
       "website": "http://www.crossfitboston.com/",
@@ -86,10 +111,20 @@
       "website": "http://www.crossfitnyc.com/",
       "phone": "2127312165"
     },
+    "838": {
+      "email": "Info@CrossFitOahu.com",
+      "website": "http://www.crossfitoahu.com/locations/honolulu/",
+      "phone": "(808) 215-5144"
+    },
     "870": {
       "email": "mike@crossfitpittsburgh.com",
       "website": "http://crossfitpittsburgh.com/",
       "phone": "4129926347"
+    },
+    "880": {
+      "email": "crossfitsantiago@yahoo.com",
+      "website": "http://www.crossfitsantiago.com/",
+      "phone": ""
     },
     "931": {
       "email": "andy.hendel@crossfit.com",
@@ -105,6 +140,11 @@
       "email": "bryant@firstpowerfitness.com",
       "website": "https://firstpowerfitness.com/",
       "phone": "254748476976"
+    },
+    "1110": {
+      "email": "jen@crossfitcampbell.com",
+      "website": "https://crossfitcampbell.com/",
+      "phone": "669-213-1354"
     },
     "1132": {
       "email": "fundamentals@crossfitglasgow.com",
@@ -136,10 +176,20 @@
       "website": "http://www.dragonathletic.com/",
       "phone": ""
     },
+    "1350": {
+      "email": "dan.gallagher@crossfitstrongtown.com",
+      "website": "http://www.crossfitstrongtown.com",
+      "phone": "2034056199"
+    },
     "1365": {
       "email": "goose@crossfitsouthie.com",
       "website": "http://crossfitsouthie.com/",
       "phone": "6172690003"
+    },
+    "1386": {
+      "email": "livingston2022@yahoo.com",
+      "website": "https://www.lfcrossfit.com/",
+      "phone": "2069620063"
     },
     "1494": {
       "email": "info@crossfitedwardsville.com",
@@ -176,6 +226,11 @@
       "website": "https://www.crossfitperimeter.com",
       "phone": "4045316872"
     },
+    "1716": {
+      "email": "info@hoosiercrossfit.com",
+      "website": "https://www.hoosiercrossfit.com",
+      "phone": "(812) 497-8110"
+    },
     "1741": {
       "email": "tyler@crossfitfringe.com",
       "website": "http://crossfitfringe.com/",
@@ -201,10 +256,20 @@
       "website": "http://www.crossfitnaples.com/",
       "phone": "239-237-3098"
     },
+    "1936": {
+      "email": "jerrod@crossfitlynchburg.com",
+      "website": "http://crossfitlynchburg.com/",
+      "phone": "4348514284"
+    },
     "1960": {
       "email": "safefitclub@gmail.com",
       "website": "https://www.crossfitalcamo.com",
       "phone": "3914124379"
+    },
+    "2021": {
+      "email": "tim@908athletics.com",
+      "website": "https://908athletics.com/",
+      "phone": "908-504-7049"
     },
     "2033": {
       "email": "info@crossfitravenna.com",
@@ -246,6 +311,11 @@
       "website": "https://www.crossfitcamberley.com",
       "phone": "07889140566"
     },
+    "2241": {
+      "email": "deko.marconato@gmail.com",
+      "website": "http://www.crossfitcampinas.com.br/",
+      "phone": "19 995626165"
+    },
     "2266": {
       "email": "jason@crossfitmiamibeach.com",
       "website": "http://crossfitmiamibeach.com",
@@ -286,6 +356,11 @@
       "website": "http://www.crossfitt1.com/",
       "phone": "267-567-2699"
     },
+    "2331": {
+      "email": "amanda@crossfittorque.com",
+      "website": "http://crossfittorque.com/",
+      "phone": "5088129555"
+    },
     "2359": {
       "email": "eliz@cfsyn.com",
       "website": "http://crossfitsynergistics.com/",
@@ -296,10 +371,20 @@
       "website": "http://chikaracrossfit.com/",
       "phone": "03-6441-0980"
     },
+    "2380": {
+      "email": "jl_roseney@hotmail.com",
+      "website": "",
+      "phone": "59399198455"
+    },
     "2403": {
       "email": "craig@alwaysforwardcrossfit.com",
       "website": "http://alwaysforwardcrossfit.com",
       "phone": "7403485084"
+    },
+    "2404": {
+      "email": "hello@crossfitfederalway.com",
+      "website": "https://www.crossfitfederalway.com/",
+      "phone": "253-249-5985"
     },
     "2502": {
       "email": "jasoncfblaze@me.com",
@@ -311,6 +396,11 @@
       "website": "http://www.crossfitsupernova.com/",
       "phone": "7248885273"
     },
+    "2637": {
+      "email": "nelsonbarrigar@gmail.com",
+      "website": "",
+      "phone": "593991605689"
+    },
     "2675": {
       "email": "",
       "website": "http://crossfitarmoury.com/",
@@ -321,10 +411,30 @@
       "website": "http://rxfitnessandhealth.com",
       "phone": "5084734560"
     },
+    "2836": {
+      "email": "drew@crossfitunrivaled.com",
+      "website": "http://www.crossfitunrivaled.com",
+      "phone": "2534447449"
+    },
+    "2945": {
+      "email": "dawnmarie@crossfit508.com",
+      "website": "http://www.crossfit508.com/",
+      "phone": "5083608820"
+    },
     "2963": {
       "email": "coral@crossfitkenmore.com",
       "website": "https://www.crossfitkenmore.com/",
       "phone": "4253452999"
+    },
+    "2981": {
+      "email": "steve@crossfitchamblee.com",
+      "website": "https://crossfitchamblee.com/",
+      "phone": "(404) 882-6912"
+    },
+    "3072": {
+      "email": "toddraythompson@yahoo.com",
+      "website": "http://www.crossfitgrit.com/",
+      "phone": "9129964091"
     },
     "3160": {
       "email": "nathan@methodcrossfit.com",
@@ -356,6 +466,11 @@
       "website": "http://www.crossfitpretoria.co.za",
       "phone": "+27671067989"
     },
+    "3398": {
+      "email": "michael@crossfitnovato.com",
+      "website": "http://www.crossfitnovato.com/",
+      "phone": "7078125167"
+    },
     "3487": {
       "email": "cfc@crossfitcontinuum.com",
       "website": "http://www.crossfitcontinuum.com/",
@@ -376,10 +491,20 @@
       "website": "http://www.drivfitness.com/",
       "phone": "9045868700"
     },
+    "3627": {
+      "email": "info@crossfittigardpaw.com",
+      "website": "http://www.crossfittigard.com/homepage",
+      "phone": "9713445826"
+    },
     "3684": {
       "email": "shawn@crossfit601.com",
       "website": "http://www.crossfit601.com/",
       "phone": "601-365-1709"
+    },
+    "3716": {
+      "email": "adnaldoza@aol.com",
+      "website": "http://riocitycrossfit.com/",
+      "phone": "9165247345"
     },
     "3722": {
       "email": "tony@crossfit-sheffield.co.uk",
@@ -390,6 +515,11 @@
       "email": "gonzalezra@gmail.com",
       "website": "http://www.carlsbadcrossfit.com/",
       "phone": "7143815100"
+    },
+    "3753": {
+      "email": "tch.hutchinson@gmail.com",
+      "website": "http://www.crossfitfate.com/",
+      "phone": "2488602898"
     },
     "3754": {
       "email": "daniel.davidson.a@me.com",
@@ -425,6 +555,11 @@
       "email": "ed.morrison@crossfit.com",
       "website": "http://www.chargecrossfit.com.au",
       "phone": "0423850753"
+    },
+    "3992": {
+      "email": "info@crossfitvalleyview.com",
+      "website": "http://www.crossfitvalleyview.com/",
+      "phone": "2098294242"
     },
     "3993": {
       "email": "accueil@crossfitlouvre.com",
@@ -476,6 +611,11 @@
       "website": "http://crossfitlowell.com/",
       "phone": "978-710-8280"
     },
+    "4589": {
+      "email": "henry@crossfitguildford.co.uk",
+      "website": "http://www.crossfitguildford.co.uk/",
+      "phone": ""
+    },
     "4592": {
       "email": "jon@cfthrone.com",
       "website": "http://www.cfthrone.com/",
@@ -491,6 +631,11 @@
       "website": "",
       "phone": "7044008892"
     },
+    "4776": {
+      "email": "marc@crossfit-albstadt.de",
+      "website": "http://www.crossfit-albstadt.de/",
+      "phone": "1726013761"
+    },
     "4804": {
       "email": "stephanie@crossfitkaneohe.com",
       "website": "https://www.crossfitkaneohe.com/",
@@ -501,6 +646,11 @@
       "website": "https://crossfitmoves.be",
       "phone": ""
     },
+    "4828": {
+      "email": "canuckcoach@gmail.com",
+      "website": "http://www.crossfitcanuck.com/",
+      "phone": "6474012673"
+    },
     "4830": {
       "email": "cj@southtampacrossfit.com",
       "website": "http://southtampacrossfit.com/",
@@ -510,6 +660,11 @@
       "email": "teamtempered@gmail.com",
       "website": "https://www.crossfittemperedormeau.com.au/",
       "phone": "0432648990"
+    },
+    "4858": {
+      "email": "trisha@crossfitequality.com",
+      "website": "http://crossfitequality.com/",
+      "phone": "281-467-0199"
     },
     "4883": {
       "email": "craig@branfordcrossfit.com",
@@ -556,15 +711,40 @@
       "website": "http://crossfitickenham.com/",
       "phone": "+44 1895 676017"
     },
+    "5374": {
+      "email": "aholmberg@me.com",
+      "website": "http://www.crossfitlbk.com/",
+      "phone": "0705742970"
+    },
+    "5454": {
+      "email": "mel@crossfitlosalamos.com",
+      "website": "https://www.crossfitlosalamos.com/",
+      "phone": "5059205788"
+    },
     "5472": {
       "email": "justinwfallon@gmail.com",
       "website": "http://s2scrossfit.com/",
       "phone": "6281236271125"
     },
+    "5505": {
+      "email": "tim@crossfithendo.com",
+      "website": "https://www.crossfithendo.com",
+      "phone": "8286067747"
+    },
     "5532": {
       "email": "gino@salusnj.com",
       "website": "https://salusnj.com/programs/crossfit/",
       "phone": "732-800-1269"
+    },
+    "5552": {
+      "email": "melissa@ohiokravmaga.com",
+      "website": "http://crossfitokm.com/",
+      "phone": "6148616213"
+    },
+    "5586": {
+      "email": "jeff@fierceplay.co",
+      "website": "http://fierceplay.co/",
+      "phone": "7633562135"
     },
     "5627": {
       "email": "coach@cfstarvalley.com",
@@ -581,6 +761,11 @@
       "website": "http://www.foecrossfit.com/",
       "phone": "3605192947"
     },
+    "5863": {
+      "email": "info@breathecrossfit.com",
+      "website": "http://www.breathecrossfit.com/",
+      "phone": "603-665-0699"
+    },
     "5876": {
       "email": "contato@punkcrossfit.com.br",
       "website": "http://www.punkcrossfit.com.br/",
@@ -590,6 +775,11 @@
       "email": "crossfitpneuma@gmail.com",
       "website": "http://crossfitpneuma.com/",
       "phone": "7178821114"
+    },
+    "5983": {
+      "email": "michele@lahuella.club",
+      "website": "https://www.lahuellacrossfit.es",
+      "phone": "00393384492780"
     },
     "5992": {
       "email": "info@crossfitlimassol.com",
@@ -656,6 +846,16 @@
       "website": "http://www.crossfitnassau.com/",
       "phone": "6092853377"
     },
+    "7154": {
+      "email": "contact@crossfitn6.com",
+      "website": "http://www.crossfitn6.com/",
+      "phone": "6472372844"
+    },
+    "7207": {
+      "email": "info@crossfitchisel.com",
+      "website": "http://crossfitchisel.com/",
+      "phone": "773-900-4172"
+    },
     "7362": {
       "email": "andreas.schaaf@dvad.de",
       "website": "http://pureperformancecrossfit.de/",
@@ -671,6 +871,11 @@
       "website": "http://www.crossfittemplum.com/",
       "phone": "9725913488"
     },
+    "7495": {
+      "email": "joescanlon13@yahoo.com",
+      "website": "http://www.cfkeylargo.com/",
+      "phone": "3058145406"
+    },
     "7502": {
       "email": "",
       "website": "",
@@ -685,6 +890,26 @@
       "email": "didevieira@gmail.com",
       "website": "http://www.crossfitindaiatuba.com.br/",
       "phone": "1933295973"
+    },
+    "7687": {
+      "email": "sinead@postroadcrossfit.com",
+      "website": "http://postroadcrossfit.com/",
+      "phone": "401-304-5010"
+    },
+    "7714": {
+      "email": "info@theloopfitness.com",
+      "website": "http://www.mountainloopcrossfit.com/",
+      "phone": "425-292-1500"
+    },
+    "7715": {
+      "email": "katja@kenpokan.de",
+      "website": "https://www.crossfithangover.de",
+      "phone": "0511371255"
+    },
+    "7736": {
+      "email": "jason@crossfitintent.com",
+      "website": "http://crossfitintent.com/",
+      "phone": "330-752-7099"
     },
     "7740": {
       "email": "liberty.sunshine@gmail.com",
@@ -706,6 +931,11 @@
       "website": "https://cfbcrossfit.com/",
       "phone": "07401 180749"
     },
+    "7839": {
+      "email": "crossfitarcane1@gmail.com",
+      "website": "http://crossfitarcane.com/",
+      "phone": "423-620-0723"
+    },
     "7855": {
       "email": "info@crossfitelektromoc.pl",
       "website": "http://www.crossfitelektromoc.pl/",
@@ -721,6 +951,11 @@
       "website": "http://www.crossfitcfw.co.za/",
       "phone": "0828718196"
     },
+    "8244": {
+      "email": "ray.gerard@crossfit1904.com",
+      "website": "https://www.crossfit1904.com",
+      "phone": "9518167629"
+    },
     "8329": {
       "email": "berramine@gmail.com",
       "website": "http://www.casacrossfit.com",
@@ -731,10 +966,20 @@
       "website": "http://www.crossfitcholet.com/",
       "phone": "0632214394"
     },
+    "8357": {
+      "email": "midmittencrossfit@gmail.com",
+      "website": "http://www.midmittencrossfit.com/",
+      "phone": "5172148148"
+    },
     "8440": {
       "email": "",
       "website": "http://www.crossfitraeda.co.uk/",
       "phone": "+44 7738 210101"
+    },
+    "8453": {
+      "email": "shiver209@comcast.net",
+      "website": "http://www.cfnaugusta.com/",
+      "phone": "706.829.7023"
     },
     "8589": {
       "email": "eli@crossfitennis.com",
@@ -776,6 +1021,16 @@
       "website": "http://www.trainharderinc.com/",
       "phone": "8134408882"
     },
+    "9001": {
+      "email": "ahaskins@rainierhealth.com",
+      "website": "http://rhfcrossfit.com/",
+      "phone": "2067250279"
+    },
+    "9081": {
+      "email": "jones.adamcharles@gmail.com",
+      "website": "https://www.crossfitwitham.co.uk",
+      "phone": "01522898025"
+    },
     "9095": {
       "email": "stefan@sxsfitness.ca",
       "website": "",
@@ -796,6 +1051,21 @@
       "website": "https://www.route3.fit",
       "phone": "3212443660"
     },
+    "9224": {
+      "email": "Nick@ironhousecrossfit.com",
+      "website": "http://ironhousecrossfit.com/",
+      "phone": "7605909923"
+    },
+    "9238": {
+      "email": "chris@intrepidcrossfit.com",
+      "website": "",
+      "phone": "9729141544"
+    },
+    "9277": {
+      "email": "crossfithyattsville@gmail.com",
+      "website": "http://crossfithyattsville.com/",
+      "phone": "2023518448"
+    },
     "9288": {
       "email": "info@cfpv.fitness",
       "website": "https://www.crossfitprescottvalley.com/",
@@ -811,10 +1081,25 @@
       "website": "",
       "phone": "5517991956775"
     },
+    "9437": {
+      "email": "gonzalesfitness@gmail.com",
+      "website": "http://www.crossfitfourpeaks.com",
+      "phone": "4805802528"
+    },
+    "9473": {
+      "email": "leigh.jeffries@btinternet.com",
+      "website": "http://www.crossfitb76.com",
+      "phone": "07811556100"
+    },
     "9513": {
       "email": "aroostookironcrossfit@gmail.com",
       "website": "",
       "phone": ""
+    },
+    "9577": {
+      "email": "",
+      "website": "http://crossfitdadiva.com/",
+      "phone": "977220825"
     },
     "9586": {
       "email": "info@snakeathletic.com.au",
@@ -825,6 +1110,11 @@
       "email": "info@crossfitviral.com",
       "website": "http://crossfitviral.com/",
       "phone": "1-402-669-7623"
+    },
+    "9663": {
+      "email": "jhn_lowrance@yahoo.com",
+      "website": "http://www.crossfitlovefield.com/",
+      "phone": "8172623073"
     },
     "9670": {
       "email": "jon_maggs@hotmail.com",
@@ -840,6 +1130,16 @@
       "email": "jen@tidalfitness.ca",
       "website": "https://tidalfitness.ca/",
       "phone": "6473520322"
+    },
+    "9778": {
+      "email": "joern.heineke@me.com",
+      "website": "http://www.crossfit-nordlicht.de/",
+      "phone": "004901774796608"
+    },
+    "9791": {
+      "email": "fosterw9@gmail.com",
+      "website": "http://crossfitdownvalley.com/",
+      "phone": "9704712005"
     },
     "9897": {
       "email": "info@crossfittewkesbury.com",
@@ -861,6 +1161,11 @@
       "website": "https://www.crossfitljubljana.si/",
       "phone": "0038670658112"
     },
+    "10117": {
+      "email": "alberto_dz@yahoo.com",
+      "website": "",
+      "phone": "8478150199"
+    },
     "10200": {
       "email": "mtoner06@qub.ac.uk",
       "website": "",
@@ -881,10 +1186,25 @@
       "website": "http://crossfitqualicumbeach.com/",
       "phone": "6047102844"
     },
+    "10462": {
+      "email": "lauren@crossfitspur.com",
+      "website": "http://crossfitspur.com/",
+      "phone": ""
+    },
+    "10471": {
+      "email": "clessard83@gmail.com",
+      "website": "http://crossfitsainthelens.com/",
+      "phone": "5033965092"
+    },
     "10570": {
       "email": "Jess@crossfit819chaos.com",
       "website": "",
       "phone": "8195767500"
+    },
+    "10681": {
+      "email": "kevhulse6@hotmail.co.uk",
+      "website": "https://crossfitrivermersey.com/home",
+      "phone": "07758525985"
     },
     "10706": {
       "email": "David@crossfitoviedo.com",
@@ -911,10 +1231,20 @@
       "website": "http://crossfit-hostilius.fr/",
       "phone": "0033643345463"
     },
+    "10813": {
+      "email": "g.mountain@yahoo.com",
+      "website": "http://www.crosstownathletics.com/",
+      "phone": "8059105025"
+    },
     "10844": {
       "email": "jaysoucy@gmail.com",
       "website": "http://mtwashingtoncrossfit.com/",
       "phone": "6033482166"
+    },
+    "10889": {
+      "email": "donnie@ioniccrossfit.com",
+      "website": "http://www.ioniccrossfit.com/",
+      "phone": "4073764267"
     },
     "10918": {
       "email": "bryanmwhite@yahoo.com",
@@ -936,6 +1266,21 @@
       "website": "https://lunafitnessstudio.com",
       "phone": "2145449255"
     },
+    "11002": {
+      "email": "mari-eide@hotmail.com",
+      "website": "https://crossfitkristiansund.no",
+      "phone": "004797897546"
+    },
+    "11028": {
+      "email": "",
+      "website": "https://bit.ly/CROSSFITONARARUAMA",
+      "phone": "22988570089"
+    },
+    "11036": {
+      "email": "ladypaelmo@hotmail.com",
+      "website": "",
+      "phone": "0423622278"
+    },
     "11060": {
       "email": "aturner03@gmail.com",
       "website": "",
@@ -946,10 +1291,20 @@
       "website": "http://westovercrossfit.com/",
       "phone": ""
     },
+    "11319": {
+      "email": "aac86@hotmail.it",
+      "website": "https://www.crossfitsegrate.com",
+      "phone": "390239810016"
+    },
     "11342": {
       "email": "lb@expressionathletique.com",
       "website": "http://www.thebox-limoges.fr",
       "phone": "0587082945"
+    },
+    "11353": {
+      "email": "rlograsso03@gmail.com",
+      "website": "https://www.crossfitunwritten.com/",
+      "phone": "2158160038"
     },
     "11383": {
       "email": "bethaniewerner@gmail.com",
@@ -976,6 +1331,16 @@
       "website": "",
       "phone": "99128476"
     },
+    "11563": {
+      "email": "hallbjork@gmail.com",
+      "website": "http://www.crossfithoganas.se",
+      "phone": ""
+    },
+    "11608": {
+      "email": "info@primal.nl",
+      "website": "https://primal.nl/",
+      "phone": "0495 729 330"
+    },
     "11613": {
       "email": "brandonbonser@gmail.com",
       "website": "http://www.comalcrossfit.com/",
@@ -986,10 +1351,25 @@
       "website": "https://www.otbfitnessuk.com/",
       "phone": "07720387874"
     },
+    "11677": {
+      "email": "crossfitproton@gmail.com",
+      "website": "http://www.crossfitproton.sk/",
+      "phone": "+421907468433"
+    },
+    "11752": {
+      "email": "viniciuszola@hotmail.com",
+      "website": "",
+      "phone": "5512981819781"
+    },
     "11773": {
       "email": "E@WarlockCrossFit.com",
       "website": "http://www.warlockcrossfit.com/",
       "phone": "8454132613"
+    },
+    "11793": {
+      "email": "cameron@crossfitglenvista.co.za",
+      "website": "http://www.crossfitalberton2.co.za/",
+      "phone": "0718763434"
     },
     "11817": {
       "email": "andressoares@hotmail.com",
@@ -1011,6 +1391,16 @@
       "website": "https://crossfitfade.wordpress.com/",
       "phone": "5172316971"
     },
+    "11974": {
+      "email": "geral@crossfitviseu.pt",
+      "website": "https://www.crossfitviseu.pt/",
+      "phone": ""
+    },
+    "12006": {
+      "email": "femkje_b@hotmail.com",
+      "website": "http://www.sedcrossfit.nl/",
+      "phone": "31643551559"
+    },
     "12025": {
       "email": "benoit-jacquemin@hotmail.fr",
       "website": "http://www.crossfit-nancy.fr/",
@@ -1020,6 +1410,11 @@
       "email": "mason.luxford@live.com.au",
       "website": "http://www.crossfitbribieisland.com/",
       "phone": "0468482218"
+    },
+    "12082": {
+      "email": "basile@verdantfit.com",
+      "website": "https://www.verdantfit.com/",
+      "phone": "208-972-9272"
     },
     "12097": {
       "email": "bopeardon@gmail.com",
@@ -1056,6 +1451,16 @@
       "website": "http://www.crossfitkreis9.ch",
       "phone": "+41765362120"
     },
+    "12665": {
+      "email": "contact@crossfit-des-sacres.com",
+      "website": "",
+      "phone": ""
+    },
+    "12696": {
+      "email": "jeff@crossfitmilezero.com",
+      "website": "http://www.crossfitmilezero.com/",
+      "phone": "(305) 509-1799"
+    },
     "12747": {
       "email": "josh@crossfithoutbay.co.za",
       "website": "http://www.crossfithoutbay.co.za/",
@@ -1065,6 +1470,16 @@
       "email": "servus@everi-studio.de",
       "website": "http://www.crossfit-dachau.com/",
       "phone": "081313773000"
+    },
+    "12859": {
+      "email": "grande.matthew@gmail.com",
+      "website": "https://www.CFUnbreakable.com",
+      "phone": "(973) 227-3459"
+    },
+    "12899": {
+      "email": "oktay.secer@gmail.com",
+      "website": "https://crossfitludwigshafen.com/",
+      "phone": "0160 98466442"
     },
     "13023": {
       "email": "matt@crossfit646.com",
@@ -1086,6 +1501,11 @@
       "website": "http://www.ralstoncreekcf.com/",
       "phone": "4197339660"
     },
+    "13143": {
+      "email": "nathalia.lima@crossfit.com",
+      "website": "",
+      "phone": "+5513996931703"
+    },
     "13156": {
       "email": "pafear@hotmail.com",
       "website": "",
@@ -1106,6 +1526,16 @@
       "website": "",
       "phone": "3898383023"
     },
+    "13402": {
+      "email": "sydneycourtney53@gmail.com",
+      "website": "http://www.goathousecrossfit.com/",
+      "phone": "9137109394"
+    },
+    "13403": {
+      "email": "christian@trave-crossfit.de",
+      "website": "http://www.trave-crossfit.de/",
+      "phone": "49017666922007"
+    },
     "13423": {
       "email": "holliestevens36@yahoo.com",
       "website": "http://www.crossfitqfe.com/",
@@ -1121,10 +1551,25 @@
       "website": "https://www.thepaleogym.co.uk",
       "phone": "07795016982"
     },
+    "13617": {
+      "email": "",
+      "website": "http://crossfit-gerland.com/",
+      "phone": "0784932913"
+    },
+    "13644": {
+      "email": "",
+      "website": "http://www.crossfitpmi.com/",
+      "phone": ""
+    },
     "13663": {
       "email": "info@crossfitashlar.com",
       "website": "https://www.crossfitashlar.com",
       "phone": "3062806952"
+    },
+    "13701": {
+      "email": "enquiries@crossfitstaines.com",
+      "website": "http://www.crossfitstaines.com",
+      "phone": "+441784542215"
     },
     "13785": {
       "email": "barrerantonio@hotmail.com",
@@ -1191,6 +1636,11 @@
       "website": "https://www.actualizecrossfit.com",
       "phone": ""
     },
+    "14681": {
+      "email": "fischerade.af@gmail.com",
+      "website": "http://www.crossfitstraubing.com/",
+      "phone": "004901702716091"
+    },
     "14963": {
       "email": "kohut.peter1@gmail.com",
       "website": "http://www.crossfitzilina.com/",
@@ -1201,6 +1651,11 @@
       "website": "http://crossfitstettler.com",
       "phone": "4037409287"
     },
+    "15073": {
+      "email": "info@crossfitfarnese.com",
+      "website": "http://www.crossfitfarnese.com/#section-1",
+      "phone": "3479768608"
+    },
     "15137": {
       "email": "brent.raeymaekers@hotmail.be",
       "website": "http://www.blackoak.be/",
@@ -1210,6 +1665,11 @@
       "email": "Igcfcoach@gmail.com",
       "website": "http://www.irongripcrossfit.com/",
       "phone": "520-771-5070"
+    },
+    "15196": {
+      "email": "monicamoura@neverlandfitnesscommunity.com",
+      "website": "",
+      "phone": "00351913570470"
     },
     "15240": {
       "email": "brendan@bigshoulderscrossfit.com",
@@ -1231,6 +1691,11 @@
       "website": "",
       "phone": "9148192017"
     },
+    "15386": {
+      "email": "crossfitironfox@hotmail.com",
+      "website": "http://www.crossfitironfox.com.br/",
+      "phone": ""
+    },
     "15389": {
       "email": "kgana80@gmail.com",
       "website": "http://www.crossfitcrabs.com/",
@@ -1245,6 +1710,11 @@
       "email": "info@crossfitlah.com",
       "website": "http://www.crossfitlah.com/",
       "phone": "+60 16-287 2724"
+    },
+    "15615": {
+      "email": "info@fithub.co.il",
+      "website": "http://www.fithub.co.il",
+      "phone": "+972-52-4445050"
     },
     "15644": {
       "email": "marcoscostapinto@gmail.com",
@@ -1296,6 +1766,21 @@
       "website": "http://crossfitdesmonts.com/",
       "phone": "0033626676339"
     },
+    "16144": {
+      "email": "info@steelfurnacecrossfit.com",
+      "website": "http://steelfurnacecrossfit.com/",
+      "phone": "4079720449"
+    },
+    "16164": {
+      "email": "info@crossfitframework.com",
+      "website": "https://www.crossfitframework.com",
+      "phone": "(587)813-5381"
+    },
+    "16292": {
+      "email": "",
+      "website": "",
+      "phone": "7042081881"
+    },
     "16352": {
       "email": "antea.lo@hotmail.it",
       "website": "",
@@ -1311,10 +1796,20 @@
       "website": "https://www.silvaticus.fr/",
       "phone": "0651321859"
     },
+    "16419": {
+      "email": "business@crossfit-gera.de",
+      "website": "https://www.crossfit-gera.de",
+      "phone": "00491785643205"
+    },
     "16428": {
       "email": "pedrojroberto@gmail.com",
       "website": "https://offlimitscrossfit.com",
       "phone": "00351963461302"
+    },
+    "16438": {
+      "email": "hugues.piau@gmail.com",
+      "website": "http://crossfitchartres.com/",
+      "phone": "0668010639"
     },
     "16478": {
       "email": "jeroen@crossfitleiden.com",
@@ -1325,6 +1820,16 @@
       "email": "heber5184@gmail.com",
       "website": "",
       "phone": "7874309978"
+    },
+    "16503": {
+      "email": "chinda@kentcrossfit.com",
+      "website": "",
+      "phone": "2063517512"
+    },
+    "16561": {
+      "email": "thais.life@me.com",
+      "website": "",
+      "phone": "+5511942977171"
     },
     "16563": {
       "email": "info@ambercrossfit.lt",
@@ -1341,15 +1846,40 @@
       "website": "https://creamcitycrossfit.com/",
       "phone": ""
     },
+    "16626": {
+      "email": "aeroathleticstrainingllc@gmail.com",
+      "website": "http://crossfitmahwah.com/",
+      "phone": "201-416-9766"
+    },
     "16707": {
       "email": "dbasehore@msn.com",
       "website": "http://www.bestdamcrossfit.com/",
       "phone": "7202776256"
     },
+    "16720": {
+      "email": "myersbrandon10@gmail.com",
+      "website": "",
+      "phone": "4572220264"
+    },
+    "16782": {
+      "email": "coach@risenstrength.com",
+      "website": "http://risenstrength.com/",
+      "phone": "3522784035"
+    },
+    "16791": {
+      "email": "becca_1985@yahoo.com",
+      "website": "",
+      "phone": "2709523867"
+    },
     "16806": {
       "email": "contact@lugal.ca",
       "website": "http://www.lugal.ca",
       "phone": "4164184237"
+    },
+    "16867": {
+      "email": "",
+      "website": "http://www.crossfitkm.com/",
+      "phone": "991348894"
     },
     "16868": {
       "email": "justin@crossfit1876.com",
@@ -1366,6 +1896,21 @@
       "website": "http://crossfitchiltern.com",
       "phone": "01494726447"
     },
+    "17002": {
+      "email": "matt@crossfitcrave.com",
+      "website": "http://www.crossfitcrave.com/",
+      "phone": "419.305.5326"
+    },
+    "17010": {
+      "email": "fysioturunen@gmail.com",
+      "website": "http://www.crossfitilves.com/",
+      "phone": "+358400566200"
+    },
+    "17023": {
+      "email": "tiagoesef@hotmail.com",
+      "website": "https://www.crossfitpelotas.com.br",
+      "phone": "5391742191"
+    },
     "17027": {
       "email": "info@crossfitkh.com",
       "website": "http://crossfitkh.com/",
@@ -1380,6 +1925,26 @@
       "email": "scott@crossfitevolving.com",
       "website": "http://www.crossfitevolving.com/",
       "phone": "07867805007"
+    },
+    "17107": {
+      "email": "fanofjackbauer@hotmail.com",
+      "website": "http://www.crossfitasteria.com/",
+      "phone": "2819429673"
+    },
+    "17122": {
+      "email": "kjgustafson@lrhc.org",
+      "website": "https://wellness.lrhc.org/",
+      "phone": "2187368451"
+    },
+    "17139": {
+      "email": "jesse_yukio@hotmail.com",
+      "website": "",
+      "phone": "31653712796"
+    },
+    "17237": {
+      "email": "cfcoyotevalley@gmail.com",
+      "website": "",
+      "phone": "4624465"
     },
     "17286": {
       "email": "theryanfellows@gmail.com",
@@ -1396,6 +1961,16 @@
       "website": "https://www.crossfit-maignon.com",
       "phone": "0663454427"
     },
+    "17498": {
+      "email": "info@crossfitpineconecountry.ch",
+      "website": "http://www.crossfitpineconecountry.com/",
+      "phone": "0041 79 8226273"
+    },
+    "17556": {
+      "email": "tdbrichard@gmail.com",
+      "website": "",
+      "phone": "554788572026"
+    },
     "17586": {
       "email": "berlincrossfit@gmail.com",
       "website": "http://www.crossfitberlin.com/",
@@ -1405,6 +1980,11 @@
       "email": "comback74@hotmail.com",
       "website": "http://www.crossfit-poitiers.com/",
       "phone": "0608454628"
+    },
+    "17672": {
+      "email": "norton.nichelle@gmail.com",
+      "website": "http://arbocrossfit.com.br/",
+      "phone": ""
     },
     "17692": {
       "email": "c.steele@koontzelectric.com",
@@ -1451,6 +2031,11 @@
       "website": "http://uithoorncrossfit.nl/",
       "phone": "+31652417158"
     },
+    "17881": {
+      "email": "reggie@camelcitycrossfit.com",
+      "website": "http://www.camelcitycrossfit.com/",
+      "phone": "3363458166"
+    },
     "17901": {
       "email": "birddogcrossfit303@gmail.com",
       "website": "https://birddogcrossfit.com",
@@ -1461,10 +2046,40 @@
       "website": "https://elestafitness.com/",
       "phone": "+34 646 670 796"
     },
+    "17983": {
+      "email": "anton@bluehousefitness.com",
+      "website": "https://bluehousefitness.com/",
+      "phone": "text5037499958"
+    },
+    "18084": {
+      "email": "eric@crossfit781.com",
+      "website": "http://crossfit781.com/",
+      "phone": "7813312933"
+    },
+    "18145": {
+      "email": "marioblanco@gmail.com",
+      "website": "https://www.amsicrossfit.com",
+      "phone": "24801592"
+    },
+    "18246": {
+      "email": "",
+      "website": "http://www.suncitycrossfit.lt/",
+      "phone": "+370 676 22572"
+    },
+    "18332": {
+      "email": "toddvice@yahoo.com",
+      "website": "http://rawwarcrossfit.site",
+      "phone": "6146988214"
+    },
     "18456": {
       "email": "brett@crossfitpetram.com",
       "website": "http://www.crossfitpetram.com/",
       "phone": "3024646050"
+    },
+    "18480": {
+      "email": "info@greatwolfcrossfit.com",
+      "website": "https://greatwolfcrossfit.com/",
+      "phone": "(585) 404-3028‬"
     },
     "18513": {
       "email": "sj.coaching30@gmail.com",
@@ -1501,6 +2116,11 @@
       "website": "https://crossfitmitschmackes.de/",
       "phone": "004915774626308"
     },
+    "18762": {
+      "email": "brunno_ss@yahoo.com.br",
+      "website": "",
+      "phone": "5531994288481"
+    },
     "18780": {
       "email": "hello@msquaredfitness.co.uk",
       "website": "http://www.msquaredfitness.co.uk/gym/",
@@ -1511,10 +2131,20 @@
       "website": "https://crossfitcollierville.com/",
       "phone": "9014875273"
     },
+    "18931": {
+      "email": "",
+      "website": "https://linktr.ee/crossfitresende",
+      "phone": "(24)998286617"
+    },
     "19023": {
       "email": "seth_831@yahoo.com",
       "website": "https://Crossfitfreestate.com",
       "phone": "785-608-4144"
+    },
+    "19057": {
+      "email": "contato@kazacrossfit.com.br",
+      "website": "http://www.kazacrossfit.com.br/",
+      "phone": "+551199783-6688"
     },
     "19141": {
       "email": "torben@crossfitnorth579.dk",
@@ -1535,6 +2165,11 @@
       "email": "crossfit2pairs@gmail.com",
       "website": "",
       "phone": "3755514827"
+    },
+    "19252": {
+      "email": "info@encorecrossfit.it",
+      "website": "",
+      "phone": "3476227918"
     },
     "19261": {
       "email": "mark@crossfitamsee.de",
@@ -1561,6 +2196,11 @@
       "website": "https://crossfitbesomeone.com/",
       "phone": "7139625203"
     },
+    "19330": {
+      "email": "afeefhusni@gmail.com",
+      "website": "http://www.crossfit3090.com/",
+      "phone": "2256222348"
+    },
     "19340": {
       "email": "info@crossfitbreckenridge.com",
       "website": "http://www.crossfitbreckenridge.com/",
@@ -1586,6 +2226,11 @@
       "website": "",
       "phone": "9212135407"
     },
+    "19446": {
+      "email": "ivorggomes@gmail.com",
+      "website": "https://www.urbanpark.pt/crossfit",
+      "phone": "+351 965207907"
+    },
     "19474": {
       "email": "casey@downeastcrossfit.com",
       "website": "http://www.downeastcrossfit.com/",
@@ -1606,10 +2251,20 @@
       "website": "http://www.crossfitcortez.com/",
       "phone": "4352602278"
     },
+    "19700": {
+      "email": "geoff@crossfitowasso.com",
+      "website": "https://crossfitowasso.com/",
+      "phone": "9184099038"
+    },
     "19781": {
       "email": "info@tollandcrossfit.com",
       "website": "https://TollandCrossFit.com",
       "phone": "(860) 845-1383"
+    },
+    "19814": {
+      "email": "darlas.alice@gmail.com",
+      "website": "",
+      "phone": "0782704164"
     },
     "19913": {
       "email": "oldhickorycrossfit@gmail.com",
@@ -1626,20 +2281,60 @@
       "website": "https://www.metalzonecrossfit.com/",
       "phone": "64021446615"
     },
+    "20153": {
+      "email": "rafaelmpcoelho@hotmail.com",
+      "website": "",
+      "phone": "71 98553-2233"
+    },
+    "20176": {
+      "email": "crossfitimperatriz@gmail.com",
+      "website": "",
+      "phone": "99981097659"
+    },
     "20308": {
       "email": "service@crossfitxray.com",
       "website": "https://www.crossfitxray.com",
       "phone": "+886 7 2696260"
+    },
+    "20356": {
+      "email": "dononi@hotmail.com",
+      "website": "http://www.crossfitpapareia.com.br/",
+      "phone": "53991658555"
     },
     "20374": {
       "email": "foued.khiri@gmail.com",
       "website": "http://crossfit-marsa.com/",
       "phone": "+21692482001"
     },
+    "20417": {
+      "email": "augustoconte19@gmail.com",
+      "website": "https://crossfit55049vg.it/",
+      "phone": "0584370511"
+    },
+    "20522": {
+      "email": "hakimoussalah@gmail.com",
+      "website": "",
+      "phone": "0652127800"
+    },
     "20532": {
       "email": "squirrelangel1@gmail.com",
       "website": "https://www.crossfitchelles.com/",
       "phone": "06 98 28 31 34"
+    },
+    "20539": {
+      "email": "guidonatto@hotmail.com",
+      "website": "http://www.inboxcrossfit.com.br/",
+      "phone": "05514981591212"
+    },
+    "20584": {
+      "email": "rodolfobento156@gmail.com",
+      "website": "",
+      "phone": "5581998738488"
+    },
+    "20648": {
+      "email": "info@liveandlift-crossfit.de",
+      "website": "https://liveandlift-crossfit.de/",
+      "phone": "004991319117521"
     },
     "20730": {
       "email": "noirotmelanie@gmail.com",
@@ -1651,10 +2346,20 @@
       "website": "http://www.crossfitmoveon.com/",
       "phone": "351964821075"
     },
+    "20872": {
+      "email": "",
+      "website": "",
+      "phone": "+5545984346795"
+    },
     "20924": {
       "email": "pedrogurgacz@gmail.com",
       "website": "",
       "phone": "45 999720514"
+    },
+    "21009": {
+      "email": "info@crossfitdamascus.com",
+      "website": "https://crossfitdamascus.com/",
+      "phone": "0812772676"
     },
     "21017": {
       "email": "",
@@ -1721,6 +2426,21 @@
       "website": "https://www.crossfitursao.com/",
       "phone": "+33650421877"
     },
+    "21599": {
+      "email": "alicia@crossfitflorence.com",
+      "website": "https://www.crossfitflorence.com/",
+      "phone": "7192804513"
+    },
+    "21660": {
+      "email": "rachel@terrainfitness.co",
+      "website": "https://terrainfitness.co/",
+      "phone": "2013903774"
+    },
+    "21665": {
+      "email": "mason.zimmerman6@gmail.com",
+      "website": "https://www.crossfit50211.com",
+      "phone": "515-402-6616"
+    },
     "21746": {
       "email": "traceywoiwod@shaw.ca",
       "website": "https://www.crossfitlifetree.com",
@@ -1740,6 +2460,26 @@
       "email": "info@crossfitbanff.com",
       "website": "https://crossfitbanff.com/",
       "phone": "18254405814"
+    },
+    "21814": {
+      "email": "edelvi35@hotmail.com",
+      "website": "http://www.paikeacrossfit.com/",
+      "phone": "3223860352"
+    },
+    "21815": {
+      "email": "dmgalipolo@gmail.com",
+      "website": "https://www.crossfitximbo.com/",
+      "phone": "942330687"
+    },
+    "21879": {
+      "email": "perlamitri@libero.it",
+      "website": "",
+      "phone": "3331335250"
+    },
+    "21916": {
+      "email": "",
+      "website": "https://kawvalleycrossfit.com/",
+      "phone": "(785) 727-2844"
     },
     "21965": {
       "email": "info@circle-athletic.de",
@@ -1761,6 +2501,11 @@
       "website": "",
       "phone": "32496392959"
     },
+    "22367": {
+      "email": "pedro_hudson_@hotmail.com",
+      "website": "https://www.instagram.com/crossfit788catalao/",
+      "phone": "64993459852"
+    },
     "22371": {
       "email": "info@crossfitettenleur.nl",
       "website": "http://crossfitettenleur.nl/",
@@ -1770,6 +2515,11 @@
       "email": "alexandre@gingecrossfit.com",
       "website": "http://www.gingecrossfit.com/",
       "phone": "5551 999701157"
+    },
+    "22447": {
+      "email": "bogdansavu.sport@gmail.com",
+      "website": "",
+      "phone": "0757434728"
     },
     "22453": {
       "email": "BeachHouseCrossFit@gmail.com",
@@ -1791,6 +2541,16 @@
       "website": "https://crossfitpinecreek.com/",
       "phone": "4123466040"
     },
+    "22656": {
+      "email": "contato@grawcrossfit.com.br",
+      "website": "https://linktr.ee/grawcrossfit",
+      "phone": "51999574048"
+    },
+    "22708": {
+      "email": "sandeepgadde@yahoo.co.in",
+      "website": "http://www.crossfitmend.com/",
+      "phone": "918686998970"
+    },
     "22718": {
       "email": "avni@sonmezyildiz.com",
       "website": "https://crossfitboomerang.com/",
@@ -1805,6 +2565,11 @@
       "email": "kbrady7@msn.com",
       "website": "https://www.truegritathletic.com",
       "phone": "9896200454"
+    },
+    "22809": {
+      "email": "marina@crossfitbermondsey.com",
+      "website": "https://www.crossfitbermondsey.com/",
+      "phone": "+447428381330"
     },
     "22932": {
       "email": "nofaramar@gmail.com",
@@ -1825,6 +2590,21 @@
       "email": "",
       "website": "http://crossfit-versailles.com/",
       "phone": "0603008843"
+    },
+    "22979": {
+      "email": "coachmel.irb@icloud.com",
+      "website": "http://www.irbcrossfit.com/",
+      "phone": "7274030466"
+    },
+    "23034": {
+      "email": "peter@henrici.de",
+      "website": "https://www.crossfit-neu-anspach.de/",
+      "phone": "01791130521"
+    },
+    "23110": {
+      "email": "vmidiver@gmail.com",
+      "website": "https://s3ecrossfit.com/",
+      "phone": "7572626634"
     },
     "23126": {
       "email": "info@crossfitsaintfield.com",
@@ -1861,6 +2641,16 @@
       "website": "https://crossfitbravura.net/",
       "phone": "(574)564-6037"
     },
+    "23419": {
+      "email": "cocarescrossfit@gmail.com",
+      "website": "",
+      "phone": "49999790000"
+    },
+    "23431": {
+      "email": "nygal35@gmail.com",
+      "website": "",
+      "phone": "(914) 850-9513"
+    },
     "23457": {
       "email": "catamountcrossfit@gmail.com",
       "website": "",
@@ -1881,6 +2671,11 @@
       "website": "https://h1cf.co.nz/",
       "phone": "021842113"
     },
+    "23528": {
+      "email": "flavio_nettoo@hotmail.com",
+      "website": "",
+      "phone": "41991165594"
+    },
     "23570": {
       "email": "jmazzullo77@gmail.com",
       "website": "https://tarheelcrossfit.com/",
@@ -1900,6 +2695,11 @@
       "email": "jennyj627@icloud.com",
       "website": "http://www.primalbodyathletics.com",
       "phone": "3157659029"
+    },
+    "24043": {
+      "email": "janne_ropponen@hotmail.com",
+      "website": "https://ebcf.fi/",
+      "phone": "358408553468"
     },
     "24056": {
       "email": "cindy.joling@gmail.com",
@@ -1926,6 +2726,11 @@
       "website": "https://crossfitsalire.com/",
       "phone": ""
     },
+    "24394": {
+      "email": "sammybradford@hotmail.com",
+      "website": "http://www.crossfitmoira.co.uk/",
+      "phone": "07525203276"
+    },
     "24455": {
       "email": "dawn@sandandsteelfitness.com",
       "website": "https://www.sandandsteelfitness.com/",
@@ -1940,6 +2745,11 @@
       "email": "info@crossfit-friedrichshafen.com",
       "website": "http://www.crossfit-friedrichshafen.com/",
       "phone": "01633476861"
+    },
+    "24731": {
+      "email": "kelley4500@gmail.com",
+      "website": "http://www.dualcitiescrossfit.com/",
+      "phone": "4792702300"
     },
     "24755": {
       "email": "vijairajsharan@gmail.com",
@@ -1971,6 +2781,16 @@
       "website": "https://crossfitwaterpoort.nl/",
       "phone": "+31630049249"
     },
+    "25354": {
+      "email": "camilaprimini@hotmail.com",
+      "website": "",
+      "phone": "5519981612451"
+    },
+    "25366": {
+      "email": "hello@whitehartfitness.com",
+      "website": "https://www.whitehartfitness.com",
+      "phone": "+447869147696"
+    },
     "25437": {
       "email": "tommojohno@gmail.com",
       "website": "",
@@ -1985,6 +2805,21 @@
       "email": "info@crossfitfiend.com",
       "website": "https://www.crossfitfiend.com/",
       "phone": "4059216717"
+    },
+    "25758": {
+      "email": "ericgoossens5@hotmail.com",
+      "website": "",
+      "phone": "0614664534"
+    },
+    "25814": {
+      "email": "lornefitzs@gmail.com",
+      "website": "",
+      "phone": "6042656209"
+    },
+    "25881": {
+      "email": "stephane83.iphone@yahoo.fr",
+      "website": "http://www.crossfit1848.com/",
+      "phone": "262692197878"
     },
     "26004": {
       "email": "info@crossfituninterrupted.com",
@@ -2031,6 +2866,11 @@
       "website": "https://www.crossfit-paisley.com/",
       "phone": "01418915995"
     },
+    "26796": {
+      "email": "team@amoeba.fitness",
+      "website": "https://www.amoeba.fitness/",
+      "phone": "5595408084"
+    },
     "26804": {
       "email": "info@crossfit-novus.com",
       "website": "https://www.crossfit-novus.com/",
@@ -2045,6 +2885,11 @@
       "email": "khansel@crossfitfairhope.com",
       "website": "https://www.crossfitfairhope.com",
       "phone": "2515996508"
+    },
+    "26932": {
+      "email": "Rivercitycrossfit@gmail.com",
+      "website": "https://www.rivercitycrossfit.com/",
+      "phone": ""
     },
     "26951": {
       "email": "",
@@ -2065,6 +2910,16 @@
       "email": "aguiarigor@hotmail.com",
       "website": "https://www.clubenavaldofunchal.com/insularcrossfit/",
       "phone": "963062686"
+    },
+    "27141": {
+      "email": "skary.fitness@gmail.com",
+      "website": "https://www.crossfitcurrahee.org/",
+      "phone": "678-877-7954"
+    },
+    "27168": {
+      "email": "",
+      "website": "http://jumpshipkailua.com",
+      "phone": "8084815052"
     },
     "27173": {
       "email": "classicharley.com@gmail.com",
@@ -2106,6 +2961,21 @@
       "website": "",
       "phone": "99873-0072"
     },
+    "27808": {
+      "email": "guolhermem@gmail.com",
+      "website": "",
+      "phone": "555139337964"
+    },
+    "27871": {
+      "email": "rafaelferraz.personal@hotmail.com",
+      "website": "",
+      "phone": "11917771990"
+    },
+    "27901": {
+      "email": "cfpatraohigienopolis@gmail.com",
+      "website": "",
+      "phone": "5551998466157"
+    },
     "28150": {
       "email": "hello@crossfitrebirth.fr",
       "website": "https://www.crossfitrebirth.fr/",
@@ -2115,6 +2985,11 @@
       "email": "melissa.reed@crossfittraining.com",
       "website": "https://www.crossfitannamaria.com/",
       "phone": "2035253005"
+    },
+    "28279": {
+      "email": "nanah_rieth@yahoo.com.br",
+      "website": "",
+      "phone": "5551983148763"
     },
     "28286": {
       "email": "skull_a020@hotmail.com",
@@ -2127,5 +3002,5 @@
       "phone": "61437589175"
     }
   },
-  "index": 425
+  "index": 600
 }
