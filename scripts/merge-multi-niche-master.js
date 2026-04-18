@@ -84,6 +84,7 @@ const FILES = [
   { file: 'ifa-franchisors.csv', niche: 'franchise', country: 'US', source: 'ifa', emailField: 'email' },
   { file: 'nursing-aacn-schools.csv', niche: 'nursing school', country: 'US', source: 'aacn', emailField: 'email' },
   { file: 'ancc-accredited-crawled.csv', niche: 'nursing CE provider', country: 'US', source: 'ancc_crawled', emailField: 'primary_email' },
+  { file: 'martialarts-schools.csv', niche: 'martial arts school', country: 'US', source: 'martial_arts_directory', emailField: 'email' },
   { file: 'overpass-businesses-crawled.csv', niche: 'local business', country: '', source: 'overpass_crawled', emailField: 'primary_email' },
 ];
 
