@@ -56,6 +56,7 @@ const FILES = [
   // Coaches/therapists
   { file: 'noomii-coaches.csv', niche: 'coach', country: 'US', source: 'noomii', emailField: 'email' },
   { file: 'noomii-coaches-crawled.csv', niche: 'coach', country: 'US', source: 'noomii_crawled', emailField: 'primary_email' },
+  { file: 'noomii-coaches-full-crawled.csv', niche: 'coach', country: 'US', source: 'noomii_full_crawled', emailField: 'primary_email' },
   { file: 'therapyden-therapists.csv', niche: 'therapist', country: 'US', source: 'therapyden', emailField: 'email' },
 
   // Financial/accounting
