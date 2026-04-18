@@ -86,6 +86,8 @@ const FILES = [
   { file: 'ancc-accredited-crawled.csv', niche: 'nursing CE provider', country: 'US', source: 'ancc_crawled', emailField: 'primary_email' },
   { file: 'martialarts-schools.csv', niche: 'martial arts school', country: 'US', source: 'martial_arts_directory', emailField: 'email' },
   { file: 'overpass-businesses-crawled.csv', niche: 'local business', country: '', source: 'overpass_crawled', emailField: 'primary_email' },
+  { file: 'overpass-full-crawled.csv', niche: 'local business', country: '', source: 'overpass_full_crawled', emailField: 'primary_email' },
+  { file: 'overpass-bulk-extras.csv', niche: 'local business', country: '', source: 'osm_overpass_extras', emailField: 'email' },
 ];
 
 function main() {
