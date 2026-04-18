@@ -90,6 +90,7 @@ const FILES = [
   { file: 'overpass-businesses-crawled.csv', niche: 'local business', country: '', source: 'overpass_crawled', emailField: 'primary_email' },
   { file: 'overpass-full-crawled.csv', niche: 'local business', country: '', source: 'overpass_full_crawled', emailField: 'primary_email' },
   { file: "overpass-retry-crawled.csv", niche: "local business", country: "", source: "overpass_retry", emailField: "primary_email" },
+  { file: "overpass-extras-crawled.csv", niche: "local business", country: "", source: "overpass_extras_crawled", emailField: "primary_email" },
   { file: "overpass-bulk-extras.csv", niche: 'local business', country: '', source: 'osm_overpass_extras', emailField: 'email' },
 ];
 
